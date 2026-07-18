@@ -6,6 +6,7 @@
 <title>Bricks — Work (GTA listing media)</title>
 <meta name="description" content="Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, 3D tours." />
 <link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -37,14 +38,14 @@
   .hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
   .hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:620px;}
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 50px;}
-  .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);}
-  .card .img{aspect-ratio:4/3;background:var(--paperDeep);display:flex;align-items:center;justify-content:center;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;font-size:11px;}
-  .card .img img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);transition:border-color .2s ease;}
+  .card:hover{border-color:var(--brick);}
+  .card .img{aspect-ratio:4/3;background:var(--paperDeep);overflow:hidden;}
+  .card .img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+  .card:hover .img img{transform:scale(1.04);}
   .card .meta{padding:14px;}
   .card .meta .t{font-weight:500;font-size:14px;color:var(--ink);}
   .card .meta .d{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);margin-top:4px;}
-  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;border:1px dashed var(--hairStrong);border-radius:2px;color:var(--inkMute);}
-  .empty code{font-family:'JetBrains Mono',monospace;background:var(--paperDeep);padding:2px 6px;border-radius:2px;color:var(--brickDeep);}
   footer{border-top:1px solid var(--hair);margin-top:20px;padding:24px 0;}
   .foot{max-width:1080px;margin:0 auto;padding:0 36px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
   .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--inkFaint);max-width:340px;line-height:1.5;}
@@ -82,16 +83,7 @@
     <p class="sub">Listing media captured across the Greater Toronto Area — HDR photography, CAS-licensed drone, floor plans, twilight, and 3D virtual tours.</p>
   </section>
 
-  <div class="grid" id="workGrid">
-    <!-- Drop real shoot images into bricks-prelaunch/assets/work/ and add a card below.
-         Each card: <div class="card"><div class="img"><img src="assets/work/NAME.jpg" alt="..."></div><div class="meta"><div class="t">Title</div><div class="d">City · service</div></div></div>
-         No stock/placeholder imagery — only real Bricks captures. -->
-    <div class="empty">
-      Real selected work loads here.<br/>
-      Add images to <code>assets/work/</code> and a card in <code>gallery.html</code>.<br/>
-      (No placeholder imagery by design.)
-    </div>
-  </div>
+  <div class="grid" id="workGrid"><!-- populated from Supabase storage (BRX Images) --></div>
 </div>
 
 <footer>
@@ -100,5 +92,36 @@
     <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
   </div>
 </footer>
+
+<script>
+  // Real Bricks shoots pulled from the public Supabase bucket (BRX Images).
+  // Only genuine captures — no stock/unsplash. Source of truth = storage bucket.
+  var BUCKET = 'https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/';
+  var WORK = [
+    {f:'Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg', t:'Suite 4003 — 2 Bed', d:'Downtown · HDR + drone'},
+    {f:'Residential/Suite-4701-2BDRM-DSC08028-1-scaled.jpeg', t:'Suite 4701 — 2 Bed', d:'Downtown · HDR interior'},
+    {f:'Multifamily/untitled shoot-9971-HDR-Enhanced-NR.jpg', t:'Multifamily HDR', d:'GTA · HDR + NR'},
+    {f:'Multifamily/DroneShot2142.jpg', t:'Aerial — Multifamily', d:'Drone · CAS-licensed'},
+    {f:'Multifamily/DroneShot2210.jpg', t:'Aerial — Multifamily', d:'Drone · CAS-licensed'},
+    {f:'Multifamily/DroneShot2226.jpg', t:'Aerial — Multifamily', d:'Drone · CAS-licensed'},
+    {f:'Multifamily/untitled shoot--22-HDR.jpg', t:'Multifamily HDR', d:'GTA · HDR bracket'},
+    {f:'Multifamily/20250331-untitled shoot-3520-HDR-Enhanced-NR.jpg', t:'Enhanced HDR', d:'GTA · HDR + NR'},
+    {f:'Multifamily/braemar-place-brampton-on-aerial-photo.jpg', t:'Braemar Place', d:'Brampton · aerial'},
+    {f:'Multifamily/1746215832704_44-Charles-West-in-Manulife-Centre__5_.jpg', t:'44 Charles West', d:'Manulife Centre · exterior'},
+    {f:'Multifamily/untitled shoot--76-HDR.png', t:'Multifamily HDR', d:'GTA · HDR bracket'},
+    {f:'Multifamily/20250312-untitled shoot-0117-HDR.png', t:'Multifamily HDR', d:'GTA · HDR bracket'}
+  ];
+  var grid = document.getElementById('workGrid');
+  WORK.forEach(function(w){
+    var card = document.createElement('div');
+    card.className = 'card';
+    // encode each path segment (handles spaces in folder/file names)
+    var img = BUCKET + w.f.split('/').map(encodeURIComponent).join('/');
+    card.innerHTML =
+      '<div class="img"><img loading="lazy" src="'+img+'" alt="'+w.t+'"></div>'+
+      '<div class="meta"><div class="t">'+w.t+'</div><div class="d">'+w.d+'</div></div>';
+    grid.appendChild(card);
+  });
+</script>
 </body>
 </html>
