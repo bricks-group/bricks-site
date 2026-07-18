@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bricks — Work (GTA listing media)</title>
+<meta name="description" content="Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, 3D tours." />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F1EB; --paperSoft:#EDE8DF; --paperDeep:#E4DED2;
+    --hair:#1411100F; --hairStrong:#14111020;
+    --ink:#14110E; --inkSoft:#3B332A; --inkMute:#6B6054; --inkFaint:#A39684;
+    --brick:#D2542B; --brickDeep:#A8401F; --brickSoft:#F4D9CC; --brickTint:#FBEFE8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'General Sans',system-ui,sans-serif;color:var(--inkSoft);background:var(--paper);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 36px;}
+  header{border-bottom:1px solid var(--hair);}
+  .nav{max-width:1080px;margin:0 auto;padding:14px 36px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:inline-flex;align-items:center;gap:8px;}
+  .brand svg{height:20px;width:34px;display:block;}
+  .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
+  .nav-links{display:flex;gap:18px;align-items:center;}
+  .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
+  .nav-links a:hover{color:var(--brickDeep);}
+  .nav-cta{background:var(--brick);color:#fff;font-size:13px;font-weight:500;padding:9px 16px;border-radius:2px;text-decoration:none;}
+  .hero{padding:48px 0 28px;}
+  .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;background:var(--brickTint);color:var(--brickDeep);margin-bottom:14px;}
+  .hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
+  .hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:620px;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 50px;}
+  .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);}
+  .card .img{aspect-ratio:4/3;background:var(--paperDeep);display:flex;align-items:center;justify-content:center;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;font-size:11px;}
+  .card .img img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card .meta{padding:14px;}
+  .card .meta .t{font-weight:500;font-size:14px;color:var(--ink);}
+  .card .meta .d{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);margin-top:4px;}
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;border:1px dashed var(--hairStrong);border-radius:2px;color:var(--inkMute);}
+  .empty code{font-family:'JetBrains Mono',monospace;background:var(--paperDeep);padding:2px 6px;border-radius:2px;color:var(--brickDeep);}
+  footer{border-top:1px solid var(--hair);margin-top:20px;padding:24px 0;}
+  .foot{max-width:1080px;margin:0 auto;padding:0 36px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--inkFaint);max-width:340px;line-height:1.5;}
+  .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
+  @media (max-width:820px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.grid{grid-template-columns:1fr;}.hero h1{font-size:28px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">
+      <svg viewBox="0 0 27 16" fill="none" aria-label="Bricks mark">
+        <rect x="1" y="1" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="1" y="9" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="15" y="9" width="11" height="6" rx="1.2" fill="#D2542B"/>
+      </svg>
+      <span class="wordmark">bricks</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Overview</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="gallery.html">Work</a>
+      <a href="book.html" class="nav-cta">Book a shoot</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <span class="badge">Selected work · GTA</span>
+    <h1>The work.</h1>
+    <p class="sub">Listing media captured across the Greater Toronto Area — HDR photography, CAS-licensed drone, floor plans, twilight, and 3D virtual tours.</p>
+  </section>
+
+  <div class="grid" id="workGrid">
+    <!-- Drop real shoot images into bricks-prelaunch/assets/work/ and add a card below.
+         Each card: <div class="card"><div class="img"><img src="assets/work/NAME.jpg" alt="..."></div><div class="meta"><div class="t">Title</div><div class="d">City · service</div></div></div>
+         No stock/placeholder imagery — only real Bricks captures. -->
+    <div class="empty">
+      Real selected work loads here.<br/>
+      Add images to <code>assets/work/</code> and a card in <code>gallery.html</code>.<br/>
+      (No placeholder imagery by design.)
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot">
+    <span class="dev">Bricks booking + dispatch apps in development. Media service live in the GTA.</span>
+    <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
+  </div>
+</footer>
+</body>
+</html>

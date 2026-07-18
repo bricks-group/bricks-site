@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bricks — Book a shoot (GTA listing media)</title>
-<meta name="description" content="Book Bricks listing media in the GTA: pick your shoot, package, and date. Pre-launch direct booking." />
+<meta name="description" content="Book Bricks listing media in the GTA: instant tailored quote by footprint + travel, pay to lock your slot." />
 <link rel="preconnect" href="https://api.fontshare.com" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
@@ -39,7 +39,6 @@
   .hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
   .hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:560px;}
 
-  /* stepper */
   .steps{display:flex;gap:0;margin:28px 0 8px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
   .step-tab{flex:1;padding:13px 10px;text-align:center;font-family:'JetBrains Mono',monospace;
     font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--inkFaint);
@@ -55,7 +54,7 @@
   .panel h2{font-weight:500;font-size:22px;letter-spacing:-0.4px;color:var(--ink);margin-bottom:4px;}
   .panel .hint{font-size:13px;color:var(--inkMute);margin-bottom:20px;}
 
-  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;position:relative;}
   .field label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
     text-transform:uppercase;color:var(--inkMute);}
   .field input,.field select,.field textarea{font-family:'General Sans',sans-serif;font-size:14px;
@@ -65,7 +64,14 @@
   .field textarea{resize:vertical;min-height:70px;}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 
-  /* choice cards */
+  /* autofill dropdown */
+  .suggest{position:absolute;top:100%;left:0;right:0;z-index:20;background:var(--paper);
+    border:1px solid var(--hairStrong);border-radius:2px;margin-top:2px;max-height:240px;overflow:auto;}
+  .suggest div{padding:10px 12px;font-size:13px;color:var(--inkSoft);cursor:pointer;border-bottom:1px solid var(--hair);}
+  .suggest div:last-child{border-bottom:none;}
+  .suggest div:hover{background:var(--paperSoft);color:var(--brickDeep);}
+  .suggest .muted{font-size:11px;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;}
+
   .choices{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
     border:1px solid var(--hair);border-radius:2px;margin-bottom:16px;}
   .choice{background:var(--paper);padding:18px;cursor:pointer;border:2px solid transparent;}
@@ -79,7 +85,19 @@
   .toggle{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:14px;color:var(--inkSoft);}
   .toggle input{width:16px;height:16px;accent-color:var(--brick);}
 
-  /* review */
+  /* quote */
+  .quote{background:var(--paperDeep);border:1px solid var(--hair);border-radius:2px;padding:20px;margin-top:8px;}
+  .quote .qrow{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--hair);font-size:14px;}
+  .quote .qrow:last-child{border-bottom:none;}
+  .quote .qk{color:var(--inkMute);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;}
+  .quote .qv{color:var(--ink);text-align:right;}
+  .quote .qtotal{font-size:18px;font-weight:500;color:var(--ink);}
+  .quote .qnote{font-size:11.5px;color:var(--brickDeep);margin-top:10px;font-family:'JetBrains Mono',monospace;line-height:1.5;}
+  .sqft-edit{display:flex;align-items:center;gap:8px;margin:6px 0 2px;}
+  .sqft-edit input{width:110px;padding:7px 9px;font-size:13px;}
+  .sqft-edit button{font-size:12px;padding:7px 12px;border:1px solid var(--hairStrong);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
+  .loading{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);letter-spacing:0.08em;}
+
   .review{background:var(--paperDeep);border:1px solid var(--hair);border-radius:2px;padding:20px;}
   .review .rrow{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--hair);font-size:14px;}
   .review .rrow:last-child{border-bottom:none;}
@@ -90,6 +108,7 @@
   .btn{font-weight:500;font-size:14px;border-radius:2px;padding:12px 22px;cursor:pointer;border:none;
     font-family:'General Sans',sans-serif;}
   .btn-brick{background:var(--brick);color:#fff;}
+  .btn-brick:disabled{opacity:0.5;cursor:not-allowed;}
   .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--hairStrong);}
   .err{color:var(--brickDeep);font-size:12.5px;font-family:'JetBrains Mono',monospace;margin-top:-8px;margin-bottom:12px;min-height:14px;}
 
@@ -118,8 +137,9 @@
       <span class="wordmark">bricks</span>
     </div>
     <nav class="nav-links">
-      <a href="bricks-landing.html">Overview</a>
+      <a href="index.html">Overview</a>
       <a href="pricing.html">Pricing</a>
+      <a href="gallery.html">Work</a>
       <a href="book.html" class="nav-cta">Book a shoot</a>
     </nav>
   </div>
@@ -127,23 +147,23 @@
 
 <div class="wrap">
   <section class="hero">
-    <span class="badge">Pre-launch · direct booking</span>
+    <span class="badge">Pre-launch · instant quote + pay</span>
     <h1>Book a shoot.</h1>
-    <p class="sub">Four steps. Pick your shoot, package, and date — we confirm the slot and send pricing by footprint. The self-serve Booking app replaces this in development.</p>
+    <p class="sub">Four steps. We price it live from the address — footprint, travel, add-ons, HST — you pay to lock the slot. Scheduling syncs to our calendar instantly.</p>
   </section>
 
   <div class="steps">
     <div class="step-tab active" data-tab="0"><span class="n">1</span>Shoot</div>
     <div class="step-tab" data-tab="1"><span class="n">2</span>Package</div>
     <div class="step-tab" data-tab="2"><span class="n">3</span>Schedule</div>
-    <div class="step-tab" data-tab="3"><span class="n">4</span>Review</div>
+    <div class="step-tab" data-tab="3"><span class="n">4</span>Pay</div>
   </div>
 
   <form id="bookFlow" onsubmit="return false;">
     <!-- STEP 1: SHOOT -->
     <div class="panel active" data-panel="0">
       <h2>What are we shooting?</h2>
-      <p class="hint">Tell us about the listing and who's booking.</p>
+      <p class="hint">Tell us about the listing and who's booking. Start typing the address for suggestions.</p>
       <div class="grid2">
         <div class="field"><label>Listing agent name *</label><input id="f_name" placeholder="Jane Agent" /></div>
         <div class="field"><label>Brokerage</label><input id="f_brokerage" placeholder="Optional" /></div>
@@ -152,7 +172,9 @@
         <div class="field"><label>Email *</label><input id="f_email" type="email" placeholder="you@brokerage.com" /></div>
         <div class="field"><label>Phone</label><input id="f_phone" placeholder="416-..." /></div>
       </div>
-      <div class="field"><label>Property address *</label><input id="f_addr" placeholder="123 Main St, Toronto" /></div>
+      <div class="field"><label>Property address *</label><input id="f_addr" placeholder="123 Main St, Mississauga" autocomplete="off" />
+        <div class="suggest" id="suggest" style="display:none;"></div>
+      </div>
       <div class="field"><label>Property type *</label>
         <select id="f_type">
           <option value="">Select…</option>
@@ -164,18 +186,22 @@
       <div class="nav-btns"><span></span><button class="btn btn-brick" onclick="next(0)">Next →</button></div>
     </div>
 
-    <!-- STEP 2: PACKAGE -->
+    <!-- STEP 2: PACKAGE + QUOTE -->
     <div class="panel" data-panel="1">
       <h2>Pick a package.</h2>
-      <p class="hint">Rates by footprint — see <a href="pricing.html" style="color:var(--brickDeep)">full pricing</a>. Not sure? Pick "Advise me."</p>
+      <p class="hint">Rates by footprint — see <a href="pricing.html" style="color:var(--brickDeep)">full pricing</a>. We quote the address live below.</p>
       <div class="choices" id="pkgChoices">
-        <div class="choice" data-val="Standard (+ floor plan)"><div class="t">Standard</div><div class="d">$349–599</div><div class="x">Photo · drone · floor plan · reel</div></div>
+        <div class="choice" data-val="Standard"><div class="t">Standard</div><div class="d">$349–599</div><div class="x">Photo · drone · floor plan · reel</div></div>
         <div class="choice" data-val="Premium"><div class="t">Premium</div><div class="d">$749–1,199</div><div class="x">Larger footprint, priority edit</div></div>
-        <div class="choice" data-val="Luxury (+ twilight)"><div class="t">Luxury</div><div class="d">$1,199–2,099</div><div class="x">+ twilight exterior</div></div>
-        <div class="choice" data-val="Estate (flat)"><div class="t">Estate</div><div class="d">$2,899 flat</div><div class="x">All + extended 3D tour</div></div>
-        <div class="choice" data-val="Not sure — advise me" style="grid-column:1/-1;"><div class="t">Not sure — advise me</div><div class="x">We'll size it from the address and quote.</div></div>
+        <div class="choice" data-val="Luxury"><div class="t">Luxury</div><div class="d">$1,199–2,099</div><div class="x">+ twilight exterior</div></div>
+        <div class="choice" data-val="Estate"><div class="t">Estate</div><div class="d">$2,899 flat</div><div class="x">All + extended 3D tour</div></div>
+        <div class="choice" data-val="Advise" style="grid-column:1/-1;"><div class="t">Not sure — advise me</div><div class="x">We'll size it from the address and quote after.</div></div>
       </div>
       <label class="toggle"><input type="checkbox" id="f_tour" /> Add 3D virtual tour (+$199)</label>
+      <label class="toggle"><input type="checkbox" id="f_twilight" /> Add twilight photography (+$149)</label>
+      <label class="toggle"><input type="checkbox" id="f_ext3d" /> Add extended 3D coverage (+$249)</label>
+
+      <div id="quoteBox"><div class="loading">Quote appears here once you pick a package…</div></div>
       <div class="err" id="err1"></div>
       <div class="nav-btns"><button class="btn btn-ghost" onclick="prev(1)">← Back</button><button class="btn btn-brick" onclick="next(1)">Next →</button></div>
     </div>
@@ -183,28 +209,8 @@
     <!-- STEP 3: SCHEDULE -->
     <div class="panel" data-panel="2">
       <h2>When?</h2>
-      <p class="hint">Pick a real slot below, or give a preferred date and we confirm within one business day.</p>
-
-      <!-- Cal.com embed: paste your free Cal.com booking link below to activate.
-           Until then the manual date fields are used. -->
-      <div id="calEmbed" data-cal-link="akasm/bricks-media-shoot" style="margin-bottom:18px;min-height:40px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--inkFaint);"></div>
-      <script type="text/javascript">
-        (function(){
-          var link = document.getElementById('calEmbed').getAttribute('data-cal-link');
-          if (link) {
-            var s = document.createElement('script');
-            s.src = 'https://cal.com/embed/embed.js';
-            s.async = true;
-            document.head.appendChild(s);
-            document.getElementById('calEmbed').innerHTML =
-              '<div style="margin-bottom:8px;font-family:\'JetBrains Mono\',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--inkMute);">Pick a slot</div>' +
-              '<iframe src="https://cal.com/embed/' + encodeURIComponent(link) + '" width="100%" height="620" frameborder="0" style="border:1px solid var(--hairStrong);border-radius:2px;"></iframe>';
-          } else {
-            document.getElementById('calEmbed').textContent = 'Cal.com link not set — use the date fields below.';
-          }
-        })();
-      </script>
-
+      <p class="hint">Pick a real slot below (synced to our calendar) or give a preferred date and we confirm.</p>
+      <div id="calEmbed" data-cal-link="akasm/bricks-media-shoot" style="margin-bottom:18px;"></div>
       <div class="grid2">
         <div class="field"><label>Preferred shoot date *</label><input id="f_date" type="date" /></div>
         <div class="field"><label>Preferred window</label>
@@ -216,22 +222,23 @@
       <div class="nav-btns"><button class="btn btn-ghost" onclick="prev(2)">← Back</button><button class="btn btn-brick" onclick="next(2)">Review →</button></div>
     </div>
 
-    <!-- STEP 4: REVIEW -->
+    <!-- STEP 4: PAY -->
     <div class="panel" data-panel="3">
-      <h2>Review &amp; send.</h2>
-      <p class="hint">Confirm the details, then send the request. We'll reply to confirm.</p>
+      <h2>Review &amp; pay.</h2>
+      <p class="hint">Confirm details, then pay to lock your slot. Full amount (incl. HST) charged now via Stripe.</p>
       <div class="review" id="reviewBox"></div>
+      <div class="quote" id="finalQuote" style="margin-top:14px;"></div>
       <div class="err" id="err3"></div>
-      <div class="nav-btns"><button class="btn btn-ghost" onclick="prev(3)">← Back</button><button class="btn btn-brick" onclick="submitFlow()">Send booking request</button></div>
+      <div class="nav-btns"><button class="btn btn-ghost" onclick="prev(3)">← Back</button><button class="btn btn-brick" id="payBtn" onclick="pay()">Pay &amp; book</button></div>
     </div>
   </form>
 
   <!-- DONE -->
   <div class="panel" data-panel="done">
     <div class="done-box">
-      <h2>Request sent.</h2>
-      <p>Your booking request is on its way to booking@brxs.ca. We confirm the slot within one business day.</p>
-      <p style="margin-top:14px;"><a href="bricks-landing.html" style="color:var(--brickDeep);font-weight:500;">← Back to overview</a></p>
+      <h2 id="doneTitle">Payment started.</h2>
+      <p id="doneMsg">Redirecting to secure checkout…</p>
+      <p style="margin-top:14px;"><a href="index.html" style="color:var(--brickDeep);font-weight:500;">← Back to overview</a></p>
     </div>
   </div>
 </div>
@@ -245,37 +252,39 @@
 
 <script>
   var step = 0;
-  var data = { pkg:'' };
+  var data = { pkg:'', quote:null, selectedAddr:'' };
+  var SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/';
+  var ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod';
 
   function show(s){
     step = s;
     document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
-    var panels = document.querySelectorAll('.panel[data-panel]');
-    panels.forEach(function(p){ if(p.getAttribute('data-panel')==String(s)) p.classList.add('active'); });
+    document.querySelectorAll('.panel[data-panel]').forEach(function(p){
+      if(p.getAttribute('data-panel')===String(s)) p.classList.add('active');
+    });
     document.querySelectorAll('.step-tab').forEach(function(t){
       var i = +t.getAttribute('data-tab');
       t.classList.toggle('active', i===s);
       t.classList.toggle('done', i<s);
     });
+    if(s===1) fetchQuote();
     if(s===3) buildReview();
     window.scrollTo({top:0,behavior:'smooth'});
   }
-  function next(s){
-    var ok = validate(s);
-    if(ok) show(s+1);
-  }
+  function next(s){ if(validate(s)) show(s+1); }
   function prev(s){ show(s-1); }
 
   function validate(s){
     var e = document.getElementById('err'+s); e.textContent='';
     if(s===0){
       if(!document.getElementById('f_name').value.trim()){ e.textContent='Agent name required.'; return false; }
-      if(!document.getElementById('f_email').value.trim()){ e.textContent='Email required.'; return false; }
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById('f_email').value.trim())){ e.textContent='Valid email required.'; return false; }
       if(!document.getElementById('f_addr').value.trim()){ e.textContent='Property address required.'; return false; }
       if(!document.getElementById('f_type').value){ e.textContent='Select a property type.'; return false; }
     }
     if(s===1){
       if(!data.pkg){ e.textContent='Pick a package (or "advise me").'; return false; }
+      if(!data.quote){ e.textContent='Quote not ready — wait a moment or adjust the package.'; return false; }
     }
     if(s===2){
       if(!document.getElementById('f_date').value){ e.textContent='Pick a preferred date.'; return false; }
@@ -283,76 +292,145 @@
     return true;
   }
 
-  // package choice
+  // ---- address autofill (Nominatim) ----
+  var addrInput = document.getElementById('f_addr');
+  var sugBox = document.getElementById('suggest');
+  var debounce;
+  addrInput.addEventListener('input', function(){
+    clearTimeout(debounce);
+    var q = addrInput.value.trim();
+    if(q.length < 4){ sugBox.style.display='none'; return; }
+    debounce = setTimeout(function(){
+      fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=5&addressdetails=0', {
+        headers:{'User-Agent':'BricksPreLaunch/1.0 (booking@brxs.ca)'}
+      }).then(function(r){ return r.json(); }).then(function(j){
+        if(!Array.isArray(j) || !j.length){ sugBox.style.display='none'; return; }
+        sugBox.innerHTML = j.map(function(o){
+          return '<div data-disp="'+esc(o.display_name)+'">'+esc(o.display_name.split(',').slice(0,3).join(','))+'<div class="muted">'+esc(o.display_name)+'</div></div>';
+        }).join('');
+        sugBox.style.display='block';
+        Array.prototype.forEach.call(sugBox.children, function(c){
+          c.addEventListener('click', function(){
+            addrInput.value = c.getAttribute('data-disp');
+            data.selectedAddr = c.getAttribute('data-disp');
+            sugBox.style.display='none';
+          });
+        });
+      }).catch(function(){ sugBox.style.display='none'; });
+    }, 350);
+  });
+  document.addEventListener('click', function(e){ if(!e.target.closest('#suggest') && e.target!==addrInput) sugBox.style.display='none'; });
+
+  // ---- package choice ----
   document.querySelectorAll('#pkgChoices .choice').forEach(function(c){
     c.addEventListener('click', function(){
       document.querySelectorAll('#pkgChoices .choice').forEach(function(x){ x.classList.remove('sel'); });
       c.classList.add('sel');
       data.pkg = c.getAttribute('data-val');
       document.getElementById('err1').textContent='';
+      fetchQuote();
     });
   });
+  ['f_tour','f_twilight','f_ext3d'].forEach(function(id){
+    document.getElementById(id).addEventListener('change', function(){ if(data.pkg) fetchQuote(); });
+  });
+
+  // ---- dynamic quote ----
+  function fetchQuote(manualSqft){
+    if(!data.pkg){ return; }
+    var box = document.getElementById('quoteBox');
+    box.innerHTML = '<div class="loading">Calculating tailored price…</div>';
+    var payload = {
+      address: data.selectedAddr || addrInput.value.trim(),
+      city: 'mississauga',
+      property_type: document.getElementById('f_type').value,
+      package_interest: data.pkg,
+      tour_addon: document.getElementById('f_tour').checked,
+      twilight_addon: document.getElementById('f_twilight').checked,
+      extended3d_addon: document.getElementById('f_ext3d').checked
+    };
+    if(manualSqft) payload.sqft = manualSqft;
+    fetch(SUPABASE+'quote', { method:'POST', headers:{'Content-Type':'application/json','apikey':ANON}, body:JSON.stringify(payload) })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok, j:j}; }); })
+      .then(function(res){
+        if(!res.ok){ box.innerHTML = '<div class="loading">Could not price this address. Enter sqft manually or contact booking@brxs.ca.</div>'; return; }
+        data.quote = res.j.quote;
+        renderQuote(box, res.j.quote, true);
+      })
+      .catch(function(){ box.innerHTML = '<div class="loading">Network error pricing address.</div>'; });
+  }
+
+  function renderQuote(box, q, editable){
+    var rows = [
+      ['Base rate ('+q.package+')', '$'+q.base_rate.toFixed(2)],
+      ['Travel ('+q.distance_km+' km, '+q.travel_km_billable+' billable @ $'+q.travel_per_km+'/km)', '$'+q.travel_fee.toFixed(2)]
+    ];
+    q.addons.forEach(function(a){ rows.push([a.label, '$'+a.amount.toFixed(2)]); });
+    rows.push(['Subtotal', '$'+q.subtotal.toFixed(2)]);
+    rows.push(['HST (13%)', '$'+q.hst.toFixed(2)]);
+    var html = '<div class="qrow"><span class="qk">Square footage</span><span class="qv">'+(q.sqft?q.sqft.toLocaleString()+' sqft':'—')+(q.sqft_source?' <span class="muted">('+q.sqft_source+')</span>':'')+'</span></div>';
+    if(editable){
+      html += '<div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" value="'+(q.sqft||'')+'" /><button onclick="requote()">Re-quote</button></div>';
+    }
+    html += rows.map(function(r){ return '<div class="qrow"><span class="qk">'+r[0]+'</span><span class="qv">'+r[1]+'</span></div>'; }).join('');
+    html += '<div class="qrow"><span class="qk qtotal">Total (incl. HST)</span><span class="qv qtotal">$'+q.total.toFixed(2)+' CAD</span></div>';
+    if(q.sqft_estimated){
+      html += '<div class="qnote">⚠ Sqft estimated — confirm or edit above for an exact quote. Final invoice reflects actual scope.</div>';
+    }
+    box.innerHTML = html;
+  }
+  function requote(){ var v = document.getElementById('sqftInput').value; fetchQuote(v ? parseInt(v) : null); }
 
   function buildReview(){
     var v = function(id){ return document.getElementById(id).value.trim() || '—'; };
     var rows = [
-      ['Agent', v('f_name')],
-      ['Brokerage', v('f_brokerage')],
-      ['Email', v('f_email')],
-      ['Phone', v('f_phone')],
-      ['Property', v('f_addr')],
-      ['Type', document.getElementById('f_type').value || '—'],
+      ['Agent', v('f_name')], ['Brokerage', v('f_brokerage')], ['Email', v('f_email')], ['Phone', v('f_phone')],
+      ['Property', v('f_addr')], ['Type', document.getElementById('f_type').value || '—'],
       ['Package', data.pkg || '—'],
-      ['3D tour', document.getElementById('f_tour').checked ? 'Yes (+$199)' : 'No'],
-      ['Date', v('f_date')],
-      ['Window', document.getElementById('f_window').value],
+      ['3D tour', document.getElementById('f_tour').checked ? 'Yes' : 'No'],
+      ['Twilight', document.getElementById('f_twilight').checked ? 'Yes' : 'No'],
+      ['Extended 3D', document.getElementById('f_ext3d').checked ? 'Yes' : 'No'],
+      ['Date', v('f_date')], ['Window', document.getElementById('f_window').value],
       ['Notes', v('f_notes')]
     ];
     document.getElementById('reviewBox').innerHTML = rows.map(function(r){
-      return '<div class="rrow"><span class="rk">'+r[0]+'</span><span class="rv">'+escapeHtml(r[1])+'</span></div>';
+      return '<div class="rrow"><span class="rk">'+r[0]+'</span><span class="rv">'+esc(r[1])+'</span></div>';
     }).join('');
+    if(data.quote) renderQuote(document.getElementById('finalQuote'), data.quote, false);
   }
-  function escapeHtml(s){ return s.replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
-  function submitFlow(){
+  // ---- pay ----
+  function pay(){
     var e = document.getElementById('err3'); e.textContent='';
-    // final guard
-    if(!validate(0) || !data.pkg || !document.getElementById('f_date').value){ e.textContent='Some details are missing — go back and complete all steps.'; return; }
-    var name=v('f_name'),email=v('f_email'),phone=v('f_phone'),addr=v('f_addr'),brokerage=v('f_brokerage');
-    var type=document.getElementById('f_type').value, date=v('f_date'), window_=document.getElementById('f_window').value;
-    var tour=document.getElementById('f_tour').checked;
-    var notes=v('f_notes');
-    function v(id){return document.getElementById(id).value.trim();}
-    var payload={
-      agent_name:name, email:email, brokerage:brokerage||null, phone:phone||null,
-      property_address:addr, property_type:type, package_interest:data.pkg,
-      tour_addon:tour, preferred_date:date, preferred_window:window_, notes:notes||null
+    if(!data.quote){ e.textContent='Quote missing — go back to step 2.'; return; }
+    var btn = document.getElementById('payBtn'); btn.disabled=true; btn.textContent='Starting checkout…';
+    var payload = {
+      quote: data.quote,
+      agent_name: document.getElementById('f_name').value.trim(),
+      email: document.getElementById('f_email').value.trim(),
+      brokerage: document.getElementById('f_brokerage').value.trim() || null,
+      phone: document.getElementById('f_phone').value.trim() || null,
+      property_address: data.selectedAddr || document.getElementById('f_addr').value.trim(),
+      property_type: document.getElementById('f_type').value,
+      package_interest: data.pkg,
+      preferred_date: document.getElementById('f_date').value,
+      preferred_window: document.getElementById('f_window').value,
+      tour_addon: document.getElementById('f_tour').checked,
+      twilight_addon: document.getElementById('f_twilight').checked,
+      extended3d_addon: document.getElementById('f_ext3d').checked,
+      notes: document.getElementById('f_notes').value.trim() || null
     };
-    var subject='Bricks booking — '+addr;
-    var body='New shoot request (pre-launch — direct booking)\n\n'
-      +'Agent: '+name+'\n'+(brokerage?('Brokerage: '+brokerage+'\n'):'')
-      +'Email: '+email+'\n'+(phone?('Phone: '+phone+'\n'):'')
-      +'Property: '+addr+'\nType: '+type+'\nPackage: '+data.pkg+'\n3D tour: '+(tour?'Yes (+$199)':'No')+'\n'
-      +'Preferred date: '+date+'\nWindow: '+window_+'\n'+(notes?('Notes: '+notes+'\n'):'')
-      +'\n— sent from the bricks booking flow';
-    var mailto='mailto:booking@brxs.ca?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-
-    // Try the Supabase edge function first; fall back to mailto on any failure.
-    var endpoint='https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/booking_lead';
-    var anonKey='sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod';
-    fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','apikey':anonKey},body:JSON.stringify(payload)})
+    fetch(SUPABASE+'create-checkout', { method:'POST', headers:{'Content-Type':'application/json','apikey':ANON}, body:JSON.stringify(payload) })
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok, j:j}; }); })
       .then(function(res){
-        if(res.ok){ showDone(); }
-        else { window.location.href=mailto; showDone(); }
+        if(!res.ok){ e.textContent='Checkout failed: '+(res.j.error||'try again'); btn.disabled=false; btn.textContent='Pay & book'; return; }
+        document.getElementById('doneTitle').textContent='Redirecting to secure checkout…';
+        window.location.href = res.j.url;
       })
-      .catch(function(){ window.location.href=mailto; showDone(); });
+      .catch(function(){ e.textContent='Network error starting checkout.'; btn.disabled=false; btn.textContent='Pay & book'; });
   }
-  function showDone(){
-    document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
-    document.querySelector('.panel[data-panel="done"]').classList.add('active');
-    document.querySelector('.steps').style.display='none';
-  }
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 </script>
 </body>
 </html>
