@@ -152,23 +152,32 @@ Deno.serve(async (req: Request) => {
   const geo = await geocode(address);
   if (!geo) return bad('Could not geocode address', 422);
 
-  // 2) sqft: agent manual override wins. Otherwise take a FREE guess from the
-  //    OSM building footprint at the geocoded coord, clamped to a plausible
-  //    range around the property-type default (footprint over-estimates living
-  //    area, so we treat it as a ceiling, not the value). Agent confirms.
+  // 2) sqft: agent manual override wins. Otherwise take a FREE guess.
+  //    OSM building footprint is trusted ONLY for free-standing types
+  //    (Detached/Commercial/Estate) where the polygon ≈ the building. For
+  //    attached types (Semi / Town, Condo, Multiplex) OSM captures the whole
+  //    shared structure (e.g. a semi pair = ~7000 sqft), so we use the
+  //    property-type default instead. All guesses are flagged for agent
+  //    confirmation in the wizard.
   const DEFAULT_SQFT: Record<string, number> = {
     'Condo': 850, 'Semi / Town': 1600, 'Detached': 2600,
     'Multiplex': 3200, 'Commercial': 4000, 'Estate': 6000,
   };
+  // types where an OSM footprint ≈ the actual building (not shared walls)
+  const FREE_STANDING = new Set(['Detached', 'Commercial', 'Estate']);
   let sqft: number | null = manualSqft;
   let sqft_source = manualSqft ? 'agent' : 'none';
   let sqft_estimated = false;
   if (!sqft) {
     const pt = (body.property_type || '').toString().trim();
     const def = DEFAULT_SQFT[pt] ?? 2200;
-    const fp = await osmFootprintSqft(geo.lat, geo.lon);
-    if (fp && fp >= def * 0.5 && fp <= def * 1.6) {
-      sqft = fp; sqft_source = 'osm-footprint'; sqft_estimated = true;
+    if (FREE_STANDING.has(pt)) {
+      const fp = await osmFootprintSqft(geo.lat, geo.lon);
+      if (fp && fp >= def * 0.5 && fp <= def * 1.6) {
+        sqft = fp; sqft_source = 'osm-footprint'; sqft_estimated = true;
+      } else {
+        sqft = def; sqft_source = 'type-default'; sqft_estimated = true;
+      }
     } else {
       sqft = def; sqft_source = 'type-default'; sqft_estimated = true;
     }
