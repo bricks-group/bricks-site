@@ -305,7 +305,12 @@
         headers:{'User-Agent':'BricksPreLaunch/1.0 (booking@brxs.ca)'}
       }).then(function(r){ return r.json(); }).then(function(j){
         if(!Array.isArray(j) || !j.length){ sugBox.style.display='none'; return; }
-        sugBox.innerHTML = j.map(function(o){
+        // Hard filter: pre-launch is Ontario/GTA only — drop anything not in Canada.
+        var ca = j.filter(function(o){ return /Canada/i.test(o.display_name); });
+        // Ontario first so local results float to the top.
+        ca.sort(function(a,b){ return (/Ontario/i.test(b.display_name)?1:0) - (/Ontario/i.test(a.display_name)?1:0); });
+        if(!ca.length){ sugBox.style.display='none'; return; }
+        sugBox.innerHTML = ca.map(function(o){
           return '<div data-disp="'+esc(o.display_name)+'">'+esc(o.display_name.split(',').slice(0,3).join(','))+'<div class="muted">'+esc(o.display_name)+'</div></div>';
         }).join('');
         sugBox.style.display='block';
