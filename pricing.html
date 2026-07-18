@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bricks — Pricing (GTA listing media, pre-launch)</title>
+<meta name="description" content="Bricks listing-media pricing for the GTA: per-shoot rates by footprint, floor plans included, 3D tour add-on. Pre-launch — book direct." />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F1EB; --paperSoft:#EDE8DF; --paperDeep:#E4DED2;
+    --hair:#1411100F; --hairStrong:#14111020;
+    --ink:#14110E; --inkSoft:#3B332A; --inkMute:#6B6054; --inkFaint:#A39684;
+    --brick:#D2542B; --brickDeep:#A8401F; --brickSoft:#F4D9CC; --brickTint:#FBEFE8;
+    --night:#141210; --moon:#F4F1EB; --moonSoft:#D6CFC2; --moonMute:#8F8678;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'General Sans',system-ui,sans-serif;color:var(--inkSoft);
+    font-size:15px;line-height:1.55;background:var(--paper);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 36px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .over{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--inkMute);display:block;}
+
+  header{position:sticky;top:0;z-index:30;background:rgba(244,241,235,0.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--hair);}
+  .nav{max-width:920px;margin:0 auto;padding:14px 36px;display:flex;align-items:center;
+    justify-content:space-between;gap:16px;}
+  .brand{display:inline-flex;align-items:center;gap:8px;}
+  .brand svg{height:20px;width:34px;display:block;}
+  .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
+  .nav-links{display:flex;gap:22px;align-items:center;}
+  .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
+  .nav-links a:hover{color:var(--brickDeep);}
+  .nav-cta{background:var(--brick);color:#fff;font-size:13px;font-weight:500;
+    padding:9px 16px;border-radius:2px;text-decoration:none;}
+
+  .hero{padding:56px 0 36px;}
+  .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;
+    background:var(--brickTint);color:var(--brickDeep);margin-bottom:16px;}
+  .hero h1{font-weight:500;font-size:40px;line-height:1.02;letter-spacing:-1.2px;color:var(--ink);}
+  .hero p.sub{font-size:16px;color:var(--inkSoft);margin-top:16px;max-width:600px;}
+
+  section.block{padding:46px 0;border-top:1px solid var(--hair);}
+  .sec-head{margin-bottom:24px;}
+  .sec-head h2{font-weight:500;font-size:28px;letter-spacing:-0.6px;color:var(--ink);margin-top:10px;}
+  .sec-head p{font-size:14px;color:var(--inkMute);max-width:560px;margin-top:8px;}
+
+  /* table */
+  .tbl{width:100%;border-collapse:collapse;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
+  .tbl th,.tbl td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--hair);}
+  .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperDeep);}
+  .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);}
+  .tbl td.pkg .inc{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
+    letter-spacing:0.08em;text-transform:uppercase;color:var(--brickDeep);font-weight:500;margin-top:3px;}
+  .tbl td.num{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--inkSoft);}
+  .tbl tr.flat td{background:var(--paperDeep);}
+  .tbl tr:last-child td{border-bottom:none;}
+  .note{font-size:13px;color:var(--inkMute);margin-top:14px;line-height:1.5;}
+
+  /* package detail cards */
+  .pkgs{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
+    border:1px solid var(--hair);border-radius:2px;}
+  .pkg{background:var(--paper);padding:22px 24px;}
+  .pkg h3{font-weight:500;font-size:17px;color:var(--ink);margin-bottom:6px;}
+  .pkg .rng{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brickDeep);margin-bottom:10px;}
+  .pkg ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .pkg li{font-size:13px;color:var(--inkMute);padding-left:15px;position:relative;line-height:1.4;}
+  .pkg li::before{content:"▸";position:absolute;left:0;color:var(--brick);font-family:'JetBrains Mono',monospace;font-size:11px;}
+  .pkg li.inc{color:var(--inkSoft);}
+
+  /* add-ons */
+  .adds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);
+    border:1px solid var(--hair);border-radius:2px;}
+  .add{background:var(--paper);padding:20px;}
+  .add .nm{font-weight:500;font-size:15px;color:var(--ink);}
+  .add .pr{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--brickDeep);margin:6px 0;}
+  .add p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
+
+  .note-block{background:var(--paperDeep);border:1px solid var(--hair);border-radius:2px;padding:28px;}
+  .note-block .big{font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--ink);
+    letter-spacing:-1px;display:block;margin-bottom:8px;}
+  .note-block p{font-size:14.5px;color:var(--inkSoft);}
+
+  .faq{display:flex;flex-direction:column;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
+  .qa{background:var(--paper);padding:20px 24px;}
+  .qa h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
+  .qa p{font-size:13px;color:var(--inkMute);line-height:1.5;}
+
+  .cta{background:var(--night);color:var(--moon);border-radius:2px;padding:30px;
+    display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+  .cta h3{font-weight:500;font-size:22px;letter-spacing:-0.4px;color:var(--moon);}
+  .cta p{font-size:13px;color:var(--moonSoft);margin-top:6px;}
+  .cta a{background:var(--brick);color:#fff;font-weight:500;font-size:14px;
+    padding:12px 22px;border-radius:2px;text-decoration:none;white-space:nowrap;}
+
+  footer{border-top:1px solid var(--hair);margin-top:46px;}
+  .foot{max-width:920px;margin:0 auto;padding:28px 36px;display:flex;align-items:center;
+    justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .foot .fbrand{display:inline-flex;align-items:center;gap:8px;}
+  .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--inkFaint);max-width:360px;line-height:1.5;}
+  .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
+
+  @media (max-width:760px){
+    .pkgs,.adds{grid-template-columns:1fr;}
+    .hero h1{font-size:32px;}
+    .nav-links a:not(.nav-cta){display:none;}
+  }
+  @media print{.nav-cta,.cta{display:none;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <svg viewBox="0 0 27 16" fill="none" aria-label="Bricks mark">
+        <rect x="1" y="1" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="1" y="9" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="15" y="9" width="11" height="6" rx="1.2" fill="#D2542B"/>
+      </svg>
+      <span class="wordmark">bricks</span>
+    </div>
+    <nav class="nav-links">
+      <a href="bricks-landing.html">Overview</a>
+      <a href="bricks-landing.html#platform">Platform</a>
+      <a href="pricing.html" style="color:var(--brickDeep);">Pricing</a>
+      <a href="book.html" class="nav-cta">Book a shoot</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <span class="badge">Pre-launch · GTA rates</span>
+    <h1>Priced by footprint.</h1>
+    <p class="sub">Per-shoot rates for the Greater Toronto Area. One standard, every time — photography, drone, floor plan, and a cinematic reel. The 3D tour is an add-on. Book direct; the self-serve Booking app is in development.</p>
+  </section>
+</div>
+
+<!-- TABLE -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head">
+      <div><span class="over">Per-shoot rates</span><h2>Four tiers, by footprint.</h2></div>
+    </div>
+    <table class="tbl">
+      <thead>
+        <tr><th style="text-align:left">Package</th><th>Small</th><th>Mid</th><th>Large</th><th>XL</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="pkg">Standard<span class="inc">+ floor plan</span></td><td class="num">$349</td><td class="num">$429</td><td class="num">$519</td><td class="num">$599</td></tr>
+        <tr><td class="pkg">Premium</td><td class="num">$749</td><td class="num">$899</td><td class="num">$1,049</td><td class="num">$1,199</td></tr>
+        <tr><td class="pkg">Luxury<span class="inc">+ twilight</span></td><td class="num">$1,199</td><td class="num">$1,399</td><td class="num">$1,699</td><td class="num">$2,099</td></tr>
+        <tr class="flat"><td class="pkg">Estate<span class="inc">all + extended tour</span></td><td class="num" colspan="4" style="text-align:center">$2,899 flat — all sizes</td></tr>
+      </tbody>
+    </table>
+    <p class="note"><b>Inclusions:</b> floor plan included Standard+; twilight included Luxury. <b>Add-ons</b> — 3D virtual tour +$199, rush delivery, extra reel, additional tour angle: billed at rack, no discount. Prices are per shoot and reflect the GTA market; they are not a discount off another rate.</p>
+  </section>
+</div>
+
+<!-- PACKAGE DETAIL -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head">
+      <div><span class="over">What's in the shoot</span><h2>Every tier ships the core set.</h2></div>
+      <p>HDR photo, licensed drone, floor plan, and a 30–45s cinematic reel are in every package. Tiers scale on footprint and finish.</p>
+    </div>
+    <div class="pkgs">
+      <div class="pkg">
+        <h3>Standard <span class="rng">$349–599</span></h3>
+        <ul>
+          <li class="inc">HDR photography</li>
+          <li class="inc">Licensed aerial drone</li>
+          <li class="inc">Floor plan (included)</li>
+          <li class="inc">30–45s cinematic reel</li>
+          <li>24–48h delivery</li>
+        </ul>
+      </div>
+      <div class="pkg">
+        <h3>Premium <span class="rng">$749–1,199</span></h3>
+        <ul>
+          <li class="inc">Everything in Standard</li>
+          <li class="inc">Larger footprint handling</li>
+          <li>Priority edit queue</li>
+          <li>Best fit for most detached homes</li>
+        </ul>
+      </div>
+      <div class="pkg">
+        <h3>Luxury <span class="rng">$1,199–2,099</span></h3>
+        <ul>
+          <li class="inc">Everything in Premium</li>
+          <li class="inc">Twilight exterior (included)</li>
+          <li>Extended coverage</li>
+          <li>For high-end + large listings</li>
+        </ul>
+      </div>
+      <div class="pkg">
+        <h3>Estate <span class="rng">$2,899 flat</span></h3>
+        <ul>
+          <li class="inc">All of the above</li>
+          <li class="inc">Extended 3D tour</li>
+          <li>Multi-structure coverage</li>
+          <li>For estates + multi-unit</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ADD-ONS -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head">
+      <div><span class="over">Add-ons</span><h2>Optional, billed at rack.</h2></div>
+    </div>
+    <div class="adds">
+      <div class="add"><div class="nm">3D virtual tour</div><div class="pr">+$199</div><p>Interactive, phone-scanned walkthrough. MLS-ready, delivered fast.</p></div>
+      <div class="add"><div class="nm">Rush delivery</div><div class="pr">quote</div><p>Need it faster than 24–48h? Tell us the deadline.</p></div>
+      <div class="add"><div class="nm">Extra reel / angle</div><div class="pr">quote</div><p>Additional cut or tour angle for social, web, or print.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- HONESTY -->
+<div class="wrap">
+  <section class="block">
+    <div class="note-block">
+      <span class="big mono">$600</span>
+      <p>Agents already spend roughly that per listing on media — fragmented across whoever they find, with no visibility into quality, spend, or utilization. Bricks makes that spend consistent: one standard, one shoot, one invoice. Pre-launch, you book direct and we confirm the slot.</p>
+    </div>
+  </section>
+</div>
+
+<!-- FAQ -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head"><div><span class="over">Pricing questions</span><h2>Before you book.</h2></div></div>
+    <div class="faq">
+      <div class="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property's finished area and complexity. Not sure which tier? Pick "advise me" in booking and we'll size it from the address.</p></div>
+      <div class="qa"><h4>Is the 3D tour included?</h4><p>No — it's a +$199 add-on on any tier. Floor plan is included from Standard; twilight is included from Luxury.</p></div>
+      <div class="qa"><h4>Are these the final platform rates?</h4><p>These are the pre-launch direct-booking rates for the GTA. The platform's own rate card may differ when Booking goes live.</p></div>
+      <div class="qa"><h4>Do you shoot outside the GTA?</h4><p>Ask — we'll tell you if it's covered and quote travel if needed.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA -->
+<div class="wrap">
+  <section class="block" style="border-top:none;padding-top:0;">
+    <div class="cta">
+      <div>
+        <h3>Ready to book?</h3>
+        <p>Start the booking flow — pick your shoot, package, and date.</p>
+      </div>
+      <a href="book.html">Start booking →</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="foot">
+    <div class="fbrand">
+      <svg viewBox="0 0 27 16" fill="none" aria-label="Bricks mark" style="height:18px;width:30px;">
+        <rect x="1" y="1" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="1" y="9" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="15" y="9" width="11" height="6" rx="1.2" fill="#D2542B"/>
+      </svg>
+      <span class="wordmark" style="font-size:15px;">bricks</span>
+    </div>
+    <div style="display:flex;gap:18px;align-items:center;">
+      <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
+      <span class="mono" style="font-size:11px;color:var(--inkMute);">416-848-2011</span>
+    </div>
+  </div>
+  <div class="foot" style="border-top:none;padding-top:0;">
+    <span class="dev">Bricks booking + dispatch apps in development. Media service live in the GTA. Tours via mobile 3D capture.</span>
+  </div>
+</footer>
+</body>
+</html>

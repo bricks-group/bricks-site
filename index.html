@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bricks — the operating system for real estate (pre-launch)</title>
+<meta name="description" content="Bricks is the operating system for real estate: from booking to capture to delivery to close. Listing media is live now in the GTA; the platform is in development. Book a shoot." />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F1EB; --paperSoft:#EDE8DF; --paperDeep:#E4DED2;
+    --hair:#1411100F; --hairStrong:#14111020;
+    --ink:#14110E; --inkSoft:#3B332A; --inkMute:#6B6054; --inkFaint:#A39684;
+    --brick:#D2542B; --brickDeep:#A8401F; --brickSoft:#F4D9CC; --brickTint:#FBEFE8;
+    --night:#141210; --moon:#F4F1EB; --moonSoft:#D6CFC2; --moonMute:#8F8678;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'General Sans',system-ui,sans-serif;color:var(--inkSoft);
+    font-size:15px;line-height:1.55;background:var(--paper);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 36px;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .over{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--inkMute);display:block;}
+  a{color:inherit;}
+
+  /* header */
+  header{position:sticky;top:0;z-index:30;background:rgba(244,241,235,0.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--hair);}
+  .nav{max-width:980px;margin:0 auto;padding:14px 36px;display:flex;align-items:center;
+    justify-content:space-between;gap:16px;}
+  .brand{display:inline-flex;align-items:center;gap:8px;}
+  .brand svg{height:20px;width:34px;display:block;}
+  .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
+  .nav-links{display:flex;gap:22px;align-items:center;}
+  .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
+  .nav-links a:hover{color:var(--brickDeep);}
+  .nav-cta{background:var(--brick);color:#fff;font-size:13px;font-weight:500;
+    padding:9px 16px;border-radius:2px;text-decoration:none;}
+  .nav-flag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--inkFaint);border:1px solid var(--hair);
+    padding:4px 8px;border-radius:2px;}
+
+  /* hero */
+  .hero{padding:64px 0 40px;}
+  .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;
+    background:var(--brickTint);color:var(--brickDeep);margin-bottom:18px;}
+  .hero h1{font-weight:500;font-size:44px;line-height:1.0;letter-spacing:-1.4px;
+    color:var(--ink);max-width:760px;}
+  .hero p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:620px;}
+  .cta-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+  .btn{font-weight:500;font-size:14px;border-radius:2px;padding:13px 22px;
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:none;cursor:pointer;}
+  .btn-brick{background:var(--brick);color:#fff;}
+  .btn-sec{background:transparent;color:var(--ink);border:1px solid var(--hairStrong);}
+
+  /* sections */
+  section.block{padding:52px 0;border-top:1px solid var(--hair);}
+  .sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+    gap:18px;margin-bottom:26px;}
+  .sec-head h2{font-weight:500;font-size:30px;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin-top:10px;}
+  .sec-head p{font-size:14px;color:var(--inkMute);max-width:420px;}
+
+  /* four-move flow */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
+    border:1px solid var(--hair);border-radius:2px;}
+  .step{background:var(--paper);padding:22px;}
+  .step .num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
+    letter-spacing:0.16em;color:var(--inkFaint);}
+  .step h4{font-weight:500;font-size:16px;color:var(--ink);margin:8px 0 5px;}
+  .step p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
+
+  /* flip cards (mirrors live site .modules/.mod) */
+  .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);
+    border:1px solid var(--hair);border-radius:2px;}
+  .mod{background:transparent;min-height:260px;perspective:1400px;outline:none;display:block;}
+  .mod-inner{position:relative;width:100%;height:100%;min-height:260px;
+    transition:transform .65s cubic-bezier(.22,.61,.36,1);transform-style:preserve-3d;}
+  .mod:hover .mod-inner,.mod:focus-visible .mod-inner{transform:rotateY(180deg);}
+  .mod-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    padding:26px 24px;display:flex;flex-direction:column;gap:10px;}
+  .mod-face.front{background:var(--paper);}
+  .mod-face.back{background:var(--night);color:var(--moon);transform:rotateY(180deg);}
+  .mod-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);}
+  .mod-face h4{font-size:19px;font-weight:500;letter-spacing:-0.3px;margin:auto 0 0;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--ink);}
+  .mod-face.back h4{color:var(--moon);margin:6px 0 0;}
+  .mod-face h4 .tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);padding:4px 8px;border-radius:2px;}
+  .mod-face p{font-size:13.5px;color:var(--inkMute);line-height:1.5;margin:0;}
+  .mod-face.back .over{color:var(--moonMute);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;}
+  .mod-face.back p{color:var(--moonSoft);}
+  .mod-face.back .lnk{margin-top:auto;font-size:13.5px;font-weight:500;color:var(--brickSoft);}
+
+  /* audiences */
+  .surf{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);
+    border:1px solid var(--hair);border-radius:2px;}
+  .surf-col{background:var(--paper);padding:26px;}
+  .surf-col h3{font-weight:500;font-size:18px;color:var(--ink);margin-bottom:12px;}
+  .surf-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .surf-col li{font-size:13px;color:var(--inkMute);line-height:1.45;padding-left:16px;position:relative;}
+  .surf-col li::before{content:"▸";position:absolute;left:0;color:var(--brick);font-family:'JetBrains Mono',monospace;font-size:11px;}
+
+  /* split live/coming */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);
+    border:1px solid var(--hair);border-radius:2px;}
+  .split .col{background:var(--paper);padding:26px;}
+  .split h3{font-weight:500;font-size:17px;color:var(--ink);margin-bottom:12px;}
+  .split ul{list-style:none;}
+  .split li{font-size:13px;color:var(--inkMute);padding:7px 0;border-bottom:1px solid var(--hair);
+    display:flex;gap:8px;align-items:baseline;}
+  .split li:last-child{border-bottom:none;}
+  .split .dot{color:var(--brick);font-family:'JetBrains Mono',monospace;font-size:11px;}
+
+  /* honesty block */
+  .note{background:var(--paperDeep);border:1px solid var(--hair);border-radius:2px;padding:28px;}
+  .note .big{font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--ink);
+    letter-spacing:-1px;display:block;margin-bottom:8px;}
+  .note p{font-size:14.5px;color:var(--inkSoft);}
+
+  /* booking */
+  .book{background:var(--night);color:var(--moon);border-radius:2px;padding:34px;}
+  .book .over{color:var(--moonMute);}
+  .book h2{font-weight:500;font-size:28px;letter-spacing:-0.6px;color:var(--moon);margin-top:10px;}
+  .book p.lead{font-size:14px;color:var(--moonSoft);margin-top:10px;max-width:520px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1 / -1;}
+  .field label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--moonMute);}
+  .field input,.field select,.field textarea{font-family:'General Sans',sans-serif;font-size:14px;
+    background:var(--nightSoft,#1C1A17);color:var(--moon);border:1px solid #F4F1EB26;border-radius:2px;
+    padding:11px 12px;outline:none;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--brick);}
+  .field textarea{resize:vertical;min-height:64px;}
+  .book .submit{margin-top:18px;background:var(--brick);color:#fff;font-weight:500;font-size:14px;
+    border:none;border-radius:2px;padding:13px 24px;cursor:pointer;}
+  .book .fine{font-size:12px;color:var(--moonMute);margin-top:14px;}
+  .book .one-pager-link{display:inline-block;margin-top:14px;color:var(--brickSoft);
+    font-family:'JetBrains Mono',monospace;font-size:12px;text-decoration:none;}
+
+  /* faq */
+  .faq{display:flex;flex-direction:column;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
+  .qa{background:var(--paper);padding:22px 26px;}
+  .qa h4{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:8px;}
+  .qa p{font-size:13.5px;color:var(--inkMute);line-height:1.5;}
+
+  /* footer */
+  footer{border-top:1px solid var(--hair);margin-top:52px;}
+  .foot{max-width:980px;margin:0 auto;padding:30px 36px;display:flex;align-items:center;
+    justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .foot .fbrand{display:inline-flex;align-items:center;gap:8px;}
+  .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--inkFaint);max-width:360px;line-height:1.5;}
+  .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
+
+  @media (max-width:860px){
+    .flow,.modules,.surf{grid-template-columns:1fr 1fr;}
+    .split{grid-template-columns:1fr;}
+    .form-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:34px;}
+    .nav-links a:not(.nav-cta){display:none;}
+  }
+  @media (hover:none){
+    .mod-inner,.mod:hover .mod-inner{transform:none;}
+    .mod-face.back{position:relative;inset:auto;transform:none;display:none;}
+    .mod{min-height:0;}.mod-inner{min-height:0;}.mod-face.front{position:relative;}
+  }
+  @media print{.btn,.nav-cta,.book{display:none;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <svg viewBox="0 0 27 16" fill="none" aria-label="Bricks mark">
+        <rect x="1" y="1" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="1" y="9" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="15" y="9" width="11" height="6" rx="1.2" fill="#D2542B"/>
+      </svg>
+      <span class="wordmark">bricks</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#media">Media</a>
+      <a href="#platform">Platform</a>
+      <a href="#roles">Who it's for</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="book.html" class="nav-cta">Book a shoot</a>
+      <span class="nav-flag">Pre-launch</span>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="wrap">
+  <section class="hero">
+    <span class="badge">Pre-launch · platform in development</span>
+    <h1>From booking to capture<br/>to delivery to close.</h1>
+    <p class="sub">Bricks is the operating system for real estate — one platform that runs listing media end to end. The media service is live in the GTA today. The full platform is being built.</p>
+    <div class="cta-row">
+      <a class="btn btn-brick" href="book.html">Book listing media</a>
+      <a class="btn btn-sec" href="pricing.html">View pricing</a>
+      <a class="btn btn-sec" href="mailto:booking@brxs.ca?subject=Bricks%20launch%20updates">Get launch updates</a>
+    </div>
+  </section>
+</div>
+
+<!-- FOUR MOVES -->
+<div class="wrap">
+  <section class="block" id="platform">
+    <div class="sec-head">
+      <div>
+        <span class="over">One system · listing to close</span>
+        <h2>One shoot. The whole platform.</h2>
+      </div>
+      <p>The media pipeline is the product today. The platform around it is what we're building — booking, dispatch, delivery, and the brokerage console.</p>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="num">01 / BOOK</div><h4>Booking</h4><p>Agents book media in seconds from their phone. No vendor hunting, no negotiation.</p></div>
+      <div class="step"><div class="num">02 / CAPTURE</div><h4>Dispatch</h4><p>A vetted photographer network receives and fulfills jobs, quality-tier matched to the shoot.</p></div>
+      <div class="step"><div class="num">03 / DELIVER</div><h4>Delivery</h4><p>Photos, reels, floor plans, and 3D tours land in one hosted portal — branded, MLS-ready.</p></div>
+      <div class="step"><div class="num">04 / CLOSE</div><h4>Brokerage OS</h4><p>Allocations, utilization, and one invoice across every agent. Visibility the industry lacks.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- CAPABILITY FLIP CARDS -->
+<div class="wrap">
+  <section class="block" id="media">
+    <div class="sec-head">
+      <div>
+        <span class="over">The standard</span>
+        <h2>Consistent. Every listing.</h2>
+      </div>
+      <p>Hover a card for the detail. The ones marked live are available to book now in the GTA.</p>
+    </div>
+    <div class="modules">
+      <!-- 1 -->
+      <div class="mod" tabindex="0">
+        <div class="mod-inner">
+          <div class="mod-face front">
+            <span class="mod-num">01</span>
+            <h4>Photo · drone · reel <span class="tag">Live · GTA</span></h4>
+            <p>HDR architecture, licensed aerial, and a cinematic 30–45s film per shoot.</p>
+          </div>
+          <div class="mod-face back">
+            <span class="over">01 · Photo · drone · reel</span>
+            <h4>What you get</h4>
+            <p>Architectural HDR interiors and exteriors, CAS-licensed drone coverage of the lot and surroundings, and one edited 30–45s cinematic reel cut for social and MLS. Delivered branded and MLS-ready in 24–48h.</p>
+            <span class="lnk">Start booking → book.html</span>
+          </div>
+        </div>
+      </div>
+      <!-- 2 -->
+      <div class="mod" tabindex="0">
+        <div class="mod-inner">
+          <div class="mod-face front">
+            <span class="mod-num">02</span>
+            <h4>Floor plans <span class="tag">Live · GTA</span></h4>
+            <p>Branded 2D layouts with room dimensions and flow — included from Standard.</p>
+          </div>
+          <div class="mod-face back">
+            <span class="over">02 · Floor plans</span>
+            <h4>What you get</h4>
+            <p>Measured 2D floor plans with room labels and dimensions, rendered in your brand. Included on every Standard+ shoot — no separate vendor, no separate invoice.</p>
+            <span class="lnk">See pricing → pricing.html</span>
+          </div>
+        </div>
+      </div>
+      <!-- 3 -->
+      <div class="mod" tabindex="0">
+        <div class="mod-inner">
+          <div class="mod-face front">
+            <span class="mod-num">03</span>
+            <h4>3D walkthrough <span class="tag">Add-on · Live</span></h4>
+            <p>Interactive, phone-scanned virtual tour. MLS-ready, delivered fast.</p>
+          </div>
+          <div class="mod-face back">
+            <span class="over">03 · 3D walkthrough</span>
+            <h4>What you get</h4>
+            <p>An interactive 3D tour buyers can walk through on any device — scanned from a phone, MLS-ready, delivered fast. Available as a +$199 add-on on any shoot.</p>
+            <span class="lnk">Add to a shoot → book.html</span>
+          </div>
+        </div>
+      </div>
+      <!-- 4 -->
+      <div class="mod" tabindex="0">
+        <div class="mod-inner">
+          <div class="mod-face front">
+            <span class="mod-num">04</span>
+            <h4>24–48h delivery <span class="tag">Live · GTA</span></h4>
+            <p>Edited and in your inbox before your open house. No chasing vendors.</p>
+          </div>
+          <div class="mod-face back">
+            <span class="over">04 · 24–48h delivery</span>
+            <h4>Why it matters</h4>
+            <p>Speed is the product. Edited media lands in your inbox in 24–48h so you're live before your open house. One point of contact, no status-chasing, no "where are my photos."</p>
+            <span class="lnk">Book → book.html</span>
+          </div>
+        </div>
+      </div>
+      <!-- 5 -->
+      <div class="mod" tabindex="0">
+        <div class="mod-inner">
+          <div class="mod-face front">
+            <span class="mod-num">05</span>
+            <h4>Dispatch pool <span class="tag">In development</span></h4>
+            <p>A photographer network that receives, shoots, and fulfills — quality-controlled.</p>
+          </div>
+          <div class="mod-face back">
+            <span class="over">05 · Dispatch pool</span>
+            <h4>What's coming</h4>
+            <p>Today shoots are run direct. The platform adds a vetted photographer network that receives jobs through Dispatch, matched to quality tier and fulfilled under one standard — so coverage scales without losing consistency.</p>
+            <span class="lnk">Updates → booking@brxs.ca</span>
+          </div>
+        </div>
+      </div>
+      <!-- 6 -->
+      <div class="mod" tabindex="0">
+        <div class="mod-inner">
+          <div class="mod-face front">
+            <span class="mod-num">06</span>
+            <h4>Brokerage OS <span class="tag">In development</span></h4>
+            <p>Per-agent allocation, utilization reporting, consolidated invoicing.</p>
+          </div>
+          <div class="mod-face back">
+            <span class="over">06 · Brokerage OS</span>
+            <h4>What's coming</h4>
+            <p>The console brokers actually need: allocate media per agent, see utilization across the office, and get one invoice instead of a stack. Turns fragmented per-shoot spend into something a brokerage can run on.</p>
+            <span class="lnk">Updates → booking@brxs.ca</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- AUDIENCES -->
+<div class="wrap">
+  <section class="block" id="roles">
+    <div class="sec-head">
+      <div>
+        <span class="over">One platform · three roles</span>
+        <h2>Built for everyone on the deal.</h2>
+      </div>
+      <p>Different seats, same source of truth — from the agent in the field to the broker running the desk.</p>
+    </div>
+    <div class="surf">
+      <div class="surf-col">
+        <h3>Agents</h3>
+        <ul>
+          <li>Book media in seconds from your phone</li>
+          <li>One standard across every listing</li>
+          <li>Branded, MLS-ready delivery in 24–48h</li>
+          <li>3D tours and reels without a second vendor</li>
+        </ul>
+      </div>
+      <div class="surf-col">
+        <h3>Brokerages</h3>
+        <ul>
+          <li>Allocate media per agent, see it used</li>
+          <li>Utilization and spend in one place</li>
+          <li>One invoice, not a stack of receipts</li>
+          <li>Consistency agents can't deliver alone</li>
+        </ul>
+      </div>
+      <div class="surf-col">
+        <h3>Photographers</h3>
+        <ul>
+          <li>Receive jobs through Dispatch, not cold DMs</li>
+          <li>Quality-tier matched to the shoot</li>
+          <li>One standard, clear expectations</li>
+          <li>Network that scales with demand</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- LIVE VS DEV -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head">
+      <div>
+        <span class="over">Honest about the build</span>
+        <h2>What's live. What's next.</h2>
+      </div>
+    </div>
+    <div class="split">
+      <div class="col">
+        <h3>Live today</h3>
+        <ul>
+          <li><span class="dot">▸</span> Done-for-you listing media in the GTA</li>
+          <li><span class="dot">▸</span> HDR, drone, floor plan, cinematic reel</li>
+          <li><span class="dot">▸</span> 3D virtual tour (add-on)</li>
+          <li><span class="dot">▸</span> 24–48h delivery, direct booking</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>In development</h3>
+        <ul>
+          <li><span class="dot">▸</span> Self-serve Booking app (agent mobile)</li>
+          <li><span class="dot">▸</span> Dispatch network + photographer console</li>
+          <li><span class="dot">▸</span> Brokerage OS: allocations, reporting, invoicing</li>
+          <li><span class="dot">▸</span> In-house 3D capture (Gaussian-splat tours)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- HONESTY BLOCK -->
+<div class="wrap">
+  <section class="block">
+    <div class="note">
+      <span class="big mono">$600</span>
+      <p>Agents already spend roughly that per listing on media — fragmented across whoever they find, with no visibility into quality, spend, or utilization. Bricks makes that spend consistent and accountable: one standard, one portal, one invoice. The platform turns fragmented per-shoot chaos into infrastructure a brokerage can actually run on.</p>
+    </div>
+  </section>
+</div>
+
+<!-- BOOKING -->
+<div class="wrap">
+  <section class="block" id="book">
+    <div class="cta">
+      <div>
+        <span class="over">Book a shoot</span>
+        <h2 style="color:var(--moon);margin-top:8px;">Listings don't wait. Neither should booking.</h2>
+        <p style="color:var(--moonSoft);font-size:14px;margin-top:10px;max-width:480px;">Four steps — pick your shoot, package, and date. We confirm the slot and send pricing by footprint. The self-serve Booking app replaces this in development.</p>
+        <a class="btn btn-brick" href="book.html" style="margin-top:18px;display:inline-flex;">Start booking →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FAQ -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head">
+      <div>
+        <span class="over">Questions</span>
+        <h2>Before you book.</h2>
+      </div>
+    </div>
+    <div class="faq">
+      <div class="qa"><h4>Is the platform live?</h4><p>No — the media service is live in the GTA today; the Booking app, Dispatch network, and Brokerage OS are in development. You can book media now via the form above or email.</p></div>
+      <div class="qa"><h4>How do I book a shoot?</h4><p>Use the booking form (it emails us pre-filled) or write booking@brxs.ca. We confirm the slot and send the one-pager with exact pricing by footprint.</p></div>
+      <div class="qa"><h4>What's included?</h4><p>HDR photo, licensed drone, floor plan, and a cinematic reel per shoot. 3D virtual tour is a +$199 add-on. Full tiers are on the one-pager.</p></div>
+      <div class="qa"><h4>Where do you shoot?</h4><p>The Greater Toronto Area. Outside GTA, ask — we'll tell you if it's covered.</p></div>
+      <div class="qa"><h4>When do I get my media?</h4><p>Edited and MLS-ready in 24–48 hours.</p></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="foot">
+    <div class="fbrand">
+      <svg viewBox="0 0 27 16" fill="none" aria-label="Bricks mark" style="height:18px;width:30px;">
+        <rect x="1" y="1" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="1" y="9" width="12" height="6" rx="1.2" fill="#D2542B"/>
+        <rect x="15" y="9" width="11" height="6" rx="1.2" fill="#D2542B"/>
+      </svg>
+      <span class="wordmark" style="font-size:15px;">bricks</span>
+    </div>
+    <div style="display:flex;gap:18px;align-items:center;">
+      <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
+      <span class="mono" style="font-size:11px;color:var(--inkMute);">416-848-2011</span>
+    </div>
+  </div>
+  <div class="foot" style="border-top:none;padding-top:0;">
+    <span class="dev">Bricks booking + dispatch apps in development. Media service live in the GTA. Tours via mobile 3D capture.</span>
+  </div>
+</footer>
+
+<script>
+  function book(e){
+    e.preventDefault();
+    var f = e.target;
+    var name=(f.name.value||'').trim(), email=(f.email.value||'').trim(), phone=(f.phone.value||'').trim(),
+        addr=(f.addr.value||'').trim(), type=f.type.value, date=(f.date.value||'').trim(),
+        pkg=f.pkg.value, tour=f.tour.value, notes=(f.notes.value||'').trim(), brokerage=(f.brokerage.value||'').trim();
+    var subject='Bricks booking — '+(addr||name);
+    var body='New shoot request (pre-launch — direct booking)\n\n'
+      +'Name: '+name+'\n'+(brokerage?'Brokerage: '+brokerage+'\n':'')
+      +'Email: '+email+'\n'+(phone?'Phone: '+phone+'\n':'')
+      +'Property: '+addr+'\nType: '+type+'\nPreferred date: '+date+'\n'
+      +'Package: '+pkg+'\nTour: '+tour+'\n'+(notes?'Notes: '+notes+'\n':'')
+      +'\n— sent from the bricks landing page';
+    window.location.href='mailto:booking@brxs.ca?subject='
+      +encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  }
+</script>
+</body>
+</html>

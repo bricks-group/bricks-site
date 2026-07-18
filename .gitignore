@@ -1,0 +1,12 @@
+# macOS junk
+._*
+.DS_Store
+
+# node / build
+node_modules/
+.next/
+dist/
+build/
+*.log
+.env
+.env.*
