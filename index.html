@@ -63,6 +63,27 @@
     color:var(--ink);border:1px solid var(--hairStrong);border-radius:2px;padding:12px 14px;outline:none;min-width:200px;}
   .newsletter input:focus{border-color:var(--brick);}
   .nl-msg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brickDeep);}
+  /* newsletter popup */
+  .nl-pop{position:fixed;right:20px;bottom:20px;width:330px;max-width:calc(100vw - 40px);
+    background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;
+    box-shadow:0 0 0 1px var(--hair);padding:22px 22px 20px;z-index:60;
+    transform:translateY(140%);opacity:0;transition:transform .45s ease,opacity .45s ease;
+    font-family:'General Sans',sans-serif;}
+  .nl-pop.show{transform:translateY(0);opacity:1;}
+  .nl-pop .x{position:absolute;top:10px;right:12px;background:none;border:none;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--inkMute);line-height:1;}
+  .nl-pop .x:hover{color:var(--brickDeep);}
+  .nl-pop h4{font-weight:500;font-size:18px;letter-spacing:-0.4px;color:var(--ink);margin:0 0 6px;}
+  .nl-pop p{font-size:13px;color:var(--inkSoft);line-height:1.5;margin:0 0 14px;}
+  .nl-pop form{display:flex;flex-direction:column;gap:10px;}
+  .nl-pop input{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paper);
+    color:var(--ink);border:1px solid var(--hairStrong);border-radius:2px;padding:12px 14px;outline:none;}
+  .nl-pop input:focus{border-color:var(--brick);}
+  .nl-pop .consent{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--inkFaint);
+    line-height:1.5;margin:2px 0 0;}
+  .nl-pop .btn-brick{justify-content:center;}
+  .nl-pop .nlmsg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brickDeep);min-height:14px;}
+  @media (prefers-reduced-motion: reduce){ .nl-pop{transition:none;} }
   .btn{font-weight:500;font-size:14px;border-radius:2px;padding:13px 22px;
     display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:none;cursor:pointer;}
   .btn-brick{background:var(--brick);color:#fff;}
@@ -515,6 +536,40 @@
     return false;
   }
 
+  // ---- Newsletter popup ----
+  function nlPopSubmit(e){
+    e.preventDefault();
+    var email = document.getElementById('nlPopEmail').value.trim();
+    var msg = document.getElementById('nlPopMsg');
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ msg.textContent='Enter a valid email.'; return false; }
+    msg.textContent='Subscribing…';
+    fetch(SUPABASE+'newsletter-signup', { method:'POST', headers:{'Content-Type':'application/json','apikey':ANON},
+      body: JSON.stringify({ email: email, source: 'popup' }) })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
+      .then(function(res){
+        if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
+        msg.textContent='✓ You're on the list.';
+        document.getElementById('nlPopEmail').value='';
+        try{ localStorage.setItem('nl_seen','1'); }catch(e){}
+        setTimeout(function(){ document.getElementById('nlPop').classList.remove('show'); }, 1500);
+      })
+      .catch(function(){ msg.textContent='Network error — try again.'; });
+    return false;
+  }
+  (function(){
+    var pop = document.getElementById('nlPop');
+    if(!pop) return;
+    var seen = false; try{ seen = localStorage.getItem('nl_seen')==='1'; }catch(e){}
+    function show(){ if(seen) return; pop.classList.add('show'); }
+    function hide(){ pop.classList.remove('show'); try{ localStorage.setItem('nl_seen','1'); }catch(e){} }
+    document.getElementById('nlPopX').addEventListener('click', hide);
+    if(!seen){ setTimeout(show, 8000); }
+    // exit intent (desktop)
+    document.addEventListener('mouseout', function(e){
+      if(e.clientY < 10 && !seen){ show(); }
+    });
+  })();
+
   function book(e){
     e.preventDefault();
     var f = e.target;
@@ -532,5 +587,18 @@
       +encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   }
 </script>
+
+<!-- Newsletter popup -->
+<div class="nl-pop" id="nlPop" role="dialog" aria-label="Listing media updates">
+  <button class="x" id="nlPopX" aria-label="Dismiss">×</button>
+  <h4>GTA listing media — updates</h4>
+  <p>Photo, drone, and floor plan from $199. Get new packages, pre-launch rates, and booking slots in your inbox. No spam.</p>
+  <form id="nlPopForm" onsubmit="return nlPopSubmit(event)">
+    <input type="email" id="nlPopEmail" placeholder="you@brokerage.com" aria-label="Email" required />
+    <button type="submit" class="btn btn-brick">Get updates</button>
+    <div class="nlmsg" id="nlPopMsg"></div>
+    <div class="consent">By subscribing you agree to receive listing-media emails. Unsubscribe anytime. CASL-compliant.</div>
+  </form>
+</div>
 </body>
 </html>
