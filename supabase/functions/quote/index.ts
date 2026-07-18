@@ -33,9 +33,26 @@ const BASE_RATE: Record<string, [number, number, number, number]> = {
   'Premium':  [749, 899, 1049, 1199],
   'Luxury':   [1199, 1399, 1699, 2099],
   'Estate':   [2899, 2899, 2899, 2899],
-  'Advise':   [149, 149, 149, 149], // consult floor; final quoted after
+  // NOTE: 'Advise' is NOT a pricable package. It's a recommendation mode handled
+  // below — it maps to a real package based on sqft/type and quotes THAT.
 };
 const ADDON = { tour: 199, twilight: 149, extended3d: 249 };
+
+// Maps a sqft band + property type to the package we'd recommend.
+function recommendPackage(sqft: number, propertyType: string): string {
+  const b = band(sqft);
+  // Estate-level footprint (5000+ sqft) -> Estate
+  if (b >= 3) return 'Estate';
+  // Commercial / multiplex -> at least Premium
+  if (['Commercial', 'Multiplex', 'Estate'].includes(propertyType)) return b >= 2 ? 'Luxury' : 'Premium';
+  // Condos: small -> Standard, larger -> Premium
+  if (propertyType === 'Condo') return b >= 1 ? 'Premium' : 'Standard';
+  // Default residential by footprint band
+  if (b === 0) return 'Standard';
+  if (b === 1) return 'Premium';
+  if (b === 2) return 'Luxury';
+  return 'Estate';
+}
 
 function bad(msg: string, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: msg }), {
@@ -149,6 +166,7 @@ Deno.serve(async (req: Request) => {
 
   if (!address) return bad('Address is required');
   const pkgKey = ['Standard', 'Premium', 'Luxury', 'Estate', 'Advise'].find((k) => pkg.startsWith(k)) || 'Standard';
+  const isAdvise = pkgKey === 'Advise';
 
   // 1) geocode
   const geo = await geocode(address);
@@ -183,10 +201,16 @@ Deno.serve(async (req: Request) => {
   }
 
   // 3) base rate by tier (sqft band, nudged up by property type so OSM under-estimates don't under-price)
-  const rates = BASE_RATE[pkgKey] ?? BASE_RATE['Standard'];
+  //    In 'Advise' mode, recommend a real package from sqft + property type (no invented fee).
   const pt = (body.property_type || '').toString().trim();
-  const tb = typeBand[pt] ?? 1;
-  const finalBand = Math.max(band(sqft), tb);
+  const finalBand = Math.max(band(sqft), typeBand[pt] ?? 1);
+  let effectivePkg = pkgKey;
+  let recommended = false;
+  if (isAdvise) {
+    effectivePkg = recommendPackage(sqft, pt);
+    recommended = true;
+  }
+  const rates = BASE_RATE[effectivePkg] ?? BASE_RATE['Standard'];
   const base = rates[finalBand];
 
   // 4) travel
@@ -213,7 +237,9 @@ Deno.serve(async (req: Request) => {
       lat: geo.lat, lon: geo.lon,
       distance_km: Math.round(dist * 10) / 10,
       sqft, sqft_source, sqft_estimated,
-      package: pkgKey,
+      package: effectivePkg,
+      recommended: recommended,
+      recommended_package: recommended ? effectivePkg : null,
       base_rate: base,
       travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel,
       addons, addons_total: addonsTotal,

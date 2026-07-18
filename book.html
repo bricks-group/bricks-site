@@ -108,6 +108,9 @@
   .quote .qv{color:var(--ink);text-align:right;}
   .quote .qnote{font-size:11.5px;color:var(--brickDeep);margin-top:12px;font-family:'JetBrains Mono',monospace;line-height:1.5;
     border-left:2px solid var(--brick);padding-left:10px;}
+  .quote .qrec{font-size:13px;color:var(--ink);background:var(--brickTint);border:1px solid var(--brickSoft);
+    border-radius:2px;padding:11px 13px;margin-bottom:14px;line-height:1.45;}
+  .quote .qrec b{color:var(--brickDeep);}
   .sqft-edit{display:flex;align-items:center;gap:8px;margin:12px 0 2px;}
   .sqft-edit input{width:110px;padding:7px 9px;font-size:13px;}
   .sqft-edit button{font-size:12px;padding:7px 12px;border:1px solid var(--hairStrong);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
@@ -398,6 +401,9 @@
   }
 
   function renderQuote(box, q, editable){
+    var recBanner = q.recommended
+      ? '<div class="qrec">We sized this to <b>'+q.package+'</b> from the address. Not right? Pick a different package above.</div>'
+      : '';
     var head = '<div class="qhead"><div class="qhead-l">Your tailored quote</div>'
       + '<div class="qhead-t">$'+q.total.toFixed(2)+' <span>CAD · incl. HST</span></div></div>';
     var meta = '<div class="qmeta">'+(q.sqft?q.sqft.toLocaleString()+' sqft':'sqft n/a')
@@ -416,7 +422,7 @@
     }).join('');
     var edit = editable ? '<div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" value="'+(q.sqft||'')+'" /><button onclick="requote()">Re-quote</button></div>' : '';
     var note = q.sqft_estimated ? '<div class="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>' : '';
-    box.innerHTML = head + meta + '<div class="qlines">'+body+'</div>' + edit + note;
+    box.innerHTML = recBanner + head + meta + '<div class="qlines">'+body+'</div>' + edit + note;
   }
   function requote(){ var v = document.getElementById('sqftInput').value; fetchQuote(v ? parseInt(v) : null); }
 
@@ -425,7 +431,7 @@
     var rows = [
       ['Agent', v('f_name')], ['Brokerage', v('f_brokerage')], ['Email', v('f_email')], ['Phone', v('f_phone')],
       ['Property', v('f_addr')], ['Type', document.getElementById('f_type').value || '—'],
-      ['Package', data.pkg || '—'],
+      ['Package', (data.quote && data.quote.package) ? data.quote.package + (data.quote.recommended ? ' (recommended)' : '') : (data.pkg || '—')],
       ['3D tour', document.getElementById('f_tour').checked ? 'Yes' : 'No'],
       ['Twilight', document.getElementById('f_twilight').checked ? 'Yes' : 'No'],
       ['Extended 3D', document.getElementById('f_ext3d').checked ? 'Yes' : 'No'],
@@ -451,7 +457,7 @@
       phone: document.getElementById('f_phone').value.trim() || null,
       property_address: data.selectedAddr || document.getElementById('f_addr').value.trim(),
       property_type: document.getElementById('f_type').value,
-      package_interest: data.pkg,
+      package_interest: data.quote && data.quote.package ? data.quote.package : data.pkg,
       preferred_date: document.getElementById('f_date').value,
       preferred_window: document.getElementById('f_window').value,
       tour_addon: document.getElementById('f_tour').checked,
