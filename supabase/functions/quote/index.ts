@@ -1,12 +1,13 @@
 // Supabase Edge Function: quote
 // Dynamic pricing engine for Bricks listing-media booking.
 // Flow: address -> Nominatim geocode (lat/lng, travel distance) ->
-// property-type default sqft (agent confirms in wizard) -> footprint tier
-// -> base rate -> travel fee (haversine from BASE, FREE_KM free, $/km after)
+// FREE sqft guess (OSM building footprint at the coord, clamped to the
+// property-type range; agent confirms in wizard) -> footprint tier ->
+// base rate -> travel fee (haversine from BASE, FREE_KM free, $/km after)
 // -> add-ons (3D tour +$199, twilight, extended 3D) -> +13% HST = total.
-// No external sqft API is used (CleverTech free tier is unusable for sqft;
-// OSM geometry is unreliable) — the agent's confirmed sqft is the source of
-// truth, with a typed default as the starting estimate.
+// No paid sqft API: CleverTech's free tier is unusable for sqft and its
+// monthly limit is too small to call per-quote; GeoWarehouse (~$100/mo) is
+// the paid upgrade path. The agent's confirmed sqft overrides the guess.
 // Returns an itemized quote so the wizard can show "data speaks for itself".
 //
 // Deploy:  supabase functions deploy quote
@@ -94,9 +95,40 @@ async function geocode(address: string): Promise<{ lat: number; lon: number; dis
   return null;
 }
 
-// No external sqft source: CleverTech's free tier returns no living-area
-// field and ignores search; OSM footprint geometry is slow/unreliable. We
-// use a property-type default the agent confirms in the wizard.
+// No paid sqft source (CleverTech free tier is unusable for sqft; GeoWarehouse
+// is ~$100/mo). For a FREE guess we use the OSM building footprint at the
+// geocoded coord: a single fast Overpass call. Footprint over-estimates living
+// area (includes garage/porch, and storeys are mostly untagged), so we treat it
+// as a ceiling and blend it with the property-type default. Agent confirms.
+async function osmFootprintSqft(lat: number, lon: number): Promise<number | null> {
+  const d = 0.00045; // ~45m box around the address
+  const q = `[out:json];way[building](${lat - d},${lon - d},${lat + d},${lon + d});out geom 1;`;
+  try {
+    const r = await fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST', body: new URLSearchParams({ data: q }).toString(),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'BricksPreLaunch/1.0' },
+    });
+    const j = await r.json();
+    // pick the largest nearby footprint (the building the address sits on)
+    let best = 0;
+    for (const e of j.elements ?? []) {
+      const g = e.geometry;
+      if (!g || g.length < 3) continue;
+      const latr = (g[0].lat * Math.PI) / 180;
+      const mLat = 111320, mLon = 111320 * Math.cos(latr);
+      const pts = g.map((p: any) => [p.lon * mLon, p.lat * mLat]);
+      const n = pts.length; let a = 0;
+      for (let i = 0; i < n; i++) { const [x1, y1] = pts[i], [x2, y2] = pts[(i + 1) % n]; a += x1 * y2 - x2 * y1; }
+      const area_m2 = Math.abs(a / 2);
+      best = Math.max(best, area_m2 * 10.7639);
+    }
+    // living area ~ footprint * 0.55 (garage/porch/multi-unit fudge); sane range
+    const living = Math.round(best * 0.55);
+    if (living >= 500 && living <= 20000) return living;
+    return null;
+  } catch { return null; }
+}
+
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -120,23 +152,26 @@ Deno.serve(async (req: Request) => {
   const geo = await geocode(address);
   if (!geo) return bad('Could not geocode address', 422);
 
-  // 2) sqft: agent manual override wins. Otherwise we use a realistic
-  //    default by property type — there is no free, reliable GTA sqft API
-  //    (CleverTech returns no living-area field + ignores search; OSM
-  //    footprint geometry times out / over-estimates). The agent confirms
-  //    or corrects sqft in the wizard, so a typed default is the honest base.
+  // 2) sqft: agent manual override wins. Otherwise take a FREE guess from the
+  //    OSM building footprint at the geocoded coord, clamped to a plausible
+  //    range around the property-type default (footprint over-estimates living
+  //    area, so we treat it as a ceiling, not the value). Agent confirms.
+  const DEFAULT_SQFT: Record<string, number> = {
+    'Condo': 850, 'Semi / Town': 1600, 'Detached': 2600,
+    'Multiplex': 3200, 'Commercial': 4000, 'Estate': 6000,
+  };
   let sqft: number | null = manualSqft;
   let sqft_source = manualSqft ? 'agent' : 'none';
   let sqft_estimated = false;
   if (!sqft) {
     const pt = (body.property_type || '').toString().trim();
-    const DEFAULT_SQFT: Record<string, number> = {
-      'Condo': 850, 'Semi / Town': 1600, 'Detached': 2600,
-      'Multiplex': 3200, 'Commercial': 4000, 'Estate': 6000,
-    };
-    sqft = DEFAULT_SQFT[pt] ?? 2200;
-    sqft_source = 'type-default';
-    sqft_estimated = true;
+    const def = DEFAULT_SQFT[pt] ?? 2200;
+    const fp = await osmFootprintSqft(geo.lat, geo.lon);
+    if (fp && fp >= def * 0.5 && fp <= def * 1.6) {
+      sqft = fp; sqft_source = 'osm-footprint'; sqft_estimated = true;
+    } else {
+      sqft = def; sqft_source = 'type-default'; sqft_estimated = true;
+    }
   }
   // property-type band nudges the tier when we lack a real sqft
   const typeBand: Record<string, number> = {
