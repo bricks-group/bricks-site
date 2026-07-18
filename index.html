@@ -32,8 +32,13 @@
     backdrop-filter:blur(8px);border-bottom:1px solid var(--hair);}
   .nav{max-width:980px;margin:0 auto;padding:14px 36px;display:flex;align-items:center;
     justify-content:space-between;gap:16px;}
-  .brand{display:inline-flex;align-items:center;gap:8px;}
+  .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);}
   .brand svg{height:20px;width:34px;display:block;}
+  .brand svg rect{transform-origin:center;}
+  .brand:hover svg rect:nth-child(1){animation:brickPop .5s ease-out forwards;}
+  .brand:hover svg rect:nth-child(2){animation:brickPop .5s ease-out .07s forwards;}
+  .brand:hover svg rect:nth-child(3){animation:brickPop .5s ease-out .14s forwards;}
+  @keyframes brickPop{0%{transform:translateY(0);}40%{transform:translateY(-3px);}100%{transform:translateY(0);}}
   .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
   .nav-links{display:flex;gap:22px;align-items:center;}
   .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
@@ -52,7 +57,12 @@
   .hero h1{font-weight:500;font-size:44px;line-height:1.0;letter-spacing:-1.4px;
     color:var(--ink);max-width:760px;}
   .hero p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:620px;}
-  .cta-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+  .cta-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;align-items:center;}
+  .newsletter{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .newsletter input{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paper);
+    color:var(--ink);border:1px solid var(--hairStrong);border-radius:2px;padding:12px 14px;outline:none;min-width:200px;}
+  .newsletter input:focus{border-color:var(--brick);}
+  .nl-msg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brickDeep);}
   .btn{font-weight:500;font-size:14px;border-radius:2px;padding:13px 22px;
     display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:none;cursor:pointer;}
   .btn-brick{background:var(--brick);color:#fff;}
@@ -178,12 +188,14 @@
 <header>
   <div class="nav">
     <div class="brand">
+      <a href="index.html" class="brand" aria-label="Bricks — home">
       <svg viewBox="0 0 27 16" fill="none" aria-label="Bricks mark">
         <rect x="1" y="1" width="12" height="6" rx="1.2" fill="#D2542B"/>
         <rect x="1" y="9" width="12" height="6" rx="1.2" fill="#D2542B"/>
         <rect x="15" y="9" width="11" height="6" rx="1.2" fill="#D2542B"/>
       </svg>
       <span class="wordmark">bricks</span>
+      </a>
     </div>
     <nav class="nav-links">
       <a href="#media">Media</a>
@@ -205,7 +217,11 @@
     <div class="cta-row">
       <a class="btn btn-brick" href="book.html">Book listing media</a>
       <a class="btn btn-sec" href="pricing.html">View pricing</a>
-      <a class="btn btn-sec" href="mailto:booking@brxs.ca?subject=Bricks%20launch%20updates">Get launch updates</a>
+      <form class="newsletter" id="nlForm" onsubmit="return nlSubmit(event)">
+        <input type="email" id="nlEmail" placeholder="you@brokerage.com" aria-label="Email for launch updates" required />
+        <button type="submit" class="btn btn-sec">Get launch updates</button>
+        <span class="nl-msg" id="nlMsg"></span>
+      </form>
     </div>
   </section>
 </div>
@@ -478,6 +494,27 @@
 </footer>
 
 <script>
+  var SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/';
+  var ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod';
+
+  function nlSubmit(e){
+    e.preventDefault();
+    var email = document.getElementById('nlEmail').value.trim();
+    var msg = document.getElementById('nlMsg');
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ msg.textContent='Enter a valid email.'; return false; }
+    msg.textContent='Subscribing…';
+    fetch(SUPABASE+'newsletter-signup', { method:'POST', headers:{'Content-Type':'application/json','apikey':ANON},
+      body: JSON.stringify({ email: email, source: 'bricks-prelaunch' }) })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
+      .then(function(res){
+        if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
+        msg.textContent='✓ You're on the list.';
+        document.getElementById('nlEmail').value='';
+      })
+      .catch(function(){ msg.textContent='Network error — try again.'; });
+    return false;
+  }
+
   function book(e){
     e.preventDefault();
     var f = e.target;
