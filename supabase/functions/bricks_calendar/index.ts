@@ -62,7 +62,9 @@ Deno.serve(async (req: Request) => {
     return new Response('Method not allowed', { status: 405, headers: corsHeaders });
   }
 
-  // Extract token from the path: /functions/v1/bricks-calendar/<TOKEN>
+  // The token in the URL path IS the auth for this feed — a calendar app (Apple/
+  // Google/Outlook) subscribing via URL cannot send an apikey header, so we do
+  // NOT require one here. The path token is the only gate.
   const url = new URL(req.url);
   const parts = url.pathname.split('/').filter(Boolean);
   const token = parts[parts.length - 1];
