@@ -33,14 +33,14 @@ const HST = 0.13;
 // sqft bands: small <1500, medium 1500-2999, large 3000-4999, xlarge 5000+
 const BASE_RATE: Record<string, [number, number, number, number]> = {
   //            small    medium   large    xlarge
-  'Standard': [349, 429, 519, 599],
-  'Premium':  [749, 899, 1049, 1199],
-  'Luxury':   [1199, 1399, 1699, 2099],
-  'Estate':   [2899, 2899, 2899, 2899],
+  'Standard': [199, 249, 299, 349],
+  'Premium':  [399, 449, 499, 549],
+  'Luxury':   [699, 799, 899, 999],
+  'Estate':   [1299, 1299, 1299, 1299],
   // NOTE: 'Advise' is NOT a pricable package. It's a recommendation mode handled
   // below — it maps to a real package based on sqft/type and quotes THAT.
 };
-const ADDON = { tour: 199, twilight: 149, extended3d: 249 };
+const ADDON = { tour: 149, twilight: 129, extended3d: 199 };
 
 // Maps a sqft band + property type to the package we'd recommend.
 function recommendPackage(sqft: number, propertyType: string): string {
