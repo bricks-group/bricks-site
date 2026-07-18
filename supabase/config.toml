@@ -1,0 +1,8 @@
+[functions.twilio-webhook]
+verify_jwt = false
+
+[functions.bricks_calendar]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
