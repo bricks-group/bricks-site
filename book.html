@@ -107,6 +107,17 @@
   .sqft-edit input{width:110px;padding:7px 9px;font-size:13px;}
   .sqft-edit button{font-size:12px;padding:7px 12px;border:1px solid var(--hairStrong);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
   .loading{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);letter-spacing:0.08em;}
+  /* nicer quote loading state */
+  .qload{display:flex;align-items:center;gap:14px;padding:10px 2px 6px;}
+  .qload .spin{width:22px;height:22px;border-radius:50%;border:2px solid var(--brickSoft);
+    border-top-color:var(--brick);animation:spin .7s linear infinite;flex:none;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .qload .ltxt{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--inkMute);line-height:1.5;}
+  .qload .ltxt b{display:block;font-family:'General Sans',sans-serif;font-size:14px;letter-spacing:0;
+    text-transform:none;color:var(--ink);font-weight:500;margin-bottom:3px;}
+  .qmsg{font-size:12.5px;color:var(--inkMute);padding:16px 2px;line-height:1.55;}
+  @media (prefers-reduced-motion: reduce){ .qload .spin{animation:none;border-top-color:var(--brickSoft);} }
 
   .review{background:var(--paperDeep);border:1px solid var(--hair);border-radius:2px;padding:20px;}
   .review .rrow{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--hair);font-size:14px;}
@@ -212,7 +223,7 @@
       <label class="toggle"><input type="checkbox" id="f_twilight" /> Add twilight photography (+$149)</label>
       <label class="toggle"><input type="checkbox" id="f_ext3d" /> Add extended 3D coverage (+$249)</label>
 
-      <div id="quoteBox"><div class="loading">Quote appears here once you pick a package…</div></div>
+      <div id="quoteBox" class="quote"><div class="qmsg">Pick a package above — your tailored quote appears here instantly.</div></div>
       <div class="err" id="err1"></div>
       <div class="nav-btns"><button class="btn btn-ghost" onclick="prev(1)">← Back</button><button class="btn btn-brick" onclick="next(1)">Next →</button></div>
     </div>
@@ -357,7 +368,7 @@
     if(!data.pkg){ return; }
     document.getElementById('err1').textContent='';
     var box = document.getElementById('quoteBox');
-    box.innerHTML = '<div class="loading">Calculating tailored price…</div>';
+    box.innerHTML = '<div class="qload"><div class="spin"></div><div class="ltxt"><b>Tailoring your quote</b>Measuring footprint · mapping travel · adding tax</div></div>';
     var payload = {
       address: data.selectedAddr || addrInput.value.trim(),
       property_type: document.getElementById('f_type').value,
@@ -371,11 +382,11 @@
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok, j:j}; }); })
       .then(function(res){
         document.getElementById('err1').textContent='';
-        if(!res.ok){ box.innerHTML = '<div class="loading">Could not price this address. Enter sqft manually or contact booking@brxs.ca.</div>'; return; }
+        if(!res.ok){ box.innerHTML = '<div class="qmsg">We couldn\'t auto-price this address. Enter the square footage above and hit <b>Re-quote</b>, or email <b>booking@brxs.ca</b>.</div>'; return; }
         data.quote = res.j.quote;
         renderQuote(box, res.j.quote, true);
       })
-      .catch(function(){ box.innerHTML = '<div class="loading">Network error pricing address.</div>'; });
+      .catch(function(){ box.innerHTML = '<div class="qmsg">Network hiccup pricing this address — check your connection and pick the package again.</div>'; });
   }
 
   function renderQuote(box, q, editable){
