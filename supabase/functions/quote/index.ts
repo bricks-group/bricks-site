@@ -31,9 +31,9 @@ const HST = 0.13;
 
 // Footprint-tier base rates (CAD, pre-tax) keyed by package + size band.
 // sqft bands: small <1500, medium 1500-2999, large 3000-4999, xlarge 5000+
-const BASE_RATE: Record<string, [number, number, number, number]> = {
+const BASE_RATE: Record<string, [number, number, number, number | null]> = {
   //            small    medium   large    xlarge
-  'Standard': [199, 249, 299, 349],
+  'Standard': [199, 249, 299, null],   // Standard caps at Large; XL homes go Premium+
   'Premium':  [399, 449, 499, 549],
   'Luxury':   [699, 799, 899, 999],
   'Estate':   [1299, 1299, 1299, 1299],
@@ -198,7 +198,8 @@ Deno.serve(async (req: Request) => {
     recommended = true;
   }
   const rates = BASE_RATE[effectivePkg] ?? BASE_RATE['Standard'];
-  const base = rates[finalBand];
+  // Standard caps at Large; if an XL home is forced to Standard, fall back to Premium.
+  const base = rates[finalBand] ?? BASE_RATE['Premium'][finalBand];
 
   // 4) travel
   const dist = haversine(BASE, geo);
