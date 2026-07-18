@@ -529,7 +529,7 @@
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
       .then(function(res){
         if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
-        msg.textContent='✓ You're on the list.';
+        msg.textContent='✓ You\'re on the list.';
         document.getElementById('nlEmail').value='';
       })
       .catch(function(){ msg.textContent='Network error — try again.'; });
@@ -548,7 +548,7 @@
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
       .then(function(res){
         if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
-        msg.textContent='✓ You're on the list.';
+        msg.textContent='✓ You\'re on the list.';
         document.getElementById('nlPopEmail').value='';
         try{ localStorage.setItem('nl_seen','1'); }catch(e){}
         setTimeout(function(){ document.getElementById('nlPop').classList.remove('show'); }, 1500);
