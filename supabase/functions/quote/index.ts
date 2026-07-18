@@ -1,9 +1,12 @@
 // Supabase Edge Function: quote
 // Dynamic pricing engine for Bricks listing-media booking.
-// Flow: address -> Nominatim geocode (lat/lng) -> sqft (CleverTech if key set,
-// else OSM Overpass footprint x storeys) -> footprint tier -> base rate ->
-// travel fee (haversine from BASE address, FREE_KM free, $/km after) ->
-// add-ons (3D tour +$199, twilight, extended 3D) -> +13% HST = total.
+// Flow: address -> Nominatim geocode (lat/lng, travel distance) ->
+// property-type default sqft (agent confirms in wizard) -> footprint tier
+// -> base rate -> travel fee (haversine from BASE, FREE_KM free, $/km after)
+// -> add-ons (3D tour +$199, twilight, extended 3D) -> +13% HST = total.
+// No external sqft API is used (CleverTech free tier is unusable for sqft;
+// OSM geometry is unreliable) — the agent's confirmed sqft is the source of
+// truth, with a typed default as the starting estimate.
 // Returns an itemized quote so the wizard can show "data speaks for itself".
 //
 // Deploy:  supabase functions deploy quote
@@ -91,63 +94,9 @@ async function geocode(address: string): Promise<{ lat: number; lon: number; dis
   return null;
 }
 
-// OSM footprint area (m^2) via Overpass, x storeys if tagged -> sqft estimate
-async function osmSqft(lat: number, lon: number): Promise<{ sqft: number; storeys: number | null; area_m2: number } | null> {
-  const q = `[out:json];way[building](${lat - 0.0008},${lon - 0.0008},${lat + 0.0008},${lon + 0.0008});out center 1;`;
-  try {
-    const r = await fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST', body: new URLSearchParams({ data: q }).toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'BricksPreLaunch/1.0' },
-    });
-    const j = await r.json();
-    const el = j.elements?.find((e: any) => e.lat !== undefined || e.center);
-    if (!el) return null;
-    const latc = el.lat ?? el.center.lat, lonc = el.lon ?? el.center.lon;
-    // fetch full geometry for area
-    const q2 = `[out:json];way(id:${el.id});out geom;`;
-    const r2 = await fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST', body: new URLSearchParams({ data: q2 }).toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'BricksPreLaunch/1.0' },
-    });
-    const j2 = await r2.json();
-    const w = j2.elements?.find((e: any) => e.type === 'way' && e.geometry?.length > 2);
-    if (!w) return null;
-    // shoelace on geometry (degrees -> meters via equirectangular)
-    let area = 0;
-    const n = w.geometry.length;
-    const latRef = latc * Math.PI / 180;
-    const mPerDegLat = 111320;
-    const mPerDegLon = 111320 * Math.cos(latRef);
-    const pts = w.geometry.map((p: any) => [p.lon * mPerDegLon, p.lat * mPerDegLat]);
-    for (let i = 0; i < n; i++) {
-      const [x1, y1] = pts[i], [x2, y2] = pts[(i + 1) % n];
-      area += x1 * y2 - x2 * y1;
-    }
-    const area_m2 = Math.abs(area / 2);
-    const storeys = w.tags?.['building:levels'] ? parseInt(w.tags['building:levels']) : null;
-    // footprint sqft; if storeys known, living area ~ footprint x storeys (rough)
-    const footprint_sqft = area_m2 * 10.7639;
-    const sqft = storeys && storeys > 0 ? Math.round(footprint_sqft * storeys) : Math.round(footprint_sqft);
-    return { sqft, storeys, area_m2: Math.round(area_m2) };
-  } catch { return null; }
-}
-
-// CleverTech property assessment (free key). Returns sqft if available.
-async function clevertechSqft(address: string, city: string, key: string): Promise<number | null> {
-  try {
-    const r = await fetch(`https://clevertech.ca/api/${city}/property/search?q=${encodeURIComponent(address)}&limit=1`, {
-      headers: { 'X-API-Key': key },
-    });
-    if (!r.ok) return null;
-    const j = await r.json();
-    const rec = j?.data?.[0] ?? j?.results?.[0] ?? j?.[0];
-    if (!rec) return null;
-    // assessment records vary; pull any living-area-like field
-    const cand = rec.living_area ?? rec.floor_area ?? rec.sqft ?? rec.area_sqft ?? rec.total_floor_area;
-    if (cand) return Math.round(parseFloat(cand));
-  } catch { /* ignore */ }
-  return null;
-}
+// No external sqft source: CleverTech's free tier returns no living-area
+// field and ignores search; OSM footprint geometry is slow/unreliable. We
+// use a property-type default the agent confirms in the wizard.
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -158,7 +107,6 @@ Deno.serve(async (req: Request) => {
 
   const address = (body.address || '').toString().trim();
   const pkg = (body.package_interest || body.package || '').toString().trim();
-  const city = (body.city || 'mississauga').toString().trim().toLowerCase();
   const tour = body.tour_addon === true || body.tour_addon === 'true';
   const twilight = body.twilight_addon === true || body.twilight_addon === 'true';
   const ext3d = body.extended3d_addon === true || body.extended3d_addon === 'true';
@@ -172,35 +120,30 @@ Deno.serve(async (req: Request) => {
   const geo = await geocode(address);
   if (!geo) return bad('Could not geocode address', 422);
 
-  // 2) sqft: manual override > CleverTech > OSM (clamped) > property-type band
+  // 2) sqft: agent manual override wins. Otherwise we use a realistic
+  //    default by property type — there is no free, reliable GTA sqft API
+  //    (CleverTech returns no living-area field + ignores search; OSM
+  //    footprint geometry times out / over-estimates). The agent confirms
+  //    or corrects sqft in the wizard, so a typed default is the honest base.
   let sqft: number | null = manualSqft;
   let sqft_source = manualSqft ? 'agent' : 'none';
   let sqft_estimated = false;
   if (!sqft) {
-    const ct = Deno.env.get('CLEVERTECH_KEY');
-    if (ct) {
-      sqft = await clevertechSqft(address, city, ct);
-      if (sqft) sqft_source = 'clevertech';
-    }
-  }
-  if (!sqft) {
-    const o = await osmSqft(geo.lat, geo.lon);
-    // OSM footprint x storeys over-estimates wildly; clamp to plausible
-    // residential range and defer the exact number to agent confirmation.
-    if (o && o.area_m2 > 30) {
-      const clamped = Math.min(12000, Math.max(600, o.sqft));
-      sqft = clamped; sqft_source = 'osm'; sqft_estimated = true;
-    }
+    const pt = (body.property_type || '').toString().trim();
+    const DEFAULT_SQFT: Record<string, number> = {
+      'Condo': 850, 'Semi / Town': 1600, 'Detached': 2600,
+      'Multiplex': 3200, 'Commercial': 4000, 'Estate': 6000,
+    };
+    sqft = DEFAULT_SQFT[pt] ?? 2200;
+    sqft_source = 'type-default';
+    sqft_estimated = true;
   }
   // property-type band nudges the tier when we lack a real sqft
   const typeBand: Record<string, number> = {
     'Condo': 0, 'Semi / Town': 1, 'Detached': 1, 'Multiplex': 2, 'Commercial': 2, 'Estate': 3,
   };
-  if (!sqft) {
-    sqft = 2000; sqft_source = 'type-default'; sqft_estimated = true;
-  }
 
-  // 3) base rate by tier (sqft band, nudged up by property type so OSM under-estimates don't under-price)
+  // 3) base rate by tier (sqft band, nudged up by property type so type defaults don't under-price)
   //    In 'Advise' mode, recommend a real package from sqft + property type (no invented fee).
   const pt = (body.property_type || '').toString().trim();
   const finalBand = Math.max(band(sqft), typeBand[pt] ?? 1);
