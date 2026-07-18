@@ -57,6 +57,8 @@
   .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;position:relative;}
   .field label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
     text-transform:uppercase;color:var(--inkMute);}
+  .field .req{color:var(--brickDeep);}
+  .field .hint-sm{font-size:11.5px;color:var(--inkFaint);font-family:'General Sans',sans-serif;text-transform:none;letter-spacing:0;line-height:1.4;}
   .field input,.field select,.field textarea{font-family:'General Sans',sans-serif;font-size:14px;
     background:var(--paper);color:var(--ink);border:1px solid var(--hairStrong);border-radius:2px;
     padding:11px 12px;outline:none;}
@@ -78,7 +80,7 @@
   .choice:hover{background:var(--paperSoft);}
   .choice.sel{background:var(--brickTint);border-color:var(--brick);}
   .choice .t{font-weight:500;font-size:15px;color:var(--ink);}
-  .choice .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brickDeep);margin:4px 0;}
+  .choice .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brickDeep);margin:4px 0;font-weight:500;}
   .choice .x{font-size:12px;color:var(--inkMute);line-height:1.4;}
   .choices.three{grid-template-columns:repeat(3,1fr);}
 
@@ -87,13 +89,21 @@
 
   /* quote */
   .quote{background:var(--paperDeep);border:1px solid var(--hair);border-radius:2px;padding:20px;margin-top:8px;}
+  .quote .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding-bottom:14px;margin-bottom:12px;border-bottom:2px solid var(--brick);}
+  .quote .qhead-l{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--inkMute);}
+  .quote .qhead-t{font-family:'JetBrains Mono',monospace;font-size:27px;font-weight:500;color:var(--brick);white-space:nowrap;}
+  .quote .qhead-t span{font-family:'General Sans',sans-serif;font-size:11px;color:var(--inkMute);font-weight:400;letter-spacing:0;}
+  .quote .qmeta{font-size:12px;color:var(--inkMute);margin-bottom:12px;}
   .quote .qrow{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--hair);font-size:14px;}
   .quote .qrow:last-child{border-bottom:none;}
-  .quote .qk{color:var(--inkMute);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;}
+  .quote .qk{color:var(--inkMute);}
+  .quote .qk em{font-style:normal;color:var(--inkFaint);font-size:10.5px;font-family:'JetBrains Mono',monospace;margin-left:6px;}
   .quote .qv{color:var(--ink);text-align:right;}
-  .quote .qtotal{font-size:18px;font-weight:500;color:var(--ink);}
-  .quote .qnote{font-size:11.5px;color:var(--brickDeep);margin-top:10px;font-family:'JetBrains Mono',monospace;line-height:1.5;}
-  .sqft-edit{display:flex;align-items:center;gap:8px;margin:6px 0 2px;}
+  .quote .qnote{font-size:11.5px;color:var(--brickDeep);margin-top:12px;font-family:'JetBrains Mono',monospace;line-height:1.5;
+    border-left:2px solid var(--brick);padding-left:10px;}
+  .sqft-edit{display:flex;align-items:center;gap:8px;margin:12px 0 2px;}
   .sqft-edit input{width:110px;padding:7px 9px;font-size:13px;}
   .sqft-edit button{font-size:12px;padding:7px 12px;border:1px solid var(--hairStrong);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
   .loading{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);letter-spacing:0.08em;}
@@ -165,22 +175,23 @@
       <h2>What are we shooting?</h2>
       <p class="hint">Tell us about the listing and who's booking. Start typing the address for suggestions.</p>
       <div class="grid2">
-        <div class="field"><label>Listing agent name *</label><input id="f_name" placeholder="Jane Agent" /></div>
+        <div class="field"><label>Listing agent name <span class="req">*</span></label><input id="f_name" placeholder="Jane Agent" /></div>
         <div class="field"><label>Brokerage</label><input id="f_brokerage" placeholder="Optional" /></div>
       </div>
       <div class="grid2">
-        <div class="field"><label>Email *</label><input id="f_email" type="email" placeholder="you@brokerage.com" /></div>
-        <div class="field"><label>Phone</label><input id="f_phone" placeholder="416-..." /></div>
+        <div class="field"><label>Email <span class="req">*</span></label><input id="f_email" type="email" placeholder="you@brokerage.com" /></div>
+        <div class="field"><label>Phone <span class="req">*</span></label><input id="f_phone" placeholder="416-..." /></div>
       </div>
-      <div class="field"><label>Property address *</label><input id="f_addr" placeholder="123 Main St, Mississauga" autocomplete="off" />
+      <div class="field"><label>Property address <span class="req">*</span></label><input id="f_addr" placeholder="123 Main St, Mississauga" autocomplete="off" />
         <div class="suggest" id="suggest" style="display:none;"></div>
       </div>
-      <div class="field"><label>Property type *</label>
+      <div class="field"><label>Property type</label>
         <select id="f_type">
-          <option value="">Select…</option>
+          <option value="">Not sure yet</option>
           <option>Condo</option><option>Semi / Town</option><option>Detached</option>
           <option>Multiplex</option><option>Commercial</option><option>Estate</option>
         </select>
+        <span class="hint-sm">Optional — helps us size the shoot. We estimate from the footprint either way.</span>
       </div>
       <div class="err" id="err0"></div>
       <div class="nav-btns"><span></span><button class="btn btn-brick" onclick="next(0)">Next →</button></div>
@@ -212,7 +223,7 @@
       <p class="hint">Pick a real slot below (synced to our calendar) or give a preferred date and we confirm.</p>
       <div id="calEmbed" data-cal-link="akasm/bricks-media-shoot" style="margin-bottom:18px;"></div>
       <div class="grid2">
-        <div class="field"><label>Preferred shoot date *</label><input id="f_date" type="date" /></div>
+        <div class="field"><label>Preferred shoot date <span class="req">*</span></label><input id="f_date" type="date" /></div>
         <div class="field"><label>Preferred window</label>
           <select id="f_window"><option>Morning</option><option>Afternoon</option><option>Either</option></select>
         </div>
@@ -279,12 +290,13 @@
     if(s===0){
       if(!document.getElementById('f_name').value.trim()){ e.textContent='Agent name required.'; return false; }
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById('f_email').value.trim())){ e.textContent='Valid email required.'; return false; }
+      if(!document.getElementById('f_phone').value.trim()){ e.textContent='Phone required.'; return false; }
       if(!document.getElementById('f_addr').value.trim()){ e.textContent='Property address required.'; return false; }
-      if(!document.getElementById('f_type').value){ e.textContent='Select a property type.'; return false; }
+      // property type is optional
     }
     if(s===1){
       if(!data.pkg){ e.textContent='Pick a package (or "advise me").'; return false; }
-      if(!data.quote){ e.textContent='Quote not ready — wait a moment or adjust the package.'; return false; }
+      if(!data.quote){ e.textContent='Quote still calculating — give it a moment.'; return false; }
     }
     if(s===2){
       if(!document.getElementById('f_date').value){ e.textContent='Pick a preferred date.'; return false; }
@@ -343,11 +355,11 @@
   // ---- dynamic quote ----
   function fetchQuote(manualSqft){
     if(!data.pkg){ return; }
+    document.getElementById('err1').textContent='';
     var box = document.getElementById('quoteBox');
     box.innerHTML = '<div class="loading">Calculating tailored price…</div>';
     var payload = {
       address: data.selectedAddr || addrInput.value.trim(),
-      city: 'mississauga',
       property_type: document.getElementById('f_type').value,
       package_interest: data.pkg,
       tour_addon: document.getElementById('f_tour').checked,
@@ -358,6 +370,7 @@
     fetch(SUPABASE+'quote', { method:'POST', headers:{'Content-Type':'application/json','apikey':ANON}, body:JSON.stringify(payload) })
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok, j:j}; }); })
       .then(function(res){
+        document.getElementById('err1').textContent='';
         if(!res.ok){ box.innerHTML = '<div class="loading">Could not price this address. Enter sqft manually or contact booking@brxs.ca.</div>'; return; }
         data.quote = res.j.quote;
         renderQuote(box, res.j.quote, true);
@@ -366,23 +379,25 @@
   }
 
   function renderQuote(box, q, editable){
-    var rows = [
-      ['Base rate ('+q.package+')', '$'+q.base_rate.toFixed(2)],
-      ['Travel ('+q.distance_km+' km, '+q.travel_km_billable+' billable @ $'+q.travel_per_km+'/km)', '$'+q.travel_fee.toFixed(2)]
-    ];
-    q.addons.forEach(function(a){ rows.push([a.label, '$'+a.amount.toFixed(2)]); });
-    rows.push(['Subtotal', '$'+q.subtotal.toFixed(2)]);
-    rows.push(['HST (13%)', '$'+q.hst.toFixed(2)]);
-    var html = '<div class="qrow"><span class="qk">Square footage</span><span class="qv">'+(q.sqft?q.sqft.toLocaleString()+' sqft':'—')+(q.sqft_source?' <span class="muted">('+q.sqft_source+')</span>':'')+'</span></div>';
-    if(editable){
-      html += '<div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" value="'+(q.sqft||'')+'" /><button onclick="requote()">Re-quote</button></div>';
-    }
-    html += rows.map(function(r){ return '<div class="qrow"><span class="qk">'+r[0]+'</span><span class="qv">'+r[1]+'</span></div>'; }).join('');
-    html += '<div class="qrow"><span class="qk qtotal">Total (incl. HST)</span><span class="qv qtotal">$'+q.total.toFixed(2)+' CAD</span></div>';
-    if(q.sqft_estimated){
-      html += '<div class="qnote">⚠ Sqft estimated — confirm or edit above for an exact quote. Final invoice reflects actual scope.</div>';
-    }
-    box.innerHTML = html;
+    var head = '<div class="qhead"><div class="qhead-l">Your tailored quote</div>'
+      + '<div class="qhead-t">$'+q.total.toFixed(2)+' <span>CAD · incl. HST</span></div></div>';
+    var meta = '<div class="qmeta">'+(q.sqft?q.sqft.toLocaleString()+' sqft':'sqft n/a')
+      + ' · '+q.package
+      + (q.distance_km!=null?' · '+q.distance_km+' km from base':'')
+      + (q.sqft_source?' · '+q.sqft_source:'')+'</div>';
+    var lines = [];
+    lines.push(['Base rate ('+q.package+')', '$'+q.base_rate.toFixed(2)]);
+    var travelNote = q.travel_km_billable>0 ? ('$'+q.travel_per_km+'/km after 25 km free') : 'first 25 km free';
+    lines.push(['Travel ('+q.distance_km+' km)', '$'+q.travel_fee.toFixed(2), travelNote]);
+    q.addons.forEach(function(a){ lines.push([a.label, '$'+a.amount.toFixed(2)]); });
+    lines.push(['Subtotal', '$'+q.subtotal.toFixed(2)]);
+    lines.push(['HST (13%)', '$'+q.hst.toFixed(2)]);
+    var body = lines.map(function(r){
+      return '<div class="qrow"><span class="qk">'+r[0]+(r[2]?' <em>'+r[2]+'</em>':'')+'</span><span class="qv">'+r[1]+'</span></div>';
+    }).join('');
+    var edit = editable ? '<div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" value="'+(q.sqft||'')+'" /><button onclick="requote()">Re-quote</button></div>' : '';
+    var note = q.sqft_estimated ? '<div class="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>' : '';
+    box.innerHTML = head + meta + '<div class="qlines">'+body+'</div>' + edit + note;
   }
   function requote(){ var v = document.getElementById('sqftInput').value; fetchQuote(v ? parseInt(v) : null); }
 
@@ -435,7 +450,7 @@
       .catch(function(){ e.textContent='Network error starting checkout.'; btn.disabled=false; btn.textContent='Pay & book'; });
   }
 
-  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 </script>
 </body>
 </html>
