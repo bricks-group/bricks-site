@@ -301,7 +301,7 @@
     var q = addrInput.value.trim();
     if(q.length < 4){ sugBox.style.display='none'; return; }
     debounce = setTimeout(function(){
-      fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=5&addressdetails=0', {
+      fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=5&addressdetails=0&countrycodes=ca&viewbox=-95.2,56.9,-74.3,41.6&bounded=1&dedupe=1', {
         headers:{'User-Agent':'BricksPreLaunch/1.0 (booking@brxs.ca)'}
       }).then(function(r){ return r.json(); }).then(function(j){
         if(!Array.isArray(j) || !j.length){ sugBox.style.display='none'; return; }

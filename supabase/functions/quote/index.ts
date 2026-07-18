@@ -60,11 +60,16 @@ function haversine(a: { lat: number; lon: number }, b: { lat: number; lon: numbe
 }
 
 async function geocode(address: string): Promise<{ lat: number; lon: number; display: string } | null> {
-  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`;
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&countrycodes=ca`;
   try {
     const r = await fetch(url, { headers: { 'User-Agent': 'BricksPreLaunch/1.0 (booking@brxs.ca)' } });
     const j = await r.json();
-    if (Array.isArray(j) && j.length) return { lat: +j[0].lat, lon: +j[0].lon, display: j[0].display_name };
+    if (Array.isArray(j) && j.length) {
+      const disp = j[0].display_name || '';
+      // Hard guard: only Canadian addresses are in scope for the GTA pre-launch.
+      if (!/Canada/i.test(disp)) return null;
+      return { lat: +j[0].lat, lon: +j[0].lon, display: disp };
+    }
   } catch { /* ignore */ }
   return null;
 }
