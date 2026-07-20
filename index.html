@@ -562,8 +562,8 @@
       })
       .catch(function(){ msg.textContent='Network error — try again.'; });
     return false;
-  }
-  (function(){
+  // ---- Newsletter popup ----
+  document.addEventListener('DOMContentLoaded', function(){
     var pop = document.getElementById('nlPop');
     if(!pop) return;
     var pill = document.getElementById('nlPill');
@@ -574,7 +574,7 @@
     if(pill) pill.addEventListener('click', show);
     if(!seen){ setTimeout(show, 4000); }
     document.addEventListener('mouseout', function(e){ if(e.clientY < 10 && !seen){ show(); } });
-  })();
+  });
 
   function book(e){
     e.preventDefault();
