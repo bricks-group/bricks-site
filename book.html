@@ -491,6 +491,7 @@
   // ---- post-payment scheduling CTA (paid=1) ----
   (function(){
     if(new URLSearchParams(location.search).get('paid') !== '1') return;
+    show('done');
     document.getElementById('doneTitle').textContent = 'Payment confirmed';
     document.getElementById('doneMsg').textContent = 'Your shoot is paid. Pick a time below and it lands on our calendar.';
     document.getElementById('scheduleCta').style.display = 'block';
