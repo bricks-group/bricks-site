@@ -248,7 +248,7 @@
     <div class="panel" data-panel="2">
       <h2>When?</h2>
       <p class="hint">Pick a real slot below (synced to our calendar) or give a preferred date and we confirm.</p>
-      <div id="calEmbed" data-cal-link="akasm/bricks-media-shoot" style="margin-bottom:18px;"></div>
+      <p class="hint">After payment we confirm your shoot date within one business day and send a calendar invite — no auto-scheduling.</p>
       <div class="grid2">
         <div class="field"><label>Preferred shoot date <span class="req">*</span></label><input id="f_date" type="date" /></div>
         <div class="field"><label>Preferred window</label>
@@ -279,8 +279,7 @@
       <p id="doneMsg">Redirecting to secure checkout…</p>
       <div id="scheduleCta" style="display:none;margin-top:18px;padding:18px;border:1px solid var(--hairStrong);border-radius:2px;">
         <h3 style="margin:0 0 6px;font-size:17px;font-weight:500;color:var(--ink);">Payment confirmed ✓</h3>
-        <p style="margin:0 0 14px;font-size:14px;color:var(--inkSoft);">Now pick your shoot time — it lands straight on our calendar.</p>
-        <a id="calScheduleLink" href="https://cal.com/akasm/bricks-media-shoot" class="btn btn-brick" style="display:inline-block;">Schedule your shoot →</a>
+        <p style="margin:0 0 14px;font-size:14px;color:var(--inkSoft);">We'll confirm your shoot date within one business day and email a calendar invite.</p>
       </div>
       <p style="margin-top:14px;"><a href="index.html" style="color:var(--brickDeep);font-weight:500;">← Back to overview</a></p>
     </div>
@@ -298,16 +297,7 @@
 </footer>
 
 <script>
-  // ---- Cal.com embed (Step 3 calendar was a dead div with no loader) ----
-  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-  Cal("init", "bricks-media-shoot", { origin: "https://cal.com" });
-  Cal.ns["bricks-media-shoot"]("inline", {
-    elementOrSelector: "#calEmbed",
-    calLink: "akasm/bricks-media-shoot",
-    layout: "month_view"
-  });
-  Cal.ns["bricks-media-shoot"]("ui", { hideEventTypeDetails: false, layout: "month_view" });
-
+  // ---- Booking wizard (no third-party scheduling embed) ----
   var step = 0;
   var data = { pkg:'', quote:null, selectedAddr:'' };
   var SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/';
@@ -513,17 +503,8 @@
     if(new URLSearchParams(location.search).get('paid') !== '1') return;
     show('done');
     document.getElementById('doneTitle').textContent = 'Payment confirmed';
-    document.getElementById('doneMsg').textContent = 'Your shoot is paid. Pick a time below and it lands on our calendar.';
+    document.getElementById('doneMsg').textContent = 'Your shoot is paid. We confirm your date within one business day.';
     document.getElementById('scheduleCta').style.display = 'block';
-    try {
-      var b = JSON.parse(sessionStorage.getItem('bricks_booking') || '{}');
-      var q = [];
-      if(b.name) q.push('name=' + encodeURIComponent(b.name));
-      if(b.email) q.push('email=' + encodeURIComponent(b.email));
-      if(b.addr) q.push('a1=' + encodeURIComponent(b.addr));
-      if(b.notes) q.push('notes=' + encodeURIComponent(b.notes));
-      if(q.length) document.getElementById('calScheduleLink').href = 'https://cal.com/akasm/bricks-media-shoot?' + q.join('&');
-    } catch(e){}
   })();
 
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }

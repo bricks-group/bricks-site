@@ -1,11 +1,11 @@
 // Supabase Edge Function: stripe-webhook
-// Stripe calls this on checkout.session.completed. We verify the signature,
-// write the paid lead to media_booking_leads (status='paid'), and create the
-// Cal.com booking so it lands on the owner's Apple Calendar.
+// Stripe calls this on checkout.session.completed. We verify the signature
+// and write the paid lead to media_booking_leads (status='paid'). Scheduling
+// itself is not handled here -- the customer picks a real, availability-
+// checked slot via the "Schedule your shoot" Cal.com link shown post-payment.
 //
 // Deploy:  supabase functions deploy stripe-webhook
 // Needs:   STRIPE_WEBHOOK_SECRET  (from Stripe dashboard webhook config)
-//          CAL_KEY                (Cal.com API key, same account as booking)
 //          SUPABASE_SERVICE_ROLE_KEY (auto-injected)
 // Register the webhook in Stripe: endpoint = /functions/v1/stripe-webhook ,
 //           events = checkout.session.completed
@@ -78,26 +78,14 @@ Deno.serve(async (req: Request) => {
     leadId = j?.[0]?.id;
   } catch (e) { return msg('insert error: ' + String(e), 502); }
 
-  // 2) create Cal.com booking (scheduling only; payment already taken by Stripe)
-  const calKey = Deno.env.get('CAL_KEY');
-  if (calKey && m.preferred_date) {
-    try {
-      const start = m.preferred_date + 'T10:00:00Z'; // default slot; owner reschedules as needed
-      const end = m.preferred_date + 'T12:00:00Z';
-      await fetch('https://api.cal.com/v2/bookings', {
-        method: 'POST', headers: { Authorization: `Bearer ${calKey}`, 'cal-api-version': '2024-06-14', 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          eventTypeId: 6358903,
-          start,
-          end,
-          timeZone: 'America/Toronto',
-          metadata: { bricks_lead_id: leadId },
-          attendees: [{ name: m.agent_name || 'Agent', email: m.email || 'booking@brxs.ca', timeZone: 'America/Toronto' }],
-          bookingFieldsResponses: { notes: `Bricks paid shoot. ${m.property_address}` },
-        }),
-      });
-    } catch { /* non-fatal: owner can book manually */ }
-  }
+  // Scheduling is handled by the customer picking a real slot from the
+  // "Schedule your shoot" link shown post-payment (book.html), which hits
+  // Cal.com's own live availability directly. This function used to also
+  // auto-create a Cal.com booking here at a hardcoded 10:00-12:00 UTC slot
+  // (6-8am Eastern) regardless of actual availability -- removed 2026-07-20:
+  // it never checked the calendar, so it could double-book or land at a
+  // nonsensical time, and duplicated whatever slot the customer picked
+  // themselves via the real scheduling link.
 
   return msg('paid lead ' + leadId + ' created');
 });
