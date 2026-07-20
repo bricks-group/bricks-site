@@ -41,6 +41,10 @@
   .nav-links{display:flex;gap:22px;align-items:center;}
   .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
   .nav-links a:hover{color:var(--brickDeep);}
+  .nav-links a.active{color:var(--brickDeep);}
+  .nav-flag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--inkMute);border:1px solid var(--hairStrong);
+    padding:3px 7px;border-radius:2px;}
   .nav-cta{background:var(--brick);color:#fff;font-size:13px;font-weight:500;
     padding:9px 16px;border-radius:2px;text-decoration:none;}
 
@@ -137,9 +141,10 @@
     </div>
     <nav class="nav-links">
       <a href="index.html">Overview</a>
-      <a href="index.html#platform">Platform</a>
-      <a href="pricing.html" style="color:var(--brickDeep);">Pricing</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="gallery.html">Work</a>
       <a href="book.html" class="nav-cta">Book a shoot</a>
+      <span class="nav-flag">Pre-launch</span>
     </nav>
   </div>
 </header>

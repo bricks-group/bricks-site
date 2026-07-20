@@ -35,6 +35,10 @@
   .nav-links{display:flex;gap:18px;align-items:center;}
   .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
   .nav-links a:hover{color:var(--brickDeep);}
+  .nav-links a.active{color:var(--brickDeep);}
+  .nav-flag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--inkMute);border:1px solid var(--hairStrong);
+    padding:3px 7px;border-radius:2px;}
   .nav-cta{background:var(--brick);color:#fff;font-size:13px;font-weight:500;padding:9px 16px;border-radius:2px;text-decoration:none;}
 
   .hero{padding:44px 0 24px;}
@@ -151,6 +155,7 @@
   .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
 
   @media (max-width:640px){.choices,.choices.three,.grid2{grid-template-columns:1fr;}.hero h1{font-size:28px;}}
+  @media (max-width:680px){.nav-links a:not(.nav-cta){display:none;}}
 </style>
 </head>
 <body>
@@ -171,7 +176,8 @@
       <a href="index.html">Overview</a>
       <a href="pricing.html">Pricing</a>
       <a href="gallery.html">Work</a>
-      <a href="book.html" class="nav-cta">Book a shoot</a>
+      <a href="book.html" class="nav-cta active">Book a shoot</a>
+      <span class="nav-flag">Pre-launch</span>
     </nav>
   </div>
 </header>
