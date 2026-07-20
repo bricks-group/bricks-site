@@ -1,11 +1,13 @@
 // Supabase Edge Function: stripe-webhook
-// Stripe calls this on checkout.session.completed. We verify the signature
-// and write the paid lead to media_booking_leads (status='paid'). Scheduling
-// itself is not handled here -- the customer picks a real, availability-
-// checked slot via the "Schedule your shoot" Cal.com link shown post-payment.
+// Stripe calls this on checkout.session.completed. We verify the signature,
+// write the paid lead to media_booking_leads (status='paid'), and create the
+// real Cal.com booking using the exact slot the customer picked and confirmed
+// was available during the booking flow (book.html Step 3, via cal-slots) --
+// not a hardcoded or later-picked time.
 //
 // Deploy:  supabase functions deploy stripe-webhook
 // Needs:   STRIPE_WEBHOOK_SECRET  (from Stripe dashboard webhook config)
+//          CAL_KEY                (Cal.com API key, same account as cal-slots)
 //          SUPABASE_SERVICE_ROLE_KEY (auto-injected)
 // Register the webhook in Stripe: endpoint = /functions/v1/stripe-webhook ,
 //           events = checkout.session.completed
@@ -65,6 +67,7 @@ Deno.serve(async (req: Request) => {
     property_address: m.property_address || '—', property_type: m.property_type || '—', package_interest: m.package_interest || '—',
     tour_addon: m.tour_addon === 'true', twilight_addon: m.twilight_addon === 'true', extended3d_addon: m.extended3d_addon === 'true',
     preferred_date: m.preferred_date || null, preferred_window: m.preferred_window || null, notes: m.notes || null,
+    selected_slot_start: m.selected_slot_start || null, selected_slot_end: m.selected_slot_end || null,
     quote_total: quote ? quote.total : null, status: 'paid', source: 'bricks-booking-stripe', upsell_stage: 'media_only',
   };
   let leadId = null;
@@ -78,14 +81,33 @@ Deno.serve(async (req: Request) => {
     leadId = j?.[0]?.id;
   } catch (e) { return msg('insert error: ' + String(e), 502); }
 
-  // Scheduling is handled by the customer picking a real slot from the
-  // "Schedule your shoot" link shown post-payment (book.html), which hits
-  // Cal.com's own live availability directly. This function used to also
-  // auto-create a Cal.com booking here at a hardcoded 10:00-12:00 UTC slot
-  // (6-8am Eastern) regardless of actual availability -- removed 2026-07-20:
-  // it never checked the calendar, so it could double-book or land at a
-  // nonsensical time, and duplicated whatever slot the customer picked
-  // themselves via the real scheduling link.
+  // 2) create the real Cal.com booking, using the exact slot the customer
+  // picked and confirmed was available during the flow (book.html Step 3,
+  // via cal-slots) -- not a hardcoded time, and not something decided later.
+  const calKey = Deno.env.get('CAL_KEY');
+  if (calKey && m.selected_slot_start && m.selected_slot_end) {
+    try {
+      const bookingRes = await fetch('https://api.cal.com/v2/bookings', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${calKey}`, 'cal-api-version': '2026-02-25', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventTypeId: 6387567,
+          start: m.selected_slot_start,
+          attendee: { name: m.agent_name || 'Bricks agent', email: m.email || 'booking@brxs.ca', timeZone: 'America/Toronto' },
+          location: { type: 'attendeeAddress', address: m.property_address || '' },
+          bookingFieldsResponses: { notes: `Bricks paid shoot (lead ${leadId}). ${m.property_address || ''}` },
+          metadata: { bricks_lead_id: String(leadId) },
+        }),
+      });
+      if (!bookingRes.ok) {
+        console.error('Cal.com booking failed for lead ' + leadId + ': ' + (await bookingRes.text()));
+      }
+    } catch (e) {
+      console.error('Cal.com booking error for lead ' + leadId + ': ' + String(e));
+    }
+  } else {
+    console.warn('Skipped Cal.com booking for lead ' + leadId + ' -- missing CAL_KEY or selected slot.');
+  }
 
   return msg('paid lead ' + leadId + ' created');
 });

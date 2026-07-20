@@ -39,6 +39,7 @@ Deno.serve(async (req: Request) => {
 
   const q = body.quote;
   if (!q || typeof q.total !== 'number') return bad('Quote total required');
+  if (!body.selected_slot_start || !body.selected_slot_end) return bad('A real shoot slot must be selected before checkout');
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 
@@ -49,7 +50,8 @@ Deno.serve(async (req: Request) => {
     property_type: (body.property_type || '').toString(),
     package_interest: (body.package_interest || '').toString(),
     preferred_date: (body.preferred_date || '').toString(),
-    preferred_window: (body.preferred_window || '').toString(),
+    selected_slot_start: (body.selected_slot_start || '').toString(),
+    selected_slot_end: (body.selected_slot_end || '').toString(),
     tour_addon: String(body.tour_addon === true),
     twilight_addon: String(body.twilight_addon === true),
     extended3d_addon: String(body.extended3d_addon === true),
@@ -74,6 +76,8 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[property_address]', meta.property_address);
   form.append('metadata[package_interest]', meta.package_interest);
   form.append('metadata[preferred_date]', meta.preferred_date);
+  form.append('metadata[selected_slot_start]', meta.selected_slot_start);
+  form.append('metadata[selected_slot_end]', meta.selected_slot_end);
   form.append('metadata[quote_json]', meta.quote_json);
 
   try {

@@ -93,6 +93,16 @@
   .choice .x{font-size:12px;color:var(--inkMute);line-height:1.4;}
   .choices.three{grid-template-columns:repeat(3,1fr);}
 
+  /* real slot picker */
+  .slotgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0;}
+  .slotbtn{background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;
+    padding:12px 10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--ink);
+    cursor:pointer;text-align:center;}
+  .slotbtn:hover{background:var(--paperSoft);border-color:var(--brick);}
+  .slotbtn.sel{background:var(--brickTint);border-color:var(--brick);color:var(--brickDeep);font-weight:500;}
+  .slotmsg{font-size:12.5px;color:var(--inkMute);padding:10px 2px;font-family:'JetBrains Mono',monospace;}
+  @media (max-width:480px){.slotgrid{grid-template-columns:1fr;}}
+
   .toggle{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:14px;color:var(--inkSoft);}
   .toggle input{width:16px;height:16px;accent-color:var(--brick);}
 
@@ -247,14 +257,9 @@
     <!-- STEP 3: SCHEDULE -->
     <div class="panel" data-panel="2">
       <h2>When?</h2>
-      <p class="hint">Pick a real slot below (synced to our calendar) or give a preferred date and we confirm.</p>
-      <p class="hint">After payment we confirm your shoot date within one business day and send a calendar invite — no auto-scheduling.</p>
-      <div class="grid2">
-        <div class="field"><label>Preferred shoot date <span class="req">*</span></label><input id="f_date" type="date" /></div>
-        <div class="field"><label>Preferred window</label>
-          <select id="f_window"><option>Morning</option><option>Afternoon</option><option>Either</option></select>
-        </div>
-      </div>
+      <p class="hint">Pick a real time below — it's checked live against our calendar and locked the moment you pay.</p>
+      <div class="field"><label>Shoot date <span class="req">*</span></label><input id="f_date" type="date" /></div>
+      <div id="slotBox"><div class="slotmsg">Pick a date above to see real available times.</div></div>
       <div class="field"><label>Access / staging notes</label><textarea id="f_notes" placeholder="Lockbox code, occupied, staging schedule, deadline…"></textarea></div>
       <div class="err" id="err2"></div>
       <div class="nav-btns"><button class="btn btn-ghost" onclick="prev(2)">← Back</button><button class="btn btn-brick" onclick="next(2)">Review →</button></div>
@@ -278,8 +283,8 @@
       <h2 id="doneTitle">Payment started.</h2>
       <p id="doneMsg">Redirecting to secure checkout…</p>
       <div id="scheduleCta" style="display:none;margin-top:18px;padding:18px;border:1px solid var(--hairStrong);border-radius:2px;">
-        <h3 style="margin:0 0 6px;font-size:17px;font-weight:500;color:var(--ink);">Payment confirmed ✓</h3>
-        <p style="margin:0 0 14px;font-size:14px;color:var(--inkSoft);">We'll confirm your shoot date within one business day and email a calendar invite.</p>
+        <h3 style="margin:0 0 6px;font-size:17px;font-weight:500;color:var(--ink);">Shoot booked ✓</h3>
+        <p style="margin:0 0 14px;font-size:14px;color:var(--inkSoft);">Your slot is locked on our calendar and a confirmation email is on its way.</p>
       </div>
       <p style="margin-top:14px;"><a href="index.html" style="color:var(--brickDeep);font-weight:500;">← Back to overview</a></p>
     </div>
@@ -299,7 +304,7 @@
 <script>
   // ---- Booking wizard (no third-party scheduling embed) ----
   var step = 0;
-  var data = { pkg:'', quote:null, selectedAddr:'' };
+  var data = { pkg:'', quote:null, selectedAddr:'', selectedSlot:null };
   var SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/';
   var ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod';
 
@@ -336,7 +341,8 @@
       if(!data.quote){ e.textContent='Quote still calculating — give it a moment.'; return false; }
     }
     if(s===2){
-      if(!document.getElementById('f_date').value){ e.textContent='Pick a preferred date.'; return false; }
+      if(!document.getElementById('f_date').value){ e.textContent='Pick a shoot date.'; return false; }
+      if(!data.selectedSlot){ e.textContent='Pick a real time slot above.'; return false; }
     }
     return true;
   }
@@ -374,6 +380,45 @@
     }, 350);
   });
   document.addEventListener('click', function(e){ if(!e.target.closest('#suggest') && e.target!==addrInput) sugBox.style.display='none'; });
+
+  // ---- real slot picker (cal-slots, live Cal.com availability) ----
+  var CAL_SLOTS_URL = SUPABASE + 'cal-slots';
+  document.getElementById('f_date').addEventListener('change', function(){
+    data.selectedSlot = null;
+    fetchSlots(this.value);
+  });
+  function fetchSlots(date){
+    var box = document.getElementById('slotBox');
+    if(!date){ box.innerHTML = '<div class="slotmsg">Pick a date above to see real available times.</div>'; return; }
+    box.innerHTML = '<div class="slotmsg">Checking live availability…</div>';
+    fetch(CAL_SLOTS_URL + '?date=' + encodeURIComponent(date), { headers: { apikey: ANON } })
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(!j.ok){ box.innerHTML = '<div class="slotmsg">Couldn\'t load times for this date — try another, or email <b>booking@brxs.ca</b>.</div>'; return; }
+        if(!j.slots || !j.slots.length){ box.innerHTML = '<div class="slotmsg">No open times that day — try another date.</div>'; return; }
+        box.innerHTML = '<div class="slotgrid">' + j.slots.map(function(s, i){
+          var t = new Date(s.start);
+          var label = t.toLocaleTimeString('en-CA', { hour:'numeric', minute:'2-digit', timeZone:'America/Toronto' });
+          return '<div class="slotbtn" data-i="'+i+'">'+esc(label)+'</div>';
+        }).join('') + '</div>';
+        var btns = box.querySelectorAll('.slotbtn');
+        Array.prototype.forEach.call(btns, function(b){
+          b.addEventListener('click', function(){
+            Array.prototype.forEach.call(btns, function(x){ x.classList.remove('sel'); });
+            b.classList.add('sel');
+            data.selectedSlot = j.slots[+b.getAttribute('data-i')];
+            document.getElementById('err2').textContent = '';
+          });
+        });
+      })
+      .catch(function(){ box.innerHTML = '<div class="slotmsg">Network hiccup loading times — try again.</div>'; });
+  }
+  function formatSlot(s){
+    var d = new Date(s.start);
+    var day = d.toLocaleDateString('en-CA', { weekday:'short', month:'short', day:'numeric', timeZone:'America/Toronto' });
+    var t = d.toLocaleTimeString('en-CA', { hour:'numeric', minute:'2-digit', timeZone:'America/Toronto' });
+    return day + ' · ' + t;
+  }
 
   // ---- package choice ----
   document.querySelectorAll('#pkgChoices .choice').forEach(function(c){
@@ -450,7 +495,7 @@
       ['3D tour', document.getElementById('f_tour').checked ? 'Yes' : 'No'],
       ['Twilight', document.getElementById('f_twilight').checked ? 'Yes' : 'No'],
       ['Extended 3D', document.getElementById('f_ext3d').checked ? 'Yes' : 'No'],
-      ['Date', v('f_date')], ['Window', document.getElementById('f_window').value],
+      ['Shoot time', data.selectedSlot ? formatSlot(data.selectedSlot) : '—'],
       ['Notes', v('f_notes')]
     ];
     document.getElementById('reviewBox').innerHTML = rows.map(function(r){
@@ -482,7 +527,8 @@
       property_type: document.getElementById('f_type').value,
       package_interest: data.quote && data.quote.package ? data.quote.package : data.pkg,
       preferred_date: document.getElementById('f_date').value,
-      preferred_window: document.getElementById('f_window').value,
+      selected_slot_start: data.selectedSlot ? data.selectedSlot.start : null,
+      selected_slot_end: data.selectedSlot ? data.selectedSlot.end : null,
       tour_addon: document.getElementById('f_tour').checked,
       twilight_addon: document.getElementById('f_twilight').checked,
       extended3d_addon: document.getElementById('f_ext3d').checked,
@@ -503,7 +549,7 @@
     if(new URLSearchParams(location.search).get('paid') !== '1') return;
     show('done');
     document.getElementById('doneTitle').textContent = 'Payment confirmed';
-    document.getElementById('doneMsg').textContent = 'Your shoot is paid. We confirm your date within one business day.';
+    document.getElementById('doneMsg').textContent = 'Your shoot is paid and booked.';
     document.getElementById('scheduleCta').style.display = 'block';
   })();
 
