@@ -61,8 +61,12 @@ Deno.serve(async (req: Request) => {
   if (!supabaseUrl || !serviceKey) return msg('server misconfigured', 500);
 
   // 1) write paid lead
+  // stripe_session_id is unique -- Stripe retries webhook deliveries (timeouts,
+  // transient errors), and without this a retry would insert a duplicate lead
+  // AND create a duplicate Cal.com booking for the same payment.
   const quote = m.quote_json ? JSON.parse(m.quote_json) : null;
   const payload = {
+    stripe_session_id: s.id || null,
     agent_name: m.agent_name || '—', email: m.email || '—', brokerage: m.brokerage || null, phone: m.phone || null,
     property_address: m.property_address || '—', property_type: m.property_type || '—', package_interest: m.package_interest || '—',
     tour_addon: m.tour_addon === 'true', twilight_addon: m.twilight_addon === 'true', extended3d_addon: m.extended3d_addon === 'true',
@@ -76,7 +80,15 @@ Deno.serve(async (req: Request) => {
       method: 'POST', headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) return msg('insert failed: ' + (await res.text()), 502);
+    if (!res.ok) {
+      const errText = await res.text();
+      // Unique violation on stripe_session_id = this exact payment was already
+      // processed on an earlier delivery. Skip re-creating the Cal.com booking.
+      if (res.status === 409 && errText.includes('23505')) {
+        return msg('duplicate webhook delivery for session ' + s.id + ' -- already processed');
+      }
+      return msg('insert failed: ' + errText, 502);
+    }
     const j = await res.json();
     leadId = j?.[0]?.id;
   } catch (e) { return msg('insert error: ' + String(e), 502); }
