@@ -267,19 +267,42 @@
     text-transform:uppercase;color:var(--inkFaint);max-width:360px;line-height:1.5;}
   .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
 
-  @media (max-width:860px){
-    .flow,.modules,.surf{grid-template-columns:1fr 1fr;}
+  @media (max-width:680px){
+    .flow,.modules{grid-template-columns:1fr 1fr;}
+    .surf{grid-template-columns:1fr;}
     .split{grid-template-columns:1fr;}
     .form-grid{grid-template-columns:1fr;}
     .hero h1{font-size:34px;}
-    .nav-links a:not(.nav-cta){display:none;}
+    .nav{position:relative;}
+    .nav-toggle{display:flex;}
+    .nav-links{position:absolute;top:100%;left:0;right:0;background:var(--paper);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .25s ease;border-bottom:1px solid var(--hair);z-index:40;}
+    .nav-links.open{max-height:280px;}
+    .nav-links a,.nav-links .nav-cta{display:block;padding:13px 36px;border-top:1px solid var(--hair);border-radius:0;text-align:left;background:none;color:var(--inkSoft);font-size:14px;}
+    .nav-links a:first-child{border-top:none;}
+    .nav-links .nav-flag{display:none;}
   }
+  @media (max-width:480px){
+    .flow,.modules{grid-template-columns:1fr;}
+  }
+  /* scroll reveal */
+  .rvl{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease,ease-out),transform .6s var(--ease,ease-out);
+    transition-delay:var(--rd,0s);}
+  .rvl.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .rvl{opacity:1;transform:none;transition:none;} }
   @media (hover:none){
     .mod-inner,.mod:hover .mod-inner{transform:none;}
     .mod-face.back{position:relative;inset:auto;transform:none;display:none;}
     .mod{min-height:0;}.mod-inner{min-height:0;}.mod-face.front{position:relative;}
   }
   @media print{.btn,.nav-cta,.book{display:none;}}
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:30px;height:30px;
+    background:none;border:none;cursor:pointer;padding:0;flex:none;}
+  .nav-toggle span{display:block;width:100%;height:2px;background:var(--ink);border-radius:1px;
+    transition:transform .2s ease,opacity .2s ease;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 </style>
 </head>
 <body>
@@ -296,7 +319,8 @@
       <span class="wordmark">bricks</span>
       </a>
     </div>
-    <nav class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav-links" id="navLinks">
       <a href="index.html" class="active">Overview</a>
       <a href="pricing.html">Pricing</a>
       <a href="gallery.html">Work</a>
@@ -335,10 +359,10 @@
       <p>The media pipeline is the product today. The platform around it is what we're building — booking, dispatch, delivery, and the brokerage console.</p>
     </div>
     <div class="flow">
-      <div class="step"><div class="num">01 / BOOK</div><h4>Booking</h4><p>Agents book media in seconds from their phone. No vendor hunting, no negotiation.</p></div>
-      <div class="step"><div class="num">02 / CAPTURE</div><h4>Dispatch</h4><p>A vetted photographer network receives and fulfills jobs, quality-tier matched to the shoot.</p></div>
-      <div class="step"><div class="num">03 / DELIVER</div><h4>Delivery</h4><p>Photos, reels, floor plans, and 3D tours land in one hosted portal — branded, MLS-ready.</p></div>
-      <div class="step"><div class="num">04 / CLOSE</div><h4>Brokerage OS</h4><p>Allocations, utilization, and one invoice across every agent. Visibility the industry lacks.</p></div>
+      <div class="step rvl" style="--rd:0.00s"><div class="num">01 / BOOK</div><h4>Booking</h4><p>Agents book media in seconds from their phone. No vendor hunting, no negotiation.</p></div>
+      <div class="step rvl" style="--rd:0.08s"><div class="num">02 / CAPTURE</div><h4>Dispatch</h4><p>A vetted photographer network receives and fulfills jobs, quality-tier matched to the shoot.</p></div>
+      <div class="step rvl" style="--rd:0.16s"><div class="num">03 / DELIVER</div><h4>Delivery</h4><p>Photos, reels, floor plans, and 3D tours land in one hosted portal — branded, MLS-ready.</p></div>
+      <div class="step rvl" style="--rd:0.24s"><div class="num">04 / CLOSE</div><h4>Brokerage OS</h4><p>Allocations, utilization, and one invoice across every agent. Visibility the industry lacks.</p></div>
     </div>
   </section>
 </div>
@@ -355,7 +379,7 @@
     </div>
     <div class="modules">
       <!-- 1 -->
-      <div class="mod" tabindex="0">
+      <div class="mod rvl" tabindex="0" style="--rd:0.00s">
         <div class="mod-inner">
           <div class="mod-face front">
             <span class="mod-num">01</span>
@@ -371,7 +395,7 @@
         </div>
       </div>
       <!-- 2 -->
-      <div class="mod" tabindex="0">
+      <div class="mod rvl" tabindex="0" style="--rd:0.08s">
         <div class="mod-inner">
           <div class="mod-face front">
             <span class="mod-num">02</span>
@@ -387,7 +411,7 @@
         </div>
       </div>
       <!-- 3 -->
-      <div class="mod" tabindex="0">
+      <div class="mod rvl" tabindex="0" style="--rd:0.16s">
         <div class="mod-inner">
           <div class="mod-face front">
             <span class="mod-num">03</span>
@@ -403,7 +427,7 @@
         </div>
       </div>
       <!-- 4 -->
-      <div class="mod" tabindex="0">
+      <div class="mod rvl" tabindex="0" style="--rd:0.24s">
         <div class="mod-inner">
           <div class="mod-face front">
             <span class="mod-num">04</span>
@@ -419,7 +443,7 @@
         </div>
       </div>
       <!-- 5 -->
-      <div class="mod" tabindex="0">
+      <div class="mod rvl" tabindex="0" style="--rd:0.32s">
         <div class="mod-inner">
           <div class="mod-face front">
             <span class="mod-num">05</span>
@@ -435,7 +459,7 @@
         </div>
       </div>
       <!-- 6 -->
-      <div class="mod" tabindex="0">
+      <div class="mod rvl" tabindex="0" style="--rd:0.32s">
         <div class="mod-inner">
           <div class="mod-face front">
             <span class="mod-num">06</span>
@@ -465,7 +489,7 @@
       <p>Different seats, same source of truth — from the agent in the field to the broker running the desk.</p>
     </div>
     <div class="surf">
-      <div class="surf-col">
+      <div class="surf-col rvl" style="--rd:0.00s">
         <h3>Agents</h3>
         <ul>
           <li>Book media in seconds from your phone</li>
@@ -474,7 +498,7 @@
           <li>3D tours and reels without a second vendor</li>
         </ul>
       </div>
-      <div class="surf-col">
+      <div class="surf-col rvl" style="--rd:0.08s">
         <h3>Brokerages</h3>
         <ul>
           <li>Allocate media per agent, see it used</li>
@@ -483,7 +507,7 @@
           <li>Consistency agents can't deliver alone</li>
         </ul>
       </div>
-      <div class="surf-col">
+      <div class="surf-col rvl" style="--rd:0.16s">
         <h3>Photographers</h3>
         <ul>
           <li>Receive jobs through Dispatch, not cold DMs</li>
@@ -739,5 +763,45 @@
     <div class="consent">By subscribing you agree to receive Bricks newsletter and launch update emails. Unsubscribe anytime. CASL-compliant.</div>
   </form>
 </div>
+
+<script>
+  (function(){
+    var btn = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if(!btn || !links) return;
+    btn.addEventListener('click', function(){
+      var open = links.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    Array.prototype.forEach.call(links.querySelectorAll('a'), function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+      });
+    });
+  })();
+</script>
+<script>
+  (function(){
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var targets = Array.prototype.slice.call(document.querySelectorAll('.rvl'));
+    if(reduced || !('IntersectionObserver' in window) || !targets.length){
+      targets.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        en.target.classList.add('in');
+        obs.unobserve(en.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight * 0.9) el.classList.add('in');
+      else obs.observe(el);
+    });
+  })();
+</script>
 </body>
 </html>

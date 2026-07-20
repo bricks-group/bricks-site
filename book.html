@@ -19,6 +19,39 @@
 <meta name="twitter:title" content="Bricks — Book a shoot (GTA listing media)" />
 <meta name="twitter:description" content="Book Bricks listing media in the GTA: instant tailored quote by footprint + travel, pay to lock your slot." />
 <meta name="twitter:image" content="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's extended 3D coverage?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Included on Estate, this covers the full property -- multiple structures and larger footprints -- instead of the single-building scan on the standard 3D tour add-on." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's included with twilight?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Exterior photography shot during blue hour -- windows lit, sky still holding color. Included from Luxury; available as a +$129 add-on on Standard and Premium." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I reschedule after booking?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes -- free with reasonable notice. Your confirmation email has a direct link, or email booking@brxs.ca." }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I need to cancel?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Full refund if a photographer hasn't been dispatched yet. Closer to the shoot, refunds are handled case by case." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do refunds work?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Back to your original payment method via Stripe, typically within 5-10 business days." }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://api.fontshare.com" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
@@ -173,13 +206,39 @@
   .done-box h2{color:var(--ink);margin-bottom:8px;}
   .done-box p{font-size:14px;color:var(--inkMute);}
 
+  .faq-head{margin:0 0 18px;}
+  .faq-head h2{font-weight:500;font-size:22px;letter-spacing:-0.4px;color:var(--ink);margin-bottom:4px;}
+  .faq-head p{font-size:13px;color:var(--inkMute);}
+  .faq{display:flex;flex-direction:column;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
+  .qa{background:var(--paper);padding:20px 24px;}
+  .qa h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
+  .qa p{font-size:13px;color:var(--inkMute);line-height:1.5;}
+  .qa p a{color:var(--brickDeep);}
+
   footer{border-top:1px solid var(--hair);margin-top:40px;padding:24px 0;}
   .foot{max-width:760px;margin:0 auto;padding:0 36px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
   .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--inkFaint);max-width:340px;line-height:1.5;}
   .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
 
   @media (max-width:640px){.choices,.choices.three,.grid2{grid-template-columns:1fr;}.hero h1{font-size:28px;}}
-  @media (max-width:680px){.nav-links a:not(.nav-cta){display:none;}}
+  .rvl{opacity:0;transform:translateY(16px);transition:opacity .6s ease-out,transform .6s ease-out;}
+  .rvl.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .rvl{opacity:1;transform:none;transition:none;} }
+  @media (max-width:680px){.nav{position:relative;}
+    .nav-toggle{display:flex;}
+    .nav-links{position:absolute;top:100%;left:0;right:0;background:var(--paper);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .25s ease;border-bottom:1px solid var(--hair);z-index:40;}
+    .nav-links.open{max-height:280px;}
+    .nav-links a,.nav-links .nav-cta{display:block;padding:13px 36px;border-top:1px solid var(--hair);border-radius:0;text-align:left;background:none;color:var(--inkSoft);font-size:14px;}
+    .nav-links a:first-child{border-top:none;}
+    .nav-links .nav-flag{display:none;}}
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:30px;height:30px;
+    background:none;border:none;cursor:pointer;padding:0;flex:none;}
+  .nav-toggle span{display:block;width:100%;height:2px;background:var(--ink);border-radius:1px;
+    transition:transform .2s ease,opacity .2s ease;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 </style>
 </head>
 <body>
@@ -196,7 +255,8 @@
       <span class="wordmark">bricks</span>
       </a>
     </div>
-    <nav class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav-links" id="navLinks">
       <a href="index.html">Overview</a>
       <a href="pricing.html">Pricing</a>
       <a href="gallery.html">Work</a>
@@ -303,6 +363,23 @@
       <p style="margin-top:14px;"><a href="index.html" style="color:var(--brickDeep);font-weight:500;">← Back to overview</a></p>
     </div>
   </div>
+</div>
+
+<!-- FAQ -->
+<div class="wrap">
+  <section class="faq-wrap rvl" style="padding:12px 0 40px;">
+    <div class="faq-head">
+      <h2>Before you book.</h2>
+      <p>Add-ons, scheduling, and what happens if plans change.</p>
+    </div>
+    <div class="faq">
+      <div class="qa"><h4>What's extended 3D coverage?</h4><p>Included on Estate, this covers the full property — multiple structures and larger footprints — instead of the single-building scan on the standard 3D tour add-on. Not sure which you need? Pick "advise me" in Step 1 and we'll size it from the address.</p></div>
+      <div class="qa"><h4>What's included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. Included from Luxury; available as a +$129 add-on on Standard and Premium.</p></div>
+      <div class="qa"><h4>Can I reschedule after booking?</h4><p>Yes — free with reasonable notice. Your confirmation email has a direct link, or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</p></div>
+      <div class="qa"><h4>What if I need to cancel?</h4><p>Full refund if a photographer hasn't been dispatched yet. Closer to the shoot, refunds are handled case by case — see the full <a href="terms.html#refunds">Cancellation &amp; Refund Policy</a>.</p></div>
+      <div class="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
+    </div>
+  </section>
 </div>
 
 <footer>
@@ -568,6 +645,46 @@
   })();
 
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+</script>
+
+<script>
+  (function(){
+    var btn = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if(!btn || !links) return;
+    btn.addEventListener('click', function(){
+      var open = links.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    Array.prototype.forEach.call(links.querySelectorAll('a'), function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+      });
+    });
+  })();
+</script>
+<script>
+  (function(){
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var targets = Array.prototype.slice.call(document.querySelectorAll('.rvl'));
+    if(reduced || !('IntersectionObserver' in window) || !targets.length){
+      targets.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        en.target.classList.add('in');
+        obs.unobserve(en.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < window.innerHeight * 0.9) el.classList.add('in');
+      else obs.observe(el);
+    });
+  })();
 </script>
 </body>
 </html>
