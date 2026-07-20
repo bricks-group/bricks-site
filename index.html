@@ -83,6 +83,13 @@
     line-height:1.5;margin:2px 0 0;}
   .nl-pop .btn-brick{justify-content:center;}
   .nl-pop .nlmsg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brickDeep);min-height:14px;}
+  .nl-pill{position:fixed;right:20px;bottom:20px;z-index:55;display:flex;align-items:center;gap:7px;
+    background:var(--ink);color:var(--paper);border:none;border-radius:2px;cursor:pointer;
+    font-family:'General Sans',sans-serif;font-weight:500;font-size:13px;padding:11px 16px;
+    box-shadow:0 0 0 1px var(--hair);}
+  .nl-pill:hover{background:var(--brick);}
+  .nl-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--brick);}
+  .nl-pill:hover::before{background:var(--paper);}
   @media (prefers-reduced-motion: reduce){ .nl-pop{transition:none;} }
   .btn{font-weight:500;font-size:14px;border-radius:2px;padding:13px 22px;
     display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:none;cursor:pointer;}
@@ -559,15 +566,14 @@
   (function(){
     var pop = document.getElementById('nlPop');
     if(!pop) return;
-    var seen = false; try{ seen = localStorage.getItem('nl_seen')==='1'; }catch(e){}
-    function show(){ if(seen) return; pop.classList.add('show'); }
-    function hide(){ pop.classList.remove('show'); try{ localStorage.setItem('nl_seen','1'); }catch(e){} }
-    document.getElementById('nlPopX').addEventListener('click', hide);
-    if(!seen){ setTimeout(show, 8000); }
-    // exit intent (desktop)
-    document.addEventListener('mouseout', function(e){
-      if(e.clientY < 10 && !seen){ show(); }
-    });
+    var pill = document.getElementById('nlPill');
+    var seen = false; try{ seen = sessionStorage.getItem('nl_seen')==='1'; }catch(e){}
+    function show(){ pop.classList.add('show'); if(pill) pill.style.display='none'; }
+    function hide(){ pop.classList.remove('show'); try{ sessionStorage.setItem('nl_seen','1'); }catch(e){} if(pill) pill.style.display='flex'; }
+    var x = document.getElementById('nlPopX'); if(x) x.addEventListener('click', hide);
+    if(pill) pill.addEventListener('click', show);
+    if(!seen){ setTimeout(show, 4000); }
+    document.addEventListener('mouseout', function(e){ if(e.clientY < 10 && !seen){ show(); } });
   })();
 
   function book(e){
@@ -587,6 +593,9 @@
       +encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   }
 </script>
+
+<!-- Newsletter persistent pill -->
+<button class="nl-pill" id="nlPill" aria-label="Get listing-media updates">Listing updates</button>
 
 <!-- Newsletter popup -->
 <div class="nl-pop" id="nlPop" role="dialog" aria-label="Listing media updates">
