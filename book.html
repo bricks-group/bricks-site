@@ -270,6 +270,11 @@
     <div class="done-box">
       <h2 id="doneTitle">Payment started.</h2>
       <p id="doneMsg">Redirecting to secure checkout…</p>
+      <div id="scheduleCta" style="display:none;margin-top:18px;padding:18px;border:1px solid var(--hairStrong);border-radius:2px;">
+        <h3 style="margin:0 0 6px;font-size:17px;font-weight:500;color:var(--ink);">Payment confirmed ✓</h3>
+        <p style="margin:0 0 14px;font-size:14px;color:var(--inkSoft);">Now pick your shoot time — it lands straight on our calendar.</p>
+        <a id="calScheduleLink" href="https://cal.com/akasm/bricks-media-shoot" class="btn btn-brick" style="display:inline-block;">Schedule your shoot →</a>
+      </div>
       <p style="margin-top:14px;"><a href="index.html" style="color:var(--brickDeep);font-weight:500;">← Back to overview</a></p>
     </div>
   </div>
@@ -449,6 +454,14 @@
     var e = document.getElementById('err3'); e.textContent='';
     if(!data.quote){ e.textContent='Quote missing — go back to step 2.'; return; }
     var btn = document.getElementById('payBtn'); btn.disabled=true; btn.textContent='Starting checkout…';
+    try {
+      sessionStorage.setItem('bricks_booking', JSON.stringify({
+        name: document.getElementById('f_name').value.trim(),
+        email: document.getElementById('f_email').value.trim(),
+        addr: data.selectedAddr || document.getElementById('f_addr').value.trim(),
+        notes: document.getElementById('f_notes').value.trim()
+      }));
+    } catch(e){}
     var payload = {
       quote: data.quote,
       agent_name: document.getElementById('f_name').value.trim(),
@@ -474,6 +487,23 @@
       })
       .catch(function(){ e.textContent='Network error starting checkout.'; btn.disabled=false; btn.textContent='Pay & book'; });
   }
+
+  // ---- post-payment scheduling CTA (paid=1) ----
+  (function(){
+    if(new URLSearchParams(location.search).get('paid') !== '1') return;
+    document.getElementById('doneTitle').textContent = 'Payment confirmed';
+    document.getElementById('doneMsg').textContent = 'Your shoot is paid. Pick a time below and it lands on our calendar.';
+    document.getElementById('scheduleCta').style.display = 'block';
+    try {
+      var b = JSON.parse(sessionStorage.getItem('bricks_booking') || '{}');
+      var q = [];
+      if(b.name) q.push('name=' + encodeURIComponent(b.name));
+      if(b.email) q.push('email=' + encodeURIComponent(b.email));
+      if(b.addr) q.push('a1=' + encodeURIComponent(b.addr));
+      if(b.notes) q.push('notes=' + encodeURIComponent(b.notes));
+      if(q.length) document.getElementById('calScheduleLink').href = 'https://cal.com/akasm/bricks-media-shoot?' + q.join('&');
+    } catch(e){}
+  })();
 
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 </script>
