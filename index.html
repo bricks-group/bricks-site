@@ -148,6 +148,15 @@
     border:1px solid var(--hair);border-radius:2px;}
   .split .col{background:var(--paper);padding:26px;}
   .split h3{font-weight:500;font-size:17px;color:var(--ink);margin-bottom:12px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+  .grid3 .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);transition:border-color .2s ease;}
+  .grid3 .card:hover{border-color:var(--brick);}
+  .grid3 .card .img{aspect-ratio:4/3;background:var(--paperDeep);overflow:hidden;}
+  .grid3 .card .img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+  .grid3 .card:hover .img img{transform:scale(1.04);}
+  .grid3 .card .meta{padding:13px;}
+  .grid3 .card .meta .t{font-weight:500;font-size:14px;color:var(--ink);}
+  .grid3 .card .meta .d{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);margin-top:4px;}
   .split ul{list-style:none;}
   .split li{font-size:13px;color:var(--inkMute);padding:7px 0;border-bottom:1px solid var(--hair);
     display:flex;gap:8px;align-items:baseline;}
@@ -500,6 +509,20 @@
   </section>
 </div>
 
+<!-- WORK PREVIEW -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head">
+      <div>
+        <span class="over">Selected work · GTA</span>
+        <h2>Real shoots, not stock.</h2>
+      </div>
+      <a href="gallery.html" class="btn btn-sec" style="white-space:nowrap;">See more work →</a>
+    </div>
+    <div class="grid3" id="workPreview"><!-- first 6 from Supabase (BRX Images) --></div>
+  </section>
+</div>
+
 <footer>
   <div class="foot">
     <div class="fbrand">
@@ -628,6 +651,29 @@
     if(!seen){ setTimeout(show, 4000); }
     document.addEventListener('mouseout', function(e){ if(e.clientY < 10 && !seen){ show(); } });
   });
+
+  // ---- Work preview on landing (first 6, real shoots from BRX Images) ----
+  (function(){
+    var prev = document.getElementById('workPreview');
+    if(!prev) return;
+    var BUCKET = 'https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/';
+    var WORK = [
+      {f:'Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg', t:'Suite 4003 — 2 Bed', d:'Downtown · HDR + drone'},
+      {f:'Multifamily/DroneShot2142.jpg', t:'Aerial — Multifamily', d:'Drone · CAS-licensed'},
+      {f:'Multifamily/untitled shoot--22-HDR.jpg', t:'Multifamily HDR', d:'GTA · HDR bracket'},
+      {f:'Multifamily/amenities-3.jpg', t:'Building amenities', d:'GTA · HDR interior'},
+      {f:'Multifamily/braemar-place-brampton-on-aerial-photo.jpg', t:'Braemar Place', d:'Brampton · aerial'},
+      {f:'Multifamily/1746215832704_44-Charles-West-in-Manulife-Centre__5_.jpg', t:'44 Charles West', d:'Manulife Centre · exterior'}
+    ];
+    WORK.forEach(function(w){
+      var card = document.createElement('div');
+      card.className = 'card';
+      var img = BUCKET + w.f.split('/').map(encodeURIComponent).join('/');
+      card.innerHTML = '<div class="img"><img loading="lazy" src="'+img+'" alt="'+w.t+'"></div>'+
+        '<div class="meta"><div class="t">'+w.t+'</div><div class="d">'+w.d+'</div></div>';
+      prev.appendChild(card);
+    });
+  })();
 </script>
 
 <!-- Newsletter persistent pill -->
