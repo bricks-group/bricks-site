@@ -562,7 +562,9 @@
       })
       .catch(function(){ msg.textContent='Network error — try again.'; });
     return false;
-  // ---- Newsletter popup ----
+  }
+
+  // ---- Newsletter popup trigger ----
   document.addEventListener('DOMContentLoaded', function(){
     var pop = document.getElementById('nlPop');
     if(!pop) return;
@@ -592,6 +594,41 @@
     window.location.href='mailto:booking@brxs.ca?subject='
       +encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   }
+
+  // ---- Newsletter popup submit ----
+  function nlPopSubmit(e){
+    e.preventDefault();
+    var email = document.getElementById('nlPopEmail').value.trim();
+    var msg = document.getElementById('nlPopMsg');
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ msg.textContent='Enter a valid email.'; return false; }
+    msg.textContent='Subscribing…';
+    fetch(SUPABASE+'newsletter-signup', { method:'POST', headers:{'Content-Type':'application/json','apikey':ANON},
+      body: JSON.stringify({ email: email, source: 'popup' }) })
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
+      .then(function(res){
+        if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
+        msg.textContent='You are on the list.';
+        document.getElementById('nlPopEmail').value='';
+        try{ sessionStorage.setItem('nl_seen','1'); }catch(e){}
+        setTimeout(function(){ var p=document.getElementById('nlPop'); if(p) p.classList.remove('show'); }, 1500);
+      })
+      .catch(function(){ msg.textContent='Network error — try again.'; });
+    return false;
+  }
+
+  // ---- Newsletter popup trigger ----
+  document.addEventListener('DOMContentLoaded', function(){
+    var pop = document.getElementById('nlPop');
+    if(!pop) return;
+    var pill = document.getElementById('nlPill');
+    var seen = false; try{ seen = sessionStorage.getItem('nl_seen')==='1'; }catch(e){}
+    function show(){ pop.classList.add('show'); if(pill) pill.style.display='none'; }
+    function hide(){ pop.classList.remove('show'); try{ sessionStorage.setItem('nl_seen','1'); }catch(e){} if(pill) pill.style.display='flex'; }
+    var x = document.getElementById('nlPopX'); if(x) x.addEventListener('click', hide);
+    if(pill) pill.addEventListener('click', show);
+    if(!seen){ setTimeout(show, 4000); }
+    document.addEventListener('mouseout', function(e){ if(e.clientY < 10 && !seen){ show(); } });
+  });
 </script>
 
 <!-- Newsletter persistent pill -->
