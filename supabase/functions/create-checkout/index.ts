@@ -5,13 +5,21 @@
 // Checkout URL. A webhook (stripe-webhook fn) confirms payment, writes the
 // paid lead, and books the Cal.com slot.
 //
+// The client-submitted `quote` is NEVER trusted for the charged amount --
+// it's just what the wizard displayed. We re-run the same pricing engine
+// server-side (an internal call to the `quote` function, using the same
+// address/package/add-ons/sqft the client says it used) and charge that
+// number instead. Without this, editing `quote.total` in devtools before
+// hitting Pay would let anyone check out for any amount.
+//
 // Deploy:  supabase functions deploy create-checkout
 // Needs:   STRIPE_SECRET_KEY (set via `supabase secrets set STRIPE_SECRET_KEY=...`)
 //          APP_URL (your public prelaunch site; set already)
+//          SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY (auto-injected)
 //
 // Invoke:  POST /functions/v1/create-checkout
-//          body: { quote, agent_name, email, property_address, property_type,
-//                  package_interest, preferred_date, preferred_window,
+//          body: { agent_name, email, property_address, property_type,
+//                  package_interest, sqft, preferred_date, preferred_window,
 //                  tour_addon, twilight_addon, extended3d_addon, phone, brokerage, notes }
 
 const corsHeaders = {
@@ -33,13 +41,40 @@ Deno.serve(async (req: Request) => {
   const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
   if (!stripeKey) return bad('Stripe not configured (set STRIPE_SECRET_KEY)', 503);
   const appUrl = Deno.env.get('APP_URL') || 'https://bricks-booking.prelaunch';
+  const supabaseUrl = Deno.env.get('SUPABASE_URL');
+  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  if (!supabaseUrl || !serviceKey) return bad('Server misconfigured', 500);
 
   let body: any;
   try { body = await req.json(); } catch { return bad('Invalid JSON'); }
 
-  const q = body.quote;
-  if (!q || typeof q.total !== 'number') return bad('Quote total required');
   if (!body.selected_slot_start || !body.selected_slot_end) return bad('A real shoot slot must be selected before checkout');
+
+  // Re-derive the trusted price server-side -- ignore body.quote entirely for
+  // pricing. Pass the same sqft the wizard used (agent-confirmed or the
+  // auto-estimate) so the recompute matches exactly, not a fresh re-estimate.
+  let q: any;
+  try {
+    const quoteRes = await fetch(`${supabaseUrl}/functions/v1/quote`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${serviceKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        address: body.property_address,
+        property_type: body.property_type,
+        package_interest: body.package_interest,
+        tour_addon: body.tour_addon,
+        twilight_addon: body.twilight_addon,
+        extended3d_addon: body.extended3d_addon,
+        sqft: body.sqft || undefined,
+      }),
+    });
+    const quoteJson = await quoteRes.json();
+    if (!quoteRes.ok || !quoteJson.ok) return bad('Could not verify pricing for this booking: ' + (quoteJson.error || quoteRes.status), 502);
+    q = quoteJson.quote;
+  } catch (e) {
+    return bad('Pricing verification error: ' + String(e), 502);
+  }
+  if (!q || typeof q.total !== 'number') return bad('Quote total required');
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 

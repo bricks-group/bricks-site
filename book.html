@@ -621,6 +621,7 @@
       property_address: data.selectedAddr || document.getElementById('f_addr').value.trim(),
       property_type: document.getElementById('f_type').value,
       package_interest: data.quote && data.quote.package ? data.quote.package : data.pkg,
+      sqft: data.quote && data.quote.sqft ? data.quote.sqft : null,
       preferred_date: document.getElementById('f_date').value,
       selected_slot_start: data.selectedSlot ? data.selectedSlot.start : null,
       selected_slot_end: data.selectedSlot ? data.selectedSlot.end : null,
