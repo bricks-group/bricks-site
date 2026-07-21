@@ -58,7 +58,10 @@ Deno.serve(async (req: Request) => {
     phone: (body.phone || '').toString(),
     brokerage: (body.brokerage || '').toString(),
     notes: (body.notes || '').toString().slice(0, 500),
-    quote_json: JSON.stringify(q).slice(0, 1900),
+    // Stripe metadata values are capped at 500 chars -- store only what
+    // stripe-webhook actually reads back (total, and lat/lon for the
+    // travel-time check against neighboring bookings), not the full quote.
+    quote_json: JSON.stringify({ total: q.total, lat: q.lat ?? null, lon: q.lon ?? null }).slice(0, 480),
   };
 
   const form = new URLSearchParams();

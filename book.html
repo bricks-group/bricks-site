@@ -482,7 +482,11 @@
     var box = document.getElementById('slotBox');
     if(!date){ box.innerHTML = '<div class="slotmsg">Pick a date above to see real available times.</div>'; return; }
     box.innerHTML = '<div class="slotmsg">Checking live availability…</div>';
-    fetch(CAL_SLOTS_URL + '?date=' + encodeURIComponent(date), { headers: { apikey: ANON } })
+    var geoQS = '';
+    if(data.quote && data.quote.lat != null && data.quote.lon != null){
+      geoQS = '&lat=' + encodeURIComponent(data.quote.lat) + '&lon=' + encodeURIComponent(data.quote.lon);
+    }
+    fetch(CAL_SLOTS_URL + '?date=' + encodeURIComponent(date) + geoQS, { headers: { apikey: ANON } })
       .then(function(r){ return r.json(); })
       .then(function(j){
         if(!j.ok){ box.innerHTML = '<div class="slotmsg">Couldn\'t load times for this date — try another, or email <b>booking@brxs.ca</b>.</div>'; return; }

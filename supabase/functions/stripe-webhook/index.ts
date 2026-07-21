@@ -108,7 +108,13 @@ Deno.serve(async (req: Request) => {
           attendee: { name: m.agent_name || 'Bricks agent', email: m.email || 'booking@brxs.ca', timeZone: 'America/Toronto' },
           location: { type: 'attendeeAddress', address: m.property_address || '' },
           bookingFieldsResponses: { notes: `Bricks paid shoot (lead ${leadId}). ${m.property_address || ''}` },
-          metadata: { bricks_lead_id: String(leadId) },
+          // property_lat/lon let cal-slots enforce a travel-time gap against
+          // this booking when it later computes availability for other addresses.
+          metadata: {
+            bricks_lead_id: String(leadId),
+            property_lat: quote?.lat != null ? String(quote.lat) : '',
+            property_lon: quote?.lon != null ? String(quote.lon) : '',
+          },
         }),
       });
       if (!bookingRes.ok) {
