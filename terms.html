@@ -74,6 +74,13 @@
   .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--inkFaint);max-width:340px;line-height:1.5;}
   .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
 
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:30px;height:30px;
+    background:none;border:none;cursor:pointer;padding:0;flex:none;}
+  .nav-toggle span{display:block;width:100%;height:2px;background:var(--ink);border-radius:1px;
+    transition:transform .2s ease,opacity .2s ease;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
   @media (max-width:680px){.nav{position:relative;}
     .nav-toggle{display:flex;}
     .nav-links{position:absolute;top:100%;left:0;right:0;background:var(--paper);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .25s ease;border-bottom:1px solid var(--hair);z-index:40;}
@@ -82,13 +89,6 @@
     .nav-links a:first-child{border-top:none;}
     .nav-links .nav-flag{display:none;}}
 
-  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:30px;height:30px;
-    background:none;border:none;cursor:pointer;padding:0;flex:none;}
-  .nav-toggle span{display:block;width:100%;height:2px;background:var(--ink);border-radius:1px;
-    transition:transform .2s ease,opacity .2s ease;}
-  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  .nav-toggle.open span:nth-child(2){opacity:0;}
-  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 </style>
 </head>
 <body>
