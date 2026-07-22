@@ -55,7 +55,9 @@
   .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;background:var(--brickTint);color:var(--brickDeep);margin-bottom:14px;}
   .hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
   .hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:620px;}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 50px;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 44px;}
+  .grp{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:34px 0 0;padding-bottom:10px;border-bottom:1px solid var(--hair);}
+  .grp:first-child{margin-top:14px;}
   .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);transition:border-color .2s ease;}
   .card:hover{border-color:var(--brick);}
   .card .img{aspect-ratio:4/3;background:var(--paperDeep);overflow:hidden;}
@@ -118,28 +120,41 @@
     <p class="sub">Listing media captured across the Greater Toronto Area — HDR photography, CAS-licensed drone, floor plans, twilight, and 3D virtual tours.</p>
   </section>
 
-  <div class="grid" id="workGrid">
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg" alt="Downtown residence"></div><div class="meta"><div class="t">Downtown residence</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4701-2BDRM-DSC08028-1-scaled.jpeg" alt="Downtown residence"></div><div class="meta"><div class="t">Downtown residence</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot-9971-HDR-Enhanced-NR.jpg" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/DroneShot2142.jpg" alt="Aerial — Multifamily"></div><div class="meta"><div class="t">Aerial — Multifamily</div><div class="d">Drone · CAS-licensed</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--22-HDR.jpg" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/amenities-3.jpg" alt="Building amenities"></div><div class="meta"><div class="t">Building amenities</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" alt="GTA multifamily"></div><div class="meta"><div class="t">GTA multifamily — aerial</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/1746215832704_44-Charles-West-in-Manulife-Centre__5_.jpg" alt="Downtown high-rise"></div><div class="meta"><div class="t">Downtown high-rise</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--76-HDR.png" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/20250312-untitled%20shoot-0117-HDR.png" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/8F382591-AA45-4B74-AD75-08717CFB63D4.PNG" alt="GTA residence"></div><div class="meta"><div class="t">GTA residence</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG" alt="GTA exterior"></div><div class="meta"><div class="t">GTA exterior</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/comm-interior-1.jpg" alt="Commercial interior"></div><div class="meta"><div class="t">Commercial interior</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/comm-aerial-1.jpg" alt="Commercial — aerial"></div><div class="meta"><div class="t">Commercial — aerial</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/comm-ext-1.jpg" alt="Commercial exterior"></div><div class="meta"><div class="t">Commercial exterior</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/comm-ext-2.jpg" alt="Commercial exterior"></div><div class="meta"><div class="t">Commercial exterior</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/comm-unit-1.jpg" alt="Commercial unit"></div><div class="meta"><div class="t">Commercial unit</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/res-dining-1.jpg" alt="Residential interior"></div><div class="meta"><div class="t">Residential interior</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/res-ext-1.jpg" alt="Residential exterior"></div><div class="meta"><div class="t">Residential exterior</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/res-living-1.jpg" alt="Residential interior"></div><div class="meta"><div class="t">Residential interior</div></div></div>
-    <div class="card"><div class="img"><img loading="lazy" src="media/res-living-2.jpg" alt="Residential interior"></div><div class="meta"><div class="t">Residential interior</div></div></div>
+  <div class="groups">
+
+    <h3 class="grp">Residential</h3>
+    <div class="grid" id="workGrid">
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg" alt="Downtown residence"></div><div class="meta"><div class="t">Downtown residence</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4701-2BDRM-DSC08028-1-scaled.jpeg" alt="Downtown residence"></div><div class="meta"><div class="t">Downtown residence</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/8F382591-AA45-4B74-AD75-08717CFB63D4.PNG" alt="GTA residence"></div><div class="meta"><div class="t">GTA residence</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/res-dining-1.jpg" alt="Residential interior"></div><div class="meta"><div class="t">Residential interior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/res-living-1.jpg" alt="Residential interior"></div><div class="meta"><div class="t">Residential interior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/res-living-2.jpg" alt="Residential interior"></div><div class="meta"><div class="t">Residential interior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/res-ext-1.jpg" alt="Residential exterior"></div><div class="meta"><div class="t">Residential exterior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG" alt="GTA exterior"></div><div class="meta"><div class="t">GTA exterior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/comm-aerial-1.jpg" alt="Residential — aerial"></div><div class="meta"><div class="t">Residential — aerial</div></div></div>
+    </div>
+
+    <h3 class="grp">Commercial</h3>
+    <div class="grid" id="workGrid">
+      <div class="card"><div class="img"><img loading="lazy" src="media/comm-interior-1.jpg" alt="Commercial interior"></div><div class="meta"><div class="t">Commercial interior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/comm-ext-1.jpg" alt="Commercial exterior"></div><div class="meta"><div class="t">Commercial exterior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/comm-ext-2.jpg" alt="Commercial exterior"></div><div class="meta"><div class="t">Commercial exterior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="media/comm-unit-1.jpg" alt="Commercial unit"></div><div class="meta"><div class="t">Commercial unit</div></div></div>
+    </div>
+
+    <h3 class="grp">Multifamily</h3>
+    <div class="grid" id="workGrid">
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot-9971-HDR-Enhanced-NR.jpg" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/DroneShot2142.jpg" alt="Aerial — Multifamily"></div><div class="meta"><div class="t">Aerial — Multifamily</div><div class="d">Drone · CAS-licensed</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--22-HDR.jpg" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/amenities-3.jpg" alt="Building amenities"></div><div class="meta"><div class="t">Building amenities</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" alt="GTA multifamily"></div><div class="meta"><div class="t">GTA multifamily — aerial</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/1746215832704_44-Charles-West-in-Manulife-Centre__5_.jpg" alt="Downtown high-rise"></div><div class="meta"><div class="t">Downtown high-rise</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--76-HDR.png" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/20250312-untitled%20shoot-0117-HDR.png" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
+    </div>
+
   </div>
 </div>
 
