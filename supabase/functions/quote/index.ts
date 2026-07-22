@@ -1,17 +1,18 @@
 // Supabase Edge Function: quote
-// Dynamic pricing engine for Bricks listing-media booking.
+// Dynamic pricing engine for Bricks listing-media booking — à la carte.
 // Flow: address -> Nominatim geocode (lat/lng, travel distance) ->
 // FREE sqft guess (OSM building footprint at the coord, clamped to the
-// property-type range; agent confirms in wizard) -> footprint tier ->
-// base rate -> travel fee (haversine from BASE, FREE_KM free, $/km after)
-// -> add-ons (3D tour +$199, twilight, extended 3D) -> +13% HST = total.
+// property-type range; agent confirms in wizard) -> footprint band ->
+// photo + drone base (always included) -> travel fee (haversine from BASE,
+// FREE_KM free, $/km after) -> add-ons (reel, 3D tour, twilight, rush) ->
+// +13% HST = total.
 // No paid sqft API: CleverTech's free tier is unusable for sqft and its
 // monthly limit is too small to call per-quote; GeoWarehouse (~$100/mo) is
 // the paid upgrade path. The agent's confirmed sqft overrides the guess.
 // Returns an itemized quote so the wizard can show "data speaks for itself".
 //
 // Deploy:  supabase functions deploy quote
-// Invoke:  POST /functions/v1/quote   body: {address, property_type, package_interest, tour_addon, twilight_addon, extended3d_addon}
+// Invoke:  POST /functions/v1/quote   body: {address, property_type, reel_addon, tour_addon, twilight_addon, rush_addon, sqft?}
 //
 // All outbound calls use a proper User-Agent (Nominatim policy) and are
 // best-effort; if geo/sqft lookup fails we fall back to a category estimate
@@ -29,34 +30,18 @@ const FREE_KM = 25;
 const PER_KM = 0.75; // market rate (CRA vehicle cost ~$0.73/km)
 const HST = 0.13;
 
-// Footprint-tier base rates (CAD, pre-tax) keyed by package + size band.
-// sqft bands: small <1500, medium 1500-2999, large 3000-4999, xlarge 5000+
-const BASE_RATE: Record<string, [number, number, number, number | null]> = {
-  //            small    medium   large    xlarge
-  'Standard': [199, 249, 299, null],   // Standard caps at Large; XL homes go Premium+
-  'Premium':  [399, 449, 499, 549],
-  'Luxury':   [699, 799, 899, 999],
-  'Estate':   [1299, 1299, 1299, 1299],
-  // NOTE: 'Advise' is NOT a pricable package. It's a recommendation mode handled
-  // below — it maps to a real package based on sqft/type and quotes THAT.
-};
-const ADDON = { tour: 149, twilight: 129, extended3d: 199 };
+// Footprint bands, aligned to the pricing page: small <=1,200 / mid <=2,500 /
+// large <=4,000 / xl 4,000+ sq ft.
+const BAND_LABEL = ['Small', 'Mid', 'Large', 'XL'];
 
-// Maps a sqft band + property type to the package we'd recommend.
-function recommendPackage(sqft: number, propertyType: string): string {
-  const b = band(sqft);
-  // Estate-level footprint (5000+ sqft) -> Estate
-  if (b >= 3) return 'Estate';
-  // Commercial / multiplex -> at least Premium
-  if (['Commercial', 'Multiplex', 'Estate'].includes(propertyType)) return b >= 2 ? 'Luxury' : 'Premium';
-  // Condos: small -> Standard, larger -> Premium
-  if (propertyType === 'Condo') return b >= 1 ? 'Premium' : 'Standard';
-  // Default residential by footprint band
-  if (b === 0) return 'Standard';
-  if (b === 1) return 'Premium';
-  if (b === 2) return 'Luxury';
-  return 'Estate';
-}
+// À la carte rates (CAD, pre-tax) by footprint band. Photo + drone are the
+// always-included base; everything else is an optional add-on.
+const PHOTO_RATE = [149, 199, 249, 299];
+const DRONE_RATE = [99, 119, 139, 159];
+const REEL_RATE = [99, 129, 149, 179];
+const TWILIGHT_RATE = [99, 109, 119, 129];
+const TOUR_FLAT = 149;
+const RUSH_FLAT = 75;
 
 function bad(msg: string, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: msg }), {
@@ -65,9 +50,9 @@ function bad(msg: string, status = 400) {
 }
 
 function band(sqft: number): number {
-  if (sqft < 1500) return 0;
-  if (sqft < 3000) return 1;
-  if (sqft < 5000) return 2;
+  if (sqft <= 1200) return 0;
+  if (sqft <= 2500) return 1;
+  if (sqft <= 4000) return 2;
   return 3;
 }
 
@@ -138,15 +123,13 @@ Deno.serve(async (req: Request) => {
   try { body = await req.json(); } catch { return bad('Invalid JSON'); }
 
   const address = (body.address || '').toString().trim();
-  const pkg = (body.package_interest || body.package || '').toString().trim();
+  const reel = body.reel_addon === true || body.reel_addon === 'true';
   const tour = body.tour_addon === true || body.tour_addon === 'true';
   const twilight = body.twilight_addon === true || body.twilight_addon === 'true';
-  const ext3d = body.extended3d_addon === true || body.extended3d_addon === 'true';
+  const rush = body.rush_addon === true || body.rush_addon === 'true';
   const manualSqft = body.sqft ? parseInt(body.sqft) : null;
 
   if (!address) return bad('Address is required');
-  const pkgKey = ['Standard', 'Premium', 'Luxury', 'Estate', 'Advise'].find((k) => pkg.startsWith(k)) || 'Standard';
-  const isAdvise = pkgKey === 'Advise';
 
   // 1) geocode
   const geo = await geocode(address);
@@ -168,8 +151,8 @@ Deno.serve(async (req: Request) => {
   let sqft: number | null = manualSqft;
   let sqft_source = manualSqft ? 'agent' : 'none';
   let sqft_estimated = false;
+  const pt = (body.property_type || '').toString().trim();
   if (!sqft) {
-    const pt = (body.property_type || '').toString().trim();
     const def = DEFAULT_SQFT[pt] ?? 2200;
     if (FREE_STANDING.has(pt)) {
       const fp = await osmFootprintSqft(geo.lat, geo.lon);
@@ -187,33 +170,28 @@ Deno.serve(async (req: Request) => {
     'Condo': 0, 'Semi / Town': 1, 'Detached': 1, 'Multiplex': 2, 'Commercial': 2, 'Estate': 3,
   };
 
-  // 3) base rate by tier (sqft band, nudged up by property type so type defaults don't under-price)
-  //    In 'Advise' mode, recommend a real package from sqft + property type (no invented fee).
-  const pt = (body.property_type || '').toString().trim();
+  // 3) footprint band (sqft band, nudged up by property type so type defaults don't under-price)
   const finalBand = Math.max(band(sqft), typeBand[pt] ?? 1);
-  let effectivePkg = pkgKey;
-  let recommended = false;
-  if (isAdvise) {
-    effectivePkg = recommendPackage(sqft, pt);
-    recommended = true;
-  }
-  const rates = BASE_RATE[effectivePkg] ?? BASE_RATE['Standard'];
-  // Standard caps at Large; if an XL home is forced to Standard, fall back to Premium.
-  const base = rates[finalBand] ?? BASE_RATE['Premium'][finalBand];
 
-  // 4) travel
+  // 4) base = photo + drone, always included
+  const photo_rate = PHOTO_RATE[finalBand];
+  const drone_rate = DRONE_RATE[finalBand];
+  const base = photo_rate + drone_rate;
+
+  // 5) travel
   const dist = haversine(BASE, geo);
   const billableKm = Math.max(0, dist - FREE_KM);
   const travel = Math.round(billableKm * PER_KM * 100) / 100;
 
-  // 5) add-ons
+  // 6) add-ons
   const addons: { label: string; amount: number }[] = [];
-  if (tour) addons.push({ label: '3D virtual tour', amount: ADDON.tour });
-  if (twilight) addons.push({ label: 'Twilight photography', amount: ADDON.twilight });
-  if (ext3d) addons.push({ label: 'Extended 3D coverage', amount: ADDON.extended3d });
+  if (reel) addons.push({ label: 'Cinematic reel', amount: REEL_RATE[finalBand] });
+  if (tour) addons.push({ label: '3D virtual tour', amount: TOUR_FLAT });
+  if (twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[finalBand] });
+  if (rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT });
   const addonsTotal = addons.reduce((s, a) => s + a.amount, 0);
 
-  // 6) subtotal + HST
+  // 7) subtotal + HST
   const subtotal = base + travel + addonsTotal;
   const tax = Math.round(subtotal * HST * 100) / 100;
   const total = Math.round((subtotal + tax) * 100) / 100;
@@ -225,9 +203,9 @@ Deno.serve(async (req: Request) => {
       lat: geo.lat, lon: geo.lon,
       distance_km: Math.round(dist * 10) / 10,
       sqft, sqft_source, sqft_estimated,
-      package: effectivePkg,
-      recommended: recommended,
-      recommended_package: recommended ? effectivePkg : null,
+      footprint_band: finalBand,
+      footprint_label: BAND_LABEL[finalBand],
+      photo_rate, drone_rate,
       base_rate: base,
       travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel,
       addons, addons_total: addonsTotal,
