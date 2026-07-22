@@ -5,7 +5,7 @@ ground Bricks' à la carte pricing so it sits competitively in the GTA market.
 
 ## Competitors & headline pricing
 - **REPhotos** — à la carte leader. Photo Essentials $149 (S) → $229 (XL). Floor plan $99 flat.
-  3 drone photos $39, 10 drone $99, drone video $99, drone+video $179. Matterport $149.
+  3 drone photos $39, 10 drone $99, drone video $99, drone+video $179. Virtual tour $149.
   Reel $149. Travel: free within Halton/Peel; $0.47/km after 30 km.
 - **Dee Visuals** — packages $375–$1055 by size. HDR-only from $200. iGUIDE tour from $225.
   Aerial photos $90 / video $90 / combo $150. Dusk photo $225. Travel free ≤50km, $25–50 beyond.
@@ -27,7 +27,7 @@ ground Bricks' à la carte pricing so it sits competitively in the GTA market.
 | Drone photos           | $39–99   | $100–149    | $179      |
 | Drone / aerial video   | $90      | $150–250    | $325      |
 | Floor plan             | $99      | $99–149     | $149      |
-| 3D / Matterport tour   | $149     | $179–225    | $300+     |
+| 3D / virtual tour      | $149     | $179–225    | $300+     |
 | Walkthrough / cinematic video | $169 | $289–400    | $525      |
 | Social reel            | $149     | $150–200    | $200      |
 | Twilight (real)        | —        | $175–225    | $250      |
