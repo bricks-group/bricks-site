@@ -227,6 +227,7 @@
   .grid3 .card .meta .t{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:4px 8px;}
   .grid3 .card .meta .d{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);margin-top:4px;}
   .reel-wrap{margin-top:26px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
+  .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
   .trust{text-align:center;padding:8px 0 4px;}
   .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
   .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
@@ -516,48 +517,6 @@
   </section>
 </div>
 
-<!-- AUDIENCES -->
-<div class="wrap">
-  <section class="block" id="roles">
-    <div class="sec-head">
-      <div>
-        <span class="over">One platform · three roles</span>
-        <h2>Built for everyone on the deal.</h2>
-      </div>
-      <p>Different seats, same source of truth — from the agent in the field to the broker running the desk.</p>
-    </div>
-    <div class="surf">
-      <div class="surf-col rvl" style="--rd:0.00s">
-        <h3>Agents</h3>
-        <ul>
-          <li>Book media in seconds from your phone</li>
-          <li>One standard across every listing</li>
-          <li>Branded, MLS-ready delivery in 24–48h</li>
-          <li>3D tours and reels without a second vendor</li>
-        </ul>
-      </div>
-      <div class="surf-col rvl" style="--rd:0.08s">
-        <h3>Brokerages</h3>
-        <ul>
-          <li>Allocate media per agent, see it used</li>
-          <li>Utilization and spend in one place</li>
-          <li>One invoice, not a stack of receipts</li>
-          <li>Consistency agents can't deliver alone</li>
-        </ul>
-      </div>
-      <div class="surf-col rvl" style="--rd:0.16s">
-        <h3>Photographers</h3>
-        <ul>
-          <li>Receive jobs through Dispatch, not cold DMs</li>
-          <li>Quality-tier matched to the shoot</li>
-          <li>One standard, clear expectations</li>
-          <li>Network that scales with demand</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-</div>
-
 <!-- LIVE VS DEV -->
 <div class="wrap">
   <section class="block">
@@ -650,12 +609,12 @@
       </video>
     </div>
     <div class="grid3" id="workPreview">
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg" alt="Downtown residence"></div><div class="meta"><div class="t">Downtown residence</div></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/DroneShot2142.jpg" alt="Aerial — Multifamily"></div><div class="meta"><div class="t">Aerial — Multifamily</div><div class="d">Drone · CAS-licensed</div></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--22-HDR.jpg" alt="Multifamily HDR"></div><div class="meta"><div class="t">Multifamily HDR</div></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/amenities-3.jpg" alt="Building amenities"></div><div class="meta"><div class="t">Building amenities</div></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" alt="GTA multifamily"></div><div class="meta"><div class="t">GTA multifamily — aerial</div></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG" alt="GTA exterior"></div><div class="meta"><div class="t">GTA exterior</div></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg" alt="Downtown residence"></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/DroneShot2142.jpg" alt="Aerial — Multifamily"></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--22-HDR.jpg" alt="Multifamily HDR"></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/amenities-3.jpg" alt="Building amenities"></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" alt="GTA multifamily"></div></div>
+      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG" alt="GTA exterior"></div></div>
     </div>
   </section>
 
