@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bricks — the operating system for real estate (pre-launch)</title>
-<meta name="description" content="Bricks is the operating system for real estate: from booking to capture to delivery to close. Listing media is live now in the GTA; the platform is in development. Book a shoot." />
+<meta name="description" content="Bricks is the operating system for real estate: from booking to capture to delivery to close. GTA listing media -- HDR, licensed drone, floor plans, 3D tours -- live now, trusted by leading Canadian brokerages and REITs. Book a shoot." />
 <link rel="canonical" href="https://www.brxs.ca/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="theme-color" content="#D2542B" />
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="en_CA" />
 <meta property="og:url" content="https://www.brxs.ca/" />
 <meta property="og:title" content="Bricks — the operating system for real estate (pre-launch)" />
-<meta property="og:description" content="Bricks is the operating system for real estate: from booking to capture to delivery to close. Listing media is live now in the GTA; the platform is in development. Book a shoot." />
+<meta property="og:description" content="Bricks is the operating system for real estate: from booking to capture to delivery to close. GTA listing media -- HDR, licensed drone, floor plans, 3D tours -- live now, trusted by leading Canadian brokerages and REITs. Book a shoot." />
 <meta property="og:image" content="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Bricks — the operating system for real estate (pre-launch)" />
@@ -24,13 +24,20 @@
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Bricks",
-  "description": "Bricks is the operating system for real estate: from booking to capture to delivery to close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and 3D virtual tours -- live now in the Greater Toronto Area. The booking, dispatch, and brokerage software platform is in development.",
+  "description": "Bricks is the operating system for real estate: from booking to capture to delivery to close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and 3D virtual tours -- live now in the Greater Toronto Area, trusted by leading Canadian brokerages and REITs. The booking, dispatch, and brokerage software platform is in development.",
   "url": "https://www.brxs.ca/",
   "telephone": "+1-343-453-4578",
   "email": "booking@brxs.ca",
   "image": "https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG",
   "priceRange": "$199-$1299 CAD",
   "areaServed": { "@type": "City", "name": "Greater Toronto Area" },
+  "knowsAbout": ["Real estate photography", "Aerial photography", "Floor plans", "3D virtual tours", "Real estate media", "Drone photography"],
+  "mentions": [
+    { "@type": "Organization", "name": "Realstar Group" },
+    { "@type": "Organization", "name": "Homestead" },
+    { "@type": "Organization", "name": "Royal LePage" },
+    { "@type": "Organization", "name": "CBRE" }
+  ],
   "sameAs": []
 }
 </script>
@@ -220,7 +227,17 @@
   .grid3 .card .meta .t{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:4px 8px;}
   .grid3 .card .meta .d{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);margin-top:4px;}
   .reel-wrap{margin-top:26px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
-  .reel-video{display:block;width:100%;height:auto;max-height:560px;object-fit:cover;outline:none;}
+  .trust{text-align:center;padding:8px 0 4px;}
+  .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
+  .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+  .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
+  .marquee:hover .marquee-track{animation-play-state:paused;}
+  .logo{display:flex;align-items:center;justify-content:center;height:32px;flex:none;}
+  .logo img{height:32px;width:auto;display:block;opacity:.78;filter:grayscale(1);transition:opacity .2s ease,filter .2s ease;}
+  .logo:hover img{opacity:1;filter:grayscale(0);}
+  .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.06em;color:var(--inkMute);opacity:.78;}
+  @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
   .split ul{list-style:none;}
   .split li{font-size:13px;color:var(--inkMute);padding:7px 0;border-bottom:1px solid var(--hair);
     display:flex;gap:8px;align-items:baseline;}
@@ -346,6 +363,25 @@
         <button type="submit" class="btn btn-sec">Get launch updates</button>
         <span class="nl-msg" id="nlMsg"></span>
       </form>
+    </div>
+  </section>
+</div>
+
+<!-- TRUST: brokerage + REIT partners -->
+<div class="wrap">
+  <section class="trust">
+    <p class="trust-cap">Trusted by Canada's leading brokerages &amp; REITs</p>
+    <div class="marquee" aria-label="Partner logos: Realstar, Homestead, Royal LePage, CBRE">
+      <div class="marquee-track">
+        <div class="logo"><img src="media/logos/realstar.png" alt="Realstar" /></div>
+        <div class="logo"><img src="media/logos/homestead.svg" alt="Homestead" /></div>
+        <div class="logo"><img src="media/logos/royallepage.svg" alt="Royal LePage" /></div>
+        <div class="logo logo-txt">CBRE</div>
+        <div class="logo"><img src="media/logos/realstar.png" alt="Realstar" /></div>
+        <div class="logo"><img src="media/logos/homestead.svg" alt="Homestead" /></div>
+        <div class="logo"><img src="media/logos/royallepage.svg" alt="Royal LePage" /></div>
+        <div class="logo logo-txt">CBRE</div>
+      </div>
     </div>
   </section>
 </div>
