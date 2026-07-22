@@ -214,6 +214,17 @@
     .nav-links .nav-flag{display:none;}
   }
   @media print{.nav-cta,.cta{display:none;}}
+  .trust{text-align:center;padding:8px 0 4px;}
+  .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
+  .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+  .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
+  .marquee:hover .marquee-track{animation-play-state:paused;}
+  .logo{display:flex;align-items:center;justify-content:center;height:32px;flex:none;}
+  .logo img{height:32px;width:auto;display:block;opacity:.78;filter:grayscale(1);transition:opacity .2s ease,filter .2s ease;}
+  .logo:hover img{opacity:1;filter:grayscale(0);}
+  .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.06em;color:var(--inkMute);opacity:.78;}
+  @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
 
 </style>
 </head>
@@ -247,6 +258,39 @@
     <span class="badge">Pre-launch · GTA rates</span>
     <h1>Priced by footprint.</h1>
     <p class="sub">Per-shoot rates for the Greater Toronto Area. One standard, every time — photography, drone, and floor plan. The cinematic reel and 3D tour are Premium+ add-ons. Book direct; the self-serve Booking app is in development.</p>
+  </section>
+<!-- TRUST: brokerage + REIT partners -->
+<div class="wrap">
+  <section class="trust">
+    <p class="trust-cap">Trusted by Canada's leading brokerages &amp; REITs</p>
+    <div class="marquee" aria-label="Partner logos: Royal LePage, RE/MAX, Century 21, Sotheby's International Realty, Sutton, Cushman &amp; Wakefield, SmartCentres, Boardwalk, Realstar, Homestead, Engel &amp; Völkers, CBRE">
+      <div class="marquee-track">
+        <div class="logo"><img src="media/logos/royallepage.svg" alt="Royal LePage" /></div>
+        <div class="logo"><img src="media/logos/remax.png" alt="RE/MAX" /></div>
+        <div class="logo"><img src="media/logos/century21.png" alt="Century 21" /></div>
+        <div class="logo"><img src="media/logos/sothebys.png" alt="Sotheby's International Realty" /></div>
+        <div class="logo"><img src="media/logos/sutton.svg" alt="Sutton" /></div>
+        <div class="logo"><img src="media/logos/cushman.svg" alt="Cushman &amp; Wakefield" /></div>
+        <div class="logo"><img src="media/logos/smartcentres.svg" alt="SmartCentres" /></div>
+        <div class="logo"><img src="media/logos/boardwalk.png" alt="Boardwalk" /></div>
+        <div class="logo"><img src="media/logos/realstar.png" alt="Realstar" /></div>
+        <div class="logo"><img src="media/logos/homestead.svg" alt="Homestead" /></div>
+        <div class="logo"><img src="media/logos/engelvoelkers.png" alt="Engel &amp; Völkers" /></div>
+        <div class="logo logo-txt">CBRE</div>
+        <div class="logo"><img src="media/logos/royallepage.svg" alt="Royal LePage" /></div>
+        <div class="logo"><img src="media/logos/remax.png" alt="RE/MAX" /></div>
+        <div class="logo"><img src="media/logos/century21.png" alt="Century 21" /></div>
+        <div class="logo"><img src="media/logos/sothebys.png" alt="Sotheby's International Realty" /></div>
+        <div class="logo"><img src="media/logos/sutton.svg" alt="Sutton" /></div>
+        <div class="logo"><img src="media/logos/cushman.svg" alt="Cushman &amp; Wakefield" /></div>
+        <div class="logo"><img src="media/logos/smartcentres.svg" alt="SmartCentres" /></div>
+        <div class="logo"><img src="media/logos/boardwalk.png" alt="Boardwalk" /></div>
+        <div class="logo"><img src="media/logos/realstar.png" alt="Realstar" /></div>
+        <div class="logo"><img src="media/logos/homestead.svg" alt="Homestead" /></div>
+        <div class="logo"><img src="media/logos/engelvoelkers.png" alt="Engel &amp; Völkers" /></div>
+        <div class="logo logo-txt">CBRE</div>
+      </div>
+    </div>
   </section>
 </div>
 
