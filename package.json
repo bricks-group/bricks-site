@@ -1,0 +1,23 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "Bricks **pre-launch** site — GTA listing-media booking, separated from the production `bricks-site` / `Bricks-OS` repos. This is the beachhead: sell media now, capture leads, upsell to the subscription platform at launch.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RuletheWorld/bricks-prelaunch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RuletheWorld/bricks-prelaunch/issues"
+  },
+  "homepage": "https://github.com/RuletheWorld/bricks-prelaunch#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
