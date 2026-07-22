@@ -272,6 +272,21 @@
   .qa h4{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:8px;}
   .qa p{font-size:13.5px;color:var(--inkMute);line-height:1.5;}
 
+  /* homepage included + add-ons */
+  .incl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
+  .incl .c{background:var(--paper);padding:22px 22px;}
+  .incl .c h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
+  .incl .c p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
+  .incl .c .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
+  .adds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
+  .adds .a{background:var(--paper);padding:20px 22px;}
+  .adds .a .nm{font-weight:500;font-size:15px;color:var(--ink);}
+  .adds .a .pr{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--brickDeep);margin:5px 0 6px;}
+  .adds .a p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
+  @media (max-width:680px){
+    .incl,.adds{grid-template-columns:1fr;}
+  }
+
   /* footer */
   footer{border-top:1px solid var(--hair);margin-top:52px;}
   .foot{max-width:980px;margin:0 auto;padding:30px 36px;display:flex;align-items:center;
@@ -415,15 +430,45 @@
       </video>
     </div>
     <div class="grid3" id="workPreview">
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg" alt="Downtown residence"></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/DroneShot2142.jpg" alt="Aerial — Multifamily"></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--22-HDR.jpg" alt="Multifamily HDR"></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/amenities-3.jpg" alt="Building amenities"></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" alt="GTA multifamily"></div></div>
-      <div class="card"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG" alt="GTA exterior"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg" alt="Downtown residence"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/DroneShot2142.jpg" alt="Aerial — Multifamily"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--22-HDR.jpg" alt="Multifamily HDR"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/amenities-3.jpg" alt="Building amenities"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" alt="GTA multifamily"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG" alt="GTA exterior"></div></div>
     </div>
   </section>
 
+</div>
+
+<!-- WHAT'S IN THE SHOOT + ADD-ONS -->
+<div class="wrap">
+  <section class="block">
+    <div class="sec-head">
+      <div>
+        <span class="over">What's in the shoot</span>
+        <h2>Every shoot ships the core set.</h2>
+      </div>
+    </div>
+    <div class="incl">
+      <div class="c"><span class="ic">01</span><h4>HDR photography</h4><p>Architectural interiors &amp; exteriors, bracketed and edited for MLS.</p></div>
+      <div class="c"><span class="ic">02</span><h4>Licensed drone</h4><p>CAS-certified aerial of the lot, surroundings, and roofline.</p></div>
+      <div class="c"><span class="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
+      <div class="c"><span class="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
+    </div>
+    <div class="sec-head" style="margin-top:38px;">
+      <div>
+        <span class="over">Add-ons</span>
+        <h2>Scale a shoot up.</h2>
+      </div>
+    </div>
+    <div class="adds">
+      <div class="a"><div class="nm">Cinematic reel</div><div class="pr">Included Premium+</div><p>30–45s motion reel for social and listing pages.</p></div>
+      <div class="a"><div class="nm">3D virtual tour</div><div class="pr">+$149</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
+      <div class="a"><div class="nm">Twilight exterior</div><div class="pr">Included Luxury · +$129 a la carte</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
+    </div>
+    <p class="note" style="font-size:13px;color:var(--inkMute);margin-top:16px;">Full tiers and à la carte pricing by footprint are on the <a href="pricing.html" style="color:var(--brickDeep);">pricing page</a>.</p>
+  </section>
 </div>
 
 <!-- FAQ -->
