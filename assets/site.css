@@ -120,6 +120,16 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 .qa h4{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:8px;}
 .qa p{font-size:13.5px;color:var(--inkMute);line-height:1.5;}
 
+/* info cards — quote breakdown, travel, and similar callouts */
+.quote-note,.travel{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:22px 26px;margin-top:20px;}
+.quote-note h3,.travel h3{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:8px;}
+.quote-note p,.travel p{font-size:13.5px;color:var(--inkMute);line-height:1.5;}
+.quote-note ul{margin:12px 0 0;padding-left:18px;}
+.quote-note li{font-size:13.5px;color:var(--inkMute);line-height:1.6;margin-bottom:6px;}
+
+/* shared muted footnote — used under pricing tables, quote cards, etc. */
+.note{font-size:13px;color:var(--inkMute);line-height:1.5;margin-top:16px;}
+
 /* cta band */
 .book{background:var(--night);color:var(--moon);border-radius:2px;padding:34px;margin-top:24px;}
 .book .over{color:var(--moonMute);}
