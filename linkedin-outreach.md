@@ -37,8 +37,8 @@ Live media + pricing: https://brxs.ca
 Subject: cinema-grade listing films
 
 [First name] — for your [area] listings, add a 30–45s cinematic reel and a twilight shoot to
-any booking — both à la carte, from $99 each. Drone + floor plan included on every shoot. The
-reel is the differentiator buyers scroll past. Want one on your next high-end listing?
+any booking — both à la carte, from $199 and $150. Drone + floor plan included on every shoot.
+The reel is the differentiator buyers scroll past. Want one on your next high-end listing?
 
 Book: https://brxs.ca/book.html
 
@@ -71,7 +71,7 @@ Book: https://brxs.ca/book.html
 
 ## What they get when they book
 Photo + drone + floor plan from $248, by footprint (up to $458 for XL) — floor plan always
-included. Add a cinematic reel ($99–179), 3D virtual tour (+$149 flat), twilight (+$99–129),
+included. Add a cinematic reel ($199–349), 3D virtual tour (+$149–299), twilight (+$150–200),
 or rush delivery (+$75), all à la carte and priced to the property. First 25 km of travel from
 Mississauga is free, then $0.75/km. HST added at checkout. Pay at booking via Stripe; schedule
 the slot after.

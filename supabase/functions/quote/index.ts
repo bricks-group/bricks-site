@@ -38,9 +38,9 @@ const BAND_LABEL = ['Small', 'Mid', 'Large', 'XL'];
 // always-included base; everything else is an optional add-on.
 const PHOTO_RATE = [149, 199, 249, 299];
 const DRONE_RATE = [99, 119, 139, 159];
-const REEL_RATE = [99, 129, 149, 179];
-const TWILIGHT_RATE = [99, 109, 119, 129];
-const TOUR_FLAT = 149;
+const REEL_RATE = [199, 249, 299, 349];
+const TWILIGHT_RATE = [150, 170, 185, 200];
+const TOUR_RATE = [149, 199, 249, 299];
 const RUSH_FLAT = 75;
 
 function bad(msg: string, status = 400) {
@@ -186,7 +186,7 @@ Deno.serve(async (req: Request) => {
   // 6) add-ons
   const addons: { label: string; amount: number }[] = [];
   if (reel) addons.push({ label: 'Cinematic reel', amount: REEL_RATE[finalBand] });
-  if (tour) addons.push({ label: '3D virtual tour', amount: TOUR_FLAT });
+  if (tour) addons.push({ label: '3D virtual tour', amount: TOUR_RATE[finalBand] });
   if (twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[finalBand] });
   if (rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT });
   const addonsTotal = addons.reduce((s, a) => s + a.amount, 0);
