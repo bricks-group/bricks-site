@@ -21,76 +21,26 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
 <style>
-  :root{
-    --paper:#F4F1EB; --paperSoft:#EDE8DF; --paperDeep:#E4DED2;
-    --hair:#1411100F; --hairStrong:#14111020;
-    --ink:#14110E; --inkSoft:#3B332A; --inkMute:#6B6054; --inkFaint:#A39684;
-    --brick:#D2542B; --brickDeep:#A8401F; --brickSoft:#F4D9CC; --brickTint:#FBEFE8;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'General Sans',system-ui,sans-serif;color:var(--inkSoft);
-    font-size:15px;line-height:1.6;background:var(--paper);-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:760px;margin:0 auto;padding:0 36px;}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  .over{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
-    letter-spacing:0.16em;text-transform:uppercase;color:var(--inkMute);display:block;}
-
-  header{border-bottom:1px solid var(--hair);}
-  .nav{max-width:760px;margin:0 auto;padding:14px 36px;display:flex;align-items:center;justify-content:space-between;}
-  .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);}
-  .brand svg{height:20px; width:20px;display:block;}
-  .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
-  .nav-links{display:flex;gap:18px;align-items:center;}
-  .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
-  .nav-links a:hover{color:var(--brickDeep);}
-  .nav-flag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;
-    text-transform:uppercase;color:var(--inkMute);border:1px solid var(--hairStrong);
-    padding:3px 7px;border-radius:2px;}
-
-  .hero{padding:44px 0 20px;}
-  .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
+.wrap{max-width:760px;margin:0 auto;padding:0 36px;}
+.hero{padding:44px 0 20px;}
+.badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
     font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;
     background:var(--brickTint);color:var(--brickDeep);margin-bottom:14px;}
-  .hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
-  .hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:560px;}
-  .updated{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);margin-top:10px;}
-
-  .draft-note{background:var(--brickTint);border:1px solid var(--brickSoft);border-radius:2px;
+.hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
+.hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:560px;}
+.updated{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);margin-top:10px;}
+.draft-note{background:var(--brickTint);border:1px solid var(--brickSoft);border-radius:2px;
     padding:16px 18px;margin:22px 0 0;font-size:13px;color:var(--inkSoft);line-height:1.55;}
-  .draft-note b{color:var(--brickDeep);}
-
-  section.block{padding:36px 0;border-top:1px solid var(--hair);}
-  section.block h2{font-weight:500;font-size:22px;letter-spacing:-0.4px;color:var(--ink);margin-bottom:14px;}
-  section.block h3{font-weight:500;font-size:16px;color:var(--ink);margin:20px 0 8px;}
-  section.block p{margin-bottom:12px;color:var(--inkSoft);}
-  section.block ul{margin:0 0 12px 20px;color:var(--inkSoft);}
-  section.block li{margin-bottom:6px;}
-  section.block a{color:var(--brickDeep);}
-
-  footer{border-top:1px solid var(--hair);margin-top:20px;padding:24px 0;}
-  .foot{max-width:760px;margin:0 auto;padding:0 36px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-  .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--inkFaint);max-width:340px;line-height:1.5;}
-  .foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
-
-  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:30px;height:30px;
-    background:none;border:none;cursor:pointer;padding:0;flex:none;}
-  .nav-toggle span{display:block;width:100%;height:2px;background:var(--ink);border-radius:1px;
-    transition:transform .2s ease,opacity .2s ease;}
-  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  .nav-toggle.open span:nth-child(2){opacity:0;}
-  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  @media (max-width:680px){.nav{position:relative;}
-    .nav-toggle{display:flex;}
-    .nav-links{position:absolute;top:100%;left:0;right:0;display:block;background:var(--paper);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .25s ease;border-bottom:1px solid var(--hair);z-index:40;}
-    .nav-links.open{max-height:460px;background:var(--paper);border-bottom:1.5px solid var(--ink);border-top:1.5px solid var(--ink);}
-    .nav-links a,.nav-links .nav-cta{display:block;padding:15px 24px;border-top:1px solid var(--hair);border-radius:0;text-align:left;background:none;color:var(--inkSoft);font-size:15px;}
-    .nav-links a:first-child{border-top:none;}
-    .nav-links a:hover{color:var(--brickDeep);}
-    .nav-links .nav-cta{background:var(--brick);color:#fff;margin:0 24px 16px;padding:15px 22px;text-align:center;border-top:1px solid var(--hair);width:auto;}
-    .nav-links .nav-flag{display:none;}
-  }
+.draft-note b{color:var(--brickDeep);}
+section.block{padding:36px 0;border-top:1px solid var(--hair);}
+section.block h2{font-weight:500;font-size:22px;letter-spacing:-0.4px;color:var(--ink);margin-bottom:14px;}
+section.block h3{font-weight:500;font-size:16px;color:var(--ink);margin:20px 0 8px;}
+section.block p{margin-bottom:12px;color:var(--inkSoft);}
+section.block ul{margin:0 0 12px 20px;color:var(--inkSoft);}
+section.block li{margin-bottom:6px;}
+section.block a{color:var(--brickDeep);}
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
