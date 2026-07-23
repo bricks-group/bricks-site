@@ -6,22 +6,23 @@ CASL-safe: LinkedIn DM is not email; no unsubscribe line needed. Link goes to op
 ---
 
 ## ANGLE 1 — Solo agent, high-volume condos (value)
-Subject: photo + drone + floor plan from $199
+Subject: photo + drone + floor plan from $248
 
 Hey [First name] — saw you're moving [neighbourhood] condos fast. I shoot GTA listings:
-HDR photo, licensed drone, and a floor plan for $199–$299, delivered in 48h. One shooter,
+HDR photo, licensed drone, and a floor plan from $248, delivered in 24–48h. One shooter,
 one standard, no piecing vendors together. Want me to quote your next listing?
 
-Book / get a quote: https://bricks-prelaunch.vercel.app/book.html
+Book / get a quote: https://brxs.ca/book.html
 
 ## ANGLE 2 — Team lead (consistency + scale)
 Subject: consistent media across your whole team
 
 [First name] — when a team lists 10+ homes a month, media quality swings per vendor. Bricks
-is one standard: photo, drone, floor plan every time, priced by footprint ($199–$1,299).
-You get predictable spend and a 48h turn. Happy to shoot one of your active listings on spec.
+is one standard: photo, drone, floor plan every time, priced by footprint ($248–$458 for the
+core shoot, add-ons à la carte on top). You get predictable spend and a 24–48h turn. Happy to
+shoot one of your active listings on spec.
 
-See packages: https://bricks-prelaunch.vercel.app/pricing.html
+See packages: https://brxs.ca/pricing.html
 
 ## ANGLE 3 — Brokerage owner (spend + accountability)
 Subject: turn per-shoot chaos into one invoice
@@ -30,33 +31,34 @@ Subject: turn per-shoot chaos into one invoice
 that one shoot, one standard, one invoice — and the brokerage OS (allocations, utilization,
 reporting) is in development for exactly that. Media's live now in the GTA. Worth a look?
 
-Live media + pricing: https://bricks-prelaunch.vercel.app
+Live media + pricing: https://brxs.ca
 
-## ANGLE 4 — Luxury / boutique specialist (premium tier)
+## ANGLE 4 — Luxury / boutique specialist (premium add-ons)
 Subject: cinema-grade listing films
 
-[First name] — for your [area] listings, the Premium/Luxury tier adds a 30–45s cinematic reel
-and twilight shoot, all in one booking ($699–$999). Drone + floor plan included. The reel is
-the differentiator buyers scroll past. Want one on your next high-end listing?
+[First name] — for your [area] listings, add a 30–45s cinematic reel and a twilight shoot to
+any booking — both à la carte, from $99 each. Drone + floor plan included on every shoot. The
+reel is the differentiator buyers scroll past. Want one on your next high-end listing?
 
-Book: https://bricks-prelaunch.vercel.app/book.html
+Book: https://brxs.ca/book.html
 
 ## ANGLE 5 — Agent who posts stale/old photos (pain)
 Subject: your listings deserve better than iPhone
 
-[First name] — noticed some of your active listings are running flat photos. For $199–$299 I'll
-shoot HDR + drone + floor plan and have it back in 48h. First shoot, you judge the difference.
-No commitment past that.
+[First name] — noticed some of your active listings are running flat photos. From $248 I'll
+shoot HDR + drone + floor plan and have it back in 24–48h. First shoot, you judge the
+difference. No commitment past that.
 
-Get a quote: https://bricks-prelaunch.vercel.app/book.html
+Get a quote: https://brxs.ca/book.html
 
 ## ANGLE 6 — Warm reconnect (past contact / referral)
 Subject: finally booking shoots
 
 [First name] — following up: Bricks is live for GTA listing media now. Photo, drone, floor plan
-from $199, 48h turn, booked direct. If you've got a listing coming up, I'll quote it on the spot.
+from $248, 24–48h turn, booked direct. If you've got a listing coming up, I'll quote it on the
+spot.
 
-Book: https://bricks-prelaunch.vercel.app/book.html
+Book: https://brxs.ca/book.html
 
 ---
 
@@ -68,6 +70,8 @@ Book: https://bricks-prelaunch.vercel.app/book.html
 - [ ] Log replies in a note (who said yes / maybe / no)
 
 ## What they get when they book
-Photo + drone + floor plan ($199–$299 Standard) · reel + larger footprint (Premium $399–$549)
-· reel + twilight (Luxury $699–$999) · all-in (Estate $1,299). 3D tour +$149, twilight +$129.
-Pay at booking via Stripe; schedule the slot after.
+Photo + drone + floor plan from $248, by footprint (up to $458 for XL) — floor plan always
+included. Add a cinematic reel ($99–179), 3D virtual tour (+$149 flat), twilight (+$99–129),
+or rush delivery (+$75), all à la carte and priced to the property. First 25 km of travel from
+Mississauga is free, then $0.75/km. HST added at checkout. Pay at booking via Stripe; schedule
+the slot after.
