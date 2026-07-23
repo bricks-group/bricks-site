@@ -28,7 +28,7 @@ See packages: https://brxs.ca/pricing.html
 Subject: turn per-shoot chaos into one invoice
 
 [First name] — most brokerages bleed $200–600 a listing across whoever's free. Bricks makes
-that one shoot, one standard, one invoice — and the brokerage OS (allocations, utilization,
+that one shoot, one standard, one invoice — and the brokerage operating system (allocations, utilization,
 reporting) is in development for exactly that. Media's live now in the GTA. Worth a look?
 
 Live media + pricing: https://brxs.ca
@@ -71,7 +71,7 @@ Book: https://brxs.ca/book.html
 
 ## What they get when they book
 Photo + drone + floor plan from $248, by footprint (up to $458 for XL) — floor plan always
-included. Add a cinematic reel ($199–349), 3D virtual tour (+$149–299), twilight (+$150–200),
+included. Add a cinematic reel ($199–349), 3D virtual tour (+$149–299), twilight (+$150–200), or virtual staging (+$35 / image),
 or rush delivery (+$75), all à la carte and priced to the property. First 25 km of travel from
 Mississauga is free, then $0.75/km. HST added at checkout. Pay at booking via Stripe; schedule
 the slot after.
