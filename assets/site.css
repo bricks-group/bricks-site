@@ -16,7 +16,7 @@ body{font-family:'General Sans',system-ui,sans-serif;color:var(--inkSoft);
 a{color:inherit;}
 
 /* header */
-header{position:sticky;top:0;z-index:30;background:rgba(244,241,235,0.92);
+header{position:sticky;top:0;z-index:70;background:rgba(244,241,235,0.92);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--hair);}
 .nav{max-width:980px;margin:0 auto;padding:14px 36px;display:flex;align-items:center;
   justify-content:space-between;gap:16px;}
