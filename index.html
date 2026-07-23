@@ -114,15 +114,7 @@
   .brand:hover svg rect:nth-child(3){animation:brickPop .5s ease-out .14s forwards;}
   @keyframes brickPop{0%{transform:translateY(0);}40%{transform:translateY(-3px);}100%{transform:translateY(0);}}
   .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
-  .nav-links{display:flex;gap:22px;align-items:center;}
-  .nav-links a{font-size:13px;color:var(--inkSoft);text-decoration:none;}
-  .nav-links a:hover{color:var(--brickDeep);}
-  .nav-cta{background:var(--brick);color:#fff;font-size:13px;font-weight:500;
-    padding:9px 16px;border-radius:2px;text-decoration:none;}
-  .nav-flag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;
-    text-transform:uppercase;color:var(--inkFaint);border:1px solid var(--hair);
-    padding:4px 8px;border-radius:2px;}
-
+  @media (max-width:680px){
   /* hero */
   .hero{padding:64px 0 40px;}
   .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
