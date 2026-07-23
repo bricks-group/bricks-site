@@ -39,7 +39,8 @@ header{position:sticky;top:0;z-index:30;background:rgba(244,241,235,0.92);
   padding:4px 8px;border-radius:2px;}
 
 /* hero / page head */
-.hero{padding:64px 0 40px;}
+.hero{padding:64px 36px 40px;}
+.hero .wrap{padding:0;}
 .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;
   background:var(--brickTint);color:var(--brickDeep);margin-bottom:18px;}
@@ -159,6 +160,7 @@ footer{border-top:1px solid var(--hair);margin-top:52px;}
   .nav-links a:first-child{border-top:none;}
   .nav-links .nav-flag{display:none;}
   .wrap{padding:0 20px;}
+  .hero{padding:48px 20px 32px;}
   .foot{padding:28px 20px;}
 }
 @media (prefers-reduced-motion: reduce){ .rvl{opacity:1;transform:none;transition:none;} }
