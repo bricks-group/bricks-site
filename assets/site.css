@@ -71,6 +71,9 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 .prose li{font-size:15px;line-height:1.6;margin-bottom:6px;}
 .prose strong{color:var(--ink);font-weight:600;}
 .prose a{color:var(--brickDeep);text-decoration:underline;text-underline-offset:2px;}
+.prose a.btn-brick{color:#fff;text-decoration:none;}
+.prose a.btn-sec{color:var(--ink);text-decoration:none;}
+.prose a.author-card{text-decoration:none;}
 .prose blockquote{margin:22px 0;padding:14px 20px;border-left:2px solid var(--brick);
   background:var(--paperDeep);color:var(--inkSoft);font-size:15px;}
 .prose .lead{font-size:17px;color:var(--ink);line-height:1.6;}
@@ -84,7 +87,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 .author-card .ac-bio .ac-role{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--brickDeep);margin:3px 0 4px;}
 .author-card .ac-bio p{font-size:12.5px;color:var(--inkMute);line-height:1.45;margin:0;}
-.author-card .ac-bio a{color:var(--brickDeep);font-size:12.5px;text-decoration:underline;text-underline-offset:2px;}
+.author-card .ac-bio .ac-more{color:var(--brickDeep);font-size:12.5px;text-decoration:underline;text-underline-offset:2px;}
 
 /* card grid (blog/listing) */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
