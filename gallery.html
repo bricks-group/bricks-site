@@ -81,6 +81,13 @@
   .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
   @media (max-width:680px){.nav{position:relative;}
     .nav-toggle{display:flex;}
+    .nav-links{position:absolute;top:100%;left:0;right:0;display:block;background:var(--paper);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;transition:max-height .25s ease;border-bottom:1px solid var(--hair);z-index:40;}
+    .nav-links.open{max-height:460px;background:var(--paper);border-bottom:1.5px solid var(--ink);border-top:1.5px solid var(--ink);}
+    .nav-links a,.nav-links .nav-cta{display:block;padding:15px 24px;border-top:1px solid var(--hair);border-radius:0;text-align:left;background:none;color:var(--inkSoft);font-size:15px;}
+    .nav-links a:first-child{border-top:none;}
+    .nav-links a:hover{color:var(--brickDeep);}
+    .nav-links .nav-cta{background:var(--brick);color:#fff;margin:0 24px 16px;padding:15px 22px;text-align:center;border-top:1px solid var(--hair);width:auto;}
+    .nav-links .nav-flag{display:none;}
   }
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
