@@ -189,8 +189,8 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
 .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
 .marquee:hover .marquee-track{animation-play-state:paused;}
-.logo{display:flex;align-items:center;justify-content:center;height:32px;flex:none;}
-.logo img{height:32px;width:auto;display:block;opacity:.78;filter:grayscale(1);transition:opacity .2s ease,filter .2s ease;}
+.logo{display:flex;align-items:center;justify-content:center;height:32px;flex:none;overflow:hidden;}
+.logo img{height:32px;max-height:32px;max-width:130px;width:auto;object-fit:contain;display:block;opacity:.78;filter:grayscale(1);transition:opacity .2s ease,filter .2s ease;}
 .logo:hover img{opacity:1;filter:grayscale(0);}
 .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.06em;color:var(--inkMute);opacity:.78;}
 @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
@@ -302,7 +302,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 <div class="wrap">
   <section class="hero">
     <h1>From Capture to Close.</h1>
-    <p class="sub">GTA real estate photography &amp; media — HDR photos, licensed drone, floor plans, and 3D virtual tours for listing agents across the Greater Toronto Area. One platform that runs your shoot end to end; the media service is live today.</p>
+    <p class="sub">Bricks is the GTA's shoot-and-deliver media service for listing agents — HDR, licensed drone, floor plans and 3D tours, back in 24–48 hours. Book in minutes; we run the whole shoot end to end across the Greater Toronto Area.</p>
     <div class="cta-row">
       <a class="btn btn-brick" href="book.html">Book listing media</a>
       <a class="btn btn-sec" href="pricing.html">View pricing</a>
