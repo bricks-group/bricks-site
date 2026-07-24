@@ -35,7 +35,7 @@
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cinematic reel" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": 199, "maxPrice": 349, "priceCurrency": "CAD" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "3D virtual tour" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": 149, "maxPrice": 299, "priceCurrency": "CAD" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Twilight exterior" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": 150, "maxPrice": 200, "priceCurrency": "CAD" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Travel (beyond 25 km)" }, "priceSpecification": { "@type": "UnitPriceSpecification", "price": 0.75, "priceCurrency": "CAD", "unitText": "KILOMETER", "referenceQuantity": { "@type": "QuantitativeValue", "value": 1, "unitCode": "KMT" } } }
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Virtual staging" }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": 35, "maxPrice": 35, "priceCurrency": "CAD" } },
     ]
   }
 }
@@ -54,6 +54,11 @@
       "@type": "Question",
       "name": "Is the 3D tour included?",
       "acceptedAnswer": { "@type": "Answer", "text": "No -- it's a $149-299 add-on, priced by footprint like the rest of the menu. The floor plan is included on every shoot; twilight and rush are optional add-ons priced per the menu above." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is virtual staging?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at $35 per image staged; tell us which rooms and we confirm the count before delivery." }
     },
     {
       "@type": "Question",
@@ -167,21 +172,17 @@ section.block{padding:46px 0;border-top:1px solid var(--hair);}
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="nav-links" id="navLinks">
-      <a href="index.html">Overview</a>
       <a href="pricing.html" class="active">Pricing</a>
       <a href="gallery.html">Work</a>
-      <a href="blog.html">Resources</a>
-      <a href="service-areas.html">Service areas</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
       <a href="book.html" class="nav-cta">Book a shoot</a>
-      <span class="nav-flag">Pre-launch</span>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
   <section class="hero">
-    <span class="badge">Pre-launch · GTA rates</span>
     <h1>Priced by footprint.</h1>
     <p class="sub">Per-shoot rates for the Greater Toronto Area. One standard, every time — photography, drone, and floor plan. The cinematic reel and 3D tour are Premium+ add-ons. Book direct; the self-serve Booking app is in development.</p>
   </section>
@@ -242,6 +243,7 @@ section.block{padding:46px 0;border-top:1px solid var(--hair);}
         <tr><td class="pkg">Cinematic reel<span class="inc">30–45s</span></td><td class="num">$199</td><td class="num">$249</td><td class="num">$299</td><td class="num">$349</td></tr>
         <tr><td class="pkg">3D virtual tour<span class="inc">MLS-ready</span></td><td class="num">$149</td><td class="num">$199</td><td class="num">$249</td><td class="num">$299</td></tr>
         <tr><td class="pkg">Twilight exterior<span class="inc">golden hour</span></td><td class="num">$150</td><td class="num">$170</td><td class="num">$185</td><td class="num">$200</td></tr>
+        <tr><td class="pkg">Virtual staging<span class="inc">per image</span></td><td class="num" colspan="4" style="text-align:center">$35 / image</td></tr>
         <tr class="flat"><td class="pkg">Rush delivery<span class="inc">same / next day</span></td><td class="num" colspan="4" style="text-align:center">+$75 flat</td></tr>
       </tbody>
     </table>
@@ -252,7 +254,7 @@ section.block{padding:46px 0;border-top:1px solid var(--hair);}
       <p>Your price is assembled from these factors — we only charge for what your listing actually needs:</p>
       <ul>
         <li><b>Footprint</b> — finished area &amp; complexity (Small / Mid / Large / XL) sets the photography &amp; drone base.</li>
-        <li><b>What you include</b> — add only the services you want (reel, 3D tour, twilight, rush). Nothing you don't.</li>
+        <li><b>What you include</b> — add only the services you want (reel, 3D tour, twilight, virtual staging, rush). Nothing you don't.</li>
         <li><b>Travel</b> — see below. Shooting inside 25 km of Mississauga is free.</li>
         <li><b>Volume</b> — agents and teams booking regularly get per-shoot rates tuned to their pipeline. Ask.</li>
       </ul>
@@ -275,6 +277,7 @@ section.block{padding:46px 0;border-top:1px solid var(--hair);}
     <div class="faq">
       <div class="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property's finished area and complexity. Not sure which tier? Pick "advise me" in booking and we'll size it from the address.</p></div>
       <div class="qa"><h4>Is the 3D tour included?</h4><p>No — it's a $149–299 add-on, priced by footprint like the rest of the menu. The floor plan is included on every shoot; twilight and rush are optional add-ons priced per the menu above.</p></div>
+      <div class="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. Priced per image staged at <b>$35 / image</b>; tell us which rooms and we'll confirm the count before delivery.</p></div>
       <div class="qa"><h4>Are these the final platform rates?</h4><p>These are the pre-launch direct-booking rates for the GTA. The platform's own rate card may differ when Booking goes live.</p></div>
       <div class="qa"><h4>Do you shoot outside the GTA?</h4><p>Ask — we'll tell you if it's covered and quote travel if needed.</p></div>
     </div>
@@ -308,6 +311,8 @@ section.block{padding:46px 0;border-top:1px solid var(--hair);}
       <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
       <span class="mono" style="font-size:11px;color:var(--inkMute);">343-453-4578</span>
       <a href="terms.html">Terms &amp; Privacy</a>
+      <a href="blog.html">Resources</a>
+      <a href="service-areas.html">Service areas</a>
     </div>
   </div>
   <div class="foot" style="border-top:none;padding-top:0;">
@@ -332,5 +337,6 @@ section.block{padding:46px 0;border-top:1px solid var(--hair);}
     });
   })();
 </script>
+  <script src="assets/protect.js"></script>
 </body>
 </html>

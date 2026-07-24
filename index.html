@@ -24,7 +24,7 @@
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Bricks",
-  "description": "Bricks is the operating system for real estate: from booking to capture to delivery to close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and 3D virtual tours -- live now in the Greater Toronto Area, serving agents and sales reps at Canada's leading brokerages and REITs. The booking, dispatch, and brokerage software platform is in development.",
+  "description": "Bricks is the operating system for real estate: From Capture to Close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and 3D virtual tours -- live now in the Greater Toronto Area, serving agents and sales reps at Canada's leading brokerages and REITs. The booking, dispatch, and brokerage software platform is in development.",
   "url": "https://www.brxs.ca/",
   "telephone": "+1-343-453-4578",
   "email": "booking@brxs.ca",
@@ -54,7 +54,7 @@
     {
       "@type": "Question",
       "name": "Is the platform live?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No -- the media service is live in the GTA today; the Booking app, Dispatch network, and Brokerage OS are in development. You can book media now via the form above or email." }
+      "acceptedAnswer": { "@type": "Answer", "text": "No -- the media service is live in the GTA today; the Booking app, Dispatch network, and Brokerage operating system are in development. You can book media now via the form above or email." }
     },
     {
       "@type": "Question",
@@ -254,6 +254,22 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 .mod-inner{min-height:0;}
 .mod-face.front{position:relative;}}
 @media print{.btn,.nav-cta,.book{display:none;}}
+.ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px;}
+@media(max-width:720px){.ba-grid{grid-template-columns:1fr;}}
+.ba{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--paperDeep);
+  border:1px solid var(--hair);border-radius:2px;cursor:ew-resize;user-select:none;-webkit-user-select:none;touch-action:pan-y;}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none;}
+.ba-before{clip-path:inset(0 50% 0 0);}
+.ba-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--paper);
+  transform:translateX(-1px);box-shadow:0 0 0 1px rgba(20,17,14,0.18);pointer-events:none;}
+.ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:34px;height:34px;border-radius:50%;background:var(--paper);
+  display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--brickDeep);
+  box-shadow:0 1px 5px rgba(20,17,14,0.32);font-family:'JetBrains Mono',monospace;}
+.ba-tag{position:absolute;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:2px;pointer-events:none;z-index:2;}
+.ba-tag-before{left:10px;background:rgba(20,17,14,0.6);color:var(--paper);}
+.ba-tag-after{right:10px;background:var(--brick);color:#fff;}
 </style>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
@@ -273,14 +289,11 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="nav-links" id="navLinks">
-      <a href="index.html" class="active">Overview</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="pricing.html" class="active">Pricing</a>
       <a href="gallery.html">Work</a>
-      <a href="blog.html">Resources</a>
-      <a href="service-areas.html">Service areas</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
       <a href="book.html" class="nav-cta">Book a shoot</a>
-      <span class="nav-flag">Pre-launch</span>
     </nav>
   </div>
 </header>
@@ -288,8 +301,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 <!-- HERO -->
 <div class="wrap">
   <section class="hero">
-    <span class="badge">Pre-launch · platform in development</span>
-    <h1>From booking to capture<br/>to delivery to close.</h1>
+    <h1>From Capture to Close.</h1>
     <p class="sub">GTA real estate photography &amp; media — HDR photos, licensed drone, floor plans, and 3D virtual tours for listing agents across the Greater Toronto Area. One platform that runs your shoot end to end; the media service is live today.</p>
     <div class="cta-row">
       <a class="btn btn-brick" href="book.html">Book listing media</a>
@@ -355,15 +367,58 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       </video>
     </div>
     <div class="grid3" id="workPreview">
-      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Residential/Suite-4003-2BDDEN-DSC08185-1-scaled.jpeg" alt="Downtown residence"></div></div>
-      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/DroneShot2142.jpg" alt="Aerial — Multifamily"></div></div>
-      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/untitled%20shoot--22-HDR.jpg" alt="Multifamily HDR"></div></div>
-      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/amenities-3.jpg" alt="Building amenities"></div></div>
-      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Multifamily/braemar-place-brampton-on-aerial-photo.jpg" alt="GTA multifamily"></div></div>
-      <div class="card rvl"><div class="img"><img loading="lazy" src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG" alt="GTA exterior"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="media/work/01.jpg" alt="GTA residence"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="media/work/02.jpg" alt="Residential interior"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="media/work/03.jpg" alt="Residential interior"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="media/work/04.jpg" alt="Residential interior"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="media/work/05.jpg" alt="Residential interior"></div></div>
+      <div class="card rvl"><div class="img"><img loading="lazy" src="media/work/06.jpg" alt="Residential interior"></div></div>
     </div>
   </section>
 
+</div>
+
+<!-- THE EDIT — BEFORE / AFTER (interactive) -->
+<div class="wrap">
+  <section class="block" id="edit">
+    <div class="sec-head">
+      <div>
+        <span class="over">The edit</span>
+        <h2>The difference is in the delivery.</h2>
+      </div>
+      <p>Drag across each pair. Sky replacement, HDR blending, twilight, and virtual staging — the Bricks edit, every shoot.</p>
+    </div>
+    <div class="ba-grid">
+      <div class="ba" data-pos="50" tabindex="0" role="slider" aria-label="Sky replacement before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <img class="ba-after" src="media/proof/Sky%20After.png" alt="Sky replacement — after">
+        <img class="ba-before" src="media/proof/Sky%20Before.png" alt="Sky replacement — before">
+        <span class="ba-tag ba-tag-before">Before</span>
+        <span class="ba-tag ba-tag-after">After</span>
+        <div class="ba-handle" aria-hidden="true"><span class="ba-knob">&#8596;</span></div>
+      </div>
+      <div class="ba" data-pos="50" tabindex="0" role="slider" aria-label="HDR blending before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <img class="ba-after" src="media/proof/HDR%20After.png" alt="HDR blending — after">
+        <img class="ba-before" src="media/proof/HDR%20Before.png" alt="HDR blending — before">
+        <span class="ba-tag ba-tag-before">Before</span>
+        <span class="ba-tag ba-tag-after">After</span>
+        <div class="ba-handle" aria-hidden="true"><span class="ba-knob">&#8596;</span></div>
+      </div>
+      <div class="ba" data-pos="50" tabindex="0" role="slider" aria-label="Twilight before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <img class="ba-after" src="media/proof/twilight%20After.png" alt="Twilight — after">
+        <img class="ba-before" src="media/proof/Twilight%20before.png" alt="Twilight — before">
+        <span class="ba-tag ba-tag-before">Before</span>
+        <span class="ba-tag ba-tag-after">After</span>
+        <div class="ba-handle" aria-hidden="true"><span class="ba-knob">&#8596;</span></div>
+      </div>
+      <div class="ba" data-pos="50" tabindex="0" role="slider" aria-label="Virtual staging before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <img class="ba-after" src="media/proof/Staging%20After.png" alt="Virtual staging — after">
+        <img class="ba-before" src="media/proof/Staging%20Before.png" alt="Virtual staging — before">
+        <span class="ba-tag ba-tag-before">Before</span>
+        <span class="ba-tag ba-tag-after">After</span>
+        <div class="ba-handle" aria-hidden="true"><span class="ba-knob">&#8596;</span></div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- WHAT'S IN THE SHOOT + ADD-ONS -->
@@ -392,7 +447,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
     <div class="a"><div class="nm">3D virtual tour</div><div class="pr">+$149–299</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
     <div class="a"><div class="nm">Twilight exterior</div><div class="pr">+$150–200</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
     </div>
-    <p class="note" style="font-size:13px;color:var(--inkMute);margin-top:16px;">Full tiers and à la carte pricing by footprint are on the <a href="pricing.html" style="color:var(--brickDeep);">pricing page</a>.</p>
+    <p class="note">Full tiers and à la carte pricing by footprint are on the <a href="pricing.html" style="color:var(--brickDeep);">pricing page</a>.</p>
   </section>
 </div>
 
@@ -406,7 +461,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       </div>
     </div>
     <div class="faq">
-      <div class="qa"><h4>Is the platform live?</h4><p>No — the media service is live in the GTA today; the Booking app, Dispatch network, and Brokerage OS are in development. You can book media now via the form above or email.</p></div>
+      <div class="qa"><h4>Is the platform live?</h4><p>No — the media service is live in the GTA today; the Booking app, Dispatch network, and Brokerage operating system are in development. You can book media now via the form above or email.</p></div>
       <div class="qa"><h4>How do I book a shoot?</h4><p>Use the booking form (it emails us pre-filled) or write booking@brxs.ca. We confirm the slot and send the one-pager with exact pricing by footprint.</p></div>
       <div class="qa"><h4>What's included?</h4><p>HDR photo, licensed drone, and a floor plan every shoot. Cinematic reel and 3D virtual tour are optional add-ons (+$199–349 and +$149–299). Build your shoot à la carte on the <a href="pricing.html" style="color:var(--brickDeep);">pricing page</a>.</p></div>
       <div class="qa"><h4>Where do you shoot?</h4><p>The Greater Toronto Area. Outside GTA, ask — we'll tell you if it's covered.</p></div>
@@ -435,10 +490,10 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
     <div class="sec-head">
       <div>
         <span class="over">The platform is coming</span>
-        <h2>Media is live. The OS is next.</h2>
+        <h2>Media is live. The operating system is next.</h2>
       </div>
     </div>
-    <p style="font-size:14px;color:var(--inkMute);max-width:660px;">Today Bricks runs the shoot end to end in the GTA &mdash; booking, capture, and delivery handled direct. We're building the software around it: a self-serve Booking app, a Dispatch network for photographers, and a Brokerage OS for allocations, reporting, and one invoice. <a href="mailto:booking@brxs.ca" style="color:var(--brickDeep);">Get launch updates &rarr;</a></p>
+    <p style="font-size:14px;color:var(--inkMute);max-width:660px;">Today Bricks runs the shoot end to end in the GTA &mdash; booking, capture, and delivery handled direct. We're building the software around it: a self-serve Booking app, a Dispatch network for photographers, and a Brokerage operating system for allocations, reporting, and one invoice. <a href="mailto:booking@brxs.ca" style="color:var(--brickDeep);">Get launch updates &rarr;</a></p>
   </section>
 </div>
 
@@ -456,6 +511,8 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
       <span class="mono" style="font-size:11px;color:var(--inkMute);">343-453-4578</span>
       <a href="terms.html">Terms &amp; Privacy</a>
+      <a href="blog.html">Resources</a>
+      <a href="service-areas.html">Service areas</a>
     </div>
   </div>
   <div class="foot" style="border-top:none;padding-top:0;">
@@ -629,5 +686,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
     });
   })();
 </script>
+  <script src="assets/protect.js"></script>
+  <script src="assets/ba.js"></script>
 </body>
 </html>

@@ -188,21 +188,17 @@
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="nav-links" id="navLinks">
-      <a href="index.html">Overview</a>
       <a href="pricing.html">Pricing</a>
       <a href="gallery.html">Work</a>
-      <a href="blog.html">Resources</a>
-      <a href="service-areas.html">Service areas</a>
       <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
       <a href="book.html" class="nav-cta active">Book a shoot</a>
-      <span class="nav-flag">Pre-launch</span>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
   <section class="hero">
-    <span class="badge">Pre-launch · instant quote + pay</span>
     <h1>Book a shoot.</h1>
     <p class="sub">Four steps. We price it live from the address — footprint, travel, add-ons, HST — you pay to lock the slot. Scheduling syncs to our calendar instantly.</p>
   </section>
@@ -250,12 +246,13 @@
         <div class="choice sel" data-val="essentials"><div class="t">Essentials</div><div class="x">Photo · drone · floor plan</div></div>
         <div class="choice" data-val="story"><div class="t">Story</div><div class="x">+ cinematic reel</div></div>
         <div class="choice" data-val="showcase"><div class="t">Showcase</div><div class="x">+ reel + 3D tour</div></div>
-        <div class="choice" data-val="suite"><div class="t">Full suite</div><div class="x">+ reel + tour + twilight</div></div>
+        <div class="choice" data-val="suite"><div class="t">Full suite</div><div class="x">+ reel + tour + twilight + staging</div></div>
       </div>
       <p class="hint-sm" style="margin:-4px 0 14px;">Or build à la carte:</p>
       <label class="toggle"><input type="checkbox" id="f_reel" /> Cinematic reel (+$199–349, by footprint)</label>
       <label class="toggle"><input type="checkbox" id="f_tour" /> 3D virtual tour (+$149–299, by footprint)</label>
       <label class="toggle"><input type="checkbox" id="f_twilight" /> Twilight photography (+$150–200, by footprint)</label>
+      <label class="toggle"><input type="checkbox" id="f_staging" /> Virtual staging (+$35 / image staged)</label>
       <label class="toggle"><input type="checkbox" id="f_rush" /> Rush delivery (+$75)</label>
 
       <div id="quoteBox" class="quote"><div class="qmsg">Tailoring your quote…</div></div>
@@ -308,7 +305,8 @@
       <p>Add-ons, scheduling, and what happens if plans change.</p>
     </div>
     <div class="faq">
-      <div class="qa"><h4>What's included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It's an optional add-on (+$99–$129 by footprint) on any shoot; pick it in Step 2.</p></div>
+      <div class="qa"><h4>What's included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It's an optional add-on (+$150–200 by footprint) on any shoot; pick it in Step 2.</p></div>
+      <div class="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It's priced per image staged at <b>$35 / image</b>; tell us how many rooms to stage in the access notes and we'll confirm the count before delivery.</p></div>
       <div class="qa"><h4>Can I reschedule after booking?</h4><p>Yes — free with reasonable notice. Your confirmation email has a direct link, or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</p></div>
       <div class="qa"><h4>What if I need to cancel?</h4><p>Full refund if a photographer hasn't been dispatched yet. Closer to the shoot, refunds are handled case by case — see the full <a href="terms.html#refunds">Cancellation &amp; Refund Policy</a>.</p></div>
       <div class="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
@@ -322,6 +320,8 @@
     <div style="display:flex;gap:18px;align-items:center;">
       <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
       <a href="terms.html">Terms &amp; Privacy</a>
+      <a href="blog.html">Resources</a>
+      <a href="service-areas.html">Service areas</a>
     </div>
   </div>
 </footer>
@@ -666,5 +666,6 @@
     });
   })();
 </script>
+  <script src="assets/protect.js"></script>
 </body>
 </html>
