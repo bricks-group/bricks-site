@@ -1,0 +1,86 @@
+import type { Metadata } from 'next'
+import BlogPostLayout from '@/components/BlogPostLayout'
+
+export const metadata: Metadata = {
+  title: "What's included in a professional listing photo shoot? | Bricks",
+  description: 'The core set every Bricks GTA listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h delivery — plus the add-ons you can stack.',
+  alternates: { canonical: '/blog/whats-included-listing-shoot' },
+  openGraph: {
+    type: 'article',
+    title: "What's included in a professional listing photo shoot?",
+    description: 'The core set every Bricks GTA shoot ships: HDR, licensed drone, floor plan, 24–48h delivery — plus add-ons.',
+  },
+  twitter: {
+    title: "What's included in a pro listing shoot?",
+    description: 'HDR, licensed drone, floor plan, and 24–48h delivery — plus the add-ons.',
+  },
+}
+
+export default function Post() {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: "What's included in a professional listing photo shoot?",
+            description: 'The core set every Bricks GTA listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h delivery — plus the add-ons you can stack.',
+            author: { '@type': 'Person', name: 'Raphael Merchant' },
+            datePublished: '2026-07-22',
+            dateModified: '2026-07-22',
+            publisher: { '@type': 'Organization', name: 'Bricks' },
+            mainEntityOfPage: 'https://www.brxs.ca/blog/whats-included-listing-shoot',
+            keywords: "what's included in real estate photo shoot, GTA listing media package, professional listing photography GTA",
+          }),
+        }}
+      />
+      <BlogPostLayout
+        badge="Resources · The shoot"
+        title="What's included in a professional listing photo shoot?"
+        sub="Every Bricks GTA shoot ships the same core set. Here's exactly what you get — and the add-ons you can stack on top."
+      >
+        <p className="lead">A listing shoot shouldn&apos;t be a mystery. At Bricks, every shoot — regardless of footprint — ships the same core set, then you add what the property needs. No tier guessing, no padded package.</p>
+
+        <h2>The core set (included on every shoot)</h2>
+        <h3>HDR photography</h3>
+        <p>Exposure-bracketed, blended interiors and exteriors — the standard for MLS-ready listing photos. Shot to show the space accurately, not just brightly. Volume scales with footprint (more rooms = more frames).</p>
+        <h3>Licensed drone coverage</h3>
+        <p>Aerial exteriors and approach shots, flown under a Transport Canada <strong>Advanced RPAS certificate</strong> with the right airspace clearance. This is the &quot;wow&quot; frame for most homes and is included, not extra.</p>
+        <h3>Floor plan</h3>
+        <p>A clean, dimensioned floor plan — included on every shoot. Buyers reference it constantly; portals surface it prominently.</p>
+        <h3>24–48 hour delivery</h3>
+        <p>Edited, MLS-ready files delivered to your inbox within two business days, with a gallery link for download.</p>
+
+        <h2>Add-ons you can stack</h2>
+        <ul>
+          <li><strong>Cinematic reel</strong> (+$199–349) — a 30–45s motion reel for social and the listing page. Best for reach.</li>
+          <li><strong>3D virtual tour</strong> (+$149–299) — a navigable, MLS-ready walkthrough. Best for large or remote-buyer homes.</li>
+          <li><strong>Twilight photography</strong> (+$150–200) — blue-hour exteriors with lit windows. Best for premium listings.</li>
+          <li><strong>Rush delivery</strong> (+$75) — faster than the standard 24–48h window.</li>
+        </ul>
+
+        <h2>How a shoot actually runs</h2>
+        <ol>
+          <li><strong>Book:</strong> pick your services and a date; we confirm the slot and quote travel up front.</li>
+          <li><strong>Shoot:</strong> on-site typically 60–90 minutes depending on footprint.</li>
+          <li><strong>Edit:</strong> HDR blend, drone straighten/colour-match, floor plan drafted.</li>
+          <li><strong>Deliver:</strong> gallery + download within 24–48h.</li>
+        </ol>
+
+        <h2>What you don&apos;t pay for</h2>
+        <p>You don&apos;t pay for a &quot;Premium&quot; or &quot;Luxury&quot; tier you didn&apos;t need. The core set is the core set; the add-ons are optional. Your quote is the sum of what you booked, sized to the property — that&apos;s the whole point of à la carte.</p>
+
+        <blockquote>&quot;One standard, every time: HDR, licensed drone, and a floor plan. The reel and 3D tour are there when the listing calls for them.&quot;</blockquote>
+
+        <h2>FAQ</h2>
+        <div className="faq">
+          <div className="qa"><h4>Is the floor plan really included?</h4><p>Yes — every Bricks shoot includes a dimensioned floor plan at no extra charge.</p></div>
+          <div className="qa"><h4>What if I only want photos, no drone?</h4><p>Licensed drone is part of the core set because it&apos;s the highest-impact frame for most homes; if a listing genuinely doesn&apos;t suit aerials, tell us at booking and we&apos;ll tailor the shoot.</p></div>
+          <div className="qa"><h4>How many photos do I get?</h4><p>It scales with footprint — a condo gets fewer frames than an estate. You&apos;ll see the full set in the delivery gallery; tell us if you need a specific count for a portal.</p></div>
+        </div>
+      </BlogPostLayout>
+    </>
+  )
+}

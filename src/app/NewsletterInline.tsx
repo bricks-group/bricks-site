@@ -1,0 +1,39 @@
+'use client'
+
+import { useState } from 'react'
+
+const SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/'
+const ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
+
+export default function NewsletterInline() {
+  const [email, setEmail] = useState('')
+  const [msg, setMsg] = useState('')
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setMsg('Enter a valid email.'); return }
+    setMsg('Subscribing…')
+    fetch(SUPABASE + 'newsletter-signup', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON },
+      body: JSON.stringify({ email, source: 'bricks-prelaunch' }),
+    })
+      .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok !== false })))
+      .then((res) => {
+        if (!res.ok) { setMsg('Could not subscribe — try booking@brxs.ca'); return }
+        setMsg('✓ You are on the list.')
+        setEmail('')
+      })
+      .catch(() => setMsg('Network error — try again.'))
+  }
+
+  return (
+    <form className="newsletter" onSubmit={submit}>
+      <input
+        type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+        placeholder="you@brokerage.com" aria-label="Email for launch updates" required
+      />
+      <button type="submit" className="btn btn-sec">Get launch updates</button>
+      <span className="nl-msg">{msg}</span>
+    </form>
+  )
+}
