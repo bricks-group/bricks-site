@@ -12,7 +12,10 @@
 // Returns an itemized quote so the wizard can show "data speaks for itself".
 //
 // Deploy:  supabase functions deploy quote
-// Invoke:  POST /functions/v1/quote   body: {address, property_type, reel_addon, tour_addon, twilight_addon, rush_addon, sqft?}
+// Invoke:  POST /functions/v1/quote   body: {address, property_type, drone_addon?, reel_addon, tour_addon, twilight_addon, rush_addon, sqft?}
+// drone_addon defaults true (photo+drone is the standard included base); pass
+// false for the "Photos only" bare-minimum tier -- drops drone and the floor
+// plan deliverable, photo_rate alone is charged.
 //
 // All outbound calls use a proper User-Agent (Nominatim policy) and are
 // best-effort; if geo/sqft lookup fails we fall back to a category estimate
@@ -123,6 +126,11 @@ Deno.serve(async (req: Request) => {
   try { body = await req.json(); } catch { return bad('Invalid JSON'); }
 
   const address = (body.address || '').toString().trim();
+  // drone defaults true (existing "always included" behavior); explicit false
+  // is the "Photos only" bare-minimum tier -- drone dropped, floor plan also
+  // dropped from the deliverable (it was never a separate priced line, so
+  // that half of the drop doesn't change the total).
+  const drone = !(body.drone_addon === false || body.drone_addon === 'false');
   const reel = body.reel_addon === true || body.reel_addon === 'true';
   const tour = body.tour_addon === true || body.tour_addon === 'true';
   const twilight = body.twilight_addon === true || body.twilight_addon === 'true';
@@ -173,10 +181,11 @@ Deno.serve(async (req: Request) => {
   // 3) footprint band (sqft band, nudged up by property type so type defaults don't under-price)
   const finalBand = Math.max(band(sqft), typeBand[pt] ?? 1);
 
-  // 4) base = photo + drone, always included
+  // 4) base = photo, always included; drone included unless "Photos only" (drone_addon: false)
   const photo_rate = PHOTO_RATE[finalBand];
-  const drone_rate = DRONE_RATE[finalBand];
+  const drone_rate = drone ? DRONE_RATE[finalBand] : 0;
   const base = photo_rate + drone_rate;
+  const floor_plan_included = drone; // floor plan travels with the standard tier, dropped on Photos only
 
   // 5) travel
   const dist = haversine(BASE, geo);
@@ -205,7 +214,7 @@ Deno.serve(async (req: Request) => {
       sqft, sqft_source, sqft_estimated,
       footprint_band: finalBand,
       footprint_label: BAND_LABEL[finalBand],
-      photo_rate, drone_rate,
+      photo_rate, drone_rate, drone_included: drone, floor_plan_included,
       base_rate: base,
       travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel,
       addons, addons_total: addonsTotal,

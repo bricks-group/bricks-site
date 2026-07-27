@@ -14,6 +14,8 @@ type Quote = {
   sqft_source?: string
   photo_rate: number
   drone_rate: number
+  drone_included?: boolean
+  floor_plan_included?: boolean
   travel_km_billable: number
   travel_per_km: number
   travel_fee: number
@@ -27,13 +29,21 @@ type Quote = {
 
 type Slot = { start: string; end: string }
 
-const PKG_DEFS: Record<string, { reel: boolean; tour: boolean; twilight: boolean }> = {
-  essentials: { reel: false, tour: false, twilight: false },
-  story: { reel: true, tour: false, twilight: false },
-  showcase: { reel: true, tour: true, twilight: false },
-  suite: { reel: true, tour: true, twilight: true },
+const PKG_DEFS: Record<string, { drone: boolean; reel: boolean; tour: boolean; twilight: boolean }> = {
+  photosOnly: { drone: false, reel: false, tour: false, twilight: false },
+  essentials: { drone: true, reel: false, tour: false, twilight: false },
+  story: { drone: true, reel: true, tour: false, twilight: false },
+  showcase: { drone: true, reel: true, tour: true, twilight: false },
+  suite: { drone: true, reel: true, tour: true, twilight: true },
 }
-const PKG_LABEL: Record<string, string> = { essentials: 'Essentials', story: 'Story', showcase: 'Showcase', suite: 'Full suite' }
+const PKG_LABEL: Record<string, string> = { photosOnly: 'Photos only', essentials: 'Essentials', story: 'Story', showcase: 'Showcase', suite: 'Full suite' }
+const PKG_DESC: Record<string, string> = {
+  photosOnly: 'HDR photo only — no drone, no floor plan',
+  essentials: 'Photo · drone · floor plan',
+  story: '+ cinematic reel',
+  showcase: '+ reel + 3D tour',
+  suite: '+ reel + tour + twilight + staging',
+}
 
 function esc(s: string) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] || c))
@@ -58,6 +68,7 @@ export default function BookingWizard() {
   const addrInputRef = useRef<HTMLInputElement>(null)
 
   // step 1 fields
+  const [drone, setDrone] = useState(true)
   const [reel, setReel] = useState(false)
   const [tour, setTour] = useState(false)
   const [twilight, setTwilight] = useState(false)
@@ -134,14 +145,14 @@ export default function BookingWizard() {
   function matchedPackage(): string | null {
     for (const k of Object.keys(PKG_DEFS)) {
       const d = PKG_DEFS[k]
-      if (d.reel === reel && d.tour === tour && d.twilight === twilight) return k
+      if (d.drone === drone && d.reel === reel && d.tour === tour && d.twilight === twilight) return k
     }
     return null
   }
 
   function applyPackage(key: string) {
     const def = PKG_DEFS[key]
-    setReel(def.reel); setTour(def.tour); setTwilight(def.twilight)
+    setDrone(def.drone); setReel(def.reel); setTour(def.tour); setTwilight(def.twilight)
   }
 
   // ---- quote ----
@@ -151,6 +162,7 @@ export default function BookingWizard() {
     const payload: Record<string, unknown> = {
       address: selectedAddr || addr.trim(),
       property_type: propertyType,
+      drone_addon: drone,
       reel_addon: reel,
       tour_addon: tour,
       twilight_addon: twilight,
@@ -173,7 +185,7 @@ export default function BookingWizard() {
     if (firstAddonRun.current) { firstAddonRun.current = false; return }
     if (quote) fetchQuote()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reel, tour, twilight, rush])
+  }, [drone, reel, tour, twilight, rush])
 
   // ---- slots ----
   function fetchSlots(d: string) {
@@ -204,7 +216,8 @@ export default function BookingWizard() {
 
   function servicesSummary() {
     const pkg = matchedPackage()
-    const parts = ['HDR photo', 'Drone']
+    const parts = ['HDR photo']
+    if (drone) parts.push('Drone')
     if (reel) parts.push('Cinematic reel')
     if (tour) parts.push('3D tour')
     if (twilight) parts.push('Twilight')
@@ -268,6 +281,7 @@ export default function BookingWizard() {
       preferred_date: date,
       selected_slot_start: selectedSlot ? selectedSlot.start : null,
       selected_slot_end: selectedSlot ? selectedSlot.end : null,
+      drone_addon: drone,
       reel_addon: reel,
       tour_addon: tour,
       twilight_addon: twilight,
@@ -291,7 +305,11 @@ export default function BookingWizard() {
         <div className="qmeta">{q.sqft ? q.sqft.toLocaleString() + ' sqft' : 'sqft n/a'} · {q.footprint_label}{q.distance_km != null ? ' · ' + q.distance_km + ' km from base' : ''}{q.sqft_source ? ' · ' + q.sqft_source : ''}</div>
         <div className="qlines">
           <div className="qrow"><span className="qk">HDR photography</span><span className="qv">${q.photo_rate.toFixed(2)}</span></div>
-          <div className="qrow"><span className="qk">Licensed drone</span><span className="qv">${q.drone_rate.toFixed(2)}</span></div>
+          {q.drone_included !== false ? (
+            <div className="qrow"><span className="qk">Licensed drone</span><span className="qv">${q.drone_rate.toFixed(2)}</span></div>
+          ) : (
+            <div className="qrow"><span className="qk">Licensed drone <em>not included — Photos only</em></span><span className="qv">$0.00</span></div>
+          )}
           <div className="qrow"><span className="qk">Travel ({q.distance_km} km) <em>{q.travel_km_billable > 0 ? `$${q.travel_per_km}/km after 25 km free` : 'first 25 km free'}</em></span><span className="qv">${q.travel_fee.toFixed(2)}</span></div>
           {q.addons.map((a) => (
             <div key={a.label} className="qrow"><span className="qk">{a.label}</span><span className="qv">${a.amount.toFixed(2)}</span></div>
@@ -305,6 +323,7 @@ export default function BookingWizard() {
             <button type="button" onClick={() => fetchQuote(sqftInput ? parseInt(sqftInput, 10) : null)}>Re-quote</button>
           </div>
         )}
+        {q.floor_plan_included === false && <div className="qnote">Photos only: no floor plan drafted for this booking.</div>}
         {q.sqft_estimated && <div className="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>}
       </>
     )
@@ -377,17 +396,12 @@ export default function BookingWizard() {
             {/* STEP 2: SERVICES + QUOTE */}
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">HDR photography, licensed drone, and a floor plan are included on every shoot. Pick a bundle, or build à la carte with the checkboxes — see <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>. Every option is quoted live below, priced from the same per-service rates either way.</p>
+              <p className="hint">HDR photography is included on every shoot; licensed drone and a floor plan are included on the standard tiers, or drop both for the bare-minimum Photos only option. Pick a bundle, or build à la carte with the checkboxes — see <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>. Every option is quoted live below, priced from the same per-service rates either way.</p>
               <div className="choices">
                 {Object.keys(PKG_DEFS).map((k) => (
                   <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
                     <div className="t">{PKG_LABEL[k]}</div>
-                    <div className="x">
-                      {k === 'essentials' && 'Photo · drone · floor plan'}
-                      {k === 'story' && '+ cinematic reel'}
-                      {k === 'showcase' && '+ reel + 3D tour'}
-                      {k === 'suite' && '+ reel + tour + twilight + staging'}
-                    </div>
+                    <div className="x">{PKG_DESC[k]}</div>
                   </div>
                 ))}
               </div>
@@ -440,6 +454,7 @@ export default function BookingWizard() {
                   ['Agent', name.trim() || '—'], ['Brokerage', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
                   ['Property', addr.trim() || '—'], ['Type', propertyType || '—'],
                   ['Package', pkg ? PKG_LABEL[pkg] : 'Custom (à la carte)'],
+                  ['Licensed drone', drone ? 'Yes' : 'No — Photos only'], ['Floor plan', drone ? 'Yes' : 'No — Photos only'],
                   ['Cinematic reel', reel ? 'Yes' : 'No'], ['3D tour', tour ? 'Yes' : 'No'], ['Twilight', twilight ? 'Yes' : 'No'], ['Rush delivery', rush ? 'Yes' : 'No'],
                   ['Shoot time', selectedSlot ? formatSlot(selectedSlot) : '—'], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
