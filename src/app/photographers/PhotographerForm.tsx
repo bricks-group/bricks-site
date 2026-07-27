@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react'
 
-const DISPATCH_API = 'https://dispatch-api.brxs.ca/api/onboarding'
+// dispatch-api.brxs.ca has no DNS record yet -- pointing at the real Vercel host
+// until that CNAME is added. Change back once Kam sets up the custom domain.
+const DISPATCH_API = 'https://bricks-dispatch-api.vercel.app/api/onboarding'
 
 export default function PhotographerForm() {
   const [submitted, setSubmitted] = useState(false)
