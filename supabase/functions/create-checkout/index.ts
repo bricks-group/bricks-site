@@ -20,7 +20,11 @@
 // Invoke:  POST /functions/v1/create-checkout
 //          body: { agent_name, email, property_address, property_type,
 //                  package_interest, sqft, preferred_date, preferred_window,
-//                  reel_addon, tour_addon, twilight_addon, rush_addon, phone, brokerage, notes }
+//                  drone_addon, reel_addon, tour_addon, twilight_addon, rush_addon,
+//                  phone, brokerage, notes }
+// drone_addon defaults true if omitted (matches the `quote` function) --
+// forward whatever the client actually selected, never assume, or a
+// "Photos only" booking gets silently re-priced at the full drone rate here.
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -61,6 +65,7 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify({
         address: body.property_address,
         property_type: body.property_type,
+        drone_addon: body.drone_addon,
         reel_addon: body.reel_addon,
         tour_addon: body.tour_addon,
         twilight_addon: body.twilight_addon,
@@ -87,6 +92,7 @@ Deno.serve(async (req: Request) => {
     preferred_date: (body.preferred_date || '').toString(),
     selected_slot_start: (body.selected_slot_start || '').toString(),
     selected_slot_end: (body.selected_slot_end || '').toString(),
+    drone_addon: String(body.drone_addon !== false),
     reel_addon: String(body.reel_addon === true),
     tour_addon: String(body.tour_addon === true),
     twilight_addon: String(body.twilight_addon === true),
@@ -117,6 +123,7 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[property_address]', meta.property_address);
   form.append('metadata[property_type]', meta.property_type);
   form.append('metadata[package_interest]', meta.package_interest);
+  form.append('metadata[drone_addon]', meta.drone_addon);
   form.append('metadata[reel_addon]', meta.reel_addon);
   form.append('metadata[tour_addon]', meta.tour_addon);
   form.append('metadata[twilight_addon]', meta.twilight_addon);
