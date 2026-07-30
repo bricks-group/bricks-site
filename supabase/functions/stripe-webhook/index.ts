@@ -42,12 +42,16 @@ Deno.serve(async (req: Request) => {
   const raw = await req.text();
   const secret = Deno.env.get('STRIPE_WEBHOOK_SECRET');
   const sig = req.headers.get('stripe-signature');
-  if (secret && sig) {
-    if (!(await verify(raw, sig, secret))) return msg('invalid signature', 400);
+  if (secret) {
+    // Secret is configured -- a request with no/invalid signature is rejected
+    // outright. Previously this only checked when BOTH secret and sig were
+    // present, so simply omitting the stripe-signature header skipped
+    // verification entirely even with a secret configured.
+    if (!sig || !(await verify(raw, sig, secret))) return msg('invalid signature', 401);
   } else {
-    // Pre-launch: process without verification when no secret is configured.
+    // Pre-launch: process without verification only when no secret is configured.
     // Set STRIPE_WEBHOOK_SECRET (whsec_...) in prod to enforce signature checks.
-    console.warn('Webhook processed without signature verification (STRIPE_WEBHOOK_SECRET not set or no signature header present).');
+    console.warn('Webhook processed without signature verification (STRIPE_WEBHOOK_SECRET not set).');
   }
 
   let event: any;
