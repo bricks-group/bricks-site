@@ -237,7 +237,7 @@ const faqs = [
         .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
         .trust{text-align:center;padding:8px 0 4px;}
         .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
-        .proof-cap{font-family:'Inter',sans-serif;font-size:15px;line-height:1.45;color:var(--ink);max-width:680px;margin:0 auto 22px;font-weight:500;}
+        .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto 22px;text-align:center;}
         /* ===== V2 hero-forward motion (2026-08-07) ===== */
         .hero-split{padding:0;border-bottom:1px solid var(--hair);overflow:hidden;}
         .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;min-height:540px;}
