@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE } from '@/lib/pricing'
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
 
@@ -420,11 +421,11 @@ export default function BookingWizard() {
                 ))}
               </div>
               <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Or build à la carte:</p>
-              <label className="toggle"><input type="checkbox" checked={reel} onChange={(e) => setReel(e.target.checked)} /> Cinematic reel (+$199–349, by footprint)</label>
-              <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> 3D virtual tour (+$149–299, by footprint)</label>
-              <label className="toggle"><input type="checkbox" checked={twilight} onChange={(e) => setTwilight(e.target.checked)} /> Twilight photography (+$150–200, by footprint)</label>
-              <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging (+$35 / image staged)</label>
-              <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+$75)</label>
+              <label className="toggle"><input type="checkbox" checked={reel} onChange={(e) => setReel(e.target.checked)} /> Cinematic reel (+{REEL_RANGE}, by footprint)</label>
+              <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> 3D virtual tour (+{TOUR_RANGE}, by footprint)</label>
+              <label className="toggle"><input type="checkbox" checked={twilight} onChange={(e) => setTwilight(e.target.checked)} /> Twilight photography (+{TWILIGHT_RANGE}, by footprint)</label>
+              <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging (+${STAGING_PER_IMAGE} per image staged)</label>
+              <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+${RUSH_FLAT})</label>
 
               <div className="quote">
                 {quoteLoading && <div className="qload"><div className="spin"></div><div className="ltxt"><b>Tailoring your quote</b>Measuring footprint · mapping travel · adding tax</div></div>}
@@ -507,7 +508,7 @@ export default function BookingWizard() {
             <p>Add-ons, scheduling, and what happens if plans change.</p>
           </div>
           <div className="faq">
-            <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+$150–200 by footprint) on any shoot; pick it in Step 2.</p></div>
+            <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It&apos;s priced per image staged at <b>$35 / image</b>; tell us how many rooms to stage in the access notes and we&apos;ll confirm the count before delivery.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>Yes — free with reasonable notice. Your confirmation email has a direct link, or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</p></div>
             <div className="qa"><h4>What if I need to cancel?</h4><p>Full refund if a photographer hasn&apos;t been dispatched yet. Closer to the shoot, refunds are handled case by case — see the full <Link href="/terms#refunds">Cancellation &amp; Refund Policy</Link>.</p></div>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { PHOTO_RATE, DRONE_RATE, REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, bandCells } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'How much does real estate photography cost in the GTA? (2026) | Bricks',
@@ -69,13 +70,13 @@ export default function Post() {
         <h2>How Bricks prices it</h2>
         <p>Instead of fixed tiers, Bricks quotes à la carte and tailors each booking:</p>
         <ul>
-          <li>HDR photography: <strong>$149 / $199 / $249 / $299</strong> by footprint (small → XL)</li>
-          <li>Licensed drone: <strong>$99 / $119 / $139 / $159</strong> by footprint</li>
+          <li>HDR photography: <strong>{bandCells(PHOTO_RATE).join(' / ')}</strong> by footprint (small → XL)</li>
+          <li>Licensed drone: <strong>{bandCells(DRONE_RATE).join(' / ')}</strong> by footprint</li>
           <li>Floor plan: <strong>included</strong> on every shoot</li>
-          <li>Cinematic reel: <strong>+$199–349</strong></li>
-          <li>3D virtual tour: <strong>+$149–299</strong></li>
-          <li>Twilight: <strong>+$150–200</strong></li>
-          <li>Rush: <strong>+$75</strong></li>
+          <li>Cinematic reel: <strong>+{REEL_RANGE}</strong></li>
+          <li>3D virtual tour: <strong>+{TOUR_RANGE}</strong></li>
+          <li>Twilight: <strong>+{TWILIGHT_RANGE}</strong></li>
+          <li>Rush: <strong>+${RUSH_FLAT}</strong></li>
           <li>Travel: first 25 km free, <strong>$0.75/km</strong> after · HST 13% added at checkout</li>
         </ul>
         <p>Your final quote is the sum of what you actually book, sized to the property — so you never pay for a tier you didn&apos;t need. <a href="/pricing">See the full menu →</a></p>

@@ -5,7 +5,9 @@ import Script from 'next/script'
 import NewsletterInline from './NewsletterInline'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
 
+const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
 export const metadata: Metadata = {
   title: 'GTA Real Estate Photography & Media | Bricks',
   description: "GTA real estate listing media — HDR photography, licensed drone, floor plans, and 3D virtual tours. Book a shoot in 24–48h, serving agents at Canada's leading brokerages and REITs.",
@@ -55,7 +57,7 @@ const beforeAfter = [
 const faqs = [
   { q: 'Is the platform live?', a: 'No — the media service is live in the GTA today; the Booking app, Dispatch network, and Brokerage operating system are in development. You can book media now via the form above or email.' },
   { q: 'How do I book a shoot?', a: 'Use the booking form (it emails us pre-filled) or write booking@brxs.ca. We confirm the slot and send the one-pager with exact pricing by footprint.' },
-  { q: "What's included?", a: 'HDR photo, licensed drone, and a floor plan every shoot. Cinematic reel and 3D virtual tour are optional add-ons (+$199–349 and +$149–299). Build your shoot à la carte on the pricing page.' },
+  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan every shoot. Cinematic reel and 3D virtual tour are optional add-ons (+${REEL_RANGE} and +${TOUR_RANGE}). Build your shoot à la carte on the pricing page.` },
   { q: 'Where do you shoot?', a: "The Greater Toronto Area. Outside GTA, ask — we'll tell you if it's covered." },
   { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24-48 hours.' },
 ]
@@ -77,7 +79,7 @@ export default function Home() {
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
-            priceRange: '$$ (à la carte from $149; HDR + drone + floor plan from ~$248)',
+            priceRange: `$$ (à la carte from $${PHOTO_RATE[0]}; HDR + drone + floor plan from ~$${CORE_FROM})`,
             areaServed: ['Greater Toronto Area', 'Toronto', 'Mississauga', 'Brampton', 'Oakville', 'Milton', 'Halton Hills', 'Vaughan', 'Richmond Hill'].map((name) => ({ '@type': 'City', name })),
             knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', '3D virtual tours', 'Real estate media', 'Drone photography'],
             founder: { '@type': 'Person', name: 'Raphael Merchant', url: 'https://www.brxs.ca/about' },
@@ -176,9 +178,9 @@ export default function Home() {
             <div><span className="over">Add-ons</span><h2>Scale a shoot up.</h2></div>
           </div>
           <div className="adds">
-            <div className="a"><div className="nm">Cinematic reel</div><div className="pr">+$199–349</div><p>30–45s motion reel for social and listing pages.</p></div>
-            <div className="a"><div className="nm">3D virtual tour</div><div className="pr">+$149–299</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
-            <div className="a"><div className="nm">Twilight exterior</div><div className="pr">+$150–200</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
+            <div className="a"><div className="nm">Cinematic reel</div><div className="pr">+{REEL_RANGE}</div><p>30–45s motion reel for social and listing pages.</p></div>
+            <div className="a"><div className="nm">3D virtual tour</div><div className="pr">+{TOUR_RANGE}</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
+            <div className="a"><div className="nm">Twilight exterior</div><div className="pr">+{TWILIGHT_RANGE}</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
           </div>
           <p className="note">Full tiers and à la carte pricing by footprint are on the <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>pricing page</Link>.</p>
         </section>
