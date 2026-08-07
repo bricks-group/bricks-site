@@ -13,6 +13,11 @@ body{font-family:'General Sans',system-ui,sans-serif;color:var(--inkSoft);
 .mono{font-family:'JetBrains Mono',monospace;}
 .over{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
   letter-spacing:0.16em;text-transform:uppercase;color:var(--inkMute);display:block;}
+.trust{text-align:center;padding:8px 0 4px;}
+.trust-cap{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--inkMute);}
+.proof-cap{font-family:'General Sans',system-ui,sans-serif;font-weight:500;font-size:15px;
+  letter-spacing:-0.2px;color:var(--ink);margin-top:10px;}
 a{color:inherit;}
 
 /* header */
