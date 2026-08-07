@@ -60,7 +60,7 @@ const faqs = [
   { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24-48 hours.' },
  ]
 
- const HERO_IMG = '/media/res-ext-1.jpg' // placeholder hero — swap for new MLS-style photo when available
+ const HERO_IMG = '/media/work/01.jpg' // Toronto brick townhomes — hero still; swap for new MLS-style photo when available
 
  export default function Home() {
   return (
