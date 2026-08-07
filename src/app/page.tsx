@@ -60,9 +60,11 @@ const faqs = [
   { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan every shoot. Cinematic reel and 3D virtual tour are optional add-ons (+${REEL_RANGE} and +${TOUR_RANGE}). Build your shoot à la carte on the pricing page.` },
   { q: 'Where do you shoot?', a: "The Greater Toronto Area. Outside GTA, ask — we'll tell you if it's covered." },
   { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24-48 hours.' },
-]
+ ]
 
-export default function Home() {
+ const HERO_IMG = '/media/work/01.jpg' // Toronto brick townhomes — hero still; swap for new MLS-style photo when available
+
+ export default function Home() {
   return (
     <>
       <RevealObserver />
@@ -97,17 +99,23 @@ export default function Home() {
         }}
       />
 
-      <div className="wrap">
-        <section className="hero">
-          <h1>From Capture to Close.</h1>
-          <p className="sub">Bricks is the GTA&apos;s shoot-and-deliver media service for listing agents — HDR, licensed drone, floor plans, with optional 3D tours, back in 24–48 hours. Book in minutes; we run the whole shoot end to end across the Greater Toronto Area.</p>
-          <div className="cta-row">
-            <Link className="btn btn-brick" href="/book">Book listing media</Link>
-            <Link className="btn btn-sec" href="/pricing">View pricing</Link>
-            <NewsletterInline />
+      <section className="hero-split">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <span className="badge-lit"><span className="dot" />Pre-launch · GTA rates</span>
+            <h1>From Capture to Close.</h1>
+            <p className="sub">Bricks is the GTA&apos;s shoot-and-deliver media service for listing agents — HDR, licensed drone, floor plans, with optional 3D tours, back in 24–48 hours. Book in minutes; we run the whole shoot end to end across the Greater Toronto Area.</p>
+            <div className="cta-row">
+              <Link className="btn btn-brick" href="/book">Book listing media</Link>
+              <Link className="btn btn-sec" href="/pricing">View pricing</Link>
+              <NewsletterInline />
+            </div>
           </div>
-        </section>
-      </div>
+          <div className="hero-visual">
+            <div className="kb"><Image className="kb-img" src={HERO_IMG} alt="GTA listing photographed by Bricks" fill sizes="(max-width: 900px) 100vw, 50vw" priority /></div>
+          </div>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="trust">
@@ -126,7 +134,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">Selected work · GTA</span><h2>Real shoots, not stock.</h2></div>
             <Link href="/gallery" className="btn btn-sec" style={{ whiteSpace: 'nowrap' }}>See more work →</Link>
@@ -145,7 +153,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block" id="edit">
+        <section className="block rvl" id="edit">
           <div className="sec-head">
             <div><span className="over">The edit</span><h2>The difference is in the delivery.</h2></div>
             <p>Drag across each pair. Sky replacement, HDR blending, twilight, and virtual staging — the Bricks edit, every shoot.</p>
@@ -165,7 +173,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">What&apos;s in the shoot</span><h2>Every shoot ships the core set.</h2></div>
           </div>
@@ -188,7 +196,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">Questions</span><h2>Before you book.</h2></div>
           </div>
@@ -201,7 +209,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block" id="book">
+        <section className="block rvl" id="book">
           <div className="book">
             <div>
               <span className="over">Book a shoot</span>
@@ -214,7 +222,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">The platform is coming</span><h2>Media is live. The operating system is next.</h2></div>
           </div>
@@ -230,6 +238,31 @@ export default function Home() {
         .trust{text-align:center;padding:8px 0 4px;}
         .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
         .proof-cap{font-family:'Inter',sans-serif;font-size:15px;line-height:1.45;color:var(--ink);max-width:680px;margin:0 auto 22px;font-weight:500;}
+        /* ===== V2 hero-forward motion (2026-08-07) ===== */
+        .hero-split{padding:0;border-bottom:1px solid var(--hair);overflow:hidden;}
+        .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;min-height:540px;}
+        .hero-copy{padding:76px 44px 60px 36px;display:flex;flex-direction:column;justify-content:center;}
+        .hero-copy .badge-lit{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:6px 10px;width:fit-content;margin-bottom:20px;}
+        .hero-copy .badge-lit .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);animation:pulse 2s ease-in-out infinite;}
+        @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(210,84,43,.5)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(210,84,43,0)}}
+        .hero-copy h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);}
+        .hero-copy p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
+        .hero-visual{position:relative;overflow:hidden;background:var(--paperDeep);}
+        .hero-visual .kb{position:absolute;inset:-4%;width:108%;height:108%;animation:kenburns 18s ease-in-out infinite alternate;will-change:transform;}
+        @keyframes kenburns{from{transform:scale(1.0) translate(0,0);}to{transform:scale(1.09) translate(-1.2%,-1.5%);}}
+        .kb-img{object-fit:cover;}
+        .hero-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,14,0) 55%,rgba(20,17,14,.34) 100%),linear-gradient(90deg,rgba(20,17,14,.12),transparent 32%);pointer-events:none;}
+        .hero-copy .badge-lit,.hero-copy h1,.hero-copy p.sub,.hero-copy .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
+        .hero-copy h1{animation-delay:.06s;} .hero-copy p.sub{animation-delay:.17s;} .hero-copy .cta-row{animation-delay:.28s;}
+        @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
+        .hero-visual{opacity:0;animation:heroFade 1s ease .1s forwards;}
+        @keyframes heroFade{to{opacity:1;}}
+        @media (max-width:900px){
+          .hero-grid{grid-template-columns:1fr;min-height:0;}
+          .hero-visual{aspect-ratio:16/9;order:-1;}
+          .hero-copy{padding:40px 20px;}
+          .hero-copy h1{font-size:34px;}
+        }
         .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
         .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
         .marquee:hover .marquee-track{animation-play-state:paused;}
