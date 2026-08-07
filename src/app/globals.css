@@ -156,10 +156,11 @@ footer{border-top:1px solid var(--hair);margin-top:52px;}
 .nav-toggle.open span:nth-child(2){opacity:0;}
 .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
-/* scroll reveal */
-.rvl{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease,ease-out),transform .6s var(--ease,ease-out);
+/* scroll reveal — hidden state only applies once JS marks the doc ready,
+   so content is never permanently invisible if the observer fails to run. */
+html.reveal-ready .rvl{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease,ease-out),transform .6s var(--ease,ease-out);
   transition-delay:var(--rd,0s);}
-.rvl.in{opacity:1;transform:translateY(0);}
+html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
 
 @media (max-width:680px){
   .grid3,.areas{grid-template-columns:1fr;}
@@ -178,5 +179,5 @@ footer{border-top:1px solid var(--hair);margin-top:52px;}
   .hero{padding:48px 20px 32px;}
   .foot{padding:28px 20px;}
 }
-@media (prefers-reduced-motion: reduce){ .rvl{opacity:1;transform:none;transition:none;} }
+@media (prefers-reduced-motion: reduce){ html.reveal-ready .rvl{opacity:1;transform:none;transition:none;} }
 @media print{.btn,.nav-cta,.book{display:none;}}
