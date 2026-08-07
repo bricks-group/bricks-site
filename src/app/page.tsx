@@ -112,7 +112,7 @@ const faqs = [
             </div>
           </div>
           <div className="hero-visual">
-            <div className="kb"><Image className="kb-img" src={HERO_IMG} alt="GTA listing photographed by Bricks" fill sizes="(max-width: 900px) 100vw, 50vw" priority /></div>
+            <div className="kb"><Image className="kb-img" src={HERO_IMG} alt="GTA listing photographed by Bricks" fill sizes="(max-width: 900px) 100vw, 75vw" priority /></div>
           </div>
         </div>
       </section>
