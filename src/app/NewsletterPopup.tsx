@@ -1,6 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { track } from '@vercel/analytics'
+
+// Best-effort funnel analytics via Vercel Web Analytics. Never throws into the flow.
+type TrackProps = Record<string, string | number | boolean | null | undefined>
+function evt(name: string, props?: TrackProps) {
+  try { track(name, props) } catch { /* analytics is best-effort */ }
+}
 
 const SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/'
 const ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
@@ -33,7 +40,8 @@ export default function NewsletterPopup() {
 
   function submit(e: React.FormEvent) {
     e.preventDefault()
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setMsg('Enter a valid email.'); return }
+    if (!/^[^@\s]+@[^@\s]+.[^@\s]+$/.test(email)) { setMsg('Enter a valid email.'); return }
+    evt('newsletter_subscribe_started', { source: 'popup' })
     setMsg('Subscribing…')
     fetch(SUPABASE + 'newsletter-signup', {
       method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON },
@@ -42,6 +50,7 @@ export default function NewsletterPopup() {
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok !== false })))
       .then((res) => {
         if (!res.ok) { setMsg('Could not subscribe — try booking@brxs.ca'); return }
+        evt('newsletter_subscribed', { source: 'popup' })
         setMsg('✓ You are on the list.')
         setEmail('')
         try { sessionStorage.setItem('nl_seen', '1') } catch {}
