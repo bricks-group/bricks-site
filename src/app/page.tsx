@@ -178,18 +178,18 @@ const faqs = [
             <div><span className="over">What&apos;s in the shoot</span><h2>Every shoot ships the core set.</h2></div>
           </div>
           <div className="incl">
-            <div className="c"><span className="ic">01</span><h4>HDR photography</h4><p>Architectural interiors &amp; exteriors, bracketed and edited for MLS.</p></div>
-            <div className="c"><span className="ic">02</span><h4>Licensed drone</h4><p>Advanced RPAS-certified aerial of the lot, surroundings, and roofline.</p></div>
-            <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
-            <div className="c"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
+            <div className="c rvl"><span className="ic">01</span><h4>HDR photography</h4><p>Architectural interiors &amp; exteriors, bracketed and edited for MLS.</p></div>
+            <div className="c rvl"><span className="ic">02</span><h4>Licensed drone</h4><p>Advanced RPAS-certified aerial of the lot, surroundings, and roofline.</p></div>
+            <div className="c rvl"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
+            <div className="c rvl"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
           </div>
           <div className="sec-head" style={{ marginTop: 38 }}>
             <div><span className="over">Add-ons</span><h2>Scale a shoot up.</h2></div>
           </div>
           <div className="adds">
-            <div className="a"><div className="nm">Cinematic reel</div><div className="pr">+{REEL_RANGE}</div><p>30–45s motion reel for social and listing pages.</p></div>
-            <div className="a"><div className="nm">3D virtual tour</div><div className="pr">+{TOUR_RANGE}</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
-            <div className="a"><div className="nm">Twilight exterior</div><div className="pr">+{TWILIGHT_RANGE}</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
+            <div className="a rvl"><div className="nm">Cinematic reel</div><div className="pr">+{REEL_RANGE}</div><p>30–45s motion reel for social and listing pages.</p></div>
+            <div className="a rvl"><div className="nm">3D virtual tour</div><div className="pr">+{TOUR_RANGE}</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
+            <div className="a rvl"><div className="nm">Twilight exterior</div><div className="pr">+{TWILIGHT_RANGE}</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
           </div>
           <p className="note">Full tiers and à la carte pricing by footprint are on the <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>pricing page</Link>.</p>
         </section>
@@ -202,7 +202,7 @@ const faqs = [
           </div>
           <div className="faq">
             {faqs.map((f) => (
-              <div key={f.q} className="qa"><h4>{f.q}</h4><p>{f.a}</p></div>
+              <div key={f.q} className="qa rvl"><h4>{f.q}</h4><p>{f.a}</p></div>
             ))}
           </div>
         </section>
