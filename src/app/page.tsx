@@ -120,7 +120,7 @@ const faqs = [
       <div className="wrap">
         <section className="trust">
           <p className="trust-cap">Agents &amp; sales reps from Canada&apos;s leading brokerages &amp; REITs</p>
-          <p className="proof-cap">Founded by a CoStar Regional Visual Director / Architectural Photographer who has shot 14,000+ GTA properties — Transport Canada Advanced RPAS-certified.</p>
+          <p className="proof-cap">14,000+ GTA properties shot.</p>
           <div className="marquee" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
             <div className="marquee-track">
               {[...logos, ...logos].map((l, i) => (
