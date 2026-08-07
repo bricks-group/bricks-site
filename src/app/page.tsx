@@ -58,9 +58,11 @@ const faqs = [
   { q: "What's included?", a: 'HDR photo, licensed drone, and a floor plan every shoot. Cinematic reel and 3D virtual tour are optional add-ons (+$199–349 and +$149–299). Build your shoot à la carte on the pricing page.' },
   { q: 'Where do you shoot?', a: "The Greater Toronto Area. Outside GTA, ask — we'll tell you if it's covered." },
   { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24-48 hours.' },
-]
+ ]
 
-export default function Home() {
+ const HERO_IMG = '/media/res-ext-1.jpg' // placeholder hero — swap for new MLS-style photo when available
+
+ export default function Home() {
   return (
     <>
       <RevealObserver />
@@ -95,17 +97,23 @@ export default function Home() {
         }}
       />
 
-      <div className="wrap">
-        <section className="hero">
-          <h1>From Capture to Close.</h1>
-          <p className="sub">Bricks is the GTA&apos;s shoot-and-deliver media service for listing agents — HDR, licensed drone, floor plans and 3D tours, back in 24–48 hours. Book in minutes; we run the whole shoot end to end across the Greater Toronto Area.</p>
-          <div className="cta-row">
-            <Link className="btn btn-brick" href="/book">Book listing media</Link>
-            <Link className="btn btn-sec" href="/pricing">View pricing</Link>
-            <NewsletterInline />
+      <section className="hero-split">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <span className="badge-lit"><span className="dot" />Pre-launch · GTA rates</span>
+            <h1>From Capture to Close.</h1>
+            <p className="sub">Bricks is the GTA&apos;s shoot-and-deliver media service for listing agents — HDR, licensed drone, floor plans and 3D tours, back in 24–48 hours. Book in minutes; we run the whole shoot end to end across the Greater Toronto Area.</p>
+            <div className="cta-row">
+              <Link className="btn btn-brick" href="/book">Book listing media</Link>
+              <Link className="btn btn-sec" href="/pricing">View pricing</Link>
+              <NewsletterInline />
+            </div>
           </div>
-        </section>
-      </div>
+          <div className="hero-visual">
+            <div className="kb"><Image className="kb-img" src={HERO_IMG} alt="GTA listing photographed by Bricks" fill sizes="(max-width: 900px) 100vw, 50vw" priority /></div>
+          </div>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="trust">
@@ -123,7 +131,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">Selected work · GTA</span><h2>Real shoots, not stock.</h2></div>
             <Link href="/gallery" className="btn btn-sec" style={{ whiteSpace: 'nowrap' }}>See more work →</Link>
@@ -142,7 +150,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block" id="edit">
+        <section className="block rvl" id="edit">
           <div className="sec-head">
             <div><span className="over">The edit</span><h2>The difference is in the delivery.</h2></div>
             <p>Drag across each pair. Sky replacement, HDR blending, twilight, and virtual staging — the Bricks edit, every shoot.</p>
@@ -162,43 +170,43 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">What&apos;s in the shoot</span><h2>Every shoot ships the core set.</h2></div>
           </div>
           <div className="incl">
-            <div className="c"><span className="ic">01</span><h4>HDR photography</h4><p>Architectural interiors &amp; exteriors, bracketed and edited for MLS.</p></div>
-            <div className="c"><span className="ic">02</span><h4>Licensed drone</h4><p>Advanced RPAS-certified aerial of the lot, surroundings, and roofline.</p></div>
-            <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
-            <div className="c"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
+            <div className="c rvl"><span className="ic">01</span><h4>HDR photography</h4><p>Architectural interiors &amp; exteriors, bracketed and edited for MLS.</p></div>
+            <div className="c rvl"><span className="ic">02</span><h4>Licensed drone</h4><p>Advanced RPAS-certified aerial of the lot, surroundings, and roofline.</p></div>
+            <div className="c rvl"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
+            <div className="c rvl"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
           </div>
           <div className="sec-head" style={{ marginTop: 38 }}>
             <div><span className="over">Add-ons</span><h2>Scale a shoot up.</h2></div>
           </div>
           <div className="adds">
-            <div className="a"><div className="nm">Cinematic reel</div><div className="pr">+$199–349</div><p>30–45s motion reel for social and listing pages.</p></div>
-            <div className="a"><div className="nm">3D virtual tour</div><div className="pr">+$149–299</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
-            <div className="a"><div className="nm">Twilight exterior</div><div className="pr">+$150–200</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
+            <div className="a rvl"><div className="nm">Cinematic reel</div><div className="pr">+$199–349</div><p>30–45s motion reel for social and listing pages.</p></div>
+            <div className="a rvl"><div className="nm">3D virtual tour</div><div className="pr">+$149–299</div><p>Interactive walkthrough, MLS-ready. Scanned from a phone.</p></div>
+            <div className="a rvl"><div className="nm">Twilight exterior</div><div className="pr">+$150–200</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
           </div>
           <p className="note">Full tiers and à la carte pricing by footprint are on the <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>pricing page</Link>.</p>
         </section>
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">Questions</span><h2>Before you book.</h2></div>
           </div>
           <div className="faq">
             {faqs.map((f) => (
-              <div key={f.q} className="qa"><h4>{f.q}</h4><p>{f.a}</p></div>
+              <div key={f.q} className="qa rvl"><h4>{f.q}</h4><p>{f.a}</p></div>
             ))}
           </div>
         </section>
       </div>
 
       <div className="wrap">
-        <section className="block" id="book">
+        <section className="block rvl" id="book">
           <div className="book">
             <div>
               <span className="over">Book a shoot</span>
@@ -211,7 +219,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">The platform is coming</span><h2>Media is live. The operating system is next.</h2></div>
           </div>
@@ -298,6 +306,39 @@ export default function Home() {
         .nl-pill:hover{background:var(--brick);}
         .nl-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--brick);}
         .nl-pill:hover::before{background:var(--paper);}
+        /* ===== V2 hero-forward motion (2026-08-07) ===== */
+        .hero-split{padding:0;border-bottom:1px solid var(--hair);overflow:hidden;}
+        .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;min-height:540px;}
+        .hero-copy{padding:76px 44px 60px 36px;display:flex;flex-direction:column;justify-content:center;}
+        .hero-copy .badge-lit{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:6px 10px;width:fit-content;margin-bottom:20px;}
+        .hero-copy .badge-lit .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);animation:pulse 2s ease-in-out infinite;}
+        @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(210,84,43,.5)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(210,84,43,0)}}
+        .hero-copy h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);}
+        .hero-copy p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
+        .hero-visual{position:relative;overflow:hidden;background:var(--paperDeep);}
+        .hero-visual .kb{position:absolute;inset:-4%;width:108%;height:108%;animation:kenburns 18s ease-in-out infinite alternate;will-change:transform;}
+        @keyframes kenburns{from{transform:scale(1.0) translate(0,0);}to{transform:scale(1.09) translate(-1.2%,-1.5%);}}
+        .kb-img{object-fit:cover;}
+        .hero-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,14,0) 55%,rgba(20,17,14,.34) 100%),linear-gradient(90deg,rgba(20,17,14,.12),transparent 32%);pointer-events:none;}
+        .hero-copy .badge-lit,.hero-copy h1,.hero-copy p.sub,.hero-copy .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
+        .hero-copy h1{animation-delay:.06s;} .hero-copy p.sub{animation-delay:.17s;} .hero-copy .cta-row{animation-delay:.28s;}
+        @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
+        .hero-visual{opacity:0;animation:heroFade 1s ease .1s forwards;}
+        @keyframes heroFade{to{opacity:1;}}
+        .incl .c:nth-child(2),.adds .a:nth-child(2),.faq .qa:nth-child(2){--rd:.05s;}
+        .incl .c:nth-child(3),.adds .a:nth-child(3),.faq .qa:nth-child(3){--rd:.1s;}
+        .incl .c:nth-child(4),.faq .qa:nth-child(4){--rd:.15s;}
+        .faq .qa:nth-child(5){--rd:.2s;}
+        @media (max-width:900px){
+          .hero-grid{grid-template-columns:1fr;min-height:0;}
+          .hero-visual{aspect-ratio:16/9;order:-1;}
+          .hero-copy{padding:40px 20px;}
+          .hero-copy h1{font-size:34px;}
+        }
+        @media (prefers-reduced-motion: reduce){
+          .hero-copy .badge-lit,.hero-copy h1,.hero-copy p.sub,.hero-copy .cta-row{animation:none!important;opacity:1!important;transform:none!important;}
+          .hero-visual{animation:none!important;opacity:1!important;}
+        }
         @media (prefers-reduced-motion: reduce){.nl-pop{transition:none;}}
       `}</style>
     </>
