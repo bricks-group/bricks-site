@@ -3,11 +3,11 @@ import PhotographerForm from './PhotographerForm'
 
 export const metadata: Metadata = {
   title: 'Shoot for Bricks | Photographer & videographer network — GTA',
-  description: 'Join the Bricks photographer network. Auto-routed listing shoots, paid via Stripe Connect, no invoicing. Tier C starts at 35% of job revenue, Tier A earns 55%. Apply in about 4 minutes.',
+  description: 'Join the Bricks photographer network — launching soon. Auto-routed listing shoots, paid via Stripe Connect, no invoicing. Planned tier payouts: Tier C starts at 35% of job revenue, Tier A earns 55%. Apply in about 4 minutes.',
   alternates: { canonical: '/photographers' },
   openGraph: {
     title: 'Shoot for Bricks | Photographer & videographer network',
-    description: 'Auto-routed listing shoots, paid via Stripe Connect. Tier C starts at 35% of job revenue, Tier A earns 55%.',
+    description: 'Auto-routed listing shoots, paid via Stripe Connect. Planned tier payouts: Tier C starts at 35% of job revenue, Tier A earns 55%.',
   },
   twitter: {
     title: 'Shoot for Bricks | Photographer & videographer network',
@@ -25,7 +25,7 @@ export default function PhotographersPage() {
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
             title: 'Real Estate Photographer / Videographer — Independent Contractor',
-            description: 'Auto-routed real estate listing shoots across the GTA. Paid via Stripe Connect, tier-based payout 35-55% of job revenue.',
+            description: 'Auto-routed real estate listing shoots across the GTA. Paid via Stripe Connect, planned tier-based payout 35-55% of job revenue. Network launching soon.',
             hiringOrganization: { '@type': 'Organization', name: 'Bricks', sameAs: 'https://www.brxs.ca/' },
             employmentType: 'CONTRACTOR',
             jobLocationType: 'TELECOMMUTE',
@@ -38,7 +38,7 @@ export default function PhotographersPage() {
         <section className="hero">
           <span className="badge">Photographers</span>
           <h1>Shoot listings.<br />Get paid fast.</h1>
-          <p className="sub">Auto-routed jobs land on your phone. You shoot, upload, and get paid via Stripe Connect — no invoicing, no chasing. Tier C starts at 35% of job revenue; Tier A specialists earn 55%.</p>
+          <p className="sub">When the network launches, jobs will be auto-routed to your phone. You shoot, upload, and get paid via Stripe Connect — no invoicing, no chasing. Planned tier payouts: Tier C starts at 35% of job revenue; Tier A specialists earn 55%.</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
             <a className="btn btn-sec" href="#payouts">See tier payouts</a>
@@ -52,10 +52,11 @@ export default function PhotographersPage() {
             <div>
               <span className="over">How it works</span>
               <h2>You shoot. We handle the rest.</h2>
+              <p className="sub" style={{ marginTop: 10 }}>The Dispatch network is launching soon — apply now to be in the first cohort.</p>
             </div>
           </div>
           <div className="incl">
-            <div className="c rvl"><span className="ic">01</span><h4>Auto-routed jobs</h4><p>Jobs land on your phone based on specialty, tier, and proximity — no bidding.</p></div>
+            <div className="c rvl"><span className="ic">01</span><h4>Auto-routed jobs</h4><p>When live, jobs will land on your phone based on specialty, tier, and proximity — no bidding.</p></div>
             <div className="c rvl"><span className="ic">02</span><h4>You set availability</h4><p>Accept or decline any job. Declining never affects your account standing.</p></div>
             <div className="c rvl"><span className="ic">03</span><h4>Stripe Connect payouts</h4><p>No invoicing, no chasing clients — paid automatically per completed job.</p></div>
             <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>Inaccessible property or client? Report it in-app for a $60 trip fee — you&apos;re not penalised.</p></div>
@@ -75,7 +76,7 @@ export default function PhotographersPage() {
           <div className="adds">
             <div className="a rvl"><div className="nm">Tier C — Entry</div><div className="pr">35%</div><p>Standard routing. Where every photographer starts.</p></div>
             <div className="a rvl"><div className="nm">Tier B — Core</div><div className="pr">45%</div><p>Standard + Premium routing once quality and reliability are proven.</p></div>
-            <div className="a rvl"><div className="nm">Tier A — Elite</div><div className="pr">55%</div><p>Full routing across Standard, Premium, Luxury, and Estate. A Standard shoot pays $164–$302.</p></div>
+            <div className="a rvl"><div className="nm">Tier A — Elite</div><div className="pr">55%</div><p>Full routing across Standard, Premium, Luxury, and Estate. At launch, a Standard shoot is planned to pay $164–$302.</p></div>
           </div>
           <p className="note" style={{ marginTop: 26 }}>Coverage area: GTA · Hamilton · Durham · York · Niagara. Payout is always computed on rack price — never a discounted customer rate.</p>
         </section>

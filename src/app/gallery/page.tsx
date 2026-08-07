@@ -3,15 +3,15 @@ import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'Bricks — Work (GTA listing media)',
-  description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, 3D tours.',
+  description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, with optional 3D tours.',
   alternates: { canonical: '/gallery' },
   openGraph: {
     title: 'Bricks — Work (GTA listing media)',
-    description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, 3D tours.',
+    description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, with optional 3D tours.',
   },
   twitter: {
     title: 'Bricks — Work (GTA listing media)',
-    description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, 3D tours.',
+    description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, with optional 3D tours.',
   },
 }
 

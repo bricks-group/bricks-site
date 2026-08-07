@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'GTA Service Areas | Bricks — real estate media across the Greater Toronto Area',
-  description: 'Bricks shoots listing media across the Greater Toronto Area — Toronto, Mississauga, Brampton, Oakville, Milton, Halton Hills, Vaughan, Richmond Hill. Licensed drone, HDR, floor plans, 3D tours.',
+  description: 'Bricks shoots listing media across the Greater Toronto Area — Toronto, Mississauga, Brampton, Oakville, Milton, Halton Hills, Vaughan, Richmond Hill. Licensed drone, HDR, floor plans, with optional 3D tours.',
   alternates: { canonical: '/service-areas' },
   openGraph: {
     title: 'GTA Service Areas | Bricks',
