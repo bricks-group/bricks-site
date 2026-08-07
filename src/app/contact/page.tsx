@@ -3,11 +3,11 @@ import ContactForm from './ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact Bricks | GTA real estate media',
-  description: 'Contact Bricks for GTA listing media — HDR photography, licensed drone, floor plans, 3D tours. Email booking@brxs.ca or call 343-453-4578. Booked direct, delivered in 24–48 hours.',
+  description: 'Contact Bricks for GTA listing media — HDR photography, licensed drone, floor plans, with optional 3D tours. Email booking@brxs.ca or call 343-453-4578. Booked direct, delivered in 24–48 hours.',
   alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Contact Bricks | GTA real estate media',
-    description: 'GTA listing media — HDR photo, licensed drone, floor plans, 3D tours. Booked direct, delivered in 24–48 hours.',
+    description: 'GTA listing media — HDR photo, licensed drone, floor plans, with optional 3D tours. Booked direct, delivered in 24–48 hours.',
   },
   twitter: {
     title: 'Contact Bricks | GTA real estate media',

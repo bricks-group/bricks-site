@@ -8,11 +8,11 @@ import RevealObserver from '@/components/RevealObserver'
 
 export const metadata: Metadata = {
   title: 'GTA Real Estate Photography & Media | Bricks',
-  description: "GTA real estate listing media — HDR photography, licensed drone, floor plans, and 3D virtual tours. Book a shoot in 24–48h, serving agents at Canada's leading brokerages and REITs.",
+  description: "GTA real estate listing media — HDR photography, licensed drone, floor plans, with optional 3D virtual tours. Book a shoot in 24–48h, serving agents at Canada's leading brokerages and REITs.",
   alternates: { canonical: '/' },
   openGraph: {
     title: 'GTA Real Estate Photography & Media | Bricks',
-    description: "GTA real estate listing media — HDR photography, licensed drone, floor plans, and 3D virtual tours. Book a shoot in 24–48h, serving agents at Canada's leading brokerages and REITs.",
+    description: "GTA real estate listing media — HDR photography, licensed drone, floor plans, with optional 3D virtual tours. Book a shoot in 24–48h, serving agents at Canada's leading brokerages and REITs.",
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
@@ -73,7 +73,7 @@ export default function Home() {
             '@context': 'https://schema.org',
             '@type': 'LocalBusiness',
             name: 'Bricks',
-            description: 'Bricks is the operating system for real estate: From Capture to Close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and 3D virtual tours -- live now in the Greater Toronto Area, serving agents and sales reps at Canada\'s leading brokerages and REITs. The booking, dispatch, and brokerage software platform is in development.',
+            description: 'Bricks is GTA listing media — From Capture to Close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and optional 3D virtual tours -- live now in the Greater Toronto Area, serving agents and sales reps at Canada\'s leading brokerages and REITs. The self-serve booking app is in development.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
@@ -98,7 +98,7 @@ export default function Home() {
       <div className="wrap">
         <section className="hero">
           <h1>From Capture to Close.</h1>
-          <p className="sub">Bricks is the GTA&apos;s shoot-and-deliver media service for listing agents — HDR, licensed drone, floor plans and 3D tours, back in 24–48 hours. Book in minutes; we run the whole shoot end to end across the Greater Toronto Area.</p>
+          <p className="sub">Bricks is the GTA&apos;s shoot-and-deliver media service for listing agents — HDR, licensed drone, floor plans, with optional 3D tours, back in 24–48 hours. Book in minutes; we run the whole shoot end to end across the Greater Toronto Area.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book listing media</Link>
             <Link className="btn btn-sec" href="/pricing">View pricing</Link>
@@ -110,6 +110,7 @@ export default function Home() {
       <div className="wrap">
         <section className="trust">
           <p className="trust-cap">Agents &amp; sales reps from Canada&apos;s leading brokerages &amp; REITs</p>
+          <p className="proof-cap">Founded by a CoStar Regional Visual Director / Architectural Photographer who has shot 14,000+ GTA properties — Transport Canada Advanced RPAS-certified.</p>
           <div className="marquee" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
             <div className="marquee-track">
               {[...logos, ...logos].map((l, i) => (
@@ -226,6 +227,7 @@ export default function Home() {
         .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
         .trust{text-align:center;padding:8px 0 4px;}
         .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
+        .proof-cap{font-family:'Inter',sans-serif;font-size:15px;line-height:1.45;color:var(--ink);max-width:680px;margin:0 auto 22px;font-weight:500;}
         .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
         .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
         .marquee:hover .marquee-track{animation-play-state:paused;}

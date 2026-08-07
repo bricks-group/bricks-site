@@ -88,7 +88,7 @@ export default function PricingPage() {
       <div className="wrap">
         <section className="hero">
           <h1>Priced by footprint.</h1>
-          <p className="sub">Per-shoot rates for the Greater Toronto Area. One standard, every time — photography, drone, and floor plan. The cinematic reel and 3D tour are Premium+ add-ons. Book direct; the self-serve Booking app is in development.</p>
+          <p className="sub">Per-shoot rates for the Greater Toronto Area. One standard, every time — photography, drone, and floor plan. The cinematic reel and 3D tour are optional add-ons. Book direct; the self-serve Booking app is in development.</p>
         </section>
       </div>
 
