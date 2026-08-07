@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { track } from '@vercel/analytics'
 
 const SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/'
 const ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
@@ -47,6 +48,12 @@ const PKG_DESC: Record<string, string> = {
 
 function esc(s: string) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] || c))
+}
+
+// Best-effort funnel analytics via Vercel Web Analytics. Never throws into the flow.
+type TrackProps = Record<string, string | number | boolean | null | undefined>
+function evt(name: string, props?: TrackProps) {
+  try { track(name, props) } catch { /* analytics is best-effort */ }
 }
 
 export default function BookingWizard() {
@@ -95,6 +102,7 @@ export default function BookingWizard() {
   // ---- post-payment confirmation (?paid=1) ----
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('paid') !== '1') return
+    evt('booking_paid')
     setStep('done')
     setDoneTitle('Payment confirmed')
     setDoneMsg('Your shoot is paid and booked.')
@@ -173,8 +181,9 @@ export default function BookingWizard() {
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
       .then((res) => {
         setQuoteLoading(false)
-        if (!res.ok) { setQuote(null); setQuoteError("We couldn't auto-price this address. Enter the square footage above and hit Re-quote, or email booking@brxs.ca."); return }
+        if (!res.ok) { evt('quote_failed'); setQuote(null); setQuoteError("We couldn't auto-price this address. Enter the square footage above and hit Re-quote, or email booking@brxs.ca."); return }
         setQuote(res.j.quote)
+        evt('quote_viewed', { footprint: res.j.quote.footprint_label, total: res.j.quote.total, sqft_source: res.j.quote.sqft_source ?? 'unknown' })
       })
       .catch(() => { setQuoteLoading(false); setQuote(null); setQuoteError('Network hiccup pricing this address — check your connection and try again.') })
   }
@@ -251,6 +260,9 @@ export default function BookingWizard() {
     if (validate(s)) {
       const next = s + 1
       setStep(next)
+      if (s === 0) evt('booking_contact_submitted')
+      if (s === 1) evt('booking_services_submitted', { total: quote ? quote.total : null })
+      if (s === 2) evt('booking_schedule_submitted', { slot: selectedSlot ? 'picked' : 'none' })
       if (next === 1) fetchQuote()
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -265,6 +277,7 @@ export default function BookingWizard() {
     if (!quote) { setErrs((e) => ({ ...e, 3: 'Quote missing — go back to step 2.' })); return }
     setErrs((e) => ({ ...e, 3: '' }))
     setPaying(true)
+    evt('checkout_started', { total: quote ? quote.total : null })
     try {
       sessionStorage.setItem('bricks_booking', JSON.stringify({ name: name.trim(), email: email.trim(), addr: selectedAddr || addr.trim(), notes: notes.trim() }))
     } catch {}
@@ -291,11 +304,12 @@ export default function BookingWizard() {
     fetch(SUPABASE + 'create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON }, body: JSON.stringify(payload) })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
       .then((res) => {
-        if (!res.ok) { setErrs((e) => ({ ...e, 3: 'Checkout failed: ' + (res.j.error || 'try again') })); setPaying(false); return }
+        if (!res.ok) { evt('checkout_failed', { reason: 'create_checkout_error' }); setErrs((e) => ({ ...e, 3: 'Checkout failed: ' + (res.j.error || 'try again') })); setPaying(false); return }
         setDoneTitle('Redirecting to secure checkout…')
+        evt('checkout_redirected', { total: quote ? quote.total : null })
         window.location.href = res.j.url
       })
-      .catch(() => { setErrs((e) => ({ ...e, 3: 'Network error starting checkout.' })); setPaying(false) })
+      .catch(() => { evt('checkout_failed', { reason: 'network' }); setErrs((e) => ({ ...e, 3: 'Network error starting checkout.' })); setPaying(false) })
   }
 
   function QuoteBlock({ q, editable }: { q: Quote; editable: boolean }) {
