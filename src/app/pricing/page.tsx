@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, bandCells, TOUR_RANGE } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Bricks — Pricing (GTA listing media, pre-launch)',
@@ -17,14 +18,14 @@ export const metadata: Metadata = {
 }
 
 const rows = [
-  { name: 'HDR photography', inc: 'interiors + exteriors', vals: ['$149', '$199', '$249', '$299'] },
-  { name: 'Licensed drone', inc: 'Advanced RPAS-certified aerial', vals: ['$99', '$119', '$139', '$159'] },
+  { name: 'HDR photography', inc: 'interiors + exteriors', vals: bandCells(PHOTO_RATE) },
+  { name: 'Licensed drone', inc: 'Advanced RPAS-certified aerial', vals: bandCells(DRONE_RATE) },
   { name: 'Floor plan', inc: 'branded 2D', flat: 'Included on every shoot' },
-  { name: 'Cinematic reel', inc: '30–45s', vals: ['$199', '$249', '$299', '$349'] },
-  { name: '3D virtual tour', inc: 'MLS-ready', vals: ['$149', '$199', '$249', '$299'] },
-  { name: 'Twilight exterior', inc: 'golden hour', vals: ['$150', '$170', '$185', '$200'] },
-  { name: 'Virtual staging', inc: 'per image', flat: '$35 / image' },
-  { name: 'Rush delivery', inc: 'same / next day', flat: '+$75 flat', row: 'flat' },
+  { name: 'Cinematic reel', inc: '30–45s', vals: bandCells(REEL_RATE) },
+  { name: '3D virtual tour', inc: 'MLS-ready', vals: bandCells(TOUR_RATE) },
+  { name: 'Twilight exterior', inc: 'golden hour', vals: bandCells(TWILIGHT_RATE) },
+  { name: 'Virtual staging', inc: 'per image', flat: `$${STAGING_PER_IMAGE} / image` },
+  { name: 'Rush delivery', inc: 'same / next day', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
 ]
 
 const logos = [
@@ -161,7 +162,7 @@ export default function PricingPage() {
           <div className="sec-head"><div><span className="over">Pricing questions</span><h2>Before you book.</h2></div></div>
           <div className="faq">
             <div className="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property&apos;s finished area and complexity. Not sure which tier? Pick &quot;advise me&quot; in booking and we&apos;ll size it from the address.</p></div>
-            <div className="qa"><h4>Is the 3D tour included?</h4><p>No — it&apos;s a $149–299 add-on, priced by footprint like the rest of the menu. The floor plan is included on every shoot; twilight and rush are optional add-ons priced per the menu above.</p></div>
+            <div className="qa"><h4>Is the 3D tour included?</h4><p>No — it&apos;s a {TOUR_RANGE} add-on, priced by footprint like the rest of the menu. The floor plan is included on every shoot; twilight and rush are optional add-ons priced per the menu above.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. Priced per image staged at <b>$35 / image</b>; tell us which rooms and we&apos;ll confirm the count before delivery.</p></div>
             <div className="qa"><h4>Are these the final platform rates?</h4><p>These are the pre-launch direct-booking rates for the GTA. The platform&apos;s own rate card may differ when Booking goes live.</p></div>
             <div className="qa"><h4>Do you shoot outside the GTA?</h4><p>Ask — we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: "What's included in a professional listing photo shoot? | Bricks",
@@ -55,10 +56,10 @@ export default function Post() {
 
         <h2>Add-ons you can stack</h2>
         <ul>
-          <li><strong>Cinematic reel</strong> (+$199–349) — a 30–45s motion reel for social and the listing page. Best for reach.</li>
-          <li><strong>3D virtual tour</strong> (+$149–299) — a navigable, MLS-ready walkthrough. Best for large or remote-buyer homes.</li>
-          <li><strong>Twilight photography</strong> (+$150–200) — blue-hour exteriors with lit windows. Best for premium listings.</li>
-          <li><strong>Rush delivery</strong> (+$75) — faster than the standard 24–48h window.</li>
+          <li><strong>Cinematic reel</strong> (+{REEL_RANGE}) — a 30–45s motion reel for social and the listing page. Best for reach.</li>
+          <li><strong>3D virtual tour</strong> (+{TOUR_RANGE}) — a navigable, MLS-ready walkthrough. Best for large or remote-buyer homes.</li>
+          <li><strong>Twilight photography</strong> (+{TWILIGHT_RANGE}) — blue-hour exteriors with lit windows. Best for premium listings.</li>
+          <li><strong>Rush delivery</strong> (+${RUSH_FLAT}) — faster than the standard 24–48h window.</li>
         </ul>
 
         <h2>How a shoot actually runs</h2>
