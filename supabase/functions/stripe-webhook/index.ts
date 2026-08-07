@@ -37,6 +37,68 @@ async function verify(rawBody: string, sig: string | null, secret: string): Prom
   return diff === 0;
 }
 
+// Notify the owner the instant a booking is paid. Best-effort: failures are
+// logged, never thrown -- a notification outage must never break the webhook
+// or block the lead/calendar write that already happened.
+async function notifyOwner(lead: { id: any; agent_name: string; email: string; phone: string | null; property_address: string; brokerage: string | null; quote_total: number | null; selected_slot_start: string | null }) {
+  const smsTo = (Deno.env.get('BRXS_FORWARD_PHONE') || '3434534578').replace(/\D/g, '');
+  const emailTo = Deno.env.get('NOTIFY_EMAIL') || 'booking@brxs.ca';
+  const when = lead.selected_slot_start
+    ? new Date(lead.selected_slot_start).toLocaleString('en-CA', { timeZone: 'America/Toronto' })
+    : 'TBD';
+  const total = lead.quote_total != null ? `$${lead.quote_total.toFixed(2)}` : '';
+  const text = `📸 Bricks booking paid #${lead.id}: ${lead.agent_name} (${lead.email})${lead.brokerage ? ' · ' + lead.brokerage : ''} — ${lead.property_address}. Shoot: ${when} ${total}`;
+  const emailSubject = `New Bricks booking #${lead.id} — ${lead.agent_name}`;
+  const emailHtml = `<div style="font-family:Helvetica,Arial,sans-serif;max-width:520px;padding:18px;">
+    <h2 style="margin:0 0 12px;color:#D2542B;">New booking paid 🎉</h2>
+    <p><b>Lead #${lead.id}</b></p>
+    <p><b>Agent:</b> ${lead.agent_name} &lt;${lead.email}&gt;${lead.phone ? ' · ' + lead.phone : ''}</p>
+    ${lead.brokerage ? `<p><b>Brokerage:</b> ${lead.brokerage}</p>` : ''}
+    <p><b>Property:</b> ${lead.property_address}</p>
+    <p><b>Shoot time:</b> ${when}</p>
+    ${total ? `<p><b>Total:</b> ${total} (incl. HST)</p>` : ''}
+    <p style="color:#666;font-size:13px;margin-top:16px;">Confirmed within 24h. Reply to this email or text the team.</p>
+  </div>`;
+
+  // SMS via Twilio
+  const twSid = Deno.env.get('TWILIO_ACCOUNT_SID');
+  const twTok = Deno.env.get('TWILIO_AUTH_TOKEN');
+  const twFrom = Deno.env.get('TWILIO_FROM_NUMBER');
+  if (twSid && twTok && twFrom) {
+    try {
+      const body = new URLSearchParams({ To: smsTo, From: twFrom, Body: text });
+      const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twSid}/Messages.json`, {
+        method: 'POST',
+        headers: { Authorization: `Basic ${btoa(twSid + ':' + twTok)}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      });
+      if (!r.ok) console.error('Twilio SMS failed for lead ' + lead.id + ': ' + (await r.text()).slice(0, 200));
+    } catch (e) { console.error('Twilio SMS error for lead ' + lead.id + ': ' + String(e)); }
+  } else {
+    console.warn('Skipped SMS for lead ' + lead.id + ' -- missing Twilio env.');
+  }
+
+  // Email via Resend
+  const resendKey = Deno.env.get('RESEND_API_KEY');
+  if (resendKey) {
+    try {
+      const r = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'Bricks Bookings <booking@brxs.ca>',
+          to: [emailTo],
+          subject: emailSubject,
+          html: emailHtml,
+        }),
+      });
+      if (!r.ok) console.error('Resend email failed for lead ' + lead.id + ': ' + (await r.text()).slice(0, 200));
+    } catch (e) { console.error('Resend email error for lead ' + lead.id + ': ' + String(e)); }
+  } else {
+    console.warn('Skipped email for lead ' + lead.id + ' -- missing RESEND_API_KEY.');
+  }
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method !== 'POST') return msg('method not allowed', 405);
   const raw = await req.text();
@@ -130,6 +192,13 @@ Deno.serve(async (req: Request) => {
     }
   } else {
     console.warn('Skipped Cal.com booking for lead ' + leadId + ' -- missing CAL_KEY or selected slot.');
+  }
+
+  // 3) notify the owner instantly (SMS + email) -- best-effort, never blocks.
+  if (leadId != null) {
+    try {
+      await notifyOwner({ id: leadId, agent_name: payload.agent_name, email: payload.email, phone: payload.phone, property_address: payload.property_address, brokerage: payload.brokerage, quote_total: payload.quote_total, selected_slot_start: payload.selected_slot_start });
+    } catch (e) { console.error('notifyOwner failed for lead ' + leadId + ': ' + String(e)); }
   }
 
   return msg('paid lead ' + leadId + ' created');
