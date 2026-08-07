@@ -1,6 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { track } from '@vercel/analytics'
+
+// Best-effort funnel analytics via Vercel Web Analytics. Never throws into the flow.
+type TrackProps = Record<string, string | number | boolean | null | undefined>
+function evt(name: string, props?: TrackProps) {
+  try { track(name, props) } catch { /* analytics is best-effort */ }
+}
 
 export default function ContactForm() {
   const [msg, setMsg] = useState('')
@@ -12,10 +19,11 @@ export default function ContactForm() {
     const email = (f.elements.namedItem('email') as HTMLInputElement).value.trim()
     const body = (f.elements.namedItem('msg') as HTMLTextAreaElement).value.trim()
 
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !body) {
+    if (!name || !/^[^@\s]+@[^@\s]+.[^@\s]+$/.test(email) || !body) {
       setMsg('Fill in name, a valid email, and a message.')
       return
     }
+    evt('contact_submitted')
     const subject = 'Bricks — message from ' + name
     const mailBody = `${name} (${email})\n\n${body}\n\n— sent from the Bricks contact page`
     window.location.href = 'mailto:booking@brxs.ca?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(mailBody)
