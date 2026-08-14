@@ -1,0 +1,22 @@
+# Bricks
+
+> GTA real estate listing media — HDR photography, licensed drone, floor plans, with optional 3D virtual tours. Book a shoot in 24–48h, serving agents at Canada's leading brokerages and REITs.
+
+Bricks is a real estate media company operating in the Greater Toronto Area (GTA), Ontario, Canada. Agents and brokerages book listing photo/video/drone shoots online; Bricks dispatches a vetted local photographer and delivers edited media within 24–48 hours.
+
+## Core pages
+
+- [Pricing](https://www.brxs.ca/pricing): Package and à-la-carte pricing for HDR photography, drone, floor plans, twilight, and 3D virtual tours.
+- [Book a shoot](https://www.brxs.ca/book): Online booking flow with MLS auto-fill and instant pricing.
+- [Gallery](https://www.brxs.ca/gallery): Sample listing photography and video from the Bricks photographer network.
+- [Service areas](https://www.brxs.ca/service-areas): GTA neighbourhoods and municipalities covered.
+- [Photographers](https://www.brxs.ca/photographers): Independent contractor network — apply to shoot for Bricks.
+- [About](https://www.brxs.ca/about): Company background.
+- [Contact](https://www.brxs.ca/contact): Get in touch.
+
+## Blog
+
+- [How much does real estate photography cost in the GTA? (2026 pricing guide)](https://www.brxs.ca/blog/gta-real-estate-media-cost-2026)
+- [What's included in a professional listing photo shoot?](https://www.brxs.ca/blog/whats-included-listing-shoot)
+- [3D virtual tour vs. video walkthrough: which sells listings faster?](https://www.brxs.ca/blog/3d-tour-vs-video-walkthrough)
+- [Drone photography rules for real estate listings in Ontario](https://www.brxs.ca/blog/drone-photography-rules-ontario)
