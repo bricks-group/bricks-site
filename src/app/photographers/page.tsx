@@ -24,12 +24,24 @@ export default function PhotographersPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
+            datePosted: '2026-08-13',
             title: 'Real Estate Photographer / Videographer — Independent Contractor',
             description: 'Auto-routed real estate listing shoots across the GTA. Paid via Stripe Connect, planned tier-based payout 35-55% of job revenue. Network launching soon.',
             hiringOrganization: { '@type': 'Organization', name: 'Bricks', sameAs: 'https://www.brxs.ca/' },
             employmentType: 'CONTRACTOR',
-            jobLocationType: 'TELECOMMUTE',
+            jobLocationType: 'HYBRID',
             applicantLocationRequirements: { '@type': 'Country', name: 'Canada' },
+            baseSalary: {
+              '@type': 'MonetaryAmount',
+              currency: 'CAD',
+              value: {
+                '@type': 'QuantitativeValue',
+                minValue: 35,
+                maxValue: 55,
+                unitText: 'PERCENT',
+              },
+            },
+            validThrough: '2027-08-13',
           }),
         }}
       />
