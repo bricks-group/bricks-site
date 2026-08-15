@@ -151,7 +151,7 @@ footer{border-top:1px solid var(--hair);margin-top:52px;}
 .foot .fbrand{display:inline-flex;align-items:center;gap:8px;}
 .foot .dev{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;
   text-transform:uppercase;color:var(--inkFaint);max-width:360px;line-height:1.5;}
-.foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;}
+.foot a{color:var(--inkSoft);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;white-space:nowrap;}
 
 .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:30px;height:30px;
   background:none;border:none;cursor:pointer;padding:0;flex:none;}

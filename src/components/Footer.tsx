@@ -12,9 +12,9 @@ export default function Footer() {
           </svg>
           <span className="wordmark" style={{ fontSize: 15 }}>bricks</span>
         </div>
-        <div style={{ display: 'flex', gap: 18, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap', rowGap: 10 }}>
           <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
-          <span className="mono" style={{ fontSize: 11, color: 'var(--inkMute)' }}>343-453-4578</span>
+          <span className="mono" style={{ fontSize: 11, color: 'var(--inkMute)', whiteSpace: 'nowrap' }}>343-453-4578</span>
           <Link href="/terms">Terms &amp; Privacy</Link>
           <Link href="/blog">Resources</Link>
           <Link href="/service-areas">Service areas</Link>
