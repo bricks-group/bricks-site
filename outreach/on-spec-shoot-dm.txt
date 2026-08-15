@@ -1,63 +1,51 @@
-ON-SPEC FIRST SHOOT — outreach draft (2026-08-14)
+FIRST-BOOKING OUTREACH — outreach draft (2026-08-14, revised)
 
 Purpose: Bricks has zero completed client shoots so far (new business — see
-project_bricks_no_past_clients_20260814.md). This is the highest-priority send:
-landing the first real job is what unlocks everything else downstream (GBP
-reviews, real gallery photos, case studies, repeat bookings). Send this before
-or alongside the general LinkedIn angles in linkedin-outreach.md.
+project_bricks_no_past_clients_20260814.md). Landing the first real job
+unlocks everything downstream (first GBP review, real gallery photos, case
+studies, repeat bookings) -- but this needs to be a PAID booking, not a
+freebie. Kam needs revenue now, not just portfolio material.
+
+REVISION NOTE: the original draft of this file offered the first shoot for
+free. Kam corrected that directly ("no i need money") -- dropped entirely.
+The angles below are full-price, same as everything in linkedin-outreach.md.
 
 Same CASL rule as the rest of this folder: 1st-degree LinkedIn connections or
 people you actually know, 1:1, no blast.
 
 ---
 
-## LINKEDIN DM — primary version
+## PRIMARY — just send the existing paid angles
+
+linkedin-outreach.md Angles 1, 2, and 4 are already full-price pitches, ready
+to send, zero rewrite needed. That's the fastest actual path to money --
+there's no reason to invent a new offer when the paid ones are sitting done.
+Send those first.
+
+## SECONDARY — for a hesitant first-time prospect only
+
+If someone's on the fence specifically because Bricks has no reviews/track
+record yet, this is a real (not free) risk-reducer: full price, but they
+only pay if they're happy with the delivery.
 
 Hey [First name] — I'm getting Bricks off the ground in the GTA: HDR photo,
 licensed drone, and a floor plan, one standard, edited and MLS-ready in
-24–48h. I'm building out a real portfolio and want to shoot it right, so I'm
-offering the first listing free — full package, no strings, you keep and use
-everything.
+24–48h, from $248 for the core set. New name, so here's the deal: I shoot
+it, you look at the delivery, and you only pay if you're happy with it. No
+risk on your end either way.
 
-Got anything active or coming up? If it works out and you like what you see,
-I'd just ask for a quick Google review — otherwise no obligation either way.
+Got a listing coming up?
 
-## LINKEDIN DM — team lead / brokerage variant
-
-Hey [First name] — I'm getting Bricks off the ground in the GTA (HDR photo,
-licensed drone, floor plan, 24–48h turn) and want to shoot one of your team's
-active listings at no cost to build out the portfolio properly. Pick whichever
-one you'd want handled well — full package, no strings, you keep everything.
-If it lands, a Google review would help a lot; if not, no hard feelings either
-way.
-
-## EMAIL VERSION
-Subject: Free listing shoot — building my GTA portfolio
-
-Hi [First name],
-
-I'm Kam — I run Bricks, a real estate media service just getting started in
-the GTA (HDR photo, licensed drone, a floor plan, edited and MLS-ready in
-24–48h). I'm building out a real portfolio and would like to shoot one of
-your active listings at no cost — full package, no strings, you keep and use
-everything either way.
-
-If you like the result, a quick Google review would mean a lot. If not, no
-obligation.
-
-If you've got a listing coming up, reply with the address and a date and I'll
-get it on the calendar: https://brxs.ca/book.html
-
-Kam
+Only use this with someone who'd otherwise say no -- it's a conversion tool
+for a skeptical first prospect, not the default pitch. It's real payment
+risk on a completed job, not a discount, so use it selectively rather than
+as the standing offer.
 
 ---
 
 Notes:
-- Deliberately doesn't claim existing clients, reviews, or a track record —
-  "getting Bricks off the ground" / "building out a portfolio" is the honest
-  frame given zero completed shoots so far.
-- "No strings" / "no obligation either way" is the actual offer, not a
-  disguised upsell — don't follow up with a bill or a surprise ask.
-- Once this shoot happens, treat it as the trigger for: real gallery photos
-  (replacing placeholders), the first GBP review ask, and a Google review
-  request follow-up 2-3 days after delivery.
+- Doesn't claim existing clients, reviews, or track record -- "getting
+  Bricks off the ground" is the honest frame given zero completed shoots.
+- Once a paid shoot happens: real gallery photos (replacing placeholders),
+  first GBP review ask, and a review-request follow-up 2-3 days after
+  delivery.
