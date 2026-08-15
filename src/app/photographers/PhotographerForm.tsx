@@ -10,6 +10,30 @@ export default function PhotographerForm() {
   const [droneVisible, setDroneVisible] = useState(false)
   const [icText, setIcText] = useState('Loading agreement…')
   const [err, setErr] = useState('')
+  const [resumeWarning, setResumeWarning] = useState('')
+
+  const RESUME_MAX_BYTES = 8 * 1024 * 1024 // 8MB
+  const RESUME_EXTS = ['.pdf', '.doc', '.docx']
+
+  function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve((reader.result as string).split(',')[1] || '')
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
+  }
+
+  async function uploadResume(memberId: string, file: File) {
+    const base64 = await fileToBase64(file)
+    const fd = new FormData()
+    fd.append('member_id', memberId)
+    fd.append('doc_type', 'resume')
+    fd.append('filename', file.name)
+    fd.append('file_data', base64)
+    const r = await fetch(DISPATCH_API + '/documents', { method: 'POST', body: fd })
+    if (!r.ok) throw new Error('resume upload failed')
+  }
 
   useEffect(() => {
     fetch(DISPATCH_API + '/ic-agreement')
@@ -47,6 +71,17 @@ export default function PhotographerForm() {
     const portfolio2 = (fd.get('portfolio2') as string || '').trim()
     const equipmentList = equipmentRaw.split(/[\n,]+/).map((s) => s.trim()).filter(Boolean)
 
+    const resumeFile = (fd.get('resume') as File) || null
+    if (resumeFile && resumeFile.size > 0) {
+      const lower = resumeFile.name.toLowerCase()
+      if (!RESUME_EXTS.some((ext) => lower.endsWith(ext))) {
+        setErr('Resume must be a PDF, DOC, or DOCX file.'); return
+      }
+      if (resumeFile.size > RESUME_MAX_BYTES) {
+        setErr('Resume file is too large (8MB max).'); return
+      }
+    }
+
     const payload = {
       name, email, phone, city,
       max_travel_km: parseInt((fd.get('max_travel_km') as string) || '50', 10),
@@ -68,8 +103,16 @@ export default function PhotographerForm() {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
       })
       const data = await r.json()
-      if (r.ok) { setSubmitted(true) }
-      else { setErr(data.detail || 'Something went wrong. Please try again.'); setSubmitting(false) }
+      if (!r.ok) { setErr(data.detail || 'Something went wrong. Please try again.'); setSubmitting(false); return }
+
+      if (resumeFile && resumeFile.size > 0 && data.member_id) {
+        try {
+          await uploadResume(data.member_id, resumeFile)
+        } catch {
+          setResumeWarning('Application received, but your resume didn’t upload — email it to booking@brxs.ca if you’d like it reviewed.')
+        }
+      }
+      setSubmitted(true)
     } catch {
       setErr('Network error. Please check your connection and try again.'); setSubmitting(false)
     }
@@ -81,6 +124,7 @@ export default function PhotographerForm() {
         <div className="check">✓</div>
         <h3>Application received.</h3>
         <p>We&apos;ll review your portfolio and be in touch within 3 business days. Check your email — including spam.</p>
+        {resumeWarning && <p style={{ color: 'var(--brickDeep)', marginTop: 10 }}>{resumeWarning}</p>}
       </div>
     )
   }
@@ -150,6 +194,10 @@ export default function PhotographerForm() {
       <div className="fsec">03 · Your work</div>
       <div className="field"><label>Portfolio link 1 <span className="req">*</span></label><input name="portfolio1" type="url" placeholder="https://yourportfolio.com" required /></div>
       <div className="field"><label>Portfolio link 2 <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label><input name="portfolio2" type="url" placeholder="https://instagram.com/yourhandle" /></div>
+      <div className="field"><label>Resume <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label>
+        <input name="resume" type="file" accept=".pdf,.doc,.docx" />
+        <span className="hint-sm">PDF, DOC, or DOCX — 8MB max. Not required, but helps us route you faster if you have relevant experience beyond your portfolio.</span>
+      </div>
 
       <div className="fsec">04 · Business info</div>
       <div className="field"><label>HST / GST number <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(if registered)</span></label>
