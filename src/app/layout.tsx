@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.brxs.ca'),
   title: {
     default: 'Bricks — GTA Real Estate Photography & Media',
-    template: '%s | Bricks',
+    template: '%s',
   },
   description: 'GTA real estate listing media — HDR photography, licensed drone, floor plans, and 3D virtual tours. Book a shoot in 24–48h.',
   icons: { icon: '/favicon.svg' },
