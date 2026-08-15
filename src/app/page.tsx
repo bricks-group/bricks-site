@@ -137,6 +137,15 @@ const faqs = [
       <div className="wrap">
         <section className="block rvl">
           <div className="sec-head">
+            <div><span className="over">For teams &amp; brokerages</span><h2>One standard, whoever&apos;s booking it.</h2></div>
+          </div>
+          <p style={{ fontSize: 14, color: 'var(--inkMute)', maxWidth: 620 }}>Every shoot follows the same standard — same HDR treatment, same drone coverage, same floor plan format — no matter which agent on your team is behind the request. One point of contact, one consistent look across every listing under your brand, direct booked at <Link href="/book" style={{ color: 'var(--brickDeep)' }}>the same price</Link> whether it&apos;s your first shoot or your fiftieth.</p>
+        </section>
+      </div>
+
+      <div className="wrap">
+        <section className="block rvl">
+          <div className="sec-head">
             <div><span className="over">Selected work · GTA</span><h2>Real shoots, not stock.</h2></div>
             <Link href="/gallery" className="btn btn-sec" style={{ whiteSpace: 'nowrap' }}>See more work →</Link>
           </div>
