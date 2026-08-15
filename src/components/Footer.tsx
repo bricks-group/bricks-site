@@ -18,6 +18,7 @@ export default function Footer() {
           <Link href="/terms">Terms &amp; Privacy</Link>
           <Link href="/blog">Resources</Link>
           <Link href="/service-areas">Service areas</Link>
+          <a href="https://share.google/7ttYfc6W7JRwlqA9U" target="_blank" rel="noopener noreferrer">Find us on Google</a>
         </div>
       </div>
       <div className="foot" style={{ borderTop: 'none', paddingTop: 0 }}>

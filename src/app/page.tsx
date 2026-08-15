@@ -85,6 +85,7 @@ const faqs = [
             areaServed: ['Greater Toronto Area', 'Toronto', 'Mississauga', 'Brampton', 'Oakville', 'Milton', 'Halton Hills', 'Vaughan', 'Richmond Hill'].map((name) => ({ '@type': 'City', name })),
             knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', '3D virtual tours', 'Real estate media', 'Drone photography'],
             founder: { '@type': 'Person', name: 'Raphael Merchant', url: 'https://www.brxs.ca/about' },
+            sameAs: ['https://share.google/7ttYfc6W7JRwlqA9U'],
           }),
         }}
       />
