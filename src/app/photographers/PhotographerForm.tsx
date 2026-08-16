@@ -72,14 +72,15 @@ export default function PhotographerForm() {
     const equipmentList = equipmentRaw.split(/[\n,]+/).map((s) => s.trim()).filter(Boolean)
 
     const resumeFile = (fd.get('resume') as File) || null
-    if (resumeFile && resumeFile.size > 0) {
-      const lower = resumeFile.name.toLowerCase()
-      if (!RESUME_EXTS.some((ext) => lower.endsWith(ext))) {
-        setErr('Resume must be a PDF, DOC, or DOCX file.'); return
-      }
-      if (resumeFile.size > RESUME_MAX_BYTES) {
-        setErr('Resume file is too large (8MB max).'); return
-      }
+    if (!resumeFile || resumeFile.size === 0) {
+      setErr('Please attach your resume (PDF, DOC, or DOCX).'); return
+    }
+    const lower = resumeFile.name.toLowerCase()
+    if (!RESUME_EXTS.some((ext) => lower.endsWith(ext))) {
+      setErr('Resume must be a PDF, DOC, or DOCX file.'); return
+    }
+    if (resumeFile.size > RESUME_MAX_BYTES) {
+      setErr('Resume file is too large (8MB max).'); return
     }
 
     const payload = {
@@ -194,9 +195,9 @@ export default function PhotographerForm() {
       <div className="fsec">03 · Your work</div>
       <div className="field"><label>Portfolio link 1 <span className="req">*</span></label><input name="portfolio1" type="url" placeholder="https://yourportfolio.com" required /></div>
       <div className="field"><label>Portfolio link 2 <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label><input name="portfolio2" type="url" placeholder="https://instagram.com/yourhandle" /></div>
-      <div className="field"><label>Resume <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label>
-        <input name="resume" type="file" accept=".pdf,.doc,.docx" />
-        <span className="hint-sm">PDF, DOC, or DOCX — 8MB max. Not required, but helps us route you faster if you have relevant experience beyond your portfolio.</span>
+      <div className="field"><label>Resume <span className="req">*</span></label>
+        <input name="resume" type="file" accept=".pdf,.doc,.docx" required />
+        <span className="hint-sm">PDF, DOC, or DOCX — 8MB max. Required.</span>
       </div>
 
       <div className="fsec">04 · Business info</div>

@@ -27,10 +27,9 @@ header{position:sticky;top:0;z-index:70;background:rgba(244,241,235,0.92);
   justify-content:space-between;gap:16px;}
 .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);}
 .brand svg{height:20px; width:20px;display:block;}
-.brand svg rect{transform-origin:center;}
-.brand:hover svg rect:nth-child(1){animation:brickPop .5s ease-out forwards;}
-.brand:hover svg rect:nth-child(2){animation:brickPop .5s ease-out .07s forwards;}
-.brand:hover svg rect:nth-child(3){animation:brickPop .5s ease-out .14s forwards;}
+.brand-mark{transform-origin:center;}
+.brand:hover .brand-mark{animation:brandSpinY .9s ease-in-out;}
+@keyframes brandSpinY{from{transform:perspective(300px) rotateY(0deg);}to{transform:perspective(300px) rotateY(360deg);}}
 @keyframes brickPop{0%{transform:translateY(0);}40%{transform:translateY(-3px);}100%{transform:translateY(0);}}
 .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
 .nav-links{display:flex;gap:22px;align-items:center;}

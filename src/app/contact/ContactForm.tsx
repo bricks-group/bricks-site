@@ -11,8 +11,9 @@ function evt(name: string, props?: TrackProps) {
 
 export default function ContactForm() {
   const [msg, setMsg] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
-  function submit(e: React.FormEvent<HTMLFormElement>) {
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const f = e.currentTarget
     const name = (f.elements.namedItem('name') as HTMLInputElement).value.trim()
@@ -23,11 +24,26 @@ export default function ContactForm() {
       setMsg('Fill in name, a valid email, and a message.')
       return
     }
-    evt('contact_submitted')
-    const subject = 'Bricks — message from ' + name
-    const mailBody = `${name} (${email})\n\n${body}\n\n— sent from the Bricks contact page`
-    window.location.href = 'mailto:booking@brxs.ca?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(mailBody)
-    setMsg('✓ Opening your email app…')
+    setSubmitting(true)
+    try {
+      const r = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message: body }),
+      })
+      const data = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
+      if (!r.ok || !data.ok) {
+        setMsg(data.error || 'Could not send. Email us at booking@brxs.ca.')
+      } else {
+        evt('contact_submitted')
+        setMsg('✓ Message sent — we’ll get back to you soon.')
+        f.reset()
+      }
+    } catch {
+      setMsg('Network error. Please email booking@brxs.ca directly.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -45,7 +61,7 @@ export default function ContactForm() {
         <textarea id="cMsg" name="msg" placeholder="Property address, shoot type, preferred date — anything we should know." required />
       </div>
       <div className="cta-row">
-        <button type="submit" className="btn btn-brick">Send message</button>
+        <button type="submit" className="btn btn-brick" disabled={submitting}>{submitting ? 'Sending…' : 'Send message'}</button>
         <a className="btn btn-sec" href="/book">Or book a shoot →</a>
       </div>
       <div className="nlmsg">{msg}</div>
