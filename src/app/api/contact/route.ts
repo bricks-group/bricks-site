@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function POST(req: NextRequest) {
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
-    return NextResponse.json({ ok: false, error: 'Email service is not configured.' }, { status: 500 })
-  }
+// Public bricks-prelaunch Supabase credentials (already shipped in the client
+// bundle via BookingWizard). The Resend key lives only in the Supabase vault —
+// this route forwards to the contact-message edge function, which holds it.
+// No Vercel env var is required.
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ctqwxwrcxwruaqojohpf.supabase.co'
+const SUPABASE_ANON_KEY =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
 
+export async function POST(req: NextRequest) {
   let body: { name?: string; email?: string; message?: string }
   try {
     body = await req.json()
@@ -22,24 +25,20 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const res = await fetch('https://api.resend.com/emails', {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/contact-message`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({
-        from: 'Bricks Contact <booking@brxs.ca>',
-        to: ['booking@brxs.ca'],
-        reply_to: [email],
-        subject: `Bricks — message from ${name}`,
-        text: `${name} (${email})\n\n${message}\n\n— sent from the Bricks contact page`,
-      }),
+      body: JSON.stringify({ name, email, message }),
     })
-    if (!res.ok) {
+    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
+    if (!res.ok || !data.ok) {
       return NextResponse.json(
-        { ok: false, error: 'Could not send message. Please email booking@brxs.ca directly.' },
-        { status: 502 },
+        { ok: false, error: data.error || 'Could not send message.' },
+        { status: res.ok ? 502 : res.status },
       )
     }
     return NextResponse.json({ ok: true })
