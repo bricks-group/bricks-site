@@ -298,6 +298,7 @@ const faqs = [
         .adds .a .nm{font-weight:500;font-size:15px;color:var(--ink);}
         .adds .a .pr{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--brickDeep);margin:5px 0 6px;}
         .adds .a p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
+        @media (max-width:680px){ .incl,.adds{grid-template-columns:1fr;} }
         .ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px;}
         @media(max-width:720px){.ba-grid{grid-template-columns:1fr;}}
         .ba{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--paperDeep);
