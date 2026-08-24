@@ -6,9 +6,9 @@ export default function Footer() {
       <div className="foot">
         <div className="fbrand">
           <svg viewBox="0 0 24 24" fill="none" aria-label="Bricks mark" style={{ height: 18, width: 18 }}>
-            <rect x="4" y="5" width="11" height="7" rx="1.2" fill="#D2542B" />
-            <rect x="4" y="13" width="6" height="7" rx="1.2" fill="#D2542B" />
-            <rect x="11" y="13" width="10" height="7" rx="1.2" fill="#D2542B" />
+            <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D2542B" opacity="0.82" />
+            <rect x="3" y="11.6" width="6" height="8.4" rx="0.8" fill="#D2542B" />
+            <rect x="10.2" y="11.6" width="10.8" height="8.4" rx="0.8" fill="#D2542B" />
           </svg>
           <span className="wordmark" style={{ fontSize: 15 }}>bricks</span>
         </div>
