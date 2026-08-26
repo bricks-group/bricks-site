@@ -48,6 +48,9 @@ export default function PhotographerForm() {
     const form = e.currentTarget
     const fd = new FormData(form)
 
+    // Honeypot — off-screen field real users never fill.
+    if ((fd.get('company_website') as string || '').trim()) { setErr('Submission rejected.'); return }
+
     const specialties = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="specialties"]:checked')).map((c) => c.value)
     if (!specialties.length) { setErr('Select at least one specialty.'); return }
 
@@ -59,9 +62,12 @@ export default function PhotographerForm() {
     const portfolio1 = (fd.get('portfolio1') as string || '').trim()
     const accepted = (form.querySelector<HTMLInputElement>('#f_accept'))?.checked
 
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone || !city || !equipmentRaw.trim() || !portfolio1) {
-      setErr('Fill in all required fields marked *.'); return
-    }
+    if (name.length < 2 || !/^[A-Za-z][A-Za-z'’.\- ]{1,}$/.test(name)) { setErr('Please enter your full name.'); return }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setErr('Please enter a valid email address.'); return }
+    if (phone.replace(/\D/g, '').length < 7) { setErr('Please enter a valid phone number.'); return }
+    if (city.length < 2) { setErr('Please enter your home city.'); return }
+    if (!equipmentRaw.trim() || equipmentRaw.trim().length < 8) { setErr('Please describe your equipment in a little more detail.'); return }
+    if (!portfolio1) { setErr('Please provide at least one portfolio link.'); return }
     if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
 
     const droneChecked = specialties.includes('drone')
@@ -132,6 +138,11 @@ export default function PhotographerForm() {
 
   return (
     <form className="aform" onSubmit={handleSubmit} noValidate>
+      {/* Honeypot — hidden from real users; bots that autofill it get rejected. */}
+      <div aria-hidden style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+        <label>Company website (leave blank)</label>
+        <input type="text" name="company_website" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="fsec">01 · About you</div>
       <div className="grid2">
         <div className="field"><label>Full name <span className="req">*</span></label><input name="name" placeholder="Jordan Chen" required autoComplete="name" /></div>
