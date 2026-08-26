@@ -3,7 +3,6 @@ import Link from 'next/link'
 export default function Footer() {
   return (
     <footer>
-      <div className="foot-word" aria-hidden="true">bricks</div>
       <div className="foot-inner">
         <div>
           <Link href="/" className="brand" style={{marginBottom:'14px'}}>
@@ -50,12 +49,13 @@ export default function Footer() {
           </ul>
         </div>
       </div>
+      <div className="foot-word" aria-hidden="true">bricks</div>
       <div className="foot-meta">
         <span>© 2026 BRICKS · brxs.ca · TORONTO</span>
         <span>v1.0 · <Link href="/terms">TERMS</Link></span>
       </div>
       <style>{`
-        .foot-word{max-width:980px;margin:56px auto -10px;
+        .foot-word{max-width:980px;margin:72px auto -10px;
           font-weight:500;font-size:clamp(110px,17vw,250px);line-height:.78;letter-spacing:-.045em;
           color:transparent;-webkit-text-stroke:1px var(--hairStrong);user-select:none;pointer-events:none;
           transition:color 1s var(--ease,ease-out);text-align:center;}
