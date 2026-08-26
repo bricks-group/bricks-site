@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -60,7 +59,7 @@ export default function AboutPage() {
         <div className="wrap">
           <div className="author rvl">
             <div className="photo">
-              <Image src="/media/raphael-merchant-640.jpg" alt="Portrait of Raphael Merchant, founder of Bricks and Transport Canada Advanced RPAS drone certificate holder" width={640} height={618} />
+              <img src="/media/raphael-merchant-640.jpg" alt="Portrait of Raphael Merchant, founder of Bricks and Transport Canada Advanced RPAS drone certificate holder" width={640} height={618} />
             </div>
             <div className="bio">
               <span className="role">Founder · Bricks</span>

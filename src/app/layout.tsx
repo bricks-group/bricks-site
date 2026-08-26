@@ -23,9 +23,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#D2542B" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var r=document.documentElement,s="bricks-theme",v=localStorage.getItem(s);if(v)r.setAttribute("data-theme",v);else if(window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)r.setAttribute("data-theme","dark")})()`,
+          }}
+        />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />

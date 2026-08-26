@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+// Plain <img> used throughout (not next/image) for local reliability — mirrors bricks-site.
 import Link from 'next/link'
 import Script from 'next/script'
 import NewsletterInline from './NewsletterInline'
@@ -113,7 +113,7 @@ const faqs = [
             </div>
           </div>
           <div className="hero-visual">
-            <div className="kb"><Image className="kb-img" src={HERO_IMG} alt="GTA listing photographed by Bricks" fill sizes="(max-width: 900px) 100vw, 75vw" priority /></div>
+            <div className="kb"><img className="kb-img" src={HERO_IMG} alt="GTA listing photographed by Bricks" /></div>
           </div>
         </div>
       </section>
@@ -125,7 +125,7 @@ const faqs = [
           <div className="marquee" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
             <div className="marquee-track">
               {[...logos, ...logos].map((l, i) => (
-                <div key={l.alt + i} className="logo"><Image src={l.src} alt={l.alt} width={100} height={32} /></div>
+                <div key={l.alt + i} className="logo"><img src={l.src} alt={l.alt} width={100} height={32} /></div>
               ))}
               <div className="logo logo-txt">CBRE</div>
               <div className="logo logo-txt">CBRE</div>
@@ -156,7 +156,7 @@ const faqs = [
           </div>
           <div className="grid3">
             {workPreview.map((w) => (
-              <div key={w.src} className="card rvl"><div className="img"><Image loading="lazy" src={w.src} alt={w.alt} width={480} height={360} /></div></div>
+              <div key={w.src} className="card rvl"><div className="img"><img loading="lazy" src={w.src} alt={w.alt} width={480} height={360} /></div></div>
             ))}
           </div>
         </section>
@@ -171,8 +171,8 @@ const faqs = [
           <div className="ba-grid">
             {beforeAfter.map((p) => (
               <div key={p.label} className="ba" data-pos="50" tabIndex={0} role="slider" aria-label={p.label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={50}>
-                <Image className="ba-after" src={p.after} alt={`${p.label.split(' before')[0]} — after`} fill sizes="(max-width: 720px) 100vw, 50vw" />
-                <Image className="ba-before" src={p.before} alt={`${p.label.split(' before')[0]} — before`} fill sizes="(max-width: 720px) 100vw, 50vw" />
+                <img className="ba-after" src={p.after} alt={`${p.label.split(' before')[0]} — after`} />
+                <img className="ba-before" src={p.before} alt={`${p.label.split(' before')[0]} — before`} />
                 <span className="ba-tag ba-tag-before">Before</span>
                 <span className="ba-tag ba-tag-after">After</span>
                 <div className="ba-handle" aria-hidden="true"><span className="ba-knob">&#8596;</span></div>

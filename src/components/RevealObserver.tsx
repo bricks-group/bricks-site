@@ -22,7 +22,7 @@ export default function RevealObserver() {
     const docEl = document.documentElement
     docEl.classList.add('reveal-ready')
 
-    const targets = Array.from(document.querySelectorAll<HTMLElement>('.rvl'))
+    const targets = Array.from(document.querySelectorAll<HTMLElement>('.rvl, .foot-word'))
     if (!targets.length) return
 
     const reduced =
@@ -62,7 +62,7 @@ export default function RevealObserver() {
     // hidden on purpose — they reveal on scroll.
     const failsafe = window.setTimeout(() => {
       document
-        .querySelectorAll<HTMLElement>('.rvl:not(.in)')
+        .querySelectorAll<HTMLElement>('.rvl:not(.in), .foot-word:not(.in)')
         .forEach((el) => revealIfInView(el))
     }, 1500)
 

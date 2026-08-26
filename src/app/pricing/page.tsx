@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, bandCells, TOUR_RANGE } from '@/lib/pricing'
 
@@ -99,7 +98,7 @@ export default function PricingPage() {
           <div className="marquee" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
             <div className="marquee-track">
               {[...logos, ...logos].map((l, i) => (
-                <div key={l.alt + i} className="logo"><Image src={l.src} alt={l.alt} width={100} height={32} /></div>
+                <div key={l.alt + i} className="logo"><img src={l.src} alt={l.alt} width={100} height={32} /></div>
               ))}
               <div className="logo logo-txt">CBRE</div>
               <div className="logo logo-txt">CBRE</div>

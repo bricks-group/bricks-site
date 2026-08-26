@@ -72,7 +72,7 @@ export default function GalleryPage() {
           <div className="grid">
             {residential.map((img) => (
               <div key={img.src} className="card">
-                <div className="img"><Image src={img.src} alt={img.alt} width={480} height={360} loading="lazy" /></div>
+                <div className="img"><img src={img.src} alt={img.alt} width={480} height={360} loading="lazy" /></div>
                 <div className="meta"><div className="t">{img.t}</div></div>
               </div>
             ))}
@@ -82,7 +82,7 @@ export default function GalleryPage() {
           <div className="grid">
             {commercial.map((img) => (
               <div key={img.src} className="card">
-                <div className="img"><Image src={img.src} alt={img.alt} width={480} height={360} loading="lazy" /></div>
+                <div className="img"><img src={img.src} alt={img.alt} width={480} height={360} loading="lazy" /></div>
                 <div className="meta"><div className="t">{img.t}</div>{img.d && <div className="d">{img.d}</div>}</div>
               </div>
             ))}
@@ -93,8 +93,8 @@ export default function GalleryPage() {
             {beforeAfter.map((p) => (
               <div key={p.t} className="card">
                 <div className="img" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'var(--hair)' }}>
-                  <Image src={p.before} alt={`${p.t} before`} width={240} height={360} loading="lazy" />
-                  <Image src={p.after} alt={`${p.t} after`} width={240} height={360} loading="lazy" />
+                  <img src={p.before} alt={`${p.t} before`} width={240} height={360} loading="lazy" />
+                  <img src={p.after} alt={`${p.t} after`} width={240} height={360} loading="lazy" />
                 </div>
                 <div className="meta"><div className="t">{p.t}</div></div>
               </div>
