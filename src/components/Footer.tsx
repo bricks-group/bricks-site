@@ -6,10 +6,10 @@ export default function Footer() {
       <div className="foot-inner">
         <div>
           <Link href="/" className="brand" style={{marginBottom:'14px'}}>
-            <svg width="22" height="14" viewBox="0 0 27 16" fill="none" aria-hidden="true">
-              <rect x="1" y="1" width="12" height="6" rx="0.8" fill="#D2542B" opacity="0.82"/>
-              <rect x="1" y="9" width="12" height="6" rx="0.8" fill="#D2542B"/>
-              <rect x="15" y="9" width="11" height="6" rx="0.8" fill="#D2542B"/>
+            <svg className="brand-mark" viewBox="0 0 24 24" fill="none" aria-label="Bricks mark">
+              <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D2542B" opacity="0.82" />
+              <rect x="3" y="11.6" width="6" height="8.4" rx="0.8" fill="#D2542B" />
+              <rect x="10.2" y="11.6" width="10.8" height="8.4" rx="0.8" fill="#D2542B" />
             </svg>
             bricks
           </Link>
@@ -61,7 +61,7 @@ export default function Footer() {
           transition:color 1s var(--ease,ease-out);text-align:center;}
         .foot-word.in{color:var(--inkFaint);-webkit-text-stroke:1px transparent;}
         footer{overflow:hidden;}
-        .foot-inner{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:48px;align-items:start;}
+        .foot-inner{max-width:980px;margin:0 auto;padding-top:16px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:48px;align-items:start;}
         footer h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;
           text-transform:uppercase;color:var(--inkFaint);margin:0 0 18px;font-weight:500;}
         footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}

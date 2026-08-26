@@ -166,7 +166,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
 .book .btn-sec:hover{border-color:var(--moon);}
 
 /* footer */
-footer{border-top:1px solid var(--hair);margin-top:52px;}
+footer{margin-top:52px;}
 .foot{max-width:980px;margin:0 auto;padding:30px 36px;display:flex;align-items:center;
   justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .foot .fbrand{display:inline-flex;align-items:center;gap:8px;}
