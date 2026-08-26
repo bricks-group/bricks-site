@@ -68,6 +68,8 @@ export default function PhotographerForm() {
     if (city.length < 2) { setErr('Please enter your home city.'); return }
     if (!equipmentRaw.trim() || equipmentRaw.trim().length < 8) { setErr('Please describe your equipment in a little more detail.'); return }
     if (!portfolio1) { setErr('Please provide at least one portfolio link.'); return }
+    const hst = (fd.get('hst_number') as string || '').trim()
+    if (!hst) { setErr('HST / GST number is required.'); return }
     if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
 
     const droneChecked = specialties.includes('drone')
@@ -95,7 +97,7 @@ export default function PhotographerForm() {
       specialties,
       portfolio_links: [portfolio1].concat(portfolio2 ? [portfolio2] : []),
       equipment_list: equipmentList,
-      hst_number: (fd.get('hst_number') as string || '').trim() || null,
+      hst_number: hst,
       drone_certified: !!(droneChecked && rpasLevel && rpasLevel !== 'none'),
       rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
       rpas_certificate_number: (fd.get('rpas_certificate_number') as string || '').trim() || null,
