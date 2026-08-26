@@ -242,8 +242,10 @@ export default function PhotographerForm() {
         .aform .fsec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
         .check-col{display:grid;gap:8px;}
         .check-item{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border:1px solid var(--hairStrong);
-          border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:14px;color:var(--ink);}
-        .check-item input{margin-top:3px;flex:none;}
+          border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:14px;color:var(--ink);min-width:0;overflow-wrap:anywhere;}
+        .check-item span{min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+        .check-item input{margin-top:3px;flex:none;width:auto;min-width:0;}
+        .check-col .check-item input{width:auto;min-width:0;flex:none;}
         .radio-row{display:flex;gap:8px;flex-wrap:wrap;}
         .radio-row label{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hairStrong);
           border-radius:2px;font-size:13.5px;cursor:pointer;background:var(--paperDeep);}
