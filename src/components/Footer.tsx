@@ -1,19 +1,17 @@
 import Link from 'next/link'
 import { COVERAGE_LINE } from '@/lib/brand'
+import BrandMark from '@/components/BrandMark'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export default function Footer() {
   return (
     <footer>
       <div className="foot-inner">
         <div className="foot-brand">
-          <div className="fbrand">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D2542B" opacity="0.82" />
-              <rect x="3" y="11.6" width="6" height="8.4" rx="0.8" fill="#D2542B" />
-              <rect x="10.2" y="11.6" width="10.8" height="8.4" rx="0.8" fill="#D2542B" />
-            </svg>
+          <Link href="/" className="brand" aria-label="Bricks — home">
+            <BrandMark />
             <span className="wordmark">bricks</span>
-          </div>
+          </Link>
           <p className="foot-blurb">
             Listing media for Canadian real estate. HDR, licensed drone, and a floor plan on every standard shoot — booked direct, delivered in 24–48 hours.
           </p>
@@ -44,6 +42,7 @@ export default function Footer() {
         <span className="mono">343-453-4578</span>
         <a href="https://share.google/7ttYfc6W7JRwlqA9U" target="_blank" rel="noopener noreferrer">Find us on Google</a>
         <span className="foot-cover">{COVERAGE_LINE}</span>
+        <ThemeToggle />
       </div>
     </footer>
   )
