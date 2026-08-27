@@ -7,7 +7,7 @@ export default function ProductStage() {
   return (
     <ProductWindow
       title="Brokerage OS"
-      src="/screens/os.html?screen=overview"
+      src="/screens/os.html?screen=overview&lock=1"
       nw={1440}
       nh={920}
     />
