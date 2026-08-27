@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: "What's included in a professional listing photo shoot? | Bricks",
-  description: 'The core set every Bricks GTA listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h delivery — plus the add-ons you can stack.',
+  description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h delivery — plus the add-ons you can stack.',
   alternates: { canonical: '/blog/whats-included-listing-shoot' },
   openGraph: {
     type: 'article',
     title: "What's included in a professional listing photo shoot?",
-    description: 'The core set every Bricks GTA shoot ships: HDR, licensed drone, floor plan, 24–48h delivery — plus add-ons.',
+    description: 'The core set every Bricks standard shoot ships: HDR, licensed drone, floor plan, 24–48h delivery — plus add-ons.',
   },
   twitter: {
     title: "What's included in a pro listing shoot?",
@@ -27,37 +28,38 @@ export default function Post() {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: "What's included in a professional listing photo shoot?",
-            description: 'The core set every Bricks GTA listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h delivery — plus the add-ons you can stack.',
+            description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h delivery — plus the add-ons you can stack.',
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
             publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
             mainEntityOfPage: 'https://www.brxs.ca/blog/whats-included-listing-shoot',
-            keywords: "what's included in real estate photo shoot, GTA listing media package, professional listing photography GTA",
+            keywords: "what's included in real estate photo shoot, listing media package, professional listing photography Canada",
           }),
         }}
       />
       <BlogPostLayout
         badge="Resources · The shoot"
         title="What's included in a professional listing photo shoot?"
-        sub="Every Bricks GTA shoot ships the same core set. Here's exactly what you get — and the add-ons you can stack on top."
+        sub="Every Bricks standard shoot ships the same core set. Here's exactly what you get — and the add-ons you can stack on top."
       >
-        <p className="lead">A listing shoot shouldn&apos;t be a mystery. At Bricks, every shoot — regardless of footprint — ships the same core set, then you add what the property needs. No tier guessing, no padded package.</p>
+        <p className="lead">A listing shoot shouldn&apos;t be a mystery. At Bricks, every standard shoot — regardless of footprint — ships the same core set, then you add what the property needs. Photos only drops drone and the floor plan. No tier guessing, no padded package.</p>
 
-        <h2>The core set (included on every shoot)</h2>
+        <h2>The core set (included on every standard shoot)</h2>
         <h3>HDR photography</h3>
         <p>Exposure-bracketed, blended interiors and exteriors — the standard for MLS-ready listing photos. Shot to show the space accurately, not just brightly. Volume scales with footprint (more rooms = more frames).</p>
         <h3>Licensed drone coverage</h3>
         <p>Aerial exteriors and approach shots, flown under a Transport Canada <strong>Advanced RPAS certificate</strong> with the right airspace clearance. This is the &quot;wow&quot; frame for most homes and is included, not extra.</p>
         <h3>Floor plan</h3>
-        <p>A clean, dimensioned floor plan — included on every shoot. Buyers reference it constantly; portals surface it prominently.</p>
+        <p>A clean, dimensioned floor plan — included on every standard shoot. Buyers reference it constantly; portals surface it prominently.</p>
         <h3>24–48 hour delivery</h3>
         <p>Edited, MLS-ready files delivered to your inbox within two business days, with a gallery link for download.</p>
 
         <h2>Add-ons you can stack</h2>
         <ul>
           <li><strong>Cinematic reel</strong> (+{REEL_RANGE}) — a 30–45s motion reel for social and the listing page. Best for reach.</li>
-          <li><strong>3D virtual tour</strong> (+{TOUR_RANGE}) — a navigable, MLS-ready walkthrough. Best for large or remote-buyer homes.</li>
+          <li><strong>{TOUR_NAME}</strong> (+{TOUR_RANGE}) — {TOUR_BLURB} MLS-ready. À la carte add-on; included in Showcase and Full suite.</li>
+          <li><strong>{VISIT_NAME}</strong> ({VISIT_PRICE_LABEL}) — {VISIT_BLURB} {VISIT_PACKAGING}</li>
           <li><strong>Twilight photography</strong> (+{TWILIGHT_RANGE}) — blue-hour exteriors with lit windows. Best for premium listings.</li>
           <li><strong>Rush delivery</strong> (+${RUSH_FLAT}) — faster than the standard 24–48h window.</li>
         </ul>
@@ -71,13 +73,13 @@ export default function Post() {
         </ol>
 
         <h2>What you don&apos;t pay for</h2>
-        <p>You don&apos;t pay for a &quot;Premium&quot; or &quot;Luxury&quot; tier you didn&apos;t need. The core set is the core set; the add-ons are optional. Your quote is the sum of what you booked, sized to the property — that&apos;s the whole point of à la carte.</p>
+        <p>You don&apos;t pay for a &quot;Premium&quot; or &quot;Luxury&quot; tier you didn&apos;t need. The core set is the core set; the add-ons are optional. {VISIT_NAME} is never bundled into Premium or any other package. Your quote is the sum of what you booked, sized to the property — that&apos;s the whole point of à la carte.</p>
 
-        <blockquote>&quot;One standard, every time: HDR, licensed drone, and a floor plan. The reel and 3D tour are there when the listing calls for them.&quot;</blockquote>
+        <blockquote>&quot;One standard, every time: HDR, licensed drone, and a floor plan. The reel and {TOUR_NAME.toLowerCase()} are there when the listing calls for them. {VISIT_NAME} is always extra.&quot;</blockquote>
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h4>Is the floor plan really included?</h4><p>Yes — every Bricks shoot includes a dimensioned floor plan at no extra charge.</p></div>
+          <div className="qa"><h4>Is the floor plan really included?</h4><p>Yes — every Bricks standard shoot includes a dimensioned floor plan at no extra charge. Photos only drops drone and the floor plan.</p></div>
           <div className="qa"><h4>What if I only want photos, no drone?</h4><p>Licensed drone is part of the core set because it&apos;s the highest-impact frame for most homes; if a listing genuinely doesn&apos;t suit aerials, tell us at booking and we&apos;ll tailor the shoot.</p></div>
           <div className="qa"><h4>How many photos do I get?</h4><p>It scales with footprint — a condo gets fewer frames than an estate. You&apos;ll see the full set in the delivery gallery; tell us if you need a specific count for a portal.</p></div>
         </div>

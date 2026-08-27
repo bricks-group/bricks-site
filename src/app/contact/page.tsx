@@ -1,17 +1,18 @@
 import type { Metadata } from 'next'
 import ContactForm from './ContactForm'
+import { AREA_SERVED_SCHEMA, COVERAGE_LINE } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'Contact Bricks | GTA real estate media',
-  description: 'Contact Bricks for GTA listing media — HDR photography, licensed drone, floor plans, with optional 3D tours. Email booking@brxs.ca or call 343-453-4578. Booked direct, delivered in 24–48 hours.',
+  title: 'Contact Bricks | Canadian real estate media',
+  description: 'Contact Bricks for Canadian listing media — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Email booking@brxs.ca or call 343-453-4578.',
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact Bricks | GTA real estate media',
-    description: 'GTA listing media — HDR photo, licensed drone, floor plans, with optional 3D tours. Booked direct, delivered in 24–48 hours.',
+    title: 'Contact Bricks | Canadian real estate media',
+    description: 'Listing media for Canadian real estate — HDR photo, licensed drone, floor plans, with optional virtual tour and virtual visit. Booked direct, delivered in 24–48 hours.',
   },
   twitter: {
-    title: 'Contact Bricks | GTA real estate media',
-    description: 'GTA listing media — booked direct, delivered in 24–48 hours.',
+    title: 'Contact Bricks | Canadian real estate media',
+    description: 'Listing media for Canadian real estate — booked direct, delivered in 24–48 hours.',
   },
 }
 
@@ -25,7 +26,7 @@ export default function ContactPage() {
             '@context': 'https://schema.org',
             '@type': 'ContactPage',
             name: 'Contact Bricks',
-            description: 'Contact Bricks for GTA real estate listing media.',
+            description: 'Contact Bricks for Canadian real estate listing media.',
             url: 'https://www.brxs.ca/contact',
             mainEntity: {
               '@type': 'Organization',
@@ -33,7 +34,7 @@ export default function ContactPage() {
               legalName: 'Bricks Group',
               email: 'booking@brxs.ca',
               telephone: '+1-343-453-4578',
-              areaServed: 'Greater Toronto Area',
+              areaServed: AREA_SERVED_SCHEMA,
             },
           }),
         }}
@@ -43,7 +44,7 @@ export default function ContactPage() {
         <div className="wrap">
           <span className="badge">Contact</span>
           <h1>Let&apos;s shoot your next listing.</h1>
-          <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours across the GTA. Reach out and we&apos;ll confirm the slot and send pricing by footprint.</p>
+          <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours. {COVERAGE_LINE} Reach out and we&apos;ll confirm the slot and send pricing by footprint.</p>
         </div>
       </section>
 
@@ -52,7 +53,7 @@ export default function ContactPage() {
           <div className="contact-grid">
             <div className="c"><div className="l">Email</div><div className="v"><a href="mailto:booking@brxs.ca">booking@brxs.ca</a></div></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+13434534578">343-453-4578</a></div></div>
-            <div className="c"><div className="l">Service area</div><div className="v">Greater Toronto Area</div></div>
+            <div className="c"><div className="l">Service area</div><div className="v">Canada — current coverage listed on booking</div></div>
             <div className="c"><div className="l">Turnaround</div><div className="v">Edited &amp; delivered in 24–48h</div></div>
           </div>
 

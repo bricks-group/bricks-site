@@ -2,7 +2,7 @@
   "name": "bricks-prelaunch",
   "version": "1.0.0",
   "private": true,
-  "description": "Bricks pre-launch site — GTA listing-media booking. Live, revenue-generating site at brxs.ca. Migrated to Next.js 2026-07-27, same live Stripe/Cal.com/Supabase booking flow.",
+  "description": "Bricks pre-launch site — Canadian listing-media booking. Live, revenue-generating site at brxs.ca. Migrated to Next.js 2026-07-27, same live Stripe/Cal.com/Supabase booking flow.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
 
@@ -43,8 +44,8 @@ const PKG_DESC: Record<string, string> = {
   photosOnly: 'HDR photo only — no drone, no floor plan',
   essentials: 'Photo · drone · floor plan',
   story: '+ cinematic reel',
-  showcase: '+ reel + 3D tour',
-  suite: '+ reel + tour + twilight + staging',
+  showcase: `+ reel + ${TOUR_NAME.toLowerCase()}`,
+  suite: `+ reel + ${TOUR_NAME.toLowerCase()} + twilight + staging`,
 }
 
 function esc(s: string) {
@@ -79,6 +80,7 @@ export default function BookingWizard() {
   const [drone, setDrone] = useState(true)
   const [reel, setReel] = useState(false)
   const [tour, setTour] = useState(false)
+  const [visit, setVisit] = useState(false)
   const [twilight, setTwilight] = useState(false)
   const [staging, setStaging] = useState(false)
   const [rush, setRush] = useState(false)
@@ -229,7 +231,8 @@ export default function BookingWizard() {
     const parts = ['HDR photo']
     if (drone) parts.push('Drone')
     if (reel) parts.push('Cinematic reel')
-    if (tour) parts.push('3D tour')
+    if (tour) parts.push(TOUR_NAME)
+    if (visit) parts.push(`${VISIT_NAME} (${VISIT_PRICE_LABEL.toLowerCase()} separately)`)
     if (twilight) parts.push('Twilight')
     if (rush) parts.push('Rush')
     const base = parts.join(' + ')
@@ -282,6 +285,10 @@ export default function BookingWizard() {
     try {
       sessionStorage.setItem('bricks_booking', JSON.stringify({ name: name.trim(), email: email.trim(), addr: selectedAddr || addr.trim(), notes: notes.trim() }))
     } catch {}
+    const visitNote = visit
+      ? `${VISIT_NAME} (Gaussian splat, free-roam) requested — ${VISIT_PRICE_LABEL.toLowerCase()} separately. Never packaged.`
+      : ''
+    const combinedNotes = [notes.trim(), visitNote].filter(Boolean).join('\n')
     const payload = {
       quote,
       agent_name: name.trim(),
@@ -300,7 +307,7 @@ export default function BookingWizard() {
       tour_addon: tour,
       twilight_addon: twilight,
       rush_addon: rush,
-      notes: notes.trim() || null,
+      notes: combinedNotes || null,
     }
     fetch(SUPABASE + 'create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON }, body: JSON.stringify(payload) })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
@@ -338,6 +345,7 @@ export default function BookingWizard() {
             <button type="button" onClick={() => fetchQuote(sqftInput ? parseInt(sqftInput, 10) : null)}>Re-quote</button>
           </div>
         )}
+        {visit && <div className="qnote">{VISIT_NAME} requested — {VISIT_PRICE_LABEL.toLowerCase()} separately, not in this total, never packaged.</div>}
         {q.floor_plan_included === false && <div className="qnote">Photos only: no floor plan drafted for this booking.</div>}
         {q.sqft_estimated && <div className="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>}
       </>
@@ -411,7 +419,7 @@ export default function BookingWizard() {
             {/* STEP 2: SERVICES + QUOTE */}
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">HDR photography is included on every shoot; licensed drone and a floor plan are included on the standard tiers, or drop both for the bare-minimum Photos only option. Pick a bundle, or build à la carte with the checkboxes — see <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>. Every option is quoted live below, priced from the same per-service rates either way.</p>
+              <p className="hint">HDR photography is included on every shoot; licensed drone and a floor plan are included on the standard tiers, or drop both for Photos only. {TOUR_NAME} may be included in Showcase and Full suite. {VISIT_NAME} is always a paid add-on, never packaged. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
               <div className="choices">
                 {Object.keys(PKG_DEFS).map((k) => (
                   <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
@@ -422,7 +430,8 @@ export default function BookingWizard() {
               </div>
               <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Or build à la carte:</p>
               <label className="toggle"><input type="checkbox" checked={reel} onChange={(e) => setReel(e.target.checked)} /> Cinematic reel (+{REEL_RANGE}, by footprint)</label>
-              <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> 3D virtual tour (+{TOUR_RANGE}, by footprint)</label>
+              <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> {TOUR_NAME} (+{TOUR_RANGE}, by footprint) — {TOUR_BLURB}</label>
+              <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL.toLowerCase()} separately) — {VISIT_BLURB} {VISIT_PACKAGING}</label>
               <label className="toggle"><input type="checkbox" checked={twilight} onChange={(e) => setTwilight(e.target.checked)} /> Twilight photography (+{TWILIGHT_RANGE}, by footprint)</label>
               <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging (+${STAGING_PER_IMAGE} per image staged)</label>
               <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+${RUSH_FLAT})</label>
@@ -470,7 +479,7 @@ export default function BookingWizard() {
                   ['Property', addr.trim() || '—'], ['Type', propertyType || '—'],
                   ['Package', pkg ? PKG_LABEL[pkg] : 'Custom (à la carte)'],
                   ['Licensed drone', drone ? 'Yes' : 'No — Photos only'], ['Floor plan', drone ? 'Yes' : 'No — Photos only'],
-                  ['Cinematic reel', reel ? 'Yes' : 'No'], ['3D tour', tour ? 'Yes' : 'No'], ['Twilight', twilight ? 'Yes' : 'No'], ['Rush delivery', rush ? 'Yes' : 'No'],
+                  ['Cinematic reel', reel ? 'Yes' : 'No'], [TOUR_NAME, tour ? 'Yes' : 'No'], [VISIT_NAME, visit ? `Yes — ${VISIT_PRICE_LABEL.toLowerCase()} separately` : 'No'], ['Twilight', twilight ? 'Yes' : 'No'], ['Rush delivery', rush ? 'Yes' : 'No'],
                   ['Shoot time', selectedSlot ? formatSlot(selectedSlot) : '—'], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
                   <div key={k} className="rrow"><span className="rk">{k}</span><span className="rv">{esc(v)}</span></div>

@@ -18,9 +18,16 @@ export const PHOTO_RATE = [149, 199, 249, 299] as const;
 export const DRONE_RATE = [99, 119, 139, 159] as const;
 export const REEL_RATE = [199, 249, 299, 349] as const;
 export const TWILIGHT_RATE = [150, 170, 185, 200] as const;
+/** Virtual tour (path-confined walkthrough) — paid add-on. Not the virtual visit splat. */
 export const TOUR_RATE = [149, 199, 249, 299] as const;
 export const RUSH_FLAT = 75;
 export const STAGING_PER_IMAGE = 35;
+
+/**
+ * Virtual visit (Gaussian splat / SuperSplat) has no published rate in this
+ * repo. Always quoted separately. Never invent a price. Never package it.
+ */
+export const VISIT_PRICE_LABEL = 'Quoted';
 
 /** Format a rate band as a display range, e.g. [149,199,249,299] -> "$149–299". */
 export function bandRange(rate: readonly number[]): string {

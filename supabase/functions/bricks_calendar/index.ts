@@ -119,7 +119,7 @@ Deno.serve(async (req: Request) => {
         `Agent: ${r.agent_name}`,
         r.brokerage ? `Brokerage: ${r.brokerage}` : '',
         `Package: ${r.package_interest}`,
-        `3D tour: ${r.tour_addon ? 'Yes' : 'No'}`,
+        `Virtual tour: ${r.tour_addon ? 'Yes' : 'No'}`,
         r.preferred_window ? `Window: ${r.preferred_window}` : '',
         r.notes ? `Notes: ${r.notes}` : '',
       ].filter(Boolean).map(esc).join('\\n');

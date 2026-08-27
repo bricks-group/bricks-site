@@ -20,8 +20,8 @@ export default function BlogPostLayout({
           <article className="prose rvl">
             {children}
 
-            <p style={{ marginTop: 28 }}><Link href="/book" className="btn btn-brick">Book a tailored GTA shoot →</Link></p>
-            <p style={{ marginTop: 18, fontSize: 13, color: 'var(--inkMute)' }}>Written by <strong>Raphael Merchant</strong>, founder of Bricks. Figures reflect 2026 GTA market research across major regional providers; Bricks rates are starting points and tailored per booking.</p>
+            <p style={{ marginTop: 28 }}><Link href="/book" className="btn btn-brick">Book a listing shoot →</Link></p>
+            <p style={{ marginTop: 18, fontSize: 13, color: 'var(--inkMute)' }}>Written by <strong>Raphael Merchant</strong>, founder of Bricks. Figures that cite regional market research are labelled as such; Bricks rates are starting points and tailored per booking.</p>
             <Link className="author-card" href="/about">
               <Image src="/media/raphael-merchant-640.jpg" alt="Raphael Merchant, founder of Bricks" loading="lazy" width={56} height={56} />
               <div className="ac-bio">

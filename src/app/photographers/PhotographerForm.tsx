@@ -157,7 +157,8 @@ export default function PhotographerForm() {
             { value: 'photo', label: 'Real estate photography' },
             { value: 'video', label: 'Cinematic video' },
             { value: 'drone', label: 'Drone / aerial' },
-            { value: 'virtual_tour', label: '3D / virtual tour' },
+            { value: 'virtual_tour', label: 'Virtual tour (path-confined walkthrough)' },
+            { value: 'virtual_visit', label: 'Virtual visit (Gaussian splat / SuperSplat)' },
             { value: 'floor_plan', label: 'Floor plans' },
             { value: 'twilight', label: 'Twilight / blue hour' },
           ].map((s) => (
@@ -180,7 +181,7 @@ export default function PhotographerForm() {
               <label><input type="radio" name="f_rpas" value="basic" /> Basic certificate</label>
               <label><input type="radio" name="f_rpas" value="advanced" /> Advanced certificate</label>
             </div>
-            <span className="hint-sm">GTA controlled airspace (Pearson / Billy Bishop) requires Advanced RPAS. We verify with Transport Canada before routing drone jobs.</span>
+            <span className="hint-sm">Controlled airspace near Pearson / Billy Bishop requires Advanced RPAS. We verify with Transport Canada before routing drone jobs.</span>
           </div>
           <div className="field"><label>RPAS certificate number</label><input name="rpas_certificate_number" placeholder="PC-XXXXXXXX" /></div>
         </div>
