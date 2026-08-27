@@ -75,61 +75,23 @@ export default function PhotographersPage() {
             <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>Inaccessible property or a client no-show reported in-app may qualify for the published trip fee then in effect.</p></div>
           </div>
         </section>
-      </div>
 
-      <section className="rvl" id="payouts" aria-label="Vendor rate card">
-        <div className="wrap">
+        <section className="block rvl" id="payouts" aria-label="Vendor rate card">
           <div className="sec-head">
             <div>
               <span className="over">Vendor rate card</span>
               <h2>Fixed package payouts.</h2>
             </div>
-            <p>CAD, exclusive of HST, shown as Tier C / Tier B / Tier A. Package payouts do not change based on what the client was charged. Add-ons use your tier percentage of add-on rack: C 35% · B 45% · A 55%.</p>
           </div>
-        </div>
-        <div className="tray tray-crm tray-frame">
-          <div className="tray-stage">
-            <div className="pwin">
-              <div className="pwin-bar">
-                <div className="pwin-dots" aria-hidden="true"><i /><i /><i /></div>
-                <span>Rate card</span>
-              </div>
-              <div className="pwin-body">
-                <table className="rate-table">
-                  <thead>
-                    <tr><th>Package</th><th>Tier C</th><th>Tier B</th><th>Tier A</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Standard · under 2,000 sqft</td><td>$104.65</td><td>$134.55</td><td>$164.45</td></tr>
-                    <tr><td>Standard · 2,000–3,499</td><td>$132.65</td><td>$170.55</td><td>$208.45</td></tr>
-                    <tr><td>Standard · 3,500–4,999</td><td>$164.15</td><td>$211.05</td><td>$257.95</td></tr>
-                    <tr><td>Standard · 5,000+</td><td>$174.65</td><td>$224.55</td><td>$274.45</td></tr>
-                    <tr><td>Premium · under 2,000</td><td>$209.65</td><td>$269.55</td><td>$329.45</td></tr>
-                    <tr><td>Premium · 2,000–3,499</td><td>$262.15</td><td>$337.05</td><td>$411.95</td></tr>
-                    <tr><td>Premium · 3,500–4,999</td><td>$314.64</td><td>$404.55</td><td>$494.45</td></tr>
-                    <tr><td>Premium · 5,000+</td><td>$367.15</td><td>$472.05</td><td>$576.95</td></tr>
-                    <tr><td>Luxury · under 2,000</td><td>$402.15</td><td>$517.05</td><td>$631.95</td></tr>
-                    <tr><td>Luxury · 2,000–3,499</td><td>$419.65</td><td>$539.55</td><td>$659.45</td></tr>
-                    <tr><td>Luxury · 3,500–4,999</td><td>$524.65</td><td>$674.55</td><td>$824.45</td></tr>
-                    <tr><td>Luxury · 5,000+</td><td>$664.65</td><td>$854.55</td><td>$1,044.45</td></tr>
-                    <tr><td>Estate · flat</td><td>$874.65</td><td>$1,124.55</td><td>$1,374.45</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="wrap">
+          <p className="rate-lead">Photographers are independent contractors, paid a published dollar rate card — not a percent of what the client paid. Tiers C / B / A are assigned by Bricks on quality, reliability, volume, and compliance; the full card lives in the contractor agreement after you apply. Virtual visit is a client add-on quoted by sqft — never packaged.</p>
           <div className="adds">
-            <div className="a rvl"><div className="nm">Tier C — Entry</div><div className="pr">Add-ons 35%</div><p>Starting tier. Assigned by Bricks based on quality, reliability, volume, and compliance.</p></div>
-            <div className="a rvl"><div className="nm">Tier B — Core</div><div className="pr">Add-ons 45%</div><p>Package payouts from the rate card above. Add-on rack share is 45%.</p></div>
-            <div className="a rvl"><div className="nm">Tier A — Elite</div><div className="pr">Add-ons 55%</div><p>Package payouts from the rate card above. Add-on rack share is 55%.</p></div>
+            <div className="a rvl"><div className="nm">Tier C — Entry</div><p>Starting tier. Assigned by Bricks based on quality, reliability, volume, and compliance.</p></div>
+            <div className="a rvl"><div className="nm">Tier B — Core</div><p>Assigned for consistent quality and reliability on the network.</p></div>
+            <div className="a rvl"><div className="nm">Tier A — Elite</div><p>Highest assigned tier for quality, volume, and compliance.</p></div>
           </div>
           <p className="note">{COVERAGE_LINE} Payout is the published rate-card amount. Virtual visit is a client add-on, quoted by sqft — never packaged.</p>
-        </div>
-      </section>
+        </section>
 
-      <div className="wrap">
         <section className="block rvl">
           <div className="sec-head">
             <div>
@@ -144,9 +106,7 @@ export default function PhotographersPage() {
             <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability. Insurance and WSIB proof are required before a first dispatched job — see the IC agreement.</p></div>
           </div>
         </section>
-      </div>
 
-      <div className="wrap">
         <section className="block rvl" id="apply">
           <div className="sec-head">
             <div>
@@ -160,17 +120,18 @@ export default function PhotographersPage() {
       </div>
 
       <style>{`
-        .adds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:28px;}
+        .sec-head{min-width:0;}
+        .sec-head > div{min-width:0;max-width:100%;}
+        .sec-head h2{white-space:normal;overflow:visible;overflow-wrap:break-word;}
+        .rate-lead{font-size:15px;color:var(--inkSoft);line-height:1.6;max-width:640px;margin:0 0 22px;}
+        .adds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
         .adds .a{background:var(--paper);padding:26px 24px;}
-        .adds .a .nm{font-weight:500;font-size:16px;color:var(--ink);}
-        .adds .a .pr{font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--brickDeep);margin:8px 0 6px;}
+        .adds .a .nm{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:8px;}
         .adds .a p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
-        .rate-table{width:100%;border-collapse:collapse;font-size:13px;color:var(--inkSoft);}
-        .rate-table th,.rate-table td{padding:12px 18px;border-bottom:1px solid var(--hair);text-align:right;white-space:nowrap;}
-        .rate-table th:first-child,.rate-table td:first-child{text-align:left;color:var(--ink);}
-        .rate-table th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);background:var(--paperSoft);}
-        .rate-table tr:last-child td{border-bottom:none;}
-        @media (max-width:680px){.adds{grid-template-columns:1fr;}}
+        @media (max-width:720px){
+          .sec-head{flex-direction:column;align-items:flex-start;}
+          .adds{grid-template-columns:1fr;}
+        }
       `}</style>
     </>
   )

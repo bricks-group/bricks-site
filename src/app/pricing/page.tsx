@@ -28,6 +28,8 @@ export const metadata: Metadata = {
   },
 }
 
+const BANDS = ['Small', 'Mid', 'Large', 'XL'] as const
+
 const rows = [
   { name: 'HDR photography', inc: 'interiors + exteriors', vals: bandCells(PHOTO_RATE) },
   { name: 'Licensed drone', inc: 'Advanced RPAS-certified aerial', vals: bandCells(DRONE_RATE) },
@@ -103,42 +105,34 @@ export default function PricingPage() {
             <div className="logo logo-txt">CBRE</div>
           </div>
         </section>
-      </div>
 
-      <section className="rvl" aria-label="À la carte rates">
-        <div className="tray tray-tx tray-frame">
-          <div className="tray-stage">
-            <div className="pwin">
-              <div className="pwin-bar">
-                <div className="pwin-dots" aria-hidden="true"><i /><i /><i /></div>
-                <span>À la carte</span>
-              </div>
-              <div className="pwin-body">
-                <table className="tbl">
-                  <caption className="tbl-cap">Starting points — your quote is tailored per booking</caption>
-                  <thead>
-                    <tr><th style={{ textAlign: 'left' }}>Service</th><th>Small</th><th>Mid</th><th>Large</th><th>XL</th></tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((r) => (
-                      <tr key={r.name} className={r.row}>
-                        <td className="pkg">{r.name}<span className="inc">{r.inc}</span></td>
-                        {r.flat ? (
-                          <td className="num" colSpan={4} style={{ textAlign: 'center' }}>{r.flat}</td>
-                        ) : (
-                          r.vals!.map((v, i) => <td key={i} className="num">{v}</td>)
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+        <section className="block rvl rates" aria-label="À la carte rates">
+          <div className="sec-head">
+            <div>
+              <span className="over">À la carte</span>
+              <h2>Starting points.</h2>
             </div>
           </div>
-        </div>
-      </section>
+          <p className="tbl-cap">Starting points — your quote is tailored per booking</p>
+          <table className="tbl">
+            <thead>
+              <tr><th style={{ textAlign: 'left' }}>Service</th><th>Small</th><th>Mid</th><th>Large</th><th>XL</th></tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.name} className={r.row}>
+                  <td className="pkg">{r.name}<span className="inc">{r.inc}</span></td>
+                  {r.flat ? (
+                    <td className="num flat-val" colSpan={4} data-flat="1">{r.flat}</td>
+                  ) : (
+                    r.vals!.map((v, i) => <td key={i} className="num" data-band={BANDS[i]}>{v}</td>)
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
 
-      <div className="wrap">
         <p className="note price-foot">Small ≈ ≤1,200 sq ft · Mid ≈ 1,200–2,500 · Large ≈ 2,500–4,000 · XL ≈ 4,000+. First 25 km from Mississauga is free; $0.75/km after, quoted before you confirm. CAD, exclude HST (13%).</p>
 
         <section className="block rvl">
@@ -165,19 +159,34 @@ export default function PricingPage() {
 
       <style>{`
         .trust{text-align:center;padding:8px 0 28px;}
-        .tbl{width:100%;border-collapse:collapse;}
-        .tbl-cap{caption-side:top;text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);padding:14px 22px 8px;}
+        .rates{overflow-x:clip;}
+        .tbl{width:100%;max-width:100%;border-collapse:collapse;}
+        .tbl-cap{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);padding:0 0 16px;}
         .tbl th,.tbl td{padding:16px 22px;text-align:right;border-bottom:1px solid var(--hair);}
         .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
           text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperSoft);}
-        .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);}
+        .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);font-size:15px;}
         .tbl td.pkg .inc{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
           letter-spacing:0.08em;text-transform:uppercase;color:var(--brickDeep);font-weight:500;margin-top:3px;}
         .tbl td.num{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--inkSoft);}
+        .tbl td.num.flat-val{text-align:center;}
         .tbl tr.flat td{background:var(--paperDeep);}
         .tbl tr:last-child td{border-bottom:none;}
         .price-foot{max-width:680px;margin:28px auto 0;text-align:center;}
-        @media (max-width:680px){.tbl th,.tbl td{padding:12px 14px;}}
+        @media (max-width:720px){
+          .tbl thead{display:none;}
+          .tbl, .tbl tbody, .tbl tr, .tbl th, .tbl td{display:block;width:100%;max-width:100%;box-sizing:border-box;text-align:left;}
+          .tbl tr{border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:var(--paper);margin:0 0 14px;}
+          .tbl th, .tbl td{padding:12px 16px;border-bottom:1px solid var(--hair);}
+          .tbl td.pkg{border-bottom:1px solid var(--hair);font-size:15px;}
+          .tbl td.num{display:flex;justify-content:space-between;align-items:center;text-align:right;font-size:15px;}
+          .tbl td.num::before{content:attr(data-band);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);}
+          .tbl td.num[colspan]::before,
+          .tbl td.num.flat-val::before{content:none;}
+          .tbl td.num[colspan],
+          .tbl td.num.flat-val{display:block;text-align:left;}
+          .tbl tr:last-child td, .tbl td:last-child{border-bottom:none;}
+        }
       `}</style>
     </>
   )
