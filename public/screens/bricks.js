@@ -600,7 +600,7 @@ function BrokShell({ dark=false, screen='overview', role='brokerage', customize=
           <div onClick={locked ? undefined : () => setCur('settings')} style={{ cursor: locked ? 'default' : 'pointer', display:'flex' }}><I name="cog" size={15} color={th.ink3}/></div>
         </div>
       </aside>
-      <main style={{ flex:1, display:'flex', flexDirection:'column', minWidth:0, overflow:'auto' }}>
+      <main style={{ flex:1, display:'flex', flexDirection:'column', minWidth:0, overflow: locked ? 'hidden' : 'auto' }}>
         <TopBar th={th} screen={cur}/>
         <div style={{ padding:'32px 36px', display:'flex', flexDirection:'column', gap:28 }}>
           {cur === 'overview'    && <OverviewContent     th={th} dark={dark} role={role} customize={customize}/>}
