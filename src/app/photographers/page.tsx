@@ -46,25 +46,25 @@ export default function PhotographersPage() {
         }}
       />
 
-      <div className="wrap">
-        <section className="hero">
+      <section className="hero">
+        <div className="wrap">
           <span className="badge">Photographers</span>
           <h1>Shoot listings.<br />Get paid fast.</h1>
-          <p className="sub">When the network launches, jobs will be auto-routed to your phone. You shoot, upload, and get paid via Stripe Connect — no invoicing, no chasing. Package payouts are a fixed vendor rate card by package, size band, and tier. Add-ons pay at 35% / 45% / 55% of add-on rack for Tier C / B / A.</p>
+          <p className="sub">Auto-routed jobs. Stripe Connect payouts. Apply in about four minutes.</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
             <a className="btn btn-sec" href="#payouts">See tier payouts</a>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="block">
           <div className="sec-head">
             <div>
               <span className="over">How it works</span>
-              <h2>You shoot. We handle the rest.</h2>
-              <p className="sub" style={{ marginTop: 10 }}>The Dispatch network is launching soon — apply now to be in the first cohort.</p>
+              <h2>The Dispatch network.</h2>
+              <p className="sub" style={{ marginTop: 10 }}>Launching soon — apply now to be in the first cohort.</p>
             </div>
           </div>
           <div className="incl">
@@ -147,11 +147,6 @@ export default function PhotographersPage() {
       </div>
 
       <style>{`
-        .incl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
-        .incl .c{background:var(--paper);padding:22px 22px;}
-        .incl .c h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
-        .incl .c p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
-        .incl .c .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
         .adds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
         .adds .a{background:var(--paper);padding:22px 22px;}
         .adds .a .nm{font-weight:500;font-size:16px;color:var(--ink);}

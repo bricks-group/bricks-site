@@ -5,15 +5,11 @@ import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, PHOTO_RATE, DRONE_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
   BROKERAGE_LOGOS,
   KNOWS_ABOUT,
-  TOUR_BLURB,
-  TOUR_NAME,
-  VISIT_NAME,
-  VISIT_PACKAGING,
 } from '@/lib/brand'
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
@@ -102,7 +98,7 @@ export default function Home() {
           <div className="tray-stage">
             <ProductWindow
               title="Brokerage OS"
-              src="/screens/os.html?screen=crm"
+              src="/screens/os.html?screen=crm&lock=1"
               nw={1440}
               nh={920}
               lazy
@@ -141,7 +137,7 @@ export default function Home() {
             <ProductWindow
               variant="phone"
               title="Booking"
-              src="/screens/book.html"
+              src="/screens/book.html?lock=1"
               nw={390}
               nh={844}
               lazy
@@ -156,7 +152,7 @@ export default function Home() {
             <ProductWindow
               variant="phone"
               title="Dispatch"
-              src="/screens/disp.html"
+              src="/screens/disp.html?lock=1"
               nw={390}
               nh={844}
               lazy
@@ -195,9 +191,6 @@ export default function Home() {
             <div className="c rvl"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every standard shoot.</p></div>
             <div className="c rvl"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
           </div>
-          <p className="quiet-adds">
-            Add-ons: cinematic reel {REEL_RANGE}; {TOUR_NAME.toLowerCase()} {TOUR_RANGE} — {TOUR_BLURB} Included in Showcase and Full suite. {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}). {VISIT_PACKAGING} Twilight exterior {TWILIGHT_RANGE}.
-          </p>
         </section>
       </div>
 
@@ -234,18 +227,7 @@ export default function Home() {
           .hero-home{padding:56px 20px 40px;}
           .hero-home h1{font-size:34px;}
         }
-        .logo-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:22px 36px;padding:4px 0 8px;}
-        .logo-row .logo{display:flex;align-items:center;justify-content:center;height:28px;flex:none;}
-        .logo-row .logo img{height:28px;max-height:28px;max-width:110px;width:auto;object-fit:contain;display:block;opacity:.72;filter:grayscale(1);}
-        .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;letter-spacing:.06em;color:var(--inkMute);opacity:.72;}
         @media (prefers-reduced-motion:reduce){.hero-home .badge-lit,.hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
-        .incl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
-        .incl .c{background:var(--paper);padding:22px 22px;}
-        .incl .c h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
-        .incl .c p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
-        .incl .c .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
-        .quiet-adds{font-size:13px;color:var(--inkMute);line-height:1.55;margin-top:18px;max-width:720px;}
-        @media (max-width:680px){ .incl{grid-template-columns:1fr;} }
         .nl-pop{position:fixed;right:20px;bottom:20px;width:330px;max-width:calc(100vw - 40px);
           background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;
           box-shadow:0 0 0 1px var(--hair);padding:22px 22px 20px;z-index:60;

@@ -85,30 +85,28 @@ export default function PricingPage() {
         }}
       />
 
-      <div className="wrap">
-        <section className="hero">
+      <section className="hero">
+        <div className="wrap">
+          <span className="badge">Pricing</span>
           <h1>Priced by footprint.</h1>
-          <p className="sub">Per-shoot rates for Canadian real estate. One standard — photography, drone, and floor plan on every standard shoot. {TOUR_NAME} is a {TOUR_RANGE} add-on (included in Showcase and Full suite). {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} — same bands as photo, reel, and virtual tour — and never packaged.</p>
-        </section>
-      </div>
+          <p className="sub">Per-shoot rates for Canadian real estate. Floor plan included on every standard shoot. Virtual visit quoted by sqft.</p>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="trust">
           <p className="trust-cap">Agents &amp; sales reps from Canada&apos;s leading brokerages &amp; REITs</p>
-          <div className="marquee" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
-            <div className="marquee-track">
-              {[...BROKERAGE_LOGOS, ...BROKERAGE_LOGOS].map((l, i) => (
-                <div key={l.alt + i} className="logo"><Image src={l.src} alt={l.alt} width={100} height={32} /></div>
-              ))}
-              <div className="logo logo-txt">CBRE</div>
-              <div className="logo logo-txt">CBRE</div>
-            </div>
+          <div className="logo-row" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
+            {BROKERAGE_LOGOS.map((l) => (
+              <div key={l.alt} className="logo"><Image src={l.src} alt={l.alt} width={100} height={28} /></div>
+            ))}
+            <div className="logo logo-txt">CBRE</div>
           </div>
         </section>
       </div>
 
       <div className="wrap">
-        <section className="block">
+        <section className="block price-block">
           <div className="sec-head">
             <div><span className="over">À la carte</span><h2>Priced by the job, not a flat rate.</h2></div>
             <p>Every listing is different, so every quote is built to fit — footprint, what you need shot, and where. The grid below is a <b>starting-point menu</b>, not a fixed price sheet: your actual quote is tailored per booking and confirmed before you commit.</p>
@@ -183,13 +181,10 @@ export default function PricingPage() {
       </div>
 
       <style>{`
-        .wrap{max-width:920px;margin:0 auto;padding:0 36px;}
-        .hero{padding:56px 0 36px;}
-        .hero h1{font-weight:500;font-size:40px;line-height:1.02;letter-spacing:-1.2px;color:var(--ink);}
-        .hero p.sub{font-size:16px;color:var(--inkSoft);margin-top:16px;max-width:600px;}
-        .tbl-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+        .price-block{padding-top:48px;}
+        .tbl-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;}
         .tbl{width:100%;min-width:520px;border-collapse:collapse;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
-        .tbl th,.tbl td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--hair);}
+        .tbl th,.tbl td{padding:16px 18px;text-align:right;border-bottom:1px solid var(--hair);}
         .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
           text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperDeep);}
         .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);}
@@ -204,18 +199,9 @@ export default function PricingPage() {
         .cta p{font-size:13px;color:var(--moonSoft);margin-top:6px;}
         .cta a{background:var(--brick);color:#fff;font-weight:500;font-size:14px;
           padding:12px 22px;border-radius:2px;text-decoration:none;white-space:nowrap;}
-        .trust{text-align:center;padding:8px 0 4px;}
+        .trust{text-align:center;padding:12px 0 8px;}
         .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
-        .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
-        .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
-        .marquee:hover .marquee-track{animation-play-state:paused;}
-        .logo{display:flex;align-items:center;justify-content:center;height:32px;flex:none;}
-        .logo img{height:32px;width:auto;display:block;opacity:.78;filter:grayscale(1);transition:opacity .2s ease,filter .2s ease;}
-        .logo:hover img{opacity:1;filter:grayscale(0);}
-        .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.06em;color:var(--inkMute);opacity:.78;}
-        @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-        @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
-        @media (max-width:680px){.wrap{padding:0 20px;} .pkgs,.adds{grid-template-columns:1fr;} .hero h1{font-size:32px;} .tbl th,.tbl td{padding:12px 12px;}}
+        @media (max-width:680px){.pkgs,.adds{grid-template-columns:1fr;} .tbl th,.tbl td{padding:12px 12px;}}
       `}</style>
     </>
   )

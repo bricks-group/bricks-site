@@ -536,7 +536,8 @@
   }) {
     const th = useTheme(dark);
     const nav = React.useContext(DemoNav);
-    const select = onSelect || nav && nav.setTab;
+    const locked = !!(nav && nav.locked);
+    const select = locked ? undefined : onSelect || nav && nav.setTab;
     const cur = nav && typeof nav.tab === 'number' ? nav.tab : active;
     return /*#__PURE__*/React.createElement("div", {
       style: {
@@ -560,7 +561,7 @@
           padding: '8px 0',
           position: 'relative',
           color: on ? th.ink : th.ink4,
-          cursor: 'pointer'
+          cursor: select ? 'pointer' : 'default'
         }
       }, on && /*#__PURE__*/React.createElement("div", {
         style: {
@@ -6353,28 +6354,32 @@
     });
   }
   function DemoBook({
-    dark = false
+    dark = false,
+    locked = false
   }) {
     const [tab, setTab] = React.useState(0);
     const Screen = BOOK_SCREENS[tab] || BookHome;
     return /*#__PURE__*/React.createElement(DemoNav.Provider, {
       value: {
         tab,
-        setTab
+        setTab: locked ? undefined : setTab,
+        locked
       }
     }, /*#__PURE__*/React.createElement(Screen, {
       dark: dark
     }));
   }
   function DemoDisp({
-    dark = false
+    dark = false,
+    locked = false
   }) {
     const [tab, setTab] = React.useState(0);
     const Screen = DISP_SCREENS[tab] || DispToday;
     return /*#__PURE__*/React.createElement(DemoNav.Provider, {
       value: {
         tab,
-        setTab
+        setTab: locked ? undefined : setTab,
+        locked
       }
     }, /*#__PURE__*/React.createElement(Screen, {
       dark: dark

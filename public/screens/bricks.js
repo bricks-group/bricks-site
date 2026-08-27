@@ -175,7 +175,8 @@ const DemoNav = React.createContext(null);
 function TabBar({ dark=false, tabs, active, accent=T.brick, onSelect }) {
   const th = useTheme(dark);
   const nav = React.useContext(DemoNav);
-  const select = onSelect || (nav && nav.setTab);
+  const locked = !!(nav && nav.locked);
+  const select = locked ? undefined : (onSelect || (nav && nav.setTab));
   const cur = (nav && typeof nav.tab === 'number') ? nav.tab : active;
   return (
     <div style={{
@@ -190,7 +191,7 @@ function TabBar({ dark=false, tabs, active, accent=T.brick, onSelect }) {
             display:'flex', flexDirection:'column', alignItems:'center', gap:4,
             padding:'8px 0', position:'relative',
             color: on ? th.ink : th.ink4,
-            cursor:'pointer',
+            cursor: select ? 'pointer' : 'default',
           }}>
             {on && <div style={{ position:'absolute', top:0, width:24, height:2, background:accent }}/>}
             <I name={t.icon} size={19} color={on ? th.ink : th.ink4} sw={on ? 1.75 : 1.5}/>
@@ -2116,21 +2117,21 @@ function DemoOS({ dark=false, screen='overview', locked=false }) {
   return <BrokShell dark={dark} screen={screen} locked={locked} />;
 }
 
-function DemoBook({ dark=false }) {
+function DemoBook({ dark=false, locked=false }) {
   const [tab, setTab] = React.useState(0);
   const Screen = BOOK_SCREENS[tab] || BookHome;
   return (
-    <DemoNav.Provider value={{ tab, setTab }}>
+    <DemoNav.Provider value={{ tab, setTab: locked ? undefined : setTab, locked }}>
       <Screen dark={dark} />
     </DemoNav.Provider>
   );
 }
 
-function DemoDisp({ dark=false }) {
+function DemoDisp({ dark=false, locked=false }) {
   const [tab, setTab] = React.useState(0);
   const Screen = DISP_SCREENS[tab] || DispToday;
   return (
-    <DemoNav.Provider value={{ tab, setTab }}>
+    <DemoNav.Provider value={{ tab, setTab: locked ? undefined : setTab, locked }}>
       <Screen dark={dark} />
     </DemoNav.Provider>
   );

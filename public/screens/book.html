@@ -24,6 +24,13 @@
 <script src="bricks.compiled.js"></script>
 <script>
 (function(){
+  function lockParam(){
+    try{
+      var q = new URLSearchParams(location.search).get('lock');
+      if (q === '1' || q === 'true') return true;
+    }catch(e){}
+    return false;
+  }
   function parentTheme(){
     try{
       var t=window.parent.document.documentElement.getAttribute('data-theme');
@@ -39,10 +46,11 @@
     document.body.style.background = theme==='dark' ? '#141210' : '#E4DED2';
   }
   var dark=parentTheme()==='dark';
+  var locked=lockParam();
   apply(dark?'dark':'light');
   var root=ReactDOM.createRoot(document.getElementById('root'));
   function render(){
-    root.render(React.createElement(DemoBook, {dark: dark}));
+    root.render(React.createElement(DemoBook, {dark: dark, locked: locked}));
   }
   window.addEventListener('message', function(e){
     if(e.data && e.data.bricks_theme){

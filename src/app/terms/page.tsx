@@ -20,16 +20,16 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <>
-      <div className="wrap">
-        <section className="hero">
+      <section className="hero">
+        <div className="wrap">
           <span className="badge">Legal</span>
           <h1>Terms of Service</h1>
           <p className="sub">Client / booking terms for listing media through brxs.ca. Contracting party: Bricks Group.</p>
           <div className="updated">Effective · 27 August 2026</div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block" id="terms">
           <h2>BRICKS TERMS OF SERVICE (client / booking)</h2>
           <p>Effective: August 27, 2026<br />Contracting party: Bricks Group (&quot;Bricks&quot;)<br />Governing law: Ontario, Canada</p>
@@ -52,7 +52,7 @@ export default function TermsPage() {
         </section>
       </div>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block" id="refunds">
           <h2>5. Reschedule, cancellation, refunds</h2>
           <p>Contact <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know.</p>
@@ -69,7 +69,7 @@ export default function TermsPage() {
         </section>
       </div>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block">
           <h3>6. Intellectual property</h3>
           <p>Bricks owns copyright in the deliverables (assigned from the photographer). When your booking is paid in full, Bricks grants you a perpetual, non-exclusive licence to use those deliverables for real estate marketing of that property: MLS, web, social, print, brokerage materials, and sharing with the seller for that listing. You may not sell the files as stock, or use them to market a different property.</p>
@@ -87,14 +87,14 @@ export default function TermsPage() {
         </section>
       </div>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block" id="privacy">
           <h2>10. Privacy</h2>
           <p>We collect the name, brokerage, email, phone, property address, and shoot details you submit, plus payment metadata from Stripe. We use it to quote, charge, schedule, shoot, deliver, and support the booking, and for records we must keep (including tax). We share what is needed with Stripe, our database host (Supabase), scheduling (Cal.com if used), and the assigned photographer. We do not sell your information. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> to access, correct, or delete what we hold, subject to records we must keep. Marketing email is only if you opted in, with unsubscribe, under CASL. Full detail is at <Link href="/privacy">brxs.ca/privacy</Link>.</p>
         </section>
       </div>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block">
           <h3>11. Changes</h3>
           <p>We may update these terms. The version in effect when you pay applies to that booking. Material changes will be posted on this page.</p>
@@ -104,7 +104,7 @@ export default function TermsPage() {
         </section>
       </div>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions?</h2>
           <p>Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> · <span className="mono">343-453-4578</span></p>

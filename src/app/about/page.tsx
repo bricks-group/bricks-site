@@ -52,7 +52,7 @@ export default function AboutPage() {
         <div className="wrap">
           <span className="badge">About</span>
           <h1>Raphael Merchant</h1>
-          <p className="sub">Founder of Bricks — listing media for Canadian real estate, built on 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar and photography work behind Apartments.com&apos;s launch across the Greater Golden Horseshoe.</p>
+          <p className="sub">Founder of Bricks — listing media for Canadian real estate.</p>
         </div>
       </section>
 
@@ -108,8 +108,8 @@ export default function AboutPage() {
         .author .bio h2{font-weight:500;font-size:26px;letter-spacing:-0.6px;color:var(--ink);margin-bottom:4px;}
         .author .bio .role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);margin-bottom:18px;display:block;}
         .author .bio p{font-size:15px;color:var(--inkSoft);line-height:1.65;margin-bottom:14px;}
-        .creds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin:26px 0;}
-        .creds .c{background:var(--paper);padding:20px;}
+        .creds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin:40px 0;}
+        .creds .c{background:var(--paper);padding:26px 22px;}
         .creds .c .n{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--ink);letter-spacing:-1px;}
         .creds .c .l{font-size:12px;color:var(--inkMute);margin-top:4px;line-height:1.4;}
         .posts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px;}

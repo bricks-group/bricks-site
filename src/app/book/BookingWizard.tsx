@@ -359,12 +359,7 @@ export default function BookingWizard() {
 
   return (
     <>
-      <div className="wrap">
-        <section className="hero">
-          <h1>Book a shoot.</h1>
-          <p className="sub">Four steps. We price it live from the address — footprint, travel, add-ons, HST — you pay to lock the slot. Scheduling syncs to our calendar instantly.</p>
-        </section>
-
+      <div className="wrap flow">
         <div className="steps">
           {[
             { n: '1', label: 'Shoot' },
@@ -544,11 +539,8 @@ export default function BookingWizard() {
       </div>
 
       <style>{`
-        .wrap{max-width:760px;margin:0 auto;padding:0 36px;}
-        .hero{padding:44px 0 24px;}
-        .hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
-        .hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:560px;}
-        .steps{display:flex;gap:0;margin:28px 0 8px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
+        .flow{max-width:760px;}
+        .steps{display:flex;gap:0;margin:8px 0 8px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
         .step-tab{flex:1;padding:13px 10px;text-align:center;font-family:'JetBrains Mono',monospace;
           font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--inkFaint);
           background:var(--paper);border-right:1px solid var(--hair);position:relative;}
@@ -646,7 +638,7 @@ export default function BookingWizard() {
         .qa h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
         .qa p{font-size:13px;color:var(--inkMute);line-height:1.5;}
         .qa p a{color:var(--brickDeep);}
-        @media (max-width:640px){.choices,.grid2{grid-template-columns:1fr;} .hero h1{font-size:28px;}}
+        @media (max-width:640px){.choices,.grid2{grid-template-columns:1fr;}}
       `}</style>
     </>
   )

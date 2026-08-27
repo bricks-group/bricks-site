@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { TOUR_NAME, VISIT_NAME, WORK_PHOTOS } from '@/lib/brand'
+import { WORK_PHOTOS } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'Bricks — Work (Canadian listing media)',
@@ -52,13 +52,15 @@ export default function GalleryPage() {
         }}
       />
 
-      <div className="wrap">
-        <section className="hero">
+      <section className="hero">
+        <div className="wrap">
           <span className="badge">Selected work</span>
           <h1>The work.</h1>
-          <p className="sub">Listing media for Canadian real estate — HDR photography, Advanced RPAS-licensed drone, floor plans, twilight, plus optional {TOUR_NAME.toLowerCase()} and {VISIT_NAME.toLowerCase()}.</p>
-        </section>
+          <p className="sub">Residential, commercial, and the edit — real shoots, not stock.</p>
+        </div>
+      </section>
 
+      <div className="wrap work-wrap">
         <div className="groups">
           <h3 className="grp">Residential</h3>
           <div className="grid">
@@ -96,23 +98,18 @@ export default function GalleryPage() {
       </div>
 
       <style>{`
-        .wrap{max-width:1080px;margin:0 auto;padding:0 36px;}
-        .hero{padding:48px 0 28px;}
-        .hero h1{font-weight:500;font-size:34px;letter-spacing:-1px;color:var(--ink);}
-        .hero p.sub{font-size:15px;color:var(--inkSoft);margin-top:12px;max-width:620px;}
-        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 44px;}
-        .grp{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:34px 0 0;padding-bottom:10px;border-bottom:1px solid var(--hair);}
-        .grp:first-child{margin-top:14px;}
-        .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);transition:border-color .2s ease;}
-        .card:hover{border-color:var(--brick);}
+        .work-wrap{max-width:1080px;}
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:22px 0 64px;}
+        .grp{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--inkMute);margin:40px 0 0;padding-bottom:12px;border-bottom:1px solid var(--hair);}
+        .grp:first-child{margin-top:8px;}
+        .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);}
         .card .img{aspect-ratio:4/3;background:var(--paperDeep);overflow:hidden;}
-        .card .img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
-        .card:hover .img img{transform:scale(1.04);}
-        .card .meta{padding:12px 13px;}
-        .card .meta .t{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:4px 8px;}
-        .card .meta .d{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--inkMute);margin-top:7px;}
-        @media (max-width:820px){.grid{grid-template-columns:repeat(2,1fr);}}
-        @media (max-width:560px){.grid{grid-template-columns:1fr;} .hero h1{font-size:28px;}}
+        .card .img img{width:100%;height:100%;object-fit:cover;display:block;}
+        .card .meta{padding:8px 2px 0;}
+        .card .meta .t{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkMute);}
+        .card .meta .d{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--inkFaint);margin-top:4px;}
+        @media (max-width:820px){.grid{grid-template-columns:repeat(2,1fr);gap:16px;}}
+        @media (max-width:560px){.grid{grid-template-columns:1fr;}}
       `}</style>
     </>
   )

@@ -49,7 +49,7 @@ export default function BlogPage() {
         <div className="wrap">
           <span className="badge">Resources</span>
           <h1>Real estate media, explained.</h1>
-          <p className="sub">Practical guides for Canadian listing agents — what things cost, what the rules are, and how to get media that moves listings. Written by Raphael Merchant, Bricks founder and Transport Canada Advanced RPAS (drone) certificate holder.</p>
+          <p className="sub">Practical guides for Canadian listing agents — cost, rules, and what a shoot includes. By Raphael Merchant.</p>
         </div>
       </section>
 
