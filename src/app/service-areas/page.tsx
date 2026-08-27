@@ -56,8 +56,8 @@ export default function ServiceAreasPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Service areas · Canada</span>
-          <h1>Listing media, currently covering these cities.</h1>
-          <p className="sub">Bricks is built for Canadian real estate. {COVERAGE_LINE} Base is Mississauga — the first 25 km of travel is free, then $0.75/km, quoted up front.</p>
+          <h1>Currently covering these cities.</h1>
+          <p className="sub">Bricks is built for Canadian real estate. {COVERAGE_LINE} First 25 km from Mississauga is free.</p>
         </div>
       </section>
 

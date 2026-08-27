@@ -6,11 +6,10 @@ import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
 
 const links = [
-  { href: '/pricing', label: 'Pricing' },
   { href: '/gallery', label: 'Work' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/pricing', label: 'Pricing' },
   { href: '/photographers', label: 'Photographers' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 export default function Nav() {
@@ -50,6 +49,23 @@ export default function Nav() {
             </Link>
             <span className="nav-flag">Canada</span>
           </div>
+          <nav className="nav-links" aria-label="Primary">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={pathname === l.href ? 'active' : ''}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+          <Link
+            href="/book"
+            className={`nav-cta${pathname === '/book' ? ' active' : ''}`}
+          >
+            Book
+          </Link>
           <button
             className={`nav-burger${open ? ' open' : ''}`}
             aria-label="Menu"

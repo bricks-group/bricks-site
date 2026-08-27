@@ -37,6 +37,13 @@ export default function BookPage() {
           }),
         }}
       />
+      <section className="hero">
+        <div className="wrap">
+          <span className="badge">Book</span>
+          <h1>Book a shoot.</h1>
+          <p className="sub">Four steps. Live quote from the address — pay to lock the slot.</p>
+        </div>
+      </section>
       <BookingWizard />
     </>
   )

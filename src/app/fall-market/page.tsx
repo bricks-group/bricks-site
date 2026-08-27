@@ -42,17 +42,17 @@ export default function FallMarket() {
         }}
       />
 
-      <div className="wrap">
-        <section className="hero">
+      <section className="hero">
+        <div className="wrap">
           <span className="badge">Fall listing season</span>
-          <h1>The fall market moves fast. Your media shouldn&apos;t be what slows a listing down.</h1>
-          <p className="sub">Ontario&apos;s second listing season starts right after Labour Day, and shoot capacity gets tight fast. Bricks runs HDR photo, licensed drone, and a floor plan on every standard shoot — edited and MLS-ready in 24–48 hours — so a booked slot is a delivered listing, not a bottleneck.</p>
+          <h1>The fall market moves fast.</h1>
+          <p className="sub">Reserve a September slot before the rush. HDR, licensed drone, floor plan — 24–48h.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Reserve a fall slot</Link>
             <Link className="btn btn-sec" href="/pricing">View pricing</Link>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="block rvl">

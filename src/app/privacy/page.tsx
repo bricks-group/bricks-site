@@ -19,16 +19,16 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <div className="wrap">
-        <section className="hero">
+      <section className="hero">
+        <div className="wrap">
           <span className="badge">Legal</span>
           <h1>Privacy Policy</h1>
           <p className="sub">How Bricks Group collects, uses, and discloses personal information for brxs.ca and related booking and photographer-apply flows.</p>
           <div className="updated">Effective · 27 August 2026</div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block">
           <h2>BRICKS PRIVACY POLICY</h2>
           <p>Effective: August 27, 2026<br />Organization: Bricks Group<br />Privacy contact: <a href="mailto:booking@brxs.ca">booking@brxs.ca</a></p>
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
         </section>
       </div>
 
-      <div className="wrap">
+      <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Contact</h2>
           <p><a href="mailto:booking@brxs.ca">booking@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
