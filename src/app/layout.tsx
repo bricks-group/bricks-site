@@ -8,10 +8,10 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.brxs.ca'),
   title: {
-    default: 'Bricks — GTA Real Estate Photography & Media',
+    default: 'Bricks — Canadian Real Estate Photography & Media',
     template: '%s',
   },
-  description: 'GTA real estate listing media — HDR photography, licensed drone, floor plans, and 3D virtual tours. Book a shoot in 24–48h.',
+  description: 'Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Book a shoot in 24–48h.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
     type: 'website',

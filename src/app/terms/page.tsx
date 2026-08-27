@@ -33,7 +33,7 @@ export default function TermsPage() {
         <section className="block" id="terms">
           <h2>BRICKS TERMS OF SERVICE (client / booking)</h2>
           <p>Effective: August 27, 2026<br />Contracting party: Bricks Group (&quot;Bricks&quot;)<br />Governing law: Ontario, Canada</p>
-          <p>These terms cover listing-media bookings made through brxs.ca (photography, drone, floor plans, video, 3D tours, twilight, virtual staging, and related add-ons) in the areas Bricks serves. By paying for a booking you agree to these terms, the cancellation policy, and the <Link href="/privacy">privacy policy</Link>.</p>
+          <p>These terms cover listing-media bookings made through brxs.ca (photography, drone, floor plans, video, virtual tours, virtual visits, twilight, virtual staging, and related add-ons) in the areas Bricks serves. By paying for a booking you agree to these terms, the cancellation policy, and the <Link href="/privacy">privacy policy</Link>.</p>
           <p>Bricks Group is the party you are contracting with for the media package you buy. Photographers who shoot for Bricks are independent contractors of Bricks, not your employees and not a separate party to your booking. Bricks remains responsible to you for delivery of the package, subject to these terms.</p>
 
           <h3>1. Authority and access</h3>

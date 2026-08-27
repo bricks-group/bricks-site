@@ -3,16 +3,16 @@ import BlogPostLayout from '@/components/BlogPostLayout'
 
 export const metadata: Metadata = {
   title: 'Drone photography rules for real estate in Ontario | Bricks',
-  description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant GTA aerial shoot looks like.',
+  description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant aerial shoot looks like.',
   alternates: { canonical: '/blog/drone-photography-rules-ontario' },
   openGraph: {
     type: 'article',
     title: 'Drone photography rules for real estate in Ontario',
-    description: 'Transport Canada Advanced RPAS rules for real estate drone photography: certification, no-fly zones, and what a compliant GTA aerial shoot looks like.',
+    description: 'Transport Canada Advanced RPAS rules for real estate drone photography: certification, no-fly zones, and what a compliant aerial shoot looks like.',
   },
   twitter: {
     title: 'Drone photography rules for real estate in Ontario',
-    description: 'Transport Canada Advanced RPAS rules for GTA real estate drone photography.',
+    description: 'Transport Canada Advanced RPAS rules for Ontario real estate drone photography.',
   },
 }
 
@@ -26,7 +26,7 @@ export default function Post() {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: 'Drone photography rules for real estate listings in Ontario',
-            description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant GTA aerial shoot looks like.',
+            description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant aerial shoot looks like.',
             author: { '@type': 'Person', name: 'Raphael Merchant', jobTitle: 'Advanced RPAS certificate holder (Transport Canada)', knowsAbout: ['Aerial photography', 'Transport Canada RPAS regulations'] },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',

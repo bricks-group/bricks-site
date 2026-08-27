@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import PhotographerForm from './PhotographerForm'
 
 export const metadata: Metadata = {
-  title: 'Shoot for Bricks | Photographer & videographer network — GTA',
+  title: 'Shoot for Bricks | Photographer & videographer network — Canada',
   description: 'Join the Bricks photographer network — launching soon. Auto-routed listing shoots, paid via Stripe Connect on a fixed vendor rate card. Apply in about 4 minutes.',
   alternates: { canonical: '/photographers' },
   openGraph: {
@@ -26,7 +26,7 @@ export default function PhotographersPage() {
             '@type': 'JobPosting',
             datePosted: '2026-08-13',
             title: 'Real Estate Photographer / Videographer — Independent Contractor',
-            description: 'Auto-routed real estate listing shoots across the GTA. Paid via Stripe Connect on a fixed vendor rate card. Network launching soon.',
+            description: 'Auto-routed real estate listing shoots in Canada. Paid via Stripe Connect on a fixed vendor rate card. Network launching soon.',
             hiringOrganization: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', sameAs: 'https://www.brxs.ca/' },
             employmentType: 'CONTRACTOR',
             jobLocationType: 'HYBRID',
@@ -112,7 +112,7 @@ export default function PhotographersPage() {
             <div className="a rvl"><div className="nm">Tier B — Core</div><div className="pr">Add-ons 45%</div><p>Package payouts from the rate card above. Add-on rack share is 45%.</p></div>
             <div className="a rvl"><div className="nm">Tier A — Elite</div><div className="pr">Add-ons 55%</div><p>Package payouts from the rate card above. Add-on rack share is 55%.</p></div>
           </div>
-          <p className="note" style={{ marginTop: 26 }}>Coverage area: GTA · Hamilton · Durham · York · Niagara. Payout is the fixed rate-card amount — never a discounted customer rate. Bricks may change the rate card prospectively on 14 days&apos; notice; changes do not apply to jobs already accepted.</p>
+          <p className="note" style={{ marginTop: 26 }}>Coverage area: Toronto · Mississauga · Hamilton · Durham · York · Niagara. Payout is the fixed rate-card amount — never a discounted customer rate. Bricks may change the rate card prospectively on 14 days&apos; notice; changes do not apply to jobs already accepted. Virtual visit (Gaussian splat) is always a client add-on, quoted by sqft on the same footprint bands as photo, reel, and virtual tour — never bundled into Standard, Premium, Luxury, or Estate packages.</p>
         </section>
       </div>
 
@@ -127,7 +127,7 @@ export default function PhotographersPage() {
           <div className="faq">
             <div className="qa"><h4>How long does review take?</h4><p>We review every application manually. Portfolio quality is the primary gate — sharp composition, accurate colour, consistent exposure across a full property set. Expect a response within 1–3 business days.</p></div>
             <div className="qa"><h4>What equipment do I need?</h4><p>Full-frame or equivalent, fast primes, and ideally a DJI/Autel drone if you&apos;re applying for aerial work. List your kit in the application.</p></div>
-            <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes — GTA controlled airspace (Pearson / Billy Bishop) requires Transport Canada Advanced RPAS certification. We verify before routing any drone job.</p></div>
+            <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes — controlled airspace near Pearson / Billy Bishop requires Transport Canada Advanced RPAS certification. We verify before routing any drone job.</p></div>
             <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability. Insurance and WSIB proof are required before a first dispatched job — see the IC agreement.</p></div>
           </div>
         </section>

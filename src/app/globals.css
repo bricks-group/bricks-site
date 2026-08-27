@@ -25,6 +25,7 @@ header{position:sticky;top:0;z-index:70;background:rgba(244,241,235,0.92);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--hair);}
 .nav{max-width:980px;margin:0 auto;padding:14px 36px;display:flex;align-items:center;
   justify-content:space-between;gap:16px;}
+.brand-cluster{display:flex;align-items:center;gap:12px;min-width:0;}
 .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);}
 .brand svg{height:20px; width:20px;display:block;}
 .brand-mark{transform-origin:center;}
@@ -178,10 +179,16 @@ html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
   .nav-links a:first-child{border-top:none;}
   .nav-links a:hover{color:var(--brickDeep);}
   .nav-links .nav-cta{background:var(--brick);color:#fff;margin:0 24px 16px;padding:15px 22px;text-align:center;border-top:1px solid var(--hair);width:auto;}
-  .nav-links .nav-flag{display:none;}
+  .nav-flag{display:none;}
   .wrap{padding:0 20px;}
   .hero{padding:48px 20px 32px;}
   .foot{padding:28px 20px;}
 }
 @media (prefers-reduced-motion: reduce){ html.reveal-ready .rvl{opacity:1;transform:none;transition:none;} }
 @media print{.btn,.nav-cta,.book{display:none;}}
+
+.newsletter{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.newsletter input{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paper);
+  color:var(--ink);border:1px solid var(--hairStrong);border-radius:2px;padding:12px 14px;outline:none;min-width:200px;}
+.newsletter input:focus{border-color:var(--brick);}
+.nl-msg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brickDeep);}

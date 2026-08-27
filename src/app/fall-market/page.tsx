@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import NewsletterInline from '../NewsletterInline'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'Fall Market Listing Media | Bricks',
-  description: 'Book your fall listing media early. Bricks delivers HDR photography, licensed drone, floor plans, and 3D tours across the GTA in 24–48 hours — reserve your September slot before the rush.',
+  description: 'Book your fall listing media early. Bricks delivers HDR photography, licensed drone, floor plans, plus optional virtual tour and virtual visit in 24–48 hours — reserve your September slot before the rush.',
   alternates: { canonical: '/fall-market' },
   openGraph: {
     title: 'Fall Market Listing Media | Bricks',
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
 
 const faqs = [
   { q: 'Is "priority booking" a discount?', a: 'No — pricing is the same as always (see the pricing page). Priority booking reserves your shoot date ahead of the fall demand spike so it doesn’t get pushed by later requests.' },
-  { q: 'How far out should I book?', a: 'As soon as you have a listing date in mind. September and early October fill fastest across the GTA.' },
-  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan every shoot. Cinematic reel and 3D virtual tour are optional add-ons. Build your shoot à la carte on the pricing page.` },
-  { q: 'Where do you shoot?', a: "The Greater Toronto Area. Outside GTA, ask — we'll tell you if it's covered." },
+  { q: 'How far out should I book?', a: 'As soon as you have a listing date in mind. September and early October fill fastest.' },
+  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan on every standard shoot. Cinematic reel and ${TOUR_NAME.toLowerCase()} are optional add-ons. ${VISIT_NAME} is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}) and never packaged. Build your shoot à la carte on the pricing page.` },
+  { q: 'Where do you shoot?', a: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered.` },
   { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24–48 hours, fall included.' },
 ]
 
@@ -43,9 +44,9 @@ export default function FallMarket() {
 
       <div className="wrap">
         <section className="hero">
-          <span className="badge">Fall listing season · GTA</span>
+          <span className="badge">Fall listing season</span>
           <h1>The fall market moves fast. Your media shouldn&apos;t be what slows a listing down.</h1>
-          <p className="sub">Ontario&apos;s second listing season starts right after Labour Day, and shoot capacity across the GTA gets tight fast. Bricks runs HDR photo, licensed drone, and a floor plan on every shoot — edited and MLS-ready in 24–48 hours — so a booked slot is a delivered listing, not a bottleneck.</p>
+          <p className="sub">Ontario&apos;s second listing season starts right after Labour Day, and shoot capacity gets tight fast. Bricks runs HDR photo, licensed drone, and a floor plan on every standard shoot — edited and MLS-ready in 24–48 hours — so a booked slot is a delivered listing, not a bottleneck.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Reserve a fall slot</Link>
             <Link className="btn btn-sec" href="/pricing">View pricing</Link>
@@ -59,7 +60,7 @@ export default function FallMarket() {
             <div><span className="over">Why this season is different</span><h2>Everyone lists in the same six weeks.</h2></div>
           </div>
           <div className="reasons">
-            <div className="r"><span className="ic">01</span><h4>Compressed timing</h4><p>Fall listings cluster right after Labour Day through late October — most agents in the GTA are booking media in the same narrow window.</p></div>
+            <div className="r"><span className="ic">01</span><h4>Compressed timing</h4><p>Fall listings cluster right after Labour Day through late October — most agents are booking media in the same narrow window.</p></div>
             <div className="r"><span className="ic">02</span><h4>Weekend open houses</h4><p>Miss your shoot slot by a few days and you miss the weekend window your listing needed to launch into.</p></div>
             <div className="r"><span className="ic">03</span><h4>Finite capacity</h4><p>One shooter, one standard, booked slots — capacity doesn&apos;t expand just because demand spikes. Earlier bookings hold their date.</p></div>
           </div>
@@ -77,7 +78,7 @@ export default function FallMarket() {
             <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
             <div className="c"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
           </div>
-          <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. 3D tours run +{TOUR_RANGE}. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full à la carte pricing</Link>.</p>
+          <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. {TOUR_NAME} runs +{TOUR_RANGE}. {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}) — {VISIT_PACKAGING} See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full à la carte pricing</Link>.</p>
         </section>
       </div>
 

@@ -1,31 +1,22 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { TOUR_NAME, VISIT_NAME, WORK_PHOTOS } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'Bricks — Work (GTA listing media)',
-  description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, with optional 3D tours.',
+  title: 'Bricks — Work (Canadian listing media)',
+  description: 'Selected Bricks listing media — photo, drone, floor plans, twilight, with optional virtual tour and virtual visit.',
   alternates: { canonical: '/gallery' },
   openGraph: {
-    title: 'Bricks — Work (GTA listing media)',
-    description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, with optional 3D tours.',
+    title: 'Bricks — Work (Canadian listing media)',
+    description: 'Selected Bricks listing media — photo, drone, floor plans, twilight, with optional virtual tour and virtual visit.',
   },
   twitter: {
-    title: 'Bricks — Work (GTA listing media)',
-    description: 'Selected Bricks listing media from across the GTA — photo, drone, floor plans, twilight, with optional 3D tours.',
+    title: 'Bricks — Work (Canadian listing media)',
+    description: 'Selected Bricks listing media — photo, drone, floor plans, twilight, with optional virtual tour and virtual visit.',
   },
 }
 
-const residential = [
-  { src: '/media/work/01.jpg', alt: 'GTA residence', t: 'GTA residence' },
-  { src: '/media/work/02.jpg', alt: 'Residential interior', t: 'Residential interior' },
-  { src: '/media/work/03.jpg', alt: 'Residential interior', t: 'Residential interior' },
-  { src: '/media/work/04.jpg', alt: 'Residential interior', t: 'Residential interior' },
-  { src: '/media/work/05.jpg', alt: 'Residential interior', t: 'Residential interior' },
-  { src: '/media/work/06.jpg', alt: 'Residential interior', t: 'Residential interior' },
-  { src: '/media/work/07.jpg', alt: 'Residential interior', t: 'Residential interior' },
-  { src: '/media/work/08.jpg', alt: 'Residential exterior', t: 'Residential exterior' },
-]
-
+const residential = WORK_PHOTOS.slice(0, 8).map((p) => ({ ...p, t: p.alt }))
 const commercial = [
   { src: '/media/comm-aerial-1.jpg', alt: 'Commercial — aerial', t: 'Commercial — aerial', d: 'Drone · Advanced RPAS' },
   { src: '/media/comm-interior-1.jpg', alt: 'Commercial interior', t: 'Commercial interior' },
@@ -35,6 +26,7 @@ const commercial = [
   { src: '/media/work/09.jpg', alt: 'Retail — HDR', t: 'Retail — HDR' },
   { src: '/media/work/10.jpg', alt: 'Building HDR', t: 'Building HDR' },
   { src: '/media/work/11.jpg', alt: 'Interior HDR', t: 'Interior HDR' },
+  { src: '/media/work/12.jpg', alt: 'Residential interior', t: 'Residential interior' },
 ]
 
 const beforeAfter = [
@@ -53,8 +45,8 @@ export default function GalleryPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'ImageGallery',
-            name: 'Bricks — Selected GTA listing media',
-            description: 'Real estate listing photography, drone, and interior/exterior captures from across the Greater Toronto Area.',
+            name: 'Bricks — Selected listing media',
+            description: 'Real estate listing photography, drone, and interior/exterior captures for Canadian real estate.',
             url: 'https://www.brxs.ca/gallery',
           }),
         }}
@@ -62,9 +54,9 @@ export default function GalleryPage() {
 
       <div className="wrap">
         <section className="hero">
-          <span className="badge">Selected work · GTA</span>
+          <span className="badge">Selected work</span>
           <h1>The work.</h1>
-          <p className="sub">Listing media captured across the Greater Toronto Area — HDR photography, Advanced RPAS-licensed drone, floor plans, twilight, and 3D virtual tours.</p>
+          <p className="sub">Listing media for Canadian real estate — HDR photography, Advanced RPAS-licensed drone, floor plans, twilight, plus optional {TOUR_NAME.toLowerCase()} and {VISIT_NAME.toLowerCase()}.</p>
         </section>
 
         <div className="groups">

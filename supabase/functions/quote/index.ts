@@ -4,7 +4,7 @@
 // FREE sqft guess (OSM building footprint at the coord, clamped to the
 // property-type range; agent confirms in wizard) -> footprint band ->
 // photo + drone base (always included) -> travel fee (haversine from BASE,
-// FREE_KM free, $/km after) -> add-ons (reel, 3D tour, twilight, rush) ->
+// FREE_KM free, $/km after) -> add-ons (reel, virtual tour, twilight, rush) ->
 // +13% HST = total.
 // No paid sqft API: CleverTech's free tier is unusable for sqft and its
 // monthly limit is too small to call per-quote; GeoWarehouse (~$100/mo) is
@@ -195,7 +195,7 @@ Deno.serve(async (req: Request) => {
   // 6) add-ons
   const addons: { label: string; amount: number }[] = [];
   if (reel) addons.push({ label: 'Cinematic reel', amount: REEL_RATE[finalBand] });
-  if (tour) addons.push({ label: '3D virtual tour', amount: TOUR_RATE[finalBand] });
+  if (tour) addons.push({ label: 'Virtual tour', amount: TOUR_RATE[finalBand] });
   if (twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[finalBand] });
   if (rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT });
   const addonsTotal = addons.reduce((s, a) => s + a.amount, 0);

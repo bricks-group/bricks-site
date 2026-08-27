@@ -18,9 +18,19 @@ export const PHOTO_RATE = [149, 199, 249, 299] as const;
 export const DRONE_RATE = [99, 119, 139, 159] as const;
 export const REEL_RATE = [199, 249, 299, 349] as const;
 export const TWILIGHT_RATE = [150, 170, 185, 200] as const;
+/** Virtual tour (path-confined walkthrough) — paid add-on. Not the virtual visit splat. */
 export const TOUR_RATE = [149, 199, 249, 299] as const;
 export const RUSH_FLAT = 75;
 export const STAGING_PER_IMAGE = 35;
+
+/**
+ * Virtual visit (Gaussian splat / SuperSplat) has no published dollar table.
+ * Quoted by the same footprint bands as photo / reel / virtual tour.
+ * Always a paid add-on. Never invent a VISIT_RATE. Never package it. Never
+ * charge it in Stripe — booking collects the request + sqft, then we quote.
+ */
+export const FOOTPRINT_BANDS = 'Small ≤1,200 / Mid ≤2,500 / Large ≤4,000 / XL 4,000+'
+export const VISIT_PRICE_LABEL = 'Quoted by sqft'
 
 /** Format a rate band as a display range, e.g. [149,199,249,299] -> "$149–299". */
 export function bandRange(rate: readonly number[]): string {

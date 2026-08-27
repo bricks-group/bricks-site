@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
 
@@ -43,8 +44,8 @@ const PKG_DESC: Record<string, string> = {
   photosOnly: 'HDR photo only — no drone, no floor plan',
   essentials: 'Photo · drone · floor plan',
   story: '+ cinematic reel',
-  showcase: '+ reel + 3D tour',
-  suite: '+ reel + tour + twilight + staging',
+  showcase: `+ reel + ${TOUR_NAME.toLowerCase()}`,
+  suite: `+ reel + ${TOUR_NAME.toLowerCase()} + twilight + staging`,
 }
 
 function esc(s: string) {
@@ -79,6 +80,7 @@ export default function BookingWizard() {
   const [drone, setDrone] = useState(true)
   const [reel, setReel] = useState(false)
   const [tour, setTour] = useState(false)
+  const [visit, setVisit] = useState(false)
   const [twilight, setTwilight] = useState(false)
   const [staging, setStaging] = useState(false)
   const [rush, setRush] = useState(false)
@@ -229,7 +231,8 @@ export default function BookingWizard() {
     const parts = ['HDR photo']
     if (drone) parts.push('Drone')
     if (reel) parts.push('Cinematic reel')
-    if (tour) parts.push('3D tour')
+    if (tour) parts.push(TOUR_NAME)
+    if (visit) parts.push(`${VISIT_NAME} (${VISIT_PRICE_LABEL.toLowerCase()})`)
     if (twilight) parts.push('Twilight')
     if (rush) parts.push('Rush')
     const base = parts.join(' + ')
@@ -248,6 +251,7 @@ export default function BookingWizard() {
     }
     if (s === 1) {
       if (!quote) msg = 'Quote still calculating — give it a moment.'
+      else if (visit && !(quote.sqft || sqftInput)) msg = `Confirm square footage so we can quote the ${VISIT_NAME.toLowerCase()} by footprint (${FOOTPRINT_BANDS}).`
     }
     if (s === 2) {
       if (!date) msg = 'Pick a shoot date.'
@@ -282,6 +286,12 @@ export default function BookingWizard() {
     try {
       sessionStorage.setItem('bricks_booking', JSON.stringify({ name: name.trim(), email: email.trim(), addr: selectedAddr || addr.trim(), notes: notes.trim() }))
     } catch {}
+    const visitSqft = (sqftInput ? parseInt(sqftInput, 10) : null) || quote.sqft
+    const visitBand = quote.footprint_label || 'unbanded'
+    const visitNote = visit
+      ? `${VISIT_NAME} (Gaussian splat, free-roam) requested — ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}). Footprint: ${visitBand}${visitSqft ? ` · ${visitSqft} sqft` : ''}${quote.sqft_estimated ? ' (estimated — confirm)' : ''}. Never packaged. Not in Stripe total.`
+      : ''
+    const combinedNotes = [notes.trim(), visitNote].filter(Boolean).join('\n')
     const payload = {
       quote,
       agent_name: name.trim(),
@@ -300,7 +310,7 @@ export default function BookingWizard() {
       tour_addon: tour,
       twilight_addon: twilight,
       rush_addon: rush,
-      notes: notes.trim() || null,
+      notes: combinedNotes || null,
     }
     fetch(SUPABASE + 'create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON }, body: JSON.stringify(payload) })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
@@ -338,6 +348,7 @@ export default function BookingWizard() {
             <button type="button" onClick={() => fetchQuote(sqftInput ? parseInt(sqftInput, 10) : null)}>Re-quote</button>
           </div>
         )}
+        {visit && <div className="qnote">{VISIT_NAME} requested — {VISIT_PRICE_LABEL.toLowerCase()} ({q.footprint_label}{q.sqft ? ` · ${q.sqft.toLocaleString()} sqft` : ''}). Not in this total, not charged at checkout. Never packaged.</div>}
         {q.floor_plan_included === false && <div className="qnote">Photos only: no floor plan drafted for this booking.</div>}
         {q.sqft_estimated && <div className="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>}
       </>
@@ -411,7 +422,7 @@ export default function BookingWizard() {
             {/* STEP 2: SERVICES + QUOTE */}
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">HDR photography is included on every shoot; licensed drone and a floor plan are included on the standard tiers, or drop both for the bare-minimum Photos only option. Pick a bundle, or build à la carte with the checkboxes — see <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>. Every option is quoted live below, priced from the same per-service rates either way.</p>
+              <p className="hint">HDR photography is included on every shoot; licensed drone and a floor plan are included on the standard tiers, or drop both for Photos only. {TOUR_NAME} may be included in Showcase and Full suite. {VISIT_NAME} is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}), never packaged, and not charged at checkout. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
               <div className="choices">
                 {Object.keys(PKG_DEFS).map((k) => (
                   <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
@@ -422,7 +433,21 @@ export default function BookingWizard() {
               </div>
               <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Or build à la carte:</p>
               <label className="toggle"><input type="checkbox" checked={reel} onChange={(e) => setReel(e.target.checked)} /> Cinematic reel (+{REEL_RANGE}, by footprint)</label>
-              <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> 3D virtual tour (+{TOUR_RANGE}, by footprint)</label>
+              <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> {TOUR_NAME} (+{TOUR_RANGE}, by footprint) — {TOUR_BLURB}</label>
+              <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL.toLowerCase()}) — {VISIT_BLURB} {VISIT_PACKAGING} Not charged in Stripe.</label>
+              {visit && (
+                <div className="field" style={{ margin: '4px 0 14px' }}>
+                  <label>Sqft for {VISIT_NAME.toLowerCase()} quote</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={sqftInput}
+                    onChange={(e) => setSqftInput(e.target.value)}
+                    placeholder={quote?.sqft ? String(quote.sqft) : 'e.g. 2200'}
+                  />
+                  <span className="hint-sm">{FOOTPRINT_BANDS}. Same bands as photo, reel, and virtual tour. We quote the visit after booking using this footprint — not in checkout.</span>
+                </div>
+              )}
               <label className="toggle"><input type="checkbox" checked={twilight} onChange={(e) => setTwilight(e.target.checked)} /> Twilight photography (+{TWILIGHT_RANGE}, by footprint)</label>
               <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging (+${STAGING_PER_IMAGE} per image staged)</label>
               <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+${RUSH_FLAT})</label>
@@ -470,7 +495,7 @@ export default function BookingWizard() {
                   ['Property', addr.trim() || '—'], ['Type', propertyType || '—'],
                   ['Package', pkg ? PKG_LABEL[pkg] : 'Custom (à la carte)'],
                   ['Licensed drone', drone ? 'Yes' : 'No — Photos only'], ['Floor plan', drone ? 'Yes' : 'No — Photos only'],
-                  ['Cinematic reel', reel ? 'Yes' : 'No'], ['3D tour', tour ? 'Yes' : 'No'], ['Twilight', twilight ? 'Yes' : 'No'], ['Rush delivery', rush ? 'Yes' : 'No'],
+                  ['Cinematic reel', reel ? 'Yes' : 'No'], [TOUR_NAME, tour ? 'Yes' : 'No'], [VISIT_NAME, visit ? `Yes — ${VISIT_PRICE_LABEL.toLowerCase()}` : 'No'], ['Twilight', twilight ? 'Yes' : 'No'], ['Rush delivery', rush ? 'Yes' : 'No'],
                   ['Shoot time', selectedSlot ? formatSlot(selectedSlot) : '—'], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
                   <div key={k} className="rrow"><span className="rk">{k}</span><span className="rv">{esc(v)}</span></div>
@@ -508,6 +533,7 @@ export default function BookingWizard() {
             <p>Add-ons, scheduling, and what happens if plans change.</p>
           </div>
           <div className="faq">
+            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Check it in Step 2 and confirm sqft — we quote after booking. It is not charged in Stripe checkout.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It&apos;s priced per image staged at <b>$35 / image</b>; tell us how many rooms to stage in the access notes and we&apos;ll confirm the count before delivery.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>

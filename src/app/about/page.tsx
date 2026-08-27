@@ -3,25 +3,25 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About Raphael Merchant | Bricks — GTA real estate media',
-  description: "Raphael Merchant is the founder of Bricks, a GTA real estate media company. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, photography work behind Apartments.com's launch across the Greater Golden Horseshoe, and a Transport Canada Advanced RPAS drone certificate. Bricks shoots HDR, licensed drone, floor plans and optional 3D tours across the Greater Toronto Area.",
+  title: 'About Raphael Merchant | Bricks — Canadian real estate media',
+  description: "Raphael Merchant is the founder of Bricks, a Canadian real estate media company. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, photography work behind Apartments.com's launch across the Greater Golden Horseshoe, and a Transport Canada Advanced RPAS drone certificate. Bricks shoots HDR, licensed drone, floor plans, optional virtual tour and virtual visit.",
   alternates: { canonical: '/about' },
   openGraph: {
     type: 'profile',
     title: 'About Raphael Merchant | Bricks',
-    description: "Founder of Bricks — GTA real estate media. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, photography work behind Apartments.com's Greater Golden Horseshoe launch, Advanced RPAS certified.",
+    description: "Founder of Bricks — listing media for Canadian real estate. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, photography work behind Apartments.com's Greater Golden Horseshoe launch, Advanced RPAS certified.",
     images: ['/media/raphael-merchant-640.jpg'],
   },
   twitter: {
     title: 'About Raphael Merchant | Bricks',
-    description: "Founder of Bricks — GTA real estate media. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, work behind Apartments.com's Greater Golden Horseshoe launch.",
+    description: "Founder of Bricks — listing media for Canadian real estate. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, work behind Apartments.com's Greater Golden Horseshoe launch.",
     images: ['/media/raphael-merchant-640.jpg'],
   },
 }
 
 const posts = [
   { href: '/blog/gta-real-estate-media-cost-2026', tag: 'Pricing', title: 'How much does real estate photography cost in the GTA? (2026)' },
-  { href: '/blog/3d-tour-vs-video-walkthrough', tag: 'Strategy', title: '3D virtual tour vs. video walkthrough: which sells faster?' },
+  { href: '/blog/3d-tour-vs-video-walkthrough', tag: 'Strategy', title: 'Virtual tour vs. video walkthrough: which sells faster?' },
   { href: '/blog/drone-photography-rules-ontario', tag: 'Rules & safety', title: 'Drone photography rules for real estate in Ontario' },
   { href: '/blog/whats-included-listing-shoot', tag: 'The shoot', title: "What's included in a professional listing photo shoot?" },
 ]
@@ -37,12 +37,12 @@ export default function AboutPage() {
             '@type': 'Person',
             name: 'Raphael Merchant',
             jobTitle: 'Founder, Bricks',
-            description: "Founder of Bricks, a GTA real estate media company. Shot and profiled 14,000+ properties as Regional Visual Director / Architectural Photographer at CoStar; photography work behind Apartments.com's launch across the Greater Golden Horseshoe. Transport Canada Advanced RPAS drone certificate holder.",
+            description: "Founder of Bricks, listing media for Canadian real estate. Shot and profiled 14,000+ properties as Regional Visual Director / Architectural Photographer at CoStar; photography work behind Apartments.com's launch across the Greater Golden Horseshoe. Transport Canada Advanced RPAS drone certificate holder.",
             image: 'https://www.brxs.ca/media/raphael-merchant-640.jpg',
             url: 'https://www.brxs.ca/about',
             email: 'booking@brxs.ca',
             sameAs: ['https://www.linkedin.com/company/bricksbybricks'],
-            knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', '3D virtual tours', 'Drone photography', 'Transport Canada RPAS regulations'],
+            knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations'],
             worksFor: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', url: 'https://www.brxs.ca/' },
           }),
         }}
@@ -52,7 +52,7 @@ export default function AboutPage() {
         <div className="wrap">
           <span className="badge">About</span>
           <h1>Raphael Merchant</h1>
-          <p className="sub">Founder of Bricks — GTA real estate media, built on 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar and photography work behind Apartments.com&apos;s launch across the Greater Golden Horseshoe.</p>
+          <p className="sub">Founder of Bricks — listing media for Canadian real estate, built on 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar and photography work behind Apartments.com&apos;s launch across the Greater Golden Horseshoe.</p>
         </div>
       </section>
 
@@ -64,7 +64,7 @@ export default function AboutPage() {
             </div>
             <div className="bio">
               <span className="role">Founder · Bricks</span>
-              <p>Raphael Merchant started Bricks to give GTA listing agents one consistent standard of media — HDR photography, licensed drone, floor plans, and 3D virtual tours — booked direct, delivered in 24–48 hours.</p>
+              <p>Raphael Merchant started Bricks to give Canadian listing agents one consistent standard of media — HDR photography, licensed drone, floor plans, plus optional virtual tour and virtual visit — booked direct, delivered in 24–48 hours.</p>
               <p>Before Bricks, Raphael shot and profiled <strong>14,000+ properties</strong> as Regional Visual Director / Architectural Photographer at CoStar — architectural photography and portfolio work at a volume most photographers never reach. That work helped power Apartments.com&apos;s launch across the Greater Golden Horseshoe, which aired during Super Bowl LVIII. That volume is where the standard comes from: accurate, measured, and built to move listings — not just look pretty.</p>
               <p>Raphael also holds a <strong>Transport Canada Advanced RPAS (Remotely Piloted Aircraft Systems) certificate</strong>, which is what lets Bricks fly legally for commercial aerial work in the complex airspace around Toronto and Mississauga — including near Pearson.</p>
             </div>
@@ -91,7 +91,7 @@ export default function AboutPage() {
         <div className="wrap">
           <div className="book">
             <span className="over">Work with Raphael</span>
-            <h2>Book a GTA listing shoot.</h2>
+            <h2>Book a listing shoot.</h2>
             <p className="lead">One standard, every time. Pick your services à la carte and get MLS-ready media in 24–48 hours.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book listing media</Link>

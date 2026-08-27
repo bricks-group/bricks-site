@@ -19,14 +19,17 @@ export default function Nav() {
   return (
     <header>
       <div className="nav">
-        <Link href="/" className="brand" aria-label="Bricks — home" onClick={() => setOpen(false)}>
-          <svg className="brand-mark" viewBox="0 0 24 24" fill="none" aria-label="Bricks mark">
-            <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D2542B" opacity="0.82" />
-            <rect x="3" y="11.6" width="6" height="8.4" rx="0.8" fill="#D2542B" />
-            <rect x="10.2" y="11.6" width="10.8" height="8.4" rx="0.8" fill="#D2542B" />
-          </svg>
-          <span className="wordmark">bricks</span>
-        </Link>
+        <div className="brand-cluster">
+          <Link href="/" className="brand" aria-label="Bricks — home" onClick={() => setOpen(false)}>
+            <svg className="brand-mark" viewBox="0 0 24 24" fill="none" aria-label="Bricks mark">
+              <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D2542B" opacity="0.82" />
+              <rect x="3" y="11.6" width="6" height="8.4" rx="0.8" fill="#D2542B" />
+              <rect x="10.2" y="11.6" width="10.8" height="8.4" rx="0.8" fill="#D2542B" />
+            </svg>
+            <span className="wordmark">bricks</span>
+          </Link>
+          <span className="nav-flag">Canadian real estate</span>
+        </div>
         <button
           className={`nav-toggle${open ? ' open' : ''}`}
           aria-label="Menu"
