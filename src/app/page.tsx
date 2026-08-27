@@ -17,7 +17,6 @@ import {
 } from '@/lib/brand'
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
-const HERO_IMG = '/media/work/01.jpg'
 
 export const metadata: Metadata = {
   title: 'Canadian Real Estate Photography & Media | Bricks',
@@ -61,26 +60,23 @@ export default function Home() {
         }}
       />
 
-      <section className="hero-split">
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <span className="badge-lit"><span className="dot" />Live in Canada</span>
-            <h1>From Capture to Close.</h1>
-            <p className="sub">Listing media for Canadian real estate — HDR, licensed drone, and a floor plan, back in 24–48 hours. Optional virtual tour and virtual visit, booked direct.</p>
-            <div className="cta-row">
-              <Link className="btn btn-brick" href="/book">Book a shoot</Link>
-              <Link className="btn btn-sec" href="/pricing">Pricing</Link>
-            </div>
-          </div>
-          <div className="hero-visual">
-            <div className="kb"><Image className="kb-img" src={HERO_IMG} alt="Canadian listing exterior" fill sizes="(max-width: 900px) 100vw, 75vw" priority /></div>
+      <section className="hero hero-home">
+        <div className="wrap">
+          <span className="badge-lit"><span className="dot" />Live in Canada</span>
+          <h1>From Capture to Close.</h1>
+          <p className="sub">Listing media for Canadian real estate — HDR, licensed drone, and a floor plan, back in 24–48 hours. Optional virtual tour and virtual visit, booked direct.</p>
+          <div className="cta-row">
+            <Link className="btn btn-brick" href="/book">Book a shoot</Link>
+            <Link className="btn btn-sec" href="/pricing">Pricing</Link>
           </div>
         </div>
       </section>
 
-      <section className="prod-band paint" aria-label="Brokerage OS">
-        <div className="prod-frame prod-frame-lg">
-          <ProductStage />
+      <section className="prod-hero" aria-label="Brokerage OS">
+        <div className="tray tray-os">
+          <div className="tray-stage">
+            <ProductStage />
+          </div>
         </div>
       </section>
 
@@ -96,48 +92,52 @@ export default function Home() {
         </section>
       </div>
 
-      <section className="prod-band paint prod-later rvl" aria-label="Control surface">
+      <section className="prod-row rvl" aria-label="Control surface">
         <div className="prod-copy">
           <span className="over">Control surface</span>
           <h2>The brokerage dashboard.</h2>
           <p>OS is the desk: roster, jobs, and media in one place — not a second product.</p>
         </div>
-        <div className="prod-frame">
-          <ProductWindow
-            title="Brokerage OS"
-            src="/screens/os.html?screen=crm"
-            nw={1440}
-            nh={920}
-            lazy
-          />
+        <div className="tray tray-crm tray-bleed-end">
+          <div className="tray-stage">
+            <ProductWindow
+              title="Brokerage OS"
+              src="/screens/os.html?screen=crm"
+              nw={1440}
+              nh={920}
+              lazy
+            />
+          </div>
         </div>
       </section>
 
-      <section className="prod-band paint paint-shift prod-later rvl" aria-label="The rest unlocks">
+      <section className="prod-row prod-row-flip rvl" aria-label="The rest unlocks">
+        <div className="tray tray-tx tray-bleed-start">
+          <div className="tray-stage">
+            <ProductWindow
+              title="Brokerage OS"
+              src="/screens/os.html?screen=transactions"
+              nw={1440}
+              nh={920}
+              lazy
+            />
+          </div>
+        </div>
         <div className="prod-copy">
           <span className="over">The rest unlocks</span>
           <h2>Same OS. Deeper rooms.</h2>
           <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product.</p>
         </div>
-        <div className="prod-frame">
-          <ProductWindow
-            title="Brokerage OS"
-            src="/screens/os.html?screen=transactions"
-            nw={1440}
-            nh={920}
-            lazy
-          />
-        </div>
       </section>
 
-      <section className="prod-band paint prod-later rvl" aria-label="Booking">
-        <div className="prod-split">
-          <div className="prod-copy prod-copy-flush">
-            <span className="over">Booking</span>
-            <h2>The agent&apos;s booker.</h2>
-            <p>Companion app for the listing agent — schedule a shoot without leaving the phone. Secondary to OS, in development.</p>
-          </div>
-          <div className="prod-phone">
+      <section className="prod-row rvl" aria-label="Booking">
+        <div className="prod-copy">
+          <span className="over">Booking</span>
+          <h2>The agent&apos;s booker.</h2>
+          <p>Companion app for the listing agent — schedule a shoot without leaving the phone. Secondary to OS, in development.</p>
+        </div>
+        <div className="tray tray-book tray-phone">
+          <div className="tray-stage">
             <ProductWindow
               variant="phone"
               title="Booking"
@@ -150,14 +150,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prod-band paint paint-shift prod-later rvl" aria-label="Dispatch">
-        <div className="prod-split">
-          <div className="prod-copy prod-copy-flush">
-            <span className="over">Dispatch</span>
-            <h2>The field app.</h2>
-            <p>Companion for the photographer on site — jobs, uploads, pay. Last of the apps, in development.</p>
-          </div>
-          <div className="prod-phone">
+      <section className="prod-row prod-row-flip rvl" aria-label="Dispatch">
+        <div className="tray tray-disp tray-phone">
+          <div className="tray-stage">
             <ProductWindow
               variant="phone"
               title="Dispatch"
@@ -167,6 +162,11 @@ export default function Home() {
               lazy
             />
           </div>
+        </div>
+        <div className="prod-copy">
+          <span className="over">Dispatch</span>
+          <h2>The field app.</h2>
+          <p>Companion for the photographer on site — jobs, uploads, pay. Last of the apps, in development.</p>
         </div>
       </section>
 
@@ -219,37 +219,26 @@ export default function Home() {
       <style>{`
         .reel-wrap{margin-top:26px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
         .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
-        .trust{text-align:center;padding:48px 0 28px;}
+        .trust{text-align:center;padding:110px 0 40px;}
         .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto 22px;text-align:center;}
-        .hero-split{padding:0;border-bottom:1px solid var(--hair);overflow:hidden;}
-        .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;min-height:540px;}
-        .hero-copy{padding:76px 44px 60px 36px;display:flex;flex-direction:column;justify-content:center;}
-        .hero-copy .badge-lit{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:6px 10px;width:fit-content;margin-bottom:20px;}
-        .hero-copy .badge-lit .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);animation:pulse 2s ease-in-out infinite;}
+        .hero-home{padding:92px 36px 72px;border-bottom:none;}
+        .hero-home .badge-lit{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:6px 10px;width:fit-content;margin-bottom:20px;}
+        .hero-home .badge-lit .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);animation:pulse 2s ease-in-out infinite;}
         @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(210,84,43,.5)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(210,84,43,0)}}
-        .hero-copy h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);}
-        .hero-copy p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
-        .hero-visual{position:relative;overflow:hidden;background:var(--paperDeep);}
-        .hero-visual .kb{position:absolute;inset:-4%;width:108%;height:108%;animation:kenburns 24s ease-in-out infinite alternate;will-change:transform;}
-        @keyframes kenburns{from{transform:scale(1.0) translate(0,0);}to{transform:scale(1.06) translate(-0.8%,-1%);}}
-        .kb-img{object-fit:cover;}
-        .hero-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,14,0) 55%,rgba(20,17,14,.28) 100%),linear-gradient(90deg,rgba(20,17,14,.10),transparent 32%);pointer-events:none;}
-        .hero-copy .badge-lit,.hero-copy h1,.hero-copy p.sub,.hero-copy .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
-        .hero-copy h1{animation-delay:.06s;} .hero-copy p.sub{animation-delay:.17s;} .hero-copy .cta-row{animation-delay:.28s;}
+        .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
+        .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
+        .hero-home .badge-lit,.hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
+        .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
-        .hero-visual{opacity:0;animation:heroFade 1s ease .1s forwards;}
-        @keyframes heroFade{to{opacity:1;}}
         @media (max-width:900px){
-          .hero-grid{grid-template-columns:1fr;min-height:0;}
-          .hero-visual{aspect-ratio:16/9;order:-1;}
-          .hero-copy{padding:40px 20px;}
-          .hero-copy h1{font-size:34px;}
+          .hero-home{padding:56px 20px 40px;}
+          .hero-home h1{font-size:34px;}
         }
         .logo-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:22px 36px;padding:4px 0 8px;}
         .logo-row .logo{display:flex;align-items:center;justify-content:center;height:28px;flex:none;}
         .logo-row .logo img{height:28px;max-height:28px;max-width:110px;width:auto;object-fit:contain;display:block;opacity:.72;filter:grayscale(1);}
         .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;letter-spacing:.06em;color:var(--inkMute);opacity:.72;}
-        @media (prefers-reduced-motion:reduce){.hero-visual .kb{animation:none;}.hero-copy .badge-lit,.hero-copy h1,.hero-copy p.sub,.hero-copy .cta-row,.hero-visual{opacity:1;transform:none;animation:none;}}
+        @media (prefers-reduced-motion:reduce){.hero-home .badge-lit,.hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
         .incl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
         .incl .c{background:var(--paper);padding:22px 22px;}
         .incl .c h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
