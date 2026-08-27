@@ -3,43 +3,75 @@
 import { useEffect, useState } from 'react'
 
 const KEY = 'bricks-theme'
+type Pref = 'system' | 'light' | 'dark'
 
-function isDark() {
-  if (typeof document === 'undefined') return false
-  const t = document.documentElement.getAttribute('data-theme')
-  return t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)
+function resolve(pref: Pref): 'light' | 'dark' {
+  if (pref === 'dark' || pref === 'light') return pref
+  if (typeof window === 'undefined') return 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
+function readPref(): Pref {
+  try {
+    const stored = localStorage.getItem(KEY)
+    if (stored === 'dark' || stored === 'light' || stored === 'system') return stored
+  } catch {
+    /* private mode / blocked storage */
+  }
+  return 'system'
+}
+
+function apply(pref: Pref) {
+  const resolved = resolve(pref)
+  const root = document.documentElement
+  root.setAttribute('data-theme', resolved)
+  root.style.colorScheme = resolved
+}
+
+const OPTIONS: { id: Pref; label: string }[] = [
+  { id: 'system', label: 'System' },
+  { id: 'light', label: 'Light' },
+  { id: 'dark', label: 'Dark' },
+]
+
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(false)
+  const [pref, setPref] = useState<Pref>('system')
 
   useEffect(() => {
-    const sync = () => setDark(isDark())
-    sync()
+    const current = readPref()
+    setPref(current)
+    apply(current)
+
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    mq.addEventListener('change', sync)
-    return () => mq.removeEventListener('change', sync)
+    const onChange = () => {
+      if (readPref() === 'system') apply('system')
+    }
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
   }, [])
 
-  function toggle() {
-    const next = isDark() ? 'light' : 'dark'
-    document.documentElement.setAttribute('data-theme', next)
+  function select(next: Pref) {
     try {
       localStorage.setItem(KEY, next)
     } catch {
       /* private mode / blocked storage */
     }
-    setDark(next === 'dark')
+    setPref(next)
+    apply(next)
   }
 
   return (
-    <button
-      type="button"
-      className="theme-toggle"
-      aria-label={dark ? 'Switch to light' : 'Switch to dark'}
-      onClick={toggle}
-    >
-      {dark ? '○' : '◑'}
-    </button>
+    <div className="theme-switch" role="group" aria-label="Theme">
+      {OPTIONS.map((o) => (
+        <button
+          key={o.id}
+          type="button"
+          aria-pressed={pref === o.id}
+          onClick={() => select(o.id)}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
   )
 }

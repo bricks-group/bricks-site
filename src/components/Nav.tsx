@@ -6,10 +6,8 @@ import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
 
 const links = [
-  { href: '/pricing', label: 'Pricing' },
   { href: '/gallery', label: 'Work' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/pricing', label: 'Pricing' },
   { href: '/photographers', label: 'Photographers' },
 ]
 

@@ -27,8 +27,7 @@ export default function Footer() {
           <h4>Company</h4>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
-          <Link href="/service-areas">Service areas</Link>
-          <Link href="/blog">Resources</Link>
+          <Link href="/blog">Blog</Link>
         </div>
         <div className="foot-col">
           <h4>Legal</h4>
