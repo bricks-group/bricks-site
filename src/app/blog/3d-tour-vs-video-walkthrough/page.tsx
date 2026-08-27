@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
-import { REEL_RANGE, TOUR_RANGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -49,7 +49,7 @@ export default function Post() {
         <h3>{TOUR_NAME}</h3>
         <p>{TOUR_BLURB} Click to move room to room along the captured path. Delivered as an interactive embed on the listing and often MLS-ready. Best for letting serious buyers pre-screen a property before a showing. À la carte add-on; included in Showcase and Full suite.</p>
         <h3>{VISIT_NAME}</h3>
-        <p>{VISIT_BLURB} {VISIT_PACKAGING} Price is {VISIT_PRICE_LABEL.toLowerCase()} separately — we do not publish a rate, and it is never bundled into Premium or any other package.</p>
+        <p>{VISIT_BLURB} {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). No published dollar table — never bundled into Premium or any other package, and not charged at checkout.</p>
         <h3>Video walkthrough / cinematic reel</h3>
         <p>A produced, set to music, paced edit — usually 30–90 seconds. It&apos;s an emotional asset: it makes the home feel desirable and is built for social, portals, and the top of a listing page. It sells the <em>lifestyle</em>, not the measurements.</p>
 
@@ -78,7 +78,7 @@ export default function Post() {
         <ul>
           <li>Cinematic reel: {REEL_RANGE} add-on, by footprint.</li>
           <li>{TOUR_NAME}: {TOUR_RANGE}, path-confined, MLS-ready.</li>
-          <li>{VISIT_NAME}: {VISIT_PRICE_LABEL} separately. {VISIT_PACKAGING}</li>
+          <li>{VISIT_NAME}: {VISIT_PRICE_LABEL} ({FOOTPRINT_BANDS}). {VISIT_PACKAGING}</li>
         </ul>
         <p>Both are modest next to the cost of a price reduction from a stale listing. The mistake isn&apos;t spending — it&apos;s spending on the wrong one for the property.</p>
 

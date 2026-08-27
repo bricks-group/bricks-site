@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
   BROKERAGE_LOGOS,
@@ -15,15 +15,15 @@ import {
 
 export const metadata: Metadata = {
   title: 'Bricks — Pricing (Canadian listing media)',
-  description: 'Bricks listing-media pricing for Canadian real estate: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted separately.',
+  description: 'Bricks listing-media pricing for Canadian real estate: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted by sqft.',
   alternates: { canonical: '/pricing' },
   openGraph: {
     title: 'Bricks — Pricing (Canadian listing media)',
-    description: 'Bricks listing-media pricing: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted separately.',
+    description: 'Bricks listing-media pricing: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted by sqft.',
   },
   twitter: {
     title: 'Bricks — Pricing (Canadian listing media)',
-    description: 'Bricks listing-media pricing: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted separately.',
+    description: 'Bricks listing-media pricing: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted by sqft.',
   },
 }
 
@@ -33,7 +33,7 @@ const rows = [
   { name: 'Floor plan', inc: 'branded 2D — every standard shoot', flat: 'Included on every standard shoot' },
   { name: 'Cinematic reel', inc: '30–45s', vals: bandCells(REEL_RATE) },
   { name: TOUR_NAME, inc: 'path-confined walkthrough', vals: bandCells(TOUR_RATE) },
-  { name: VISIT_NAME, inc: 'free-roam Gaussian splat — never packaged', flat: `${VISIT_PRICE_LABEL} — always an add-on` },
+  { name: VISIT_NAME, inc: `free-roam Gaussian splat — ${FOOTPRINT_BANDS}`, flat: `${VISIT_PRICE_LABEL} — always an add-on, never packaged` },
   { name: 'Twilight exterior', inc: 'golden hour', vals: bandCells(TWILIGHT_RATE) },
   { name: 'Virtual staging', inc: 'per image', flat: `$${STAGING_PER_IMAGE} / image` },
   { name: 'Rush delivery', inc: 'same / next day', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
@@ -59,7 +59,7 @@ export default function PricingPage() {
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Licensed aerial drone' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 99, maxPrice: 159, priceCurrency: 'CAD' } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cinematic reel' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 199, maxPrice: 349, priceCurrency: 'CAD' } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: TOUR_NAME, description: TOUR_BLURB }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 149, maxPrice: 299, priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: VISIT_NAME, description: `${VISIT_BLURB} ${VISIT_PACKAGING}` } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: VISIT_NAME, description: `${VISIT_BLURB} ${VISIT_PACKAGING} ${VISIT_PRICE_LABEL} (${FOOTPRINT_BANDS}). No published dollar table.` } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Twilight exterior' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, maxPrice: 200, priceCurrency: 'CAD' } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Virtual staging' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 35, maxPrice: 35, priceCurrency: 'CAD' } },
               ],
@@ -76,7 +76,7 @@ export default function PricingPage() {
             mainEntity: [
               { '@type': 'Question', name: 'How is footprint defined?', acceptedAnswer: { '@type': 'Answer', text: 'Small / Mid / Large / XL map to the property\'s finished area and complexity. Not sure which tier? Pick "advise me" in booking and we\'ll size it from the address.' } },
               { '@type': 'Question', name: `Is the ${TOUR_NAME.toLowerCase()} included?`, acceptedAnswer: { '@type': 'Answer', text: `À la carte, no -- it's a ${TOUR_RANGE} add-on, priced by footprint. Showcase and Full suite include it. The floor plan is included on every standard shoot. ${VISIT_NAME} is never included in any package.` } },
-              { '@type': 'Question', name: `Is the ${VISIT_NAME.toLowerCase()} included?`, acceptedAnswer: { '@type': 'Answer', text: `Never. ${VISIT_NAME} is always a paid add-on, quoted separately, and is not part of Showcase, Full suite, Premium, or any other package.` } },
+              { '@type': 'Question', name: `Is the ${VISIT_NAME.toLowerCase()} included?`, acceptedAnswer: { '@type': 'Answer', text: `Never. ${VISIT_NAME} is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} on the same bands as photo, reel, and virtual tour (${FOOTPRINT_BANDS}). No published dollar table. Not part of Showcase, Full suite, Premium, or any other package.` } },
               { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: 'Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at $35 per image staged; tell us which rooms and we confirm the count before delivery.' } },
               { '@type': 'Question', name: 'Are these the final platform rates?', acceptedAnswer: { '@type': 'Answer', text: 'These are the pre-launch direct-booking rates. The platform\'s own rate card may differ when Booking goes live.' } },
               { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered and quote travel if needed.` } },
@@ -88,7 +88,7 @@ export default function PricingPage() {
       <div className="wrap">
         <section className="hero">
           <h1>Priced by footprint.</h1>
-          <p className="sub">Per-shoot rates for Canadian real estate. One standard — photography, drone, and floor plan on every standard shoot. {TOUR_NAME} is a {TOUR_RANGE} add-on (included in Showcase and Full suite). {VISIT_NAME} is always quoted separately and never packaged.</p>
+          <p className="sub">Per-shoot rates for Canadian real estate. One standard — photography, drone, and floor plan on every standard shoot. {TOUR_NAME} is a {TOUR_RANGE} add-on (included in Showcase and Full suite). {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} — same bands as photo, reel, and virtual tour — and never packaged.</p>
         </section>
       </div>
 
@@ -140,7 +140,7 @@ export default function PricingPage() {
             <p>Your price is assembled from these factors — we only charge for what your listing actually needs:</p>
             <ul>
               <li><b>Footprint</b> — finished area &amp; complexity (Small / Mid / Large / XL) sets the photography &amp; drone base.</li>
-              <li><b>What you include</b> — add only the services you want (reel, {TOUR_NAME.toLowerCase()}, twilight, virtual staging, rush). {VISIT_NAME} is always extra. Nothing you don&apos;t.</li>
+              <li><b>What you include</b> — add only the services you want (reel, {TOUR_NAME.toLowerCase()}, twilight, virtual staging, rush). {VISIT_NAME} is always extra, {VISIT_PRICE_LABEL.toLowerCase()}. Nothing you don&apos;t.</li>
               <li><b>Travel</b> — see below. Shooting inside 25 km of Mississauga is free.</li>
               <li><b>Volume</b> — agents and teams booking regularly get per-shoot rates tuned to their pipeline. Ask.</li>
             </ul>
@@ -162,7 +162,7 @@ export default function PricingPage() {
           <div className="faq">
             <div className="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property&apos;s finished area and complexity. Not sure which tier? Pick &quot;advise me&quot; in booking and we&apos;ll size it from the address.</p></div>
             <div className="qa"><h4>Is the {TOUR_NAME.toLowerCase()} included?</h4><p>À la carte, no — it&apos;s a {TOUR_RANGE} add-on, priced by footprint. Showcase and Full suite include it. The floor plan is included on every standard shoot.</p></div>
-            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_BLURB} {VISIT_PACKAGING} Price is {VISIT_PRICE_LABEL.toLowerCase()} separately — we do not publish a rate.</p></div>
+            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_BLURB} {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). No published dollar table — we quote it after you book, using the listing&apos;s sqft. It is not charged at checkout.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. Priced per image staged at <b>$35 / image</b>; tell us which rooms and we&apos;ll confirm the count before delivery.</p></div>
             <div className="qa"><h4>Are these the final platform rates?</h4><p>These are the pre-launch direct-booking rates. The platform&apos;s own rate card may differ when Booking goes live.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>

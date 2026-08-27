@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, PHOTO_RATE, DRONE_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
   BROKERAGE_LOGOS,
@@ -15,7 +15,6 @@ import {
   VISIT_BLURB,
   VISIT_NAME,
   VISIT_PACKAGING,
-  VISIT_PRICE_LABEL,
   WORK_PHOTOS,
 } from '@/lib/brand'
 
@@ -48,9 +47,9 @@ const beforeAfter = [
 const faqs = [
   { q: 'Is the platform live?', a: 'The media service is live in Canada today. The Booking app, Dispatch network, and Brokerage operating system are in development. Book now via the form or email booking@brxs.ca.' },
   { q: 'How do I book a shoot?', a: 'Use the booking form or write booking@brxs.ca / 343-453-4578. We confirm the slot and send pricing by footprint.' },
-  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan on every standard shoot. Photos only drops drone and the floor plan. Cinematic reel (+${REEL_RANGE}) and ${TOUR_NAME.toLowerCase()} (+${TOUR_RANGE}) are optional add-ons. ${VISIT_NAME} is always a paid add-on, quoted separately — never packaged.` },
+  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan on every standard shoot. Photos only drops drone and the floor plan. Cinematic reel (+${REEL_RANGE}) and ${TOUR_NAME.toLowerCase()} (+${TOUR_RANGE}) are optional add-ons. ${VISIT_NAME} is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}) — never packaged.` },
   { q: `Is the ${TOUR_NAME.toLowerCase()} included?`, a: `À la carte, no — it's a ${TOUR_RANGE} add-on, priced by footprint. Showcase and Full suite include it. ${VISIT_NAME} is never included in any package.` },
-  { q: `Is the ${VISIT_NAME.toLowerCase()} included?`, a: `Never. ${VISIT_NAME} is always a paid add-on (${VISIT_PRICE_LABEL.toLowerCase()} separately) and is not part of Showcase, Full suite, or any other package.` },
+  { q: `Is the ${VISIT_NAME.toLowerCase()} included?`, a: `Never. ${VISIT_NAME} is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} on the same bands as photo, reel, and virtual tour (${FOOTPRINT_BANDS}). No published dollar table. Not part of Showcase, Full suite, or any other package.` },
   { q: 'Where do you shoot?', a: `Canada — ${COVERAGE_LINE} Outside that, ask and we'll tell you if it's covered.` },
   { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24-48 hours.' },
 ]
@@ -181,7 +180,7 @@ export default function Home() {
           <div className="adds">
             <div className="a rvl"><div className="nm">Cinematic reel</div><div className="pr">+{REEL_RANGE}</div><p>30–45s motion reel for social and listing pages.</p></div>
             <div className="a rvl"><div className="nm">{TOUR_NAME}</div><div className="pr">+{TOUR_RANGE}</div><p>{TOUR_BLURB} À la carte add-on; included in Showcase and Full suite.</p></div>
-            <div className="a rvl"><div className="nm">{VISIT_NAME}</div><div className="pr">{VISIT_PRICE_LABEL}</div><p>{VISIT_BLURB} {VISIT_PACKAGING}</p></div>
+            <div className="a rvl"><div className="nm">{VISIT_NAME}</div><div className="pr">{VISIT_PRICE_LABEL}</div><p>{VISIT_BLURB} Same footprint bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). {VISIT_PACKAGING}</p></div>
             <div className="a rvl"><div className="nm">Twilight exterior</div><div className="pr">+{TWILIGHT_RANGE}</div><p>Golden-hour exterior frame that sells the lifestyle.</p></div>
           </div>
           <p className="note">Photos only drops drone and the floor plan. Full tiers and à la carte pricing by footprint are on the <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>pricing page</Link>.</p>

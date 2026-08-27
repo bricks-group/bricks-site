@@ -112,7 +112,7 @@ export default function PhotographersPage() {
             <div className="a rvl"><div className="nm">Tier B — Core</div><div className="pr">Add-ons 45%</div><p>Package payouts from the rate card above. Add-on rack share is 45%.</p></div>
             <div className="a rvl"><div className="nm">Tier A — Elite</div><div className="pr">Add-ons 55%</div><p>Package payouts from the rate card above. Add-on rack share is 55%.</p></div>
           </div>
-          <p className="note" style={{ marginTop: 26 }}>Coverage area: Toronto · Mississauga · Hamilton · Durham · York · Niagara. Payout is the fixed rate-card amount — never a discounted customer rate. Bricks may change the rate card prospectively on 14 days&apos; notice; changes do not apply to jobs already accepted. Virtual visit (Gaussian splat) is always a client add-on, never bundled into Standard, Premium, Luxury, or Estate packages.</p>
+          <p className="note" style={{ marginTop: 26 }}>Coverage area: Toronto · Mississauga · Hamilton · Durham · York · Niagara. Payout is the fixed rate-card amount — never a discounted customer rate. Bricks may change the rate card prospectively on 14 days&apos; notice; changes do not apply to jobs already accepted. Virtual visit (Gaussian splat) is always a client add-on, quoted by sqft on the same footprint bands as photo, reel, and virtual tour — never bundled into Standard, Premium, Luxury, or Estate packages.</p>
         </section>
       </div>
 

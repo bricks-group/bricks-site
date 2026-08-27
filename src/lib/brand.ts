@@ -51,7 +51,6 @@ export const TOUR_BLURB = 'Path-confined walkthrough. You stay on the path.'
 export const VISIT_NAME = 'Virtual visit'
 export const VISIT_BLURB = 'Free-roam Gaussian splat (SuperSplat). You are not confined to a path.'
 export const VISIT_PACKAGING = 'Always a paid add-on — never included in any package.'
-export const VISIT_PRICE_LABEL = 'Quoted'
 
 export const WORK_PHOTOS = [
   { src: '/media/work/01.jpg', alt: 'Residential street exterior' },

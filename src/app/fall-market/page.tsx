@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import NewsletterInline from '../NewsletterInline'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const faqs = [
   { q: 'Is "priority booking" a discount?', a: 'No — pricing is the same as always (see the pricing page). Priority booking reserves your shoot date ahead of the fall demand spike so it doesn’t get pushed by later requests.' },
   { q: 'How far out should I book?', a: 'As soon as you have a listing date in mind. September and early October fill fastest.' },
-  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan on every standard shoot. Cinematic reel and ${TOUR_NAME.toLowerCase()} are optional add-ons. ${VISIT_NAME} is always a paid add-on (${VISIT_PRICE_LABEL.toLowerCase()}) and never packaged. Build your shoot à la carte on the pricing page.` },
+  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan on every standard shoot. Cinematic reel and ${TOUR_NAME.toLowerCase()} are optional add-ons. ${VISIT_NAME} is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}) and never packaged. Build your shoot à la carte on the pricing page.` },
   { q: 'Where do you shoot?', a: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered.` },
   { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24–48 hours, fall included.' },
 ]
@@ -78,7 +78,7 @@ export default function FallMarket() {
             <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
             <div className="c"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
           </div>
-          <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. {TOUR_NAME} runs +{TOUR_RANGE}. {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} separately — {VISIT_PACKAGING} See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full à la carte pricing</Link>.</p>
+          <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. {TOUR_NAME} runs +{TOUR_RANGE}. {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}) — {VISIT_PACKAGING} See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full à la carte pricing</Link>.</p>
         </section>
       </div>
 

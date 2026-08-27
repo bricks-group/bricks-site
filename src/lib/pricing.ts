@@ -24,10 +24,13 @@ export const RUSH_FLAT = 75;
 export const STAGING_PER_IMAGE = 35;
 
 /**
- * Virtual visit (Gaussian splat / SuperSplat) has no published rate in this
- * repo. Always quoted separately. Never invent a price. Never package it.
+ * Virtual visit (Gaussian splat / SuperSplat) has no published dollar table.
+ * Quoted by the same footprint bands as photo / reel / virtual tour.
+ * Always a paid add-on. Never invent a VISIT_RATE. Never package it. Never
+ * charge it in Stripe — booking collects the request + sqft, then we quote.
  */
-export const VISIT_PRICE_LABEL = 'Quoted';
+export const FOOTPRINT_BANDS = 'Small ≤1,200 / Mid ≤2,500 / Large ≤4,000 / XL 4,000+'
+export const VISIT_PRICE_LABEL = 'Quoted by sqft'
 
 /** Format a rate band as a display range, e.g. [149,199,249,299] -> "$149–299". */
 export function bandRange(rate: readonly number[]): string {

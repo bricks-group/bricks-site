@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -59,7 +59,7 @@ export default function Post() {
         <ul>
           <li><strong>Cinematic reel</strong> (+{REEL_RANGE}) — a 30–45s motion reel for social and the listing page. Best for reach.</li>
           <li><strong>{TOUR_NAME}</strong> (+{TOUR_RANGE}) — {TOUR_BLURB} MLS-ready. À la carte add-on; included in Showcase and Full suite.</li>
-          <li><strong>{VISIT_NAME}</strong> ({VISIT_PRICE_LABEL}) — {VISIT_BLURB} {VISIT_PACKAGING}</li>
+          <li><strong>{VISIT_NAME}</strong> ({VISIT_PRICE_LABEL}) — {VISIT_BLURB} Same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). {VISIT_PACKAGING}</li>
           <li><strong>Twilight photography</strong> (+{TWILIGHT_RANGE}) — blue-hour exteriors with lit windows. Best for premium listings.</li>
           <li><strong>Rush delivery</strong> (+${RUSH_FLAT}) — faster than the standard 24–48h window.</li>
         </ul>

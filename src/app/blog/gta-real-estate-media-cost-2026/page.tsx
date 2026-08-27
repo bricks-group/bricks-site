@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
-import { PHOTO_RATE, DRONE_RATE, REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, bandCells, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE, REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, bandCells, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -76,7 +76,7 @@ export default function Post() {
           <li>Floor plan: <strong>included</strong> on every standard shoot</li>
           <li>Cinematic reel: <strong>+{REEL_RANGE}</strong></li>
           <li>{TOUR_NAME}: <strong>+{TOUR_RANGE}</strong></li>
-          <li>{VISIT_NAME}: <strong>{VISIT_PRICE_LABEL}</strong> — {VISIT_PACKAGING}</li>
+          <li>{VISIT_NAME}: <strong>{VISIT_PRICE_LABEL}</strong> ({FOOTPRINT_BANDS}) — {VISIT_PACKAGING}</li>
           <li>Twilight: <strong>+{TWILIGHT_RANGE}</strong></li>
           <li>Rush: <strong>+${RUSH_FLAT}</strong></li>
           <li>Travel: first 25 km free, <strong>$0.75/km</strong> after · HST 13% added at checkout</li>

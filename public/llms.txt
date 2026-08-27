@@ -8,7 +8,7 @@ Two spatial products, never collapsed: **virtual tour** is a path-confined walkt
 
 ## Core pages
 
-- [Pricing](https://www.brxs.ca/pricing): À-la-carte pricing for HDR photography, drone, floor plans, twilight, virtual tour, and virtual visit (quoted separately).
+- [Pricing](https://www.brxs.ca/pricing): À-la-carte pricing for HDR photography, drone, floor plans, twilight, virtual tour, and virtual visit (quoted by sqft — same footprint bands, no published dollar table).
 - [Book a shoot](https://www.brxs.ca/book): Online booking flow with MLS auto-fill and instant pricing.
 - [Gallery](https://www.brxs.ca/gallery): Sample listing photography from Bricks.
 - [Service areas](https://www.brxs.ca/service-areas): Current city coverage in Canada.
