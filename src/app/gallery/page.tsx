@@ -2,39 +2,69 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
-import { WORK_PHOTOS } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'Bricks — Work (Canadian listing media)',
-  description: 'Selected Bricks listing media — photo, drone, floor plans, twilight, with optional virtual tour and virtual visit.',
+  description: 'Selected Bricks listing media — photo, drone, and floor plans across residential, multifamily, commercial, and industrial.',
   alternates: { canonical: '/gallery' },
   openGraph: {
     title: 'Bricks — Work (Canadian listing media)',
-    description: 'Selected Bricks listing media — photo, drone, floor plans, twilight, with optional virtual tour and virtual visit.',
+    description: 'Selected Bricks listing media — photo, drone, and floor plans across residential, multifamily, commercial, and industrial.',
   },
   twitter: {
     title: 'Bricks — Work (Canadian listing media)',
-    description: 'Selected Bricks listing media — photo, drone, floor plans, twilight, with optional virtual tour and virtual visit.',
+    description: 'Selected Bricks listing media — photo, drone, and floor plans across residential, multifamily, commercial, and industrial.',
   },
 }
 
 const featured = [
   { src: '/media/work/01.jpg', alt: 'Residential street exterior', t: 'Exterior' },
-  { src: '/media/work/02.jpg', alt: 'Residential interior', t: 'Interior' },
+  { src: '/media/unsplash/us-living-sofa-chairs.jpg', alt: 'Residential living room', t: 'Interior' },
 ]
 
-const residential = WORK_PHOTOS.slice(2, 8).map((p) => ({ ...p, t: p.alt }))
+type Shot = { src: string; alt: string; t: string; d?: string }
 
-const commercial = [
-  { src: '/media/comm-aerial-1.jpg', alt: 'Commercial — aerial', t: 'Commercial — aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/comm-interior-1.jpg', alt: 'Commercial interior', t: 'Commercial interior' },
-  { src: '/media/comm-ext-1.jpg', alt: 'Commercial exterior', t: 'Commercial exterior' },
-  { src: '/media/comm-ext-2.jpg', alt: 'Commercial exterior', t: 'Commercial exterior' },
-  { src: '/media/comm-unit-1.jpg', alt: 'Commercial unit', t: 'Commercial unit' },
-  { src: '/media/work/09.jpg', alt: 'Retail — HDR', t: 'Retail — HDR' },
-  { src: '/media/work/10.jpg', alt: 'Building HDR', t: 'Building HDR' },
-  { src: '/media/work/11.jpg', alt: 'Interior HDR', t: 'Interior HDR' },
-  { src: '/media/work/12.jpg', alt: 'Residential interior', t: 'Residential interior' },
+const residential: Shot[] = [
+  { src: '/media/work/02.jpg', alt: 'Residential exterior', t: 'Exterior' },
+  { src: '/media/res-ext-1.jpg', alt: 'Brick house exterior', t: 'Exterior' },
+  { src: '/media/res-dining-1.jpg', alt: 'Dining room', t: 'Dining' },
+  { src: '/media/res-living-1.jpg', alt: 'Open living and kitchen', t: 'Living' },
+  { src: '/media/res-living-2.jpg', alt: 'Living room', t: 'Living' },
+  { src: '/media/unsplash/us-living-3sofas.jpg', alt: 'Living room', t: 'Living' },
+  { src: '/media/unsplash/us-living-white.jpg', alt: 'Living room with white sofa', t: 'Living' },
+  { src: '/media/work/07.jpg', alt: 'Living room', t: 'Living' },
+  { src: '/media/unsplash/us-kitchen-yellow.jpg', alt: 'Kitchen with island', t: 'Kitchen' },
+  { src: '/media/unsplash/us-kitchen-steel.jpg', alt: 'Kitchen', t: 'Kitchen' },
+  { src: '/media/unsplash/us-kitchen-island.jpg', alt: 'Kitchen island', t: 'Kitchen' },
+  { src: '/media/unsplash/us-bath-vanity.jpg', alt: 'Bathroom', t: 'Bath' },
+  { src: '/media/work/08.jpg', alt: 'Bedroom', t: 'Bedroom' },
+  { src: '/media/unsplash/us-bedroom-artwork.jpg', alt: 'Bedroom', t: 'Bedroom' },
+]
+
+const multifamily: Shot[] = [
+  { src: '/media/work/03.jpg', alt: 'Condo bedroom', t: 'Bedroom' },
+  { src: '/media/work/04.jpg', alt: 'Condo living room', t: 'Living' },
+  { src: '/media/unsplash/us-living-city.jpg', alt: 'Living room with city view', t: 'Living' },
+  { src: '/media/unsplash/us-living-window.jpg', alt: 'Living room', t: 'Living' },
+  { src: '/media/unsplash/us-bedroom-closet.jpg', alt: 'Bedroom', t: 'Bedroom' },
+  { src: '/media/unsplash/us-bedroom-window.jpg', alt: 'Bedroom with city view', t: 'Bedroom' },
+  { src: '/media/work/09.jpg', alt: 'Building lobby', t: 'Lobby' },
+  { src: '/media/unsplash/us-lobby-leather.jpg', alt: 'Lobby lounge', t: 'Lobby' },
+]
+
+const commercial: Shot[] = [
+  { src: '/media/comm-aerial-1.jpg', alt: 'Commercial aerial', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/work/10.jpg', alt: 'Flex campus aerial', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/comm-ext-1.jpg', alt: 'Commercial exterior', t: 'Exterior' },
+  { src: '/media/work/05.jpg', alt: 'Urban mixed-use aerial', t: 'Urban' },
+  { src: '/media/unsplash/us-office-lounge.jpg', alt: 'Office lounge', t: 'Lounge' },
+]
+
+const industrial: Shot[] = [
+  { src: '/media/work/06.jpg', alt: 'Industrial aerial', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/comm-unit-1.jpg', alt: 'Industrial unit', t: 'Unit' },
+  { src: '/media/comm-interior-1.jpg', alt: 'Industrial suite', t: 'Suite' },
+  { src: '/media/work/11.jpg', alt: 'Construction aerial', t: 'Site' },
 ]
 
 const beforeAfter = [
@@ -43,6 +73,19 @@ const beforeAfter = [
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', t: 'Twilight' },
   { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', t: 'Virtual staging' },
 ]
+
+function Grid({ images }: { images: Shot[] }) {
+  return (
+    <div className="work-grid">
+      {images.map((img) => (
+        <div key={img.src} className="work-card">
+          <div className="img"><Image src={img.src} alt={img.alt} width={720} height={540} loading="lazy" /></div>
+          <div className="meta"><div className="t">{img.t}</div>{img.d && <div className="d">{img.d}</div>}</div>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function GalleryPage() {
   return (
@@ -65,7 +108,7 @@ export default function GalleryPage() {
         <div className="wrap">
           <span className="badge">Selected work</span>
           <h1>Real shoots, not stock.</h1>
-          <p className="sub">Residential, commercial, and the edit — the same standard every listing gets.</p>
+          <p className="sub">Residential, multifamily, commercial, and industrial — the same standard every listing gets.</p>
         </div>
       </section>
 
@@ -88,30 +131,30 @@ export default function GalleryPage() {
       <div className="wrap work-wrap">
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Residential</span><h2>Interiors and the street.</h2></div>
+            <div><span className="over">Residential</span><h2>Houses, interiors, the street.</h2></div>
           </div>
-          <div className="work-grid">
-            {residential.map((img) => (
-              <div key={img.src} className="work-card">
-                <div className="img"><Image src={img.src} alt={img.alt} width={720} height={540} loading="lazy" /></div>
-                <div className="meta"><div className="t">{img.t}</div></div>
-              </div>
-            ))}
-          </div>
+          <Grid images={residential} />
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Commercial &amp; aerial</span><h2>Lots, units, and the roof.</h2></div>
+            <div><span className="over">Multifamily</span><h2>Units, amenity, the lobby.</h2></div>
           </div>
-          <div className="work-grid">
-            {commercial.map((img) => (
-              <div key={img.src} className="work-card">
-                <div className="img"><Image src={img.src} alt={img.alt} width={720} height={540} loading="lazy" /></div>
-                <div className="meta"><div className="t">{img.t}</div>{img.d && <div className="d">{img.d}</div>}</div>
-              </div>
-            ))}
+          <Grid images={multifamily} />
+        </section>
+
+        <section className="block rvl">
+          <div className="sec-head">
+            <div><span className="over">Commercial</span><h2>Offices, flex, and the roof.</h2></div>
           </div>
+          <Grid images={commercial} />
+        </section>
+
+        <section className="block rvl">
+          <div className="sec-head">
+            <div><span className="over">Industrial</span><h2>Units, docks, and the site.</h2></div>
+          </div>
+          <Grid images={industrial} />
         </section>
 
         <section className="block rvl">

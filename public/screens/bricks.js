@@ -1764,7 +1764,7 @@ function DispToday({ dark=true }) {
   const th = useTheme(dark);
   return (
     <Phone dark={dark}>
-      <div style={{ padding:'8px 22px 0', flex:1, overflow:'auto' }}>
+      <div style={{ padding:'8px 22px 0', flex:1, overflow:'hidden' }}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', paddingTop:6 }}>
           <div>
             <Over color={th.ink4}>Thursday · Apr 18</Over>

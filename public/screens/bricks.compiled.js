@@ -5282,7 +5282,7 @@
       style: {
         padding: '8px 22px 0',
         flex: 1,
-        overflow: 'auto'
+        overflow: 'hidden'
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
