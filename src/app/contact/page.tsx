@@ -45,6 +45,7 @@ export default function ContactPage() {
           <span className="badge">Contact</span>
           <h1>Let&apos;s shoot your next listing.</h1>
           <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours. {COVERAGE_LINE} Reach out and we&apos;ll confirm the slot and send pricing by footprint.</p>
+          <p className="sub product-hint">Media is live. Booking, Dispatch, and Brokerage OS are the platform — in development.</p>
         </div>
       </section>
 
@@ -65,6 +66,7 @@ export default function ContactPage() {
       </section>
 
       <style>{`
+        .product-hint{margin-top:14px;font-size:14px;color:var(--inkMute);max-width:520px;}
         .contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;margin:28px 0 34px;}
         .contact-grid .c{background:var(--paper);padding:22px 24px;}

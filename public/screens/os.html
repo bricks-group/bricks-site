@@ -24,6 +24,17 @@
 <script src="bricks.compiled.js"></script>
 <script>
 (function(){
+  var ALLOWED = {
+    overview:1, crm:1, transactions:1, mls:1, forms:1, jobs:1,
+    jobdetail:1, vendors:1, accounting:1, billing:1, agents:1, settings:1
+  };
+  function screenParam(){
+    try{
+      var q = new URLSearchParams(location.search).get('screen');
+      if (q && ALLOWED[q]) return q;
+    }catch(e){}
+    return 'overview';
+  }
   function parentTheme(){
     try{
       var t=window.parent.document.documentElement.getAttribute('data-theme');
@@ -39,10 +50,11 @@
     document.body.style.background = theme==='dark' ? '#141210' : '#E4DED2';
   }
   var dark=parentTheme()==='dark';
+  var screen=screenParam();
   apply(dark?'dark':'light');
   var root=ReactDOM.createRoot(document.getElementById('root'));
   function render(){
-    root.render(React.createElement(DemoOS, {dark: dark}));
+    root.render(React.createElement(DemoOS, {dark: dark, screen: screen}));
   }
   window.addEventListener('message', function(e){
     if(e.data && e.data.bricks_theme){

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
+import ProductWindow from '@/components/ProductWindow'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, PHOTO_RATE, DRONE_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
@@ -77,11 +78,11 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="wrap">
-        <section className="block block-flush rvl">
+      <section className="prod-band paint" aria-label="Brokerage OS">
+        <div className="prod-frame prod-frame-lg">
           <ProductStage />
-        </section>
-      </div>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="trust rvl">
@@ -94,6 +95,80 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      <section className="prod-band paint prod-later rvl" aria-label="Control surface">
+        <div className="prod-copy">
+          <span className="over">Control surface</span>
+          <h2>The brokerage dashboard.</h2>
+          <p>OS is the desk: roster, jobs, and media in one place — not a second product.</p>
+        </div>
+        <div className="prod-frame">
+          <ProductWindow
+            title="Brokerage OS"
+            src="/screens/os.html?screen=crm"
+            nw={1440}
+            nh={920}
+            lazy
+          />
+        </div>
+      </section>
+
+      <section className="prod-band paint paint-shift prod-later rvl" aria-label="The rest unlocks">
+        <div className="prod-copy">
+          <span className="over">The rest unlocks</span>
+          <h2>Same OS. Deeper rooms.</h2>
+          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product.</p>
+        </div>
+        <div className="prod-frame">
+          <ProductWindow
+            title="Brokerage OS"
+            src="/screens/os.html?screen=transactions"
+            nw={1440}
+            nh={920}
+            lazy
+          />
+        </div>
+      </section>
+
+      <section className="prod-band paint prod-later rvl" aria-label="Booking">
+        <div className="prod-split">
+          <div className="prod-copy prod-copy-flush">
+            <span className="over">Booking</span>
+            <h2>The agent&apos;s booker.</h2>
+            <p>Companion app for the listing agent — schedule a shoot without leaving the phone. Secondary to OS, in development.</p>
+          </div>
+          <div className="prod-phone">
+            <ProductWindow
+              variant="phone"
+              title="Booking"
+              src="/screens/book.html"
+              nw={390}
+              nh={844}
+              lazy
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="prod-band paint paint-shift prod-later rvl" aria-label="Dispatch">
+        <div className="prod-split">
+          <div className="prod-copy prod-copy-flush">
+            <span className="over">Dispatch</span>
+            <h2>The field app.</h2>
+            <p>Companion for the photographer on site — jobs, uploads, pay. Last of the apps, in development.</p>
+          </div>
+          <div className="prod-phone">
+            <ProductWindow
+              variant="phone"
+              title="Dispatch"
+              src="/screens/disp.html"
+              nw={390}
+              nh={844}
+              lazy
+            />
+          </div>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="block rvl">
@@ -144,7 +219,7 @@ export default function Home() {
       <style>{`
         .reel-wrap{margin-top:26px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
         .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
-        .trust{text-align:center;padding:28px 0 8px;}
+        .trust{text-align:center;padding:48px 0 28px;}
         .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto 22px;text-align:center;}
         .hero-split{padding:0;border-bottom:1px solid var(--hair);overflow:hidden;}
         .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;min-height:540px;}

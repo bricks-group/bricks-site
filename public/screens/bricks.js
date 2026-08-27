@@ -2112,8 +2112,8 @@ function DispProfile({ dark=true }) {
 const BOOK_SCREENS = [BookHome, BookJobs, BookFlow, BookHome, BookProfile];
 const DISP_SCREENS = [DispToday, DispSchedule, DispUploads, DispProfile, DispProfile];
 
-function DemoOS({ dark=false }) {
-  return <BrokShell dark={dark} screen="overview" />;
+function DemoOS({ dark=false, screen='overview' }) {
+  return <BrokShell dark={dark} screen={screen} />;
 }
 
 function DemoBook({ dark=false }) {
