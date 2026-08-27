@@ -39,7 +39,7 @@ export default function PhotographerForm() {
     fetch('/legal/ic-agreement.txt')
       .then((r) => (r.ok ? r.text() : Promise.reject()))
       .then((t) => setIcText(t))
-      .catch(() => setIcText('Could not load agreement. Please visit brxs.ca/contractors for the full text.'))
+      .catch(() => setIcText('Could not load agreement. Please email booking@brxs.ca for the full text.'))
   }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -94,7 +94,7 @@ export default function PhotographerForm() {
       rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
       rpas_certificate_number: (fd.get('rpas_certificate_number') as string || '').trim() || null,
       accepted_terms: true,
-      ic_agreement_version: '1.2',
+      ic_agreement_version: '1.3',
       preferred_regions: [] as string[],
     }
 
@@ -211,7 +211,7 @@ export default function PhotographerForm() {
       <div className="ic-box">{icText}</div>
       <label className="ic-accept">
         <input type="checkbox" id="f_accept" required />
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.2</strong>. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and applicable insurance; and that Transport Canada drone regulations are my sole responsibility.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.3</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and required insurance and WSIB proof before a first job; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
 
       <div className="err">{err}</div>

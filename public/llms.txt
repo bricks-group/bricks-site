@@ -11,6 +11,8 @@ Bricks is a real estate media company operated by Bricks Group in the Greater To
 - [Gallery](https://www.brxs.ca/gallery): Sample listing photography and video from the Bricks photographer network.
 - [Service areas](https://www.brxs.ca/service-areas): GTA neighbourhoods and municipalities covered.
 - [Photographers](https://www.brxs.ca/photographers): Independent contractor network — apply to shoot for Bricks.
+- [Terms](https://www.brxs.ca/terms): Client booking terms and cancellation schedule.
+- [Privacy](https://www.brxs.ca/privacy): How Bricks Group handles personal information.
 - [About](https://www.brxs.ca/about): Company background.
 - [Contact](https://www.brxs.ca/contact): Get in touch.
 

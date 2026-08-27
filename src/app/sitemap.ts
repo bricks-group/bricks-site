@@ -14,6 +14,7 @@ const routes = [
   '/book',
   '/service-areas',
   '/terms',
+  '/privacy',
   '/blog',
   '/blog/3d-tour-vs-video-walkthrough',
   '/blog/drone-photography-rules-ontario',
