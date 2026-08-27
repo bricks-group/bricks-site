@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import Script from 'next/script'
 import RevealObserver from '@/components/RevealObserver'
 
 export const metadata: Metadata = {
@@ -16,11 +17,6 @@ export const metadata: Metadata = {
     description: 'Selected Bricks listing media — photo, drone, and floor plans across residential, multifamily, commercial, and industrial.',
   },
 }
-
-const featured = [
-  { src: '/media/work/01.jpg', alt: 'Residential street exterior', t: 'Exterior' },
-  { src: '/media/res-living-1.jpg', alt: 'Residential living room', t: 'Interior' },
-]
 
 type Shot = { src: string; alt: string; t: string; d?: string }
 
@@ -54,10 +50,10 @@ const industrial: Shot[] = [
 ]
 
 const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', t: 'Sky replacement' },
-  { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', t: 'HDR blending' },
-  { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', t: 'Twilight' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', t: 'Virtual staging' },
+  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky replacement before and after' },
+  { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
+  { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
+  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
 ]
 
 function Grid({ images }: { images: Shot[] }) {
@@ -77,6 +73,7 @@ export default function GalleryPage() {
   return (
     <>
       <RevealObserver />
+      <Script src="/assets/ba.js" strategy="afterInteractive" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -98,23 +95,38 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      <section className="rvl" aria-label="Featured stills">
-        <div className="tray tray-os tray-still">
-          <div className="tray-stage">
-            {featured.map((img) => (
-              <div key={img.src} className="pwin">
-                <div className="pwin-bar">
-                  <div className="pwin-dots" aria-hidden="true"><i /><i /><i /></div>
-                  <span>{img.t}</span>
-                </div>
-                <Image className="still" src={img.src} alt={img.alt} width={800} height={600} priority />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <div className="wrap work-wrap">
+        <section className="block rvl">
+          <div className="sec-head">
+            <div><span className="over">The edit</span><h2>Before and after.</h2></div>
+          </div>
+          <p className="ba-hint">Drag across each pair.</p>
+          <div className="ba-grid">
+            {beforeAfter.map((p) => {
+              const name = p.label.replace(/ before and after$/i, '')
+              return (
+                <div
+                  key={p.label}
+                  className="ba"
+                  data-pos="50"
+                  tabIndex={0}
+                  role="slider"
+                  aria-label={p.label}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={50}
+                >
+                  <img className="ba-after" src={p.after} alt={`${name} — after`} />
+                  <img className="ba-before" src={p.before} alt={`${name} — before`} />
+                  <span className="ba-tag ba-tag-before">Before</span>
+                  <span className="ba-tag ba-tag-after">After</span>
+                  <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
         <section className="block rvl">
           <div className="sec-head">
             <div><span className="over">Residential</span><h2>Houses, interiors, the street.</h2></div>
@@ -143,32 +155,6 @@ export default function GalleryPage() {
           <Grid images={industrial} />
         </section>
 
-        <section className="block rvl">
-          <div className="sec-head">
-            <div><span className="over">The edit</span><h2>Before and after.</h2></div>
-          </div>
-          <div className="ba-grid">
-            {beforeAfter.map((p) => (
-              <div key={p.t} className="pwin ba-card">
-                <div className="pwin-bar">
-                  <div className="pwin-dots" aria-hidden="true"><i /><i /><i /></div>
-                  <span>{p.t}</span>
-                </div>
-                <div className="ba-split">
-                  <figure>
-                    <Image src={p.before} alt={`${p.t} before`} width={480} height={360} loading="lazy" />
-                    <figcaption>Before</figcaption>
-                  </figure>
-                  <figure>
-                    <Image src={p.after} alt={`${p.t} after`} width={480} height={360} loading="lazy" />
-                    <figcaption>After</figcaption>
-                  </figure>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
             <span className="over">Book a shoot</span>
@@ -191,14 +177,27 @@ export default function GalleryPage() {
         .work-card .meta{padding:16px 18px 18px;}
         .work-card .meta .t{font-weight:500;font-size:15px;color:var(--ink);letter-spacing:-0.2px;}
         .work-card .meta .d{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);margin-top:6px;letter-spacing:.06em;}
-        .ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px;margin-top:8px;}
-        .ba-card{overflow:hidden;}
-        .ba-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);}
-        .ba-split figure{margin:0;background:var(--paper);}
-        .ba-split img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;filter:none;}
-        .ba-split figcaption{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);padding:10px 14px 14px;}
+        .ba-hint{margin:0 0 4px;font-size:15px;color:var(--inkMute);}
+        .ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px;}
+        .ba{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--paperDeep);
+          border:1px solid var(--hair);border-radius:12px;cursor:ew-resize;user-select:none;-webkit-user-select:none;touch-action:pan-y;}
+        .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none;filter:none;}
+        .ba-before{clip-path:inset(0 50% 0 0);}
+        .ba-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--paper);
+          transform:translateX(-1px);box-shadow:0 0 0 1px rgba(20,17,14,0.18);pointer-events:none;}
+        .ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+          width:34px;height:34px;border-radius:50%;background:var(--paper);
+          display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--brickDeep);
+          box-shadow:0 1px 5px rgba(20,17,14,0.32);font-family:'JetBrains Mono',monospace;}
+        .ba-tag{position:absolute;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:10px;
+          letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:2px;pointer-events:none;z-index:2;}
+        .ba-tag-before{left:10px;background:rgba(20,17,14,0.6);color:var(--paper);}
+        .ba-tag-after{right:10px;background:var(--brick);color:#fff;}
         @media (max-width:820px){
-          .work-grid,.ba-grid{grid-template-columns:1fr;gap:28px;}
+          .work-grid{grid-template-columns:1fr;gap:28px;}
+        }
+        @media (max-width:720px){
+          .ba-grid{grid-template-columns:1fr;}
         }
       `}</style>
     </>

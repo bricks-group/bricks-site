@@ -534,6 +534,7 @@ html[data-theme="dark"] .pwin{
 html[data-theme="dark"] .work-card .img img,
 html[data-theme="dark"] .still,
 html[data-theme="dark"] .ba-split img,
+html[data-theme="dark"] .ba img,
 html[data-theme="dark"] .reel-video,
 html[data-theme="dark"] .grid3 .card .img img{
   filter:brightness(0.62) saturate(0.86);
@@ -547,6 +548,7 @@ html[data-theme="dark"] .book{
   :root:not([data-theme="light"]) .work-card .img img,
   :root:not([data-theme="light"]) .still,
   :root:not([data-theme="light"]) .ba-split img,
+  :root:not([data-theme="light"]) .ba img,
   :root:not([data-theme="light"]) .reel-video,
   :root:not([data-theme="light"]) .grid3 .card .img img{
     filter:brightness(0.62) saturate(0.86);
