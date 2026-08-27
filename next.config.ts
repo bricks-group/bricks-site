@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       { source: '/gallery.html', destination: '/gallery', permanent: true },
       { source: '/service-areas.html', destination: '/service-areas', permanent: true },
       { source: '/terms.html', destination: '/terms', permanent: true },
+      { source: '/privacy.html', destination: '/privacy', permanent: true },
       { source: '/blog.html', destination: '/blog', permanent: true },
       { source: '/photographers.html', destination: '/photographers', permanent: true },
       { source: '/vendors.html', destination: '/photographers', permanent: true },

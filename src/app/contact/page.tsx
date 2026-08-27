@@ -30,6 +30,7 @@ export default function ContactPage() {
             mainEntity: {
               '@type': 'Organization',
               name: 'Bricks',
+              legalName: 'Bricks Group',
               email: 'booking@brxs.ca',
               telephone: '+1-343-453-4578',
               areaServed: 'Greater Toronto Area',

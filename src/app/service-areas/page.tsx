@@ -37,6 +37,7 @@ export default function ServiceAreasPage() {
             '@context': 'https://schema.org',
             '@type': 'LocalBusiness',
             name: 'Bricks',
+            legalName: 'Bricks Group',
             description: 'GTA real estate listing media — HDR photography, licensed drone, floor plans, 3D virtual tours. Serving the Greater Toronto Area.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',

@@ -39,6 +39,7 @@ Reserve a slot: https://brxs.ca/book.html
 See pricing: https://brxs.ca/pricing.html
 
 — Bricks
+Bricks Group
 
 ---
 
@@ -57,6 +58,7 @@ If you've got a listing going up in September or October, now's the time to lock
 Reserve a slot: https://brxs.ca/book.html
 
 — Bricks
+Bricks Group
 
 ---
 
@@ -75,3 +77,4 @@ If you've got a listing coming up, grab your date now: https://brxs.ca/book.html
 Either way, glad to have you on the list — more updates as the platform gets closer to launch.
 
 — Bricks
+Bricks Group

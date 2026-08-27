@@ -478,7 +478,7 @@ export default function BookingWizard() {
               </div>
               {quote && <div className="quote" style={{ marginTop: 14 }}><QuoteBlock q={quote} editable={false} /></div>}
               <div className="err">{errs[3]}</div>
-              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 2 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms, Cancellation &amp; Refund Policy</Link>.</p>
+              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 2 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>.</p>
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
             </div>
           </form>
@@ -510,8 +510,8 @@ export default function BookingWizard() {
           <div className="faq">
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It&apos;s priced per image staged at <b>$35 / image</b>; tell us how many rooms to stage in the access notes and we&apos;ll confirm the count before delivery.</p></div>
-            <div className="qa"><h4>Can I reschedule after booking?</h4><p>Yes — free with reasonable notice. Your confirmation email has a direct link, or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</p></div>
-            <div className="qa"><h4>What if I need to cancel?</h4><p>Full refund if a photographer hasn&apos;t been dispatched yet. Closer to the shoot, refunds are handled case by case — see the full <Link href="/terms#refunds">Cancellation &amp; Refund Policy</Link>.</p></div>
+            <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
+            <div className="qa"><h4>What if I need to cancel?</h4><p>More than 48 hours before the shoot window: full refund. 48 hours down to 4 hours: 50% refund. Inside 4 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
             <div className="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
           </div>
         </section>

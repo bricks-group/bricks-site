@@ -30,7 +30,7 @@ export default function Post() {
             author: { '@type': 'Person', name: 'Raphael Merchant', jobTitle: 'Advanced RPAS certificate holder (Transport Canada)', knowsAbout: ['Aerial photography', 'Transport Canada RPAS regulations'] },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
-            publisher: { '@type': 'Organization', name: 'Bricks' },
+            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
             mainEntityOfPage: 'https://www.brxs.ca/blog/drone-photography-rules-ontario',
             keywords: 'drone photography rules Ontario, real estate drone Toronto, Transport Canada Advanced RPAS, aerial photography GTA',
           }),

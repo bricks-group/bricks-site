@@ -30,7 +30,7 @@ export default function Post() {
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
-            publisher: { '@type': 'Organization', name: 'Bricks' },
+            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
             mainEntityOfPage: 'https://www.brxs.ca/blog/3d-tour-vs-video-walkthrough',
             keywords: '3D virtual tour vs video walkthrough, real estate video tour GTA, Matterport alternative GTA',
           }),

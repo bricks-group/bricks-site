@@ -77,6 +77,7 @@ const faqs = [
             '@context': 'https://schema.org',
             '@type': 'LocalBusiness',
             name: 'Bricks',
+            legalName: 'Bricks Group',
             description: 'Bricks is GTA listing media — From Capture to Close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and optional 3D virtual tours -- live now in the Greater Toronto Area, serving agents and sales reps at Canada\'s leading brokerages and REITs. The self-serve booking app is in development.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
