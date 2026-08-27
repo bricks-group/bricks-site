@@ -36,9 +36,9 @@ export default function PhotographerForm() {
   }
 
   useEffect(() => {
-    fetch(DISPATCH_API + '/ic-agreement')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => setIcText(d?.text ?? 'Could not load agreement. Please visit brxs.ca/contractors for the full text.'))
+    fetch('/legal/ic-agreement.txt')
+      .then((r) => (r.ok ? r.text() : Promise.reject()))
+      .then((t) => setIcText(t))
       .catch(() => setIcText('Could not load agreement. Please visit brxs.ca/contractors for the full text.'))
   }, [])
 
@@ -94,7 +94,7 @@ export default function PhotographerForm() {
       rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
       rpas_certificate_number: (fd.get('rpas_certificate_number') as string || '').trim() || null,
       accepted_terms: true,
-      ic_agreement_version: '1.1',
+      ic_agreement_version: '1.2',
       preferred_regions: [] as string[],
     }
 
@@ -207,11 +207,11 @@ export default function PhotographerForm() {
       </div>
 
       <div className="fsec">05 · Independent contractor agreement</div>
-      <p className="hint-sm" style={{ margin: '0 0 4px' }}>Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Technologies Inc. as an independent contractor under Ontario law.</p>
+      <p className="hint-sm" style={{ margin: '0 0 4px' }}>Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
       <div className="ic-box">{icText}</div>
       <label className="ic-accept">
         <input type="checkbox" id="f_accept" required />
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.1</strong>. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and applicable insurance; and that Transport Canada drone regulations are my sole responsibility.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.2</strong>. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and applicable insurance; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
 
       <div className="err">{err}</div>

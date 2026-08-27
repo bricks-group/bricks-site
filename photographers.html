@@ -24,7 +24,7 @@
   "@type": "JobPosting",
   "title": "Real Estate Photographer / Videographer — Independent Contractor",
   "description": "Auto-routed real estate listing shoots across the GTA. Paid via Stripe Connect, tier-based payout 35-55% of job revenue.",
-  "hiringOrganization": { "@type": "Organization", "name": "Bricks", "sameAs": "https://www.brxs.ca/" },
+  "hiringOrganization": { "@type": "Organization", "name": "Bricks", "legalName": "Bricks Group", "sameAs": "https://www.brxs.ca/" },
   "employmentType": "CONTRACTOR",
   "jobLocationType": "TELECOMMUTE",
   "applicantLocationRequirements": { "@type": "Country", "name": "Canada" }
@@ -245,11 +245,11 @@
       </div>
 
       <div class="fsec">05 · Independent contractor agreement</div>
-      <p class="hint-sm" style="margin:0 0 4px;">Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Technologies Inc. as an independent contractor under Ontario law.</p>
+      <p class="hint-sm" style="margin:0 0 4px;">Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
       <div class="ic-box" id="icBox">Loading agreement…</div>
       <label class="ic-accept">
         <input type="checkbox" id="f_accept" required/>
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.1</strong>. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and applicable insurance; and that Transport Canada drone regulations are my sole responsibility.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.2</strong>. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and applicable insurance; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
 
       <div class="err" id="fErr"></div>
@@ -276,16 +276,16 @@
     </div>
   </div>
   <div class="foot" style="border-top:none;padding-top:0;">
-    <span class="dev">Bricks — GTA real estate media. Booking platform in development; media service live today.</span>
+    <span class="dev">© Bricks Group. Bricks — GTA real estate media. Booking platform in development; media service live today.</span>
   </div>
 </footer>
 
 <script>
   var DISPATCH_API = 'https://dispatch-api.brxs.ca/api/onboarding';
 
-  fetch(DISPATCH_API + '/ic-agreement')
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){ document.getElementById('icBox').textContent = (d && d.text) ? d.text : 'Could not load agreement. Please visit brxs.ca/contractors for the full text.'; })
+  fetch('/legal/ic-agreement.txt')
+    .then(function(r){ return r.ok ? r.text() : Promise.reject(); })
+    .then(function(t){ document.getElementById('icBox').textContent = t; })
     .catch(function(){ document.getElementById('icBox').textContent = 'Could not load agreement. Please visit brxs.ca/contractors for the full text.'; });
 
   document.getElementById('f_spec_drone').addEventListener('change', function(e){
@@ -332,7 +332,7 @@
       rpas_certificate_level: (rpasLevel && rpasLevel !== 'none') ? rpasLevel : null,
       rpas_certificate_number: document.getElementById('f_rpas_num').value.trim() || null,
       accepted_terms: true,
-      ic_agreement_version: '1.1',
+      ic_agreement_version: '1.2',
       preferred_regions: []
     };
 

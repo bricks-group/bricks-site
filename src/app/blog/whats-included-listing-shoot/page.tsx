@@ -31,7 +31,7 @@ export default function Post() {
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
-            publisher: { '@type': 'Organization', name: 'Bricks' },
+            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
             mainEntityOfPage: 'https://www.brxs.ca/blog/whats-included-listing-shoot',
             keywords: "what's included in real estate photo shoot, GTA listing media package, professional listing photography GTA",
           }),

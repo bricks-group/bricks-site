@@ -52,7 +52,7 @@ export default function PricingPage() {
             '@context': 'https://schema.org',
             '@type': 'Service',
             serviceType: 'Real estate listing media',
-            provider: { '@type': 'LocalBusiness', name: 'Bricks', url: 'https://www.brxs.ca/' },
+            provider: { '@type': 'LocalBusiness', name: 'Bricks', legalName: 'Bricks Group', url: 'https://www.brxs.ca/' },
             areaServed: { '@type': 'City', name: 'Greater Toronto Area' },
             hasOfferCatalog: {
               type: 'OfferCatalog',

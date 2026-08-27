@@ -27,7 +27,7 @@ export default function PhotographersPage() {
             datePosted: '2026-08-13',
             title: 'Real Estate Photographer / Videographer — Independent Contractor',
             description: 'Auto-routed real estate listing shoots across the GTA. Paid via Stripe Connect, planned tier-based payout 35-55% of job revenue. Network launching soon.',
-            hiringOrganization: { '@type': 'Organization', name: 'Bricks', sameAs: 'https://www.brxs.ca/' },
+            hiringOrganization: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', sameAs: 'https://www.brxs.ca/' },
             employmentType: 'CONTRACTOR',
             jobLocationType: 'HYBRID',
             applicantLocationRequirements: { '@type': 'Country', name: 'Canada' },

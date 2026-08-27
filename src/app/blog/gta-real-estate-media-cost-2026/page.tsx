@@ -31,7 +31,7 @@ export default function Post() {
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
-            publisher: { '@type': 'Organization', name: 'Bricks' },
+            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
             mainEntityOfPage: 'https://www.brxs.ca/blog/gta-real-estate-media-cost-2026',
             keywords: 'real estate photography cost GTA, GTA listing media pricing, Toronto real estate photographer price',
           }),

@@ -33,7 +33,7 @@ export default function BlogPage() {
             '@type': 'Blog',
             name: 'Bricks Resources',
             url: 'https://www.brxs.ca/blog',
-            publisher: { '@type': 'Organization', name: 'Bricks', logo: { '@type': 'ImageObject', url: 'https://www.brxs.ca/favicon.svg' } },
+            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', logo: { '@type': 'ImageObject', url: 'https://www.brxs.ca/favicon.svg' } },
             blogPost: posts.map((p) => ({
               '@type': 'BlogPosting',
               headline: p.title,

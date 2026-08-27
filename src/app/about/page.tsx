@@ -43,7 +43,7 @@ export default function AboutPage() {
             email: 'booking@brxs.ca',
             sameAs: ['https://www.linkedin.com/company/bricksbybricks'],
             knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', '3D virtual tours', 'Drone photography', 'Transport Canada RPAS regulations'],
-            worksFor: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca/' },
+            worksFor: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', url: 'https://www.brxs.ca/' },
           }),
         }}
       />

@@ -31,7 +31,7 @@ export default function TermsPage() {
       <div className="wrap">
         <section className="block" id="terms">
           <h2>Terms of Service</h2>
-          <p>These terms cover bookings made through the Bricks pre-launch site (this direct-booking flow) for listing media — photography, drone, floor plans, video, and 3D tours — in the Greater Toronto Area.</p>
+          <p>These terms cover bookings made through the Bricks pre-launch site (this direct-booking flow) for listing media — photography, drone, floor plans, video, and 3D tours — in the Greater Toronto Area. The contracting party is Bricks Group.</p>
           <h3>Booking &amp; payment</h3>
           <p>Booking a shoot requires full payment, including HST, at the time of booking to lock your slot. Pricing is quoted live from the property address and selected package; the quote shown at checkout is the amount charged.</p>
           <h3>Scheduling</h3>
@@ -61,7 +61,7 @@ export default function TermsPage() {
         <section className="block" id="privacy">
           <h2>Privacy Policy</h2>
           <h3>What we collect</h3>
-          <p>When you book a shoot, we collect your name, brokerage, email, phone number, the property address, and shoot preferences (package, add-ons, preferred date). Payment is processed by Stripe — we do not see or store your card details. If you sign up for launch updates, we collect your email address.</p>
+          <p>When you book a shoot, Bricks Group collects your name, brokerage, email, phone number, the property address, and shoot preferences (package, add-ons, preferred date). Payment is processed by Stripe — we do not see or store your card details. If you sign up for launch updates, we collect your email address.</p>
           <h3>How we use it</h3>
           <ul>
             <li>To confirm, schedule, and deliver your booked shoot</li>

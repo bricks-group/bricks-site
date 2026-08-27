@@ -22,7 +22,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="foot" style={{ borderTop: 'none', paddingTop: 0 }}>
-        <span className="dev">Bricks — GTA real estate media. Booking platform in development; media service live today.</span>
+        <span className="dev">© Bricks Group. Bricks — GTA real estate media. Booking platform in development; media service live today.</span>
       </div>
     </footer>
   )
