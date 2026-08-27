@@ -58,7 +58,6 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <span className="badge-lit"><span className="dot" />Live in Canada</span>
           <h1>From Capture to Close.</h1>
           <p className="sub">Listing media for Canadian real estate — HDR, licensed drone, and a floor plan, back in 24–48 hours. Optional virtual tour and virtual visit, booked direct.</p>
           <div className="cta-row">
@@ -215,19 +214,16 @@ export default function Home() {
         .trust{text-align:center;padding:110px 0 40px;}
         .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto 22px;text-align:center;}
         .hero-home{padding:92px 36px 72px;border-bottom:none;}
-        .hero-home .badge-lit{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:6px 10px;width:fit-content;margin-bottom:20px;}
-        .hero-home .badge-lit .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);animation:pulse 2s ease-in-out infinite;}
-        @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(210,84,43,.5)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(210,84,43,0)}}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
-        .hero-home .badge-lit,.hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
+         .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
         .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
         @media (max-width:900px){
           .hero-home{padding:56px 20px 40px;}
           .hero-home h1{font-size:34px;}
         }
-        @media (prefers-reduced-motion:reduce){.hero-home .badge-lit,.hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
+        @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
         .nl-pop{position:fixed;right:20px;bottom:20px;width:330px;max-width:calc(100vw - 40px);
           background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;
           box-shadow:0 0 0 1px var(--hair);padding:22px 22px 20px;z-index:60;
