@@ -827,7 +827,7 @@
       eyebrow: 'Thursday · Apr 18',
       hi: 'Hi, Marisol.',
       cta: 'Book a shoot',
-      sub: th => /*#__PURE__*/React.createElement(React.Fragment, null, "One shoot today, one deal firming up. You\u2019re on pace for a ", /*#__PURE__*/React.createElement("span", {
+      sub: th => /*#__PURE__*/React.createElement(React.Fragment, null, "One shoot today, one deal firming up. You’re on pace for a ", /*#__PURE__*/React.createElement("span", {
         style: {
           color: th.ink
         }
@@ -893,7 +893,7 @@
         color: th.ink2,
         marginTop: 6
       }
-    }, "Drag to reorder \xB7 remove what you don\u2019t need \xB7 add from the library below.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
+    }, "Drag to reorder · remove what you don’t need · add from the library below.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
       color: th.ink4
     }, D.eyebrow), /*#__PURE__*/React.createElement("div", {
       style: {
@@ -1389,7 +1389,7 @@
         fontSize: 12.5,
         color: th.ink2
       }
-    }, "April reconciled \xB7 0 exceptions")));
+    }, "April reconciled · 0 exceptions")));
   }
   function wClosings(th, dark) {
     const rows = [['8 Riverbend', 'Apr 26', '$1.28M', 'Firm', 'ok'], ['201 Oak Dr', 'Apr 29', '$910K', 'Financing', 'warn'], ['55 Birch Way', 'May 02', '$690K', 'Firm', 'ok']];
@@ -1527,7 +1527,7 @@
         fontFamily: F.mono,
         letterSpacing: '0.1em'
       }
-    }, "GOAL $260K \xB7 YEAR-END"), /*#__PURE__*/React.createElement("div", {
+    }, "GOAL $260K · YEAR-END"), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         alignItems: 'flex-end',
@@ -1579,7 +1579,7 @@
         color: '#C8BFB0',
         marginTop: 4
       }
-    }, "Today \xB7 14:30 \xB7 J. Reyes"), /*#__PURE__*/React.createElement("div", {
+    }, "Today · 14:30 · J. Reyes"), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 8,
@@ -1661,7 +1661,8 @@
     dark = false,
     screen = 'overview',
     role = 'brokerage',
-    customize = false
+    customize = false,
+    locked = false
   }) {
     const th = useTheme(dark);
     const [cur, setCur] = React.useState(screen);
@@ -1746,10 +1747,10 @@
       const on = k === cur;
       return /*#__PURE__*/React.createElement("div", {
         key: k,
-        role: "button",
-        tabIndex: 0,
-        onClick: () => setCur(k),
-        onKeyDown: e => {
+        role: locked ? undefined : "button",
+        tabIndex: locked ? undefined : 0,
+        onClick: locked ? undefined : () => setCur(k),
+        onKeyDown: locked ? undefined : e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             setCur(k);
@@ -1766,7 +1767,7 @@
           fontSize: 13.5,
           fontWeight: on ? 500 : 400,
           position: 'relative',
-          cursor: 'pointer'
+          cursor: locked ? 'default' : 'pointer'
         }
       }, on && /*#__PURE__*/React.createElement("div", {
         style: {
@@ -1819,9 +1820,9 @@
         color: th.ink3
       }
     }, RC.role)), /*#__PURE__*/React.createElement("div", {
-      onClick: () => setCur('settings'),
+      onClick: locked ? undefined : () => setCur('settings'),
       style: {
-        cursor: 'pointer',
+        cursor: locked ? 'default' : 'pointer',
         display: 'flex'
       }
     }, /*#__PURE__*/React.createElement(I, {
@@ -1926,7 +1927,7 @@
         fontSize: 13,
         color: th.ink2
       }
-    }, "April 1 \u2014 18, 2026"), /*#__PURE__*/React.createElement("div", {
+    }, "April 1 — 18, 2026"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginLeft: 'auto',
         display: 'flex',
@@ -1949,14 +1950,14 @@
       name: "srch",
       size: 14,
       color: th.ink3
-    }), /*#__PURE__*/React.createElement("span", null, "Search jobs, agents\u2026"), /*#__PURE__*/React.createElement("span", {
+    }), /*#__PURE__*/React.createElement("span", null, "Search jobs, agents…"), /*#__PURE__*/React.createElement("span", {
       style: {
         marginLeft: 'auto',
         fontFamily: F.mono,
         fontSize: 10,
         color: th.ink4
       }
-    }, "\u2318K")), /*#__PURE__*/React.createElement(I, {
+    }, "⌘K")), /*#__PURE__*/React.createElement(I, {
       name: "bell",
       size: 17,
       color: th.ink3
@@ -2163,7 +2164,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "184 this month \xB7 12 today")), /*#__PURE__*/React.createElement("div", {
+    }, "184 this month · 12 today")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 10
@@ -2221,7 +2222,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink4
-    }, "Jobs \u2192 #08412"), /*#__PURE__*/React.createElement(Pill, {
+    }, "Jobs → #08412"), /*#__PURE__*/React.createElement(Pill, {
       tone: "brick",
       dark: dark
     }, "In progress")), /*#__PURE__*/React.createElement("div", {
@@ -2236,7 +2237,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "Toronto, ON \xB7 House \xB7 2,140 sqft")), /*#__PURE__*/React.createElement("div", {
+    }, "Toronto, ON · House · 2,140 sqft")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 10
@@ -2271,7 +2272,7 @@
     }, /*#__PURE__*/React.createElement(Img, {
       w: "100%",
       h: 320,
-      label: "PROPERTY HERO \u2014 LINDEN ST",
+      label: "PROPERTY HERO — LINDEN ST",
       dark: dark,
       r: 0
     })), /*#__PURE__*/React.createElement("div", {
@@ -2361,13 +2362,13 @@
         marginTop: 10,
         letterSpacing: -0.3
       }
-    }, "Premium \xB7 $749"), /*#__PURE__*/React.createElement("div", {
+    }, "Premium · $749"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
         color: th.ink3,
         marginTop: 6
       }
-    }, "40 photos \xB7 Drone \xB7 60-sec reel \xB7 Floor plan")), /*#__PURE__*/React.createElement("div", {
+    }, "40 photos · Drone · 60-sec reel · Floor plan")), /*#__PURE__*/React.createElement("div", {
       style: {
         border: `1px solid ${th.hair}`,
         borderRadius: 2,
@@ -2474,7 +2475,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "47 active \xB7 3 invited")), /*#__PURE__*/React.createElement("div", {
+    }, "47 active · 3 invited")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 10
@@ -2503,7 +2504,7 @@
         textTransform: 'uppercase',
         color: th.ink4
       }
-    }, /*#__PURE__*/React.createElement("div", null, "Name"), /*#__PURE__*/React.createElement("div", null, "Email"), /*#__PURE__*/React.createElement("div", null, "Jobs \xB7 30d"), /*#__PURE__*/React.createElement("div", null, "Revenue"), /*#__PURE__*/React.createElement("div", null, "Status"), /*#__PURE__*/React.createElement("div", null)), agents.map(([n, e, j, r, s], i) => /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("div", null, "Name"), /*#__PURE__*/React.createElement("div", null, "Email"), /*#__PURE__*/React.createElement("div", null, "Jobs · 30d"), /*#__PURE__*/React.createElement("div", null, "Revenue"), /*#__PURE__*/React.createElement("div", null, "Status"), /*#__PURE__*/React.createElement("div", null)), agents.map(([n, e, j, r, s], i) => /*#__PURE__*/React.createElement("div", {
       key: n,
       style: {
         display: 'grid',
@@ -2689,7 +2690,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "April cycle \xB7 closes Apr 30")), /*#__PURE__*/React.createElement(Btn, {
+    }, "April cycle · closes Apr 30")), /*#__PURE__*/React.createElement(Btn, {
       variant: "ghost",
       dark: dark,
       icon: "dl"
@@ -2817,13 +2818,13 @@
         fontFamily: F.mono,
         fontSize: 13
       }
-    }, "\u2022\u2022\u2022\u2022 4242")), /*#__PURE__*/React.createElement("div", {
+    }, "•••• 4242")), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink3,
         marginTop: 6
       }
-    }, "Expires 08 / 28 \xB7 Visa")), /*#__PURE__*/React.createElement(Btn, {
+    }, "Expires 08 / 28 · Visa")), /*#__PURE__*/React.createElement(Btn, {
       variant: "ghost",
       dark: dark,
       full: true,
@@ -2849,7 +2850,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "Brokerage \xB7 team \xB7 preferences")), sections.map(([title, rows]) => /*#__PURE__*/React.createElement("div", {
+    }, "Brokerage · team · preferences")), sections.map(([title, rows]) => /*#__PURE__*/React.createElement("div", {
       key: title,
       style: {
         border: `1px solid ${th.hair}`,
@@ -3042,7 +3043,7 @@
       th: th,
       dark: dark,
       title: "CRM",
-      sub: "312 contacts \xB7 48 active deals \xB7 9 follow-ups due today",
+      sub: "312 contacts · 48 active deals · 9 follow-ups due today",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3195,7 +3196,7 @@
       th: th,
       dark: dark,
       title: "Transactions",
-      sub: "48 open \xB7 6 closing this week \xB7 listing to close in one timeline",
+      sub: "48 open · 6 closing this week · listing to close in one timeline",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3324,7 +3325,7 @@
         color: th.ink4,
         marginTop: 8
       }
-    }, "MLS #C7841902 \xB7 $1.15M"), /*#__PURE__*/React.createElement("div", {
+    }, "MLS #C7841902 · $1.15M"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 20
       }
@@ -3425,7 +3426,7 @@
       th: th,
       dark: dark,
       title: "MLS submission",
-      sub: "TRREB \xB7 Pillar 9 \xB7 CREA DDF \u2014 board-ready packages from the data you already entered",
+      sub: "TRREB · Pillar 9 · CREA DDF — board-ready packages from the data you already entered",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark
@@ -3509,14 +3510,14 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "Validation \xB7 30 Mercer Loop"), /*#__PURE__*/React.createElement("div", {
+    }, "Validation · 30 Mercer Loop"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: F.mono,
         fontSize: 12,
         color: th.ink4,
         marginTop: 8
       }
-    }, "TRREB \xB7 27 of 28 fields ready"), /*#__PURE__*/React.createElement("div", {
+    }, "TRREB · 27 of 28 fields ready"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 16,
         display: 'flex',
@@ -3601,7 +3602,7 @@
       th: th,
       dark: dark,
       title: "Forms & e-signatures",
-      sub: "Provincial board forms \u2014 pre-filled from the deal, signed in-system. No DocuSign round-trips.",
+      sub: "Provincial board forms — pre-filled from the deal, signed in-system. No DocuSign round-trips.",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3760,7 +3761,7 @@
       th: th,
       dark: dark,
       title: "Accounting",
-      sub: "Commissions, trust ledger and agent billing \u2014 reconciled against every closed deal",
+      sub: "Commissions, trust ledger and agent billing — reconciled against every closed deal",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3790,7 +3791,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "Commission runs \xB7 April")), /*#__PURE__*/React.createElement("div", {
+    }, "Commission runs · April")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
         gridTemplateColumns: '1.3fr 1fr 1fr 0.9fr 1fr 110px',
@@ -3963,7 +3964,7 @@
         fontSize: 13,
         color: th.ink2
       }
-    }, "April trust reconciled to the penny \xB7 0 exceptions"))))));
+    }, "April trust reconciled to the penny · 0 exceptions"))))));
   }
 
   // Login — split screen
@@ -4046,7 +4047,7 @@
         fontFamily: F.mono,
         letterSpacing: 4
       }
-    }, "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"), /*#__PURE__*/React.createElement(I, {
+    }, "••••••••••"), /*#__PURE__*/React.createElement(I, {
       name: "eye",
       size: 16,
       color: th.ink3
@@ -4076,7 +4077,7 @@
         fontFamily: F.mono,
         letterSpacing: '0.14em'
       }
-    }, "BRICKS \xB7 BROKERAGE")), /*#__PURE__*/React.createElement("div", {
+    }, "BRICKS · BROKERAGE")), /*#__PURE__*/React.createElement("div", {
       style: {
         flex: 1,
         position: 'relative'
@@ -4084,7 +4085,7 @@
     }, /*#__PURE__*/React.createElement(Img, {
       w: "100%",
       h: "100%",
-      label: "ARCHITECTURAL COMPOSITION \u2014 WARM STONE",
+      label: "ARCHITECTURAL COMPOSITION — WARM STONE",
       dark: dark,
       r: 0
     }), /*#__PURE__*/React.createElement("div", {
@@ -4280,7 +4281,7 @@
         fontFamily: F.mono,
         letterSpacing: 3
       }
-    }, "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"), /*#__PURE__*/React.createElement(I, {
+    }, "••••••••"), /*#__PURE__*/React.createElement(I, {
       name: "eye",
       size: 15,
       color: th.ink3
@@ -4506,7 +4507,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: "#F4D9CC"
-    }, "Next shoot \xB7 in 3 hours"), /*#__PURE__*/React.createElement("div", {
+    }, "Next shoot · in 3 hours"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 19,
         fontWeight: 500,
@@ -4519,7 +4520,7 @@
         color: '#C8BFB0',
         marginTop: 4
       }
-    }, "Today \xB7 14:30 \xB7 J. Reyes"), /*#__PURE__*/React.createElement("div", {
+    }, "Today · 14:30 · J. Reyes"), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 8,
@@ -4576,7 +4577,7 @@
         fontSize: 12,
         color: th.ink3
       }
-    }, "All \xB7 14")), /*#__PURE__*/React.createElement("div", {
+    }, "All · 14")), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 12,
         display: 'flex',
@@ -4673,7 +4674,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "New booking \xB7 step 2 / 4")), /*#__PURE__*/React.createElement("span", {
+    }, "New booking · step 2 / 4")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 12,
         color: th.ink3
@@ -4716,7 +4717,7 @@
         color: th.ink2,
         marginTop: 6
       }
-    }, "214 Linden St \xB7 House \xB7 2,140 sqft"), /*#__PURE__*/React.createElement("div", {
+    }, "214 Linden St · House · 2,140 sqft"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 22,
         display: 'flex',
@@ -4822,13 +4823,13 @@
         fontSize: 14,
         fontWeight: 500
       }
-    }, "Today \xB7 14:30"), /*#__PURE__*/React.createElement("div", {
+    }, "Today · 14:30"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink3,
         marginTop: 2
       }
-    }, "J. Reyes \xB7 4.9 \u2605 \xB7 2.1 mi away")), /*#__PURE__*/React.createElement("span", {
+    }, "J. Reyes · 4.9 ★ · 2.1 mi away")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 12,
         color: T.brickDeep
@@ -5044,7 +5045,7 @@
         color: th.ink3,
         marginTop: 2
       }
-    }, "Studio North \xB7 Agent")), /*#__PURE__*/React.createElement(I, {
+    }, "Studio North · Agent")), /*#__PURE__*/React.createElement(I, {
       name: "cR",
       size: 16,
       color: th.ink3
@@ -5291,7 +5292,7 @@
       }
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Over, {
       color: th.ink4
-    }, "Thursday \xB7 Apr 18"), /*#__PURE__*/React.createElement("div", {
+    }, "Thursday · Apr 18"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 22,
         fontWeight: 500,
@@ -5317,7 +5318,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: T.brick
-    }, "Next up \xB7 in 42 min"), /*#__PURE__*/React.createElement("div", {
+    }, "Next up · in 42 min"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 10,
         padding: 18,
@@ -5338,7 +5339,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "TORONTO \xB7 HOUSE \xB7 2,140 SQFT"), /*#__PURE__*/React.createElement("div", {
+    }, "TORONTO · HOUSE · 2,140 SQFT"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 14,
         display: 'grid',
@@ -5635,7 +5636,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "Thursday, Apr 18 \xB7 4 shoots"), /*#__PURE__*/React.createElement("div", {
+    }, "Thursday, Apr 18 · 4 shoots"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 12,
         display: 'flex',
@@ -5759,7 +5760,7 @@
     }, /*#__PURE__*/React.createElement(Img, {
       w: "100%",
       h: 200,
-      label: "214 LINDEN ST \xB7 STREET VIEW",
+      label: "214 LINDEN ST · STREET VIEW",
       dark: dark,
       r: 0
     }), /*#__PURE__*/React.createElement("div", {
@@ -5785,7 +5786,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "Toronto, ON \xB7 House \xB7 2,140 sqft")), /*#__PURE__*/React.createElement(Pill, {
+    }, "Toronto, ON · House · 2,140 sqft")), /*#__PURE__*/React.createElement(Pill, {
       tone: "brick",
       dark: dark
     }, "Next up")), /*#__PURE__*/React.createElement("div", {
@@ -5860,7 +5861,7 @@
         fontSize: 11,
         color: th.ink3
       }
-    }, "Studio North \xB7 Agent")), /*#__PURE__*/React.createElement(I, {
+    }, "Studio North · Agent")), /*#__PURE__*/React.createElement(I, {
       name: "phone",
       size: 17,
       color: th.ink2
@@ -5989,7 +5990,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "Drop the card \u2014 we auto-sort by job."), /*#__PURE__*/React.createElement("div", {
+    }, "Drop the card — we auto-sort by job."), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 20,
         padding: '32px 20px',
@@ -6013,7 +6014,7 @@
         color: th.ink3,
         marginTop: 6
       }
-    }, "RAW, JPEG, MP4 \xB7 up to 20 GB per job"), /*#__PURE__*/React.createElement(Btn, {
+    }, "RAW, JPEG, MP4 · up to 20 GB per job"), /*#__PURE__*/React.createElement(Btn, {
       variant: "accent",
       style: {
         marginTop: 14
@@ -6043,14 +6044,14 @@
         fontSize: 14,
         fontWeight: 500
       }
-    }, "1902 Pine Rd \xB7 #08410"), /*#__PURE__*/React.createElement("div", {
+    }, "1902 Pine Rd · #08410"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink3,
         marginTop: 2,
         fontFamily: F.mono
       }
-    }, "127 / 240 FILES \xB7 4.2 GB")), /*#__PURE__*/React.createElement("span", {
+    }, "127 / 240 FILES · 4.2 GB")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: F.mono,
         fontSize: 16,
@@ -6193,7 +6194,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "Pays out Monday \xB7 7 jobs"), /*#__PURE__*/React.createElement("div", {
+    }, "Pays out Monday · 7 jobs"), /*#__PURE__*/React.createElement("div", {
       style: {
         height: 3,
         background: th.hair,
@@ -6342,11 +6343,13 @@
   const DISP_SCREENS = [DispToday, DispSchedule, DispUploads, DispProfile, DispProfile];
   function DemoOS({
     dark = false,
-    screen = 'overview'
+    screen = 'overview',
+    locked = false
   }) {
     return /*#__PURE__*/React.createElement(BrokShell, {
       dark: dark,
-      screen: screen
+      screen: screen,
+      locked: locked
     });
   }
   function DemoBook({

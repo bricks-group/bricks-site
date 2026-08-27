@@ -35,6 +35,13 @@
     }catch(e){}
     return 'overview';
   }
+  function lockParam(){
+    try{
+      var q = new URLSearchParams(location.search).get('lock');
+      if (q === '1' || q === 'true') return true;
+    }catch(e){}
+    return false;
+  }
   function parentTheme(){
     try{
       var t=window.parent.document.documentElement.getAttribute('data-theme');
@@ -51,10 +58,11 @@
   }
   var dark=parentTheme()==='dark';
   var screen=screenParam();
+  var locked=lockParam();
   apply(dark?'dark':'light');
   var root=ReactDOM.createRoot(document.getElementById('root'));
   function render(){
-    root.render(React.createElement(DemoOS, {dark: dark, screen: screen}));
+    root.render(React.createElement(DemoOS, {dark: dark, screen: screen, locked: locked}));
   }
   window.addEventListener('message', function(e){
     if(e.data && e.data.bricks_theme){

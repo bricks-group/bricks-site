@@ -549,7 +549,7 @@ function wFollowups(th){
 }
 
 // Brokerage — web shell with all screens. dark toggle support.
-function BrokShell({ dark=false, screen='overview', role='brokerage', customize=false }) {
+function BrokShell({ dark=false, screen='overview', role='brokerage', customize=false, locked=false }) {
   const th = useTheme(dark);
   const [cur, setCur] = React.useState(screen);
   const RC = BROK_ROLES[role] || BROK_ROLES.brokerage;
@@ -575,12 +575,12 @@ function BrokShell({ dark=false, screen='overview', role='brokerage', customize=
               {grp.items.map(([ic,lb,k]) => {
                 const on = k === cur;
                 return (
-                  <div key={k} role="button" tabIndex={0} onClick={() => setCur(k)} onKeyDown={(e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); setCur(k); } }} style={{
+                  <div key={k} role={locked ? undefined : "button"} tabIndex={locked ? undefined : 0} onClick={locked ? undefined : () => setCur(k)} onKeyDown={locked ? undefined : (e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); setCur(k); } }} style={{
                     display:'flex', alignItems:'center', gap:12, padding:'9px 14px', borderRadius:2,
                     background: on ? th.surf2 : 'transparent',
                     color: on ? th.ink : th.ink3,
                     fontSize:13.5, fontWeight: on ? 500 : 400, position:'relative',
-                    cursor:'pointer',
+                    cursor: locked ? 'default' : 'pointer',
                   }}>
                     {on && <div style={{ position:'absolute', left:0, top:9, bottom:9, width:2, background:T.brick }}/>}
                     <I name={ic} size={16} color={on ? th.ink : th.ink3}/>{lb}
@@ -596,7 +596,7 @@ function BrokShell({ dark=false, screen='overview', role='brokerage', customize=
             <div style={{ fontSize:12, fontWeight:500 }}>{RC.who}</div>
             <div style={{ fontSize:11, color:th.ink3 }}>{RC.role}</div>
           </div>
-          <div onClick={() => setCur('settings')} style={{ cursor:'pointer', display:'flex' }}><I name="cog" size={15} color={th.ink3}/></div>
+          <div onClick={locked ? undefined : () => setCur('settings')} style={{ cursor: locked ? 'default' : 'pointer', display:'flex' }}><I name="cog" size={15} color={th.ink3}/></div>
         </div>
       </aside>
       <main style={{ flex:1, display:'flex', flexDirection:'column', minWidth:0, overflow:'auto' }}>
@@ -2112,8 +2112,8 @@ function DispProfile({ dark=true }) {
 const BOOK_SCREENS = [BookHome, BookJobs, BookFlow, BookHome, BookProfile];
 const DISP_SCREENS = [DispToday, DispSchedule, DispUploads, DispProfile, DispProfile];
 
-function DemoOS({ dark=false, screen='overview' }) {
-  return <BrokShell dark={dark} screen={screen} />;
+function DemoOS({ dark=false, screen='overview', locked=false }) {
+  return <BrokShell dark={dark} screen={screen} locked={locked} />;
 }
 
 function DemoBook({ dark=false }) {

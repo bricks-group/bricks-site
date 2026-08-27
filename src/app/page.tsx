@@ -112,11 +112,11 @@ export default function Home() {
       </section>
 
       <section className="prod-row prod-row-flip rvl" aria-label="The rest unlocks">
-        <div className="tray tray-tx tray-bleed-start">
+        <div className="tray tray-tx">
           <div className="tray-stage">
             <ProductWindow
               title="Brokerage OS"
-              src="/screens/os.html?screen=transactions"
+              src="/screens/os.html?screen=transactions&lock=1"
               nw={1440}
               nh={920}
               lazy

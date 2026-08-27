@@ -287,7 +287,7 @@ html[data-theme="dark"] .tray::after{
 
 .tray-stage{position:relative;z-index:2;}
 
-/* First product band — full-width inset tray, window oversized and bottom-clipped */
+/* First product band — full-width inset tray, OS window centered on the painting. */
 .prod-hero{padding:0;margin:8px 0 0;}
 .prod-hero .tray{
   margin:0 32px;
@@ -297,10 +297,18 @@ html[data-theme="dark"] .tray::after{
 }
 .prod-hero .tray-stage{
   position:absolute;
-  left:50%;
-  top:52px;
-  width:90%;
-  transform:translateX(-50%);
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 48px;
+  width:auto;
+  transform:none;
+  container-type:size;
+}
+.prod-hero .pwin{
+  width:min(82%, 920px, calc((100cqh - 116px) * 1440 / 920));
+  flex:none;
 }
 
 /* Split bands — copy left / tray right, then tray left / copy right. ~120px air. */
@@ -346,6 +354,18 @@ html[data-theme="dark"] .tray::after{
   left:auto;
   width:118%;
 }
+/* Transactions: window sits centered on the painting, no side-bleed. */
+.tray-tx .tray-stage{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:36px 32px;
+  width:auto;
+  transform:none;
+}
+.tray-tx .pwin{ width:min(86%, 760px); flex:none; }
 .tray-phone{min-height:520px;height:560px;}
 .tray-phone .tray-stage{
   position:absolute;
@@ -402,7 +422,10 @@ html[data-theme="dark"] .pwin{
     height:58vh;
     min-height:420px;
   }
-  .prod-hero .tray-stage{width:94%;top:28px;}
+  .prod-hero .tray-stage{padding:24px 20px;}
+  .prod-hero .pwin{width:min(90%, 920px, calc((100cqh - 84px) * 1440 / 920));}
+  .tray-tx .tray-stage{padding:24px 20px;}
+  .tray-tx .pwin{width:min(90%, 640px);}
   .prod-row,.prod-row-flip{
     grid-template-columns:1fr;
     gap:24px;
