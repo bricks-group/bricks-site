@@ -463,13 +463,7 @@ html[data-theme="dark"] .pwin{
   .prod-row .prod-copy{order:1;padding:0;max-width:none;}
   .prod-row .tray{order:2;height:380px;min-height:340px;}
   .tray-bleed-end .tray-stage,
-  .tray-bleed-start .tray-stage{
-    left:50%;
-    right:auto;
-    width:160%;
-    top:16px;
-    transform:translateX(-50%);
-  }
+  .tray-bleed-start .tray-stage{width:108%;left:8px;right:auto;top:16px;transform:none;}
   .tray-phone{height:480px;min-height:440px;}
   .tray-phone .tray-stage{width:min(300px,70%);}
 }
