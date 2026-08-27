@@ -224,15 +224,15 @@ export default function PhotographerForm() {
       <p className="hint-sm">By submitting you confirm the information above is accurate. Bricks reviews all applications manually.</p>
 
       <style>{`
-        .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:32px;margin-top:4px;max-width:100%;min-width:0;overflow-x:hidden;box-sizing:border-box;}
+        .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:32px;margin-top:4px;max-width:100%;min-width:0;box-sizing:border-box;}
         .aform .fsec{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
           color:var(--brickDeep);margin:26px 0 14px;padding-top:22px;border-top:1px solid var(--hair);}
         .aform .fsec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
         .aform .check-col{display:grid;gap:8px;min-width:0;max-width:100%;}
-        .aform .check-item{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:9px;padding:11px 13px;border:1px solid var(--hairStrong);
-          border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:14px;color:var(--ink);min-width:0;max-width:100%;overflow:hidden;box-sizing:border-box;}
-        .aform .check-item input{margin-top:3px;flex:none;}
-        .aform .check-item span{min-width:0;flex:1;overflow-wrap:anywhere;white-space:normal;word-break:break-word;}
+        .aform .check-item{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border:1px solid var(--hairStrong);
+          border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:14px;color:var(--ink);min-width:0;max-width:100%;box-sizing:border-box;}
+        .aform .check-item input{flex:none;margin-top:3px;}
+        .aform .check-item span{min-width:0;flex:1;white-space:normal;overflow-wrap:break-word;word-break:normal;}
         .aform .radio-row{display:flex;gap:8px;flex-wrap:wrap;}
         .aform .radio-row label{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hairStrong);
           border-radius:2px;font-size:13.5px;cursor:pointer;background:var(--paperDeep);}
@@ -255,7 +255,7 @@ export default function PhotographerForm() {
         .aform .field input:focus,.aform .field select:focus{border-color:var(--brick);}
         .aform .hint-sm{font-size:11.5px;color:var(--inkFaint);line-height:1.4;display:block;margin-top:4px;}
         .aform .err{color:var(--brickDeep);font-size:12.5px;font-family:'JetBrains Mono',monospace;min-height:14px;}
-        @media (max-width:720px){ .aform .grid2{grid-template-columns:1fr;} .aform .radio-row{flex-direction:column;} .aform{padding:18px 16px;} .aform .field label{white-space:normal;overflow-wrap:anywhere;letter-spacing:0.06em;} .aform .fsec{white-space:normal;overflow-wrap:anywhere;letter-spacing:0.1em;} .aform input, .aform select, .aform textarea, .aform .ic-box, .aform .ic-accept, .aform .check-item{max-width:100%;min-width:0;} .aform input[type=file]{max-width:100%;} .aform .ic-box{overflow-wrap:anywhere;word-break:break-word;} .aform .ic-accept span{min-width:0;overflow-wrap:anywhere;} .aform .check-item{align-items:flex-start;min-width:0;} }
+        @media (max-width:680px){ .aform .grid2{grid-template-columns:1fr;} .aform .radio-row{flex-direction:column;} .aform{padding:22px;} }
       `}</style>
     </form>
   )
