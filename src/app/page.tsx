@@ -41,7 +41,6 @@ export const metadata: Metadata = {
 
 const beforeAfter = [
   { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky replacement before and after' },
-  { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
   { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
 ]
@@ -128,7 +127,7 @@ export default function Home() {
       </div>
 
       <div className="wrap">
-        <section className="block rvl">
+        <section className="block block-flush rvl">
           <div className="sec-head">
             <div><span className="over">For teams &amp; brokerages</span><h2>One standard, whoever&apos;s booking it.</h2></div>
           </div>
@@ -147,7 +146,7 @@ export default function Home() {
               <source src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
             </video>
           </div>
-          <div className="grid3">
+          <div className="grid3 work-preview">
             {workPreview.map((w) => (
               <div key={w.src} className="card rvl"><div className="img"><Image loading="lazy" src={w.src} alt={w.alt} width={480} height={360} /></div></div>
             ))}
@@ -159,7 +158,7 @@ export default function Home() {
         <section className="block rvl" id="edit">
           <div className="sec-head">
             <div><span className="over">The edit</span><h2>The difference is in the delivery.</h2></div>
-            <p>Drag across each pair. Sky replacement, HDR blending, twilight, and virtual staging — the Bricks edit, every shoot.</p>
+            <p>Drag across each pair. Sky replacement, twilight, and virtual staging — the Bricks edit, every shoot.</p>
           </div>
           <div className="ba-grid">
             {beforeAfter.map((p) => (
@@ -291,9 +290,10 @@ export default function Home() {
         .adds .a .nm{font-weight:500;font-size:15px;color:var(--ink);}
         .adds .a .pr{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--brickDeep);margin:5px 0 6px;}
         .adds .a p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
-        @media (max-width:680px){ .incl,.adds,.grid3{grid-template-columns:1fr;} }
-        .ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px;}
-        @media(max-width:720px){.ba-grid{grid-template-columns:1fr;}}
+        @media (max-width:680px){ .incl,.adds{grid-template-columns:1fr;} .work-preview{display:none;} }
+        .ba-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+        @media(max-width:900px){.ba-grid{grid-template-columns:1fr 1fr;}.ba-grid > :first-child{grid-column:1 / -1;}}
+        @media(max-width:720px){.ba-grid{grid-template-columns:1fr;}.ba-grid > :first-child{grid-column:auto;}}
         .ba{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--paperDeep);
           border:1px solid var(--hair);border-radius:2px;cursor:ew-resize;user-select:none;-webkit-user-select:none;touch-action:pan-y;}
         .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none;}
