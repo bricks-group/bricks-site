@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
+import NewsletterInline from './NewsletterInline'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, PHOTO_RATE, DRONE_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
@@ -19,7 +20,8 @@ import {
 } from '@/lib/brand'
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
-const HERO_IMG = WORK_PHOTOS[0]
+const HERO_IMG = '/media/work/01.jpg'
+const workPreview = WORK_PHOTOS.slice(0, 6)
 
 export const metadata: Metadata = {
   title: 'Canadian Real Estate Photography & Media | Bricks',
@@ -91,23 +93,20 @@ export default function Home() {
         }}
       />
 
-      <section className="hero-photo">
-        <Image
-          className="hero-photo-img"
-          src={HERO_IMG.src}
-          alt="Listing exterior photographed by Bricks"
-          fill
-          sizes="100vw"
-          priority
-        />
-        <div className="hero-photo-veil" />
-        <div className="hero-photo-copy">
-          <span className="badge-lit"><span className="dot" />Live in Canada</span>
-          <h1>Listing media for Canadian real estate.</h1>
-          <p className="sub">HDR, licensed drone, and a floor plan on every standard shoot. Book in minutes — MLS-ready in 24–48 hours.</p>
-          <div className="cta-row">
-            <Link className="btn btn-brick" href="/book">Book a shoot</Link>
-            <Link className="btn btn-sec hero-sec" href="/pricing">View pricing</Link>
+      <section className="hero-split">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <span className="badge-lit"><span className="dot" />Live in Canada</span>
+            <h1>From Capture to Close.</h1>
+            <p className="sub">Bricks is listing media for Canadian real estate — HDR, licensed drone, floor plans, with optional virtual tour and virtual visit, back in 24–48 hours. Book in minutes; we run the whole shoot end to end.</p>
+            <div className="cta-row">
+              <Link className="btn btn-brick" href="/book">Book listing media</Link>
+              <Link className="btn btn-sec" href="/pricing">View pricing</Link>
+              <NewsletterInline />
+            </div>
+          </div>
+          <div className="hero-visual">
+            <div className="kb"><Image className="kb-img" src={HERO_IMG} alt="Canadian listing exterior" fill sizes="(max-width: 900px) 100vw, 75vw" priority /></div>
           </div>
         </div>
       </section>
@@ -115,8 +114,7 @@ export default function Home() {
       <div className="wrap">
         <section className="trust">
           <p className="trust-cap">Agents &amp; sales reps from Canada&apos;s leading brokerages &amp; REITs</p>
-          <p className="proof-cap">14,000+ properties, shot by founder Raphael Merchant.</p>
-          <p className="proof-sub">Career body of work as Regional Visual Director / Architectural Photographer at CoStar — not a Bricks job count.</p>
+          <p className="proof-cap">14,000+ properties shot.</p>
           <div className="marquee" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
             <div className="marquee-track">
               {[...BROKERAGE_LOGOS, ...BROKERAGE_LOGOS].map((l, i) => (
@@ -132,11 +130,25 @@ export default function Home() {
       <div className="wrap">
         <section className="block rvl">
           <div className="sec-head">
+            <div><span className="over">For teams &amp; brokerages</span><h2>One standard, whoever&apos;s booking it.</h2></div>
+          </div>
+          <p style={{ fontSize: 14, color: 'var(--inkMute)', maxWidth: 620 }}>Every shoot follows the same standard — same HDR treatment, same drone coverage, same floor plan format — no matter which agent on your team is behind the request. One point of contact, one consistent look across every listing under your brand, direct booked at <Link href="/book" style={{ color: 'var(--brickDeep)' }}>the same price</Link> whether it&apos;s your first shoot or your fiftieth.</p>
+        </section>
+      </div>
+
+      <div className="wrap">
+        <section className="block rvl">
+          <div className="sec-head">
             <div><span className="over">Selected work</span><h2>Real shoots, not stock.</h2></div>
             <Link href="/gallery" className="btn btn-sec" style={{ whiteSpace: 'nowrap' }}>See more work →</Link>
           </div>
+          <div className="reel-wrap">
+            <video className="reel-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
+              <source src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
+            </video>
+          </div>
           <div className="grid3">
-            {WORK_PHOTOS.map((w) => (
+            {workPreview.map((w) => (
               <div key={w.src} className="card rvl"><div className="img"><Image loading="lazy" src={w.src} alt={w.alt} width={480} height={360} /></div></div>
             ))}
           </div>
@@ -147,7 +159,7 @@ export default function Home() {
         <section className="block rvl" id="edit">
           <div className="sec-head">
             <div><span className="over">The edit</span><h2>The difference is in the delivery.</h2></div>
-            <p>Drag across each pair. Sky replacement, HDR blending, twilight, and virtual staging.</p>
+            <p>Drag across each pair. Sky replacement, HDR blending, twilight, and virtual staging — the Bricks edit, every shoot.</p>
           </div>
           <div className="ba-grid">
             {beforeAfter.map((p) => (
@@ -206,36 +218,53 @@ export default function Home() {
             <div>
               <span className="over">Book a shoot</span>
               <h2 style={{ color: 'var(--moon)', marginTop: 8 }}>Listings don&apos;t wait. Neither should booking.</h2>
-              <p style={{ color: 'var(--moonSoft)', fontSize: 14, marginTop: 10, maxWidth: 480 }}>Four steps — pick your shoot, package, and date. We confirm the slot and send pricing by footprint.</p>
+              <p style={{ color: 'var(--moonSoft)', fontSize: 14, marginTop: 10, maxWidth: 480 }}>Four steps — pick your shoot, package, and date. We confirm the slot and send pricing by footprint. The self-serve Booking app replaces this in development.</p>
               <Link className="btn btn-brick" href="/book" style={{ marginTop: 18, display: 'inline-flex' }}>Start booking →</Link>
             </div>
           </div>
         </section>
       </div>
 
+      <div className="wrap">
+        <section className="block rvl">
+          <div className="sec-head">
+            <div><span className="over">The platform is coming</span><h2>Media is live. The operating system is next.</h2></div>
+          </div>
+          <p style={{ fontSize: 14, color: 'var(--inkMute)', maxWidth: 660 }}>Today Bricks runs the shoot end to end in Canada — booking, capture, and delivery handled direct. We&apos;re building the software around it: a self-serve Booking app, a Dispatch network for photographers, and a Brokerage operating system for allocations, reporting, and one invoice. <a href="mailto:booking@brxs.ca" style={{ color: 'var(--brickDeep)' }}>Get launch updates &rarr;</a></p>
+        </section>
+      </div>
+
       <NewsletterPopup />
 
       <style>{`
-        .proof-sub{font-size:13.5px;color:var(--inkMute);max-width:560px;margin:0 auto 22px;text-align:center;line-height:1.45;}
-        .hero-photo{position:relative;min-height:min(78vh,720px);display:flex;align-items:flex-end;overflow:hidden;background:var(--night);}
-        .hero-photo-img{object-fit:cover;object-position:center 40%;}
-        .hero-photo-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,14,.18) 0%,rgba(20,17,14,.28) 42%,rgba(20,17,14,.78) 100%);z-index:1;pointer-events:none;}
-        .hero-photo-copy{position:relative;z-index:2;max-width:980px;width:100%;margin:0 auto;padding:72px 36px 56px;color:var(--moon);}
-        .hero-photo-copy .badge-lit{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(210,84,43,.92);border-radius:2px;padding:6px 10px;width:fit-content;margin-bottom:18px;}
-        .hero-photo-copy .badge-lit .dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 2s ease-in-out infinite;}
-        @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,255,255,.45)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(255,255,255,0)}}
-        .hero-photo-copy h1{font-weight:500;font-size:48px;line-height:1.02;letter-spacing:-1.6px;color:var(--moon);max-width:720px;}
-        .hero-photo-copy p.sub{font-size:17px;color:var(--moonSoft);margin-top:16px;max-width:520px;}
-        .hero-photo-copy .cta-row{margin-top:24px;}
-        .hero-sec{color:var(--moon);border-color:var(--moonMute);}
-        .hero-sec:hover{border-color:var(--moon);}
-        .hero-photo-copy .badge-lit,.hero-photo-copy h1,.hero-photo-copy p.sub,.hero-photo-copy .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
-        .hero-photo-copy h1{animation-delay:.06s;} .hero-photo-copy p.sub{animation-delay:.17s;} .hero-photo-copy .cta-row{animation-delay:.28s;}
+        .reel-wrap{margin-top:26px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
+        .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
+        .trust{text-align:center;padding:8px 0 4px;}
+        .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
+        .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto 22px;text-align:center;}
+        .hero-split{padding:0;border-bottom:1px solid var(--hair);overflow:hidden;}
+        .hero-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;min-height:540px;}
+        .hero-copy{padding:76px 44px 60px 36px;display:flex;flex-direction:column;justify-content:center;}
+        .hero-copy .badge-lit{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);background:var(--brickTint);border-radius:2px;padding:6px 10px;width:fit-content;margin-bottom:20px;}
+        .hero-copy .badge-lit .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);animation:pulse 2s ease-in-out infinite;}
+        @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(210,84,43,.5)}50%{opacity:.6;box-shadow:0 0 0 5px rgba(210,84,43,0)}}
+        .hero-copy h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);}
+        .hero-copy p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
+        .hero-visual{position:relative;overflow:hidden;background:var(--paperDeep);}
+        .hero-visual .kb{position:absolute;inset:-4%;width:108%;height:108%;animation:kenburns 18s ease-in-out infinite alternate;will-change:transform;}
+        @keyframes kenburns{from{transform:scale(1.0) translate(0,0);}to{transform:scale(1.09) translate(-1.2%,-1.5%);}}
+        .kb-img{object-fit:cover;}
+        .hero-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,17,14,0) 55%,rgba(20,17,14,.34) 100%),linear-gradient(90deg,rgba(20,17,14,.12),transparent 32%);pointer-events:none;}
+        .hero-copy .badge-lit,.hero-copy h1,.hero-copy p.sub,.hero-copy .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
+        .hero-copy h1{animation-delay:.06s;} .hero-copy p.sub{animation-delay:.17s;} .hero-copy .cta-row{animation-delay:.28s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
+        .hero-visual{opacity:0;animation:heroFade 1s ease .1s forwards;}
+        @keyframes heroFade{to{opacity:1;}}
         @media (max-width:900px){
-          .hero-photo{min-height:min(70vh,620px);}
-          .hero-photo-copy{padding:48px 20px 40px;}
-          .hero-photo-copy h1{font-size:34px;}
+          .hero-grid{grid-template-columns:1fr;min-height:0;}
+          .hero-visual{aspect-ratio:16/9;order:-1;}
+          .hero-copy{padding:40px 20px;}
+          .hero-copy h1{font-size:34px;}
         }
         .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
         .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
@@ -245,7 +274,7 @@ export default function Home() {
         .logo:hover img{opacity:1;filter:grayscale(0);}
         .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.06em;color:var(--inkMute);opacity:.78;}
         @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-        @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}.hero-photo-copy .badge-lit,.hero-photo-copy h1,.hero-photo-copy p.sub,.hero-photo-copy .cta-row{opacity:1;transform:none;animation:none;}}
+        @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}.hero-visual .kb{animation:none;}.hero-copy .badge-lit,.hero-copy h1,.hero-copy p.sub,.hero-copy .cta-row,.hero-visual{opacity:1;transform:none;animation:none;}}
         .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
         .grid3 .card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);transition:border-color .2s ease;}
         .grid3 .card:hover{border-color:var(--brick);}
