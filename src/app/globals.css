@@ -316,13 +316,13 @@ html[data-theme="dark"] .tray::after{
 
 .tray-stage{position:relative;z-index:2;}
 
-/* First product band — full-width inset tray, OS window centered on the painting. */
+/* First product band — full-width inset tray, OS window contained on the painting. */
 .prod-hero{padding:0;margin:8px 0 0;}
 .prod-hero .tray{
   margin:0 24px;
-  height:82vh;
-  min-height:640px;
-  max-height:none;
+  height:68vh;
+  min-height:520px;
+  max-height:720px;
 }
 .prod-hero .tray-stage{
   position:absolute;
@@ -330,14 +330,23 @@ html[data-theme="dark"] .tray::after{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:32px 36px;
+  padding:40px 48px;
   width:auto;
   transform:none;
 }
 .prod-hero .pwin{
-  width:min(90%, 1120px);
+  width:min(86%, 980px);
+  height:100%;
+  max-height:100%;
+  display:flex;
+  flex-direction:column;
   flex:none;
   overflow:hidden;
+}
+.prod-hero .pwin-scale{
+  flex:1;
+  min-height:0;
+  width:100%;
 }
 .prod-hero .pwin-scale,.prod-hero .pwin iframe{overflow:hidden;}
 
@@ -453,6 +462,11 @@ html[data-theme="dark"] .pwin{
     top:auto;
     left:auto;
     width:min(90%, 920px);
+    height:100%;
+    max-height:100%;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
   }
   .prod-row,.prod-row-flip{
     grid-template-columns:1fr;
