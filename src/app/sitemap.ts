@@ -6,6 +6,7 @@ const BASE = 'https://www.brxs.ca'
 const routes = [
   '',
   '/pricing',
+  '/platform',
   '/fall-market',
   '/gallery',
   '/about',

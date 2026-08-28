@@ -43,7 +43,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'Bricks is listing media for Canadian real estate — From Capture to Close. HDR photography, licensed drone, floor plans, twilight, optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Media service live now in Canada. The self-serve booking app is in development.',
+            description: 'Bricks is listing media for Canadian real estate — From Capture to Close. HDR photography, licensed drone, floor plans, twilight, optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Listing media and the website booking form are live now in Canada. Brokerage OS, the Booking companion app, and Dispatch are in development and are not in the App Store or Google Play.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
@@ -91,7 +91,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">Control surface</span>
           <h2>The brokerage dashboard.</h2>
-          <p>OS is the desk: roster, jobs, and media in one place — not a second product.</p>
+          <p>OS is the desk: roster, jobs, and media in one place — not a second product. In development — preview.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -121,7 +121,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">The rest unlocks</span>
           <h2>Same OS. Deeper rooms.</h2>
-          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product.</p>
+          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product. In development — preview.</p>
         </div>
       </section>
 
@@ -129,7 +129,8 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">Booking</span>
           <h2>The agent&apos;s booker.</h2>
-          <p>Companion app for the listing agent — schedule a shoot without leaving the phone. Secondary to OS, in development.</p>
+          <p>The Booking app is in development and is not in the App Store or Google Play. You can book a shoot now on the site.</p>
+          <p className="prod-mini"><Link href="/book">Book a shoot</Link> · <Link href="/platform">Platform</Link></p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">
@@ -161,9 +162,15 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">Dispatch</span>
           <h2>The field app.</h2>
-          <p>Companion for the photographer on site — jobs, uploads, pay. Last of the apps, in development.</p>
+          <p>Companion for the photographer on site — jobs, uploads, pay. In development and not in the App Store or Google Play.</p>
         </div>
       </section>
+
+      <div className="wrap">
+        <section className="plat-hint rvl">
+          <p>The full platform — Brokerage OS, Booking, Dispatch, and Clay / Keystone / Marble / Diamond — is in development. <Link href="/platform">Details on the platform page</Link>.</p>
+        </section>
+      </div>
 
       <div className="wrap">
         <section className="block rvl">
@@ -213,6 +220,13 @@ export default function Home() {
         .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
         .trust{text-align:center;padding:110px 0 40px;}
         .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto 22px;text-align:center;}
+        .prod-mini{margin-top:14px;font-size:13px;color:var(--inkMute);}
+        .prod-mini a{color:var(--brickDeep);text-decoration:none;}
+        .prod-mini a:hover{text-decoration:underline;text-underline-offset:2px;}
+        .plat-hint{padding:8px 0 0;}
+        .plat-hint p{font-size:14px;color:var(--inkMute);max-width:640px;line-height:1.5;}
+        .plat-hint a{color:var(--brickDeep);text-decoration:none;}
+        .plat-hint a:hover{text-decoration:underline;text-underline-offset:2px;}
         .hero-home{padding:92px 36px 72px;border-bottom:none;}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
