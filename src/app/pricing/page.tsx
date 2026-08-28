@@ -61,7 +61,7 @@ export default function PricingPage() {
               itemListElement: [
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'HDR photography' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 149, maxPrice: 299, priceCurrency: 'CAD' } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Licensed aerial drone' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 99, maxPrice: 159, priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cinematic reel' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 199, maxPrice: 349, priceCurrency: 'CAD' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cinematic reel' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: REEL_RATE[0], maxPrice: REEL_RATE[REEL_RATE.length - 1], priceCurrency: 'CAD' } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: TOUR_NAME, description: TOUR_BLURB }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 149, maxPrice: 299, priceCurrency: 'CAD' } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: VISIT_NAME, description: `${VISIT_BLURB} ${VISIT_PACKAGING} ${VISIT_PRICE_LABEL} (${FOOTPRINT_BANDS}). No published dollar table.` } },
                 { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Twilight exterior' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, maxPrice: 200, priceCurrency: 'CAD' } },
