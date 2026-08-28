@@ -9,7 +9,7 @@ const links = [
   { href: '/gallery', label: 'Work' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/photographers', label: 'Photographers' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/platform', label: 'Platform' },
 ]
 
 const OS_LOGIN = 'https://app.brxs.ca/login'
@@ -62,24 +62,32 @@ export default function Nav() {
               </Link>
             ))}
           </nav>
-          <a href={OS_LOGIN} className="nav-login">
-            Log in
-          </a>
-          <Link
-            href="/book"
-            className={`nav-cta${pathname === '/book' ? ' active' : ''}`}
-          >
-            Book
-          </Link>
-          <button
-            className={`nav-burger${open ? ' open' : ''}`}
-            aria-label="Menu"
-            aria-expanded={open}
-            aria-controls="site-drawer"
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span></span><span></span><span></span>
-          </button>
+          <div className="nav-actions">
+            <a href={OS_LOGIN} className="nav-login">
+              Log in
+            </a>
+            <Link
+              href="/contact"
+              className={`nav-sec${pathname === '/contact' ? ' active' : ''}`}
+            >
+              Contact
+            </Link>
+            <Link
+              href="/book"
+              className={`nav-cta${pathname === '/book' ? ' active' : ''}`}
+            >
+              Book a shoot
+            </Link>
+            <button
+              className={`nav-burger${open ? ' open' : ''}`}
+              aria-label="Menu"
+              aria-expanded={open}
+              aria-controls="site-drawer"
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span></span><span></span><span></span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -111,6 +119,13 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
+          <Link
+            href="/contact"
+            className={pathname === '/contact' ? 'active' : ''}
+            onClick={() => setOpen(false)}
+          >
+            Contact
+          </Link>
           <a href={OS_LOGIN} onClick={() => setOpen(false)}>
             Log in
           </a>
