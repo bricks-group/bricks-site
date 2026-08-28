@@ -316,36 +316,57 @@ html[data-theme="dark"] .tray::after{
 
 .tray-stage{position:relative;z-index:2;}
 
-/* First product band — smaller complete window sitting in the painting. */
+/* First product band — Cursor clamp: centered desktop, right-crop on a phone. */
 .prod-hero{padding:0;margin:8px 0 0;}
 .prod-hero .tray{
   margin:0 28px;
-  height:580px;
-  min-height:580px;
-  max-height:580px;
+  height:min(780px, 70vh);
+  min-height:720px;
+  max-height:780px;
 }
 .prod-hero .tray-stage{
   position:absolute;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:44px 56px;
+  display:block;
+  padding:0;
   width:auto;
   transform:none;
+  overflow:hidden;
+  --demo-pad:32px;
+}
+.prod-stack{position:absolute;inset:0;overflow:hidden;}
+.prod-stack-main,.prod-stack-sub{
+  position:absolute;
+  overflow:hidden;
+  cursor:default;
+}
+.prod-stack-main{
+  left:clamp(calc(var(--demo-pad) + 540px), 50%, calc(100% - var(--demo-pad) - 540px));
+  top:clamp(calc(var(--demo-pad) + 310px), 50%, calc(100% - var(--demo-pad) - 310px));
+  width:1080px;
+  height:620px;
+  transform:translate(-50%, -50%);
+}
+.prod-stack-sub{
+  left:clamp(calc(var(--demo-pad) + 280px), 100%, calc(100% - var(--demo-pad) - 240px));
+  top:clamp(calc(var(--demo-pad) + 180px), 100%, calc(100% - var(--demo-pad) - 180px));
+  width:480px;
+  height:360px;
+  transform:translate(-50%, -50%);
 }
 .prod-hero .pwin{
-  width:min(64%, 720px);
-  height:auto;
+  width:100%;
+  height:100%;
   max-height:none;
-  flex:none;
-  display:block;
+  display:flex;
+  flex-direction:column;
   overflow:hidden;
 }
 .prod-hero .pwin-scale{
-  flex:none;
+  flex:1;
   width:100%;
   min-height:0;
+  overflow:hidden;
 }
 .prod-hero .pwin-scale,.prod-hero .pwin iframe{overflow:hidden;}
 
@@ -446,22 +467,21 @@ html[data-theme="dark"] .pwin{
 @media (max-width:900px){
   .prod-hero .tray{
     margin:0 16px;
-    height:420px;
-    min-height:420px;
-    max-height:420px;
+    height:min(780px, 70vh);
+    min-height:720px;
+    max-height:780px;
   }
   .prod-hero .tray-stage{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:28px 24px;
+    display:block;
+    padding:0;
+    --demo-pad:16px;
   }
   .prod-hero .pwin{
-    width:min(78%, 560px);
-    height:auto;
+    width:100%;
+    height:100%;
     max-height:none;
-    flex:none;
-    display:block;
+    display:flex;
+    flex-direction:column;
     overflow:hidden;
   }
   .prod-row,.prod-row-flip{
@@ -479,7 +499,7 @@ html[data-theme="dark"] .pwin{
 }
 @media (max-width:680px){
   .theme-switch button{padding:6px 8px;}
-  .prod-hero .tray{margin:0 12px;height:420px;min-height:420px;max-height:420px;}
+  .prod-hero .tray{margin:0 12px;height:min(780px, 70vh);min-height:720px;max-height:780px;}
 }
 
 .newsletter{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;}
