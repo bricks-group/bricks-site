@@ -20,6 +20,7 @@ export default function Footer() {
           <h4>Product</h4>
           <Link href="/pricing">Pricing</Link>
           <Link href="/platform">Platform</Link>
+          <a href="https://app.brxs.ca/login">Log in</a>
           <Link href="/gallery">Work</Link>
           <Link href="/book">Book a shoot</Link>
           <Link href="/photographers">Photographers</Link>
