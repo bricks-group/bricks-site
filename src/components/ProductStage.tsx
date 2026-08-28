@@ -10,6 +10,7 @@ export default function ProductStage() {
       src="/screens/os.html?screen=overview&lock=1"
       nw={1440}
       nh={920}
+      fit="contain"
     />
   )
 }

@@ -17,6 +17,7 @@ function ScaledIframe({
   frameRef,
   onReady,
   lazy = false,
+  fit = 'width',
 }: {
   src: string
   nw: number
@@ -25,6 +26,7 @@ function ScaledIframe({
   frameRef: Ref<HTMLIFrameElement>
   onReady: (el: HTMLIFrameElement) => void
   lazy?: boolean
+  fit?: 'width' | 'contain'
 }) {
   const box = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(0)
@@ -34,13 +36,71 @@ function ScaledIframe({
     if (!el) return
     const apply = () => {
       const w = el.clientWidth
-      setScale(w > 0 ? w / nw : 0)
+      if (fit === 'contain') {
+        const h = el.clientHeight
+        const sx = w > 0 ? w / nw : 0
+        const sy = h > 0 ? h / nh : 0
+        setScale(sx > 0 && sy > 0 ? Math.min(sx, sy) : 0)
+      } else {
+        setScale(w > 0 ? w / nw : 0)
+      }
     }
     apply()
     const ro = new ResizeObserver(apply)
     ro.observe(el)
     return () => ro.disconnect()
-  }, [nw])
+  }, [nw, nh, fit])
+
+  const iframe = (
+    <iframe
+      ref={frameRef}
+      src={src}
+      title={title}
+      width={nw}
+      height={nh}
+      loading={lazy ? 'lazy' : 'eager'}
+      onLoad={(e) => onReady(e.currentTarget)}
+      style={{
+        width: nw,
+        height: nh,
+        border: 0,
+        display: 'block',
+        transform: `scale(${scale || 0.0001})`,
+        transformOrigin: 'top left',
+        pointerEvents: 'auto',
+      }}
+    />
+  )
+
+  if (fit === 'contain') {
+    return (
+      <div
+        ref={box}
+        className="pwin-scale"
+        style={{
+          width: '100%',
+          height: '100%',
+          minHeight: 0,
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            width: scale ? nw * scale : undefined,
+            height: scale ? nh * scale : undefined,
+            position: 'relative',
+            overflow: 'hidden',
+            flex: 'none',
+          }}
+        >
+          {iframe}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
@@ -51,24 +111,7 @@ function ScaledIframe({
         aspectRatio: `${nw} / ${nh}`,
       }}
     >
-      <iframe
-        ref={frameRef}
-        src={src}
-        title={title}
-        width={nw}
-        height={nh}
-        loading={lazy ? 'lazy' : 'eager'}
-        onLoad={(e) => onReady(e.currentTarget)}
-        style={{
-          width: nw,
-          height: nh,
-          border: 0,
-          display: 'block',
-          transform: `scale(${scale || 0.0001})`,
-          transformOrigin: 'top left',
-          pointerEvents: 'auto',
-        }}
-      />
+      {iframe}
     </div>
   )
 }
@@ -80,6 +123,7 @@ export default function ProductWindow({
   nh,
   variant = 'os',
   lazy = false,
+  fit = 'width',
 }: {
   title: string
   src: string
@@ -87,6 +131,7 @@ export default function ProductWindow({
   nh: number
   variant?: 'os' | 'phone'
   lazy?: boolean
+  fit?: 'width' | 'contain'
 }) {
   const frameRef = useRef<HTMLIFrameElement>(null)
 
@@ -125,6 +170,7 @@ export default function ProductWindow({
         frameRef={frameRef}
         onReady={onReady}
         lazy={lazy}
+        fit={fit}
       />
     </div>
   )
