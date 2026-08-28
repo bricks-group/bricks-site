@@ -25,6 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=location.search||'';var h=location.hash||'';var blob=s+h;if(/access_token|refresh_token|[?&#]type=(signup|recovery|invite|magiclink|email)(?:&|$)|[?&#]code=/.test(blob)){location.replace('https://app.brxs.ca/auth/callback'+s+h);}}catch(e){}})();`,
+          }}
+        />
         <meta name="theme-color" content="#F4F1EB" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
         <link rel="preconnect" href="https://api.fontshare.com" />
