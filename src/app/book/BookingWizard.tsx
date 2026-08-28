@@ -70,7 +70,7 @@ export default function BookingWizard() {
   const [addr, setAddr] = useState('')
   const [selectedAddr, setSelectedAddr] = useState('')
   const [propertyType, setPropertyType] = useState('')
-  const [suggestions, setSuggestions] = useState<{ display_name: string }[]>([])
+  const [suggestions, setSuggestions] = useState<{ label: string; city: string; province: string; postal_code: string }[]>([])
   const [showSuggest, setShowSuggest] = useState(false)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const suggestBoxRef = useRef<HTMLDivElement>(null)
@@ -112,24 +112,17 @@ export default function BookingWizard() {
     setScheduleCtaVisible(true)
   }, [])
 
-  // ---- address autocomplete (Nominatim) ----
+  // ---- address autocomplete (server Nominatim proxy, Canada-wide) ----
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     const q = addr.trim()
-    if (q.length < 4) { setShowSuggest(false); return }
+    if (q.length < 3) { setShowSuggest(false); return }
     debounceRef.current = setTimeout(() => {
-      fetch(
-        'https://nominatim.openstreetmap.org/search?q=' + encodeURIComponent(q) +
-        '&format=json&limit=5&addressdetails=0&countrycodes=ca&viewbox=-95.2,56.9,-74.3,41.6&bounded=1&dedupe=1',
-        { headers: { 'User-Agent': 'BricksPreLaunch/1.0 (booking@brxs.ca)' } }
-      )
+      fetch('/api/address-suggest?q=' + encodeURIComponent(q))
         .then((r) => r.json())
-        .then((j: { display_name: string }[]) => {
+        .then((j: { label: string; city: string; province: string; postal_code: string }[]) => {
           if (!Array.isArray(j) || !j.length) { setShowSuggest(false); return }
-          const ca = j.filter((o) => /Canada/i.test(o.display_name))
-          ca.sort((a, b) => (/Ontario/i.test(b.display_name) ? 1 : 0) - (/Ontario/i.test(a.display_name) ? 1 : 0))
-          if (!ca.length) { setShowSuggest(false); return }
-          setSuggestions(ca)
+          setSuggestions(j)
           setShowSuggest(true)
         })
         .catch(() => setShowSuggest(false))
@@ -146,9 +139,9 @@ export default function BookingWizard() {
     return () => document.removeEventListener('click', onDocClick)
   }, [])
 
-  function pickSuggestion(displayName: string) {
-    setAddr(displayName)
-    setSelectedAddr(displayName)
+  function pickSuggestion(label: string) {
+    setAddr(label)
+    setSelectedAddr(label)
     setShowSuggest(false)
   }
 
@@ -393,9 +386,9 @@ export default function BookingWizard() {
                 {showSuggest && suggestions.length > 0 && (
                   <div className="suggest" ref={suggestBoxRef}>
                     {suggestions.map((o) => (
-                      <div key={o.display_name} onClick={() => pickSuggestion(o.display_name)}>
-                        {o.display_name.split(',').slice(0, 3).join(',')}
-                        <div className="muted">{o.display_name}</div>
+                      <div key={o.label} onClick={() => pickSuggestion(o.label)}>
+                        {o.label.split(',').slice(0, 3).join(',')}
+                        <div className="muted">{o.label}</div>
                       </div>
                     ))}
                   </div>
