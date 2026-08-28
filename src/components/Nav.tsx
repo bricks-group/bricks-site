@@ -12,6 +12,8 @@ const links = [
   { href: '/contact', label: 'Contact' },
 ]
 
+const OS_LOGIN = 'https://app.brxs.ca/login'
+
 export default function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
@@ -60,6 +62,9 @@ export default function Nav() {
               </Link>
             ))}
           </nav>
+          <a href={OS_LOGIN} className="nav-login">
+            Log in
+          </a>
           <Link
             href="/book"
             className={`nav-cta${pathname === '/book' ? ' active' : ''}`}
@@ -106,6 +111,9 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
+          <a href={OS_LOGIN} onClick={() => setOpen(false)}>
+            Log in
+          </a>
           <Link
             href="/book"
             className={`drawer-cta${pathname === '/book' ? ' active' : ''}`}
