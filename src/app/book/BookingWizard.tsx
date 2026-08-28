@@ -8,6 +8,21 @@ import { track } from '@vercel/analytics'
 
 const SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/'
 const ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
+const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
+
+type AddrSuggestion = {
+  label: string
+  city: string
+  province: string
+  postal_code: string
+  lng?: number
+  lat?: number
+}
+
+function mapCutoutSrc(lng: number, lat: number, token: string): string {
+  const overlay = `pin-s%2BD2542B(${lng},${lat})`
+  return `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/${overlay}/${lng},${lat},16,0/640x160@2x?access_token=${encodeURIComponent(token)}`
+}
 
 type Quote = {
   total: number
@@ -70,8 +85,10 @@ export default function BookingWizard() {
   const [addr, setAddr] = useState('')
   const [selectedAddr, setSelectedAddr] = useState('')
   const [propertyType, setPropertyType] = useState('')
-  const [suggestions, setSuggestions] = useState<{ label: string; city: string; province: string; postal_code: string }[]>([])
+  const [suggestions, setSuggestions] = useState<AddrSuggestion[]>([])
   const [showSuggest, setShowSuggest] = useState(false)
+  const [addrLng, setAddrLng] = useState<number | null>(null)
+  const [addrLat, setAddrLat] = useState<number | null>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const suggestBoxRef = useRef<HTMLDivElement>(null)
   const addrInputRef = useRef<HTMLInputElement>(null)
@@ -112,22 +129,23 @@ export default function BookingWizard() {
     setScheduleCtaVisible(true)
   }, [])
 
-  // ---- address autocomplete (server Nominatim proxy, Canada-wide) ----
+  // ---- address autocomplete (server Mapbox geocoding proxy, Canada-wide) ----
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     const q = addr.trim()
     if (q.length < 3) { setShowSuggest(false); return }
+    if (selectedAddr && q === selectedAddr) { setShowSuggest(false); return }
     debounceRef.current = setTimeout(() => {
       fetch('/api/address-suggest?q=' + encodeURIComponent(q))
         .then((r) => r.json())
-        .then((j: { label: string; city: string; province: string; postal_code: string }[]) => {
+        .then((j: AddrSuggestion[]) => {
           if (!Array.isArray(j) || !j.length) { setShowSuggest(false); return }
           setSuggestions(j)
           setShowSuggest(true)
         })
         .catch(() => setShowSuggest(false))
     }, 350)
-  }, [addr])
+  }, [addr, selectedAddr])
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
@@ -139,10 +157,20 @@ export default function BookingWizard() {
     return () => document.removeEventListener('click', onDocClick)
   }, [])
 
-  function pickSuggestion(label: string) {
-    setAddr(label)
-    setSelectedAddr(label)
+  function pickSuggestion(o: AddrSuggestion) {
+    setAddr(o.label)
+    setSelectedAddr(o.label)
     setShowSuggest(false)
+    const lng = typeof o.lng === 'number' && Number.isFinite(o.lng) ? o.lng : null
+    const lat = typeof o.lat === 'number' && Number.isFinite(o.lat) ? o.lat : null
+    setAddrLng(lng)
+    setAddrLat(lat)
+  }
+
+  function clearPickedPin() {
+    setSelectedAddr('')
+    setAddrLng(null)
+    setAddrLat(null)
   }
 
   // ---- package presets ----
@@ -382,16 +410,25 @@ export default function BookingWizard() {
               </div>
               <div className="field">
                 <label>Property address <span className="req">*</span></label>
-                <input ref={addrInputRef} value={addr} onChange={(e) => { setAddr(e.target.value); setSelectedAddr('') }} placeholder="123 Main St, Mississauga" autoComplete="off" />
+                <input ref={addrInputRef} value={addr} onChange={(e) => { setAddr(e.target.value); clearPickedPin() }} placeholder="123 Main St, Mississauga" autoComplete="off" />
                 {showSuggest && suggestions.length > 0 && (
                   <div className="suggest" ref={suggestBoxRef}>
                     {suggestions.map((o) => (
-                      <div key={o.label} onClick={() => pickSuggestion(o.label)}>
+                      <div key={o.label} onClick={() => pickSuggestion(o)}>
                         {o.label.split(',').slice(0, 3).join(',')}
                         <div className="muted">{o.label}</div>
                       </div>
                     ))}
                   </div>
+                )}
+                {MAPBOX_PUBLIC && addrLng != null && addrLat != null && (
+                  <img
+                    className="map-cutout"
+                    src={mapCutoutSrc(addrLng, addrLat, MAPBOX_PUBLIC)}
+                    alt={`Map of ${selectedAddr || addr}`}
+                    width={640}
+                    height={160}
+                  />
                 )}
               </div>
               <div className="field">
@@ -562,6 +599,7 @@ export default function BookingWizard() {
         .suggest div:last-child{border-bottom:none;}
         .suggest div:hover{background:var(--paperSoft);color:var(--brickDeep);}
         .suggest .muted{font-size:11px;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;}
+        .map-cutout{display:block;width:100%;height:140px;object-fit:cover;border-radius:8px;border:1px solid var(--hairStrong);margin-top:8px;}
         .choices{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;margin-bottom:20px;}
         .choice{background:var(--paper);padding:20px 18px;cursor:pointer;border:2px solid transparent;}
