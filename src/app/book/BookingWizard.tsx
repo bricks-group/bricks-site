@@ -24,6 +24,61 @@ function mapCutoutSrc(lng: number, lat: number, token: string): string {
   return `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/${overlay}/${lng},${lat},16,0/640x160@2x?access_token=${encodeURIComponent(token)}`
 }
 
+type MapboxContext = { id?: string; text?: string; short_code?: string }
+type MapboxFeature = {
+  place_name?: string
+  text?: string
+  center?: [number, number]
+  context?: MapboxContext[]
+}
+
+function parseMapboxFeature(feat: MapboxFeature): AddrSuggestion | null {
+  const ctx = feat.context || []
+  const find = (prefix: string) => ctx.find((c) => String(c.id || '').startsWith(prefix))
+  const place = find('place.') || find('locality.')
+  const region = find('region.')
+  const postcode = find('postcode.')
+  let province = ''
+  if (region) {
+    const short = String(region.short_code || '').toUpperCase()
+    province = short.startsWith('CA-') && short.length === 5 ? short.slice(3) : (region.text || '')
+  }
+  const center = feat.center || []
+  const lng = Number(center[0])
+  const lat = Number(center[1])
+  const label = (feat.place_name || feat.text || '').trim()
+  if (!label) return null
+  return {
+    label,
+    city: (place && place.text) || '',
+    province,
+    postal_code: (postcode && postcode.text) || '',
+    lng: Number.isFinite(lng) ? lng : undefined,
+    lat: Number.isFinite(lat) ? lat : undefined,
+  }
+}
+
+function fetchAddressSuggestions(q: string): Promise<AddrSuggestion[]> {
+  const fallback = () =>
+    fetch('/api/address-suggest?q=' + encodeURIComponent(q))
+      .then((r) => r.json())
+      .then((j: AddrSuggestion[]) => (Array.isArray(j) ? j : []))
+
+  if (!MAPBOX_PUBLIC) return fallback()
+
+  const url =
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(q)}.json` +
+    `?access_token=${encodeURIComponent(MAPBOX_PUBLIC)}` +
+    '&country=ca&types=address&autocomplete=true&limit=6'
+
+  return fetch(url)
+    .then((r) => (r.ok ? r.json() : Promise.reject(new Error('mapbox'))))
+    .then((d: { features?: MapboxFeature[] }) =>
+      (d.features || []).map(parseMapboxFeature).filter((x): x is AddrSuggestion => x !== null),
+    )
+    .catch(() => fallback())
+}
+
 type Quote = {
   total: number
   sqft: number | null
@@ -129,22 +184,22 @@ export default function BookingWizard() {
     setScheduleCtaVisible(true)
   }, [])
 
-  // ---- address autocomplete (server Mapbox geocoding proxy, Canada-wide) ----
+  // ---- address autocomplete (browser Mapbox geocoding, Canada-wide) ----
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     const q = addr.trim()
     if (q.length < 3) { setShowSuggest(false); return }
     if (selectedAddr && q === selectedAddr) { setShowSuggest(false); return }
     debounceRef.current = setTimeout(() => {
-      fetch('/api/address-suggest?q=' + encodeURIComponent(q))
-        .then((r) => r.json())
-        .then((j: AddrSuggestion[]) => {
-          if (!Array.isArray(j) || !j.length) { setShowSuggest(false); return }
+      fetchAddressSuggestions(q)
+        .then((j) => {
+          if (!j.length) { setShowSuggest(false); return }
           setSuggestions(j)
           setShowSuggest(true)
         })
         .catch(() => setShowSuggest(false))
     }, 350)
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current) }
   }, [addr, selectedAddr])
 
   useEffect(() => {
@@ -593,7 +648,7 @@ export default function BookingWizard() {
         .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--brick);}
         .field textarea{resize:vertical;min-height:80px;}
         .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-        .suggest{position:absolute;top:100%;left:0;right:0;z-index:20;background:var(--paper);
+        .suggest{position:absolute;top:100%;left:0;right:0;z-index:200;background:var(--paper);
           border:1px solid var(--hairStrong);border-radius:2px;margin-top:2px;max-height:240px;overflow:auto;}
         .suggest div{padding:10px 12px;font-size:13px;color:var(--inkSoft);cursor:pointer;border-bottom:1px solid var(--hair);}
         .suggest div:last-child{border-bottom:none;}
