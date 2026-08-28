@@ -765,11 +765,11 @@
       eyebrow: 'Thursday · Week 16',
       hi: 'Good morning, Elena.',
       cta: 'New job',
-      sub: th => /*#__PURE__*/React.createElement(React.Fragment, null, "Six shoots on the books today. ", /*#__PURE__*/React.createElement("span", {
+      sub: th => /*#__PURE__*/React.createElement(React.Fragment, null, "Two deals need signatures. ", /*#__PURE__*/React.createElement("span", {
         style: {
           color: th.ink
         }
-      }, "Two deals need signatures.")),
+      }, "Close of $1.2M is Thursday.")),
       kpis: [{
         l: 'Jobs this month',
         v: '184',

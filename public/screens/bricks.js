@@ -286,7 +286,7 @@ const BROK_ROLES = {
 const DASHBOARDS = {
   brokerage: {
     eyebrow:'Thursday · Week 16', hi:'Good morning, Elena.', cta:'New job',
-    sub:(th)=><>Six shoots on the books today. <span style={{color:th.ink}}>Two deals need signatures.</span></>,
+    sub:(th)=><>Two deals need signatures. <span style={{color:th.ink}}>Close of $1.2M is Thursday.</span></>,
     kpis:[
       {l:'Jobs this month',v:'184',d:'+12.4%',s:'vs 164 prev.'},
       {l:'GCI · April',v:'$182K',d:'+9.4%',s:'gross commission'},
