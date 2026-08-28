@@ -578,7 +578,8 @@ html[data-theme="dark"] .still,
 html[data-theme="dark"] .ba-split img,
 html[data-theme="dark"] .ba img,
 html[data-theme="dark"] .reel-video,
-html[data-theme="dark"] .grid3 .card .img img{
+html[data-theme="dark"] .grid3 .card .img img,
+html[data-theme="dark"] .map-cutout{
   filter:brightness(0.62) saturate(0.86);
 }
 html[data-theme="dark"] .pwin iframe{filter:none;}
@@ -592,7 +593,8 @@ html[data-theme="dark"] .book{
   :root:not([data-theme="light"]) .ba-split img,
   :root:not([data-theme="light"]) .ba img,
   :root:not([data-theme="light"]) .reel-video,
-  :root:not([data-theme="light"]) .grid3 .card .img img{
+  :root:not([data-theme="light"]) .grid3 .card .img img,
+  :root:not([data-theme="light"]) .map-cutout{
     filter:brightness(0.62) saturate(0.86);
   }
   :root:not([data-theme="light"]) .pwin iframe{filter:none;}
