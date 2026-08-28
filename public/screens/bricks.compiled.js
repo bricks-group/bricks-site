@@ -4459,13 +4459,15 @@
     dark = false
   }) {
     const th = useTheme(dark);
+    const nav = React.useContext(DemoNav);
+    const locked = !!(nav && nav.locked);
     return /*#__PURE__*/React.createElement(Phone, {
       dark: dark
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         padding: '8px 22px 0',
         flex: 1,
-        overflow: 'auto'
+        overflow: locked ? 'hidden' : 'auto'
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {

@@ -1489,9 +1489,11 @@ function BookRegister({ dark=false }) {
 // 4) HOME
 function BookHome({ dark=false }) {
   const th = useTheme(dark);
+  const nav = React.useContext(DemoNav);
+  const locked = !!(nav && nav.locked);
   return (
     <Phone dark={dark}>
-      <div style={{ padding:'8px 22px 0', flex:1, overflow:'auto' }}>
+      <div style={{ padding:'8px 22px 0', flex:1, overflow: locked ? 'hidden' : 'auto' }}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', paddingTop:6 }}>
           <div>
             <Over color={th.ink4}>Thursday</Over>
