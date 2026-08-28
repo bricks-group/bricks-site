@@ -147,6 +147,7 @@ export default function BookingWizard() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const suggestBoxRef = useRef<HTMLDivElement>(null)
   const addrInputRef = useRef<HTMLInputElement>(null)
+  const addrFieldRef = useRef<HTMLDivElement>(null)
 
   // step 1 fields
   const [drone, setDrone] = useState(true)
@@ -203,13 +204,14 @@ export default function BookingWizard() {
   }, [addr, selectedAddr])
 
   useEffect(() => {
-    function onDocClick(e: MouseEvent) {
-      const t = e.target as HTMLElement
-      if (suggestBoxRef.current?.contains(t) || t === addrInputRef.current) return
+    function onDocPointer(e: Event) {
+      const t = e.target
+      if (!(t instanceof Node)) return
+      if (addrFieldRef.current?.contains(t)) return
       setShowSuggest(false)
     }
-    document.addEventListener('click', onDocClick)
-    return () => document.removeEventListener('click', onDocClick)
+    document.addEventListener('pointerdown', onDocPointer)
+    return () => document.removeEventListener('pointerdown', onDocPointer)
   }, [])
 
   function pickSuggestion(o: AddrSuggestion) {
@@ -463,16 +465,25 @@ export default function BookingWizard() {
                 <div className="field"><label>Email <span className="req">*</span></label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@brokerage.com" /></div>
                 <div className="field"><label>Phone <span className="req">*</span></label><input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="416-..." /></div>
               </div>
-              <div className="field">
+              <div className="field" ref={addrFieldRef}>
                 <label>Property address <span className="req">*</span></label>
                 <input ref={addrInputRef} value={addr} onChange={(e) => { setAddr(e.target.value); clearPickedPin() }} placeholder="123 Main St, Mississauga" autoComplete="off" />
                 {showSuggest && suggestions.length > 0 && (
-                  <div className="suggest" ref={suggestBoxRef}>
+                  <div className="suggest" ref={suggestBoxRef} role="listbox">
                     {suggestions.map((o) => (
-                      <div key={o.label} onClick={() => pickSuggestion(o)}>
+                      <button
+                        type="button"
+                        key={o.label}
+                        role="option"
+                        onMouseDown={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          pickSuggestion(o)
+                        }}
+                      >
                         {o.label.split(',').slice(0, 3).join(',')}
-                        <div className="muted">{o.label}</div>
-                      </div>
+                        <span className="muted">{o.label}</span>
+                      </button>
                     ))}
                   </div>
                 )}
@@ -650,10 +661,10 @@ export default function BookingWizard() {
         .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
         .suggest{position:absolute;top:100%;left:0;right:0;z-index:200;background:var(--paper);
           border:1px solid var(--hairStrong);border-radius:2px;margin-top:2px;max-height:240px;overflow:auto;}
-        .suggest div{padding:10px 12px;font-size:13px;color:var(--inkSoft);cursor:pointer;border-bottom:1px solid var(--hair);}
-        .suggest div:last-child{border-bottom:none;}
-        .suggest div:hover{background:var(--paperSoft);color:var(--brickDeep);}
-        .suggest .muted{font-size:11px;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;}
+        .suggest button{display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--hair);border-radius:0;padding:10px 12px;font-size:13px;color:var(--inkSoft);cursor:pointer;font-family:'General Sans',sans-serif;}
+        .suggest button:last-child{border-bottom:none;}
+        .suggest button:hover{background:var(--paperSoft);color:var(--brickDeep);}
+        .suggest .muted{display:block;font-size:11px;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;}
         .map-cutout{display:block;width:100%;height:140px;object-fit:cover;border-radius:8px;border:1px solid var(--hairStrong);margin-top:8px;}
         .choices{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;margin-bottom:20px;}
