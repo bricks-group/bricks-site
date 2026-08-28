@@ -20,8 +20,7 @@ type AddrSuggestion = {
 }
 
 function mapCutoutSrc(lng: number, lat: number, token: string): string {
-  const overlay = `pin-s%2BD2542B(${lng},${lat})`
-  return `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/${overlay}/${lng},${lat},16,0/640x160@2x?access_token=${encodeURIComponent(token)}`
+  return `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-s+D2542B(${lng},${lat})/${lng},${lat},16,0/640x160@2x?access_token=${encodeURIComponent(token)}`
 }
 
 type MapboxContext = { id?: string; text?: string; short_code?: string }
@@ -665,7 +664,7 @@ export default function BookingWizard() {
         .suggest button:last-child{border-bottom:none;}
         .suggest button:hover{background:var(--paperSoft);color:var(--brickDeep);}
         .suggest .muted{display:block;font-size:11px;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;}
-        .map-cutout{display:block;width:100%;height:140px;object-fit:cover;border-radius:8px;border:1px solid var(--hairStrong);margin-top:8px;}
+        .map-cutout{display:block;width:100%;height:160px;object-fit:cover;border-radius:2px;border:1px solid var(--hair);margin-top:8px;}
         .choices{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;margin-bottom:20px;}
         .choice{background:var(--paper);padding:20px 18px;cursor:pointer;border:2px solid transparent;}
