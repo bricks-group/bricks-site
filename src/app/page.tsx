@@ -43,7 +43,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'Bricks is listing media for Canadian real estate — From Capture to Close. HDR photography, licensed drone, floor plans, twilight, optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Listing media and the website booking form are live now in Canada. Brokerage OS, the Booking companion app, and Dispatch are in development and are not in the App Store or Google Play.',
+            description: 'Bricks is listing media for Canadian real estate — From Capture to Close. HDR photography, licensed drone, floor plans, twilight, optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Listing media and the website booking form are live now in Canada. Bricks OS, the Booking companion app, and Dispatch are in development and are not in the App Store or Google Play.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
@@ -67,7 +67,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prod-hero" aria-label="Brokerage OS">
+      <section className="prod-hero" aria-label="Bricks OS">
         <div className="tray tray-os">
           <div className="tray-stage">
             <ProductStage />
@@ -90,13 +90,13 @@ export default function Home() {
       <section className="prod-row rvl" aria-label="Control surface">
         <div className="prod-copy">
           <span className="over">Control surface</span>
-          <h2>The brokerage dashboard.</h2>
-          <p>OS is the desk: roster, jobs, and media in one place — not a second product. In development — preview.</p>
+          <h2>The operating system.</h2>
+          <p>One desk for the listing file: deals, signatures, MLS, and media as a loop inside it. In development — preview.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
             <ProductWindow
-              title="Brokerage OS"
+              title="bricks"
               src="/screens/os.html?screen=crm&lock=1"
               nw={1440}
               nh={920}
@@ -110,7 +110,7 @@ export default function Home() {
         <div className="tray tray-tx tray-bleed-start">
           <div className="tray-stage">
             <ProductWindow
-              title="Brokerage OS"
+              title="bricks"
               src="/screens/os.html?screen=transactions&lock=1"
               nw={1440}
               nh={920}
@@ -168,7 +168,7 @@ export default function Home() {
 
       <div className="wrap">
         <section className="plat-hint rvl">
-          <p>The full platform — Brokerage OS, Booking, Dispatch, and Clay / Keystone / Marble / Diamond — is in development. <Link href="/platform">Details on the platform page</Link>.</p>
+          <p>The full platform — Bricks OS, Booking, Dispatch, and Clay / Keystone / Marble / Diamond — is in development. <Link href="/platform">Details on the platform page</Link>.</p>
         </section>
       </div>
 
