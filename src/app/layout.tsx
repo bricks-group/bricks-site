@@ -5,6 +5,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import './globals.css'
 import './map-cutout.css'
+import './book/book-wizard.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.brxs.ca'),
