@@ -1,0 +1,15 @@
+/* Never dim or invert the Standard 3D GL cutout. */
+html[data-theme="dark"] .map-cutout.map-cutout-gl,
+html[data-theme="dark"] .map-cutout-gl,
+html[data-theme="dark"] .map-cutout-gl canvas,
+html[data-theme="dark"] .map-cutout-gl img {
+  filter: none !important;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .map-cutout.map-cutout-gl,
+  :root:not([data-theme="light"]) .map-cutout-gl,
+  :root:not([data-theme="light"]) .map-cutout-gl canvas,
+  :root:not([data-theme="light"]) .map-cutout-gl img {
+    filter: none !important;
+  }
+}

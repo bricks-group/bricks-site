@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import './globals.css'
+import './map-cutout.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.brxs.ca'),
