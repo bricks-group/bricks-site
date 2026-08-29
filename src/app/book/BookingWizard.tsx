@@ -545,7 +545,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
-              <p className="hint">Confirm details, then pay to lock your slot. Full amount (incl. HST) charged now via Stripe.</p>
+              <p className="hint">Confirm details, then pay to lock your slot. Full amount (incl. HST) charged now via Stripe. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
               <div className="review">
                 {[
                   ['Agent', name.trim() || '—'], ['Office', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
@@ -561,6 +561,7 @@ export default function BookingWizard() {
               {quote && <div className="quote" style={{ marginTop: 14 }}><QuoteBlock q={quote} editable={false} /></div>}
               <div className="err">{errs[3]}</div>
               <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 2 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Safari / iOS → Apple Pay. Chrome / Android → Google Pay. Link where Stripe offers it. Card always available.</p>
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
             </div>
           </form>
@@ -596,6 +597,7 @@ export default function BookingWizard() {
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
             <div className="qa"><h4>What if I need to cancel?</h4><p>More than 48 hours before the shoot window: full refund. 48 hours down to 4 hours: 50% refund. Inside 4 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
             <div className="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
+            <div className="qa"><h4>Can I pay with Apple Pay or Google Pay?</h4><p>Yes. Pay &amp; book opens Stripe Checkout: Apple Pay in Safari/iOS, Google Pay in Chrome/Android, Link where Stripe shows it, plus cards. We don&apos;t take PayPal, Klarna, Afterpay, or Interac. The virtual visit is still never charged here.</p></div>
           </div>
         </section>
       </div>
