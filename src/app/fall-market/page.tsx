@@ -104,7 +104,7 @@ export default function FallMarket() {
             <div>
               <span className="over">While you&apos;re booking media</span>
               <h2>Get founder pricing on the platform.</h2>
-              <p>The Booking app, Dispatch network, and Brokerage operating system are in development. Join the list for launch updates and a discounted founder rate before it opens.</p>
+              <p>The Booking app, Dispatch network, and Bricks OS are in development. Join the list for launch updates and a discounted founder rate before it opens.</p>
             </div>
           </div>
           <NewsletterInline />

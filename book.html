@@ -218,7 +218,7 @@
       <p class="hint">Tell us about the listing and who's booking. Start typing the address for suggestions.</p>
       <div class="grid2">
         <div class="field"><label>Listing agent name <span class="req">*</span></label><input id="f_name" placeholder="Jane Agent" /></div>
-        <div class="field"><label>Brokerage <span class="req">*</span></label><input id="f_brokerage" placeholder="e.g. Your brokerage" /></div>
+        <div class="field"><label>Office <span class="req">*</span></label><input id="f_brokerage" placeholder="e.g. Your office" /></div>
       </div>
       <div class="grid2">
         <div class="field"><label>Email <span class="req">*</span></label><input id="f_email" type="email" placeholder="you@brokerage.com" /></div>
@@ -359,7 +359,7 @@
       if(!document.getElementById('f_name').value.trim()){ e.textContent='Agent name required.'; return false; }
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById('f_email').value.trim())){ e.textContent='Valid email required.'; return false; }
       if(!document.getElementById('f_phone').value.trim()){ e.textContent='Phone required.'; return false; }
-      if(!document.getElementById('f_brokerage').value.trim()){ e.textContent='Brokerage required.'; return false; }
+      if(!document.getElementById('f_brokerage').value.trim()){ e.textContent='Office required.'; return false; }
       if(!document.getElementById('f_addr').value.trim()){ e.textContent='Property address required.'; return false; }
       // property type is optional
     }
@@ -559,7 +559,7 @@
   function buildReview(){
     var v = function(id){ return document.getElementById(id).value.trim() || '—'; };
     var rows = [
-      ['Agent', v('f_name')], ['Brokerage', v('f_brokerage')], ['Email', v('f_email')], ['Phone', v('f_phone')],
+      ['Agent', v('f_name')], ['Office', v('f_brokerage')], ['Email', v('f_email')], ['Phone', v('f_phone')],
       ['Property', v('f_addr')], ['Type', document.getElementById('f_type').value || '—'],
       ['Package', matchedPackage() ? PKG_LABEL[matchedPackage()] : 'Custom (à la carte)'],
       ['Cinematic reel', document.getElementById('f_reel').checked ? 'Yes' : 'No'],

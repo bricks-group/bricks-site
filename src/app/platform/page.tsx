@@ -5,7 +5,7 @@ import NewsletterInline from '../NewsletterInline'
 
 export const metadata: Metadata = {
   title: 'Bricks platform — OS, Booking, Dispatch (in development)',
-  description: 'Brokerage OS, the Booking companion app, and Dispatch are in development and not in the App Store or Google Play. Book a shoot is live today on the site.',
+  description: 'Bricks OS, the Booking companion app, and Dispatch are in development and not in the App Store or Google Play. Book a shoot is live today on the site.',
   alternates: { canonical: '/platform' },
   openGraph: {
     title: 'Bricks platform — OS, Booking, Dispatch (in development)',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 }
 
 const apps = [
-  { over: 'In development', title: 'Brokerage OS', body: 'The desk — roster, jobs, and media in one place for the brokerage.' },
+  { over: 'In development', title: 'OS', body: 'The desk — roster, jobs, and media in one place for the office.' },
   { over: 'In development', title: 'Booking', body: 'The agent companion. You can book a shoot now on the site; the app is not in any store yet.' },
   { over: 'In development', title: 'Dispatch', body: 'The field app for photographers on site — jobs, uploads, pay.' },
 ]
@@ -34,7 +34,7 @@ export default function PlatformPage() {
             '@context': 'https://schema.org',
             '@type': 'WebPage',
             name: 'Bricks platform',
-            description: 'Brokerage OS, the Booking companion app, and Dispatch are in development and are not in the App Store or Google Play. Listing media and the website booking form are live. Software subscriptions: Clay, Keystone, Marble, Diamond.',
+            description: 'Bricks OS, the Booking companion app, and Dispatch are in development and are not in the App Store or Google Play. Listing media and the website booking form are live. Software subscriptions: Clay, Keystone, Marble, Diamond.',
             url: 'https://www.brxs.ca/platform',
             isPartOf: { '@type': 'WebSite', name: 'Bricks', url: 'https://www.brxs.ca/' },
             publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
