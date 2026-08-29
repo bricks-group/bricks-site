@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
@@ -8,7 +7,6 @@ import ProductWindow from '@/components/ProductWindow'
 import { PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
-  BROKERAGE_LOGOS,
   KNOWS_ABOUT,
 } from '@/lib/brand'
 
@@ -78,12 +76,6 @@ export default function Home() {
       <div className="wrap">
         <section className="trust rvl">
           <p className="proof-cap">14,000+ properties shot.</p>
-          <div className="logo-row" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
-            {BROKERAGE_LOGOS.map((l) => (
-              <div key={l.alt} className="logo"><Image src={l.src} alt={l.alt} width={100} height={28} /></div>
-            ))}
-            <div className="logo logo-txt">CBRE</div>
-          </div>
         </section>
       </div>
 
@@ -219,7 +211,7 @@ export default function Home() {
         .reel-wrap{margin-top:26px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
         .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
         .trust{text-align:center;padding:110px 0 40px;}
-        .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto 22px;text-align:center;}
+        .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto;text-align:center;}
         .prod-mini{margin-top:14px;font-size:13px;color:var(--inkMute);}
         .prod-mini a{color:var(--brickDeep);text-decoration:none;}
         .prod-mini a:hover{text-decoration:underline;text-underline-offset:2px;}
