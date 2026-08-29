@@ -6,6 +6,16 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'ctqwxwrcxwruaqojohpf.supabase.co' },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: '/.well-known/apple-developer-merchantid-domain-association',
+        headers: [
+          { key: 'Content-Type', value: 'application/octet-stream' },
+        ],
+      },
+    ]
+  },
   async redirects() {
     return [
       { source: '/index.html', destination: '/', permanent: true },
