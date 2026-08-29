@@ -5,6 +5,7 @@ import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE, V
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
+import MapCutout from '@/components/MapCutout'
 
 const SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/'
 const ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
@@ -17,10 +18,6 @@ type AddrSuggestion = {
   postal_code: string
   lng?: number
   lat?: number
-}
-
-function mapCutoutSrc(lng: number, lat: number, token: string): string {
-  return `https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-s+D2542B(${lng},${lat})/${lng},${lat},16,0/640x160@2x?access_token=${encodeURIComponent(token)}`
 }
 
 type MapboxContext = { id?: string; text?: string; short_code?: string }
@@ -121,7 +118,6 @@ function esc(s: string) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] || c))
 }
 
-// Best-effort funnel analytics via Vercel Web Analytics. Never throws into the flow.
 type TrackProps = Record<string, string | number | boolean | null | undefined>
 function evt(name: string, props?: TrackProps) {
   try { track(name, props) } catch { /* analytics is best-effort */ }
@@ -130,8 +126,6 @@ function evt(name: string, props?: TrackProps) {
 export default function BookingWizard() {
   const [step, setStep] = useState<number | 'done'>(0)
   const [errs, setErrs] = useState<Record<number, string>>({})
-
-  // step 0 fields
   const [name, setName] = useState('')
   const [brokerage, setBrokerage] = useState('')
   const [email, setEmail] = useState('')
@@ -147,8 +141,6 @@ export default function BookingWizard() {
   const suggestBoxRef = useRef<HTMLDivElement>(null)
   const addrInputRef = useRef<HTMLInputElement>(null)
   const addrFieldRef = useRef<HTMLDivElement>(null)
-
-  // step 1 fields
   const [drone, setDrone] = useState(true)
   const [reel, setReel] = useState(false)
   const [tour, setTour] = useState(false)
@@ -160,21 +152,16 @@ export default function BookingWizard() {
   const [quoteLoading, setQuoteLoading] = useState(false)
   const [quoteError, setQuoteError] = useState('')
   const [sqftInput, setSqftInput] = useState('')
-
-  // step 2 fields
   const [date, setDate] = useState('')
   const [notes, setNotes] = useState('')
   const [slots, setSlots] = useState<Slot[] | null>(null)
   const [slotMsg, setSlotMsg] = useState('Pick a date above to see real available times.')
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null)
-
-  // step 3 / pay
   const [paying, setPaying] = useState(false)
   const [doneTitle, setDoneTitle] = useState('Payment started.')
   const [doneMsg, setDoneMsg] = useState('Redirecting to secure checkout…')
   const [scheduleCtaVisible, setScheduleCtaVisible] = useState(false)
 
-  // ---- post-payment confirmation (?paid=1) ----
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('paid') !== '1') return
     evt('booking_paid')
@@ -184,7 +171,6 @@ export default function BookingWizard() {
     setScheduleCtaVisible(true)
   }, [])
 
-  // ---- address autocomplete (browser Mapbox geocoding, Canada-wide) ----
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     const q = addr.trim()
@@ -229,7 +215,6 @@ export default function BookingWizard() {
     setAddrLat(null)
   }
 
-  // ---- package presets ----
   function matchedPackage(): string | null {
     for (const k of Object.keys(PKG_DEFS)) {
       const d = PKG_DEFS[k]
@@ -243,7 +228,6 @@ export default function BookingWizard() {
     setDrone(def.drone); setReel(def.reel); setTour(def.tour); setTwilight(def.twilight)
   }
 
-  // ---- quote ----
   function fetchQuote(manualSqft?: number | null) {
     setQuoteError('')
     setQuoteLoading(true)
@@ -268,15 +252,12 @@ export default function BookingWizard() {
       .catch(() => { setQuoteLoading(false); setQuote(null); setQuoteError('Network hiccup pricing this address — check your connection and try again.') })
   }
 
-  // re-fetch quote whenever add-ons change, once a quote already exists (matches original behavior)
   const firstAddonRun = useRef(true)
   useEffect(() => {
     if (firstAddonRun.current) { firstAddonRun.current = false; return }
     if (quote) fetchQuote()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drone, reel, tour, twilight, rush])
 
-  // ---- slots ----
   function fetchSlots(d: string) {
     setSelectedSlot(null)
     if (!d) { setSlots(null); setSlotMsg('Pick a date above to see real available times.'); return }
@@ -316,7 +297,6 @@ export default function BookingWizard() {
     return pkg ? PKG_LABEL[pkg] + ' — ' + base : base
   }
 
-  // ---- validation / navigation ----
   function validate(s: number): boolean {
     let msg = ''
     if (s === 0) {
@@ -354,7 +334,6 @@ export default function BookingWizard() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // ---- pay ----
   function pay() {
     if (!quote) { setErrs((e) => ({ ...e, 3: 'Quote missing — go back to step 2.' })); return }
     setErrs((e) => ({ ...e, 3: '' }))
@@ -452,7 +431,6 @@ export default function BookingWizard() {
 
         {step !== 'done' && (
           <form onSubmit={(e) => e.preventDefault()}>
-            {/* STEP 1: SHOOT */}
             <div className={`panel${step === 0 ? ' active' : ''}`}>
               <h2>What are we shooting?</h2>
               <p className="hint">Tell us about the listing and who&apos;s booking. Start typing the address for suggestions.</p>
@@ -487,12 +465,11 @@ export default function BookingWizard() {
                   </div>
                 )}
                 {MAPBOX_PUBLIC && addrLng != null && addrLat != null && (
-                  <img
-                    className="map-cutout"
-                    src={mapCutoutSrc(addrLng, addrLat, MAPBOX_PUBLIC)}
-                    alt={`Map of ${selectedAddr || addr}`}
-                    width={640}
-                    height={160}
+                  <MapCutout
+                    token={MAPBOX_PUBLIC}
+                    lng={addrLng}
+                    lat={addrLat}
+                    label={selectedAddr || addr}
                   />
                 )}
               </div>
@@ -509,7 +486,6 @@ export default function BookingWizard() {
               <div className="nav-btns"><span></span><button type="button" className="btn btn-brick" onClick={() => goNext(0)}>Next →</button></div>
             </div>
 
-            {/* STEP 2: SERVICES + QUOTE */}
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
               <p className="hint">HDR photography is included on every shoot; licensed drone and a floor plan are included on the standard tiers, or drop both for Photos only. {TOUR_NAME} may be included in Showcase and Full suite. {VISIT_NAME} is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}), never packaged, and not charged at checkout. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
@@ -528,20 +504,13 @@ export default function BookingWizard() {
               {visit && (
                 <div className="field" style={{ margin: '4px 0 14px' }}>
                   <label>Sqft for {VISIT_NAME.toLowerCase()} quote</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={sqftInput}
-                    onChange={(e) => setSqftInput(e.target.value)}
-                    placeholder={quote?.sqft ? String(quote.sqft) : 'e.g. 2200'}
-                  />
+                  <input type="number" min={1} value={sqftInput} onChange={(e) => setSqftInput(e.target.value)} placeholder={quote?.sqft ? String(quote.sqft) : 'e.g. 2200'} />
                   <span className="hint-sm">{FOOTPRINT_BANDS}. Same bands as photo, reel, and virtual tour. We quote the visit after booking using this footprint — not in checkout.</span>
                 </div>
               )}
               <label className="toggle"><input type="checkbox" checked={twilight} onChange={(e) => setTwilight(e.target.checked)} /> Twilight photography (+{TWILIGHT_RANGE}, by footprint)</label>
               <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging (+${STAGING_PER_IMAGE} per image staged)</label>
               <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+${RUSH_FLAT})</label>
-
               <div className="quote">
                 {quoteLoading && <div className="qload"><div className="spin"></div><div className="ltxt"><b>Tailoring your quote</b>Measuring footprint · mapping travel · adding tax</div></div>}
                 {!quoteLoading && quote && <QuoteBlock q={quote} editable />}
@@ -552,7 +521,6 @@ export default function BookingWizard() {
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(1)}>← Back</button><button type="button" className="btn btn-brick" onClick={() => goNext(1)}>Next →</button></div>
             </div>
 
-            {/* STEP 3: SCHEDULE */}
             <div className={`panel${step === 2 ? ' active' : ''}`}>
               <h2>When?</h2>
               <p className="hint">Pick a real time below — it&apos;s checked live against our calendar and locked the moment you pay.</p>
@@ -575,7 +543,6 @@ export default function BookingWizard() {
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(2)}>← Back</button><button type="button" className="btn btn-brick" onClick={() => goNext(2)}>Review →</button></div>
             </div>
 
-            {/* STEP 4: PAY */}
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
               <p className="hint">Confirm details, then pay to lock your slot. Full amount (incl. HST) charged now via Stripe.</p>
@@ -632,111 +599,6 @@ export default function BookingWizard() {
           </div>
         </section>
       </div>
-
-      <style>{`
-        .flow{max-width:820px;padding-bottom:24px;}
-        .steps{display:flex;gap:1px;background:var(--hair);margin:4px 0 8px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
-        .step-tab{flex:1;padding:16px 10px;text-align:center;font-family:'JetBrains Mono',monospace;
-          font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--inkFaint);
-          background:var(--paper);}
-        .step-tab .n{display:block;font-size:13px;color:var(--inkMute);margin-bottom:4px;font-weight:500;}
-        .step-tab.active{background:var(--paperDeep);color:var(--brickDeep);}
-        .step-tab.active .n{color:var(--brickDeep);}
-        .step-tab.done{color:var(--inkMute);}
-        .panel{display:none;padding:36px 0 16px;}
-        .panel.active{display:block;}
-        .panel h2{font-weight:500;font-size:30px;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin-bottom:10px;}
-        .panel .hint{font-size:15px;color:var(--inkSoft);margin-bottom:28px;max-width:540px;line-height:1.5;}
-        .field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;position:relative;}
-        .field label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
-          text-transform:uppercase;color:var(--inkMute);}
-        .field .req{color:var(--brickDeep);}
-        .field .hint-sm{font-size:11.5px;color:var(--inkFaint);font-family:'General Sans',sans-serif;text-transform:none;letter-spacing:0;line-height:1.4;}
-        .field input,.field select,.field textarea{font-family:'General Sans',sans-serif;font-size:15px;
-          background:var(--paper);color:var(--ink);border:1px solid var(--hairStrong);border-radius:2px;
-          padding:13px 14px;outline:none;width:100%;}
-        .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--brick);}
-        .field textarea{resize:vertical;min-height:80px;}
-        .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-        .suggest{position:absolute;top:100%;left:0;right:0;z-index:200;background:var(--paper);
-          border:1px solid var(--hairStrong);border-radius:2px;margin-top:2px;max-height:240px;overflow:auto;}
-        .suggest button{display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--hair);border-radius:0;padding:10px 12px;font-size:13px;color:var(--inkSoft);cursor:pointer;font-family:'General Sans',sans-serif;}
-        .suggest button:last-child{border-bottom:none;}
-        .suggest button:hover{background:var(--paperSoft);color:var(--brickDeep);}
-        .suggest .muted{display:block;font-size:11px;color:var(--inkFaint);font-family:'JetBrains Mono',monospace;}
-        .map-cutout{display:block;width:100%;height:160px;object-fit:cover;border-radius:2px;border:1px solid var(--hair);margin-top:8px;}
-        .choices{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
-          border:1px solid var(--hair);border-radius:2px;margin-bottom:20px;}
-        .choice{background:var(--paper);padding:20px 18px;cursor:pointer;border:2px solid transparent;}
-        .choice:hover{background:var(--paperSoft);}
-        .choice.sel{background:var(--brickTint);border-color:var(--brick);}
-        .choice .t{font-weight:500;font-size:15px;color:var(--ink);}
-        .choice .x{font-size:12.5px;color:var(--inkMute);line-height:1.45;margin-top:4px;}
-        .slotgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0;}
-        .slotbtn{background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;
-          padding:14px 10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--ink);
-          cursor:pointer;text-align:center;}
-        .slotbtn:hover{background:var(--paperSoft);border-color:var(--brick);}
-        .slotbtn.sel{background:var(--brickTint);border-color:var(--brick);color:var(--brickDeep);font-weight:500;}
-        .slotmsg{font-size:12.5px;color:var(--inkMute);padding:10px 2px;font-family:'JetBrains Mono',monospace;}
-        @media (max-width:480px){.slotgrid{grid-template-columns:1fr;}}
-        .toggle{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:14px;color:var(--inkSoft);}
-        .toggle input{width:16px;height:16px;accent-color:var(--brick);}
-        .quote{background:var(--paper);border:1px solid var(--hairStrong);border-radius:12px;padding:0;margin-top:16px;overflow:hidden;
-          box-shadow:0 1px 0 rgba(255,255,255,.45) inset, 0 16px 48px rgba(20,17,14,.08);}
-        .quote .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-          padding:16px 22px;margin:0;border-bottom:1px solid var(--hair);background:var(--paperSoft);}
-        .quote .qhead-l{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;
-          text-transform:uppercase;color:var(--inkMute);}
-        .quote .qhead-t{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:500;color:var(--ink);white-space:nowrap;}
-        .quote .qhead-t span{font-family:'General Sans',sans-serif;font-size:11px;color:var(--inkMute);font-weight:400;letter-spacing:0;}
-        .quote .qmeta{font-size:12.5px;color:var(--inkMute);padding:14px 22px 4px;}
-        .quote .qlines{padding:4px 22px 12px;}
-        .quote .qrow{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--hair);font-size:14px;}
-        .quote .qrow:last-child{border-bottom:none;}
-        .quote .qk{color:var(--inkMute);}
-        .quote .qk em{font-style:normal;color:var(--inkFaint);font-size:10.5px;font-family:'JetBrains Mono',monospace;margin-left:6px;}
-        .quote .qv{color:var(--ink);text-align:right;}
-        .quote .qnote{font-size:12px;color:var(--brickDeep);margin:4px 22px 16px;font-family:'JetBrains Mono',monospace;line-height:1.5;
-          border-left:2px solid var(--brick);padding-left:10px;}
-        .sqft-edit{display:flex;align-items:center;gap:8px;margin:8px 22px 16px;}
-        .sqft-edit input{width:110px;padding:9px 11px;font-size:13px;border:1px solid var(--hairStrong);border-radius:2px;background:var(--paper);color:var(--ink);}
-        .sqft-edit button{font-size:12px;padding:9px 14px;border:1px solid var(--hairStrong);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
-        .qload{display:flex;align-items:center;gap:14px;padding:22px;}
-        .qload .spin{width:22px;height:22px;border-radius:50%;border:2px solid var(--brickSoft);
-          border-top-color:var(--brick);animation:spin .7s linear infinite;flex:none;}
-        @keyframes spin{to{transform:rotate(360deg);}}
-        .qload .ltxt{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.1em;
-          text-transform:uppercase;color:var(--inkMute);line-height:1.5;}
-        .qload .ltxt b{display:block;font-family:'General Sans',sans-serif;font-size:14px;letter-spacing:0;
-          text-transform:none;color:var(--ink);font-weight:500;margin-bottom:3px;}
-        .qmsg{font-size:13px;color:var(--inkMute);padding:22px;line-height:1.55;}
-        @media (prefers-reduced-motion: reduce){.qload .spin{animation:none;border-top-color:var(--brickSoft);}}
-        .review{background:var(--paper);border:1px solid var(--hairStrong);border-radius:12px;padding:8px 22px 12px;}
-        .review .rrow{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--hair);font-size:14px;}
-        .review .rrow:last-child{border-bottom:none;}
-        .review .rk{color:var(--inkMute);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;}
-        .review .rv{color:var(--ink);text-align:right;}
-        .nav-btns{display:flex;justify-content:space-between;gap:12px;margin:28px 0 8px;}
-        .btn{font-weight:500;font-size:14px;border-radius:2px;padding:13px 22px;cursor:pointer;border:none;
-          font-family:'General Sans',sans-serif;}
-        .btn-brick{background:var(--brick);color:#fff;}
-        .btn-brick:disabled{opacity:0.5;cursor:not-allowed;}
-        .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--hairStrong);}
-        .err{color:var(--brickDeep);font-size:12.5px;font-family:'JetBrains Mono',monospace;margin-top:-8px;margin-bottom:12px;min-height:14px;}
-        .done-box{background:var(--paper);border:1px solid var(--hairStrong);border-radius:12px;padding:36px 28px;text-align:center;}
-        .done-box h2{color:var(--ink);margin-bottom:8px;}
-        .done-box p{font-size:14px;color:var(--inkMute);}
-        .faq-head{margin:0 0 22px;}
-        .faq-head h2{font-weight:500;font-size:30px;letter-spacing:-0.7px;color:var(--ink);margin-bottom:8px;}
-        .faq-head p{font-size:14px;color:var(--inkMute);}
-        .faq{display:flex;flex-direction:column;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .qa{background:var(--paper);padding:22px 26px;}
-        .qa h4{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:8px;}
-        .qa p{font-size:13.5px;color:var(--inkMute);line-height:1.5;}
-        .qa p a{color:var(--brickDeep);}
-        @media (max-width:640px){.choices,.grid2{grid-template-columns:1fr;} .panel h2{font-size:26px;}}
-      `}</style>
     </>
   )
 }
