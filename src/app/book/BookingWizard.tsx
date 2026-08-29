@@ -303,7 +303,7 @@ export default function BookingWizard() {
       if (!name.trim()) msg = 'Agent name required.'
       else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) msg = 'Valid email required.'
       else if (!phone.trim()) msg = 'Phone required.'
-      else if (!brokerage.trim()) msg = 'Brokerage required.'
+      else if (!brokerage.trim()) msg = 'Office required.'
       else if (!addr.trim()) msg = 'Property address required.'
     }
     if (s === 1) {
@@ -436,10 +436,10 @@ export default function BookingWizard() {
               <p className="hint">Tell us about the listing and who&apos;s booking. Start typing the address for suggestions.</p>
               <div className="grid2">
                 <div className="field"><label>Listing agent name <span className="req">*</span></label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Agent" /></div>
-                <div className="field"><label>Brokerage <span className="req">*</span></label><input value={brokerage} onChange={(e) => setBrokerage(e.target.value)} placeholder="e.g. Your brokerage" /></div>
+                <div className="field"><label>Office <span className="req">*</span></label><input value={brokerage} onChange={(e) => setBrokerage(e.target.value)} placeholder="e.g. Your office" /></div>
               </div>
               <div className="grid2">
-                <div className="field"><label>Email <span className="req">*</span></label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@brokerage.com" /></div>
+                <div className="field"><label>Email <span className="req">*</span></label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" /></div>
                 <div className="field"><label>Phone <span className="req">*</span></label><input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="416-..." /></div>
               </div>
               <div className="field" ref={addrFieldRef}>
@@ -548,7 +548,7 @@ export default function BookingWizard() {
               <p className="hint">Confirm details, then pay to lock your slot. Full amount (incl. HST) charged now via Stripe.</p>
               <div className="review">
                 {[
-                  ['Agent', name.trim() || '—'], ['Brokerage', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
+                  ['Agent', name.trim() || '—'], ['Office', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
                   ['Property', addr.trim() || '—'], ['Type', propertyType || '—'],
                   ['Package', pkg ? PKG_LABEL[pkg] : 'Custom (à la carte)'],
                   ['Licensed drone', drone ? 'Yes' : 'No — Photos only'], ['Floor plan', drone ? 'Yes' : 'No — Photos only'],
