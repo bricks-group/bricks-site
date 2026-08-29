@@ -12,6 +12,13 @@
 // number instead. Without this, editing `quote.total` in devtools before
 // hitting Pay would let anyone check out for any amount.
 //
+// Wallets: this is hosted Stripe Checkout (not Payment Element / PaymentIntent).
+// Apple Pay and Google Pay are NOT separate payment_method_types — they show
+// on Checkout when `card` is enabled and the shopper's device/browser supports
+// them (Safari/iOS → Apple Pay, Chrome/Android → Google Pay). Stripe Link is
+// `link`. We do not add PayPal, Klarna, Afterpay, or Interac (acss_debit).
+// Dashboard must still have Apple Pay / Google Pay / Link enabled.
+//
 // Deploy:  supabase functions deploy create-checkout
 // Needs:   STRIPE_SECRET_KEY (set via `supabase secrets set STRIPE_SECRET_KEY=...`)
 //          APP_URL (your public prelaunch site; set already)
@@ -32,10 +39,47 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
+const WALLET_DOMAINS = ['brxs.ca', 'www.brxs.ca'];
+
 function bad(msg: string, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: msg }), {
     status, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
+}
+
+function publicAppUrl() {
+  return (Deno.env.get('APP_URL') || 'https://www.brxs.ca').replace(/\/$/, '');
+}
+
+// Register Apple Pay / Google Pay / Link domains with Stripe. Hosted Checkout
+// itself is on checkout.stripe.com (Stripe registers that), but Stripe still
+// wants brxs.ca + www.brxs.ca registered for wallet buttons and for Apple's
+// domain association check. Duplicate domains return an error we ignore so
+// checkout never depends on this succeeding.
+async function ensureWalletDomains(stripeKey: string) {
+  await Promise.all(WALLET_DOMAINS.map((domain_name) =>
+    fetch('https://api.stripe.com/v1/payment_method_domains', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${stripeKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({ domain_name }).toString(),
+    }).catch((e) => {
+      console.warn('payment_method_domains register failed for ' + domain_name + ': ' + String(e));
+      return null;
+    }),
+  ));
+}
+
+async function createCheckoutSession(stripeKey: string, form: URLSearchParams) {
+  const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: form.toString(),
+  });
+  const j = await res.json();
+  return { ok: res.ok, status: res.status, j };
 }
 
 Deno.serve(async (req: Request) => {
@@ -44,7 +88,7 @@ Deno.serve(async (req: Request) => {
 
   const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
   if (!stripeKey) return bad('Stripe not configured (set STRIPE_SECRET_KEY)', 503);
-  const appUrl = Deno.env.get('APP_URL') || 'https://bricks-booking.prelaunch';
+  const appUrl = publicAppUrl();
   const supabaseUrl = Deno.env.get('SUPABASE_URL');
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
   if (!supabaseUrl || !serviceKey) return bad('Server misconfigured', 500);
@@ -109,8 +153,17 @@ Deno.serve(async (req: Request) => {
   const form = new URLSearchParams();
   form.set('mode', 'payment');
   form.set('currency', 'cad');
-  form.set('success_url', `${appUrl}/book.html?paid=1&session_id={CHECKOUT_SESSION_ID}`);
-  form.set('cancel_url', `${appUrl}/book.html?paid=0`);
+  form.set('locale', 'en-CA');
+  form.set('submit_type', 'book');
+  // Live route is /book (Next.js). book.html is a leftover static page.
+  form.set('success_url', `${appUrl}/book?paid=1&session_id={CHECKOUT_SESSION_ID}`);
+  form.set('cancel_url', `${appUrl}/book?paid=0`);
+  // card → Apple Pay / Google Pay wallets on supported devices. link → Stripe Link.
+  // Explicit list so Dashboard toggles for PayPal / Klarna / Afterpay / Interac
+  // cannot appear on this session.
+  form.append('payment_method_types[0]', 'card');
+  form.append('payment_method_types[1]', 'link');
+  if (meta.email) form.set('customer_email', meta.email);
   form.append('line_items[0][price_data][currency]', 'cad');
   form.append('line_items[0][price_data][product_data][name]', `Bricks listing media — ${meta.property_address}`);
   form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || 'HDR photo + drone'} (incl. HST). Travel ${q.travel_fee} CAD, base ${q.base_rate} CAD.`);
@@ -135,14 +188,17 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[quote_json]', meta.quote_json);
 
   try {
-    const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${stripeKey}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: form.toString(),
-    });
-    const j = await res.json();
-    if (!res.ok) return bad('Stripe error: ' + (j.error?.message || res.status), 502);
-    return new Response(JSON.stringify({ ok: true, url: j.url, session_id: j.id }), {
+    await ensureWalletDomains(stripeKey);
+    let session = await createCheckoutSession(stripeKey, form);
+    // If Link is not enabled on the Stripe account yet, retry cards-only so
+    // checkout (and Apple Pay / Google Pay, which ride on `card`) keep working.
+    const linkErr = String(session.j?.error?.message || '');
+    if (!session.ok && /link/i.test(linkErr)) {
+      form.delete('payment_method_types[1]');
+      session = await createCheckoutSession(stripeKey, form);
+    }
+    if (!session.ok) return bad('Stripe error: ' + (session.j.error?.message || session.status), 502);
+    return new Response(JSON.stringify({ ok: true, url: session.j.url, session_id: session.j.id }), {
       status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (e) {
