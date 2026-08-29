@@ -3,18 +3,14 @@
 import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics'
 
-// Best-effort funnel analytics via Vercel Web Analytics. Never throws into the flow.
 type TrackProps = Record<string, string | number | boolean | null | undefined>
 function evt(name: string, props?: TrackProps) {
   try { track(name, props) } catch { /* analytics is best-effort */ }
 }
 
-const SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/'
-const ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
-
 export default function NewsletterPopup() {
   const [show, setShow] = useState(false)
-  const [seen, setSeen] = useState(true) // default true until we check sessionStorage, avoids SSR flash
+  const [seen, setSeen] = useState(true)
   const [email, setEmail] = useState('')
   const [msg, setMsg] = useState('')
 
@@ -40,11 +36,11 @@ export default function NewsletterPopup() {
 
   function submit(e: React.FormEvent) {
     e.preventDefault()
-    if (!/^[^@\s]+@[^@\s]+.[^@\s]+$/.test(email)) { setMsg('Enter a valid email.'); return }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg('Enter a valid email.'); return }
     evt('newsletter_subscribe_started', { source: 'popup' })
     setMsg('Subscribing…')
-    fetch(SUPABASE + 'newsletter-signup', {
-      method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON },
+    fetch('/api/newsletter', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, source: 'popup' }),
     })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok !== false })))
@@ -62,17 +58,17 @@ export default function NewsletterPopup() {
   return (
     <>
       {!seen && !show && (
-        <button className="nl-pill" aria-label="Join the newsletter for launch updates and founder pricing" onClick={() => setShow(true)}>
-          Founder pricing
+        <button className="nl-pill" aria-label="Join the Bricks list for platform and pricing updates" onClick={() => setShow(true)}>
+          Platform updates
         </button>
       )}
-      <div className={`nl-pop${show ? ' show' : ''}`} role="dialog" aria-label="Newsletter signup for launch updates and founder pricing">
+      <div className={`nl-pop${show ? ' show' : ''}`} role="dialog" aria-label="Newsletter signup for platform and pricing updates">
         <button className="x" aria-label="Dismiss" onClick={hide}>×</button>
-        <h4>Get founder pricing.</h4>
-        <p>Join the newsletter for launch updates — and lock in a discounted founder rate before Bricks opens to everyone. No spam.</p>
+        <h4>Stay on the list.</h4>
+        <p>Launch notes for Bricks — listing media and the OS for Canadian real estate. Platform and published pricing, no spam.</p>
         <form onSubmit={submit}>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@brokerage.com" aria-label="Email" required />
-          <button type="submit" className="btn btn-brick">Claim founder rate</button>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@office.com" aria-label="Email" required />
+          <button type="submit" className="btn btn-brick">Get updates</button>
           <div className="nlmsg">{msg}</div>
           <div className="consent">By subscribing you agree to receive Bricks newsletter and launch update emails. Unsubscribe anytime. CASL-compliant.</div>
         </form>
