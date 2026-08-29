@@ -1,7 +1,7 @@
 // Supabase Edge Function: stripe-webhook
 // Stripe calls this on checkout.session.completed.
 // Path: payment success → media_booking_leads (status=paid, OS /bookings queue)
-//     → jobs row assigned to Kam (Dispatch fulfill) with payout_status=unpaid
+//     → jobs row auto-assigned (location/package/tier/skills/RPAS) or left unassigned
 //     → Cal.com slot (best-effort) → owner SMS/email (best-effort).
 // Does NOT auto-charge photographers. Does NOT create Connect transfers.
 //
@@ -14,9 +14,87 @@
 
 const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
 
-// Kam is the photographer/vendor who fulfills first bookings.
 const KAM_VENDOR_ID = '0c3fa7c2-d23b-4e44-90ad-ab2d19af2580';
-const KAM_VENDOR_NAME = 'Ajani Kamali Akio';
+const ORG_VENDOR_ID = 'default_vendor';
+const GTA = ['gta','toronto','mississauga','brampton','vaughan','markham','oakville','peel','halton','york','durham','etobicoke','scarborough'];
+
+function packageIdOf(name: string): string {
+  const n = (name || '').toLowerCase();
+  if (n.includes('estate')) return 'estate';
+  if (n.includes('luxury')) return 'luxury';
+  if (n.includes('premium')) return 'premium';
+  if (n.includes('standard')) return 'standard';
+  return n.split(/[^a-z0-9]+/)[0] || 'standard';
+}
+function minTierOf(pkg: string): number {
+  if (pkg === 'estate' || pkg === 'luxury') return 3;
+  if (pkg === 'premium') return 2;
+  return 1;
+}
+function isOwner(m: any): boolean {
+  const role = String(m?.role || '').toLowerCase();
+  const email = String(m?.email || '').toLowerCase();
+  return role === 'owner' || m?.id === KAM_VENDOR_ID || email === 'akashorter@icloud.com' || email === 'akashorter@gmail.com';
+}
+function isAman(m: any): boolean {
+  const status = String(m?.onboarding_status || '').toLowerCase();
+  if (status !== 'approved') return true;
+  const name = String(m?.name || '').toLowerCase();
+  return name.includes('aman') && name.includes('sammy');
+}
+function hasAdvancedRpas(m: any): boolean {
+  if (m?.rpas_advanced === true) return true;
+  return String(m?.rpas_certificate_level || '').toLowerCase() === 'advanced';
+}
+function vendorSkills(m: any): Set<string> {
+  const s = new Set<string>();
+  for (const x of (m?.skills || [])) s.add(String(x).toLowerCase());
+  const spec = String(m?.specialty || '').toLowerCase();
+  if (spec) s.add(spec === 'photography' ? 'photo' : spec);
+  if (m?.drone_certified || hasAdvancedRpas(m)) s.add('drone');
+  if (m?.polycam_equipped) s.add('tour');
+  if (!s.size) s.add('photo');
+  return s;
+}
+function locationOk(m: any, address: string, city: string): boolean {
+  const hay = `${city || ''} ${address || ''}`.toLowerCase();
+  const areas = [...(m?.service_areas || []), m?.home_city || ''].map((a: string) => String(a).toLowerCase()).filter(Boolean);
+  if (!areas.length) return true;
+  if (areas.some((a: string) => a && hay.includes(a))) return true;
+  const vgta = areas.some((a: string) => GTA.some((g) => a.includes(g)));
+  const jgta = GTA.some((g) => hay.includes(g));
+  return vgta && (jgta || !hay.trim());
+}
+
+async function pickAssignee(supabaseUrl: string, serviceKey: string, job: any): Promise<string> {
+  const url = `${supabaseUrl}/rest/v1/vendor_members?select=*&is_active=eq.true&limit=200`;
+  const res = await fetch(url, { headers: restHeaders(serviceKey) });
+  if (!res.ok) return '';
+  const rows = await res.json();
+  const needed = new Set<string>(['photo']);
+  const addKeys = (job.add_ons || []).map((a: any) => String(a?.key || a).toLowerCase());
+  if (job.job_type === 'drone' || addKeys.includes('drone')) needed.add('drone');
+  if (addKeys.includes('reel')) needed.add('reel');
+  if (addKeys.includes('tour')) needed.add('tour');
+  if (addKeys.includes('twilight')) needed.add('twilight');
+  const minTier = job.min_tier_required || 1;
+  const eligible = (rows || []).filter((m: any) => {
+    if (isAman(m)) return false;
+    if ((m.tier || 1) < minTier) return false;
+    if (!locationOk(m, job.address, job.city)) return false;
+    const have = vendorSkills(m);
+    for (const k of needed) if (!have.has(k) && !(k === 'photo' && have.has('photography'))) return false;
+    if (needed.has('drone') && !hasAdvancedRpas(m)) return false;
+    return true;
+  });
+  eligible.sort((a: any, b: any) => {
+    const oa = isOwner(a) ? 1 : 0;
+    const ob = isOwner(b) ? 1 : 0;
+    if (oa !== ob) return ob - oa;
+    return (b.tier || 1) - (a.tier || 1);
+  });
+  return eligible[0]?.id || '';
+}
 
 function msg(s: string, status = 200) {
   return new Response(JSON.stringify({ received: true, note: s }), {
@@ -197,38 +275,45 @@ async function ensureDispatchJob(opts: {
 
   const now = new Date().toISOString();
   const rush = opts.m.rush_addon === 'true';
+  const drone = opts.m.drone_addon === 'true';
   const addOns = [
+    drone ? { key: 'drone', included: true } : null,
     opts.m.reel_addon === 'true' ? { key: 'reel', included: true } : null,
     opts.m.tour_addon === 'true' ? { key: 'tour', included: true } : null,
     opts.m.twilight_addon === 'true' ? { key: 'twilight', included: true } : null,
     rush ? { key: 'rush', included: true } : null,
   ].filter(Boolean);
+  const pkg = packageIdOf(opts.m.package_interest || '');
+  const minTier = minTierOf(pkg);
+  const cityGuess = (opts.m.property_address || '').split(',').slice(-2, -1)[0]?.trim() || '';
 
-  const job = {
+  const job: Record<string, unknown> = {
     id: crypto.randomUUID(),
     booking_id: opts.leadId,
     address: opts.m.property_address || '—',
-    city: '',
-    state: '',
+    city: cityGuess,
+    state: 'ON',
     zip_code: '',
     lat: opts.quote.lat,
     lng: opts.quote.lon,
     time_window_start: torontoClock(opts.m.selected_slot_start || null),
     time_window_end: opts.m.selected_slot_end ? torontoClock(opts.m.selected_slot_end) : '',
-    job_type: 'photo',
-    status: 'assigned',
+    job_type: drone ? 'drone' : 'photo',
+    status: 'unassigned',
     priority: rush ? 'rush' : 'normal',
     property_details: `${opts.m.property_type || 'listing'} · paid www.brxs.ca/book · lead ${opts.leadId} · stripe ${opts.sessionId}`,
     client_instructions: opts.m.notes || '',
     checklist: [],
-    assignee_id: KAM_VENDOR_ID,
-    vendor_id: KAM_VENDOR_ID,
+    assignee_id: '',
+    vendor_id: ORG_VENDOR_ID,
     scheduled_date: opts.preferredDate,
     agent_name: opts.m.agent_name || null,
     agent_email: opts.m.email || null,
     agent_brokerage: opts.m.brokerage || null,
+    package_id: pkg,
     package_name: opts.m.package_interest || 'Listing media',
     package_price: opts.quote.total != null ? Math.round(opts.quote.total) : null,
+    rack_price: opts.quote.total != null ? Math.round(opts.quote.total) : null,
     add_ons: addOns,
     billing_type: 'stripe_prepaid',
     created_at: now,
@@ -236,13 +321,73 @@ async function ensureDispatchJob(opts: {
     payout_status: 'unpaid',
     payout_amount: null,
     payout_transfer_id: null,
-    vendor_name: KAM_VENDOR_NAME,
-    vendor_tier: 1,
+    vendor_name: null,
+    vendor_tier: minTier,
+    min_tier_required: minTier,
+    preferred_tier: minTier,
     vendor_payout: null,
     platform_margin: null,
     is_rush: rush,
     ai_flags: [],
   };
+
+  let assignee = '';
+  const dispatchUrl = (Deno.env.get('DISPATCH_API_URL') || 'https://dispatch-api.brxs.ca').replace(/\/$/, '');
+  const internalKey = (Deno.env.get('INTERNAL_API_KEY') || (Deno.env.get('INTERNAL_API_KEYS') || '').split(',')[0] || '').trim();
+  if (internalKey) {
+    try {
+      const intake = await fetch(`${dispatchUrl}/api/v1/dispatch/jobs`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Internal-Api-Key': internalKey },
+        body: JSON.stringify({
+          booking_id: opts.leadId,
+          address: job.address,
+          city: job.city,
+          state: 'ON',
+          lat: job.lat,
+          lng: job.lng,
+          time_window_start: job.time_window_start,
+          time_window_end: job.time_window_end,
+          job_type: job.job_type,
+          priority: job.priority,
+          property_details: job.property_details,
+          client_instructions: job.client_instructions,
+          scheduled_date: job.scheduled_date,
+          vendor_id: ORG_VENDOR_ID,
+          assignee_id: '',
+          agent_name: job.agent_name,
+          agent_email: job.agent_email,
+          agent_brokerage: job.agent_brokerage,
+          package_id: pkg,
+          package_name: job.package_name,
+          package_price: job.package_price,
+          rack_price: job.rack_price,
+          add_ons: addOns,
+          min_tier_required: minTier,
+          preferred_tier: minTier,
+          is_rush: rush,
+        }),
+      });
+      if (intake.ok) {
+        const body = await intake.json();
+        return { jobId: body.job_id || body.id || null, created: true };
+      }
+      console.error('dispatch intake failed: ' + (await intake.text()).slice(0, 300));
+    } catch (e) {
+      console.error('dispatch intake error: ' + String(e));
+    }
+  }
+
+  assignee = await pickAssignee(opts.supabaseUrl, opts.serviceKey, job);
+  if (assignee) {
+    job.assignee_id = assignee;
+    job.status = 'assigned';
+    job.vendor_name = assignee === KAM_VENDOR_ID ? 'Ajani Kamali Akio' : null;
+    job.vendor_tier = assignee === KAM_VENDOR_ID ? 3 : job.vendor_tier;
+  } else {
+    job.status = 'unassigned';
+    job.assignee_id = '';
+  }
 
   const res = await fetch(`${opts.supabaseUrl}/rest/v1/jobs`, {
     method: 'POST',
