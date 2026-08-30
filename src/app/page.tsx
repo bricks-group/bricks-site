@@ -5,7 +5,6 @@ import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
 import { PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
-import { LOOP } from '@/lib/catalog'
 import {
   AREA_SERVED_SCHEMA,
   KNOWS_ABOUT,
@@ -62,11 +61,6 @@ export default function Home() {
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/platform">See the platform</Link>
-          </div>
-          <div className="loop" aria-label="Property to close">
-            {LOOP.map((step) => (
-              <span key={step}>{step}</span>
-            ))}
           </div>
         </div>
       </section>
@@ -254,8 +248,6 @@ export default function Home() {
         .aud-sec{padding:8px 0 24px;}
         .aud-lede{font-size:15px;color:var(--inkSoft);max-width:560px;margin:-12px 0 22px;line-height:1.5;}
         .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .loop{display:flex;flex-wrap:wrap;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:28px;max-width:760px;}
-        .loop span{flex:1 1 88px;background:var(--paper);padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:500;}
         .aud-card{background:var(--paper);padding:22px 24px;text-decoration:none;color:inherit;display:block;}
         .aud-card:hover{background:var(--paperSoft);}
         .aud-card h3{font-weight:500;font-size:18px;letter-spacing:-0.4px;color:var(--ink);margin:8px 0 6px;}
