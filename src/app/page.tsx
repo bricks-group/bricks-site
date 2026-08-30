@@ -14,16 +14,16 @@ const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~
 
 export const metadata: Metadata = {
   title: 'bricks — the desk for Canadian real estate',
-  description: "OS for Canadian real estate. Property to close — listing, booking, GO, media, MLS, transaction. Listing media is live. The platform is in development.",
+  description: "The operating system for Canadian real estate, from listing photo to closing the deal. Book professional media today — CRM, transactions, and MLS are next.",
   alternates: { canonical: '/' },
   openGraph: {
     title: 'bricks — the desk for Canadian real estate',
-    description: "OS for Canadian real estate. Property to close — listing, booking, GO, media, MLS, transaction. Listing media is live. The platform is in development.",
+    description: "The operating system for Canadian real estate, from listing photo to closing the deal. Book professional media today — CRM, transactions, and MLS are next.",
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
     title: 'bricks — the desk for Canadian real estate',
-    description: 'OS for Canadian real estate. Listing media is live. The platform is in development.',
+    description: 'The operating system for Canadian real estate. Book media today — CRM, transactions, and MLS are next.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
@@ -57,7 +57,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The desk for the deal.</h1>
-          <p className="sub">OS for Canadian real estate. Property to close — listing, booking, GO, media, MLS, transaction. Listing media is live now, the beachhead. The rest of the platform is in development.</p>
+          <p className="sub">The operating system for Canadian real estate — from listing photo to closing the deal. Book professional media today. CRM, transactions, and MLS are next.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/platform">See the platform</Link>
