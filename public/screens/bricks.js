@@ -250,8 +250,8 @@ function Btn({ children, variant='primary', dark=false, full=false, icon, style=
 
 // ─── Role-aware console config (brokerage / team / solo) ───
 const BROK_ROLES = {
-  brokerage: {
-    wsNm:'Studio North', wsMeta:'47 agents', ini:'EA', who:'Elena Asare', role:'Operations',
+  office: {
+    wsNm:'Ashfield', wsMeta:'47 agents', ini:'EA', who:'Elena Asare', role:'Operations',
     nav:[
       { group:null,        items:[['grid','Overview','overview']] },
       { group:'Deal flow', items:[['users','CRM','crm'],['cards','Transactions','transactions'],['up','MLS submission','mls'],['file','Forms & e-sign','forms']] },
@@ -280,20 +280,21 @@ const BROK_ROLES = {
     ],
   },
 };
+BROK_ROLES.brokerage = BROK_ROLES.office;
 
 // Each role gets a different default dashboard — greeting, KPIs and widgets tuned to what
 // that operator wants to see first. All of it is user-customizable (see customize state).
 const DASHBOARDS = {
-  brokerage: {
-    eyebrow:'Thursday · Week 16', hi:'Good morning, Elena.', cta:'New job',
+  office: {
+    eyebrow:'Thursday · Week 16', hi:'Good morning, Elena.', cta:'New deal',
     sub:(th)=><>Two deals need signatures. <span style={{color:th.ink}}>Close of $1.2M is Thursday.</span></>,
     kpis:[
-      {l:'Jobs this month',v:'184',d:'+12.4%',s:'vs 164 prev.'},
+      {l:'Deals this month',v:'184',d:'+12.4%',s:'vs 164 prev.'},
       {l:'GCI · April',v:'$182K',d:'+9.4%',s:'gross commission'},
       {l:'Company dollar',v:'$47.3K',d:'+6.0%',s:'after splits'},
       {l:'Active agents',v:'47',d:'+3',s:'onboarded · 30d'},
     ],
-    widgets:[['volume',4],['today',2],['pipeline',2],['leaderboard',2],['trust',2]],
+    widgets:[['pipeline',4],['volume',2],['today',2],['leaderboard',2],['trust',2]],
   },
   team: {
     eyebrow:'Ortega Group · Week 16', hi:'Morning, Marisol.', cta:'New job',
@@ -318,6 +319,7 @@ const DASHBOARDS = {
     widgets:[['nextshoot',2],['income',2],['followups',2],['listings',4],['closings',2]],
   },
 };
+DASHBOARDS.brokerage = DASHBOARDS.office;
 const WTITLE = {
   volume:'Job volume · 24 days', today:'Today · 6 shoots', pipeline:'Pipeline by stage',
   leaderboard:'Top performers · 30d', trust:'Trust & reconciliation', closings:'Upcoming closings',
@@ -325,7 +327,7 @@ const WTITLE = {
 };
 
 function DashRole({ th, dark, role, customize }) {
-  const D = DASHBOARDS[role] || DASHBOARDS.brokerage;
+  const D = DASHBOARDS[role] || DASHBOARDS.office;
   return (
     <>
       <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
@@ -550,10 +552,10 @@ function wFollowups(th){
 }
 
 // Brokerage — web shell with all screens. dark toggle support.
-function BrokShell({ dark=false, screen='overview', role='brokerage', customize=false, locked=false }) {
+function BrokShell({ dark=false, screen='overview', role='office', customize=false, locked=false }) {
   const th = useTheme(dark);
   const [cur, setCur] = React.useState(screen);
-  const RC = BROK_ROLES[role] || BROK_ROLES.brokerage;
+  const RC = BROK_ROLES[role] || BROK_ROLES.office;
   const NAV = RC.nav;
   return (
     <div style={{ width:1440, height:920, background:th.bg, color:th.ink, fontFamily:F.display, display:'flex', overflow:'hidden' }}>
@@ -640,7 +642,7 @@ function TopBar({ th, screen }) {
 }
 
 // ─── OVERVIEW ───
-function OverviewContent({ th, dark, role='brokerage', customize=false }) {
+function OverviewContent({ th, dark, role='office', customize=false }) {
   // Every role — brokerage, team, solo — renders the same customizable widget dashboard.
   return <DashRole th={th} dark={dark} role={role} customize={customize}/>;
 }
@@ -766,7 +768,7 @@ function JobDetailContent({ th, dark }) {
               {[
                 ['M. Ortega', 'Agent', 'EA'],
                 ['J. Reyes',  'Vendor', 'JR'],
-                ['Studio North', 'Brokerage', 'HR'],
+                ['Ashfield', 'Office', 'AS'],
               ].map(([n,r,in2]) => (
                 <div key={n} style={{ display:'flex', alignItems:'center', gap:12 }}>
                   <div style={{ width:32, height:32, borderRadius:2, background:T.brickSoft, color:T.brickDeep, display:'flex', alignItems:'center', justifyContent:'center', fontSize:11, fontWeight:600 }}>{in2}</div>
@@ -928,13 +930,13 @@ function BillingContent({ th, dark }) {
 
 function SettingsContent({ th, dark }) {
   const sections = [
-    ['Brokerage', [['Name','Studio North'],['Domain','harbor.co'],['Time zone','America / Toronto']]],
+    ['Office', [['Name','Ashfield'],['Domain','harbor.co'],['Time zone','America / Toronto']]],
     ['Defaults',  [['Default package','Standard · $379'],['Turnaround SLA','24 hours'],['Auto-assign vendor','On · nearest']]],
     ['Notifications', [['New booking','Email + push'],['Delivery ready','Email'],['Weekly digest','Monday 8:00']]],
   ];
   return (
     <>
-      <div><div style={{ fontSize:30, fontWeight:500, letterSpacing:-1 }}>Settings</div><div style={{ fontSize:13, color:th.ink2, marginTop:4 }}>Brokerage · team · preferences</div></div>
+      <div><div style={{ fontSize:30, fontWeight:500, letterSpacing:-1 }}>Settings</div><div style={{ fontSize:13, color:th.ink2, marginTop:4 }}>Office · team · preferences</div></div>
       {sections.map(([title, rows]) => (
         <div key={title} style={{ border:`1px solid ${th.hair}`, borderRadius:2 }}>
           <div style={{ padding:'18px 24px', borderBottom:`1px solid ${th.hair}` }}>
@@ -1207,7 +1209,7 @@ function FormsContent({ th, dark }) {
   ];
   const docs = [
     ['Agreement of Purchase & Sale','Form 100','214 Linden St','Buyer, Seller, 2 agents',2,3,'Partially signed','warn'],
-    ['Confirmation of Cooperation','Form 320','8 Riverbend','Both brokerages',2,2,'Completed','ok'],
+    ['Confirmation of Cooperation','Form 320','8 Riverbend','Both offices',2,2,'Completed','ok'],
     ['Listing Agreement','Form 200','201 Oak Dr','Seller, Listing agent',1,2,'Sent','neutral'],
     ['FINTRAC Individual ID','IIR','30 Mercer Loop','Buyer',0,1,'Draft','neutral'],
     ['Working with a Realtor','RECO','55 Birch Way','Buyer',1,1,'Completed','ok'],
@@ -1465,7 +1467,7 @@ function BookRegister({ dark=false }) {
         <Over color={th.ink4}>Create account</Over>
         <div style={{ fontSize:28, fontWeight:500, letterSpacing:-0.8, marginTop:10 }}>A few details.</div>
         <div style={{ marginTop:24, display:'flex', flexDirection:'column', gap:14 }}>
-          {[['Full name','Marisol Ortega'],['Work email','mortega@harbor.co'],['Brokerage','Studio North'],['License #','RE·482901']].map(([l,v])=>(
+          {[['Full name','Marisol Ortega'],['Work email','mortega@harbor.co'],['Office','Ashfield'],['License #','RE·482901']].map(([l,v])=>(
             <div key={l}>
               <Over color={th.ink3}>{l}</Over>
               <div style={{ marginTop:8, padding:'14px 14px', border:`1px solid ${th.hair}`, borderRadius:2, fontSize:14 }}>{v}</div>
@@ -1674,7 +1676,7 @@ function BookProfile({ dark=false }) {
           <div style={{ width:56, height:56, borderRadius:2, background:T.brickSoft, color:T.brickDeep, display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, fontWeight:600 }}>MO</div>
           <div style={{ flex:1 }}>
             <div style={{ fontSize:17, fontWeight:500 }}>Marisol Ortega</div>
-            <div style={{ fontSize:12, color:th.ink3, marginTop:2 }}>Studio North · Agent</div>
+            <div style={{ fontSize:12, color:th.ink3, marginTop:2 }}>Ashfield · Agent</div>
           </div>
           <I name="cR" size={16} color={th.ink3}/>
         </div>
@@ -1732,7 +1734,7 @@ function DispOnboarding({ dark=true, slide=0 }) {
   const slides = [
     { eye:'FOR SHOOTERS', head:'Your day, queued up.', body:'Every job on the books — addresses, gate codes, packages, contact.', img:'VENDOR LOADING VAN' },
     { eye:'NAVIGATE',     head:'Drive time baked in.', body:'Bricks only books jobs you can actually make. Tap for directions.',  img:'DASHBOARD MAP' },
-    { eye:'UPLOAD',        head:'Shoot. Upload. Done.', body:'Drag the SD card in. Brokerage gets notified when editing starts.',  img:'SD CARD + LAPTOP' },
+    { eye:'UPLOAD',        head:'Shoot. Upload. Done.', body:'Drag the SD card in. Office gets notified when editing starts.',  img:'SD CARD + LAPTOP' },
   ];
   const s = slides[slide];
   return (
@@ -1940,7 +1942,7 @@ function DispJobDetail({ dark=true }) {
               <div style={{ width:36, height:36, borderRadius:2, background:T.brickSoft, color:T.brickDeep, display:'flex', alignItems:'center', justifyContent:'center', fontSize:11, fontWeight:600 }}>MO</div>
               <div style={{ flex:1 }}>
                 <div style={{ fontSize:14, fontWeight:500 }}>M. Ortega</div>
-                <div style={{ fontSize:11, color:th.ink3 }}>Studio North · Agent</div>
+                <div style={{ fontSize:11, color:th.ink3 }}>Ashfield · Agent</div>
               </div>
               <I name="phone" size={17} color={th.ink2}/>
             </div>

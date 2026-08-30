@@ -690,8 +690,8 @@
 
   // ─── Role-aware console config (brokerage / team / solo) ───
   const BROK_ROLES = {
-    brokerage: {
-      wsNm: 'Studio North',
+    office: {
+      wsNm: 'Ashfield',
       wsMeta: '47 agents',
       ini: 'EA',
       who: 'Elena Asare',
@@ -757,21 +757,22 @@
       }]
     }
   };
+  BROK_ROLES.brokerage = BROK_ROLES.office;
 
   // Each role gets a different default dashboard — greeting, KPIs and widgets tuned to what
   // that operator wants to see first. All of it is user-customizable (see customize state).
   const DASHBOARDS = {
-    brokerage: {
+    office: {
       eyebrow: 'Thursday · Week 16',
       hi: 'Good morning, Elena.',
-      cta: 'New job',
+      cta: 'New deal',
       sub: th => /*#__PURE__*/React.createElement(React.Fragment, null, "Two deals need signatures. ", /*#__PURE__*/React.createElement("span", {
         style: {
           color: th.ink
         }
       }, "Close of $1.2M is Thursday.")),
       kpis: [{
-        l: 'Jobs this month',
+        l: 'Deals this month',
         v: '184',
         d: '+12.4%',
         s: 'vs 164 prev.'
@@ -791,7 +792,7 @@
         d: '+3',
         s: 'onboarded · 30d'
       }],
-      widgets: [['volume', 4], ['today', 2], ['pipeline', 2], ['leaderboard', 2], ['trust', 2]]
+      widgets: [['pipeline', 4], ['volume', 2], ['today', 2], ['leaderboard', 2], ['trust', 2]]
     },
     team: {
       eyebrow: 'Ortega Group · Week 16',
@@ -828,7 +829,7 @@
       eyebrow: 'Thursday · Apr 18',
       hi: 'Hi, Marisol.',
       cta: 'Book a shoot',
-      sub: th => /*#__PURE__*/React.createElement(React.Fragment, null, "One shoot today, one deal firming up. You’re on pace for a ", /*#__PURE__*/React.createElement("span", {
+      sub: th => /*#__PURE__*/React.createElement(React.Fragment, null, "One shoot today, one deal firming up. You\u2019re on pace for a ", /*#__PURE__*/React.createElement("span", {
         style: {
           color: th.ink
         }
@@ -854,6 +855,7 @@
       widgets: [['nextshoot', 2], ['income', 2], ['followups', 2], ['listings', 4], ['closings', 2]]
     }
   };
+  DASHBOARDS.brokerage = DASHBOARDS.office;
   const WTITLE = {
     volume: 'Job volume · 24 days',
     today: 'Today · 6 shoots',
@@ -872,7 +874,7 @@
     role,
     customize
   }) {
-    const D = DASHBOARDS[role] || DASHBOARDS.brokerage;
+    const D = DASHBOARDS[role] || DASHBOARDS.office;
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
@@ -894,7 +896,7 @@
         color: th.ink2,
         marginTop: 6
       }
-    }, "Drag to reorder · remove what you don’t need · add from the library below.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
+    }, "Drag to reorder \xB7 remove what you don\u2019t need \xB7 add from the library below.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
       color: th.ink4
     }, D.eyebrow), /*#__PURE__*/React.createElement("div", {
       style: {
@@ -1390,7 +1392,7 @@
         fontSize: 12.5,
         color: th.ink2
       }
-    }, "April reconciled · 0 exceptions")));
+    }, "April reconciled \xB7 0 exceptions")));
   }
   function wClosings(th, dark) {
     const rows = [['8 Riverbend', 'Apr 26', '$1.28M', 'Firm', 'ok'], ['201 Oak Dr', 'Apr 29', '$910K', 'Financing', 'warn'], ['55 Birch Way', 'May 02', '$690K', 'Firm', 'ok']];
@@ -1528,7 +1530,7 @@
         fontFamily: F.mono,
         letterSpacing: '0.1em'
       }
-    }, "GOAL $260K · YEAR-END"), /*#__PURE__*/React.createElement("div", {
+    }, "GOAL $260K \xB7 YEAR-END"), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         alignItems: 'flex-end',
@@ -1580,7 +1582,7 @@
         color: '#C8BFB0',
         marginTop: 4
       }
-    }, "Today · 14:30 · J. Reyes"), /*#__PURE__*/React.createElement("div", {
+    }, "Today \xB7 14:30 \xB7 J. Reyes"), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 8,
@@ -1661,13 +1663,13 @@
   function BrokShell({
     dark = false,
     screen = 'overview',
-    role = 'brokerage',
+    role = 'office',
     customize = false,
     locked = false
   }) {
     const th = useTheme(dark);
     const [cur, setCur] = React.useState(screen);
-    const RC = BROK_ROLES[role] || BROK_ROLES.brokerage;
+    const RC = BROK_ROLES[role] || BROK_ROLES.office;
     const NAV = RC.nav;
     return /*#__PURE__*/React.createElement("div", {
       style: {
@@ -1836,7 +1838,7 @@
         display: 'flex',
         flexDirection: 'column',
         minWidth: 0,
-        overflow: (locked && cur === 'overview') ? 'hidden' : 'auto'
+        overflow: locked && cur === 'overview' ? 'hidden' : 'auto'
       }
     }, /*#__PURE__*/React.createElement(TopBar, {
       th: th,
@@ -1928,7 +1930,7 @@
         fontSize: 13,
         color: th.ink2
       }
-    }, "April 1 — 18, 2026"), /*#__PURE__*/React.createElement("div", {
+    }, "April 1 \u2014 18, 2026"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginLeft: 'auto',
         display: 'flex',
@@ -1951,14 +1953,14 @@
       name: "srch",
       size: 14,
       color: th.ink3
-    }), /*#__PURE__*/React.createElement("span", null, "Search jobs, agents…"), /*#__PURE__*/React.createElement("span", {
+    }), /*#__PURE__*/React.createElement("span", null, "Search jobs, agents\u2026"), /*#__PURE__*/React.createElement("span", {
       style: {
         marginLeft: 'auto',
         fontFamily: F.mono,
         fontSize: 10,
         color: th.ink4
       }
-    }, "⌘K")), /*#__PURE__*/React.createElement(I, {
+    }, "\u2318K")), /*#__PURE__*/React.createElement(I, {
       name: "bell",
       size: 17,
       color: th.ink3
@@ -1969,7 +1971,7 @@
   function OverviewContent({
     th,
     dark,
-    role = 'brokerage',
+    role = 'office',
     customize = false
   }) {
     // Every role — brokerage, team, solo — renders the same customizable widget dashboard.
@@ -2165,7 +2167,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "184 this month · 12 today")), /*#__PURE__*/React.createElement("div", {
+    }, "184 this month \xB7 12 today")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 10
@@ -2223,7 +2225,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink4
-    }, "Jobs → #08412"), /*#__PURE__*/React.createElement(Pill, {
+    }, "Jobs \u2192 #08412"), /*#__PURE__*/React.createElement(Pill, {
       tone: "brick",
       dark: dark
     }, "In progress")), /*#__PURE__*/React.createElement("div", {
@@ -2238,7 +2240,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "Toronto, ON · House · 2,140 sqft")), /*#__PURE__*/React.createElement("div", {
+    }, "Toronto, ON \xB7 House \xB7 2,140 sqft")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 10
@@ -2273,7 +2275,7 @@
     }, /*#__PURE__*/React.createElement(Img, {
       w: "100%",
       h: 320,
-      label: "PROPERTY HERO — LINDEN ST",
+      label: "PROPERTY HERO \u2014 LINDEN ST",
       dark: dark,
       r: 0
     })), /*#__PURE__*/React.createElement("div", {
@@ -2363,13 +2365,13 @@
         marginTop: 10,
         letterSpacing: -0.3
       }
-    }, "Premium · $749"), /*#__PURE__*/React.createElement("div", {
+    }, "Premium \xB7 $749"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
         color: th.ink3,
         marginTop: 6
       }
-    }, "40 photos · Drone · 60-sec reel · Floor plan")), /*#__PURE__*/React.createElement("div", {
+    }, "40 photos \xB7 Drone \xB7 60-sec reel \xB7 Floor plan")), /*#__PURE__*/React.createElement("div", {
       style: {
         border: `1px solid ${th.hair}`,
         borderRadius: 2,
@@ -2384,7 +2386,7 @@
         flexDirection: 'column',
         gap: 14
       }
-    }, [['M. Ortega', 'Agent', 'EA'], ['J. Reyes', 'Vendor', 'JR'], ['Studio North', 'Brokerage', 'HR']].map(([n, r, in2]) => /*#__PURE__*/React.createElement("div", {
+    }, [['M. Ortega', 'Agent', 'EA'], ['J. Reyes', 'Vendor', 'JR'], ['Ashfield', 'Office', 'AS']].map(([n, r, in2]) => /*#__PURE__*/React.createElement("div", {
       key: n,
       style: {
         display: 'flex',
@@ -2476,7 +2478,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "47 active · 3 invited")), /*#__PURE__*/React.createElement("div", {
+    }, "47 active \xB7 3 invited")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 10
@@ -2505,7 +2507,7 @@
         textTransform: 'uppercase',
         color: th.ink4
       }
-    }, /*#__PURE__*/React.createElement("div", null, "Name"), /*#__PURE__*/React.createElement("div", null, "Email"), /*#__PURE__*/React.createElement("div", null, "Jobs · 30d"), /*#__PURE__*/React.createElement("div", null, "Revenue"), /*#__PURE__*/React.createElement("div", null, "Status"), /*#__PURE__*/React.createElement("div", null)), agents.map(([n, e, j, r, s], i) => /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("div", null, "Name"), /*#__PURE__*/React.createElement("div", null, "Email"), /*#__PURE__*/React.createElement("div", null, "Jobs \xB7 30d"), /*#__PURE__*/React.createElement("div", null, "Revenue"), /*#__PURE__*/React.createElement("div", null, "Status"), /*#__PURE__*/React.createElement("div", null)), agents.map(([n, e, j, r, s], i) => /*#__PURE__*/React.createElement("div", {
       key: n,
       style: {
         display: 'grid',
@@ -2691,7 +2693,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "April cycle · closes Apr 30")), /*#__PURE__*/React.createElement(Btn, {
+    }, "April cycle \xB7 closes Apr 30")), /*#__PURE__*/React.createElement(Btn, {
       variant: "ghost",
       dark: dark,
       icon: "dl"
@@ -2819,13 +2821,13 @@
         fontFamily: F.mono,
         fontSize: 13
       }
-    }, "•••• 4242")), /*#__PURE__*/React.createElement("div", {
+    }, "\u2022\u2022\u2022\u2022 4242")), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink3,
         marginTop: 6
       }
-    }, "Expires 08 / 28 · Visa")), /*#__PURE__*/React.createElement(Btn, {
+    }, "Expires 08 / 28 \xB7 Visa")), /*#__PURE__*/React.createElement(Btn, {
       variant: "ghost",
       dark: dark,
       full: true,
@@ -2838,7 +2840,7 @@
     th,
     dark
   }) {
-    const sections = [['Brokerage', [['Name', 'Studio North'], ['Domain', 'harbor.co'], ['Time zone', 'America / Toronto']]], ['Defaults', [['Default package', 'Standard · $379'], ['Turnaround SLA', '24 hours'], ['Auto-assign vendor', 'On · nearest']]], ['Notifications', [['New booking', 'Email + push'], ['Delivery ready', 'Email'], ['Weekly digest', 'Monday 8:00']]]];
+    const sections = [['Office', [['Name', 'Ashfield'], ['Domain', 'harbor.co'], ['Time zone', 'America / Toronto']]], ['Defaults', [['Default package', 'Standard · $379'], ['Turnaround SLA', '24 hours'], ['Auto-assign vendor', 'On · nearest']]], ['Notifications', [['New booking', 'Email + push'], ['Delivery ready', 'Email'], ['Weekly digest', 'Monday 8:00']]]];
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 30,
@@ -2851,7 +2853,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "Brokerage · team · preferences")), sections.map(([title, rows]) => /*#__PURE__*/React.createElement("div", {
+    }, "Office \xB7 team \xB7 preferences")), sections.map(([title, rows]) => /*#__PURE__*/React.createElement("div", {
       key: title,
       style: {
         border: `1px solid ${th.hair}`,
@@ -3044,7 +3046,7 @@
       th: th,
       dark: dark,
       title: "CRM",
-      sub: "312 contacts · 48 active deals · 9 follow-ups due today",
+      sub: "312 contacts \xB7 48 active deals \xB7 9 follow-ups due today",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3197,7 +3199,7 @@
       th: th,
       dark: dark,
       title: "Transactions",
-      sub: "48 open · 6 closing this week · listing to close in one timeline",
+      sub: "48 open \xB7 6 closing this week \xB7 listing to close in one timeline",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3326,7 +3328,7 @@
         color: th.ink4,
         marginTop: 8
       }
-    }, "MLS #C7841902 · $1.15M"), /*#__PURE__*/React.createElement("div", {
+    }, "MLS #C7841902 \xB7 $1.15M"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 20
       }
@@ -3427,7 +3429,7 @@
       th: th,
       dark: dark,
       title: "MLS submission",
-      sub: "TRREB · Pillar 9 · CREA DDF — board-ready packages from the data you already entered",
+      sub: "TRREB \xB7 Pillar 9 \xB7 CREA DDF \u2014 board-ready packages from the data you already entered",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark
@@ -3511,14 +3513,14 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "Validation · 30 Mercer Loop"), /*#__PURE__*/React.createElement("div", {
+    }, "Validation \xB7 30 Mercer Loop"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: F.mono,
         fontSize: 12,
         color: th.ink4,
         marginTop: 8
       }
-    }, "TRREB · 27 of 28 fields ready"), /*#__PURE__*/React.createElement("div", {
+    }, "TRREB \xB7 27 of 28 fields ready"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 16,
         display: 'flex',
@@ -3598,12 +3600,12 @@
       d: null,
       s: 'OREA + TRREB'
     }];
-    const docs = [['Agreement of Purchase & Sale', 'Form 100', '214 Linden St', 'Buyer, Seller, 2 agents', 2, 3, 'Partially signed', 'warn'], ['Confirmation of Cooperation', 'Form 320', '8 Riverbend', 'Both brokerages', 2, 2, 'Completed', 'ok'], ['Listing Agreement', 'Form 200', '201 Oak Dr', 'Seller, Listing agent', 1, 2, 'Sent', 'neutral'], ['FINTRAC Individual ID', 'IIR', '30 Mercer Loop', 'Buyer', 0, 1, 'Draft', 'neutral'], ['Working with a Realtor', 'RECO', '55 Birch Way', 'Buyer', 1, 1, 'Completed', 'ok']];
+    const docs = [['Agreement of Purchase & Sale', 'Form 100', '214 Linden St', 'Buyer, Seller, 2 agents', 2, 3, 'Partially signed', 'warn'], ['Confirmation of Cooperation', 'Form 320', '8 Riverbend', 'Both offices', 2, 2, 'Completed', 'ok'], ['Listing Agreement', 'Form 200', '201 Oak Dr', 'Seller, Listing agent', 1, 2, 'Sent', 'neutral'], ['FINTRAC Individual ID', 'IIR', '30 Mercer Loop', 'Buyer', 0, 1, 'Draft', 'neutral'], ['Working with a Realtor', 'RECO', '55 Birch Way', 'Buyer', 1, 1, 'Completed', 'ok']];
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(ModHead, {
       th: th,
       dark: dark,
       title: "Forms & e-signatures",
-      sub: "Provincial board forms — pre-filled from the deal, signed in-system. No DocuSign round-trips.",
+      sub: "Provincial board forms \u2014 pre-filled from the deal, signed in-system. No DocuSign round-trips.",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3762,7 +3764,7 @@
       th: th,
       dark: dark,
       title: "Accounting",
-      sub: "Commissions, trust ledger and agent billing — reconciled against every closed deal",
+      sub: "Commissions, trust ledger and agent billing \u2014 reconciled against every closed deal",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3792,7 +3794,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "Commission runs · April")), /*#__PURE__*/React.createElement("div", {
+    }, "Commission runs \xB7 April")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
         gridTemplateColumns: '1.3fr 1fr 1fr 0.9fr 1fr 110px',
@@ -3965,7 +3967,7 @@
         fontSize: 13,
         color: th.ink2
       }
-    }, "April trust reconciled to the penny · 0 exceptions"))))));
+    }, "April trust reconciled to the penny \xB7 0 exceptions"))))));
   }
 
   // Login — split screen
@@ -4048,7 +4050,7 @@
         fontFamily: F.mono,
         letterSpacing: 4
       }
-    }, "••••••••••"), /*#__PURE__*/React.createElement(I, {
+    }, "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"), /*#__PURE__*/React.createElement(I, {
       name: "eye",
       size: 16,
       color: th.ink3
@@ -4078,7 +4080,7 @@
         fontFamily: F.mono,
         letterSpacing: '0.14em'
       }
-    }, "BRICKS · BROKERAGE")), /*#__PURE__*/React.createElement("div", {
+    }, "BRICKS \xB7 BROKERAGE")), /*#__PURE__*/React.createElement("div", {
       style: {
         flex: 1,
         position: 'relative'
@@ -4086,7 +4088,7 @@
     }, /*#__PURE__*/React.createElement(Img, {
       w: "100%",
       h: "100%",
-      label: "ARCHITECTURAL COMPOSITION — WARM STONE",
+      label: "ARCHITECTURAL COMPOSITION \u2014 WARM STONE",
       dark: dark,
       r: 0
     }), /*#__PURE__*/React.createElement("div", {
@@ -4282,7 +4284,7 @@
         fontFamily: F.mono,
         letterSpacing: 3
       }
-    }, "••••••••"), /*#__PURE__*/React.createElement(I, {
+    }, "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"), /*#__PURE__*/React.createElement(I, {
       name: "eye",
       size: 15,
       color: th.ink3
@@ -4390,7 +4392,7 @@
         flexDirection: 'column',
         gap: 14
       }
-    }, [['Full name', 'Marisol Ortega'], ['Work email', 'mortega@harbor.co'], ['Brokerage', 'Studio North'], ['License #', 'RE·482901']].map(([l, v]) => /*#__PURE__*/React.createElement("div", {
+    }, [['Full name', 'Marisol Ortega'], ['Work email', 'mortega@harbor.co'], ['Office', 'Ashfield'], ['License #', 'RE·482901']].map(([l, v]) => /*#__PURE__*/React.createElement("div", {
       key: l
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
@@ -4510,7 +4512,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: "#F4D9CC"
-    }, "Next shoot · in 3 hours"), /*#__PURE__*/React.createElement("div", {
+    }, "Next shoot \xB7 in 3 hours"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 19,
         fontWeight: 500,
@@ -4523,7 +4525,7 @@
         color: '#C8BFB0',
         marginTop: 4
       }
-    }, "Today · 14:30 · J. Reyes"), /*#__PURE__*/React.createElement("div", {
+    }, "Today \xB7 14:30 \xB7 J. Reyes"), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         gap: 8,
@@ -4580,7 +4582,7 @@
         fontSize: 12,
         color: th.ink3
       }
-    }, "All · 14")), /*#__PURE__*/React.createElement("div", {
+    }, "All \xB7 14")), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 12,
         display: 'flex',
@@ -4677,7 +4679,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "New booking · step 2 / 4")), /*#__PURE__*/React.createElement("span", {
+    }, "New booking \xB7 step 2 / 4")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 12,
         color: th.ink3
@@ -4720,7 +4722,7 @@
         color: th.ink2,
         marginTop: 6
       }
-    }, "214 Linden St · House · 2,140 sqft"), /*#__PURE__*/React.createElement("div", {
+    }, "214 Linden St \xB7 House \xB7 2,140 sqft"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 22,
         display: 'flex',
@@ -4826,13 +4828,13 @@
         fontSize: 14,
         fontWeight: 500
       }
-    }, "Today · 14:30"), /*#__PURE__*/React.createElement("div", {
+    }, "Today \xB7 14:30"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink3,
         marginTop: 2
       }
-    }, "J. Reyes · 4.9 ★ · 2.1 mi away")), /*#__PURE__*/React.createElement("span", {
+    }, "J. Reyes \xB7 4.9 \u2605 \xB7 2.1 mi away")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 12,
         color: T.brickDeep
@@ -5048,7 +5050,7 @@
         color: th.ink3,
         marginTop: 2
       }
-    }, "Studio North · Agent")), /*#__PURE__*/React.createElement(I, {
+    }, "Ashfield \xB7 Agent")), /*#__PURE__*/React.createElement(I, {
       name: "cR",
       size: 16,
       color: th.ink3
@@ -5193,7 +5195,7 @@
     }, {
       eye: 'UPLOAD',
       head: 'Shoot. Upload. Done.',
-      body: 'Drag the SD card in. Brokerage gets notified when editing starts.',
+      body: 'Drag the SD card in. Office gets notified when editing starts.',
       img: 'SD CARD + LAPTOP'
     }];
     const s = slides[slide];
@@ -5295,7 +5297,7 @@
       }
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Over, {
       color: th.ink4
-    }, "Thursday · Apr 18"), /*#__PURE__*/React.createElement("div", {
+    }, "Thursday \xB7 Apr 18"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 22,
         fontWeight: 500,
@@ -5321,7 +5323,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: T.brick
-    }, "Next up · in 42 min"), /*#__PURE__*/React.createElement("div", {
+    }, "Next up \xB7 in 42 min"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 10,
         padding: 18,
@@ -5342,7 +5344,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "TORONTO · HOUSE · 2,140 SQFT"), /*#__PURE__*/React.createElement("div", {
+    }, "TORONTO \xB7 HOUSE \xB7 2,140 SQFT"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 14,
         display: 'grid',
@@ -5639,7 +5641,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "Thursday, Apr 18 · 4 shoots"), /*#__PURE__*/React.createElement("div", {
+    }, "Thursday, Apr 18 \xB7 4 shoots"), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 12,
         display: 'flex',
@@ -5763,7 +5765,7 @@
     }, /*#__PURE__*/React.createElement(Img, {
       w: "100%",
       h: 200,
-      label: "214 LINDEN ST · STREET VIEW",
+      label: "214 LINDEN ST \xB7 STREET VIEW",
       dark: dark,
       r: 0
     }), /*#__PURE__*/React.createElement("div", {
@@ -5789,7 +5791,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "Toronto, ON · House · 2,140 sqft")), /*#__PURE__*/React.createElement(Pill, {
+    }, "Toronto, ON \xB7 House \xB7 2,140 sqft")), /*#__PURE__*/React.createElement(Pill, {
       tone: "brick",
       dark: dark
     }, "Next up")), /*#__PURE__*/React.createElement("div", {
@@ -5864,7 +5866,7 @@
         fontSize: 11,
         color: th.ink3
       }
-    }, "Studio North · Agent")), /*#__PURE__*/React.createElement(I, {
+    }, "Ashfield \xB7 Agent")), /*#__PURE__*/React.createElement(I, {
       name: "phone",
       size: 17,
       color: th.ink2
@@ -5993,7 +5995,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "Drop the card — we auto-sort by job."), /*#__PURE__*/React.createElement("div", {
+    }, "Drop the card \u2014 we auto-sort by job."), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 20,
         padding: '32px 20px',
@@ -6017,7 +6019,7 @@
         color: th.ink3,
         marginTop: 6
       }
-    }, "RAW, JPEG, MP4 · up to 20 GB per job"), /*#__PURE__*/React.createElement(Btn, {
+    }, "RAW, JPEG, MP4 \xB7 up to 20 GB per job"), /*#__PURE__*/React.createElement(Btn, {
       variant: "accent",
       style: {
         marginTop: 14
@@ -6047,14 +6049,14 @@
         fontSize: 14,
         fontWeight: 500
       }
-    }, "1902 Pine Rd · #08410"), /*#__PURE__*/React.createElement("div", {
+    }, "1902 Pine Rd \xB7 #08410"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink3,
         marginTop: 2,
         fontFamily: F.mono
       }
-    }, "127 / 240 FILES · 4.2 GB")), /*#__PURE__*/React.createElement("span", {
+    }, "127 / 240 FILES \xB7 4.2 GB")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: F.mono,
         fontSize: 16,
@@ -6197,7 +6199,7 @@
         color: th.ink3,
         marginTop: 4
       }
-    }, "Pays out Monday · 7 jobs"), /*#__PURE__*/React.createElement("div", {
+    }, "Pays out Monday \xB7 7 jobs"), /*#__PURE__*/React.createElement("div", {
       style: {
         height: 3,
         background: th.hair,

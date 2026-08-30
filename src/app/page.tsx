@@ -65,7 +65,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prod-hero" aria-label="Bricks OS">
+      <section className="prod-hero" aria-label="bricks OS">
         <div className="tray tray-os">
           <div className="tray-stage">
             <ProductStage />
@@ -79,11 +79,45 @@ export default function Home() {
         </section>
       </div>
 
-      <section className="prod-row rvl" aria-label="Control surface">
+      <div className="wrap">
+        <section className="aud-sec rvl" aria-label="Who bricks is for">
+          <div className="sec-head">
+            <div>
+              <span className="over">Built for everyone on the deal</span>
+              <h2>The app you get depends on what you do.</h2>
+            </div>
+          </div>
+          <p className="aud-lede">Three surfaces. OS is the desk for office, team, and agent — what you see depends on the account. Booking is how an agent orders media. GO is the photographer field app.</p>
+          <div className="aud-grid">
+            <div className="aud-card">
+              <span className="over">OS</span>
+              <h3>Office</h3>
+              <p>Roster, pipeline, listing file. The office desk for the whole shop.</p>
+            </div>
+            <div className="aud-card">
+              <span className="over">OS</span>
+              <h3>Team</h3>
+              <p>Same OS, team-sized. Shared pipeline for the people you run.</p>
+            </div>
+            <div className="aud-card">
+              <span className="over">OS · Booking</span>
+              <h3>Agent</h3>
+              <p>Your desk in OS, plus the booking companion to order media from the phone.</p>
+            </div>
+            <div className="aud-card">
+              <span className="over">GO</span>
+              <h3>Photographer</h3>
+              <p>The field app. Jobs, uploads, pay — on site.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section className="prod-row rvl" aria-label="Office desk">
         <div className="prod-copy">
           <span className="over">Control surface</span>
-          <h2>The operating system.</h2>
-          <p>One desk for the listing file: deals, signatures, MLS, and media as a loop inside it. In development — preview.</p>
+          <h2>The office desk.</h2>
+          <p>Roster, pipeline, and the listing file in one OS. Sign in as office, team, or agent — the rooms you see follow the account. In development — preview.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -138,12 +172,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prod-row prod-row-flip rvl" aria-label="Dispatch">
+      <section className="prod-row prod-row-flip rvl" aria-label="GO">
         <div className="tray tray-disp tray-phone">
           <div className="tray-stage">
             <ProductWindow
               variant="phone"
-              title="Dispatch"
+              title="GO"
               src="/screens/disp.html?lock=1"
               nw={390}
               nh={844}
@@ -152,15 +186,15 @@ export default function Home() {
           </div>
         </div>
         <div className="prod-copy">
-          <span className="over">Dispatch</span>
+          <span className="over">GO</span>
           <h2>The field app.</h2>
-          <p>Companion for the photographer on site — jobs, uploads, pay. In development and not in the App Store or Google Play.</p>
+          <p>GO is the photographer field app — jobs, uploads, pay, on site. In development and not in the App Store or Google Play.</p>
         </div>
       </section>
 
       <div className="wrap">
         <section className="plat-hint rvl">
-          <p>The full platform — Bricks OS, Booking, Dispatch, and Clay / Keystone / Marble / Diamond — is in development. <Link href="/platform">Details on the platform page</Link>.</p>
+          <p>The full platform — bricks OS, Booking, GO, and Clay / Keystone / Marble / Diamond — is in development. <Link href="/platform">Details on the platform page</Link>.</p>
         </section>
       </div>
 
@@ -211,6 +245,13 @@ export default function Home() {
         .reel-wrap{margin-top:26px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
         .reel-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;outline:none;}
         .trust{text-align:center;padding:110px 0 40px;}
+        .aud-sec{padding:8px 0 24px;}
+        .aud-lede{font-size:15px;color:var(--inkSoft);max-width:560px;margin:-12px 0 22px;line-height:1.5;}
+        .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
+        .aud-card{background:var(--paper);padding:22px 24px;}
+        .aud-card h3{font-weight:500;font-size:18px;letter-spacing:-0.4px;color:var(--ink);margin:8px 0 6px;}
+        .aud-card p{font-size:13.5px;color:var(--inkMute);line-height:1.45;margin:0;}
+        @media (max-width:680px){.aud-grid{grid-template-columns:1fr;}}
         .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);max-width:680px;margin:0 auto;text-align:center;}
         .prod-mini{margin-top:14px;font-size:13px;color:var(--inkMute);}
         .prod-mini a{color:var(--brickDeep);text-decoration:none;}
