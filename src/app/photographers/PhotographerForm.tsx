@@ -48,6 +48,8 @@ export default function PhotographerForm() {
     const form = e.currentTarget
     const fd = new FormData(form)
 
+    if ((fd.get('company_website') as string || '').trim()) { setErr('Submission rejected.'); return }
+
     const specialties = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="specialties"]:checked')).map((c) => c.value)
     if (!specialties.length) { setErr('Select at least one specialty.'); return }
 
@@ -57,9 +59,10 @@ export default function PhotographerForm() {
     const city = (fd.get('city') as string || '').trim()
     const equipmentRaw = (fd.get('equipment') as string) || ''
     const portfolio1 = (fd.get('portfolio1') as string || '').trim()
+    const hstNumber = (fd.get('hst_number') as string || '').trim()
     const accepted = (form.querySelector<HTMLInputElement>('#f_accept'))?.checked
 
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone || !city || !equipmentRaw.trim() || !portfolio1) {
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone || !city || !equipmentRaw.trim() || !portfolio1 || !hstNumber) {
       setErr('Fill in all required fields marked *.'); return
     }
     if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
@@ -89,7 +92,8 @@ export default function PhotographerForm() {
       specialties,
       portfolio_links: [portfolio1].concat(portfolio2 ? [portfolio2] : []),
       equipment_list: equipmentList,
-      hst_number: (fd.get('hst_number') as string || '').trim() || null,
+      hst_number: hstNumber,
+      company_website: (fd.get('company_website') as string || '').trim(),
       drone_certified: !!(droneChecked && rpasLevel && rpasLevel !== 'none'),
       rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
       rpas_certificate_number: (fd.get('rpas_certificate_number') as string || '').trim() || null,
@@ -132,6 +136,11 @@ export default function PhotographerForm() {
 
   return (
     <form className="aform" onSubmit={handleSubmit} noValidate>
+      {/* Honeypot — hidden from real users; bots that autofill it get rejected. */}
+      <div aria-hidden style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+        <label>Company website (leave blank)</label>
+        <input type="text" name="company_website" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="fsec">01 · About you</div>
       <div className="grid2">
         <div className="field"><label>Full name <span className="req">*</span></label><input name="name" placeholder="Jordan Chen" required autoComplete="name" /></div>
@@ -202,9 +211,9 @@ export default function PhotographerForm() {
       </div>
 
       <div className="fsec">04 · Business info</div>
-      <div className="field"><label>HST / GST number <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(if registered)</span></label>
-        <input name="hst_number" placeholder="123456789 RT0001" />
-        <span className="hint-sm">If your annual revenue across all clients exceeds $30,000 CAD you are required to register. We issue T4As for earnings ≥ $500/year.</span>
+      <div className="field"><label>HST / GST number <span className="req">*</span></label>
+        <input name="hst_number" placeholder="123456789 RT0001" required />
+        <span className="hint-sm">Required for all paid contractors. We issue T4As for earnings ≥ $500/year.</span>
       </div>
 
       <div className="fsec">05 · Independent contractor agreement</div>
