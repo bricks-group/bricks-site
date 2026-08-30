@@ -8,6 +8,7 @@ export default function PhotographerForm() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [droneVisible, setDroneVisible] = useState(false)
+  const [hstExempt, setHstExempt] = useState(false)
   const [icText, setIcText] = useState('Loading agreement…')
   const [err, setErr] = useState('')
   const [resumeWarning, setResumeWarning] = useState('')
@@ -60,10 +61,14 @@ export default function PhotographerForm() {
     const equipmentRaw = (fd.get('equipment') as string) || ''
     const portfolio1 = (fd.get('portfolio1') as string || '').trim()
     const hstNumber = (fd.get('hst_number') as string || '').trim()
+    const hstExemptChecked = (form.querySelector<HTMLInputElement>('#f_hst_exempt'))?.checked
     const accepted = (form.querySelector<HTMLInputElement>('#f_accept'))?.checked
 
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone || !city || !equipmentRaw.trim() || !portfolio1 || !hstNumber) {
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone || !city || !equipmentRaw.trim() || !portfolio1) {
       setErr('Fill in all required fields marked *.'); return
+    }
+    if (!hstNumber && !hstExemptChecked) {
+      setErr('Enter your HST/GST number, or confirm the small-supplier exemption below.'); return
     }
     if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
 
@@ -92,7 +97,8 @@ export default function PhotographerForm() {
       specialties,
       portfolio_links: [portfolio1].concat(portfolio2 ? [portfolio2] : []),
       equipment_list: equipmentList,
-      hst_number: hstNumber,
+      hst_number: hstNumber || null,
+      hst_exempt: !!hstExemptChecked,
       company_website: (fd.get('company_website') as string || '').trim(),
       drone_certified: !!(droneChecked && rpasLevel && rpasLevel !== 'none'),
       rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
@@ -212,9 +218,16 @@ export default function PhotographerForm() {
 
       <div className="fsec">04 · Business info</div>
       <div className="field"><label>HST / GST number <span className="req">*</span></label>
-        <input name="hst_number" placeholder="123456789 RT0001" required />
-        <span className="hint-sm">Required for all paid contractors. We issue T4As for earnings ≥ $500/year.</span>
+        <input name="hst_number" placeholder="123456789 RT0001" disabled={hstExempt} required={!hstExempt} />
+        <span className="hint-sm">Required once your revenue across all clients exceeds $30,000 CAD/year. We issue T4As for earnings ≥ $500/year.</span>
       </div>
+      <label className="check-item" style={{ marginBottom: 16 }}>
+        <input
+          type="checkbox" id="f_hst_exempt"
+          onChange={(e) => setHstExempt(e.target.checked)}
+        />
+        <span>I&apos;m not GST/HST registered — my revenue across all clients is under $30,000 CAD/year, so I&apos;m not required to register (CRA small-supplier exemption).</span>
+      </label>
 
       <div className="fsec">05 · Independent contractor agreement</div>
       <p className="hint-sm" style={{ margin: '0 0 4px' }}>Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
