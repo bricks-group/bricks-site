@@ -321,7 +321,10 @@ async function ensureDispatchJob(opts: {
     payout_status: 'unpaid',
     payout_amount: null,
     payout_transfer_id: null,
-    vendor_name: null,
+    // jobs.vendor_name is NOT NULL (default ''); an explicit null in the
+    // PostgREST payload overrides that default and 500s the insert whenever
+    // no assignee is found (or the assignee isn't Kam) below.
+    vendor_name: '',
     vendor_tier: minTier,
     min_tier_required: minTier,
     preferred_tier: minTier,
@@ -382,7 +385,7 @@ async function ensureDispatchJob(opts: {
   if (assignee) {
     job.assignee_id = assignee;
     job.status = 'assigned';
-    job.vendor_name = assignee === KAM_VENDOR_ID ? 'Ajani Kamali Akio' : null;
+    job.vendor_name = assignee === KAM_VENDOR_ID ? 'Ajani Kamali Akio' : '';
     job.vendor_tier = assignee === KAM_VENDOR_ID ? 3 : job.vendor_tier;
   } else {
     job.status = 'unassigned';
@@ -408,11 +411,14 @@ Deno.serve(async (req: Request) => {
   const raw = await req.text();
   const secret = Deno.env.get('STRIPE_WEBHOOK_SECRET');
   const sig = req.headers.get('stripe-signature');
-  if (secret) {
-    if (!sig || !(await verify(raw, sig, secret))) return msg('invalid signature', 401);
-  } else {
-    console.warn('Webhook processed without signature verification (STRIPE_WEBHOOK_SECRET not set).');
+  // Fail CLOSED: an unset STRIPE_WEBHOOK_SECRET must never let requests through
+  // unverified. Anyone who discovers this endpoint could otherwise POST a fake
+  // checkout.session.completed and create free "paid" bookings + dispatch jobs.
+  if (!secret) {
+    console.error('STRIPE_WEBHOOK_SECRET not set -- rejecting webhook (fail closed).');
+    return msg('server misconfigured', 500);
   }
+  if (!sig || !(await verify(raw, sig, secret))) return msg('invalid signature', 401);
 
   let event: any;
   try { event = JSON.parse(raw); } catch { return msg('bad json', 400); }
@@ -452,26 +458,40 @@ Deno.serve(async (req: Request) => {
 
   let leadId: string | null = null;
   let duplicate = false;
-  try {
-    const res = await fetch(`${supabaseUrl}/rest/v1/media_booking_leads`, {
-      method: 'POST',
-      headers: restHeaders(serviceKey, 'return=representation'),
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) {
-      const errText = await res.text();
-      if (res.status === 409 || errText.includes('23505')) {
-        duplicate = true;
-        leadId = await fetchLeadBySession(supabaseUrl, serviceKey, s.id);
-      } else {
-        return msg('insert failed: ' + errText, 502);
-      }
-    } else {
-      const j = await res.json();
-      leadId = j?.[0]?.id || null;
+  // Check for an existing lead for this Stripe session BEFORE inserting.
+  // Stripe redelivers on timeout/non-2xx, and a DB unique constraint on
+  // stripe_session_id may not be present in every environment -- so the
+  // insert's own 409/23505 is a backstop, not the primary defense, against
+  // double-creating the dispatch job / Cal.com booking / owner notification.
+  if (s.id) {
+    const existing = await fetchLeadBySession(supabaseUrl, serviceKey, s.id);
+    if (existing) {
+      duplicate = true;
+      leadId = existing;
     }
-  } catch (e) {
-    return msg('insert error: ' + String(e), 502);
+  }
+  if (!leadId) {
+    try {
+      const res = await fetch(`${supabaseUrl}/rest/v1/media_booking_leads`, {
+        method: 'POST',
+        headers: restHeaders(serviceKey, 'return=representation'),
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        if (res.status === 409 || errText.includes('23505')) {
+          duplicate = true;
+          leadId = await fetchLeadBySession(supabaseUrl, serviceKey, s.id);
+        } else {
+          return msg('insert failed: ' + errText, 502);
+        }
+      } else {
+        const j = await res.json();
+        leadId = j?.[0]?.id || null;
+      }
+    } catch (e) {
+      return msg('insert error: ' + String(e), 502);
+    }
   }
   if (!leadId) return msg('paid lead missing after write', 502);
 
