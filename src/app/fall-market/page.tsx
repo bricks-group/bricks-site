@@ -77,7 +77,7 @@ export default function FallMarket() {
             <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
             <div className="c"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
           </div>
-          <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. 3D tours run +{TOUR_RANGE}. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full à la carte pricing</Link>.</p>
+          <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. 3D tours run +{TOUR_RANGE}. See <Link href="/pricing" style={{ color: 'var(--brick-deep)' }}>full à la carte pricing</Link>.</p>
         </section>
       </div>
 
@@ -87,7 +87,7 @@ export default function FallMarket() {
             <div>
               <span className="over">Priority fall booking</span>
               <h2 style={{ color: 'var(--moon)', marginTop: 8 }}>Lock your date before the rush books the calendar solid.</h2>
-              <p className="lead" style={{ color: 'var(--moonSoft)' }}>This isn&apos;t a discount — it&apos;s a reserved slot. Book before Labour Day and your listing&apos;s shoot date is held ahead of the September wave, at the same pricing as always. First 25 km from Mississauga is free either way.</p>
+              <p className="lead" style={{ color: 'var(--moon-soft)' }}>This isn&apos;t a discount — it&apos;s a reserved slot. Book before Labour Day and your listing&apos;s shoot date is held ahead of the September wave, at the same pricing as always. First 25 km from Mississauga is free either way.</p>
               <p className="deadline">Priority window closes Monday, September 7</p>
               <div className="cta-row">
                 <Link className="btn btn-brick" href="/book">Reserve a fall slot</Link>
@@ -127,11 +127,11 @@ export default function FallMarket() {
         .reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;}
         .reasons .r{background:var(--paper);padding:24px;}
-        .reasons .r .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
-          text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
+        .reasons .r .ic{font-family:'Ioskeley Mono',monospace;font-size:10px;letter-spacing:.1em;
+          text-transform:uppercase;color:var(--brick-deep);display:block;margin-bottom:8px;}
         .reasons .r h4{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:6px;}
-        .reasons .r p{font-size:13px;color:var(--inkMute);line-height:1.5;}
-        .deadline{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brickSoft);
+        .reasons .r p{font-size:13px;color:var(--ink-3);line-height:1.5;}
+        .deadline{font-family:'Ioskeley Mono',monospace;font-size:12px;color:var(--brick-soft);
           letter-spacing:.06em;text-transform:uppercase;margin-top:16px;}
         @media (max-width:680px){.reasons{grid-template-columns:1fr;}}
       `}</style>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ThemeToggle from './ThemeToggle'
 
 export default function Footer() {
   return (
@@ -51,26 +52,25 @@ export default function Footer() {
       </div>
       <div className="foot-word" aria-hidden="true">bricks</div>
       <div className="foot-meta">
-        <span>© 2026 BRICKS · brxs.ca · TORONTO</span>
-        <span>v1.0 · <Link href="/terms">TERMS</Link></span>
+        <span>© 2026 Bricks · Toronto</span>
+        <ThemeToggle />
       </div>
       <style>{`
         .foot-word{max-width:980px;margin:72px auto -10px;
           font-weight:500;font-size:clamp(110px,17vw,250px);line-height:.78;letter-spacing:-.045em;
-          color:transparent;-webkit-text-stroke:1px var(--hairStrong);user-select:none;pointer-events:none;
+          color:transparent;-webkit-text-stroke:1px var(--hair-s);user-select:none;pointer-events:none;
           transition:color 1s var(--ease,ease-out);text-align:center;}
-        .foot-word.in{color:var(--inkFaint);-webkit-text-stroke:1px transparent;}
+        .foot-word.in{color:var(--ink-4);-webkit-text-stroke:1px transparent;}
         footer{overflow:hidden;}
         .foot-inner{max-width:980px;margin:0 auto;padding-top:16px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:48px;align-items:start;}
-        footer h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;
-          text-transform:uppercase;color:var(--inkFaint);margin:0 0 18px;font-weight:500;}
-        footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
-        footer a{color:var(--inkSoft);text-decoration:none;font-size:13px;}
-        footer a:hover{color:var(--brickDeep);}
+        footer h5{font-family:'General Sans',sans-serif;font-size:13px;font-weight:500;
+          color:var(--ink-3);margin:0 0 16px;}
+        footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;}
+        footer a{color:var(--ink);text-decoration:none;font-size:14px;}
+        footer a:hover{color:var(--brick-deep);}
         .foot-meta{max-width:980px;margin:48px auto 0;padding-top:20px;border-top:1px solid var(--hair);
-          font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
-          color:var(--inkFaint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-        .foot-blurb{font-size:13px;color:var(--inkFaint);max-width:240px;line-height:1.55;margin:14px 0 0;}
+          font-size:13px;color:var(--ink-3);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+        .foot-blurb{font-size:13px;color:var(--ink-3);max-width:240px;line-height:1.55;margin:14px 0 0;}
       `}</style>
     </footer>
   )

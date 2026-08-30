@@ -98,6 +98,9 @@ export default function PhotographerForm() {
       portfolio_links: [portfolio1].concat(portfolio2 ? [portfolio2] : []),
       equipment_list: equipmentList,
       hst_number: hst,
+      // Honeypot: real users leave this blank (hidden off-screen field below).
+      // Forwarding it lets the server-side gate reject bots that autofill it.
+      company_website: (fd.get('company_website') as string || '').trim(),
       drone_certified: !!(droneChecked && rpasLevel && rpasLevel !== 'none'),
       rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
       rpas_certificate_number: (fd.get('rpas_certificate_number') as string || '').trim() || null,
@@ -133,7 +136,7 @@ export default function PhotographerForm() {
         <div className="check">✓</div>
         <h3>Application received.</h3>
         <p>We&apos;ll review your portfolio and be in touch within 3 business days. Check your email — including spam.</p>
-        {resumeWarning && <p style={{ color: 'var(--brickDeep)', marginTop: 10 }}>{resumeWarning}</p>}
+        {resumeWarning && <p style={{ color: 'var(--brick-deep)', marginTop: 10 }}>{resumeWarning}</p>}
       </div>
     )
   }
@@ -201,7 +204,7 @@ export default function PhotographerForm() {
 
       <div className="field"><label>Equipment <span className="req">*</span></label>
         <textarea name="equipment" rows={3} placeholder="Camera body, lenses, drone model (if applicable), editing software…" required
-          style={{ width: '100%', fontFamily: 'inherit', fontSize: 15, color: 'var(--ink)', background: 'var(--paperDeep)', border: '1px solid var(--hairStrong)', borderRadius: 2, padding: '12px 14px', resize: 'vertical' }} />
+          style={{ width: '100%', fontFamily: 'inherit', fontSize: 15, color: 'var(--ink)', background: 'var(--paper-deep)', border: '1px solid var(--hair-s)', borderRadius: 2, padding: '12px 14px', resize: 'vertical' }} />
         <span className="hint-sm">List your primary kit. We&apos;re looking for full-frame or equivalent, fast primes, and ideally a DJI/Autel drone for aerial-capable applicants.</span>
       </div>
 
@@ -214,9 +217,9 @@ export default function PhotographerForm() {
       </div>
 
       <div className="fsec">04 · Business info</div>
-      <div className="field"><label>HST / GST number <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(if registered)</span></label>
+      <div className="field"><label>HST / GST number <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(required for all paid contractors)</span></label>
         <input name="hst_number" placeholder="123456789 RT0001" />
-        <span className="hint-sm">If your annual revenue across all clients exceeds $30,000 CAD you are required to register. We issue T4As for earnings ≥ $500/year.</span>
+        <span className="hint-sm">All paid contractors must provide an HST / GST number so we can issue T4As for earnings ≥ $500/year.</span>
       </div>
 
       <div className="fsec">05 · Independent contractor agreement</div>
@@ -237,36 +240,36 @@ export default function PhotographerForm() {
 
       <style>{`
         .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:32px;margin-top:4px;}
-        .aform .fsec{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-          color:var(--brickDeep);margin:26px 0 14px;padding-top:22px;border-top:1px solid var(--hair);}
+        .aform .fsec{font-family:'Ioskeley Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+          color:var(--brick-deep);margin:26px 0 14px;padding-top:22px;border-top:1px solid var(--hair);}
         .aform .fsec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
         .check-col{display:grid;gap:8px;}
-        .check-item{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border:1px solid var(--hairStrong);
-          border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:14px;color:var(--ink);min-width:0;overflow-wrap:anywhere;}
+        .check-item{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border:1px solid var(--hair-s);
+          border-radius:2px;cursor:pointer;background:var(--paper-deep);font-size:14px;color:var(--ink);min-width:0;overflow-wrap:anywhere;}
         .check-item span{min-width:0;overflow-wrap:anywhere;word-break:break-word;}
         .check-item input{margin-top:3px;flex:none;width:auto;min-width:0;}
         .check-col .check-item input{width:auto;min-width:0;flex:none;}
         .radio-row{display:flex;gap:8px;flex-wrap:wrap;}
-        .radio-row label{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hairStrong);
-          border-radius:2px;font-size:13.5px;cursor:pointer;background:var(--paperDeep);}
-        .ic-box{border:1px solid var(--hairStrong);border-radius:2px;background:var(--paperDeep);padding:16px 18px;
-          font-size:12.5px;color:var(--inkSoft);line-height:1.6;max-height:240px;overflow-y:auto;margin:8px 0 14px;white-space:pre-wrap;}
-        .ic-accept{display:flex;align-items:flex-start;gap:10px;padding:14px;border:1px solid var(--hairStrong);
-          border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:13.5px;line-height:1.5;margin-bottom:16px;}
+        .radio-row label{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hair-s);
+          border-radius:2px;font-size:13.5px;cursor:pointer;background:var(--paper-deep);}
+        .ic-box{border:1px solid var(--hair-s);border-radius:2px;background:var(--paper-deep);padding:16px 18px;
+          font-size:12.5px;color:var(--ink-2);line-height:1.6;max-height:240px;overflow-y:auto;margin:8px 0 14px;white-space:pre-wrap;}
+        .ic-accept{display:flex;align-items:flex-start;gap:10px;padding:14px;border:1px solid var(--hair-s);
+          border-radius:2px;cursor:pointer;background:var(--paper-deep);font-size:13.5px;line-height:1.5;margin-bottom:16px;}
         .ic-accept input{margin-top:3px;flex:none;}
         .success-box{text-align:center;padding:64px 28px;}
-        .success-box .check{font-size:38px;margin-bottom:14px;color:var(--brickDeep);}
+        .success-box .check{font-size:38px;margin-bottom:14px;color:var(--brick-deep);}
         .success-box h3{font-weight:500;font-size:24px;letter-spacing:-.5px;margin:0 0 10px;color:var(--ink);}
-        .success-box p{color:var(--inkMute);font-size:14.5px;line-height:1.6;max-width:400px;margin:0 auto;}
+        .success-box p{color:var(--ink-3);font-size:14.5px;line-height:1.6;max-width:400px;margin:0 auto;}
         .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
         .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-        .field label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--inkMute);}
-        .field .req{color:var(--brickDeep);}
-        .field input,.field select{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paperDeep);color:var(--ink);
-          border:1px solid var(--hairStrong);border-radius:2px;padding:11px 12px;outline:none;width:100%;}
+        .field label{font-family:'Ioskeley Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);}
+        .field .req{color:var(--brick-deep);}
+        .field input,.field select{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paper-deep);color:var(--ink);
+          border:1px solid var(--hair-s);border-radius:2px;padding:11px 12px;outline:none;width:100%;}
         .field input:focus,.field select:focus{border-color:var(--brick);}
-        .hint-sm{font-size:11.5px;color:var(--inkFaint);line-height:1.4;display:block;margin-top:4px;}
-        .err{color:var(--brickDeep);font-size:12.5px;font-family:'JetBrains Mono',monospace;min-height:14px;}
+        .hint-sm{font-size:11.5px;color:var(--ink-4);line-height:1.4;display:block;margin-top:4px;}
+        .err{color:var(--brick-deep);font-size:12.5px;font-family:'Ioskeley Mono',monospace;min-height:14px;}
         @media (max-width:680px){.grid2{grid-template-columns:1fr;} .radio-row{flex-direction:column;} .aform{padding:22px;}}
       `}</style>
     </form>

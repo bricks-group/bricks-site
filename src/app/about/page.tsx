@@ -94,7 +94,7 @@ export default function AboutPage() {
             <p className="lead">One standard, every time. Pick your services à la carte and get MLS-ready media in 24–48 hours.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book listing media</Link>
-              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>View pricing</Link>
+              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moon-mute)' }}>View pricing</Link>
             </div>
           </div>
         </div>
@@ -102,19 +102,19 @@ export default function AboutPage() {
 
       <style>{`
         .author{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start;margin-top:8px;}
-        .author .photo{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
+        .author .photo{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper-deep);}
         .author .photo img{width:100%;height:auto;display:block;}
         .author .bio h2{font-weight:500;font-size:26px;letter-spacing:-0.6px;color:var(--ink);margin-bottom:4px;}
-        .author .bio .role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);margin-bottom:18px;display:block;}
-        .author .bio p{font-size:15px;color:var(--inkSoft);line-height:1.65;margin-bottom:14px;}
+        .author .bio .role{font-family:'Ioskeley Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brick-deep);margin-bottom:18px;display:block;}
+        .author .bio p{font-size:15px;color:var(--ink-2);line-height:1.65;margin-bottom:14px;}
         .creds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin:26px 0;}
         .creds .c{background:var(--paper);padding:20px;}
-        .creds .c .n{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--ink);letter-spacing:-1px;}
-        .creds .c .l{font-size:12px;color:var(--inkMute);margin-top:4px;line-height:1.4;}
+        .creds .c .n{font-family:'Ioskeley Mono',monospace;font-size:22px;color:var(--ink);letter-spacing:-1px;}
+        .creds .c .l{font-size:12px;color:var(--ink-3);margin-top:4px;line-height:1.4;}
         .posts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px;}
         .posts a{border:1px solid var(--hair);border-radius:2px;padding:16px 18px;text-decoration:none;background:var(--paper);transition:border-color .2s ease;display:block;}
         .posts a:hover{border-color:var(--brick);}
-        .posts a .t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);}
+        .posts a .t{font-family:'Ioskeley Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brick-deep);}
         .posts a h4{font-weight:500;font-size:15px;color:var(--ink);margin:7px 0 0;line-height:1.25;}
         @media (max-width:680px){
           .author{grid-template-columns:1fr;gap:20px;}

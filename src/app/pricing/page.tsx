@@ -116,7 +116,7 @@ export default function PricingPage() {
 
           <div className="tbl-scroll">
             <table className="tbl">
-              <caption style={{ captionSide: 'top', textAlign: 'left', fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--inkMute)', paddingBottom: 10 }}>Starting points — your quote is tailored per booking</caption>
+              <caption style={{ captionSide: 'top', textAlign: 'left', fontFamily: "'Ioskeley Mono',monospace", fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--ink-3)', paddingBottom: 10 }}>Starting points — your quote is tailored per booking</caption>
               <thead>
                 <tr><th style={{ textAlign: 'left' }}>Service</th><th>Small</th><th>Mid</th><th>Large</th><th>XL</th></tr>
               </thead>
@@ -185,33 +185,33 @@ export default function PricingPage() {
         .wrap{max-width:920px;margin:0 auto;padding:0 36px;}
         .hero{padding:56px 0 36px;}
         .hero h1{font-weight:500;font-size:40px;line-height:1.02;letter-spacing:-1.2px;color:var(--ink);}
-        .hero p.sub{font-size:16px;color:var(--inkSoft);margin-top:16px;max-width:600px;}
+        .hero p.sub{font-size:16px;color:var(--ink-2);margin-top:16px;max-width:600px;}
         .tbl-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
         .tbl{width:100%;min-width:520px;border-collapse:collapse;border:1px solid var(--hair);border-radius:2px;overflow:hidden;}
         .tbl th,.tbl td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--hair);}
-        .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
-          text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperDeep);}
+        .tbl th{font-family:'Ioskeley Mono',monospace;font-size:10px;letter-spacing:0.12em;
+          text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--paper-deep);}
         .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);}
-        .tbl td.pkg .inc{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
-          letter-spacing:0.08em;text-transform:uppercase;color:var(--brickDeep);font-weight:500;margin-top:3px;}
-        .tbl td.num{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--inkSoft);}
-        .tbl tr.flat td{background:var(--paperDeep);}
+        .tbl td.pkg .inc{display:block;font-family:'Ioskeley Mono',monospace;font-size:9.5px;
+          letter-spacing:0.08em;text-transform:uppercase;color:var(--brick-deep);font-weight:500;margin-top:3px;}
+        .tbl td.num{font-family:'Ioskeley Mono',monospace;font-size:15px;color:var(--ink-2);}
+        .tbl tr.flat td{background:var(--paper-deep);}
         .tbl tr:last-child td{border-bottom:none;}
         .cta{background:var(--night);color:var(--moon);border-radius:2px;padding:30px;
           display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
         .cta h3{font-weight:500;font-size:22px;letter-spacing:-0.4px;color:var(--moon);}
-        .cta p{font-size:13px;color:var(--moonSoft);margin-top:6px;}
+        .cta p{font-size:13px;color:var(--moon-soft);margin-top:6px;}
         .cta a{background:var(--brick);color:#fff;font-weight:500;font-size:14px;
-          padding:12px 22px;border-radius:2px;text-decoration:none;white-space:nowrap;}
+          padding:12px 22px;border-radius:8px;text-decoration:none;white-space:nowrap;}
         .trust{text-align:center;padding:8px 0 4px;}
-        .trust-cap{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--inkMute);margin:0 0 18px;}
+        .trust-cap{font-family:'Ioskeley Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 18px;}
         .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
         .marquee-track{display:flex;align-items:center;gap:64px;width:max-content;animation:scrollx 22s linear infinite;padding:6px 0;}
         .marquee:hover .marquee-track{animation-play-state:paused;}
         .logo{display:flex;align-items:center;justify-content:center;height:32px;flex:none;}
         .logo img{height:32px;width:auto;display:block;opacity:.78;filter:grayscale(1);transition:opacity .2s ease,filter .2s ease;}
         .logo:hover img{opacity:1;filter:grayscale(0);}
-        .logo-txt{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.06em;color:var(--inkMute);opacity:.78;}
+        .logo-txt{font-family:'Ioskeley Mono',monospace;font-weight:600;font-size:18px;letter-spacing:.06em;color:var(--ink-3);opacity:.78;}
         @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
         @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
         @media (max-width:680px){.wrap{padding:0 20px;} .pkgs,.adds{grid-template-columns:1fr;} .hero h1{font-size:32px;} .tbl th,.tbl td{padding:12px 12px;}}

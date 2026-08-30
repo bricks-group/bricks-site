@@ -13,9 +13,11 @@ import { useEffect } from 'react'
  *
  * Hardened so content is never permanently invisible if the observer fails:
  *  - reduced-motion or no IntersectionObserver ⇒ reveal everything.
- *  - a failsafe reveals anything still hidden once it is actually in/near the
- *    viewport (not a blanket reveal of all off-screen content, which would kill
- *    the scroll effect).
+ *  - a scroll-driven fallback (not just a one-shot timeout) keeps re-checking
+ *    any still-hidden element on every scroll for the life of the page, so a
+ *    missed/late IntersectionObserver callback (fast flings, programmatic
+ *    scrollIntoView, some automation-driven scrolls) can never leave content
+ *    permanently stuck at opacity:0 — it self-corrects on the next scroll.
  */
 export default function RevealObserver() {
   useEffect(() => {
@@ -57,17 +59,36 @@ export default function RevealObserver() {
       if (!el.classList.contains('in')) obs.observe(el)
     })
 
-    // Failsafe: if an in/near-viewport element somehow didn't get revealed
-    // (missed IO callback), catch it after load. Off-screen elements are left
-    // hidden on purpose — they reveal on scroll.
+    // Scroll fallback: re-check remaining hidden elements on every scroll,
+    // independent of the IntersectionObserver. Self-removes once nothing is
+    // left to reveal.
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        ticking = false
+        const hidden = document.querySelectorAll<HTMLElement>('.rvl:not(.in), .foot-word:not(.in)')
+        if (!hidden.length) {
+          window.removeEventListener('scroll', onScroll)
+          return
+        }
+        hidden.forEach(revealIfInView)
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    // Failsafe: catch anything already in view that the checks above missed
+    // right after load (e.g. layout not settled yet on first paint).
     const failsafe = window.setTimeout(() => {
       document
         .querySelectorAll<HTMLElement>('.rvl:not(.in), .foot-word:not(.in)')
-        .forEach((el) => revealIfInView(el))
+        .forEach(revealIfInView)
     }, 1500)
 
     return () => {
       obs.disconnect()
+      window.removeEventListener('scroll', onScroll)
       window.clearTimeout(failsafe)
     }
   }, [])

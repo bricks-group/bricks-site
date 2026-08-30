@@ -68,14 +68,14 @@ export default function ContactForm() {
 
       <style>{`
         .cform{display:grid;gap:14px;max-width:540px;margin-top:6px;}
-        .cform label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
-          text-transform:uppercase;color:var(--inkMute);display:block;margin-bottom:6px;}
+        .cform label{font-family:'Ioskeley Mono',monospace;font-size:10px;letter-spacing:.12em;
+          text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:6px;}
         .cform input,.cform textarea{width:100%;font-family:'General Sans',sans-serif;font-size:15px;
-          color:var(--ink);background:var(--paperDeep);border:1px solid var(--hairStrong);
+          color:var(--ink);background:var(--paper-deep);border:1px solid var(--hair-s);
           border-radius:2px;padding:12px 14px;outline:none;}
         .cform input:focus,.cform textarea:focus{border-color:var(--brick);}
         .cform textarea{resize:vertical;min-height:120px;}
-        .nlmsg{font-size:13px;color:var(--brickDeep);min-height:18px;}
+        .nlmsg{font-size:13px;color:var(--brick-deep);min-height:18px;}
       `}</style>
     </form>
   )

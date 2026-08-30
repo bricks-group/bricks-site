@@ -81,7 +81,7 @@ export default function BlogPage() {
             <p className="lead">Pick your services à la carte, get a tailored quote, and your MLS-ready media in 24–48 hours.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book listing media</Link>
-              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>View pricing</Link>
+              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moon-mute)' }}>View pricing</Link>
             </div>
           </div>
         </div>

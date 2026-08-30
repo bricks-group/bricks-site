@@ -31,10 +31,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){var r=document.documentElement,s="bricks-theme",v=localStorage.getItem(s);if(v)r.setAttribute("data-theme",v);else if(window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)r.setAttribute("data-theme","dark")})()`,
           }}
         />
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+        <style>{`
+          @font-face { font-family:'General Sans'; src:url('/fonts/GeneralSans-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+          @font-face { font-family:'General Sans'; src:url('/fonts/GeneralSans-Medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+          @font-face { font-family:'General Sans'; src:url('/fonts/GeneralSans-Semibold.woff2') format('woff2'); font-weight:600; font-display:swap; }
+          @font-face { font-family:'Ioskeley Mono'; src:url('/fonts/IoskeleyMono-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+          @font-face { font-family:'Ioskeley Mono'; src:url('/fonts/IoskeleyMono-Medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+          @font-face { font-family:'Ioskeley Mono'; src:url('/fonts/IoskeleyMono-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+        `}</style>
       </head>
       <body>
         <Nav />

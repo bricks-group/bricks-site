@@ -45,3 +45,19 @@ export const REEL_RANGE = bandRange(REEL_RATE); // "$199–349"
 export const TOUR_RANGE = bandRange(TOUR_RATE); // "$149–299"
 export const PHOTO_RANGE = bandRange(PHOTO_RATE); // "$149–299"
 export const DRONE_RANGE = bandRange(DRONE_RATE); // "$99–159"
+
+/**
+ * Software subscription plans (CAD, per month). Single source of truth for the
+ * prelaunch site's plan row — never hardcode these literals in a page.
+ * Mirrors BRICKS.md §4 ("Software subscriptions don't touch media pricing").
+ */
+export const SOFTWARE_PLANS = [
+  { name: 'Clay', price: 0 },
+  { name: 'Keystone', price: 49 },
+  { name: 'Marble', price: 99 },
+  { name: 'Diamond', price: 149 },
+] as const;
+
+export function planLabel(price: number): string {
+  return price === 0 ? '$0' : `$${price}`;
+}

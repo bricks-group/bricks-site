@@ -128,13 +128,13 @@ export default function PhotographersPage() {
         .incl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
         .incl .c{background:var(--paper);padding:22px 22px;}
         .incl .c h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
-        .incl .c p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
-        .incl .c .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
+        .incl .c p{font-size:12.5px;color:var(--ink-3);line-height:1.45;}
+        .incl .c .ic{font-family:'Ioskeley Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brick-deep);display:block;margin-bottom:8px;}
         .adds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
         .adds .a{background:var(--paper);padding:22px 22px;}
         .adds .a .nm{font-weight:500;font-size:16px;color:var(--ink);}
-        .adds .a .pr{font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--brickDeep);margin:8px 0 6px;}
-        .adds .a p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
+        .adds .a .pr{font-family:'Ioskeley Mono',monospace;font-size:20px;color:var(--brick-deep);margin:8px 0 6px;}
+        .adds .a p{font-size:12.5px;color:var(--ink-3);line-height:1.45;}
         @media (max-width:680px){.incl,.adds{grid-template-columns:1fr;}}
       `}</style>
     </>
