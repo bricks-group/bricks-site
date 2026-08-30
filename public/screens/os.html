@@ -72,22 +72,6 @@
     }
   });
   render();
-  if (screen === 'overview' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var jobs = ['184','185','186','185'];
-    var i = 0;
-    setInterval(function(){
-      i = (i+1) % jobs.length;
-      var rootEl = document.getElementById('root');
-      if (!rootEl) return;
-      var walk = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
-      var n;
-      while ((n = walk.nextNode())) {
-        if (n.nodeValue && n.nodeValue.trim() === '184' || n.nodeValue && /^18[4-6]$/.test(n.nodeValue.trim())) {
-          n.nodeValue = n.nodeValue.replace(/18[4-6]/, jobs[i]);
-        }
-      }
-    }, 3000);
-  }
 })();
 </script>
 </body>

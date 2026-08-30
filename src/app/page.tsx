@@ -41,7 +41,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'bricks is the operating system for Canadian real estate — property, listing, booking, GO, media, MLS, transaction. Listing media and the website booking form are live. OS, Booking, and GO are in development and are not in the App Store or Google Play.',
+            description: 'bricks is the operating system for Canadian real estate, from listing photo to closing the deal. Listing media and the website booking form are live. CRM, transactions, and MLS are in development and are not in the App Store or Google Play.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
