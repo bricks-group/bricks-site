@@ -45,7 +45,7 @@ export default function ContactPage() {
           <span className="badge">Contact</span>
           <h1>Let&apos;s shoot your next listing.</h1>
           <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours. {COVERAGE_LINE} Reach out and we&apos;ll confirm the slot and send pricing by footprint.</p>
-          <p className="sub product-hint">Book a shoot is live. Bricks OS, the Booking app, and Dispatch are in development and not in any store yet.</p>
+          <p className="sub product-hint">Book a shoot is live. bricks OS, the Booking app, and GO are in development and not in any store yet.</p>
         </div>
       </section>
 

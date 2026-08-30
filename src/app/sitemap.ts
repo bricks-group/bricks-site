@@ -12,6 +12,8 @@ const routes = [
   '/about',
   '/contact',
   '/photographers',
+  '/office',
+  '/agents',
   '/book',
   '/service-areas',
   '/terms',

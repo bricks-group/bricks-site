@@ -52,8 +52,8 @@ export default function PhotographersPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Photographers</span>
-          <h1>Shoot listings.<br />Get paid fast.</h1>
-          <p className="sub">Auto-routed jobs. Stripe Connect payouts. Apply in about four minutes.</p>
+          <h1>GO. Shoot listings.<br />Get paid fast.</h1>
+          <p className="sub">Independent contractors on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes.</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
           </div>
@@ -65,7 +65,7 @@ export default function PhotographersPage() {
           <div className="sec-head">
             <div>
               <span className="over">How it works</span>
-              <h2>The Dispatch network.</h2>
+              <h2>GO, the field app.</h2>
             </div>
           </div>
           <div className="incl">

@@ -5,6 +5,7 @@ import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
 import { PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
+import { LOOP } from '@/lib/catalog'
 import {
   AREA_SERVED_SCHEMA,
   KNOWS_ABOUT,
@@ -13,17 +14,17 @@ import {
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
 
 export const metadata: Metadata = {
-  title: 'Canadian Real Estate Photography & Media | Bricks',
-  description: "Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Book a shoot in 24–48h.",
+  title: 'bricks — the desk for Canadian real estate',
+  description: "OS for Canadian real estate. Property to close — listing, booking, GO, media, MLS, transaction. Listing media is live. The platform is in development.",
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Canadian Real Estate Photography & Media | Bricks',
-    description: "Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Book a shoot in 24–48h.",
+    title: 'bricks — the desk for Canadian real estate',
+    description: "OS for Canadian real estate. Property to close — listing, booking, GO, media, MLS, transaction. Listing media is live. The platform is in development.",
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
-    title: 'Canadian Real Estate Photography & Media | Bricks',
-    description: 'Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Book a shoot in 24–48h.',
+    title: 'bricks — the desk for Canadian real estate',
+    description: 'OS for Canadian real estate. Listing media is live. The platform is in development.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
@@ -41,7 +42,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'Bricks is listing media for Canadian real estate — From Capture to Close. HDR photography, licensed drone, floor plans, twilight, optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Listing media and the website booking form are live now in Canada. Bricks OS, the Booking companion app, and Dispatch are in development and are not in the App Store or Google Play.',
+            description: 'bricks is the operating system for Canadian real estate — property, listing, booking, GO, media, MLS, transaction. Listing media and the website booking form are live. OS, Booking, and GO are in development and are not in the App Store or Google Play.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
@@ -56,11 +57,16 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <h1>From Capture to Close.</h1>
-          <p className="sub">Listing media for Canadian real estate — HDR, licensed drone, and a floor plan, back in 24–48 hours. Optional virtual tour and virtual visit, booked direct.</p>
+          <h1>The desk for the deal.</h1>
+          <p className="sub">OS for Canadian real estate. Property to close — listing, booking, GO, media, MLS, transaction. Listing media is live now, the beachhead. The rest of the platform is in development.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
-            <Link className="btn btn-sec" href="/pricing">Pricing</Link>
+            <Link className="btn btn-sec" href="/platform">See the platform</Link>
+          </div>
+          <div className="loop" aria-label="Property to close">
+            {LOOP.map((step) => (
+              <span key={step}>{step}</span>
+            ))}
           </div>
         </div>
       </section>
@@ -89,26 +95,26 @@ export default function Home() {
           </div>
           <p className="aud-lede">Three surfaces. OS is the desk for office, team, and agent — what you see depends on the account. Booking is how an agent orders media. GO is the photographer field app.</p>
           <div className="aud-grid">
-            <div className="aud-card">
+            <Link href="/office" className="aud-card">
               <span className="over">OS</span>
               <h3>Office</h3>
               <p>Roster, pipeline, listing file. The office desk for the whole shop.</p>
-            </div>
-            <div className="aud-card">
+            </Link>
+            <Link href="/agents#team" className="aud-card">
               <span className="over">OS</span>
               <h3>Team</h3>
               <p>Same OS, team-sized. Shared pipeline for the people you run.</p>
-            </div>
-            <div className="aud-card">
+            </Link>
+            <Link href="/agents" className="aud-card">
               <span className="over">OS · Booking</span>
               <h3>Agent</h3>
               <p>Your desk in OS, plus the booking companion to order media from the phone.</p>
-            </div>
-            <div className="aud-card">
+            </Link>
+            <Link href="/photographers" className="aud-card">
               <span className="over">GO</span>
               <h3>Photographer</h3>
-              <p>The field app. Jobs, uploads, pay — on site.</p>
-            </div>
+              <p>The field app. Jobs, uploads, pay — on site. Independent contractors, fixed rate card.</p>
+            </Link>
           </div>
         </section>
       </div>
@@ -248,7 +254,10 @@ export default function Home() {
         .aud-sec{padding:8px 0 24px;}
         .aud-lede{font-size:15px;color:var(--inkSoft);max-width:560px;margin:-12px 0 22px;line-height:1.5;}
         .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .aud-card{background:var(--paper);padding:22px 24px;}
+        .loop{display:flex;flex-wrap:wrap;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:28px;max-width:760px;}
+        .loop span{flex:1 1 88px;background:var(--paper);padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:500;}
+        .aud-card{background:var(--paper);padding:22px 24px;text-decoration:none;color:inherit;display:block;}
+        .aud-card:hover{background:var(--paperSoft);}
         .aud-card h3{font-weight:500;font-size:18px;letter-spacing:-0.4px;color:var(--ink);margin:8px 0 6px;}
         .aud-card p{font-size:13.5px;color:var(--inkMute);line-height:1.45;margin:0;}
         @media (max-width:680px){.aud-grid{grid-template-columns:1fr;}}

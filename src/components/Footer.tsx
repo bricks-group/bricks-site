@@ -13,17 +13,19 @@ export default function Footer() {
             <span className="wordmark">bricks</span>
           </Link>
           <p className="foot-blurb">
-            Listing media for Canadian real estate. HDR, licensed drone, and a floor plan on every standard shoot — booked direct, delivered in 24–48 hours.
+            The desk for Canadian real estate. Listing media is live. OS, Booking, and GO are in development.
           </p>
         </div>
         <div className="foot-col">
           <h4>Product</h4>
-          <Link href="/pricing">Pricing</Link>
           <Link href="/platform">Platform</Link>
+          <Link href="/pricing">Pricing</Link>
+          <Link href="/office">Office</Link>
+          <Link href="/agents">Agents</Link>
+          <Link href="/photographers">Photographers</Link>
+          <Link href="/book">Book a shoot</Link>
           <a href="https://app.brxs.ca/login">Log in</a>
           <Link href="/gallery">Work</Link>
-          <Link href="/book">Book a shoot</Link>
-          <Link href="/photographers">Photographers</Link>
         </div>
         <div className="foot-col">
           <h4>Company</h4>

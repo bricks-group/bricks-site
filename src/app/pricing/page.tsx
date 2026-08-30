@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { SOFTWARE_PLANS, OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
 import {
   AREA_SERVED_SCHEMA,
-  BROKERAGE_LOGOS,
   COVERAGE_LINE,
   TOUR_BLURB,
   TOUR_NAME,
@@ -15,16 +14,16 @@ import {
 } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'Bricks — Pricing (Canadian listing media)',
-  description: 'Bricks listing-media pricing for Canadian real estate: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted by sqft.',
+  title: 'bricks pricing — software, office seats, listing media',
+  description: 'Clay free. Keystone, Marble, Diamond $49 / $99 / $149 a month or yearly. Office seats Boutique to Franchise, per seat per year. Listing media CAD by footprint from Mississauga.',
   alternates: { canonical: '/pricing' },
   openGraph: {
-    title: 'Bricks — Pricing (Canadian listing media)',
-    description: 'Bricks listing-media pricing: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted by sqft.',
+    title: 'bricks pricing — software, office seats, listing media',
+    description: 'Software, office seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
   },
   twitter: {
-    title: 'Bricks — Pricing (Canadian listing media)',
-    description: 'Bricks listing-media pricing: per-shoot rates by footprint, floor plans included, virtual tour add-on, virtual visit quoted by sqft.',
+    title: 'bricks pricing — software, office seats, listing media',
+    description: 'Software, office seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
   },
 }
 
@@ -90,27 +89,55 @@ export default function PricingPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Pricing</span>
-          <h1>Priced by footprint.</h1>
-          <p className="sub">À la carte for Canadian real estate. Floor plan included on every standard shoot. Virtual visit quoted by sqft.</p>
+          <h1>Software, seats, and media.</h1>
+          <p className="sub">OS plans for individuals and offices. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit is always quoted by sqft — never in a package. Software is in development; media is live.</p>
         </div>
       </section>
 
       <div className="wrap">
-        <section className="trust">
-          <p className="trust-cap">Agents &amp; sales reps from Canada&apos;s leading brokerages &amp; REITs</p>
-          <div className="logo-row" aria-label="Logos of leading Canadian brokerages and REITs where Bricks serves agents and sales reps">
-            {BROKERAGE_LOGOS.map((l) => (
-              <div key={l.alt} className="logo"><Image src={l.src} alt={l.alt} width={100} height={28} /></div>
+        <section className="block rvl" aria-label="Software plans">
+          <div className="sec-head">
+            <div>
+              <span className="over">Individuals</span>
+              <h2>Clay, Keystone, Marble, Diamond.</h2>
+            </div>
+          </div>
+          <p className="tbl-cap">Monthly, or yearly — pay 10, get 12. Media is always a separate booking.</p>
+          <div className="incl">
+            {SOFTWARE_PLANS.map((p) => (
+              <div key={p.id} className="c rvl">
+                <span className="ic">{p.price}</span>
+                <h4>{p.name}</h4>
+                <p>{p.yearly}. {p.points.join('. ')}.</p>
+              </div>
             ))}
-            <div className="logo logo-txt">CBRE</div>
+          </div>
+        </section>
+
+        <section className="block rvl" aria-label="Office seats">
+          <div className="sec-head">
+            <div>
+              <span className="over">Offices</span>
+              <h2>Per seat, billed yearly.</h2>
+            </div>
+          </div>
+          <p className="tbl-cap">{OFFICE_INCLUDES}</p>
+          <div className="incl">
+            {OFFICE_PLANS.map((p) => (
+              <div key={p.id} className="c rvl">
+                <span className="ic">{p.seats}</span>
+                <h4>{p.name}</h4>
+                <p>{p.price}</p>
+              </div>
+            ))}
           </div>
         </section>
 
         <section className="block rvl rates" aria-label="À la carte rates">
           <div className="sec-head">
             <div>
-              <span className="over">À la carte</span>
-              <h2>Starting points.</h2>
+              <span className="over">Listing media</span>
+              <h2>Priced by footprint.</h2>
             </div>
           </div>
           <p className="tbl-cap">Starting points — your quote is tailored per booking</p>
@@ -142,6 +169,8 @@ export default function PricingPage() {
             <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} is a path-confined walkthrough — a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}), never packaged, and not charged at checkout. The floor plan is included on every standard shoot.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at <b>$35 / image</b>; tell us which rooms and we confirm the count before delivery.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>
+            <div className="qa"><h4>Is software live?</h4><p>No. Clay / Keystone / Marble / Diamond and office seats are the locked catalog for OS. Listing media and the website booking form are live. The apps are not in the App Store or Google Play.</p></div>
+            <div className="qa"><h4>Office vs individual plans?</h4><p>Individuals pick Clay through Diamond. Offices buy seats yearly — Boutique, Growth, Enterprise, Franchise. Every office seat is the full OS plus trust accounting, not a bundle of the individual plans.</p></div>
           </div>
         </section>
 
