@@ -57,7 +57,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The desk for the deal.</h1>
-          <p className="sub">The operating system for Canadian real estate — from listing photo to closing the deal. Book professional media today. CRM, transactions, and MLS are next.</p>
+          <p className="sub">The operating system for Canadian real estate — from listing photo to closing the deal. Book professional media today — the OS underneath is live in preview for early accounts.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/platform">See the platform</Link>
@@ -117,7 +117,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">Control surface</span>
           <h2>The office desk.</h2>
-          <p>Roster, pipeline, and the listing file in one OS. Sign in as office, team, or agent — the rooms you see follow the account. In development — preview.</p>
+          <p>Roster, pipeline, and the listing file in one OS. Sign in as office, team, or agent — the rooms you see follow the account. Live in preview for early accounts.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -147,7 +147,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">The rest unlocks</span>
           <h2>Same OS. Deeper rooms.</h2>
-          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product. In development — preview.</p>
+          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product. Live in preview for early accounts.</p>
         </div>
       </section>
 
@@ -188,7 +188,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">GO</span>
           <h2>The field app.</h2>
-          <p>GO is the photographer field app — jobs, uploads, pay, on site. In development and not in the App Store or Google Play.</p>
+          <p>GO is the photographer field app — jobs, uploads, pay, on site. Live in preview today; App Store and Google Play releases follow.</p>
         </div>
       </section>
 
