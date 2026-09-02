@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import NewsletterInline from '../NewsletterInline'
-import { LOOP, SOFTWARE_PLANS, OFFICE_PLANS } from '@/lib/catalog'
+import { SOFTWARE_PLANS, OFFICE_PLANS } from '@/lib/catalog'
 
 export const metadata: Metadata = {
   title: 'bricks platform — OS, Booking, GO',
@@ -40,21 +40,6 @@ export default function PlatformPage() {
       </section>
 
       <div className="wrap">
-        <section className="block rvl">
-          <div className="sec-head">
-            <div>
-              <span className="over">The loop</span>
-              <h2>How a listing moves.</h2>
-            </div>
-          </div>
-          <div className="loop" aria-label="Property to close">
-            {LOOP.map((step) => (
-              <span key={step}>{step}</span>
-            ))}
-          </div>
-          <p className="note">Media sits inside the listing file — it is not a second product. Photographers shoot in GO. Agents order media from Booking or the site.</p>
-        </section>
-
         <section className="block rvl">
           <div className="sec-head">
             <div>
@@ -152,9 +137,6 @@ export default function PlatformPage() {
         .apps .c .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
           text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
         .sub-line{font-size:15px;color:var(--inkSoft);line-height:1.5;max-width:640px;margin-top:-12px;}
-        .loop{display:flex;flex-wrap:wrap;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .loop span{flex:1 1 110px;background:var(--paper);padding:14px 16px;font-family:'JetBrains Mono',monospace;
-          font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:500;}
         .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
         .aud-card{background:var(--paper);padding:22px 24px;text-decoration:none;color:inherit;display:block;}
         .aud-card:hover{background:var(--paperSoft);}
