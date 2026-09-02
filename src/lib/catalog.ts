@@ -49,12 +49,3 @@ export const OFFICE_PLANS = [
 export const OFFICE_INCLUDES =
   'Full OS on every seat — CRM, transactions, e-sign, forms, MLS — plus trust accounting. Agents do not pay individually.'
 
-export const LOOP = [
-  'Property',
-  'Listing',
-  'Booking',
-  'GO',
-  'Media',
-  'MLS',
-  'Transaction',
-] as const
