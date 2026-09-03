@@ -9,7 +9,7 @@ const links = [
   { href: '/gallery', label: 'Work' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/photographers', label: 'Photographers' },
-  { href: '/platform', label: 'Platform' },
+  { href: '/brokerage', label: 'Brokerage' },
 ]
 
 const OS_LOGIN = 'https://app.brxs.ca/login'
@@ -113,13 +113,12 @@ export default function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className={pathname === l.href ? 'active' : ''}
+              className={pathname === l.href || (l.href === '/brokerage' && pathname === '/office') ? 'active' : ''}
               onClick={() => setOpen(false)}
             >
               {l.label}
             </Link>
           ))}
-          <Link href="/brokerage" className={pathname === '/brokerage' || pathname === '/office' ? 'active' : ''} onClick={() => setOpen(false)}>Brokerage</Link>
           <Link href="/agents" className={pathname === '/agents' ? 'active' : ''} onClick={() => setOpen(false)}>Agents</Link>
           <Link
             href="/contact"

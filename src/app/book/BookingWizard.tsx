@@ -114,6 +114,15 @@ const PKG_DESC: Record<string, string> = {
   suite: `+ reel + ${TOUR_NAME.toLowerCase()} + twilight + staging`,
 }
 
+/** Stable ids the GO capture gate reads (package_id / photos_only / suite). */
+const PKG_ID: Record<string, string> = {
+  photosOnly: 'photos_only',
+  essentials: 'essentials',
+  story: 'story',
+  showcase: 'showcase',
+  suite: 'suite',
+}
+
 function esc(s: string) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] || c))
 }
@@ -223,6 +232,15 @@ export default function BookingWizard() {
     return null
   }
 
+  /** Catalog id for Dispatch jobs.package_id — never collapse to first-word "hdr". */
+  function packageIdForCheckout(): string {
+    const m = matchedPackage()
+    if (m) return PKG_ID[m]
+    // Custom mix still includes HDR photo; floor plan follows drone (Photos only drops both).
+    if (!drone) return 'photos_only'
+    return 'essentials'
+  }
+
   function applyPackage(key: string) {
     const def = PKG_DEFS[key]
     setDrone(def.drone); setReel(def.reel); setTour(def.tour); setTwilight(def.twilight)
@@ -290,11 +308,15 @@ export default function BookingWizard() {
     if (drone) parts.push('Drone')
     if (reel) parts.push('Cinematic reel')
     if (tour) parts.push(TOUR_NAME)
+    // Virtual visit is quoted separately — never an add_on / never opens phone tour.
     if (visit) parts.push(`${VISIT_NAME} (${VISIT_PRICE_LABEL.toLowerCase()})`)
     if (twilight) parts.push('Twilight')
     if (rush) parts.push('Rush')
     const base = parts.join(' + ')
-    return pkg ? PKG_LABEL[pkg] + ' — ' + base : base
+    const label = pkg
+      ? PKG_LABEL[pkg]
+      : (packageIdForCheckout() === 'photos_only' ? 'Photos only' : 'Essentials')
+    return label + ' — ' + base
   }
 
   function validate(s: number): boolean {
@@ -348,6 +370,8 @@ export default function BookingWizard() {
       ? `${VISIT_NAME} (Gaussian splat, free-roam) requested — ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}). Footprint: ${visitBand}${visitSqft ? ` · ${visitSqft} sqft` : ''}${quote.sqft_estimated ? ' (estimated — confirm)' : ''}. Never packaged. Not in Stripe total.`
       : ''
     const combinedNotes = [notes.trim(), visitNote].filter(Boolean).join('\n')
+    const packageId = packageIdForCheckout()
+    const floorPlanIncluded = packageId !== 'photos_only' && drone
     const payload = {
       quote,
       agent_name: name.trim(),
@@ -356,7 +380,9 @@ export default function BookingWizard() {
       phone: phone.trim() || null,
       property_address: selectedAddr || addr.trim(),
       property_type: propertyType,
+      package_id: packageId,
       package_interest: servicesSummary(),
+      floor_plan_included: floorPlanIncluded,
       sqft: quote.sqft || null,
       preferred_date: date,
       selected_slot_start: selectedSlot ? selectedSlot.start : null,
@@ -366,6 +392,7 @@ export default function BookingWizard() {
       tour_addon: tour,
       twilight_addon: twilight,
       rush_addon: rush,
+      // visit is notes-only — never tour_addon / never phone shutter
       notes: combinedNotes || null,
     }
     fetch(SUPABASE + 'create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON }, body: JSON.stringify(payload) })

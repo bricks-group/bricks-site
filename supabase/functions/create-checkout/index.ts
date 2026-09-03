@@ -109,11 +109,11 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify({
         address: body.property_address,
         property_type: body.property_type,
-        drone_addon: body.drone_addon,
-        reel_addon: body.reel_addon,
-        tour_addon: body.tour_addon,
-        twilight_addon: body.twilight_addon,
-        rush_addon: body.rush_addon,
+        drone_addon: body.drone_addon === true || body.drone_addon === 'true',
+        reel_addon: body.reel_addon === true || body.reel_addon === 'true',
+        tour_addon: body.tour_addon === true || body.tour_addon === 'true',
+        twilight_addon: body.twilight_addon === true || body.twilight_addon === 'true',
+        rush_addon: body.rush_addon === true || body.rush_addon === 'true',
         sqft: body.sqft || undefined,
       }),
     });
@@ -127,20 +127,28 @@ Deno.serve(async (req: Request) => {
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 
+  const droneOn = body.drone_addon === true || body.drone_addon === 'true'
+  const photosOnly = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9]+/g, '_') === 'photos_only'
+    || /photos\s*only/i.test(String(body.package_interest || ''))
+  const floorPlan = body.floor_plan_included === true || body.floor_plan_included === 'true'
+    || (body.floor_plan_included == null && droneOn && !photosOnly)
   const meta: Record<string, string> = {
     agent_name: (body.agent_name || '').toString().slice(0, 200),
     email: (body.email || '').toString().slice(0, 200),
     property_address: (body.property_address || '').toString().slice(0, 300),
     property_type: (body.property_type || '').toString(),
+    package_id: (body.package_id || '').toString().slice(0, 64),
     package_interest: (body.package_interest || '').toString(),
+    floor_plan_included: String(!!floorPlan),
     preferred_date: (body.preferred_date || '').toString(),
     selected_slot_start: (body.selected_slot_start || '').toString(),
     selected_slot_end: (body.selected_slot_end || '').toString(),
-    drone_addon: String(body.drone_addon !== false),
-    reel_addon: String(body.reel_addon === true),
-    tour_addon: String(body.tour_addon === true),
-    twilight_addon: String(body.twilight_addon === true),
-    rush_addon: String(body.rush_addon === true),
+    // Explicit false for Photos only — never coerce omitted/string into drone.
+    drone_addon: String(droneOn),
+    reel_addon: String(body.reel_addon === true || body.reel_addon === 'true'),
+    tour_addon: String(body.tour_addon === true || body.tour_addon === 'true'),
+    twilight_addon: String(body.twilight_addon === true || body.twilight_addon === 'true'),
+    rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
     phone: (body.phone || '').toString(),
     brokerage: (body.brokerage || '').toString(),
     notes: (body.notes || '').toString().slice(0, 500),
@@ -175,7 +183,9 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[brokerage]', meta.brokerage);
   form.append('metadata[property_address]', meta.property_address);
   form.append('metadata[property_type]', meta.property_type);
+  form.append('metadata[package_id]', meta.package_id);
   form.append('metadata[package_interest]', meta.package_interest);
+  form.append('metadata[floor_plan_included]', meta.floor_plan_included);
   form.append('metadata[drone_addon]', meta.drone_addon);
   form.append('metadata[reel_addon]', meta.reel_addon);
   form.append('metadata[tour_addon]', meta.tour_addon);
