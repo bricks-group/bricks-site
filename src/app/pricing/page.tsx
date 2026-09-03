@@ -14,16 +14,16 @@ import {
 } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'bricks pricing — software, office seats, listing media',
-  description: 'Clay free. Keystone, Marble, Diamond $49 / $99 / $149 a month or yearly. Office seats Boutique to Franchise, per seat per year. Listing media CAD by footprint from Mississauga.',
+  title: 'bricks pricing — software, brokerage seats, listing media',
+  description: 'Clay free. Keystone, Marble, Diamond $49 / $99 / $149 a month or yearly. Brokerage seats Boutique to Franchise, per seat per year. Listing media CAD by footprint from Mississauga.',
   alternates: { canonical: '/pricing' },
   openGraph: {
-    title: 'bricks pricing — software, office seats, listing media',
-    description: 'Software, office seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
+    title: 'bricks pricing — software, brokerage seats, listing media',
+    description: 'Software, brokerage seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
   },
   twitter: {
-    title: 'bricks pricing — software, office seats, listing media',
-    description: 'Software, office seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
+    title: 'bricks pricing — software, brokerage seats, listing media',
+    description: 'Software, brokerage seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
   },
 }
 
@@ -90,7 +90,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and media.</h1>
-          <p className="sub">OS plans for individuals and offices. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit is always quoted by sqft — never in a package. Software is in development; media is live.</p>
+          <p className="sub">OS plans for individuals and brokerages. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit is always quoted by sqft — never in a package. Software is in development; media is live.</p>
         </div>
       </section>
 
@@ -114,10 +114,10 @@ export default function PricingPage() {
           </div>
         </section>
 
-        <section className="block rvl" aria-label="Office seats">
+        <section className="block rvl" aria-label="Brokerage seats">
           <div className="sec-head">
             <div>
-              <span className="over">Offices</span>
+              <span className="over">Brokerages</span>
               <h2>Per seat, billed yearly.</h2>
             </div>
           </div>
@@ -169,8 +169,8 @@ export default function PricingPage() {
             <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} is a path-confined walkthrough — a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}), never packaged, and not charged at checkout. The floor plan is included on every standard shoot.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at <b>$35 / image</b>; tell us which rooms and we confirm the count before delivery.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>
-            <div className="qa"><h4>Is software live?</h4><p>No. Clay / Keystone / Marble / Diamond and office seats are the locked catalog for OS. Listing media and the website booking form are live. The apps are not in the App Store or Google Play.</p></div>
-            <div className="qa"><h4>Office vs individual plans?</h4><p>Individuals pick Clay through Diamond. Offices buy seats yearly — Boutique, Growth, Enterprise, Franchise. Every office seat is the full OS plus trust accounting, not a bundle of the individual plans.</p></div>
+            <div className="qa"><h4>Is software live?</h4><p>No. Clay / Keystone / Marble / Diamond and brokerage seats are the locked catalog for OS. Listing media and the website booking form are live. The apps are not in the App Store or Google Play.</p></div>
+            <div className="qa"><h4>Brokerage vs individual plans?</h4><p>Individuals pick Clay through Diamond. Brokerages buy seats yearly — Boutique, Growth, Enterprise, Franchise. Every brokerage seat is the full OS plus trust accounting, not a bundle of the individual plans.</p></div>
           </div>
         </section>
 

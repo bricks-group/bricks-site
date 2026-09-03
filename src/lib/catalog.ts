@@ -1,5 +1,5 @@
 /**
- * Locked public catalog (software + office seats).
+ * Locked public catalog (software + brokerage seats).
  * Media rates live in pricing.ts. Do not invent a founder discount.
  * Annual individual plans = pay 10, get 12 (two months free).
  */
@@ -38,7 +38,7 @@ export const SOFTWARE_PLANS = [
   },
 ] as const
 
-/** Office OS: per seat, billed annually. Full OS on every seat — not a Clay–Diamond bundle. */
+/** Brokerage seats: per seat, billed annually. Full OS on every seat — not a Clay–Diamond bundle. */
 export const OFFICE_PLANS = [
   { id: 'boutique', name: 'Boutique', seats: '5–24 seats', price: '$708 / seat / yr' },
   { id: 'growth', name: 'Growth', seats: '25–74 seats', price: '$540 / seat / yr' },

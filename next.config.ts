@@ -30,6 +30,8 @@ const nextConfig: NextConfig = {
       { source: '/blog.html', destination: '/blog', permanent: true },
       { source: '/photographers.html', destination: '/photographers', permanent: true },
       { source: '/vendors.html', destination: '/photographers', permanent: true },
+      { source: '/office', destination: '/brokerage', permanent: true },
+      { source: '/office.html', destination: '/brokerage', permanent: true },
       { source: '/blog/gta-real-estate-media-cost-2026.html', destination: '/blog/gta-real-estate-media-cost-2026', permanent: true },
       { source: '/blog/3d-tour-vs-video-walkthrough.html', destination: '/blog/3d-tour-vs-video-walkthrough', permanent: true },
       { source: '/blog/drone-photography-rules-ontario.html', destination: '/blog/drone-photography-rules-ontario', permanent: true },

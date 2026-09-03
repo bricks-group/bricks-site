@@ -56,7 +56,7 @@ export default function AgentsPage() {
             <div className="c rvl">
               <span className="ic">Team</span>
               <h4>Team</h4>
-              <p>Same OS, team-sized. Shared pipeline for the people you run. Team software is yearly, at the same yearly totals. An office seat is a different product — full OS plus trust accounting.</p>
+              <p>Same OS, team-sized. Shared pipeline for the people you run. Team software is yearly, at the same yearly totals. A brokerage seat is a different product — full OS plus trust accounting.</p>
             </div>
           </div>
         </section>
@@ -87,7 +87,7 @@ export default function AgentsPage() {
             <p className="lead">Listing media is live in Canada. OS and the booking companion are not in any store yet.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
-              <Link className="btn btn-sec" href="/office">For offices</Link>
+              <Link className="btn btn-sec" href="/brokerage">For brokerages</Link>
             </div>
           </div>
         </section>

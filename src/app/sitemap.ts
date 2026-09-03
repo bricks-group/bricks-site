@@ -12,7 +12,7 @@ const routes = [
   '/about',
   '/contact',
   '/photographers',
-  '/office',
+  '/brokerage',
   '/agents',
   '/book',
   '/service-areas',

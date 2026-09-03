@@ -119,7 +119,7 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
-          <Link href="/office" className={pathname === '/office' ? 'active' : ''} onClick={() => setOpen(false)}>Office</Link>
+          <Link href="/brokerage" className={pathname === '/brokerage' || pathname === '/office' ? 'active' : ''} onClick={() => setOpen(false)}>Brokerage</Link>
           <Link href="/agents" className={pathname === '/agents' ? 'active' : ''} onClick={() => setOpen(false)}>Agents</Link>
           <Link
             href="/contact"

@@ -5,19 +5,19 @@ import ProductWindow from '@/components/ProductWindow'
 import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
 
 export const metadata: Metadata = {
-  title: 'bricks for offices — the desk for the whole shop',
-  description: 'OS for the office: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live; the OS is in development.',
-  alternates: { canonical: '/office' },
+  title: 'bricks for brokerages — the desk for the whole shop',
+  description: 'OS for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live; the OS is in development.',
+  alternates: { canonical: '/brokerage' },
 }
 
-export default function OfficePage() {
+export default function BrokeragePage() {
   return (
     <>
       <RevealObserver />
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Office</span>
-          <h1>The office desk.</h1>
+          <span className="badge">Brokerage</span>
+          <h1>The desk for the whole shop.</h1>
           <p className="sub">Roster, pipeline, and the listing file for the whole shop. Every seat gets the full OS — CRM, transactions, e-sign, forms, MLS — plus trust accounting. Media is live now. OS is in development.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/contact">Talk to us</Link>
@@ -26,11 +26,11 @@ export default function OfficePage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Office desk preview">
+      <section className="prod-row rvl" aria-label="Brokerage desk preview">
         <div className="prod-copy">
           <span className="over">What you see</span>
-          <h2>One OS. Office-sized.</h2>
-          <p>Sign in as the office and you get the desk: agents, deals, media as a loop inside the listing file. A team or a solo agent sees fewer rooms. Same product, different account.</p>
+          <h2>One OS. Brokerage-sized.</h2>
+          <p>Sign in as the brokerage and you get the desk: agents, deals, media as a loop inside the listing file. A team or a solo agent sees fewer rooms. Same product, different account.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -67,18 +67,18 @@ export default function OfficePage() {
             </div>
           </div>
           <div className="faq">
-            <div className="qa"><h4>Roster</h4><p>Agents under the office, seats, and who can book media.</p></div>
+            <div className="qa"><h4>Roster</h4><p>Agents under the brokerage, seats, and who can book media.</p></div>
             <div className="qa"><h4>Pipeline</h4><p>Deals and the listing file — not a jobs queue pretending to be the product.</p></div>
             <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the desk or the agent companion. Photographers shoot in GO.</p></div>
-            <div className="qa"><h4>Trust accounting</h4><p>Office-only. Solo and team plans do not unlock it.</p></div>
+            <div className="qa"><h4>Trust accounting</h4><p>Brokerage-only. Solo and team plans do not unlock it.</p></div>
           </div>
         </section>
 
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
-            <span className="over">Office</span>
+            <span className="over">Brokerage</span>
             <h2>Media is live. OS is coming.</h2>
-            <p className="lead">Book listing media today. The office desk is in development — not in any store.</p>
+            <p className="lead">Book listing media today. The OS for the brokerage is in development — not in any store.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

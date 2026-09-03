@@ -87,12 +87,12 @@ export default function Home() {
               <h2>The app you get depends on what you do.</h2>
             </div>
           </div>
-          <p className="aud-lede">Three surfaces. OS is the desk for office, team, and agent — what you see depends on the account. Booking is how an agent orders media. GO is the photographer field app.</p>
+          <p className="aud-lede">Three surfaces. OS is the desk for brokerage, team, and agent — what you see depends on the account. Booking is how an agent orders media. GO is the photographer field app.</p>
           <div className="aud-grid">
-            <Link href="/office" className="aud-card">
+            <Link href="/brokerage" className="aud-card">
               <span className="over">OS</span>
-              <h3>Office</h3>
-              <p>Roster, pipeline, listing file. The office desk for the whole shop.</p>
+              <h3>Brokerage</h3>
+              <p>Roster, pipeline, listing file. The desk for the whole shop.</p>
             </Link>
             <Link href="/agents#team" className="aud-card">
               <span className="over">OS</span>
@@ -113,11 +113,11 @@ export default function Home() {
         </section>
       </div>
 
-      <section className="prod-row rvl" aria-label="Office desk">
+      <section className="prod-row rvl" aria-label="Brokerage desk">
         <div className="prod-copy">
           <span className="over">Control surface</span>
-          <h2>The office desk.</h2>
-          <p>Roster, pipeline, and the listing file in one OS. Sign in as office, team, or agent — the rooms you see follow the account. Live in preview for early accounts.</p>
+          <h2>The desk for the brokerage.</h2>
+          <p>Roster, pipeline, and the listing file in one OS. Sign in as brokerage, team, or agent — the rooms you see follow the account. Live in preview for early accounts.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">

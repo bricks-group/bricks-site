@@ -11,13 +11,13 @@ export const metadata: Metadata = {
 }
 
 const surfaces = [
-  { over: 'In development', title: 'OS', body: 'The desk for office, team, and agent. Roster, pipeline, listing file. What you see depends on the account.' },
+  { over: 'In development', title: 'OS', body: 'The desk for brokerage, team, and agent. Roster, pipeline, listing file. What you see depends on the account.' },
   { over: 'In development', title: 'Booking', body: 'The agent companion to order media. You can book a shoot now on the site; the app is not in any store yet.' },
   { over: 'In development', title: 'GO', body: 'The photographer field app — jobs, uploads, pay. Independent contractors on a fixed rate card.' },
 ]
 
 const roles = [
-  { href: '/office', over: 'OS', title: 'Office', body: 'The whole shop. Full OS plus trust accounting, billed per seat yearly.' },
+  { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'The whole shop. Full OS plus trust accounting, billed per seat yearly.' },
   { href: '/agents#team', over: 'OS', title: 'Team', body: 'Same desk, team-sized. Shared pipeline for the people you run.' },
   { href: '/agents', over: 'OS · Booking', title: 'Agent', body: 'Your desk plus the booker. Clay free; paid plans unlock CRM through MLS.' },
   { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Independent contractor. Auto-routed jobs, fixed dollar rate card, apply here.' },
@@ -83,7 +83,7 @@ export default function PlatformPage() {
               <h2>Locked catalog. Not live yet.</h2>
             </div>
           </div>
-          <p className="sub-line">Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Offices buy seats yearly — full OS on every seat. Media is à la carte, CAD, from Mississauga. Virtual visit is always quoted by sqft, never packaged.</p>
+          <p className="sub-line">Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Media is à la carte, CAD, from Mississauga. Virtual visit is always quoted by sqft, never packaged.</p>
           <div className="incl" style={{ marginTop: 22 }}>
             {SOFTWARE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">
