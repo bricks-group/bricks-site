@@ -14,6 +14,20 @@ const nextConfig: NextConfig = {
           { key: 'Content-Type', value: 'application/octet-stream' },
         ],
       },
+      {
+        source: '/.well-known/bimi/bricks.svg',
+        headers: [
+          { key: 'Content-Type', value: 'image/svg+xml' },
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
+        ],
+      },
+      {
+        source: '/bimi/bricks.svg',
+        headers: [
+          { key: 'Content-Type', value: 'image/svg+xml' },
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
+        ],
+      },
     ]
   },
   async redirects() {

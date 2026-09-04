@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny-ps" viewBox="0 0 24 24" width="256" height="256">
+  <title>Bricks Group</title>
+  <desc>Bricks three-brick mark on paper field</desc>
+  <rect x="0" y="0" width="24" height="24" fill="#F4F1EB"/>
+  <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D8704D"/>
+  <rect x="3" y="11.6" width="6" height="8.4" rx="0.8" fill="#D2542B"/>
+  <rect x="10.2" y="11.6" width="10.8" height="8.4" rx="0.8" fill="#D2542B"/>
+</svg>

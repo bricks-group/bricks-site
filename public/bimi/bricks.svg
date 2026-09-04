@@ -3,7 +3,7 @@
   <title>Bricks Group</title>
   <desc>Bricks three-brick mark on paper field</desc>
   <rect x="0" y="0" width="24" height="24" fill="#F4F1EB"/>
-  <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D2542B" fill-opacity="0.82"/>
+  <rect x="3" y="4" width="11" height="6.4" rx="0.8" fill="#D8704D"/>
   <rect x="3" y="11.6" width="6" height="8.4" rx="0.8" fill="#D2542B"/>
   <rect x="10.2" y="11.6" width="10.8" height="8.4" rx="0.8" fill="#D2542B"/>
 </svg>
