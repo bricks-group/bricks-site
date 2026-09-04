@@ -176,8 +176,46 @@ export default function BookingWizard() {
     evt('booking_paid')
     setStep('done')
     setDoneTitle('Payment confirmed')
-    setDoneMsg('Your shoot is paid and booked.')
     setScheduleCtaVisible(true)
+
+    const sessionId = new URLSearchParams(window.location.search).get('session_id') || ''
+    if (!sessionId) {
+      // Edge may be stale without session_id — webhook (or manual nudge) is the only path.
+      setDoneMsg('Payment confirmed. Your shoot is on Bricks GO — finalizing dispatch.')
+      return
+    }
+
+    setDoneMsg('Confirming your shoot…')
+    const OS_API = 'https://bricks-brokerage-api.vercel.app'
+    let cancelled = false
+    fetch(`${OS_API}/api/book/confirm-paid`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session_id: sessionId }),
+    })
+      .then(async (r) => {
+        const j = await r.json().catch(() => ({} as Record<string, unknown>))
+        if (cancelled) return
+        if (r.ok && j && (j as { ok?: boolean }).ok) {
+          const agent = (j as { agent_user_id?: string | null }).agent_user_id
+          setDoneMsg(
+            agent
+              ? 'Payment confirmed. Your shoot is on Bricks GO — and the listing is on your desk at app.brxs.ca.'
+              : 'Payment confirmed. Your shoot is on Bricks GO',
+          )
+          return
+        }
+        setDoneMsg(
+          "Payment received — we're finalizing dispatch. You'll get email if anything needs a nudge.",
+        )
+      })
+      .catch(() => {
+        if (cancelled) return
+        setDoneMsg(
+          "Payment received — we're finalizing dispatch. You'll get email if anything needs a nudge.",
+        )
+      })
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
