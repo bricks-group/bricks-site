@@ -41,7 +41,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'bricks is the operating system for Canadian real estate, from listing photo to closing the deal. Listing media, the website booking form, and Companion (agent web) are live. CRM, transactions, and MLS continue in preview and are not in the App Store or Google Play.',
+            description: 'bricks is the operating system for Canadian real estate, from listing photo to closing the deal. Listing media, /book, Companion (agent web), GO (photographer web), and the OS desk at app.brxs.ca are live. Native App Store and Google Play binaries are not shipped yet.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
@@ -57,7 +57,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The desk for the deal.</h1>
-          <p className="sub">The operating system for Canadian real estate — from listing photo to closing the deal. Book professional media today — the OS underneath is live in preview for early accounts.</p>
+          <p className="sub">The operating system for Canadian real estate — from listing photo to closing the deal. Book professional media today. Companion, GO web, and the OS desk at app.brxs.ca are live — store apps coming.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/platform">See the platform</Link>
@@ -117,7 +117,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">Control surface</span>
           <h2>The desk for the brokerage.</h2>
-          <p>Roster, pipeline, and the listing file in one OS. Sign in as brokerage, team, or agent — the rooms you see follow the account. Live in preview for early accounts.</p>
+          <p>Roster, pipeline, and the listing file in one OS. Sign in as brokerage, team, or agent — the rooms you see follow the account. Desk live at app.brxs.ca.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -147,7 +147,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">The rest unlocks</span>
           <h2>Same OS. Deeper rooms.</h2>
-          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product. Live in preview for early accounts.</p>
+          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product. Desk live at app.brxs.ca.</p>
         </div>
       </section>
 
@@ -188,14 +188,14 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">GO</span>
           <h2>The field app.</h2>
-          <p>GO is the photographer field app — jobs, uploads, pay, on site. Web client is live in preview; not in the App Store or Google Play yet.</p>
+          <p>GO is the photographer field app — jobs, uploads, pay, on site. Web client is live; App Store and Google Play binaries are coming.</p>
           <p className="prod-mini"><a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">Open GO</a> · <Link href="/photographers">Photographers</Link> · <Link href="/platform">Platform</Link></p>
         </div>
       </section>
 
       <div className="wrap">
         <section className="plat-hint rvl">
-          <p>Companion and listing media are live. bricks OS and GO are in preview for early accounts; Clay / Keystone / Marble / Diamond plans are not for sale yet. <Link href="/platform">Details on the platform page</Link>.</p>
+          <p>Listing media, /book, Companion, GO web, and the OS desk are live. Store apps are coming; Clay / Keystone / Marble / Diamond plans are not for sale yet. <Link href="/platform">Details on the platform page</Link>.</p>
         </section>
       </div>
 

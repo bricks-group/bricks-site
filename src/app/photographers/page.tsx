@@ -5,7 +5,7 @@ import { COVERAGE_LINE } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'Shoot for Bricks | Photographer & videographer network — Canada',
-  description: 'Apply to join the Bricks photographer network. Auto-routed listing shoots, paid via Stripe Connect on a fixed vendor rate card. Apply in about 4 minutes. GO field app is not in any store yet.',
+  description: 'Apply to join the Bricks photographer network. Auto-routed listing shoots, paid via Stripe Connect on a fixed vendor rate card. Apply in about 4 minutes. GO web is live; store apps coming.',
   alternates: { canonical: '/photographers' },
   openGraph: {
     title: 'Shoot for Bricks | Photographer & videographer network',
@@ -53,7 +53,7 @@ export default function PhotographersPage() {
         <div className="wrap">
           <span className="badge">Photographers</span>
           <h1>GO. Shoot listings.<br />Get paid fast.</h1>
-          <p className="sub">Independent contractors on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes. GO web is live in preview — not in any store yet.</p>
+          <p className="sub">Independent contractors on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes. GO web is live — store apps coming.</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
             <a className="btn btn-sec" href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">Open GO web</a>
@@ -70,7 +70,7 @@ export default function PhotographersPage() {
             </div>
           </div>
           <div className="incl">
-            <div className="c rvl"><span className="ic">01</span><h4>Auto-routed jobs</h4><p>Paid bookings auto-route into GO by specialty, tier, and proximity — no bidding. GO web is live in preview (not in any store).</p></div>
+            <div className="c rvl"><span className="ic">01</span><h4>Auto-routed jobs</h4><p>Paid bookings auto-route into GO by specialty, tier, and proximity — no bidding. GO web is live; store apps coming.</p></div>
             <div className="c rvl"><span className="ic">02</span><h4>You set availability</h4><p>Accept or decline any job. Declining is not a breach. Routing may still consider your availability and history.</p></div>
             <div className="c rvl"><span className="ic">03</span><h4>Stripe Connect payouts</h4><p>No invoicing, no chasing clients — paid automatically per completed job.</p></div>
             <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>Inaccessible property or a client no-show reported in-app may qualify for the published trip fee then in effect.</p></div>

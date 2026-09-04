@@ -13,7 +13,7 @@ export default function Footer() {
             <span className="wordmark">bricks</span>
           </Link>
           <p className="foot-blurb">
-            The desk for Canadian real estate. Listing media and Companion are live. OS and GO are in preview — not in any store yet.
+            The desk for Canadian real estate. Listing media, Companion, GO web, and the OS desk are live. Store apps coming.
           </p>
         </div>
         <div className="foot-col">
@@ -25,7 +25,7 @@ export default function Footer() {
           <Link href="/photographers">Photographers</Link>
           <Link href="/book">Book a shoot</Link>
           <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Companion</a>
-          <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">GO (preview)</a>
+          <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">GO</a>
           <a href="https://app.brxs.ca/login">Log in</a>
           <Link href="/gallery">Work</Link>
         </div>

@@ -6,15 +6,15 @@ import { SOFTWARE_PLANS, OFFICE_PLANS } from '@/lib/catalog'
 
 export const metadata: Metadata = {
   title: 'bricks platform — OS, Companion, GO',
-  description: 'The desk for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media and Companion are live. OS and GO are in preview — not in any store yet.',
+  description: 'The desk for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media, Companion, GO web, and the OS desk are live. Store apps coming.',
   alternates: { canonical: '/platform' },
 }
 
 type Surface = { over: string; title: string; body: string; href?: string; linkLabel?: string }
 const surfaces: Surface[] = [
-  { over: 'Preview', title: 'OS', body: 'The desk for brokerage, team, and agent. Roster, pipeline, listing file. What you see depends on the account. Live in preview for early accounts.' },
+  { over: 'Live', title: 'OS', body: 'The desk for brokerage, team, and agent. Roster, pipeline, listing file. What you see depends on the account. Live at app.brxs.ca.' },
   { over: 'Live (web)', title: 'Companion', body: 'The agent companion to order media — Jobs and Book with morning, afternoon, or evening windows. Web app is live; not in the App Store or Google Play.', href: 'https://bricks-companion-web.vercel.app', linkLabel: 'Open Companion' },
-  { over: 'Preview (web)', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card. Web client is live in preview; not in the App Store or Google Play.', href: 'https://bricks-dispatch-web.vercel.app', linkLabel: 'Open GO' },
+  { over: 'Live (web)', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card. Web client is live; App Store and Google Play binaries are coming.', href: 'https://bricks-dispatch-web.vercel.app', linkLabel: 'Open GO' },
 ]
 
 const roles = [
@@ -32,7 +32,7 @@ export default function PlatformPage() {
         <div className="wrap">
           <span className="badge">Platform</span>
           <h1>Property to close. One desk.</h1>
-          <p className="sub">OS for Canadian real estate. Media and Companion are live now. OS and GO are in preview and not in the App Store or Google Play.</p>
+          <p className="sub">OS for Canadian real estate. Media, Companion, GO web, and the OS desk are live. Store apps coming.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>
@@ -123,7 +123,7 @@ export default function PlatformPage() {
           <div className="book">
             <span className="over">Live today</span>
             <h2>Media is the beachhead.</h2>
-            <p className="lead">Book a shoot on the site or in <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Companion</a>. OS and GO are not in any store yet — <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">open GO web</a> in preview.</p>
+            <p className="lead">Book a shoot on the site or in <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Companion</a>. Open the <a href="https://app.brxs.ca/login">OS desk</a> or <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">GO web</a> — store apps coming.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

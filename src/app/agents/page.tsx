@@ -84,7 +84,7 @@ export default function AgentsPage() {
           <div className="book">
             <span className="over">Live today</span>
             <h2>Book the shoot. The desk is coming.</h2>
-            <p className="lead">Listing media and Companion are live in Canada. OS is not in any store yet.</p>
+            <p className="lead">Listing media and Companion are live in Canada. OS desk live at app.brxs.ca — store apps coming.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/brokerage">For brokerages</Link>

@@ -104,7 +104,7 @@ export default function FallMarket() {
             <div>
               <span className="over">While you&apos;re booking media</span>
               <h2>Get founder pricing on the platform.</h2>
-              <p>Companion is live for agents on the web. GO (Dispatch) and Bricks OS continue in preview. Join the list for launch updates and a discounted founder rate before paid software opens.</p>
+              <p>Companion, GO web, and the OS desk are live. Join the list for launch updates and a discounted founder rate before paid software opens.</p>
             </div>
           </div>
           <NewsletterInline />
