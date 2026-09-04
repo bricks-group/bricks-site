@@ -53,7 +53,7 @@ export default function PrivacyPage() {
           </ul>
 
           <h3>3. Who we share with</h3>
-          <p>We do not sell personal information. We share what is needed with: Stripe; Supabase; Cal.com if used; OpenStreetMap/geocoding; the assigned photographer (address, time, access notes, contact name as needed); counsel, accountants, or authorities when required by law. Photographers are independent contractors and must keep booking details confidential under the IC agreement.</p>
+          <p>We do not sell personal information. We share what is needed with: Stripe; Supabase; OpenStreetMap/geocoding; the assigned photographer (address, time, access notes, contact name as needed); counsel, accountants, or authorities when required by law. Photographers are independent contractors and must keep booking details confidential under the IC agreement.</p>
 
           <h3>4. Where</h3>
           <p>Infrastructure currently includes US-hosted processors (Stripe, Supabase, Vercel). By using the site you consent to that transfer. We remain accountable under PIPEDA for personal information we collect.</p>

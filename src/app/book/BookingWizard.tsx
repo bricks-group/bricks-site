@@ -96,7 +96,40 @@ type Quote = {
   lon?: number | null
 }
 
-type Slot = { start: string; end: string }
+type TimeWindow = 'morning' | 'afternoon' | 'evening'
+
+const TIME_WINDOWS: { id: TimeWindow; label: string; range: string; start: string; end: string }[] = [
+  { id: 'morning', label: 'Morning', range: '09:00–12:00', start: '09:00', end: '12:00' },
+  { id: 'afternoon', label: 'Afternoon', range: '12:00–16:00', start: '12:00', end: '16:00' },
+  { id: 'evening', label: 'Evening', range: '16:00–19:00', start: '16:00', end: '19:00' },
+]
+
+/** Synthetic ISO bounds in America/Toronto for Stripe/OS back-compat (no third-party calendar). */
+function windowBoundsIso(ymd: string, windowId: TimeWindow): { start: string; end: string } | null {
+  const w = TIME_WINDOWS.find((x) => x.id === windowId)
+  if (!ymd || !w) return null
+  const toIso = (hm: string) => {
+    const [hh, mm] = hm.split(':').map(Number)
+    const y = Number(ymd.slice(0, 4))
+    const mo = Number(ymd.slice(5, 7)) - 1
+    const d = Number(ymd.slice(8, 10))
+    const asUtc = Date.UTC(y, mo, d, hh, mm, 0)
+    let guess = asUtc
+    for (let i = 0; i < 3; i++) {
+      const fp = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+      }).formatToParts(new Date(guess))
+      const g = (typ: string) => Number(fp.find((part) => part.type === typ)?.value || '0')
+      const gotH = g('hour') === 24 ? 0 : g('hour')
+      const want = Date.UTC(y, mo, d, hh, mm, 0)
+      const got = Date.UTC(g('year'), g('month') - 1, g('day'), gotH, g('minute'), g('second'))
+      guess += want - got
+    }
+    return new Date(guess).toISOString()
+  }
+  return { start: toIso(w.start), end: toIso(w.end) }
+}
 
 const PKG_DEFS: Record<string, { drone: boolean; reel: boolean; tour: boolean; twilight: boolean }> = {
   photosOnly: { drone: false, reel: false, tour: false, twilight: false },
@@ -163,9 +196,7 @@ export default function BookingWizard() {
   const [sqftInput, setSqftInput] = useState('')
   const [date, setDate] = useState('')
   const [notes, setNotes] = useState('')
-  const [slots, setSlots] = useState<Slot[] | null>(null)
-  const [slotMsg, setSlotMsg] = useState('Pick a date above to see real available times.')
-  const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null)
+  const [preferredWindow, setPreferredWindow] = useState<TimeWindow | null>(null)
   const [paying, setPaying] = useState(false)
   const [doneTitle, setDoneTitle] = useState('Payment started.')
   const [doneMsg, setDoneMsg] = useState('Redirecting to secure checkout…')
@@ -314,30 +345,12 @@ export default function BookingWizard() {
     if (quote) fetchQuote()
   }, [drone, reel, tour, twilight, rush])
 
-  function fetchSlots(d: string) {
-    setSelectedSlot(null)
-    if (!d) { setSlots(null); setSlotMsg('Pick a date above to see real available times.'); return }
-    setSlots(null)
-    setSlotMsg('Checking live availability…')
-    let geoQS = ''
-    if (quote && quote.lat != null && quote.lon != null) {
-      geoQS = '&lat=' + encodeURIComponent(quote.lat) + '&lon=' + encodeURIComponent(quote.lon)
-    }
-    fetch(SUPABASE + 'cal-slots?date=' + encodeURIComponent(d) + geoQS, { headers: { apikey: ANON } })
-      .then((r) => r.json())
-      .then((j: { ok: boolean; slots?: Slot[] }) => {
-        if (!j.ok) { setSlotMsg("Couldn't load times for this date — try another, or email booking@brxs.ca."); return }
-        if (!j.slots || !j.slots.length) { setSlotMsg('No open times that day — try another date.'); return }
-        setSlots(j.slots)
-      })
-      .catch(() => setSlotMsg('Network hiccup loading times — try again.'))
-  }
-
-  function formatSlot(s: Slot) {
-    const d = new Date(s.start)
+  function formatPreferred(ymd: string, windowId: TimeWindow | null) {
+    if (!ymd || !windowId) return '—'
+    const w = TIME_WINDOWS.find((x) => x.id === windowId)
+    const d = new Date(ymd + 'T12:00:00')
     const day = d.toLocaleDateString('en-CA', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'America/Toronto' })
-    const t = d.toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Toronto' })
-    return day + ' · ' + t
+    return day + ' · ' + (w ? w.label + ' (' + w.range + ')' : windowId)
   }
 
   function servicesSummary() {
@@ -372,7 +385,7 @@ export default function BookingWizard() {
     }
     if (s === 2) {
       if (!date) msg = 'Pick a shoot date.'
-      else if (!selectedSlot) msg = 'Pick a real time slot above.'
+      else if (!preferredWindow) msg = 'Pick a time window above.'
     }
     setErrs((e) => ({ ...e, [s]: msg }))
     return !msg
@@ -384,7 +397,7 @@ export default function BookingWizard() {
       setStep(next)
       if (s === 0) evt('booking_contact_submitted')
       if (s === 1) evt('booking_services_submitted', { total: quote ? quote.total : null })
-      if (s === 2) evt('booking_schedule_submitted', { slot: selectedSlot ? 'picked' : 'none' })
+      if (s === 2) evt('booking_schedule_submitted', { window: preferredWindow || 'none' })
       if (next === 1) fetchQuote()
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -423,8 +436,9 @@ export default function BookingWizard() {
       floor_plan_included: floorPlanIncluded,
       sqft: quote.sqft || null,
       preferred_date: date,
-      selected_slot_start: selectedSlot ? selectedSlot.start : null,
-      selected_slot_end: selectedSlot ? selectedSlot.end : null,
+      preferred_window: preferredWindow,
+      selected_slot_start: (preferredWindow && date && windowBoundsIso(date, preferredWindow)?.start) || null,
+      selected_slot_end: (preferredWindow && date && windowBoundsIso(date, preferredWindow)?.end) || null,
       drone_addon: drone,
       reel_addon: reel,
       tour_addon: tour,
@@ -588,20 +602,23 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 2 ? ' active' : ''}`}>
               <h2>When?</h2>
-              <p className="hint">Pick a real time below — it&apos;s checked live against our calendar and locked the moment you pay.</p>
-              <div className="field"><label>Shoot date <span className="req">*</span></label><input type="date" value={date} onChange={(e) => { setDate(e.target.value); fetchSlots(e.target.value) }} /></div>
-              <div>
-                {slots ? (
-                  <div className="slotgrid">
-                    {slots.map((s, i) => (
-                      <div key={i} className={`slotbtn${selectedSlot === s ? ' sel' : ''}`} onClick={() => { setSelectedSlot(s); setErrs((e) => ({ ...e, 2: '' })) }}>
-                        {new Date(s.start).toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Toronto' })}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="slotmsg">{slotMsg}</div>
-                )}
+              <p className="hint">Pick a date and window. Your photographer confirms the exact time on GO — nothing is locked to a third-party calendar.</p>
+              <div className="field"><label>Shoot date <span className="req">*</span></label><input type="date" value={date} onChange={(e) => { setDate(e.target.value); setErrs((er) => ({ ...er, 2: '' })) }} /></div>
+              <div className="field">
+                <label>Time window <span className="req">*</span></label>
+                <div className="slotgrid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginTop: 8 }}>
+                  {TIME_WINDOWS.map((w) => (
+                    <div
+                      key={w.id}
+                      className={`slotbtn${preferredWindow === w.id ? ' sel' : ''}`}
+                      onClick={() => { setPreferredWindow(w.id); setErrs((er) => ({ ...er, 2: '' })) }}
+                    >
+                      <div>{w.label}</div>
+                      <div style={{ marginTop: 4, fontSize: 11, opacity: 0.85 }}>{w.range}</div>
+                    </div>
+                  ))}
+                </div>
+                <p className="hint-sm" style={{ marginTop: 10 }}>Times are America/Toronto. Exact start is confirmed on GO after you pay.</p>
               </div>
               <div className="field"><label>Access / staging notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Lockbox code, occupied, staging schedule, deadline…" /></div>
               <div className="err">{errs[2]}</div>
@@ -610,7 +627,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
-              <p className="hint">Confirm details, then pay to lock your slot. Full amount (incl. HST) charged now via Stripe. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
+              <p className="hint">Confirm details, then pay to book. Your photographer confirms the window on GO. Full amount (incl. HST) charged now via Stripe. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
               <div className="review">
                 {[
                   ['Agent', name.trim() || '—'], ['Brokerage', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
@@ -618,7 +635,7 @@ export default function BookingWizard() {
                   ['Package', pkg ? PKG_LABEL[pkg] : 'Custom (à la carte)'],
                   ['Licensed drone', drone ? 'Yes' : 'No — Photos only'], ['Floor plan', drone ? 'Yes' : 'No — Photos only'],
                   ['Cinematic reel', reel ? 'Yes' : 'No'], [TOUR_NAME, tour ? 'Yes' : 'No'], [VISIT_NAME, visit ? `Yes — ${VISIT_PRICE_LABEL.toLowerCase()}` : 'No'], ['Twilight', twilight ? 'Yes' : 'No'], ['Rush delivery', rush ? 'Yes' : 'No'],
-                  ['Shoot time', selectedSlot ? formatSlot(selectedSlot) : '—'], ['Notes', notes.trim() || '—'],
+                  ['Preferred window', formatPreferred(date, preferredWindow)], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
                   <div key={k} className="rrow"><span className="rk">{k}</span><span className="rv">{esc(v)}</span></div>
                 ))}
@@ -640,7 +657,7 @@ export default function BookingWizard() {
               {scheduleCtaVisible && (
                 <div style={{ display: 'block', marginTop: 18, padding: 18, border: '1px solid var(--hairStrong)', borderRadius: 2 }}>
                   <h3 style={{ margin: '0 0 6px', fontSize: 17, fontWeight: 500, color: 'var(--ink)' }}>Shoot booked ✓</h3>
-                  <p style={{ margin: '0 0 14px', fontSize: 14, color: 'var(--inkSoft)' }}>Your slot is locked on our calendar and a confirmation email is on its way.</p>
+                  <p style={{ margin: '0 0 14px', fontSize: 14, color: 'var(--inkSoft)' }}>Your preferred window is on GO — the photographer will confirm timing. A confirmation email is on its way.</p>
                 </div>
               )}
               <p style={{ marginTop: 14 }}><Link href="/" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>← Back to overview</Link></p>

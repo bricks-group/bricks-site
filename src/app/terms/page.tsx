@@ -90,7 +90,7 @@ export default function TermsPage() {
       <div className="legal-body">
         <section className="block" id="privacy">
           <h2>10. Privacy</h2>
-          <p>We collect the name, brokerage, email, phone, property address, and shoot details you submit, plus payment metadata from Stripe. We use it to quote, charge, schedule, shoot, deliver, and support the booking, and for records we must keep (including tax). We share what is needed with Stripe, our database host (Supabase), scheduling (Cal.com if used), and the assigned photographer. We do not sell your information. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> to access, correct, or delete what we hold, subject to records we must keep. Marketing email is only if you opted in, with unsubscribe, under CASL. Full detail is at <Link href="/privacy">brxs.ca/privacy</Link>.</p>
+          <p>We collect the name, brokerage, email, phone, property address, and shoot details you submit, plus payment metadata from Stripe. We use it to quote, charge, schedule, shoot, deliver, and support the booking, and for records we must keep (including tax). We share what is needed with Stripe, our database host (Supabase), and the assigned photographer. We do not sell your information. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> to access, correct, or delete what we hold, subject to records we must keep. Marketing email is only if you opted in, with unsubscribe, under CASL. Full detail is at <Link href="/privacy">brxs.ca/privacy</Link>.</p>
         </section>
       </div>
 

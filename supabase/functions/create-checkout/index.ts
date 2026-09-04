@@ -3,7 +3,7 @@
 // The wizard posts the finalized quote + agent/booking details; we create a
 // one-time payment Session for the exact CAD amount (incl HST) and return the
 // Checkout URL. A webhook (stripe-webhook fn) confirms payment, writes the
-// paid lead, and books the Cal.com slot.
+// paid lead. Preferred date + window go to Stripe metadata (no Cal.com).
 //
 // The client-submitted `quote` is NEVER trusted for the charged amount --
 // it's just what the wizard displayed. We re-run the same pricing engine
@@ -96,7 +96,52 @@ Deno.serve(async (req: Request) => {
   let body: any;
   try { body = await req.json(); } catch { return bad('Invalid JSON'); }
 
-  if (!body.selected_slot_start || !body.selected_slot_end) return bad('A real shoot slot must be selected before checkout');
+  const preferredDate = (body.preferred_date || '').toString().trim();
+  const preferredWindow = (body.preferred_window || '').toString().trim().toLowerCase();
+  const WINDOW_BOUNDS: Record<string, { start: string; end: string }> = {
+    morning: { start: '09:00', end: '12:00' },
+    afternoon: { start: '12:00', end: '16:00' },
+    evening: { start: '16:00', end: '19:00' },
+  };
+  const bounds = WINDOW_BOUNDS[preferredWindow];
+  // Accept preferred_date + preferred_window, or legacy selected_slot_* ISO.
+  let slotStart = (body.selected_slot_start || '').toString().trim();
+  let slotEnd = (body.selected_slot_end || '').toString().trim();
+  if ((!slotStart || !slotEnd) && preferredDate && bounds) {
+    // Synthetic Toronto ISO for back-compat metadata (never call Cal.com).
+    const toIso = (hm: string) => {
+      const [hh, mm] = hm.split(':').map(Number);
+      const y = Number(preferredDate.slice(0, 4));
+      const mo = Number(preferredDate.slice(5, 7)) - 1;
+      const d = Number(preferredDate.slice(8, 10));
+      const asUtc = Date.UTC(y, mo, d, hh, mm, 0);
+      let guess = asUtc;
+      for (let i = 0; i < 3; i++) {
+        const loc = new Date(guess);
+        const fp = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+        }).formatToParts(loc);
+        const g = (typ: string) => Number(fp.find((part) => part.type === typ)?.value || '0');
+        const gotH = g('hour') === 24 ? 0 : g('hour');
+        const want = Date.UTC(y, mo, d, hh, mm, 0);
+        const got = Date.UTC(g('year'), g('month') - 1, g('day'), gotH, g('minute'), g('second'));
+        guess += want - got;
+      }
+      return new Date(guess).toISOString();
+    };
+    slotStart = toIso(bounds.start);
+    slotEnd = toIso(bounds.end);
+  }
+  if (!preferredDate || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(preferredDate)) {
+    return bad('preferred_date (YYYY-MM-DD) is required');
+  }
+  if (!bounds && !(slotStart && slotEnd)) {
+    return bad('preferred_window (morning|afternoon|evening) is required');
+  }
+  if (!['morning', 'afternoon', 'evening'].includes(preferredWindow) && !(slotStart && slotEnd)) {
+    return bad('preferred_window must be morning, afternoon, or evening');
+  }
 
   // Re-derive the trusted price server-side -- ignore body.quote entirely for
   // pricing. Pass the same sqft the wizard used (agent-confirmed or the
@@ -140,9 +185,10 @@ Deno.serve(async (req: Request) => {
     package_id: (body.package_id || '').toString().slice(0, 64),
     package_interest: (body.package_interest || '').toString(),
     floor_plan_included: String(!!floorPlan),
-    preferred_date: (body.preferred_date || '').toString(),
-    selected_slot_start: (body.selected_slot_start || '').toString(),
-    selected_slot_end: (body.selected_slot_end || '').toString(),
+    preferred_date: preferredDate,
+    preferred_window: preferredWindow || (bounds ? preferredWindow : ''),
+    selected_slot_start: slotStart,
+    selected_slot_end: slotEnd,
     // Explicit false for Photos only — never coerce omitted/string into drone.
     drone_addon: String(droneOn),
     reel_addon: String(body.reel_addon === true || body.reel_addon === 'true'),
@@ -192,6 +238,7 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[twilight_addon]', meta.twilight_addon);
   form.append('metadata[rush_addon]', meta.rush_addon);
   form.append('metadata[preferred_date]', meta.preferred_date);
+  form.append('metadata[preferred_window]', meta.preferred_window);
   form.append('metadata[selected_slot_start]', meta.selected_slot_start);
   form.append('metadata[selected_slot_end]', meta.selected_slot_end);
   form.append('metadata[notes]', meta.notes);
