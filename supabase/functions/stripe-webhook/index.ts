@@ -2,14 +2,14 @@
 // Stripe calls this on checkout.session.completed.
 // Path: payment success → media_booking_leads (status=paid, OS /bookings queue)
 //     → jobs row auto-assigned (location/package/tier/skills/RPAS) or left unassigned
-//     → Cal.com slot (best-effort) → owner SMS/email (best-effort).
+//     → owner SMS/email (best-effort). Cal.com is NOT called (native preferred_window).
 // Does NOT auto-charge photographers. Does NOT create Connect transfers.
 //
 // HMAC: Stripe signs with v1=… (not v=). The previous verifier read parts.v and
 // rejected every live delivery, so media_booking_leads stayed empty.
 //
 // Deploy:  supabase functions deploy stripe-webhook --no-verify-jwt
-// Needs:   STRIPE_WEBHOOK_SECRET, CAL_KEY (optional), SUPABASE_SERVICE_ROLE_KEY
+// Needs:   STRIPE_WEBHOOK_SECRET, SUPABASE_SERVICE_ROLE_KEY
 // Register: endpoint = /functions/v1/stripe-webhook, events = checkout.session.completed
 
 const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
@@ -143,6 +143,21 @@ function torontoClock(iso: string | null): string {
     hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Toronto',
   });
   return t || '10:00';
+}
+
+const PREFERRED_WINDOWS: Record<string, [string, string]> = {
+  morning: ['09:00', '12:00'],
+  afternoon: ['12:00', '16:00'],
+  evening: ['16:00', '19:00'],
+};
+
+function windowBounds(preferredWindow: string | null | undefined, slotStart: string | null | undefined, slotEnd: string | null | undefined): [string, string] {
+  const key = String(preferredWindow || '').trim().toLowerCase();
+  if (key in PREFERRED_WINDOWS) return PREFERRED_WINDOWS[key];
+  const start = torontoClock(slotStart || null);
+  const end = slotEnd ? torontoClock(slotEnd) : '';
+  if (!end && key) return PREFERRED_WINDOWS.morning;
+  return [start, end];
 }
 
 // Stripe header is t=timestamp,v1=hex[,v1=hex…][,v0=…]. Not v=.
@@ -287,6 +302,7 @@ async function ensureDispatchJob(opts: {
   const minTier = minTierOf(pkg);
   const cityGuess = (opts.m.property_address || '').split(',').slice(-2, -1)[0]?.trim() || '';
 
+  const [twStart, twEnd] = windowBounds(opts.m.preferred_window, opts.m.selected_slot_start, opts.m.selected_slot_end);
   const job: Record<string, unknown> = {
     id: crypto.randomUUID(),
     booking_id: opts.leadId,
@@ -296,8 +312,8 @@ async function ensureDispatchJob(opts: {
     zip_code: '',
     lat: opts.quote.lat,
     lng: opts.quote.lon,
-    time_window_start: torontoClock(opts.m.selected_slot_start || null),
-    time_window_end: opts.m.selected_slot_end ? torontoClock(opts.m.selected_slot_end) : '',
+    time_window_start: twStart,
+    time_window_end: twEnd,
     job_type: drone ? 'drone' : 'photo',
     status: 'unassigned',
     priority: rush ? 'rush' : 'normal',
@@ -462,7 +478,7 @@ Deno.serve(async (req: Request) => {
   // Stripe redelivers on timeout/non-2xx, and a DB unique constraint on
   // stripe_session_id may not be present in every environment -- so the
   // insert's own 409/23505 is a backstop, not the primary defense, against
-  // double-creating the dispatch job / Cal.com booking / owner notification.
+  // double-creating the dispatch job / owner notification.
   if (s.id) {
     const existing = await fetchLeadBySession(supabaseUrl, serviceKey, s.id);
     if (existing) {
@@ -500,35 +516,7 @@ Deno.serve(async (req: Request) => {
   });
 
   if (!duplicate) {
-    const calKey = Deno.env.get('CAL_KEY');
-    if (calKey && m.selected_slot_start && m.selected_slot_end) {
-      try {
-        const bookingRes = await fetch('https://api.cal.com/v2/bookings', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${calKey}`, 'cal-api-version': '2026-02-25', 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            eventTypeId: 6387567,
-            start: m.selected_slot_start,
-            attendee: { name: m.agent_name || 'Bricks agent', email: m.email || 'booking@brxs.ca', timeZone: 'America/Toronto' },
-            location: { type: 'attendeeAddress', address: m.property_address || '' },
-            bookingFieldsResponses: { notes: `Bricks paid shoot (lead ${leadId}). ${m.property_address || ''}` },
-            metadata: {
-              bricks_lead_id: String(leadId),
-              property_lat: quote.lat != null ? String(quote.lat) : '',
-              property_lon: quote.lon != null ? String(quote.lon) : '',
-            },
-          }),
-        });
-        if (!bookingRes.ok) {
-          console.error('Cal.com booking failed for lead ' + leadId + ': ' + (await bookingRes.text()));
-        }
-      } catch (e) {
-        console.error('Cal.com booking error for lead ' + leadId + ': ' + String(e));
-      }
-    } else {
-      console.warn('Skipped Cal.com booking for lead ' + leadId + ' -- missing CAL_KEY or selected slot.');
-    }
-
+    // Cal.com booking removed — preferred_window is native; Dispatch/OS own the schedule.
     try {
       await notifyOwner({
         id: leadId,
