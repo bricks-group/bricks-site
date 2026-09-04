@@ -70,7 +70,7 @@ export default function PhotographersPage() {
             </div>
           </div>
           <div className="incl">
-            <div className="c rvl"><span className="ic">01</span><h4>Auto-routed jobs</h4><p>When live, jobs will land on your phone based on specialty, tier, and proximity — no bidding.</p></div>
+            <div className="c rvl"><span className="ic">01</span><h4>Auto-routed jobs</h4><p>Paid bookings auto-route into GO by specialty, tier, and proximity — no bidding. GO web is live in preview (not in any store).</p></div>
             <div className="c rvl"><span className="ic">02</span><h4>You set availability</h4><p>Accept or decline any job. Declining is not a breach. Routing may still consider your availability and history.</p></div>
             <div className="c rvl"><span className="ic">03</span><h4>Stripe Connect payouts</h4><p>No invoicing, no chasing clients — paid automatically per completed job.</p></div>
             <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>Inaccessible property or a client no-show reported in-app may qualify for the published trip fee then in effect.</p></div>
