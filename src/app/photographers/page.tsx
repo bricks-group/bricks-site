@@ -53,9 +53,10 @@ export default function PhotographersPage() {
         <div className="wrap">
           <span className="badge">Photographers</span>
           <h1>GO. Shoot listings.<br />Get paid fast.</h1>
-          <p className="sub">Independent contractors on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes.</p>
+          <p className="sub">Independent contractors on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes. GO web is live in preview — not in any store yet.</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
+            <a className="btn btn-sec" href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">Open GO web</a>
           </div>
         </div>
       </section>

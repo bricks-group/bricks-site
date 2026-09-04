@@ -188,7 +188,8 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">GO</span>
           <h2>The field app.</h2>
-          <p>GO is the photographer field app — jobs, uploads, pay, on site. Live in preview today; App Store and Google Play releases follow.</p>
+          <p>GO is the photographer field app — jobs, uploads, pay, on site. Web client is live in preview; not in the App Store or Google Play yet.</p>
+          <p className="prod-mini"><a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">Open GO</a> · <Link href="/photographers">Photographers</Link> · <Link href="/platform">Platform</Link></p>
         </div>
       </section>
 

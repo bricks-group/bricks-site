@@ -24,6 +24,8 @@ export default function Footer() {
           <Link href="/agents">Agents</Link>
           <Link href="/photographers">Photographers</Link>
           <Link href="/book">Book a shoot</Link>
+          <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Companion</a>
+          <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">GO (preview)</a>
           <a href="https://app.brxs.ca/login">Log in</a>
           <Link href="/gallery">Work</Link>
         </div>

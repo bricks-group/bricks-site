@@ -10,10 +10,11 @@ export const metadata: Metadata = {
   alternates: { canonical: '/platform' },
 }
 
-const surfaces = [
+type Surface = { over: string; title: string; body: string; href?: string; linkLabel?: string }
+const surfaces: Surface[] = [
   { over: 'Preview', title: 'OS', body: 'The desk for brokerage, team, and agent. Roster, pipeline, listing file. What you see depends on the account. Live in preview for early accounts.' },
-  { over: 'Live (web)', title: 'Companion', body: 'The agent companion to order media — Jobs and Book with morning, afternoon, or evening windows. Web app is live; not in the App Store or Google Play.' },
-  { over: 'Preview', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card. Not in any store yet.' },
+  { over: 'Live (web)', title: 'Companion', body: 'The agent companion to order media — Jobs and Book with morning, afternoon, or evening windows. Web app is live; not in the App Store or Google Play.', href: 'https://bricks-companion-web.vercel.app', linkLabel: 'Open Companion' },
+  { over: 'Preview (web)', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card. Web client is live in preview; not in the App Store or Google Play.', href: 'https://bricks-dispatch-web.vercel.app', linkLabel: 'Open GO' },
 ]
 
 const roles = [
@@ -53,6 +54,9 @@ export default function PlatformPage() {
                 <span className="ic">{a.over}</span>
                 <h4>{a.title}</h4>
                 <p>{a.body}</p>
+                {a.href ? (
+                  <p className="surf-link"><a href={a.href} rel="noopener noreferrer">{a.linkLabel}</a></p>
+                ) : null}
               </div>
             ))}
           </div>
@@ -119,7 +123,7 @@ export default function PlatformPage() {
           <div className="book">
             <span className="over">Live today</span>
             <h2>Media is the beachhead.</h2>
-            <p className="lead">Book a shoot on the site or in Companion. OS and GO are not in any store yet.</p>
+            <p className="lead">Book a shoot on the site or in <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Companion</a>. OS and GO are not in any store yet — <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">open GO web</a> in preview.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>
@@ -134,6 +138,9 @@ export default function PlatformPage() {
         .apps .c{background:var(--paper);padding:22px 22px;}
         .apps .c h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
         .apps .c p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
+        .apps .c .surf-link{margin:10px 0 0;font-size:12.5px;}
+        .apps .c .surf-link a,.book .lead a{color:var(--brickDeep);text-decoration:none;}
+        .apps .c .surf-link a:hover,.book .lead a:hover{text-decoration:underline;}
         .apps .c .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
           text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
         .sub-line{font-size:15px;color:var(--inkSoft);line-height:1.5;max-width:640px;margin-top:-12px;}
