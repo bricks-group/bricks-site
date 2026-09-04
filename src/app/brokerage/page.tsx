@@ -6,7 +6,7 @@ import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
 
 export const metadata: Metadata = {
   title: 'bricks for brokerages — the desk for the whole shop',
-  description: 'OS for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live; the OS is in development.',
+  description: 'OS for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live; the OS is in preview — not in any store yet.',
   alternates: { canonical: '/brokerage' },
 }
 
@@ -18,7 +18,7 @@ export default function BrokeragePage() {
         <div className="wrap">
           <span className="badge">Brokerage</span>
           <h1>The desk for the whole shop.</h1>
-          <p className="sub">Roster, pipeline, and the listing file for the whole shop. Every seat gets the full OS — CRM, transactions, e-sign, forms, MLS — plus trust accounting. Media is live now. OS is in development.</p>
+          <p className="sub">Roster, pipeline, and the listing file for the whole shop. Every seat gets the full OS — CRM, transactions, e-sign, forms, MLS — plus trust accounting. Media is live now. OS is in preview for early accounts — not in any store yet.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/contact">Talk to us</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>
@@ -69,7 +69,7 @@ export default function BrokeragePage() {
           <div className="faq">
             <div className="qa"><h4>Roster</h4><p>Agents under the brokerage, seats, and who can book media.</p></div>
             <div className="qa"><h4>Pipeline</h4><p>Deals and the listing file — not a jobs queue pretending to be the product.</p></div>
-            <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the desk or the agent companion. Photographers shoot in GO.</p></div>
+            <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the desk or Companion. Photographers shoot in GO (Dispatch).</p></div>
             <div className="qa"><h4>Trust accounting</h4><p>Brokerage-only. Solo and team plans do not unlock it.</p></div>
           </div>
         </section>
@@ -78,7 +78,7 @@ export default function BrokeragePage() {
           <div className="book">
             <span className="over">Brokerage</span>
             <h2>Media is live. OS is coming.</h2>
-            <p className="lead">Book listing media today. The OS for the brokerage is in development — not in any store.</p>
+            <p className="lead">Book listing media today. The OS for the brokerage is in preview — not in any store yet.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

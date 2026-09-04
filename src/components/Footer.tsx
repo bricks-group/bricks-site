@@ -13,7 +13,7 @@ export default function Footer() {
             <span className="wordmark">bricks</span>
           </Link>
           <p className="foot-blurb">
-            The desk for Canadian real estate. Listing media is live. OS, Booking, and GO are in development.
+            The desk for Canadian real estate. Listing media and Companion are live. OS and GO are in preview — not in any store yet.
           </p>
         </div>
         <div className="foot-col">

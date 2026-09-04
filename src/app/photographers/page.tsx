@@ -5,7 +5,7 @@ import { COVERAGE_LINE } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'Shoot for Bricks | Photographer & videographer network — Canada',
-  description: 'Join the Bricks photographer network — launching soon. Auto-routed listing shoots, paid via Stripe Connect on a fixed vendor rate card. Apply in about 4 minutes.',
+  description: 'Apply to join the Bricks photographer network. Auto-routed listing shoots, paid via Stripe Connect on a fixed vendor rate card. Apply in about 4 minutes. GO field app is not in any store yet.',
   alternates: { canonical: '/photographers' },
   openGraph: {
     title: 'Shoot for Bricks | Photographer & videographer network',
@@ -29,7 +29,7 @@ export default function PhotographersPage() {
             '@type': 'JobPosting',
             datePosted: '2026-08-13',
             title: 'Real Estate Photographer / Videographer — Independent Contractor',
-            description: 'Auto-routed real estate listing shoots in Canada. Paid via Stripe Connect on a fixed vendor rate card. Network launching soon.',
+            description: 'Auto-routed real estate listing shoots in Canada. Paid via Stripe Connect on a fixed vendor rate card. Applications open now.',
             hiringOrganization: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', sameAs: 'https://www.brxs.ca/' },
             employmentType: 'CONTRACTOR',
             jobLocationType: 'HYBRID',

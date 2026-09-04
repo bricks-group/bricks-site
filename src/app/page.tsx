@@ -41,7 +41,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'bricks is the operating system for Canadian real estate, from listing photo to closing the deal. Listing media and the website booking form are live. CRM, transactions, and MLS are in development and are not in the App Store or Google Play.',
+            description: 'bricks is the operating system for Canadian real estate, from listing photo to closing the deal. Listing media, the website booking form, and Companion (agent web) are live. CRM, transactions, and MLS continue in preview and are not in the App Store or Google Play.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
@@ -87,7 +87,7 @@ export default function Home() {
               <h2>The app you get depends on what you do.</h2>
             </div>
           </div>
-          <p className="aud-lede">Three surfaces. OS is the desk for brokerage, team, and agent — what you see depends on the account. Booking is how an agent orders media. GO is the photographer field app.</p>
+          <p className="aud-lede">Three surfaces. OS is the desk for brokerage, team, and agent — what you see depends on the account. Companion is how an agent orders media. GO is the photographer field app (Dispatch).</p>
           <div className="aud-grid">
             <Link href="/brokerage" className="aud-card">
               <span className="over">OS</span>
@@ -100,9 +100,9 @@ export default function Home() {
               <p>Same OS, team-sized. Shared pipeline for the people you run.</p>
             </Link>
             <Link href="/agents" className="aud-card">
-              <span className="over">OS · Booking</span>
+              <span className="over">OS · Companion</span>
               <h3>Agent</h3>
-              <p>Your desk in OS, plus the booking companion to order media from the phone.</p>
+              <p>Your desk in OS, plus Companion to order media — Jobs and Book with morning, afternoon, or evening windows.</p>
             </Link>
             <Link href="/photographers" className="aud-card">
               <span className="over">GO</span>
@@ -151,18 +151,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Booking">
+      <section className="prod-row rvl" aria-label="Companion">
         <div className="prod-copy">
-          <span className="over">Booking</span>
+          <span className="over">Companion</span>
           <h2>The agent&apos;s booker.</h2>
-          <p>The Booking app is in development and is not in the App Store or Google Play. You can book a shoot now on the site.</p>
-          <p className="prod-mini"><Link href="/book">Book a shoot</Link> · <Link href="/platform">Platform</Link></p>
+          <p>Companion is live for agents on the web — Jobs and Book with morning, afternoon, or evening preferred windows. Not in the App Store or Google Play; use the web app or book on this site.</p>
+          <p className="prod-mini"><a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Open Companion</a> · <Link href="/book">Book a shoot</Link> · <Link href="/platform">Platform</Link></p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">
             <ProductWindow
               variant="phone"
-              title="Booking"
+              title="Companion"
               src="/screens/book.html?lock=1"
               nw={390}
               nh={844}
@@ -194,7 +194,7 @@ export default function Home() {
 
       <div className="wrap">
         <section className="plat-hint rvl">
-          <p>The full platform — bricks OS, Booking, GO, and Clay / Keystone / Marble / Diamond — is in development. <Link href="/platform">Details on the platform page</Link>.</p>
+          <p>Companion and listing media are live. bricks OS and GO are in preview for early accounts; Clay / Keystone / Marble / Diamond plans are not for sale yet. <Link href="/platform">Details on the platform page</Link>.</p>
         </section>
       </div>
 

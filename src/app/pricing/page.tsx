@@ -90,7 +90,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and media.</h1>
-          <p className="sub">OS plans for individuals and brokerages. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit is always quoted by sqft — never in a package. Software is in development; media is live.</p>
+          <p className="sub">OS plans for individuals and brokerages. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit is always quoted by sqft — never in a package. OS software plans are not for sale yet; media and Companion are live.</p>
         </div>
       </section>
 

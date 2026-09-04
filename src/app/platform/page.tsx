@@ -5,21 +5,21 @@ import NewsletterInline from '../NewsletterInline'
 import { SOFTWARE_PLANS, OFFICE_PLANS } from '@/lib/catalog'
 
 export const metadata: Metadata = {
-  title: 'bricks platform — OS, Booking, GO',
-  description: 'The desk for Canadian real estate. Property to close: listing, booking, GO, media, MLS, transaction. Media is live. OS, Booking, and GO are in development.',
+  title: 'bricks platform — OS, Companion, GO',
+  description: 'The desk for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media and Companion are live. OS and GO are in preview — not in any store yet.',
   alternates: { canonical: '/platform' },
 }
 
 const surfaces = [
-  { over: 'In development', title: 'OS', body: 'The desk for brokerage, team, and agent. Roster, pipeline, listing file. What you see depends on the account.' },
-  { over: 'In development', title: 'Booking', body: 'The agent companion to order media. You can book a shoot now on the site; the app is not in any store yet.' },
-  { over: 'In development', title: 'GO', body: 'The photographer field app — jobs, uploads, pay. Independent contractors on a fixed rate card.' },
+  { over: 'Preview', title: 'OS', body: 'The desk for brokerage, team, and agent. Roster, pipeline, listing file. What you see depends on the account. Live in preview for early accounts.' },
+  { over: 'Live (web)', title: 'Companion', body: 'The agent companion to order media — Jobs and Book with morning, afternoon, or evening windows. Web app is live; not in the App Store or Google Play.' },
+  { over: 'Preview', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card. Not in any store yet.' },
 ]
 
 const roles = [
   { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'The whole shop. Full OS plus trust accounting, billed per seat yearly.' },
   { href: '/agents#team', over: 'OS', title: 'Team', body: 'Same desk, team-sized. Shared pipeline for the people you run.' },
-  { href: '/agents', over: 'OS · Booking', title: 'Agent', body: 'Your desk plus the booker. Clay free; paid plans unlock CRM through MLS.' },
+  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Your desk plus Companion. Clay free; paid plans unlock CRM through MLS.' },
   { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Independent contractor. Auto-routed jobs, fixed dollar rate card, apply here.' },
 ]
 
@@ -31,7 +31,7 @@ export default function PlatformPage() {
         <div className="wrap">
           <span className="badge">Platform</span>
           <h1>Property to close. One desk.</h1>
-          <p className="sub">OS for Canadian real estate. Media is the beachhead — live now. Booking, GO, and the rest of OS are in development and not in the App Store or Google Play.</p>
+          <p className="sub">OS for Canadian real estate. Media and Companion are live now. OS and GO are in preview and not in the App Store or Google Play.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>
@@ -108,7 +108,7 @@ export default function PlatformPage() {
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">While it&apos;s in development</span>
+              <span className="over">Launch list</span>
               <h2>Join the list.</h2>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function PlatformPage() {
           <div className="book">
             <span className="over">Live today</span>
             <h2>Media is the beachhead.</h2>
-            <p className="lead">Book a shoot on the site. OS, Booking, and GO are not in any store yet.</p>
+            <p className="lead">Book a shoot on the site or in Companion. OS and GO are not in any store yet.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

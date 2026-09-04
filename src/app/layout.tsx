@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     default: 'bricks — the desk for Canadian real estate',
     template: '%s',
   },
-  description: 'OS for Canadian real estate. Listing media is live. OS, Booking, and GO are in development.',
+  description: 'OS for Canadian real estate. Listing media and Companion are live. OS and GO are in preview — not in any store yet.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
     type: 'website',

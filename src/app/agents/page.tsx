@@ -6,7 +6,7 @@ import { SOFTWARE_PLANS } from '@/lib/catalog'
 
 export const metadata: Metadata = {
   title: 'bricks for agents and teams — desk plus booker',
-  description: 'OS as your desk. Booking companion to order media. Clay free; Keystone, Marble, Diamond monthly or yearly. Media is live; apps are in development.',
+  description: 'OS as your desk. Companion web to order media — Jobs and Book with preferred windows. Clay free; Keystone, Marble, Diamond monthly or yearly. Media and Companion are live; OS plans are not for sale yet.',
   alternates: { canonical: '/agents' },
 }
 
@@ -18,7 +18,7 @@ export default function AgentsPage() {
         <div className="wrap">
           <span className="badge">Agent · Team</span>
           <h1>Your desk. Then the booker.</h1>
-          <p className="sub">OS is the desk — pipeline and the listing file. The booking companion is how you order media without leaving the phone. What you see depends on whether you are solo or a team. Media is live on the site today. The apps are in development.</p>
+          <p className="sub">OS is the desk — pipeline and the listing file. Companion is how you order media on the web — Jobs and Book with morning, afternoon, or evening windows. What you see depends on whether you are solo or a team. Media and Companion are live; OS plans are not for sale yet.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/pricing">Plans</Link>
@@ -26,15 +26,15 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Booking companion">
+      <section className="prod-row rvl" aria-label="Companion">
         <div className="prod-copy">
-          <span className="over">Booking</span>
+          <span className="over">Companion</span>
           <h2>Order media from the listing.</h2>
-          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. You can book on the site now. The companion app is not in the App Store or Google Play.</p>
+          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. Companion web is live for agents (Jobs + Book). Not in the App Store or Google Play — <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">open Companion</a> or book on this site.</p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">
-            <ProductWindow variant="phone" title="Booking" src="/screens/book.html?lock=1" nw={390} nh={844} lazy />
+            <ProductWindow variant="phone" title="Companion" src="/screens/book.html?lock=1" nw={390} nh={844} lazy />
           </div>
         </div>
       </section>
@@ -77,14 +77,14 @@ export default function AgentsPage() {
               </div>
             ))}
           </div>
-          <p className="note">Software is in development. Do not buy a plan yet — book media on the site. Yearly is pay 10, get 12.</p>
+          <p className="note">OS software plans are not for sale yet — book media on the site or in Companion. Yearly is pay 10, get 12.</p>
         </section>
 
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
             <span className="over">Live today</span>
             <h2>Book the shoot. The desk is coming.</h2>
-            <p className="lead">Listing media is live in Canada. OS and the booking companion are not in any store yet.</p>
+            <p className="lead">Listing media and Companion are live in Canada. OS is not in any store yet.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/brokerage">For brokerages</Link>
