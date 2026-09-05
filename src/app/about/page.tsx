@@ -74,7 +74,7 @@ export default function AboutPage() {
 
           <div className="founder rvl">
             <div className="photo">
-              <Image src="/media/raphael-merchant-640.jpg" alt="Founder of Bricks" width={640} height={618} />
+              <Image src="/media/raphael-merchant-640.jpg" alt="Founder of Bricks" width={640} height={640} />
             </div>
             <div className="bio">
               <span className="role">The standard</span>
