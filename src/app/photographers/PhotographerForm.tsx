@@ -234,7 +234,7 @@ export default function PhotographerForm() {
       <div className="ic-box">{icText}</div>
       <label className="ic-accept">
         <input type="checkbox" id="f_accept" required />
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.3</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and required insurance and WSIB proof before a first job; and that Transport Canada drone regulations are my sole responsibility.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.4</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and required insurance and WSIB proof before a first job; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
 
       <div className="err">{err}</div>
