@@ -8,6 +8,7 @@ import { PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
   COMPANION_URL,
+  FOUNDER_PERSON,
   GO_URL,
   KNOWS_ABOUT,
   STATUS,
@@ -51,7 +52,7 @@ export default function Home() {
             priceRange: `$$ (à la carte from $${PHOTO_RATE[0]}; HDR + drone + floor plan from ~$${CORE_FROM})`,
             areaServed: AREA_SERVED_SCHEMA,
             knowsAbout: KNOWS_ABOUT,
-            founder: { '@type': 'Person', name: 'Raphael Merchant', url: 'https://www.brxs.ca/about' },
+            founder: FOUNDER_PERSON,
             sameAs: ['https://share.google/7ttYfc6W7JRwlqA9U'],
           }),
         }}

@@ -23,6 +23,17 @@ export const STATUS = {
 export const TOUR_SHORT = 'path walkthrough'
 export const VISIT_SHORT = 'free-roam 3D'
 
+/** Public name on www. Legal string is schema-only — never lead with it. */
+export const FOUNDER_NAME = 'Raphael Merchant'
+export const FOUNDER_LEGAL_NAME = 'Ajani Kamali Akio Shorter Merchant'
+export const FOUNDER_PERSON = {
+  '@type': 'Person' as const,
+  name: FOUNDER_NAME,
+  alternateName: FOUNDER_LEGAL_NAME,
+  jobTitle: 'Founder',
+  url: 'https://www.brxs.ca/about',
+}
+
 export const BROKERAGE_LOGOS = [
   { src: '/media/logos/royallepage.svg', alt: 'Royal LePage' },
   { src: '/media/logos/remax.png', alt: 'RE/MAX' },

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { STATUS, TOUR_SHORT, VISIT_SHORT } from '@/lib/brand'
+import { FOUNDER_NAME, FOUNDER_PERSON, STATUS, TOUR_SHORT, VISIT_SHORT } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'About Bricks — the operating system for Canadian real estate',
@@ -44,7 +44,7 @@ export default function AboutPage() {
             telephone: '+1-343-453-4578',
             sameAs: ['https://www.linkedin.com/company/bricksbybricks', 'https://share.google/7ttYfc6W7JRwlqA9U'],
             knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate operating system'],
-            founder: { '@type': 'Person', name: 'Raphael Merchant', jobTitle: 'Founder', url: 'https://www.brxs.ca/about' },
+            founder: FOUNDER_PERSON,
             image: 'https://www.brxs.ca/media/raphael-merchant-640.jpg',
           }),
         }}
@@ -80,7 +80,7 @@ export default function AboutPage() {
               <span className="role">The standard</span>
               <p>That volume is where the standard comes from: accurate, measured, and built to move listings — not just look pretty. CoStar, then the photography behind Apartments.com&apos;s Greater Golden Horseshoe launch, which aired during Super Bowl LVIII.</p>
               <p>Transport Canada Advanced RPAS is what lets Bricks fly legally for commercial aerial work in the complex airspace around Toronto and Mississauga — including near Pearson.</p>
-              <p>Started by Raphael Merchant. Same standard, every shoot.</p>
+              <p>Started by {FOUNDER_NAME}. Same standard, every shoot.</p>
             </div>
           </div>
 
