@@ -418,8 +418,8 @@ html[data-theme="dark"] .tray::after{
   min-height:620px;
 }
 .prod-row .tray-tx{
-  height:740px;
-  min-height:680px;
+  height:700px;
+  min-height:660px;
 }
 
 .tray-bleed-end .tray-stage{
@@ -436,8 +436,8 @@ html[data-theme="dark"] .tray::after{
   width:126%;
 }
 .tray-tx .tray-stage{
-  top:16px;
-  width:min(132%, 1180px);
+  top:14px;
+  width:min(136%, 1200px);
 }
 .tray-phone{min-height:520px;height:560px;}
 .tray-phone .tray-stage{
