@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { COVERAGE_LINE } from '@/lib/brand'
+import { COVERAGE_LINE, COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import BrandMark from '@/components/BrandMark'
 import ThemeToggle from '@/components/ThemeToggle'
 
@@ -13,7 +13,7 @@ export default function Footer() {
             <span className="wordmark">bricks</span>
           </Link>
           <p className="foot-blurb">
-            The desk for Canadian real estate. Listing media, Companion, GO web, and the OS desk are live. Store apps coming.
+            {STATUS.chrome} {STATUS.stores}
           </p>
         </div>
         <div className="foot-col">
@@ -24,9 +24,9 @@ export default function Footer() {
           <Link href="/agents">Agents</Link>
           <Link href="/photographers">Photographers</Link>
           <Link href="/book">Book a shoot</Link>
-          <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Companion</a>
-          <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">GO</a>
-          <a href="https://app.brxs.ca/login">Log in</a>
+          <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>
+          <a href={GO_URL} rel="noopener noreferrer">GO</a>
+          <a href={OS_LOGIN}>Log in</a>
           <Link href="/gallery">Work</Link>
         </div>
         <div className="foot-col">

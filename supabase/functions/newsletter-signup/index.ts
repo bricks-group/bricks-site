@@ -19,8 +19,8 @@ function json(body: Record<string, unknown>, status = 200) {
 
 function welcomeHtml() {
   return `<div style="font-size:20px;font-weight:600;margin-bottom:16px;color:#14110E">You're on the Bricks list.</div>
-<p style="color:#555;line-height:1.6">Thanks for signing up. Bricks is listing media and the operating system for Canadian real estate — the desk for the listing file, not a brokerage.</p>
-<p style="color:#555;line-height:1.6">Listing media, the booking form, and Companion are live in Canada now. Bricks OS and GO (Dispatch) continue in preview.</p>
+<p style="color:#555;line-height:1.6">Thanks for signing up. Bricks is listing media and the operating system for Canadian real estate.</p>
+<p style="color:#555;line-height:1.6">Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.</p>
 <p style="margin:24px 0 8px"><a href="https://www.brxs.ca/platform" style="display:inline-block;padding:12px 20px;background:#D2542B;color:#fff;text-decoration:none;border-radius:2px;font-weight:500">See the platform</a></p>
 <p style="color:#555;line-height:1.6">Rates are the published catalog on <a href="https://www.brxs.ca/pricing" style="color:#D2542B">Pricing</a>. Book a shoot anytime at <a href="https://www.brxs.ca/book" style="color:#D2542B">www.brxs.ca/book</a>.</p>
 <p style="margin-top:32px;font-size:12px;color:#999">You're tagged as a founder subscriber for launch updates. Unsubscribe: reply to this email or write booking@brxs.ca.</p>`;

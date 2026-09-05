@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
-import { SOFTWARE_PLANS } from '@/lib/catalog'
+import { SOFTWARE_PLANS, SOFTWARE_BLURB } from '@/lib/catalog'
+import { COMPANION_URL, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'bricks for agents and teams — desk plus booker',
-  description: 'OS as your desk. Companion web to order media — Jobs and Book with preferred windows. Clay free; Keystone, Marble, Diamond monthly or yearly. Media and Companion are live; OS plans are not for sale yet.',
+  title: 'bricks for agents and teams — listing file plus Companion',
+  description: 'OS holds the pipeline and the listing file. Companion is how you order media — Jobs and Book with preferred windows. Clay free; Keystone, Marble, Diamond monthly or yearly. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/agents' },
 }
 
@@ -17,8 +18,8 @@ export default function AgentsPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Agent · Team</span>
-          <h1>Your desk. Then the booker.</h1>
-          <p className="sub">OS is the desk — pipeline and the listing file. Companion is how you order media on the web — Jobs and Book with morning, afternoon, or evening windows. What you see depends on whether you are solo or a team. Media and Companion are live; OS plans are not for sale yet.</p>
+          <h1>The listing file. Then Companion.</h1>
+          <p className="sub">OS holds the pipeline and the deal. Companion is how you order media — Jobs and Book with morning, afternoon, or evening windows. What you see depends on whether you are solo or a team. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/pricing">Plans</Link>
@@ -30,7 +31,7 @@ export default function AgentsPage() {
         <div className="prod-copy">
           <span className="over">Companion</span>
           <h2>Order media from the listing.</h2>
-          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. Companion web is live for agents (Jobs + Book). Not in the App Store or Google Play — <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">open Companion</a> or book on this site.</p>
+          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. Jobs and Book, morning, afternoon, or evening. <a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a> or book on this site.</p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">
@@ -51,7 +52,7 @@ export default function AgentsPage() {
             <div className="c rvl">
               <span className="ic">Agent</span>
               <h4>Individual</h4>
-              <p>Clay is free. Keystone, Marble, and Diamond unlock CRM, then transactions, then MLS. Monthly, or yearly with two months free. Media is always a separate booking.</p>
+              <p>Clay is free — booking, the listing file, transactions, and BYO MLS. Keystone, Marble, and Diamond add CRM, e-sign, forms, and the AI suite. Monthly, or yearly with two months free. Media is always a separate booking.</p>
             </div>
             <div className="c rvl">
               <span className="ic">Team</span>
@@ -77,14 +78,14 @@ export default function AgentsPage() {
               </div>
             ))}
           </div>
-          <p className="note">OS software plans are not for sale yet — book media on the site or in Companion. Yearly is pay 10, get 12.</p>
+          <p className="note">{SOFTWARE_BLURB} Yearly is pay 10, get 12.</p>
         </section>
 
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
-            <span className="over">Live today</span>
-            <h2>Book the shoot. The desk is coming.</h2>
-            <p className="lead">Listing media and Companion are live in Canada. OS desk live at app.brxs.ca — store apps coming.</p>
+            <span className="over">Ready</span>
+            <h2>Book the shoot. Open the OS.</h2>
+            <p className="lead">Order the shoot from Companion or this site. Open the OS when you want the pipeline.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/brokerage">For brokerages</Link>

@@ -35,7 +35,7 @@ export default function NewsletterInline() {
     <form className="newsletter" onSubmit={submit}>
       <input
         type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-        placeholder="you@office.com" aria-label="Email for launch updates" required
+        placeholder="you@brokerage.com" aria-label="Email for product updates" required
       />
       <button type="submit" className="btn btn-sec">Get launch updates</button>
       <span className="nl-msg">{msg}</span>

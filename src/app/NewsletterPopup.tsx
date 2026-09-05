@@ -67,7 +67,7 @@ export default function NewsletterPopup() {
         <h4>Stay on the list.</h4>
         <p>Launch notes for Bricks — listing media and the OS for Canadian real estate. Platform and published pricing, no spam.</p>
         <form onSubmit={submit}>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@office.com" aria-label="Email" required />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@brokerage.com" aria-label="Email" required />
           <button type="submit" className="btn btn-brick">Get updates</button>
           <div className="nlmsg">{msg}</div>
           <div className="consent">By subscribing you agree to receive Bricks newsletter and launch update emails. Unsubscribe anytime. CASL-compliant.</div>

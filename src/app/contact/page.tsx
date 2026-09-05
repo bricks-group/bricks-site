@@ -45,7 +45,7 @@ export default function ContactPage() {
           <span className="badge">Contact</span>
           <h1>Let&apos;s shoot your next listing.</h1>
           <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours. {COVERAGE_LINE} Reach out and we&apos;ll confirm the slot and send pricing by footprint.</p>
-          <p className="sub product-hint">Media, /book, Companion, GO web, and the OS desk are live. Store apps coming.</p>
+          <p className="sub product-hint">Need the OS or Companion, not a shoot? Say so in the note.</p>
         </div>
       </section>
 

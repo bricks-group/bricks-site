@@ -7,23 +7,27 @@ import ProductWindow from '@/components/ProductWindow'
 import { PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
+  COMPANION_URL,
+  FOUNDER_PERSON,
+  GO_URL,
   KNOWS_ABOUT,
+  STATUS,
 } from '@/lib/brand'
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
 
 export const metadata: Metadata = {
-  title: 'bricks — the desk for Canadian real estate',
-  description: "The operating system for Canadian real estate, from listing photo to closing the deal. Book professional media today — CRM, transactions, and MLS are next.",
+  title: 'bricks — the operating system for Canadian real estate',
+  description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'bricks — the desk for Canadian real estate',
-    description: "The operating system for Canadian real estate, from listing photo to closing the deal. Book professional media today — CRM, transactions, and MLS are next.",
+    title: 'bricks — the operating system for Canadian real estate',
+    description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today. OS is live in preview at app.brxs.ca.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
-    title: 'bricks — the desk for Canadian real estate',
-    description: 'The operating system for Canadian real estate. Book media today — CRM, transactions, and MLS are next.',
+    title: 'bricks — the operating system for Canadian real estate',
+    description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
@@ -41,14 +45,14 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'bricks is the operating system for Canadian real estate, from listing photo to closing the deal. Listing media, /book, Companion (agent web), GO (photographer web), and the OS desk at app.brxs.ca are live. Native App Store and Google Play binaries are not shipped yet.',
+            description: 'Bricks is the operating system for Canadian real estate, from listing photo to close. Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'booking@brxs.ca',
             priceRange: `$$ (à la carte from $${PHOTO_RATE[0]}; HDR + drone + floor plan from ~$${CORE_FROM})`,
             areaServed: AREA_SERVED_SCHEMA,
             knowsAbout: KNOWS_ABOUT,
-            founder: { '@type': 'Person', name: 'Raphael Merchant', url: 'https://www.brxs.ca/about' },
+            founder: FOUNDER_PERSON,
             sameAs: ['https://share.google/7ttYfc6W7JRwlqA9U'],
           }),
         }}
@@ -56,8 +60,8 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <h1>The desk for the deal.</h1>
-          <p className="sub">The operating system for Canadian real estate — from listing photo to closing the deal. Book professional media today. Companion, GO web, and the OS desk at app.brxs.ca are live — store apps coming.</p>
+          <h1>From listing photo to close.</h1>
+          <p className="sub">The operating system for Canadian real estate. Book professional media today. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/platform">See the platform</Link>
@@ -87,12 +91,12 @@ export default function Home() {
               <h2>The app you get depends on what you do.</h2>
             </div>
           </div>
-          <p className="aud-lede">Three surfaces. OS is the desk for brokerage, team, and agent — what you see depends on the account. Companion is how an agent orders media. GO is the photographer field app (Dispatch).</p>
+          <p className="aud-lede">Three surfaces. OS for brokerage, team, and agent — what you see depends on the account. Companion is how an agent orders media. GO is the photographer field app (Dispatch).</p>
           <div className="aud-grid">
             <Link href="/brokerage" className="aud-card">
               <span className="over">OS</span>
               <h3>Brokerage</h3>
-              <p>Roster, pipeline, listing file. The desk for the whole shop.</p>
+              <p>Roster, pipeline, listing file — the whole shop in one OS.</p>
             </Link>
             <Link href="/agents#team" className="aud-card">
               <span className="over">OS</span>
@@ -102,7 +106,7 @@ export default function Home() {
             <Link href="/agents" className="aud-card">
               <span className="over">OS · Companion</span>
               <h3>Agent</h3>
-              <p>Your desk in OS, plus Companion to order media — Jobs and Book with morning, afternoon, or evening windows.</p>
+              <p>The listing file in OS, plus Companion to order media — Jobs and Book with morning, afternoon, or evening windows.</p>
             </Link>
             <Link href="/photographers" className="aud-card">
               <span className="over">GO</span>
@@ -113,11 +117,11 @@ export default function Home() {
         </section>
       </div>
 
-      <section className="prod-row rvl" aria-label="Brokerage desk">
+      <section className="prod-row rvl" aria-label="Brokerage OS">
         <div className="prod-copy">
           <span className="over">Control surface</span>
-          <h2>The desk for the brokerage.</h2>
-          <p>Roster, pipeline, and the listing file in one OS. Sign in as brokerage, team, or agent — the rooms you see follow the account. Desk live at app.brxs.ca.</p>
+          <h2>Roster, pipeline, listing file.</h2>
+          <p>Sign in as brokerage, team, or agent — the rooms you see follow the account.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -147,16 +151,16 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">The rest unlocks</span>
           <h2>Same OS. Deeper rooms.</h2>
-          <p>CRM, transactions, MLS, forms, and accounting live in the same OS — not a second product. Desk live at app.brxs.ca.</p>
+          <p>CRM, transactions, MLS, forms, and accounting live in the same product — not a second login.</p>
         </div>
       </section>
 
       <section className="prod-row rvl" aria-label="Companion">
         <div className="prod-copy">
           <span className="over">Companion</span>
-          <h2>The agent&apos;s booker.</h2>
-          <p>Companion is live for agents on the web — Jobs and Book with morning, afternoon, or evening preferred windows. Not in the App Store or Google Play; use the web app or book on this site.</p>
-          <p className="prod-mini"><a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Open Companion</a> · <Link href="/book">Book a shoot</Link> · <Link href="/platform">Platform</Link></p>
+          <h2>The agent app.</h2>
+          <p>Jobs and Book with morning, afternoon, or evening windows. Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot.</p>
+          <p className="prod-mini"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a> · <Link href="/book">Book a shoot</Link> · <Link href="/platform">Platform</Link></p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">
@@ -188,14 +192,14 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">GO</span>
           <h2>The field app.</h2>
-          <p>GO is the photographer field app — jobs, uploads, pay, on site. Web client is live; App Store and Google Play binaries are coming.</p>
-          <p className="prod-mini"><a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">Open GO</a> · <Link href="/photographers">Photographers</Link> · <Link href="/platform">Platform</Link></p>
+          <p>Jobs, uploads, pay — on site. Independent contractors, fixed rate card.</p>
+          <p className="prod-mini"><a href={GO_URL} rel="noopener noreferrer">Open GO</a> · <Link href="/photographers">Photographers</Link> · <Link href="/platform">Platform</Link></p>
         </div>
       </section>
 
       <div className="wrap">
         <section className="plat-hint rvl">
-          <p>Listing media, /book, Companion, GO web, and the OS desk are live. Store apps are coming; Clay / Keystone / Marble / Diamond plans are not for sale yet. <Link href="/platform">Details on the platform page</Link>.</p>
+          <p>See the full platform — OS, Companion, GO, and the catalog. <Link href="/platform">Platform →</Link></p>
         </section>
       </div>
 
