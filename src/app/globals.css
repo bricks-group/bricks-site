@@ -382,14 +382,16 @@ html[data-theme="dark"] .tray::after{
 }
 .prod-hero .pwin-scale,.prod-hero .pwin iframe{overflow:hidden;}
 
-/* Split bands — copy left / tray right, then tray left / copy right. ~120px air. */
+/* Split bands — copy left / tray right, then tray left / copy right.
+   Desktop margins are modest because .rvl keeps a transform and prevents
+   collapse, so 48px + 48px is the real air between bands (was 240px). */
 .prod-row{
   display:grid;
   grid-template-columns:minmax(260px,1fr) minmax(420px,1.4fr);
-  gap:48px 56px;
+  gap:32px 40px;
   align-items:center;
-  padding:0 32px;
-  margin:120px 0;
+  padding:0 28px;
+  margin:48px 0;
 }
 .prod-row-flip{
   grid-template-columns:minmax(420px,1.4fr) minmax(260px,1fr);
@@ -411,19 +413,31 @@ html[data-theme="dark"] .tray::after{
   height:620px;
   min-height:560px;
 }
+.prod-row .tray-crm{
+  height:680px;
+  min-height:620px;
+}
+.prod-row .tray-tx{
+  height:740px;
+  min-height:680px;
+}
 
 .tray-bleed-end .tray-stage{
   position:absolute;
-  top:40px;
-  left:28px;
-  width:118%;
+  top:22px;
+  left:16px;
+  width:126%;
 }
 .tray-bleed-start .tray-stage{
   position:absolute;
-  top:40px;
-  left:16px;
-  right:auto;
-  width:118%;
+  top:22px;
+  left:auto;
+  right:16px;
+  width:126%;
+}
+.tray-tx .tray-stage{
+  top:16px;
+  width:min(132%, 1180px);
 }
 .tray-phone{min-height:520px;height:560px;}
 .tray-phone .tray-stage{
@@ -503,9 +517,12 @@ html[data-theme="dark"] .pwin{
     padding:0 16px;
   }
   .prod-row .prod-copy{order:1;padding:0;max-width:none;}
-  .prod-row .tray{order:2;height:380px;min-height:340px;}
+  .prod-row .tray,
+  .prod-row .tray-crm,
+  .prod-row .tray-tx{order:2;height:380px;min-height:340px;}
   .tray-bleed-end .tray-stage,
-  .tray-bleed-start .tray-stage{width:108%;left:8px;right:auto;top:16px;transform:none;}
+  .tray-bleed-start .tray-stage,
+  .tray-tx .tray-stage{width:108%;left:8px;right:auto;top:16px;transform:none;}
   .tray-phone{height:480px;min-height:440px;}
   .tray-phone .tray-stage{width:min(300px,70%);}
 }
