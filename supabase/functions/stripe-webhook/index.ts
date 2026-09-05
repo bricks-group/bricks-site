@@ -18,18 +18,47 @@ const KAM_VENDOR_ID = '0c3fa7c2-d23b-4e44-90ad-ab2d19af2580';
 const ORG_VENDOR_ID = 'default_vendor';
 const GTA = ['gta','toronto','mississauga','brampton','vaughan','markham','oakville','peel','halton','york','durham','etobicoke','scarborough'];
 
-function packageIdOf(name: string): string {
+function packageIdOf(name: string, explicit?: string): string {
+  // Prefer Stripe metadata package_id from /book (photos_only|essentials|story|showcase|suite).
+  const raw = (explicit || '').toLowerCase().replace(/[^a-z0-9_]+/g, '');
+  const aliases: Record<string, string> = {
+    photosonly: 'photos_only', photo_only: 'photos_only', photos: 'photos_only',
+    fullsuite: 'suite', full: 'suite',
+  };
+  if (raw) {
+    if (aliases[raw]) return aliases[raw];
+    if (['photos_only', 'essentials', 'story', 'showcase', 'suite', 'estate', 'luxury', 'premium', 'standard'].includes(raw)) {
+      return raw;
+    }
+    if (raw) return raw;
+  }
   const n = (name || '').toLowerCase();
-  if (n.includes('estate')) return 'estate';
-  if (n.includes('luxury')) return 'luxury';
-  if (n.includes('premium')) return 'premium';
-  if (n.includes('standard')) return 'standard';
-  return n.split(/[^a-z0-9]+/)[0] || 'standard';
+  if (n.includes('photos only') || n.includes('photo only')) return 'photos_only';
+  if (n.includes('full suite')) return 'suite';
+  for (const token of ['showcase', 'essentials', 'story', 'suite', 'estate', 'luxury', 'premium', 'standard']) {
+    if (n.includes(token)) return token;
+  }
+  const first = n.split(/[^a-z0-9]+/).filter(Boolean)[0] || 'essentials';
+  if (aliases[first]) return aliases[first];
+  if (first === 'hdr' || first === 'photo' || first === 'listing') return 'essentials';
+  return first;
 }
 function minTierOf(pkg: string): number {
-  if (pkg === 'estate' || pkg === 'luxury') return 3;
-  if (pkg === 'premium') return 2;
+  if (pkg === 'estate' || pkg === 'luxury' || pkg === 'suite' || pkg === 'showcase') return 3;
+  if (pkg === 'premium' || pkg === 'story') return 2;
   return 1;
+}
+function tourPurchased(m: Record<string, string>, pkg: string): boolean {
+  if (m.tour_addon === 'true') return true;
+  return pkg === 'showcase' || pkg === 'suite' || pkg === 'full';
+}
+function floorplanPurchased(m: Record<string, string>, pkg: string): boolean {
+  if (m.floor_plan_included === 'true') return true;
+  if (m.floor_plan_included === 'false') return false;
+  const photosOnly = pkg === 'photos_only' || pkg === 'photosonly' || pkg === 'photos';
+  if (photosOnly) return false;
+  const drone = m.drone_addon === 'true';
+  return drone || ['essentials', 'story', 'showcase', 'suite', 'full', 'standard', 'premium', 'luxury', 'estate'].includes(pkg);
 }
 function isOwner(m: any): boolean {
   const role = String(m?.role || '').toLowerCase();
@@ -291,14 +320,19 @@ async function ensureDispatchJob(opts: {
   const now = new Date().toISOString();
   const rush = opts.m.rush_addon === 'true';
   const drone = opts.m.drone_addon === 'true';
+  const pkg = packageIdOf(opts.m.package_interest || '', opts.m.package_id || '');
+  const tour = tourPurchased(opts.m, pkg);
+  const floorplan = floorplanPurchased(opts.m, pkg);
+  // Match confirm-paid / book_checkout: stamp tour + floorplan so GO gates and
+  // skill matching stay honest even when package metadata was thin.
   const addOns = [
     drone ? { key: 'drone', included: true } : null,
     opts.m.reel_addon === 'true' ? { key: 'reel', included: true } : null,
-    opts.m.tour_addon === 'true' ? { key: 'tour', included: true } : null,
+    tour ? { key: 'tour', included: true } : null,
     opts.m.twilight_addon === 'true' ? { key: 'twilight', included: true } : null,
     rush ? { key: 'rush', included: true } : null,
+    floorplan ? { key: 'floorplan_2d', included: true } : null,
   ].filter(Boolean);
-  const pkg = packageIdOf(opts.m.package_interest || '');
   const minTier = minTierOf(pkg);
   const cityGuess = (opts.m.property_address || '').split(',').slice(-2, -1)[0]?.trim() || '';
 

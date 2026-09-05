@@ -217,7 +217,7 @@ export default function BookingWizard() {
     }
 
     setDoneMsg('Confirming your shoot…')
-    const OS_API = 'https://bricks-brokerage-api.vercel.app'
+    const OS_API = 'https://brokerage-api.brxs.ca'
     let cancelled = false
     fetch(`${OS_API}/api/book/confirm-paid`, {
       method: 'POST',
