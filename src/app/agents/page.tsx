@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
-import { SOFTWARE_PLANS, SOFTWARE_BLURB } from '@/lib/catalog'
+import { SOFTWARE_PLANS, SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -78,7 +78,7 @@ export default function AgentsPage() {
               </div>
             ))}
           </div>
-          <p className="note">{SOFTWARE_BLURB} Yearly is pay 10, get 12.</p>
+          <p className="note">{SOFTWARE_BLURB} {ADDONS_BLURB} Yearly is pay 10, get 12.</p>
         </section>
 
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>

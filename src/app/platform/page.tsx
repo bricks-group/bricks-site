@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import NewsletterInline from '../NewsletterInline'
-import { SOFTWARE_PLANS, OFFICE_PLANS, SOFTWARE_BLURB } from '@/lib/catalog'
+import { SOFTWARE_PLANS, OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -107,7 +107,7 @@ export default function PlatformPage() {
               </div>
             ))}
           </div>
-          <p className="note"><Link href="/pricing">Full pricing →</Link></p>
+          <p className="note">{ADDONS_BLURB} {ADDONS.map((a) => `${a.name} ${a.price}`).join(' · ')}. <Link href="/pricing">Full pricing →</Link></p>
         </section>
 
         <section className="block rvl">
