@@ -1,20 +1,21 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { STATUS, TOUR_SHORT, VISIT_SHORT } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'About Raphael Merchant | Bricks — Canadian real estate media',
-  description: "Raphael Merchant is the founder of Bricks, a Canadian real estate media company. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, photography work behind Apartments.com's launch across the Greater Golden Horseshoe, and a Transport Canada Advanced RPAS drone certificate. Bricks shoots HDR, licensed drone, floor plans, optional virtual tour and virtual visit.",
+  title: 'About Bricks — the operating system for Canadian real estate',
+  description: 'Bricks is the operating system for Canadian real estate. Media is the beachhead — HDR, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca. Built for brokerage, team, agent, and photographer.',
   alternates: { canonical: '/about' },
   openGraph: {
-    type: 'profile',
-    title: 'About Raphael Merchant | Bricks',
-    description: "Founder of Bricks — listing media for Canadian real estate. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, photography work behind Apartments.com's Greater Golden Horseshoe launch, Advanced RPAS certified.",
+    type: 'website',
+    title: 'About Bricks',
+    description: 'The operating system for Canadian real estate. Media first. Capture to close. 14,000+ properties in the standard.',
     images: ['/media/raphael-merchant-640.jpg'],
   },
   twitter: {
-    title: 'About Raphael Merchant | Bricks',
-    description: "Founder of Bricks — listing media for Canadian real estate. 14,000+ properties shot as Regional Visual Director / Architectural Photographer at CoStar, work behind Apartments.com's Greater Golden Horseshoe launch.",
+    title: 'About Bricks',
+    description: 'The operating system for Canadian real estate. Media first. Capture to close.',
     images: ['/media/raphael-merchant-640.jpg'],
   },
 }
@@ -34,16 +35,17 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'Person',
-            name: 'Raphael Merchant',
-            jobTitle: 'Founder, Bricks',
-            description: "Founder of Bricks, listing media for Canadian real estate. Shot and profiled 14,000+ properties as Regional Visual Director / Architectural Photographer at CoStar; photography work behind Apartments.com's launch across the Greater Golden Horseshoe. Transport Canada Advanced RPAS drone certificate holder.",
-            image: 'https://www.brxs.ca/media/raphael-merchant-640.jpg',
-            url: 'https://www.brxs.ca/about',
+            '@type': 'Organization',
+            name: 'Bricks',
+            legalName: 'Bricks Group',
+            description: 'The operating system for Canadian real estate. Media is the beachhead — HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca.',
+            url: 'https://www.brxs.ca/',
             email: 'booking@brxs.ca',
-            sameAs: ['https://www.linkedin.com/company/bricksbybricks'],
-            knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations'],
-            worksFor: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', url: 'https://www.brxs.ca/' },
+            telephone: '+1-343-453-4578',
+            sameAs: ['https://www.linkedin.com/company/bricksbybricks', 'https://share.google/7ttYfc6W7JRwlqA9U'],
+            knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate operating system'],
+            founder: { '@type': 'Person', name: 'Raphael Merchant', jobTitle: 'Founder', url: 'https://www.brxs.ca/about' },
+            image: 'https://www.brxs.ca/media/raphael-merchant-640.jpg',
           }),
         }}
       />
@@ -51,33 +53,39 @@ export default function AboutPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">About</span>
-          <h1>Raphael Merchant</h1>
-          <p className="sub">Founder of Bricks — listing media for Canadian real estate.</p>
+          <h1>Bricks</h1>
+          <p className="sub">The operating system for Canadian real estate. Media first. Capture to close.</p>
         </div>
       </section>
 
       <section className="block">
         <div className="wrap">
-          <div className="author rvl">
-            <div className="photo">
-              <Image src="/media/raphael-merchant-640.jpg" alt="Portrait of Raphael Merchant, founder of Bricks and Transport Canada Advanced RPAS drone certificate holder" width={640} height={618} />
-            </div>
-            <div className="bio">
-              <span className="role">Founder · Bricks</span>
-              <p>Raphael Merchant started Bricks to give Canadian listing agents one consistent standard of media — HDR photography, licensed drone, floor plans, plus optional virtual tour and virtual visit — booked direct, delivered in 24–48 hours.</p>
-              <p>Before Bricks, Raphael shot and profiled <strong>14,000+ properties</strong> as Regional Visual Director / Architectural Photographer at CoStar — architectural photography and portfolio work at a volume most photographers never reach. That work helped power Apartments.com&apos;s launch across the Greater Golden Horseshoe, which aired during Super Bowl LVIII. That volume is where the standard comes from: accurate, measured, and built to move listings — not just look pretty.</p>
-              <p>Raphael also holds a <strong>Transport Canada Advanced RPAS (Remotely Piloted Aircraft Systems) certificate</strong>, which is what lets Bricks fly legally for commercial aerial work in the complex airspace around Toronto and Mississauga — including near Pearson.</p>
-            </div>
+          <div className="brand-story rvl">
+            <p>Bricks is the operating system for the deal — property to listing to book to dispatch to media to MLS to close. We started with the shoot because that is the first thing a listing needs, and the last thing that should live in a separate tool.</p>
+            <p>Four people on the deal. Brokerage, team, agent, photographer. Each gets a surface. OS for the shop and the pipeline. Companion for the agent ordering media. GO for the photographer in the field.</p>
+            <p>Media is live to book. HDR, licensed drone, floor plan, plus optional virtual tour ({TOUR_SHORT}) and virtual visit ({VISIT_SHORT}). {STATUS.os}</p>
           </div>
 
           <div className="creds">
-            <div className="c"><div className="n">14,000+</div><div className="l">Properties shot &amp; profiled as Regional Visual Director / Architectural Photographer at CoStar</div></div>
-            <div className="c"><div className="n">Apartments.com</div><div className="l">Photography work behind the platform&apos;s Greater Golden Horseshoe launch</div></div>
-            <div className="c"><div className="n">Advanced RPAS</div><div className="l">Transport Canada certified — commercial drone operations</div></div>
+            <div className="c"><div className="n">14,000+</div><div className="l">Properties shot and profiled — the volume behind the standard</div></div>
+            <div className="c"><div className="n">Apartments.com</div><div className="l">Photography lineage from CoStar work behind the Greater Golden Horseshoe launch</div></div>
+            <div className="c"><div className="n">Advanced RPAS</div><div className="l">Legal commercial drone — including the airspace around Toronto, Mississauga, and Pearson</div></div>
+          </div>
+
+          <div className="founder rvl">
+            <div className="photo">
+              <Image src="/media/raphael-merchant-640.jpg" alt="Founder of Bricks" width={640} height={618} />
+            </div>
+            <div className="bio">
+              <span className="role">The standard</span>
+              <p>That volume is where the standard comes from: accurate, measured, and built to move listings — not just look pretty. CoStar, then the photography behind Apartments.com&apos;s Greater Golden Horseshoe launch, which aired during Super Bowl LVIII.</p>
+              <p>Transport Canada Advanced RPAS is what lets Bricks fly legally for commercial aerial work in the complex airspace around Toronto and Mississauga — including near Pearson.</p>
+              <p>Started by Raphael Merchant. Same standard, every shoot.</p>
+            </div>
           </div>
 
           <div className="sec-head" style={{ marginTop: 40 }}>
-            <div><span className="over">Writing</span><h2>Guides by Raphael</h2></div>
+            <div><span className="over">Writing</span><h2>Guides from Bricks</h2></div>
           </div>
           <div className="posts">
             {posts.map((p) => (
@@ -90,24 +98,25 @@ export default function AboutPage() {
       <section className="block">
         <div className="wrap">
           <div className="book">
-            <span className="over">Work with Raphael</span>
+            <span className="over">Work with Bricks</span>
             <h2>Book a listing shoot.</h2>
             <p className="lead">One standard, every time. Pick your services à la carte and get MLS-ready media in 24–48 hours.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book listing media</Link>
-              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>View pricing</Link>
+              <Link className="btn btn-sec" href="/platform" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>See the platform</Link>
             </div>
           </div>
         </div>
       </section>
 
       <style>{`
-        .author{display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start;margin-top:8px;}
-        .author .photo{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
-        .author .photo img{width:100%;height:auto;display:block;}
-        .author .bio h2{font-weight:500;font-size:26px;letter-spacing:-0.6px;color:var(--ink);margin-bottom:4px;}
-        .author .bio .role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);margin-bottom:18px;display:block;}
-        .author .bio p{font-size:15px;color:var(--inkSoft);line-height:1.65;margin-bottom:14px;}
+        .brand-story{max-width:640px;margin-top:8px;}
+        .brand-story p{font-size:16px;color:var(--inkSoft);line-height:1.65;margin-bottom:16px;}
+        .founder{display:grid;grid-template-columns:240px 1fr;gap:36px;align-items:start;margin-top:8px;}
+        .founder .photo{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
+        .founder .photo img{width:100%;height:auto;display:block;}
+        .founder .bio .role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);margin-bottom:18px;display:block;}
+        .founder .bio p{font-size:15px;color:var(--inkSoft);line-height:1.65;margin-bottom:14px;}
         .creds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin:40px 0;}
         .creds .c{background:var(--paper);padding:26px 22px;}
         .creds .c .n{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--ink);letter-spacing:-1px;}
@@ -118,8 +127,8 @@ export default function AboutPage() {
         .posts a .t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brickDeep);}
         .posts a h4{font-weight:500;font-size:15px;color:var(--ink);margin:7px 0 0;line-height:1.25;}
         @media (max-width:680px){
-          .author{grid-template-columns:1fr;gap:20px;}
-          .author .photo{max-width:240px;}
+          .founder{grid-template-columns:1fr;gap:20px;}
+          .founder .photo{max-width:240px;}
           .creds,.posts{grid-template-columns:1fr;}
         }
       `}</style>

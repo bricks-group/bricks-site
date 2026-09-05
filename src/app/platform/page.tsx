@@ -2,25 +2,26 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import NewsletterInline from '../NewsletterInline'
-import { SOFTWARE_PLANS, OFFICE_PLANS } from '@/lib/catalog'
+import { SOFTWARE_PLANS, OFFICE_PLANS, SOFTWARE_BLURB } from '@/lib/catalog'
+import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'bricks platform — OS, Companion, GO',
-  description: 'The desk for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media, Companion, GO web, and the OS desk are live. Store apps coming.',
+  description: 'The operating system for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/platform' },
 }
 
 type Surface = { over: string; title: string; body: string; href?: string; linkLabel?: string }
 const surfaces: Surface[] = [
-  { over: 'Live', title: 'OS', body: 'The desk for brokerage, team, and agent. Roster, pipeline, listing file. What you see depends on the account. Live at app.brxs.ca.' },
-  { over: 'Live (web)', title: 'Companion', body: 'The agent companion to order media — Jobs and Book with morning, afternoon, or evening windows. Web app is live; not in the App Store or Google Play.', href: 'https://bricks-companion-web.vercel.app', linkLabel: 'Open Companion' },
-  { over: 'Live (web)', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card. Web client is live; App Store and Google Play binaries are coming.', href: 'https://bricks-dispatch-web.vercel.app', linkLabel: 'Open GO' },
+  { over: 'Live in preview', title: 'OS', body: 'Roster, pipeline, listing file for brokerage, team, and agent. What you see depends on the account.' },
+  { over: 'Live on the web', title: 'Companion', body: 'The agent app — Jobs and Book with morning, afternoon, or evening windows.', href: COMPANION_URL, linkLabel: 'Open Companion' },
+  { over: 'Live on the web', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card.', href: GO_URL, linkLabel: 'Open GO' },
 ]
 
 const roles = [
   { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'The whole shop. Full OS plus trust accounting, billed per seat yearly.' },
-  { href: '/agents#team', over: 'OS', title: 'Team', body: 'Same desk, team-sized. Shared pipeline for the people you run.' },
-  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Your desk plus Companion. Clay free; paid plans unlock CRM through MLS.' },
+  { href: '/agents#team', over: 'OS', title: 'Team', body: 'Same OS, team-sized. Shared pipeline for the people you run.' },
+  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Listing file plus Companion. Clay free; paid plans add CRM, e-sign, forms, and AI.' },
   { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Independent contractor. Auto-routed jobs, fixed dollar rate card, apply here.' },
 ]
 
@@ -31,8 +32,8 @@ export default function PlatformPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Platform</span>
-          <h1>Property to close. One desk.</h1>
-          <p className="sub">OS for Canadian real estate. Media, Companion, GO web, and the OS desk are live. Store apps coming.</p>
+          <h1>Property to close.</h1>
+          <p className="sub">Listing, Companion, GO, media, MLS, transaction. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>
@@ -84,16 +85,16 @@ export default function PlatformPage() {
           <div className="sec-head">
             <div>
               <span className="over">Software</span>
-              <h2>Locked catalog. Not live yet.</h2>
+              <h2>Clay, Keystone, Marble, Diamond.</h2>
             </div>
           </div>
-          <p className="sub-line">Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Media is à la carte, CAD, from Mississauga. Virtual visit is always quoted by sqft, never packaged.</p>
+          <p className="sub-line">{SOFTWARE_BLURB} Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Virtual visit is always quoted by sqft, never packaged.</p>
           <div className="incl" style={{ marginTop: 22 }}>
             {SOFTWARE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">
                 <span className="ic">{p.price}</span>
                 <h4>{p.name}</h4>
-                <p>{p.yearly}</p>
+                <p>{p.yearly}. {p.points.join('. ')}.</p>
               </div>
             ))}
           </div>
@@ -112,7 +113,7 @@ export default function PlatformPage() {
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">Launch list</span>
+              <span className="over">Updates</span>
               <h2>Join the list.</h2>
             </div>
           </div>
@@ -121,9 +122,9 @@ export default function PlatformPage() {
 
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
-            <span className="over">Live today</span>
-            <h2>Media is the beachhead.</h2>
-            <p className="lead">Book a shoot on the site or in <a href="https://bricks-companion-web.vercel.app" rel="noopener noreferrer">Companion</a>. Open the <a href="https://app.brxs.ca/login">OS desk</a> or <a href="https://bricks-dispatch-web.vercel.app" rel="noopener noreferrer">GO web</a> — store apps coming.</p>
+            <span className="over">Media is the beachhead</span>
+            <h2>Book a shoot. Open the OS.</h2>
+            <p className="lead">Order media on this site or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to the <a href={OS_LOGIN}>OS</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

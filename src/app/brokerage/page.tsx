@@ -3,10 +3,11 @@ import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
+import { STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'bricks for brokerages — the desk for the whole shop',
-  description: 'OS for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media and the OS desk are live at app.brxs.ca. Store apps coming.',
+  title: 'bricks for brokerages — the operating system for the whole shop',
+  description: 'OS for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live to book. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/brokerage' },
 }
 
@@ -17,8 +18,8 @@ export default function BrokeragePage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Brokerage</span>
-          <h1>The desk for the whole shop.</h1>
-          <p className="sub">Roster, pipeline, and the listing file for the whole shop. Every seat gets the full OS — CRM, transactions, e-sign, forms, MLS — plus trust accounting. Media and the OS desk are live at app.brxs.ca. Store apps coming.</p>
+          <h1>The operating system for the whole shop.</h1>
+          <p className="sub">Roster, pipeline, listing file, and trust accounting. Every seat gets the full OS — CRM, transactions, e-sign, forms, MLS. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/contact">Talk to us</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>
@@ -26,11 +27,11 @@ export default function BrokeragePage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Brokerage desk preview">
+      <section className="prod-row rvl" aria-label="Brokerage OS preview">
         <div className="prod-copy">
           <span className="over">What you see</span>
           <h2>One OS. Brokerage-sized.</h2>
-          <p>Sign in as the brokerage and you get the desk: agents, deals, media as a loop inside the listing file. A team or a solo agent sees fewer rooms. Same product, different account.</p>
+          <p>Sign in as the brokerage and you get agents, deals, and media as a loop inside the listing file. A team or a solo agent sees fewer rooms. Same product, different account.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -62,14 +63,14 @@ export default function BrokeragePage() {
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">On the desk</span>
+              <span className="over">In the OS</span>
               <h2>The loop lives here.</h2>
             </div>
           </div>
           <div className="faq">
             <div className="qa"><h4>Roster</h4><p>Agents under the brokerage, seats, and who can book media.</p></div>
             <div className="qa"><h4>Pipeline</h4><p>Deals and the listing file — not a jobs queue pretending to be the product.</p></div>
-            <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the desk or Companion. Photographers shoot in GO (Dispatch).</p></div>
+            <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the OS or Companion. Photographers shoot in GO (Dispatch).</p></div>
             <div className="qa"><h4>Trust accounting</h4><p>Brokerage-only. Solo and team plans do not unlock it.</p></div>
           </div>
         </section>
@@ -77,8 +78,8 @@ export default function BrokeragePage() {
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
             <span className="over">Brokerage</span>
-            <h2>Media is live. OS is coming.</h2>
-            <p className="lead">Book listing media today. The OS desk for the brokerage is live at app.brxs.ca — store apps coming.</p>
+            <h2>See the shop in one OS.</h2>
+            <p className="lead">Book listing media today. Talk to us about seats for the shop.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

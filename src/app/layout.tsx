@@ -10,10 +10,10 @@ import './book/book-wizard.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.brxs.ca'),
   title: {
-    default: 'bricks — the desk for Canadian real estate',
+    default: 'bricks — the operating system for Canadian real estate',
     template: '%s',
   },
-  description: 'OS for Canadian real estate. Listing media, Companion, GO web, and the OS desk are live. Store apps coming.',
+  description: 'The operating system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
     type: 'website',

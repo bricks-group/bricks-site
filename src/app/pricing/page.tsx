@@ -2,15 +2,18 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
-import { SOFTWARE_PLANS, OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
+import { SOFTWARE_PLANS, OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB } from '@/lib/catalog'
 import {
   AREA_SERVED_SCHEMA,
   COVERAGE_LINE,
+  STATUS,
   TOUR_BLURB,
   TOUR_NAME,
+  TOUR_SHORT,
   VISIT_BLURB,
   VISIT_NAME,
   VISIT_PACKAGING,
+  VISIT_SHORT,
 } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -34,8 +37,8 @@ const rows = [
   { name: 'Licensed drone', inc: 'Advanced RPAS-certified aerial', vals: bandCells(DRONE_RATE) },
   { name: 'Floor plan', inc: 'branded 2D — every standard shoot', flat: 'Included on every standard shoot' },
   { name: 'Cinematic reel', inc: '30–45s', vals: bandCells(REEL_RATE) },
-  { name: TOUR_NAME, inc: 'path-confined walkthrough', vals: bandCells(TOUR_RATE) },
-  { name: VISIT_NAME, inc: `free-roam Gaussian splat — ${FOOTPRINT_BANDS}`, flat: `${VISIT_PRICE_LABEL} — always an add-on, never packaged` },
+  { name: TOUR_NAME, inc: TOUR_SHORT, vals: bandCells(TOUR_RATE) },
+  { name: VISIT_NAME, inc: `${VISIT_SHORT} — ${FOOTPRINT_BANDS}`, flat: `${VISIT_PRICE_LABEL} — always an add-on, never packaged` },
   { name: 'Twilight exterior', inc: 'golden hour', vals: bandCells(TWILIGHT_RATE) },
   { name: 'Virtual staging', inc: 'per image', flat: `$${STAGING_PER_IMAGE} / image` },
   { name: 'Rush delivery', inc: 'same / next day', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
@@ -78,7 +81,7 @@ export default function PricingPage() {
             '@type': 'FAQPage',
             mainEntity: [
               { '@type': 'Question', name: 'How is footprint defined?', acceptedAnswer: { '@type': 'Answer', text: 'Small / Mid / Large / XL map to the property\'s finished area and complexity. Not sure which tier? Pick "advise me" in booking and we\'ll size it from the address.' } },
-              { '@type': 'Question', name: `Virtual tour vs virtual visit?`, acceptedAnswer: { '@type': 'Answer', text: `${TOUR_NAME} is a path-confined walkthrough — a ${TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. ${VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), never packaged, and not charged at checkout. The floor plan is included on every standard shoot.` } },
+              { '@type': 'Question', name: `Virtual tour vs virtual visit?`, acceptedAnswer: { '@type': 'Answer', text: `${TOUR_NAME} (${TOUR_SHORT}) is a ${TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. ${VISIT_NAME} (${VISIT_SHORT}) is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()}, never packaged.` } },
               { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: 'Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at $35 per image staged; tell us which rooms and we confirm the count before delivery.' } },
               { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered and quote travel if needed.` } },
             ],
@@ -90,7 +93,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and media.</h1>
-          <p className="sub">OS plans for individuals and brokerages. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit is always quoted by sqft — never in a package. OS software plans are not for sale yet; media and Companion are live.</p>
+          <p className="sub">Clay is free. Paid plans add CRM, e-sign, forms, and AI. Brokerage seats yearly. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
         </div>
       </section>
 
@@ -102,7 +105,7 @@ export default function PricingPage() {
               <h2>Clay, Keystone, Marble, Diamond.</h2>
             </div>
           </div>
-          <p className="tbl-cap">Monthly, or yearly — pay 10, get 12. Media is always a separate booking.</p>
+          <p className="tbl-cap">{SOFTWARE_BLURB} Monthly, or yearly — pay 10, get 12.</p>
           <div className="incl">
             {SOFTWARE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">
@@ -166,10 +169,10 @@ export default function PricingPage() {
           <div className="sec-head"><div><span className="over">Pricing questions</span><h2>Before you book.</h2></div></div>
           <div className="faq">
             <div className="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property&apos;s finished area and complexity. Not sure which tier? Pick &quot;advise me&quot; in booking and we&apos;ll size it from the address.</p></div>
-            <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} is a path-confined walkthrough — a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}), never packaged, and not charged at checkout. The floor plan is included on every standard shoot.</p></div>
+            <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} ({TOUR_SHORT}) is a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} ({VISIT_SHORT}) is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()}, never packaged.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at <b>$35 / image</b>; tell us which rooms and we confirm the count before delivery.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>
-            <div className="qa"><h4>Is software live?</h4><p>No. Clay / Keystone / Marble / Diamond and brokerage seats are the locked catalog for OS. Listing media and the website booking form are live. The apps are not in the App Store or Google Play.</p></div>
+            <div className="qa"><h4>Is software live?</h4><p>Yes. Stripe tiers are live on OS. Media is live to book. Companion and GO are live on the web.</p></div>
             <div className="qa"><h4>Brokerage vs individual plans?</h4><p>Individuals pick Clay through Diamond. Brokerages buy seats yearly — Boutique, Growth, Enterprise, Franchise. Every brokerage seat is the full OS plus trust accounting, not a bundle of the individual plans.</p></div>
           </div>
         </section>

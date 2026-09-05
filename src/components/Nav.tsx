@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
+import { OS_LOGIN } from '@/lib/brand'
 
 const links = [
   { href: '/gallery', label: 'Work' },
@@ -11,8 +12,6 @@ const links = [
   { href: '/photographers', label: 'Photographers' },
   { href: '/brokerage', label: 'Brokerage' },
 ]
-
-const OS_LOGIN = 'https://app.brxs.ca/login'
 
 export default function Nav() {
   const pathname = usePathname()

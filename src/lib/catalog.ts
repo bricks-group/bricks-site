@@ -2,6 +2,7 @@
  * Locked public catalog (software + brokerage seats).
  * Media rates live in pricing.ts. Do not invent a founder discount.
  * Annual individual plans = pay 10, get 12 (two months free).
+ * Stripe tiers are live on OS. Media is always à la carte.
  */
 export const SOFTWARE_PLANS = [
   {
@@ -10,7 +11,7 @@ export const SOFTWARE_PLANS = [
     price: 'Free',
     yearly: 'No card',
     over: 'Individual',
-    points: ['Book media at rack rate', 'No CRM, e-sign, transactions, or MLS'],
+    points: ['Book media at rack rate', 'Listing file, transactions, and BYO MLS'],
   },
   {
     id: 'keystone',
@@ -26,7 +27,7 @@ export const SOFTWARE_PLANS = [
     price: '$99 / mo',
     yearly: '$990 / yr · 2 months free',
     over: 'Individual',
-    points: ['Everything in Keystone', 'Transactions'],
+    points: ['Everything in Keystone', 'Forms'],
   },
   {
     id: 'diamond',
@@ -34,9 +35,12 @@ export const SOFTWARE_PLANS = [
     price: '$149 / mo',
     yearly: '$1,490 / yr · 2 months free',
     over: 'Individual',
-    points: ['Everything in Marble', 'MLS'],
+    points: ['Everything in Marble', 'AI suite included — same AI as add-ons on lower plans'],
   },
 ] as const
+
+export const SOFTWARE_BLURB =
+  'Stripe tiers are live on OS. Media is always à la carte. Modular add-ons attach without a plan jump.'
 
 /** Brokerage seats: per seat, billed annually. Full OS on every seat — not a Clay–Diamond bundle. */
 export const OFFICE_PLANS = [
@@ -48,4 +52,3 @@ export const OFFICE_PLANS = [
 
 export const OFFICE_INCLUDES =
   'Full OS on every seat — CRM, transactions, e-sign, forms, MLS — plus trust accounting. Agents do not pay individually.'
-

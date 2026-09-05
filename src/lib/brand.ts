@@ -1,4 +1,27 @@
-/** Shared brand geography, coverage, and spatial-product naming. */
+/** Shared brand geography, coverage, product status, and spatial-product naming. */
+
+/** Live product URLs — keep marketing links in one place. */
+export const OS_URL = 'https://app.brxs.ca'
+export const OS_LOGIN = `${OS_URL}/login`
+export const COMPANION_URL = 'https://bricks-companion-web.vercel.app'
+export const GO_URL = 'https://bricks-dispatch-web.vercel.app'
+
+/**
+ * Locked product truth. Do not invent softer/harder versions.
+ * One status beat per page (hero or a single closer). Store line: footer only.
+ */
+export const STATUS = {
+  media: 'Media is live to book on this site and in Companion.',
+  os: 'OS is live in preview at app.brxs.ca.',
+  companion: 'Companion is live on the web.',
+  go: 'GO is live on the web.',
+  line: 'Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
+  chrome: 'The operating system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
+  stores: 'Not in the App Store or Google Play yet.',
+} as const
+
+export const TOUR_SHORT = 'path walkthrough'
+export const VISIT_SHORT = 'free-roam 3D'
 
 export const BROKERAGE_LOGOS = [
   { src: '/media/logos/royallepage.svg', alt: 'Royal LePage' },
@@ -45,11 +68,11 @@ export const KNOWS_ABOUT = [
 
 /** Path-confined walkthrough. May be included in Showcase and Full suite. */
 export const TOUR_NAME = 'Virtual tour'
-export const TOUR_BLURB = 'Path-confined walkthrough. You stay on the path.'
+export const TOUR_BLURB = 'Path walkthrough. You stay on the path.'
 
 /** Free-roam Gaussian splat. Always a paid add-on. Never packaged. Never called a tour. */
 export const VISIT_NAME = 'Virtual visit'
-export const VISIT_BLURB = 'Free-roam Gaussian splat (SuperSplat). You are not confined to a path.'
+export const VISIT_BLURB = 'Free-roam 3D (Gaussian splat). Not a tour. Always a paid add-on.'
 export const VISIT_PACKAGING = 'Always a paid add-on — never included in any package.'
 
 export const WORK_PHOTOS = [
