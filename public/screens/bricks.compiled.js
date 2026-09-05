@@ -1,6 +1,7 @@
 // bricks.js — Bricks production component library
 // Auto-generated from Bricks Full Frontend.html
 // All components available on window. Use mountBricks('containerId', <Component/>) to render.
+// Rebuild runtime: npm run compile:os  (scripts/compile-os.js → bricks.compiled.js)
 (function (global) {
   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
     "stageBg": "#E4DED2",
@@ -3166,11 +3167,216 @@
     }), age))))))));
   }
 
-  // ─── TRANSACTIONS · deal register + milestone rail ───
+  // ─── TRANSACTIONS · living deal register ───
+  // New deals unshift at the top; the list translates down as one strip so the
+  // visible window reads as growth (bottom row is pushed out, not faded).
+  // openCount only climbs, even when incoming addresses recycle.
+  const TX_VISIBLE = 6;
+  const TX_ROW_H = 64;
+  const TX_SLIDE_MS = 640;
+  const TX_SEED_COUNT = 48;
+  const TX_SEED = [{
+    addr: '214 Linden St',
+    client: 'J. Delgado',
+    side: 'Listing',
+    price: '$1.15M',
+    close: 'Apr 24',
+    note: '2 pending',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '8 Riverbend',
+    client: 'M. Ortega',
+    side: 'Buyer',
+    price: '$1.28M',
+    close: 'Apr 26',
+    note: 'Firm',
+    status: 'Firm',
+    tone: 'ok'
+  }, {
+    addr: '201 Oak Dr',
+    client: 'K. Haddad',
+    side: 'Listing',
+    price: '$910K',
+    close: 'Apr 29',
+    note: 'Financing',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '55 Birch Way',
+    client: 'T. Winters',
+    side: 'Buyer',
+    price: '$690K',
+    close: 'May 02',
+    note: 'Firm',
+    status: 'Firm',
+    tone: 'ok'
+  }, {
+    addr: '30 Mercer Loop',
+    client: 'A. Fournier',
+    side: 'Listing',
+    price: '$740K',
+    close: 'May 06',
+    note: 'Inspection',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '112 Ash Ct',
+    client: 'N. Obayemi',
+    side: 'Buyer',
+    price: '$905K',
+    close: 'May 09',
+    note: '—',
+    status: 'Closed',
+    tone: 'ok'
+  }];
+  const TX_INCOMING = [{
+    addr: '77 Wellesley',
+    client: 'P. Nakamura',
+    side: 'Buyer',
+    price: '$1.32M',
+    close: 'May 12',
+    note: 'New offer',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '19 Distillery Ln',
+    client: 'R. Costa',
+    side: 'Listing',
+    price: '$860K',
+    close: 'May 14',
+    note: 'Awaiting docs',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '402 King St W',
+    client: 'S. Iyer',
+    side: 'Buyer',
+    price: '$1.05M',
+    close: 'May 16',
+    note: 'Financing',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '66 Sorauren',
+    client: 'J. Whitfield',
+    side: 'Listing',
+    price: '$975K',
+    close: 'May 18',
+    note: 'Inspection',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '9 Bellwoods',
+    client: 'A. Beaulieu',
+    side: 'Buyer',
+    price: '$1.48M',
+    close: 'May 20',
+    note: 'New offer',
+    status: 'Firm',
+    tone: 'ok'
+  }, {
+    addr: '41 Palmerston',
+    client: 'L. Chen',
+    side: 'Listing',
+    price: '$820K',
+    close: 'May 21',
+    note: '2 pending',
+    status: 'Conditional',
+    tone: 'warn'
+  }, {
+    addr: '18 Shaw St',
+    client: 'D. Okonkwo',
+    side: 'Buyer',
+    price: '$1.10M',
+    close: 'May 22',
+    note: 'Firm',
+    status: 'Firm',
+    tone: 'ok'
+  }, {
+    addr: '5 Gladstone',
+    client: 'M. Santos',
+    side: 'Listing',
+    price: '$790K',
+    close: 'May 23',
+    note: 'New listing',
+    status: 'Conditional',
+    tone: 'warn'
+  }];
+  function txPrefersReduce() {
+    try {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {
+      return false;
+    }
+  }
   function TransactionsContent({
     th,
     dark
   }) {
+    const [deals, setDeals] = React.useState(() => TX_SEED.map((d, i) => ({
+      ...d,
+      id: 'seed-' + i
+    })));
+    const [openCount, setOpenCount] = React.useState(TX_SEED_COUNT);
+    const [reduce, setReduce] = React.useState(txPrefersReduce);
+    const [phase, setPhase] = React.useState('idle'); // idle | primed | sliding
+    const [freshId, setFreshId] = React.useState(null);
+    const listRef = React.useRef(null);
+    const incomingRef = React.useRef(0);
+    const seqRef = React.useRef(0);
+    React.useEffect(() => {
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const apply = () => setReduce(mq.matches);
+      apply();
+      if (mq.addEventListener) mq.addEventListener('change', apply);else mq.addListener(apply);
+      return () => {
+        if (mq.removeEventListener) mq.removeEventListener('change', apply);else mq.removeListener(apply);
+      };
+    }, []);
+    React.useEffect(() => {
+      if (reduce) setPhase('idle');
+    }, [reduce]);
+    React.useLayoutEffect(() => {
+      if (phase !== 'primed') return;
+      const el = listRef.current;
+      if (el) void el.getBoundingClientRect();
+      setPhase('sliding');
+    }, [phase]);
+    React.useEffect(() => {
+      if (!freshId) return;
+      const t = setTimeout(() => setFreshId(cur => cur === freshId ? null : cur), TX_SLIDE_MS + 180);
+      return () => clearTimeout(t);
+    }, [freshId]);
+    React.useEffect(() => {
+      if (reduce) return;
+      let timer;
+      const schedule = ms => {
+        timer = setTimeout(land, ms);
+      };
+      const land = () => {
+        const src = TX_INCOMING[incomingRef.current % TX_INCOMING.length];
+        incomingRef.current += 1;
+        seqRef.current += 1;
+        const id = 'in-' + seqRef.current;
+        setDeals(prev => [{
+          ...src,
+          id
+        }, ...prev].slice(0, TX_VISIBLE + 2));
+        setOpenCount(c => c + 1);
+        setFreshId(id);
+        setPhase('primed');
+        schedule(3600 + Math.floor(Math.random() * 1400));
+      };
+      schedule(2200);
+      return () => clearTimeout(timer);
+    }, [reduce]);
+    const onSlideEnd = e => {
+      if (e.propertyName !== 'transform') return;
+      if (phase !== 'sliding') return;
+      setDeals(prev => prev.slice(0, TX_VISIBLE));
+      setPhase('idle');
+    };
     const kpis = [{
       l: 'Closing this week',
       v: '6',
@@ -3180,7 +3386,7 @@
       l: 'GCI in escrow',
       v: '$214K',
       d: '+8.2%',
-      s: 'across 48 deals'
+      s: `across ${openCount} deals`
     }, {
       l: 'Conditions pending',
       v: '12',
@@ -3193,13 +3399,15 @@
       d: null,
       s: '3 buyers waiting'
     }];
-    const deals = [['214 Linden St', 'J. Delgado', 'Listing', '$1.15M', 'Apr 24', '2 pending', 'Conditional', 'warn'], ['8 Riverbend', 'M. Ortega', 'Buyer', '$1.28M', 'Apr 26', 'Firm', 'Firm', 'ok'], ['201 Oak Dr', 'K. Haddad', 'Listing', '$910K', 'Apr 29', 'Financing', 'Conditional', 'warn'], ['55 Birch Way', 'T. Winters', 'Buyer', '$690K', 'May 02', 'Firm', 'Firm', 'ok'], ['30 Mercer Loop', 'A. Fournier', 'Listing', '$740K', 'May 06', 'Inspection', 'Conditional', 'warn'], ['112 Ash Ct', 'N. Obayemi', 'Buyer', '$905K', 'May 09', '—', 'Closed', 'ok']];
     const timeline = [['Listed', 'Apr 02', 'Live on TRREB · MLS #C7841902', true], ['Offer accepted', 'Apr 17', '$1.15M · 3 conditions', true], ['Conditions', 'Apr 24', 'Financing + inspection pending', 'now'], ['Firm & binding', '—', 'All conditions waived', false], ['Close', 'May 24', 'Keys + funds released', false]];
+    const sliding = phase === 'sliding';
+    const offset = phase === 'primed' ? -TX_ROW_H : 0;
+    const freshBg = dark ? 'rgba(210,84,43,0.18)' : T.brickTint;
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(ModHead, {
       th: th,
       dark: dark,
       title: "Transactions",
-      sub: "48 open \xB7 6 closing this week \xB7 listing to close in one timeline",
+      sub: `${openCount} open · 6 closing this week · listing to close in one timeline`,
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -3259,51 +3467,68 @@
         textTransform: 'uppercase',
         color: th.ink4
       }
-    }, /*#__PURE__*/React.createElement("div", null, "Property"), /*#__PURE__*/React.createElement("div", null, "Client"), /*#__PURE__*/React.createElement("div", null, "Side"), /*#__PURE__*/React.createElement("div", null, "Price"), /*#__PURE__*/React.createElement("div", null, "Close"), /*#__PURE__*/React.createElement("div", null, "Status")), deals.map((d, i) => /*#__PURE__*/React.createElement("div", {
-      key: d[0],
+    }, /*#__PURE__*/React.createElement("div", null, "Property"), /*#__PURE__*/React.createElement("div", null, "Client"), /*#__PURE__*/React.createElement("div", null, "Side"), /*#__PURE__*/React.createElement("div", null, "Price"), /*#__PURE__*/React.createElement("div", null, "Close"), /*#__PURE__*/React.createElement("div", null, "Status")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: TX_VISIBLE * TX_ROW_H,
+        overflow: 'hidden'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      ref: listRef,
+      onTransitionEnd: onSlideEnd,
+      style: {
+        transform: `translate3d(0, ${offset}px, 0)`,
+        transition: !reduce && sliding ? `transform ${TX_SLIDE_MS}ms cubic-bezier(0.16, 0.8, 0.3, 1)` : 'none',
+        willChange: sliding ? 'transform' : 'auto'
+      }
+    }, deals.map(d => /*#__PURE__*/React.createElement("div", {
+      key: d.id,
       style: {
         display: 'grid',
         gridTemplateColumns: '1.5fr 1fr 0.8fr 1fr 0.8fr 130px',
-        padding: '15px 24px',
-        borderBottom: i === deals.length - 1 ? 'none' : `1px solid ${th.hair}`,
+        padding: '0 24px',
+        height: TX_ROW_H,
+        boxSizing: 'border-box',
+        borderBottom: `1px solid ${th.hair}`,
         fontSize: 13,
-        alignItems: 'center'
+        alignItems: 'center',
+        background: d.id === freshId ? freshBg : 'transparent',
+        transition: reduce ? 'none' : 'background 1.4s ease'
       }
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         fontWeight: 500
       }
-    }, d[0]), /*#__PURE__*/React.createElement("div", {
+    }, d.addr), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink4,
         marginTop: 2
       }
-    }, d[5])), /*#__PURE__*/React.createElement("div", {
+    }, d.note)), /*#__PURE__*/React.createElement("div", {
       style: {
         color: th.ink2
       }
-    }, d[1]), /*#__PURE__*/React.createElement("div", {
+    }, d.client), /*#__PURE__*/React.createElement("div", {
       style: {
         color: th.ink3,
         fontFamily: F.mono,
         fontSize: 11
       }
-    }, d[2]), /*#__PURE__*/React.createElement("div", {
+    }, d.side), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: F.mono,
         fontSize: 13
       }
-    }, d[3]), /*#__PURE__*/React.createElement("div", {
+    }, d.price), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: F.mono,
         fontSize: 12,
         color: th.ink2
       }
-    }, d[4]), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Pill, {
-      tone: d[7],
+    }, d.close), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Pill, {
+      tone: d.tone,
       dark: dark
-    }, d[6]))))), /*#__PURE__*/React.createElement("div", {
+    }, d.status))))))), /*#__PURE__*/React.createElement("div", {
       style: {
         border: `1px solid ${th.hair}`,
         borderRadius: 2,

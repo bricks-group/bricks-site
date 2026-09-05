@@ -92,79 +92,9 @@
           }
         }
       }, 2500);
-    } else if (screen === 'transactions') {
-      // New deal rows slide in at the top of the register; the oldest row fades out.
-      var pool = [
-        ['77 Wellesley St', 'P. Nakamura', '$1.32M', 'May 12'],
-        ['19 Distillery Ln', 'R. Costa', '$860K', 'May 14'],
-        ['402 King St W', 'S. Iyer', '$1.05M', 'May 16'],
-        ['66 Sorauren Ave', 'J. Whitfield', '$975K', 'May 18'],
-        ['9 Trinity Bellwoods', 'A. Beaulieu', '$1.48M', 'May 20']
-      ];
-      var pi = 0;
-      function findHeaderRow(root){
-        var labels = ['Property','Client','Side','Price','Close','Status'];
-        var divs = root.querySelectorAll('div');
-        for (var i = 0; i < divs.length; i++){
-          var kids = divs[i].children;
-          if (kids.length !== 6) continue;
-          var ok = true;
-          for (var j = 0; j < 6; j++){
-            if (!kids[j] || kids[j].tagName !== 'DIV' || kids[j].textContent.trim() !== labels[j]) { ok = false; break; }
-          }
-          if (ok) return divs[i];
-        }
-        return null;
-      }
-      function rowsAfterHeader(container, header){
-        var kids = Array.prototype.slice.call(container.children);
-        return kids.slice(kids.indexOf(header) + 1);
-      }
-      function addRow(){
-        var rootEl = document.getElementById('root');
-        if (!rootEl) return;
-        var header = findHeaderRow(rootEl);
-        if (!header || !header.parentElement) return;
-        var container = header.parentElement;
-        var rows = rowsAfterHeader(container, header);
-        if (rows.length < 2) return;
-        var template = rows[Math.floor(Math.random() * rows.length)];
-        var newRow = template.cloneNode(true);
-        var data = pool[pi % pool.length]; pi++;
-        try {
-          newRow.children[0].children[0].textContent = data[0];
-          newRow.children[1].textContent = data[1];
-          newRow.children[3].textContent = data[2];
-          newRow.children[4].textContent = data[3];
-        } catch (e) {}
-        newRow.style.borderBottom = rows[0].style.borderBottom;
-        newRow.style.opacity = '0';
-        newRow.style.transform = 'translateY(-6px)';
-        newRow.style.transition = 'opacity .5s ease, transform .5s ease';
-        container.insertBefore(newRow, rows[0]);
-        requestAnimationFrame(function(){
-          requestAnimationFrame(function(){
-            newRow.style.opacity = '1';
-            newRow.style.transform = 'translateY(0)';
-          });
-        });
-        setTimeout(function(){
-          var all = rowsAfterHeader(container, header);
-          var last = all[all.length - 1];
-          if (last && last !== newRow){
-            last.style.transition = 'opacity .4s ease';
-            last.style.opacity = '0';
-            setTimeout(function(){
-              if (last.parentElement) last.parentElement.removeChild(last);
-              var remain = rowsAfterHeader(container, header);
-              var newLast = remain[remain.length - 1];
-              if (newLast) newLast.style.borderBottom = 'none';
-            }, 400);
-          }
-        }, 900);
-      }
-      setInterval(addRow, 4000);
     }
+    // Transactions growth lives in TransactionsContent (bricks.js) so the
+    // register and the open-deal totals move on the same event.
   }
 })();
 </script>
