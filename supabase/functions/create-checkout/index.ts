@@ -207,7 +207,8 @@ Deno.serve(async (req: Request) => {
   const form = new URLSearchParams();
   form.set('mode', 'payment');
   form.set('currency', 'cad');
-  form.set('locale', 'en-CA');
+  // Stripe Checkout locales do not include en-CA (use en; CAD/Canada stay).
+  form.set('locale', 'en');
   form.set('submit_type', 'book');
   // Live route is /book (Next.js). book.html is a leftover static page.
   form.set('success_url', `${appUrl}/book?paid=1&session_id={CHECKOUT_SESSION_ID}`);
