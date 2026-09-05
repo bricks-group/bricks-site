@@ -261,6 +261,7 @@ html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
 /* included tiles — homepage, photographers, fall-market */
 .incl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
   border:1px solid var(--hair);border-radius:2px;margin-top:4px;}
+.incl.three{grid-template-columns:repeat(3,1fr);}
 .incl .c{background:var(--paper);padding:22px 22px;}
 .incl .c h4{font-weight:500;font-size:15px;color:var(--ink);margin-bottom:6px;}
 .incl .c p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
@@ -286,7 +287,7 @@ html[data-theme="dark"] .logo-txt{color:var(--inkSoft);opacity:.9;}
 }
 
 @media (max-width:680px){
-  .incl{grid-template-columns:1fr;}
+  .incl,.incl.three{grid-template-columns:1fr;}
 }
 
 /* Painted product trays — raster landscape as an inset rounded stage.

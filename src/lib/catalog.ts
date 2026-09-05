@@ -42,6 +42,16 @@ export const SOFTWARE_PLANS = [
 export const SOFTWARE_BLURB =
   'Stripe tiers are live on OS. Media is always à la carte. Modular add-ons attach without a plan jump.'
 
+/** Modular Stripe AI add-ons. Attach to paid-capable plans; included in Diamond. No credit pools. */
+export const ADDONS = [
+  { id: 'ai-listing-copy', name: 'AI Listing Copy', price: '$19 / mo' },
+  { id: 'ai-cma', name: 'AI CMA', price: '$25 / mo' },
+  { id: 'ai-document-drafter', name: 'AI Document Drafter', price: '$19 / mo' },
+] as const
+
+export const ADDONS_BLURB =
+  'Add-ons attach to any paid-capable plan; Diamond includes the AI suite.'
+
 /** Brokerage seats: per seat, billed annually. Full OS on every seat — not a Clay–Diamond bundle. */
 export const OFFICE_PLANS = [
   { id: 'boutique', name: 'Boutique', seats: '5–24 seats', price: '$708 / seat / yr' },
