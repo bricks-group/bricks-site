@@ -12,6 +12,8 @@
 // Needs:   STRIPE_WEBHOOK_SECRET, SUPABASE_SERVICE_ROLE_KEY
 // Register: endpoint = /functions/v1/stripe-webhook, events = checkout.session.completed
 
+import { civilClockHm, civilYmd, formatLocalWhen, resolvePropertyTimezone } from '../_shared/canada-tz.ts';
+
 const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
 
 const KAM_VENDOR_ID = '0c3fa7c2-d23b-4e44-90ad-ab2d19af2580';
@@ -153,25 +155,13 @@ function parseQuote(raw: string | undefined): { total: number | null; lat: numbe
   }
 }
 
-function ymd(raw: string | null, fallbackIso: string | null): string {
+function ymd(raw: string | null, fallbackIso: string | null, tz: string): string {
   if (raw && /^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
   if (fallbackIso) {
     const d = new Date(fallbackIso);
-    if (!Number.isNaN(d.getTime())) {
-      return d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
-    }
+    if (!Number.isNaN(d.getTime())) return civilYmd(fallbackIso, tz);
   }
-  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
-}
-
-function torontoClock(iso: string | null): string {
-  if (!iso) return '10:00';
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return '10:00';
-  const t = d.toLocaleTimeString('en-CA', {
-    hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Toronto',
-  });
-  return t || '10:00';
+  return civilYmd(new Date().toISOString(), tz);
 }
 
 const PREFERRED_WINDOWS: Record<string, [string, string]> = {
@@ -180,16 +170,21 @@ const PREFERRED_WINDOWS: Record<string, [string, string]> = {
   evening: ['16:00', '19:00'],
 };
 
-function windowBounds(preferredWindow: string | null | undefined, slotStart: string | null | undefined, slotEnd: string | null | undefined): [string, string] {
-  // Exact booked clock is the source of truth when present.
+function windowBounds(
+  preferredWindow: string | null | undefined,
+  slotStart: string | null | undefined,
+  slotEnd: string | null | undefined,
+  tz: string,
+): [string, string] {
+  // Exact booked clock is the source of truth when present — property local zone.
   if (slotStart) {
-    const start = torontoClock(slotStart);
-    const end = slotEnd ? torontoClock(slotEnd) : '';
+    const start = civilClockHm(slotStart, tz);
+    const end = slotEnd ? civilClockHm(slotEnd, tz) : '';
     if (end) return [start, end];
   }
   const key = String(preferredWindow || '').trim().toLowerCase();
   if (key in PREFERRED_WINDOWS) return PREFERRED_WINDOWS[key];
-  return [torontoClock(slotStart || null), slotEnd ? torontoClock(slotEnd) : '11:00'];
+  return [civilClockHm(slotStart || null, tz), slotEnd ? civilClockHm(slotEnd, tz) : '11:00'];
 }
 
 // Stripe header is t=timestamp,v1=hex[,v1=hex…][,v0=…]. Not v=.
@@ -238,11 +233,12 @@ async function notifyOwner(lead: {
   brokerage: string | null;
   quote_total: number | null;
   selected_slot_start: string | null;
+  timezone: string;
 }) {
   const smsTo = (Deno.env.get('BRXS_FORWARD_PHONE') || '3434534578').replace(/\D/g, '');
   const emailTo = Deno.env.get('NOTIFY_EMAIL') || 'booking@brxs.ca';
   const when = lead.selected_slot_start
-    ? new Date(lead.selected_slot_start).toLocaleString('en-CA', { timeZone: 'America/Toronto' })
+    ? formatLocalWhen(lead.selected_slot_start, lead.timezone)
     : 'TBD';
   const total = lead.quote_total != null ? `$${lead.quote_total.toFixed(2)}` : '';
   const office = lead.brokerage ? ` · ${lead.brokerage}` : '';
@@ -312,6 +308,8 @@ async function ensureDispatchJob(opts: {
   m: Record<string, string>;
   quote: { total: number | null; lat: number | null; lon: number | null };
   preferredDate: string;
+  timezone: string;
+  province: string | null;
 }): Promise<{ jobId: string | null; created: boolean; error?: string }> {
   const existingUrl = `${opts.supabaseUrl}/rest/v1/jobs?booking_id=eq.${encodeURIComponent(opts.leadId)}&select=id&limit=1`;
   const existingRes = await fetch(existingUrl, { headers: restHeaders(opts.serviceKey, 'return=representation') });
@@ -339,13 +337,15 @@ async function ensureDispatchJob(opts: {
   const minTier = minTierOf(pkg);
   const cityGuess = (opts.m.property_address || '').split(',').slice(-2, -1)[0]?.trim() || '';
 
-  const [twStart, twEnd] = windowBounds(opts.m.preferred_window, opts.m.selected_slot_start, opts.m.selected_slot_end);
+  const [twStart, twEnd] = windowBounds(
+    opts.m.preferred_window, opts.m.selected_slot_start, opts.m.selected_slot_end, opts.timezone,
+  );
   const job: Record<string, unknown> = {
     id: crypto.randomUUID(),
     booking_id: opts.leadId,
     address: opts.m.property_address || '—',
     city: cityGuess,
-    state: 'ON',
+    state: opts.province || '',
     zip_code: '',
     lat: opts.quote.lat,
     lng: opts.quote.lon,
@@ -354,7 +354,7 @@ async function ensureDispatchJob(opts: {
     job_type: drone ? 'drone' : 'photo',
     status: 'unassigned',
     priority: rush ? 'rush' : 'normal',
-    property_details: `${opts.m.property_type || 'listing'} · paid www.brxs.ca/book · lead ${opts.leadId} · stripe ${opts.sessionId}`,
+    property_details: `${opts.m.property_type || 'listing'} · paid www.brxs.ca/book · lead ${opts.leadId} · stripe ${opts.sessionId} · tz ${opts.timezone}`,
     client_instructions: opts.m.notes || '',
     checklist: [],
     assignee_id: '',
@@ -399,7 +399,9 @@ async function ensureDispatchJob(opts: {
           booking_id: opts.leadId,
           address: job.address,
           city: job.city,
-          state: 'ON',
+          state: job.state,
+          timezone: opts.timezone,
+          province: opts.province,
           lat: job.lat,
           lng: job.lng,
           time_window_start: job.time_window_start,
@@ -484,7 +486,12 @@ Deno.serve(async (req: Request) => {
   if (!supabaseUrl || !serviceKey) return msg('server misconfigured', 500);
 
   const quote = parseQuote(m.quote_json);
-  const preferredDate = ymd(m.preferred_date || null, m.selected_slot_start || null);
+  const zone = resolvePropertyTimezone({
+    timezone: m.timezone || null,
+    province: m.province || null,
+    address: m.property_address || null,
+  });
+  const preferredDate = ymd(m.preferred_date || null, m.selected_slot_start || null, zone.tz);
   const payload = {
     stripe_session_id: s.id || null,
     agent_name: m.agent_name || '—',
@@ -550,6 +557,7 @@ Deno.serve(async (req: Request) => {
 
   const jobResult = await ensureDispatchJob({
     supabaseUrl, serviceKey, leadId, sessionId: s.id, m, quote, preferredDate,
+    timezone: zone.tz, province: zone.province,
   });
 
   if (!duplicate) {
@@ -564,6 +572,7 @@ Deno.serve(async (req: Request) => {
         brokerage: payload.brokerage,
         quote_total: payload.quote_total,
         selected_slot_start: payload.selected_slot_start,
+        timezone: zone.tz,
       });
     } catch (e) {
       console.error('notifyOwner failed for lead ' + leadId + ': ' + String(e));

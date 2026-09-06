@@ -4,7 +4,7 @@
 // one-time payment Session for the exact CAD amount (incl HST) and return the
 // Checkout URL. A webhook (stripe-webhook fn) confirms payment, writes the
 // paid lead. Preferred date + exact selected_slot_* ISO go to Stripe metadata
-// (America/Toronto; no Cal.com). preferred_window is optional back-compat only.
+// (property-local Canada timezone; no Cal.com). preferred_window is optional back-compat only.
 //
 // The client-submitted `quote` is NEVER trusted for the charged amount --
 // it's just what the wizard displayed. We re-run the same pricing engine
@@ -28,12 +28,14 @@
 // Invoke:  POST /functions/v1/create-checkout
 //          body: { agent_name, email, property_address, property_type,
 //                  package_interest, sqft, preferred_date, selected_slot_start,
-//                  selected_slot_end, preferred_window (optional),
+//                  selected_slot_end, timezone, province, preferred_window (optional),
 //                  drone_addon, reel_addon, tour_addon, twilight_addon, rush_addon,
 //                  phone, brokerage, notes }
 // drone_addon defaults true if omitted (matches the `quote` function) --
 // forward whatever the client actually selected, never assume, or a
 // "Photos only" booking gets silently re-priced at the full drone rate here.
+
+import { civilYmd, resolvePropertyTimezone } from '../_shared/canada-tz.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -110,9 +112,14 @@ Deno.serve(async (req: Request) => {
   if (!slotStart || !slotEnd || Number.isNaN(startMs) || Number.isNaN(endMs) || endMs <= startMs) {
     return bad('selected_slot_start and selected_slot_end (ISO) are required');
   }
-  const slotDay = new Date(slotStart).toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+  const zone = resolvePropertyTimezone({
+    timezone: (body.timezone || '').toString(),
+    province: (body.province || '').toString(),
+    address: (body.property_address || '').toString(),
+  });
+  const slotDay = civilYmd(slotStart, zone.tz);
   if (slotDay !== preferredDate) {
-    return bad('selected_slot_start must fall on preferred_date in America/Toronto');
+    return bad('selected_slot_start must fall on preferred_date in the property local timezone');
   }
 
   // Re-derive the trusted price server-side -- ignore body.quote entirely for
@@ -161,6 +168,8 @@ Deno.serve(async (req: Request) => {
     preferred_window: ['morning', 'afternoon', 'evening'].includes(preferredWindow) ? preferredWindow : '',
     selected_slot_start: slotStart,
     selected_slot_end: slotEnd,
+    timezone: zone.tz,
+    province: (zone.province || (body.province || '').toString().trim()).slice(0, 8),
     // Explicit false for Photos only — never coerce omitted/string into drone.
     drone_addon: String(droneOn),
     reel_addon: String(body.reel_addon === true || body.reel_addon === 'true'),
@@ -214,6 +223,8 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[preferred_window]', meta.preferred_window);
   form.append('metadata[selected_slot_start]', meta.selected_slot_start);
   form.append('metadata[selected_slot_end]', meta.selected_slot_end);
+  form.append('metadata[timezone]', meta.timezone);
+  form.append('metadata[province]', meta.province);
   form.append('metadata[notes]', meta.notes);
   form.append('metadata[quote_json]', meta.quote_json);
 

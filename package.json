@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "compile:os": "node scripts/compile-os.js"
+    "compile:os": "node scripts/compile-os.js",
+    "test": "node --experimental-strip-types --test src/lib/schedule.test.ts",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
