@@ -12,7 +12,7 @@
 // Returns an itemized quote so the wizard can show "data speaks for itself".
 //
 // Deploy:  supabase functions deploy quote
-// Invoke:  POST /functions/v1/quote   body: {address, property_type, drone_addon?, reel_addon, tour_addon, twilight_addon, rush_addon, sqft?}
+// Invoke:  POST /functions/v1/quote   body: {address, property_type, drone_addon?, reel_addon, tour_addon, twilight_addon, rush_addon, staging_addon?, staging_images?, floor_plan_only?, sqft?}
 // drone_addon defaults true (photo+drone is the standard included base); pass
 // false for the "Photos only" bare-minimum tier -- drops drone and the floor
 // plan deliverable, photo_rate alone is charged.
@@ -45,6 +45,8 @@ const REEL_RATE = [149, 179, 209, 249];
 const TWILIGHT_RATE = [150, 170, 185, 200];
 const TOUR_RATE = [149, 199, 249, 299];
 const RUSH_FLAT = 75;
+const STAGING_PER_IMAGE = 35;
+const FLOOR_PLAN_ONLY_RATE = 99;
 
 function bad(msg: string, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: msg }), {
@@ -135,6 +137,14 @@ Deno.serve(async (req: Request) => {
   const tour = body.tour_addon === true || body.tour_addon === 'true';
   const twilight = body.twilight_addon === true || body.twilight_addon === 'true';
   const rush = body.rush_addon === true || body.rush_addon === 'true';
+  const staging = body.staging_addon === true || body.staging_addon === 'true';
+  let stagingImages = body.staging_images != null ? parseInt(String(body.staging_images), 10) : (staging ? 1 : 0);
+  if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = staging ? 1 : 0;
+  if (staging && stagingImages < 1) stagingImages = 1;
+  if (!staging) stagingImages = 0;
+  const pkgRaw = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_');
+  const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
+    || pkgRaw === 'floor_plan_only' || pkgRaw === 'floorplan_only';
   const manualSqft = body.sqft ? parseInt(body.sqft) : null;
 
   if (!address) return bad('Address is required');
@@ -181,11 +191,25 @@ Deno.serve(async (req: Request) => {
   // 3) footprint band (sqft band, nudged up by property type so type defaults don't under-price)
   const finalBand = Math.max(band(sqft), typeBand[pt] ?? 1);
 
-  // 4) base = photo, always included; drone included unless "Photos only" (drone_addon: false)
-  const photo_rate = PHOTO_RATE[finalBand];
-  const drone_rate = drone ? DRONE_RATE[finalBand] : 0;
-  const base = photo_rate + drone_rate;
-  const floor_plan_included = drone; // floor plan travels with the standard tier, dropped on Photos only
+  // 4) base = photo+drone (standard), photos-only (photo alone), or floor-plan-only ($99 flat).
+  let photo_rate = 0;
+  let drone_rate = 0;
+  let base = 0;
+  let floor_plan_included = false;
+  let drone_included = false;
+  if (floorPlanOnly) {
+    photo_rate = 0;
+    drone_rate = 0;
+    base = FLOOR_PLAN_ONLY_RATE;
+    floor_plan_included = true;
+    drone_included = false;
+  } else {
+    photo_rate = PHOTO_RATE[finalBand];
+    drone_rate = drone ? DRONE_RATE[finalBand] : 0;
+    base = photo_rate + drone_rate;
+    floor_plan_included = drone; // floor plan travels with the standard tier, dropped on Photos only
+    drone_included = drone;
+  }
 
   // 5) travel
   const dist = haversine(BASE, geo);
@@ -198,6 +222,12 @@ Deno.serve(async (req: Request) => {
   if (tour) addons.push({ label: 'Virtual tour', amount: TOUR_RATE[finalBand] });
   if (twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[finalBand] });
   if (rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT });
+  if (staging && stagingImages > 0) {
+    addons.push({
+      label: stagingImages === 1 ? 'Virtual staging (1 image)' : `Virtual staging (${stagingImages} images)`,
+      amount: stagingImages * STAGING_PER_IMAGE,
+    });
+  }
   const addonsTotal = addons.reduce((s, a) => s + a.amount, 0);
 
   // 7) subtotal + HST
@@ -214,7 +244,10 @@ Deno.serve(async (req: Request) => {
       sqft, sqft_source, sqft_estimated,
       footprint_band: finalBand,
       footprint_label: BAND_LABEL[finalBand],
-      photo_rate, drone_rate, drone_included: drone, floor_plan_included,
+      photo_rate, drone_rate, drone_included, floor_plan_included,
+      floor_plan_only: floorPlanOnly,
+      floor_plan_only_rate: floorPlanOnly ? FLOOR_PLAN_ONLY_RATE : 0,
+      staging_addon: staging, staging_images: stagingImages, staging_per_image: STAGING_PER_IMAGE,
       base_rate: base,
       travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel,
       addons, addons_total: addonsTotal,

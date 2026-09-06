@@ -19,7 +19,7 @@ export const SOFTWARE_PLANS = [
     price: '$49 / mo',
     yearly: '$490 / yr · 2 months free',
     over: 'Individual',
-    points: ['Everything in Clay', 'CRM', 'E-sign'],
+    points: ['Everything in Clay', 'CRM', 'Checklist e-sign + shareable links (on-document PDF placement not available yet)'],
   },
   {
     id: 'marble',
@@ -61,4 +61,4 @@ export const OFFICE_PLANS = [
 ] as const
 
 export const OFFICE_INCLUDES =
-  'Full OS on every seat — CRM, transactions, e-sign, forms, MLS — plus trust accounting. Agents do not pay individually.'
+  'Full OS on every seat — CRM, transactions, checklist e-sign + shareable links, forms, MLS — plus trust accounting. On-document PDF placement is not available yet. Agents do not pay individually.'

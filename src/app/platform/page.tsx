@@ -21,7 +21,7 @@ const surfaces: Surface[] = [
 const roles = [
   { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'The whole shop. Full OS plus trust accounting, billed per seat yearly.' },
   { href: '/agents#team', over: 'OS', title: 'Team', body: 'Same OS, team-sized. Shared pipeline for the people you run.' },
-  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Listing file plus Companion. Clay free; paid plans add CRM, e-sign, forms, and AI.' },
+  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Listing file plus Companion. Clay free; paid plans add CRM, checklist e-sign + shareable links, forms, and AI (on-document PDF placement not available yet).' },
   { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Independent contractor. Auto-routed jobs, fixed dollar rate card, apply here.' },
 ]
 

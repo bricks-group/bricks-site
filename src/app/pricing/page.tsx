@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
-import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, FLOOR_PLAN_ONLY_RATE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { SOFTWARE_PLANS, OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import {
   AREA_SERVED_SCHEMA,
@@ -36,6 +36,7 @@ const rows = [
   { name: 'HDR photography', inc: 'interiors + exteriors', vals: bandCells(PHOTO_RATE) },
   { name: 'Licensed drone', inc: 'Advanced RPAS-certified aerial', vals: bandCells(DRONE_RATE) },
   { name: 'Floor plan', inc: 'branded 2D — every standard shoot', flat: 'Included on every standard shoot' },
+  { name: 'Floor plan only', inc: 'standalone 2D capture — no HDR / no drone', flat: `$${FLOOR_PLAN_ONLY_RATE} flat` },
   { name: 'Cinematic reel', inc: '30–45s', vals: bandCells(REEL_RATE) },
   { name: TOUR_NAME, inc: TOUR_SHORT, vals: bandCells(TOUR_RATE) },
   { name: VISIT_NAME, inc: `${VISIT_SHORT} — ${FOOTPRINT_BANDS}`, flat: `${VISIT_PRICE_LABEL} — always an add-on, never packaged` },
@@ -82,7 +83,7 @@ export default function PricingPage() {
             mainEntity: [
               { '@type': 'Question', name: 'How is footprint defined?', acceptedAnswer: { '@type': 'Answer', text: 'Small / Mid / Large / XL map to the property\'s finished area and complexity. Not sure which tier? Pick "advise me" in booking and we\'ll size it from the address.' } },
               { '@type': 'Question', name: `Virtual tour vs virtual visit?`, acceptedAnswer: { '@type': 'Answer', text: `${TOUR_NAME} (${TOUR_SHORT}) is a ${TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. ${VISIT_NAME} (${VISIT_SHORT}) is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()}, never packaged.` } },
-              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: 'Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at $35 per image staged; tell us which rooms and we confirm the count before delivery.' } },
+              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: 'Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at $35 per image staged. On /book, set the image count — it is included in the quote and Stripe total.' } },
               { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered and quote travel if needed.` } },
               { '@type': 'Question', name: 'Can I add AI without upgrading?', acceptedAnswer: { '@type': 'Answer', text: ADDONS_BLURB } },
             ],
@@ -94,7 +95,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and media.</h1>
-          <p className="sub">Clay is free. Paid plans add CRM, e-sign, forms, and AI. Brokerage seats yearly. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
+          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
         </div>
       </section>
 
@@ -190,7 +191,7 @@ export default function PricingPage() {
           <div className="faq">
             <div className="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property&apos;s finished area and complexity. Not sure which tier? Pick &quot;advise me&quot; in booking and we&apos;ll size it from the address.</p></div>
             <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} ({TOUR_SHORT}) is a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} ({VISIT_SHORT}) is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()}, never packaged.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at <b>$35 / image</b>; tell us which rooms and we confirm the count before delivery.</p></div>
+            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Priced at <b>$35 / image</b>. On /book, toggle virtual staging, set the image count, and it is included in the quote and Stripe total.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>
             <div className="qa"><h4>Is software live?</h4><p>Yes. Stripe tiers are live on OS. Media is live to book. Companion and GO are live on the web.</p></div>
             <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>

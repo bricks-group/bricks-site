@@ -26,16 +26,18 @@ function packageIdOf(name: string, explicit?: string): string {
   const aliases: Record<string, string> = {
     photosonly: 'photos_only', photo_only: 'photos_only', photos: 'photos_only',
     fullsuite: 'suite', full: 'suite',
+    floorplanonly: 'floor_plan_only', floor_planonly: 'floor_plan_only', floorplanonl: 'floor_plan_only',
   };
   if (raw) {
     if (aliases[raw]) return aliases[raw];
-    if (['photos_only', 'essentials', 'story', 'showcase', 'suite', 'estate', 'luxury', 'premium', 'standard'].includes(raw)) {
+    if (['photos_only', 'essentials', 'story', 'showcase', 'suite', 'estate', 'luxury', 'premium', 'standard', 'floor_plan_only'].includes(raw)) {
       return raw;
     }
     if (raw) return raw;
   }
   const n = (name || '').toLowerCase();
   if (n.includes('photos only') || n.includes('photo only')) return 'photos_only';
+  if (n.includes('floor plan only') || n.includes('floorplan only')) return 'floor_plan_only';
   if (n.includes('full suite')) return 'suite';
   for (const token of ['showcase', 'essentials', 'story', 'suite', 'estate', 'luxury', 'premium', 'standard']) {
     if (n.includes(token)) return token;
@@ -57,6 +59,7 @@ function tourPurchased(m: Record<string, string>, pkg: string): boolean {
   return ['showcase', 'suite', 'full', 'premium', 'luxury', 'estate'].includes(pkg);
 }
 function floorplanPurchased(m: Record<string, string>, pkg: string): boolean {
+  if (m.floor_plan_only === 'true' || pkg === 'floor_plan_only' || pkg === 'floorplanonly') return true;
   if (m.floor_plan_included === 'true') return true;
   if (m.floor_plan_included === 'false') return false;
   const photosOnly = pkg === 'photos_only' || pkg === 'photosonly' || pkg === 'photos';
@@ -328,13 +331,17 @@ async function ensureDispatchJob(opts: {
   const floorplan = floorplanPurchased(opts.m, pkg);
   // Match confirm-paid / book_checkout: stamp tour + floorplan so GO gates and
   // skill matching stay honest even when package metadata was thin.
+  const stagingOn = opts.m.staging_addon === 'true';
+  const stagingImages = Math.max(0, parseInt(String(opts.m.staging_images || '0'), 10) || 0);
+  const floorPlanOnly = pkg === 'floor_plan_only' || opts.m.floor_plan_only === 'true';
   const addOns = [
-    drone ? { key: 'drone', included: true } : null,
+    drone && !floorPlanOnly ? { key: 'drone', included: true } : null,
     opts.m.reel_addon === 'true' ? { key: 'reel', included: true } : null,
     tour ? { key: 'tour', included: true } : null,
     opts.m.twilight_addon === 'true' ? { key: 'twilight', included: true } : null,
     rush ? { key: 'rush', included: true } : null,
-    floorplan ? { key: 'floorplan_2d', included: true } : null,
+    floorplan ? { key: floorPlanOnly ? 'floor_plan_only' : 'floorplan_2d', included: true } : null,
+    stagingOn ? { key: 'staging', included: true, images: stagingImages || 1, amount: (stagingImages || 1) * 35 } : null,
   ].filter(Boolean);
   const minTier = minTierOf(pkg);
   const cityGuess = (opts.m.property_address || '').split(',').slice(-2, -1)[0]?.trim() || '';
@@ -353,7 +360,7 @@ async function ensureDispatchJob(opts: {
     lng: opts.quote.lon,
     time_window_start: twStart,
     time_window_end: twEnd,
-    job_type: drone ? 'drone' : 'photo',
+    job_type: floorPlanOnly ? 'floor_plan_only' : (drone ? 'drone' : 'photo'),
     status: 'unassigned',
     priority: rush ? 'rush' : 'normal',
     property_details: `${opts.m.property_type || 'listing'} · paid www.brxs.ca/book · lead ${opts.leadId} · stripe ${opts.sessionId} · tz ${opts.timezone}`,

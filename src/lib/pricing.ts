@@ -22,6 +22,8 @@ export const TWILIGHT_RATE = [150, 170, 185, 200] as const;
 export const TOUR_RATE = [149, 199, 249, 299] as const;
 export const RUSH_FLAT = 75;
 export const STAGING_PER_IMAGE = 35;
+/** Standalone floor-plan capture (no HDR / no drone). Flat CAD pre-tax. */
+export const FLOOR_PLAN_ONLY_RATE = 99;
 
 /**
  * Virtual visit (Gaussian splat / SuperSplat) has no published dollar table.
@@ -55,3 +57,4 @@ export const REEL_RANGE = bandRange(REEL_RATE); // "$149–249"
 export const TOUR_RANGE = bandRange(TOUR_RATE); // "$149–299"
 export const PHOTO_RANGE = bandRange(PHOTO_RATE); // "$149–299"
 export const DRONE_RANGE = bandRange(DRONE_RATE); // "$99–159"
+export const FLOOR_PLAN_ONLY_LABEL = `$${FLOOR_PLAN_ONLY_RATE}` // "$99"
