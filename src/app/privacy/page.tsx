@@ -36,7 +36,7 @@ export default function PrivacyPage() {
 
           <h3>1. What we collect</h3>
           <ul>
-            <li>Booking: name, brokerage, email, phone, property address, property type/size, package and add-on choices, preferred date and morning/afternoon/evening window, access notes.</li>
+            <li>Booking: name, brokerage, email, phone, property address, property type/size, package and add-on choices, booked date and clock time, access notes.</li>
             <li>Payment: processed by Stripe. We do not store full card numbers. We may store Stripe customer id, last four, brand, and payment status.</li>
             <li>Launch / marketing email: email, if you opted in.</li>
             <li>Photographer applicants: name, phone, email, city, travel radius, specialties, equipment, portfolio URLs, resume file, HST number if provided, and IC-acceptance record.</li>

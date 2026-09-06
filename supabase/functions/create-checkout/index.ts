@@ -3,7 +3,8 @@
 // The wizard posts the finalized quote + agent/booking details; we create a
 // one-time payment Session for the exact CAD amount (incl HST) and return the
 // Checkout URL. A webhook (stripe-webhook fn) confirms payment, writes the
-// paid lead. Preferred date + window go to Stripe metadata (no Cal.com).
+// paid lead. Preferred date + exact selected_slot_* ISO go to Stripe metadata
+// (America/Toronto; no Cal.com). preferred_window is optional back-compat only.
 //
 // The client-submitted `quote` is NEVER trusted for the charged amount --
 // it's just what the wizard displayed. We re-run the same pricing engine
@@ -26,7 +27,8 @@
 //
 // Invoke:  POST /functions/v1/create-checkout
 //          body: { agent_name, email, property_address, property_type,
-//                  package_interest, sqft, preferred_date, preferred_window,
+//                  package_interest, sqft, preferred_date, selected_slot_start,
+//                  selected_slot_end, preferred_window (optional),
 //                  drone_addon, reel_addon, tour_addon, twilight_addon, rush_addon,
 //                  phone, brokerage, notes }
 // drone_addon defaults true if omitted (matches the `quote` function) --
@@ -98,49 +100,19 @@ Deno.serve(async (req: Request) => {
 
   const preferredDate = (body.preferred_date || '').toString().trim();
   const preferredWindow = (body.preferred_window || '').toString().trim().toLowerCase();
-  const WINDOW_BOUNDS: Record<string, { start: string; end: string }> = {
-    morning: { start: '09:00', end: '12:00' },
-    afternoon: { start: '12:00', end: '16:00' },
-    evening: { start: '16:00', end: '19:00' },
-  };
-  const bounds = WINDOW_BOUNDS[preferredWindow];
-  // Accept preferred_date + preferred_window, or legacy selected_slot_* ISO.
-  let slotStart = (body.selected_slot_start || '').toString().trim();
-  let slotEnd = (body.selected_slot_end || '').toString().trim();
-  if ((!slotStart || !slotEnd) && preferredDate && bounds) {
-    // Synthetic Toronto ISO for back-compat metadata (never call Cal.com).
-    const toIso = (hm: string) => {
-      const [hh, mm] = hm.split(':').map(Number);
-      const y = Number(preferredDate.slice(0, 4));
-      const mo = Number(preferredDate.slice(5, 7)) - 1;
-      const d = Number(preferredDate.slice(8, 10));
-      const asUtc = Date.UTC(y, mo, d, hh, mm, 0);
-      let guess = asUtc;
-      for (let i = 0; i < 3; i++) {
-        const loc = new Date(guess);
-        const fp = new Intl.DateTimeFormat('en-CA', {
-          timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit',
-          hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
-        }).formatToParts(loc);
-        const g = (typ: string) => Number(fp.find((part) => part.type === typ)?.value || '0');
-        const gotH = g('hour') === 24 ? 0 : g('hour');
-        const want = Date.UTC(y, mo, d, hh, mm, 0);
-        const got = Date.UTC(g('year'), g('month') - 1, g('day'), gotH, g('minute'), g('second'));
-        guess += want - got;
-      }
-      return new Date(guess).toISOString();
-    };
-    slotStart = toIso(bounds.start);
-    slotEnd = toIso(bounds.end);
-  }
+  const slotStart = (body.selected_slot_start || '').toString().trim();
+  const slotEnd = (body.selected_slot_end || '').toString().trim();
   if (!preferredDate || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(preferredDate)) {
     return bad('preferred_date (YYYY-MM-DD) is required');
   }
-  if (!bounds && !(slotStart && slotEnd)) {
-    return bad('preferred_window (morning|afternoon|evening) is required');
+  const startMs = Date.parse(slotStart);
+  const endMs = Date.parse(slotEnd);
+  if (!slotStart || !slotEnd || Number.isNaN(startMs) || Number.isNaN(endMs) || endMs <= startMs) {
+    return bad('selected_slot_start and selected_slot_end (ISO) are required');
   }
-  if (!['morning', 'afternoon', 'evening'].includes(preferredWindow) && !(slotStart && slotEnd)) {
-    return bad('preferred_window must be morning, afternoon, or evening');
+  const slotDay = new Date(slotStart).toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+  if (slotDay !== preferredDate) {
+    return bad('selected_slot_start must fall on preferred_date in America/Toronto');
   }
 
   // Re-derive the trusted price server-side -- ignore body.quote entirely for
@@ -186,7 +158,7 @@ Deno.serve(async (req: Request) => {
     package_interest: (body.package_interest || '').toString(),
     floor_plan_included: String(!!floorPlan),
     preferred_date: preferredDate,
-    preferred_window: preferredWindow || (bounds ? preferredWindow : ''),
+    preferred_window: ['morning', 'afternoon', 'evening'].includes(preferredWindow) ? preferredWindow : '',
     selected_slot_start: slotStart,
     selected_slot_end: slotEnd,
     // Explicit false for Photos only — never coerce omitted/string into drone.

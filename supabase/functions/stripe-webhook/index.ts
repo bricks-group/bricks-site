@@ -2,7 +2,7 @@
 // Stripe calls this on checkout.session.completed.
 // Path: payment success → media_booking_leads (status=paid, OS /bookings queue)
 //     → jobs row auto-assigned (location/package/tier/skills/RPAS) or left unassigned
-//     → owner SMS/email (best-effort). Cal.com is NOT called (native preferred_window).
+//     → owner SMS/email (best-effort). Cal.com is NOT called (native selected_slot_*).
 // Does NOT auto-charge photographers. Does NOT create Connect transfers.
 //
 // HMAC: Stripe signs with v1=… (not v=). The previous verifier read parts.v and
@@ -181,12 +181,15 @@ const PREFERRED_WINDOWS: Record<string, [string, string]> = {
 };
 
 function windowBounds(preferredWindow: string | null | undefined, slotStart: string | null | undefined, slotEnd: string | null | undefined): [string, string] {
+  // Exact booked clock is the source of truth when present.
+  if (slotStart) {
+    const start = torontoClock(slotStart);
+    const end = slotEnd ? torontoClock(slotEnd) : '';
+    if (end) return [start, end];
+  }
   const key = String(preferredWindow || '').trim().toLowerCase();
   if (key in PREFERRED_WINDOWS) return PREFERRED_WINDOWS[key];
-  const start = torontoClock(slotStart || null);
-  const end = slotEnd ? torontoClock(slotEnd) : '';
-  if (!end && key) return PREFERRED_WINDOWS.morning;
-  return [start, end];
+  return [torontoClock(slotStart || null), slotEnd ? torontoClock(slotEnd) : '11:00'];
 }
 
 // Stripe header is t=timestamp,v1=hex[,v1=hex…][,v0=…]. Not v=.
@@ -550,7 +553,7 @@ Deno.serve(async (req: Request) => {
   });
 
   if (!duplicate) {
-    // Cal.com booking removed — preferred_window is native; Dispatch/OS own the schedule.
+    // Cal.com booking removed — selected_slot_* is native; Dispatch/OS own the schedule.
     try {
       await notifyOwner({
         id: leadId,
