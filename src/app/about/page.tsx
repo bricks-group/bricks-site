@@ -40,7 +40,7 @@ export default function AboutPage() {
             legalName: 'Bricks Group',
             description: 'The operating system for Canadian real estate. Media is the beachhead — HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca.',
             url: 'https://www.brxs.ca/',
-            email: 'booking@brxs.ca',
+            email: 'help@brxs.ca',
             telephone: '+1-343-453-4578',
             sameAs: ['https://www.linkedin.com/company/bricksbybricks', 'https://share.google/7ttYfc6W7JRwlqA9U'],
             knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate operating system'],

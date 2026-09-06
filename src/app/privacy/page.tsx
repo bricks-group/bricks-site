@@ -3,11 +3,11 @@ import { legalDocCss } from '@/components/legalDocCss'
 
 export const metadata: Metadata = {
   title: 'Bricks — Privacy Policy',
-  description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca, under PIPEDA. Privacy contact: booking@brxs.ca.',
+  description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca, under PIPEDA. Privacy contact: help@brxs.ca.',
   alternates: { canonical: '/privacy' },
   openGraph: {
     title: 'Bricks — Privacy Policy',
-    description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca. Privacy contact: booking@brxs.ca.',
+    description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca. Privacy contact: help@brxs.ca.',
   },
   twitter: {
     card: 'summary',
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
       <div className="legal-body">
         <section className="block">
           <h2>BRICKS PRIVACY POLICY</h2>
-          <p>Effective: August 27, 2026<br />Organization: Bricks Group<br />Privacy contact: <a href="mailto:booking@brxs.ca">booking@brxs.ca</a></p>
+          <p>Effective: August 27, 2026<br />Organization: Bricks Group<br />Privacy contact: <a href="mailto:help@brxs.ca">help@brxs.ca</a></p>
           <p>This policy explains how Bricks Group collects, uses, and discloses personal information for brxs.ca and related booking and photographer-apply flows, under PIPEDA and applicable Ontario privacy rules.</p>
 
           <h3>1. What we collect</h3>
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
           <p>Booking and payment records: generally 7 years. Delivered media: until delivered plus a limited operational window. Photographer applications: while we evaluate or engage you, then as required for records. Marketing consent records: as required by CASL. Deletion on request unless we must keep a record.</p>
 
           <h3>6. Your rights</h3>
-          <p>Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> to access, correct, or withdraw consent (subject to legal and booking obligations). Aim to respond within 30 days. Complaint: Office of the Privacy Commissioner of Canada (<a href="https://www.priv.gc.ca" rel="noopener noreferrer">priv.gc.ca</a>).</p>
+          <p>Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> to access, correct, or withdraw consent (subject to legal and booking obligations). Aim to respond within 30 days. Complaint: Office of the Privacy Commissioner of Canada (<a href="https://www.priv.gc.ca" rel="noopener noreferrer">priv.gc.ca</a>).</p>
 
           <h3>7. CASL</h3>
           <p>Commercial electronic messages only with CASL consent. Unsubscribe on marketing. Transactional booking/application messages as needed to perform the service.</p>
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
       <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Contact</h2>
-          <p><a href="mailto:booking@brxs.ca">booking@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
+          <p><a href="mailto:help@brxs.ca">help@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
           <p>Bricks Group · Ontario, Canada</p>
         </section>
       </div>

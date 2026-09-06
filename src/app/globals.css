@@ -218,14 +218,15 @@ footer{border-top:1px solid var(--hair);margin-top:64px;}
 .foot-blurb{font-size:13.5px;color:var(--inkMute);margin-top:12px;max-width:280px;line-height:1.5;}
 .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.14em;
   text-transform:uppercase;color:var(--inkMute);margin-bottom:12px;font-weight:500;}
-.foot-col a{display:block;color:var(--inkSoft);text-decoration:none;font-size:13.5px;padding:4px 0;}
-.foot-col a:hover{color:var(--brickDeep);}
+.foot-links{display:flex;flex-direction:column;gap:2px;}
+.foot-links a{display:block;color:var(--inkSoft);text-decoration:none;font-size:13.5px;padding:4px 0;}
+.foot-links a:hover{color:var(--brickDeep);}
 .foot-meta{max-width:980px;margin:0 auto;padding:16px 36px 28px;border-top:1px solid var(--hair);
   display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;
   font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);}
 .foot-meta a{color:var(--inkSoft);text-decoration:none;}
 .foot-meta a:hover{color:var(--brickDeep);}
-.foot-cover{flex:1 1 220px;}
+.foot-meta .theme-switch{margin-left:auto;}
 .theme-switch{display:inline-flex;border:1px solid var(--hairStrong);border-radius:999px;padding:3px;gap:2px;margin-left:auto;}
 .theme-switch button{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:transparent;border:none;color:var(--inkMute);padding:6px 10px;border-radius:999px;cursor:pointer;}
 .theme-switch button:hover{color:var(--ink);}
@@ -245,10 +246,16 @@ html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
   .hero{padding:56px 20px 40px;}
   .drawer{padding:14px 20px 40px;}
   .drawer-links a{font-size:26px;}
-  .foot-inner{grid-template-columns:1fr 1fr;padding:32px 20px 20px;gap:24px 18px;}
-  .foot-brand{grid-column:1 / -1;}
-  .foot-meta{padding:16px 20px 24px;}
+  .foot-inner{grid-template-columns:1fr;padding:28px 20px 16px;gap:22px;}
+  .foot-brand{grid-column:1;}
+  .foot-col{display:grid;grid-template-columns:88px 1fr;gap:8px 12px;align-items:start;}
+  .foot-col h4{margin:0;padding-top:6px;}
+  .foot-links{flex-direction:row;flex-wrap:wrap;gap:6px 14px;}
+  .foot-links a{padding:2px 0;}
+  .foot-meta{padding:14px 20px 22px;}
+  .foot-meta .theme-switch{margin-left:0;width:100%;justify-content:flex-start;}
 }
+
 @media (prefers-reduced-motion: reduce){
   html.reveal-ready .rvl{opacity:1;transform:none;transition:none;}
   .brand:hover .brand-mark svg rect{animation:none;}

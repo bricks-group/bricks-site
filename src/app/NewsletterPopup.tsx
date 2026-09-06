@@ -45,7 +45,7 @@ export default function NewsletterPopup() {
     })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok !== false })))
       .then((res) => {
-        if (!res.ok) { setMsg('Could not subscribe — try booking@brxs.ca'); return }
+        if (!res.ok) { setMsg('Could not subscribe — try help@brxs.ca'); return }
         evt('newsletter_subscribed', { source: 'popup' })
         setMsg('✓ You are on the list.')
         setEmail('')

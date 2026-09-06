@@ -48,7 +48,7 @@ export const BROKERAGE_LOGOS = [
   { src: '/media/logos/engelvoelkers.png', alt: 'Engel & Völkers' },
 ] as const
 
-/** Cities Bricks currently covers — operational, not brand identity. */
+/** Legacy city list kept for service-areas detail only — not brand geography. */
 export const COVERAGE_CITIES = [
   'Toronto',
   'Mississauga',
@@ -58,12 +58,11 @@ export const COVERAGE_CITIES = [
   'Niagara',
 ] as const
 
-export const COVERAGE_LINE =
-  'Currently covering Toronto, Mississauga, Hamilton, Durham, York, and Niagara.'
+/** Public coverage beat — Canada-wide launch; no city laundry list. */
+export const COVERAGE_LINE = 'Serving Canada.'
 
 export const AREA_SERVED_SCHEMA = [
   { '@type': 'Country' as const, name: 'Canada' },
-  ...COVERAGE_CITIES.map((name) => ({ '@type': 'City' as const, name })),
 ]
 
 export const KNOWS_ABOUT = [

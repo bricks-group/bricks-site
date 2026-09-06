@@ -64,7 +64,7 @@ const faqs = [
   {
     id: 'help',
     q: 'How do I get help?',
-    a: 'Use the Contact form, or email booking@brxs.ca. For a listing shoot, Book a shoot is fastest.',
+    a: 'Use the Contact form, or email help@brxs.ca. For a listing shoot, Book a shoot or booking@brxs.ca is fastest.',
   },
 ] as const
 
@@ -79,7 +79,7 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
     case 'photographers':
       return <>Photographers are independent contractors on a fixed dollar rate card, not a percent of the client fee. Apply at <Link href="/photographers">Photographers</Link>; jobs route in GO.</>
     case 'help':
-      return <>Use the <Link href="/contact">Contact</Link> form, or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>. For a listing shoot, <Link href="/book">Book a shoot</Link> is fastest.</>
+      return <>Use the <Link href="/contact">Contact</Link> form, or email <a href="mailto:help@brxs.ca">help@brxs.ca</a>. For a listing shoot, <Link href="/book">Book a shoot</Link> or <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</>
     default:
       return <>{a}</>
   }
@@ -117,7 +117,7 @@ export default function Home() {
             description: 'Bricks is the operating system for Canadian real estate, from listing photo to close. Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
-            email: 'booking@brxs.ca',
+            email: 'help@brxs.ca',
             priceRange: `$$ (à la carte from $${PHOTO_RATE[0]}; HDR + drone + floor plan from ~$${CORE_FROM})`,
             areaServed: AREA_SERVED_SCHEMA,
             knowsAbout: KNOWS_ABOUT,

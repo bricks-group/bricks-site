@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Service Areas | Bricks',
-    description: 'Listing media for Canadian real estate — current city coverage.',
+    description: 'Listing media for Canadian real estate — Canada-wide.',
   },
 }
 
@@ -45,7 +45,7 @@ export default function ServiceAreasPage() {
             description: 'Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
-            email: 'booking@brxs.ca',
+            email: 'help@brxs.ca',
             priceRange: '$$ (à la carte from $149)',
             areaServed: AREA_SERVED_SCHEMA,
             knowsAbout: KNOWS_ABOUT,
@@ -56,16 +56,16 @@ export default function ServiceAreasPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Service areas · Canada</span>
-          <h1>Currently covering these cities.</h1>
-          <p className="sub">Bricks is built for Canadian real estate. {COVERAGE_LINE} First 25 km from Mississauga is free.</p>
+          <h1>Canada-wide listing media.</h1>
+          <p className="sub">Bricks is built for Canadian real estate. {COVERAGE_LINE} Travel is quoted before you confirm — first 25 km from Mississauga is free on GTA shoots.</p>
         </div>
       </section>
 
       <section className="block">
         <div className="wrap">
           <div className="sec-head">
-            <div><span className="over">Where we shoot today</span><h2>Current coverage</h2></div>
-            <p>Each area gets the same core set — HDR, licensed drone, floor plan, 24–48h delivery.</p>
+            <div><span className="over">Where we shoot</span><h2>Markets we know well</h2></div>
+            <p>Same core set everywhere — HDR, licensed drone, floor plan, 24–48h delivery. Ask if your city isn&apos;t listed; we confirm coverage before you book.</p>
           </div>
           <div className="areas">
             {areas.map((a) => (

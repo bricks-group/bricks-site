@@ -90,7 +90,7 @@ export default function PhotographersPage() {
             <div className="a rvl"><div className="nm">Tier B — Core</div><p>Assigned for consistent quality and reliability on the network.</p></div>
             <div className="a rvl"><div className="nm">Tier A — Elite</div><p>Highest assigned tier for quality, volume, and compliance.</p></div>
           </div>
-          <p className="note">{COVERAGE_LINE} Payout is the published rate-card amount. Virtual visit is a client add-on, quoted by sqft — never packaged.</p>
+          <p className="note">Canada-wide recruiting. Payout is the published rate-card amount. Virtual visit is a client add-on, quoted by sqft — never packaged.</p>
         </section>
 
         <section className="block rvl">

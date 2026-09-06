@@ -4,7 +4,7 @@ import { AREA_SERVED_SCHEMA, COVERAGE_LINE } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'Contact Bricks | Canadian real estate media',
-  description: 'Contact Bricks for Canadian listing media — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Email booking@brxs.ca or call 343-453-4578.',
+  description: 'Contact Bricks for Canadian listing media — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Email help@brxs.ca or call 343-453-4578. For listing shoots use booking@brxs.ca.',
   alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Contact Bricks | Canadian real estate media',
@@ -32,7 +32,7 @@ export default function ContactPage() {
               '@type': 'Organization',
               name: 'Bricks',
               legalName: 'Bricks Group',
-              email: 'booking@brxs.ca',
+              email: 'help@brxs.ca',
               telephone: '+1-343-453-4578',
               areaServed: AREA_SERVED_SCHEMA,
             },
@@ -44,7 +44,7 @@ export default function ContactPage() {
         <div className="wrap">
           <span className="badge">Contact</span>
           <h1>Let&apos;s shoot your next listing.</h1>
-          <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours. {COVERAGE_LINE} Reach out and we&apos;ll confirm the slot and send pricing by footprint.</p>
+          <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours. {COVERAGE_LINE} Reach out and we&apos;ll confirm coverage and send pricing by footprint.</p>
           <p className="sub product-hint">Need the OS or Companion, not a shoot? Say so in the note.</p>
         </div>
       </section>
@@ -52,9 +52,10 @@ export default function ContactPage() {
       <section className="block">
         <div className="wrap">
           <div className="contact-grid">
-            <div className="c"><div className="l">Email</div><div className="v"><a href="mailto:booking@brxs.ca">booking@brxs.ca</a></div></div>
+            <div className="c"><div className="l">General</div><div className="v"><a href="mailto:help@brxs.ca">help@brxs.ca</a></div></div>
+            <div className="c"><div className="l">Bookings</div><div className="v"><a href="mailto:booking@brxs.ca">booking@brxs.ca</a></div></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+13434534578">343-453-4578</a></div></div>
-            <div className="c"><div className="l">Service area</div><div className="v">Canada — current coverage listed on booking</div></div>
+            <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>
             <div className="c"><div className="l">Turnaround</div><div className="v">Edited &amp; delivered in 24–48h</div></div>
           </div>
 
