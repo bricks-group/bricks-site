@@ -27,7 +27,7 @@ export default function BrokeragePage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Brokerage OS preview">
+      <section className="prod-row rvl" aria-label="OS preview">
         <div className="prod-copy">
           <span className="over">What you see</span>
           <h2>One OS. Brokerage-sized.</h2>

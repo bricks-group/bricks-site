@@ -769,7 +769,7 @@ function JobDetailContent({ th, dark }) {
               {[
                 ['M. Ortega', 'Agent', 'EA'],
                 ['J. Reyes',  'Vendor', 'JR'],
-                ['Ashfield', 'Office', 'AS'],
+                ['Ashfield', 'Brokerage', 'AS'],
               ].map(([n,r,in2]) => (
                 <div key={n} style={{ display:'flex', alignItems:'center', gap:12 }}>
                   <div style={{ width:32, height:32, borderRadius:2, background:T.brickSoft, color:T.brickDeep, display:'flex', alignItems:'center', justifyContent:'center', fontSize:11, fontWeight:600 }}>{in2}</div>
@@ -931,13 +931,13 @@ function BillingContent({ th, dark }) {
 
 function SettingsContent({ th, dark }) {
   const sections = [
-    ['Office', [['Name','Ashfield'],['Domain','harbor.co'],['Time zone','America / Toronto']]],
+    ['Brokerage', [['Name','Ashfield'],['Domain','harbor.co'],['Time zone','America / Toronto']]],
     ['Defaults',  [['Default package','Standard · $379'],['Turnaround SLA','24 hours'],['Auto-assign vendor','On · nearest']]],
     ['Notifications', [['New booking','Email + push'],['Delivery ready','Email'],['Weekly digest','Monday 8:00']]],
   ];
   return (
     <>
-      <div><div style={{ fontSize:30, fontWeight:500, letterSpacing:-1 }}>Settings</div><div style={{ fontSize:13, color:th.ink2, marginTop:4 }}>Office · team · preferences</div></div>
+      <div><div style={{ fontSize:30, fontWeight:500, letterSpacing:-1 }}>Settings</div><div style={{ fontSize:13, color:th.ink2, marginTop:4 }}>Brokerage · team · preferences</div></div>
       {sections.map(([title, rows]) => (
         <div key={title} style={{ border:`1px solid ${th.hair}`, borderRadius:2 }}>
           <div style={{ padding:'18px 24px', borderBottom:`1px solid ${th.hair}` }}>
@@ -1572,7 +1572,7 @@ function BookRegister({ dark=false }) {
         <Over color={th.ink4}>Create account</Over>
         <div style={{ fontSize:28, fontWeight:500, letterSpacing:-0.8, marginTop:10 }}>A few details.</div>
         <div style={{ marginTop:24, display:'flex', flexDirection:'column', gap:14 }}>
-          {[['Full name','Marisol Ortega'],['Work email','mortega@harbor.co'],['Office','Ashfield'],['License #','RE·482901']].map(([l,v])=>(
+          {[['Full name','Marisol Ortega'],['Work email','mortega@harbor.co'],['Brokerage','Ashfield'],['License #','RE·482901']].map(([l,v])=>(
             <div key={l}>
               <Over color={th.ink3}>{l}</Over>
               <div style={{ marginTop:8, padding:'14px 14px', border:`1px solid ${th.hair}`, borderRadius:2, fontSize:14 }}>{v}</div>
@@ -1839,7 +1839,7 @@ function DispOnboarding({ dark=true, slide=0 }) {
   const slides = [
     { eye:'FOR SHOOTERS', head:'Your day, queued up.', body:'Every job on the books — addresses, gate codes, packages, contact.', img:'VENDOR LOADING VAN' },
     { eye:'NAVIGATE',     head:'Drive time baked in.', body:'Bricks only books jobs you can actually make. Tap for directions.',  img:'DASHBOARD MAP' },
-    { eye:'UPLOAD',        head:'Shoot. Upload. Done.', body:'Drag the SD card in. Office gets notified when editing starts.',  img:'SD CARD + LAPTOP' },
+    { eye:'UPLOAD',        head:'Shoot. Upload. Done.', body:'Drag the SD card in. Brokerage gets notified when editing starts.',  img:'SD CARD + LAPTOP' },
   ];
   const s = slides[slide];
   return (

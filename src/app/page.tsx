@@ -117,7 +117,7 @@ export default function Home() {
         </section>
       </div>
 
-      <section className="prod-row rvl" aria-label="Brokerage OS">
+      <section className="prod-row rvl" aria-label="OS control surface">
         <div className="prod-copy">
           <span className="over">Control surface</span>
           <h2>Roster, pipeline, listing file.</h2>
