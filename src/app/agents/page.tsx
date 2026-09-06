@@ -52,7 +52,7 @@ export default function AgentsPage() {
             <div className="c rvl">
               <span className="ic">Agent</span>
               <h4>Individual</h4>
-              <p>Clay is free — booking, the listing file, transactions, and BYO MLS. Keystone, Marble, and Diamond add CRM, e-sign, forms, and the AI suite. Monthly, or yearly with two months free. Media is always a separate booking.</p>
+              <p>Clay is free — booking, the listing file, transactions, and BYO MLS. Keystone, Marble, and Diamond add CRM, checklist e-sign + shareable links, forms, and the AI suite. On-document PDF placement is not available yet. Monthly, or yearly with two months free. Media is always a separate booking.</p>
             </div>
             <div className="c rvl">
               <span className="ic">Team</span>

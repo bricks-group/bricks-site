@@ -29,7 +29,7 @@
 //          body: { agent_name, email, property_address, property_type,
 //                  package_interest, sqft, preferred_date, selected_slot_start,
 //                  selected_slot_end, timezone, province, preferred_window (optional),
-//                  drone_addon, reel_addon, tour_addon, twilight_addon, rush_addon,
+//                  drone_addon, reel_addon, tour_addon, twilight_addon, rush_addon, staging_addon, staging_images, floor_plan_only,
 //                  phone, brokerage, notes }
 // drone_addon defaults true if omitted (matches the `quote` function) --
 // forward whatever the client actually selected, never assume, or a
@@ -138,6 +138,11 @@ Deno.serve(async (req: Request) => {
         tour_addon: body.tour_addon === true || body.tour_addon === 'true',
         twilight_addon: body.twilight_addon === true || body.twilight_addon === 'true',
         rush_addon: body.rush_addon === true || body.rush_addon === 'true',
+        staging_addon: body.staging_addon === true || body.staging_addon === 'true',
+        staging_images: body.staging_images,
+        floor_plan_only: body.floor_plan_only === true || body.floor_plan_only === 'true'
+          || String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_') === 'floor_plan_only',
+        package_id: body.package_id,
         sqft: body.sqft || undefined,
       }),
     });
@@ -152,16 +157,25 @@ Deno.serve(async (req: Request) => {
   if (amountCents < 50) return bad('Amount too small');
 
   const droneOn = body.drone_addon === true || body.drone_addon === 'true'
-  const photosOnly = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9]+/g, '_') === 'photos_only'
+  const pkgNorm = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_')
+  const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
+    || pkgNorm === 'floor_plan_only' || pkgNorm === 'floorplan_only'
+  const photosOnly = pkgNorm === 'photos_only'
     || /photos\s*only/i.test(String(body.package_interest || ''))
-  const floorPlan = body.floor_plan_included === true || body.floor_plan_included === 'true'
+  const stagingOn = body.staging_addon === true || body.staging_addon === 'true'
+  let stagingImages = body.staging_images != null ? parseInt(String(body.staging_images), 10) : (stagingOn ? 1 : 0)
+  if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = stagingOn ? 1 : 0
+  if (stagingOn && stagingImages < 1) stagingImages = 1
+  if (!stagingOn) stagingImages = 0
+  const floorPlan = floorPlanOnly
+    || body.floor_plan_included === true || body.floor_plan_included === 'true'
     || (body.floor_plan_included == null && droneOn && !photosOnly)
   const meta: Record<string, string> = {
     agent_name: (body.agent_name || '').toString().slice(0, 200),
     email: (body.email || '').toString().slice(0, 200),
     property_address: (body.property_address || '').toString().slice(0, 300),
     property_type: (body.property_type || '').toString(),
-    package_id: (body.package_id || '').toString().slice(0, 64),
+    package_id: (floorPlanOnly ? 'floor_plan_only' : (body.package_id || '')).toString().slice(0, 64),
     package_interest: (body.package_interest || '').toString(),
     floor_plan_included: String(!!floorPlan),
     preferred_date: preferredDate,
@@ -176,6 +190,9 @@ Deno.serve(async (req: Request) => {
     tour_addon: String(body.tour_addon === true || body.tour_addon === 'true'),
     twilight_addon: String(body.twilight_addon === true || body.twilight_addon === 'true'),
     rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
+    staging_addon: String(stagingOn),
+    staging_images: String(stagingImages),
+    floor_plan_only: String(!!floorPlanOnly),
     phone: (body.phone || '').toString(),
     brokerage: (body.brokerage || '').toString(),
     notes: (body.notes || '').toString().slice(0, 500),
@@ -202,7 +219,7 @@ Deno.serve(async (req: Request) => {
   if (meta.email) form.set('customer_email', meta.email);
   form.append('line_items[0][price_data][currency]', 'cad');
   form.append('line_items[0][price_data][product_data][name]', `Bricks listing media — ${meta.property_address}`);
-  form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || 'HDR photo + drone'} (incl. HST). Travel ${q.travel_fee} CAD, base ${q.base_rate} CAD.`);
+  form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). Travel ${q.travel_fee} CAD, base ${q.base_rate} CAD.`);
   form.append('line_items[0][price_data][unit_amount]', String(amountCents));
   form.append('line_items[0][quantity]', '1');
   form.append('metadata[agent_name]', meta.agent_name);
@@ -219,6 +236,9 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[tour_addon]', meta.tour_addon);
   form.append('metadata[twilight_addon]', meta.twilight_addon);
   form.append('metadata[rush_addon]', meta.rush_addon);
+  form.append('metadata[staging_addon]', meta.staging_addon);
+  form.append('metadata[staging_images]', meta.staging_images);
+  form.append('metadata[floor_plan_only]', meta.floor_plan_only);
   form.append('metadata[preferred_date]', meta.preferred_date);
   form.append('metadata[preferred_window]', meta.preferred_window);
   form.append('metadata[selected_slot_start]', meta.selected_slot_start);
