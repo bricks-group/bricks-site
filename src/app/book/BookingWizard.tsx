@@ -7,9 +7,11 @@ import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, l
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
 import MapCutout from '@/components/MapCutout'
+import { getSupabaseAnonKey, getSupabaseFunctionsBase, supabasePublicConfigured } from '@/lib/supabase-public'
 
-const SUPABASE = 'https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/'
-const ANON = 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
+const SUPABASE = getSupabaseFunctionsBase()
+const ANON = getSupabaseAnonKey()
+const SUPABASE_READY = supabasePublicConfigured()
 const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 type AddrSuggestion = {
@@ -303,6 +305,12 @@ export default function BookingWizard() {
 
   function fetchQuote(manualSqft?: number | null) {
     setQuoteError('')
+    if (!SUPABASE_READY) {
+      setQuote(null)
+      setQuoteLoading(false)
+      setQuoteError('Booking is temporarily unavailable (missing Supabase config). Email booking@brxs.ca.')
+      return
+    }
     setQuoteLoading(true)
     const payload: Record<string, unknown> = {
       address: selectedAddr || addr.trim(),
@@ -472,6 +480,12 @@ export default function BookingWizard() {
       rush_addon: rush,
       // visit is notes-only — never tour_addon / never phone shutter
       notes: combinedNotes || null,
+    }
+    if (!SUPABASE_READY) {
+      evt('checkout_failed', { reason: 'missing_supabase_config' })
+      setErrs((e) => ({ ...e, 3: 'Checkout unavailable (missing Supabase config). Email booking@brxs.ca.' }))
+      setPaying(false)
+      return
     }
     fetch(SUPABASE + 'create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON }, body: JSON.stringify(payload) })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))

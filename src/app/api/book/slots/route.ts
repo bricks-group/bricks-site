@@ -4,7 +4,7 @@ import { WORK_END, WORK_START, buildDaySlots, filterOpenSlots, resolvePropertyTi
 const SUPABASE_URL = (
   process.env.SUPABASE_URL ||
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  'https://ctqwxwrcxwruaqojohpf.supabase.co'
+  ''
 ).replace(/\/$/, '')
 const SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 const OS_API = (process.env.BRICKS_OS_API_URL || 'https://brokerage-api.brxs.ca').replace(/\/$/, '')

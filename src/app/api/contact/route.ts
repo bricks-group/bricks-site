@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-// Public bricks-prelaunch Supabase credentials (already shipped in the client
-// bundle via BookingWizard). The Resend key lives only in the Supabase vault —
-// this route forwards to the contact-message edge function, which holds it.
-// No Vercel env var is required.
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ctqwxwrcxwruaqojohpf.supabase.co'
-const SUPABASE_ANON_KEY =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod'
+import { getSupabaseAnonKey, getSupabasePublicUrl } from '@/lib/supabase-public'
 
 export async function POST(req: NextRequest) {
+  const SUPABASE_URL = getSupabasePublicUrl()
+  const SUPABASE_ANON_KEY = getSupabaseAnonKey()
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    return NextResponse.json(
+      { ok: false, error: 'Contact form temporarily unavailable. Please email booking@brxs.ca.' },
+      { status: 503 },
+    )
+  }
+
   let body: { name?: string; email?: string; message?: string }
   try {
     body = await req.json()
