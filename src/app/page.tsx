@@ -4,17 +4,86 @@ import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
-import { PHOTO_RATE, DRONE_RATE } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE, FOOTPRINT_BANDS, TOUR_RANGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
   COMPANION_URL,
+  COVERAGE_LINE,
   FOUNDER_PERSON,
   GO_URL,
   KNOWS_ABOUT,
   STATUS,
+  TOUR_NAME,
+  VISIT_NAME,
+  VISIT_PACKAGING,
 } from '@/lib/brand'
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
+
+const faqs = [
+  {
+    id: 'what',
+    q: 'What is Bricks?',
+    a: `Bricks is the operating system for Canadian real estate — for brokerage, team, agent, and photographer. Media is the beachhead. Companion is how agents book media. GO is the photographer field app. ${STATUS.os}`,
+  },
+  {
+    id: 'included',
+    q: "What's included in a standard shoot?",
+    a: 'HDR photography, licensed drone, and a floor plan on every standard shoot. Edited and MLS-ready in 24–48 hours. Photos only drops drone and floor plan; Showcase and Full suite add more. See Pricing for the full à la carte table.',
+  },
+  {
+    id: 'booking',
+    q: 'How does booking work?',
+    a: 'On this site you pick services, then an exact date and clock time gated by live availability — not morning, afternoon, or evening windows. That clock time locks when you pay and goes to the photographer on GO.',
+  },
+  {
+    id: 'coverage',
+    q: 'Where do you cover?',
+    a: `Canada-wide launch. ${COVERAGE_LINE} Travel is quoted from Mississauga — first 25 km free; $0.75/km after, quoted before you confirm.`,
+  },
+  {
+    id: 'drone',
+    q: 'Do you fly drone / RPAS?',
+    a: 'Yes — licensed drone means Advanced RPAS-certified aerial. It is included on packages that include drone (Essentials and up), or à la carte. Required for legal commercial aerial work in Canadian airspace.',
+  },
+  {
+    id: 'tour-visit',
+    q: `Virtual tour vs ${VISIT_NAME.toLowerCase()}?`,
+    a: `${TOUR_NAME} is a path-confined walkthrough — a ${TOUR_RANGE} add-on by footprint; Showcase and Full suite include it. ${VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), never packaged, and not charged at checkout. ${VISIT_PACKAGING}`,
+  },
+  {
+    id: 'plans',
+    q: 'What about software plans?',
+    a: 'Clay is free through Diamond on OS. Media is always à la carte — software does not bundle shoots. See Platform for plans and Pricing for media rates.',
+  },
+  {
+    id: 'photographers',
+    q: 'How do photographers work with Bricks?',
+    a: 'Photographers are independent contractors on a fixed dollar rate card, not a percent of the client fee. Apply at Photographers; jobs route in GO.',
+  },
+  {
+    id: 'help',
+    q: 'How do I get help?',
+    a: 'Use the Contact form, or email booking@brxs.ca. For a listing shoot, Book a shoot is fastest.',
+  },
+] as const
+
+function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
+  switch (id) {
+    case 'included':
+      return <>HDR photography, licensed drone, and a floor plan on every standard shoot. Edited and MLS-ready in 24–48 hours. Photos only drops drone and floor plan; Showcase and Full suite add more. See <Link href="/pricing">Pricing</Link> for the full à la carte table.</>
+    case 'booking':
+      return <>On this site you pick services, then an exact date and clock time gated by live availability — not morning, afternoon, or evening windows. That clock time locks when you pay and goes to the photographer on GO. <Link href="/book">Book a shoot</Link>.</>
+    case 'plans':
+      return <>Clay is free through Diamond on OS. Media is always à la carte — software does not bundle shoots. See <Link href="/platform">Platform</Link> for plans and <Link href="/pricing">Pricing</Link> for media rates.</>
+    case 'photographers':
+      return <>Photographers are independent contractors on a fixed dollar rate card, not a percent of the client fee. Apply at <Link href="/photographers">Photographers</Link>; jobs route in GO.</>
+    case 'help':
+      return <>Use the <Link href="/contact">Contact</Link> form, or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>. For a listing shoot, <Link href="/book">Book a shoot</Link> is fastest.</>
+    default:
+      return <>{a}</>
+  }
+}
 
 export const metadata: Metadata = {
   title: 'bricks — the operating system for Canadian real estate',
@@ -54,6 +123,21 @@ export default function Home() {
             knowsAbout: KNOWS_ABOUT,
             founder: FOUNDER_PERSON,
             sameAs: ['https://share.google/7ttYfc6W7JRwlqA9U'],
+          }),
+        }}
+      />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqs.map((f) => ({
+              '@type': 'Question',
+              name: f.q,
+              acceptedAnswer: { '@type': 'Answer', text: f.a },
+            })),
           }),
         }}
       />
@@ -232,6 +316,22 @@ export default function Home() {
       </div>
 
       <div className="wrap">
+        <section className="block rvl" id="faq" aria-label="Frequently asked questions">
+          <div className="sec-head">
+            <div><span className="over">FAQ</span><h2>Before you book.</h2></div>
+          </div>
+          <div className="faq">
+            {faqs.map((f) => (
+              <div key={f.id} className="qa">
+                <h4>{f.q}</h4>
+                <p><FaqAnswer id={f.id} a={f.a} /></p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <div className="wrap">
         <section className="block rvl" id="book">
           <div className="book">
             <div>
@@ -266,6 +366,8 @@ export default function Home() {
         .plat-hint p{font-size:14px;color:var(--inkMute);max-width:640px;line-height:1.5;}
         .plat-hint a{color:var(--brickDeep);text-decoration:none;}
         .plat-hint a:hover{text-decoration:underline;text-underline-offset:2px;}
+        .faq .qa p a{color:var(--brickDeep);text-decoration:none;}
+        .faq .qa p a:hover{text-decoration:underline;text-underline-offset:2px;}
         .hero-home{padding:92px 36px 72px;border-bottom:none;}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:18px;max-width:520px;}
