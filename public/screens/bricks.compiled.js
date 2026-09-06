@@ -2387,7 +2387,7 @@
         flexDirection: 'column',
         gap: 14
       }
-    }, [['M. Ortega', 'Agent', 'EA'], ['J. Reyes', 'Vendor', 'JR'], ['Ashfield', 'Office', 'AS']].map(([n, r, in2]) => /*#__PURE__*/React.createElement("div", {
+    }, [['M. Ortega', 'Agent', 'EA'], ['J. Reyes', 'Vendor', 'JR'], ['Ashfield', 'Brokerage', 'AS']].map(([n, r, in2]) => /*#__PURE__*/React.createElement("div", {
       key: n,
       style: {
         display: 'flex',
@@ -2841,7 +2841,7 @@
     th,
     dark
   }) {
-    const sections = [['Office', [['Name', 'Ashfield'], ['Domain', 'harbor.co'], ['Time zone', 'America / Toronto']]], ['Defaults', [['Default package', 'Standard · $379'], ['Turnaround SLA', '24 hours'], ['Auto-assign vendor', 'On · nearest']]], ['Notifications', [['New booking', 'Email + push'], ['Delivery ready', 'Email'], ['Weekly digest', 'Monday 8:00']]]];
+    const sections = [['Brokerage', [['Name', 'Ashfield'], ['Domain', 'harbor.co'], ['Time zone', 'America / Toronto']]], ['Defaults', [['Default package', 'Standard · $379'], ['Turnaround SLA', '24 hours'], ['Auto-assign vendor', 'On · nearest']]], ['Notifications', [['New booking', 'Email + push'], ['Delivery ready', 'Email'], ['Weekly digest', 'Monday 8:00']]]];
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 30,
@@ -2854,7 +2854,7 @@
         color: th.ink2,
         marginTop: 4
       }
-    }, "Office \xB7 team \xB7 preferences")), sections.map(([title, rows]) => /*#__PURE__*/React.createElement("div", {
+    }, "Brokerage \xB7 team \xB7 preferences")), sections.map(([title, rows]) => /*#__PURE__*/React.createElement("div", {
       key: title,
       style: {
         border: `1px solid ${th.hair}`,
@@ -4617,7 +4617,7 @@
         flexDirection: 'column',
         gap: 14
       }
-    }, [['Full name', 'Marisol Ortega'], ['Work email', 'mortega@harbor.co'], ['Office', 'Ashfield'], ['License #', 'RE·482901']].map(([l, v]) => /*#__PURE__*/React.createElement("div", {
+    }, [['Full name', 'Marisol Ortega'], ['Work email', 'mortega@harbor.co'], ['Brokerage', 'Ashfield'], ['License #', 'RE·482901']].map(([l, v]) => /*#__PURE__*/React.createElement("div", {
       key: l
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
@@ -5420,7 +5420,7 @@
     }, {
       eye: 'UPLOAD',
       head: 'Shoot. Upload. Done.',
-      body: 'Drag the SD card in. Office gets notified when editing starts.',
+      body: 'Drag the SD card in. Brokerage gets notified when editing starts.',
       img: 'SD CARD + LAPTOP'
     }];
     const s = slides[slide];
