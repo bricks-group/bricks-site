@@ -51,8 +51,10 @@ function minTierOf(pkg: string): number {
   return 1;
 }
 function tourPurchased(m: Record<string, string>, pkg: string): boolean {
+  // Path-confined 3D tour: legacy Showcase/Full suite + live Premium+.
+  // Standard is floor plan only. Virtual Visit is never granted by package id.
   if (m.tour_addon === 'true') return true;
-  return pkg === 'showcase' || pkg === 'suite' || pkg === 'full';
+  return ['showcase', 'suite', 'full', 'premium', 'luxury', 'estate'].includes(pkg);
 }
 function floorplanPurchased(m: Record<string, string>, pkg: string): boolean {
   if (m.floor_plan_included === 'true') return true;
