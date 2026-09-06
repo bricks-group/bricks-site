@@ -14,6 +14,7 @@ type Suggestion = {
 type MapboxContext = {
   id?: string
   text?: string
+  short_code?: string
 }
 
 type MapboxFeature = {
@@ -28,6 +29,15 @@ function ctxText(context: MapboxContext[] | undefined, prefix: string): string {
   return (hit?.text || '').trim()
 }
 
+function ctxProvince(context: MapboxContext[] | undefined): string {
+  if (!context) return ''
+  const hit = context.find((c) => (c.id || '').startsWith('region.'))
+  if (!hit) return ''
+  const short = String(hit.short_code || '').toUpperCase()
+  if (short.startsWith('CA-') && short.length === 5) return short.slice(3)
+  return (hit.text || '').trim()
+}
+
 function mapFeature(f: MapboxFeature): Suggestion | null {
   const label = (f.place_name || '').trim()
   const center = f.center
@@ -38,7 +48,7 @@ function mapFeature(f: MapboxFeature): Suggestion | null {
   return {
     label,
     city: ctxText(f.context, 'place') || ctxText(f.context, 'locality'),
-    province: ctxText(f.context, 'region'),
+    province: ctxProvince(f.context),
     postal_code: ctxText(f.context, 'postcode'),
     lng,
     lat,

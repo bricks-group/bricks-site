@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { BOOK_TZ, WORK_END, WORK_START, buildDaySlots, filterOpenSlots } from '@/lib/schedule'
+import { WORK_END, WORK_START, buildDaySlots, filterOpenSlots, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 
 const SUPABASE_URL = (
   process.env.SUPABASE_URL ||
@@ -87,7 +87,12 @@ export async function GET(req: NextRequest) {
     return json({ ok: false, error: 'date=YYYY-MM-DD required' }, 400)
   }
 
-  const generated = buildDaySlots(date)
+  const zone = resolvePropertyTimezone({
+    timezone: req.nextUrl.searchParams.get('tz'),
+    province: req.nextUrl.searchParams.get('province'),
+    address: req.nextUrl.searchParams.get('address'),
+  })
+  const generated = buildDaySlots(date, new Date(), zone.tz)
   const [leads, os] = await Promise.all([takenFromLeads(date), takenFromOs(date)])
   const taken: Taken[] = [...(leads || []), ...(os || [])]
   const live = leads !== null || os !== null
@@ -96,7 +101,9 @@ export async function GET(req: NextRequest) {
   return json({
     ok: true,
     date,
-    tz: BOOK_TZ,
+    tz: zone.tz,
+    tz_abbrev: zoneAbbrev(zone.tz),
+    province: zone.province,
     hours: { start: WORK_START, end: WORK_END },
     availability: live ? 'live' : 'hours',
     slots,

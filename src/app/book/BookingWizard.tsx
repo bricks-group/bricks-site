@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
-import { type BookSlot, BOOK_TZ, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, torontoYmd } from '@/lib/schedule'
+import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
 import MapCutout from '@/components/MapCutout'
@@ -151,6 +151,7 @@ export default function BookingWizard() {
   const [showSuggest, setShowSuggest] = useState(false)
   const [addrLng, setAddrLng] = useState<number | null>(null)
   const [addrLat, setAddrLat] = useState<number | null>(null)
+  const [addrProvince, setAddrProvince] = useState('')
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const suggestBoxRef = useRef<HTMLDivElement>(null)
   const addrInputRef = useRef<HTMLInputElement>(null)
@@ -261,13 +262,22 @@ export default function BookingWizard() {
     const lat = typeof o.lat === 'number' && Number.isFinite(o.lat) ? o.lat : null
     setAddrLng(lng)
     setAddrLat(lat)
+    setAddrProvince(o.province || '')
   }
 
   function clearPickedPin() {
     setSelectedAddr('')
     setAddrLng(null)
     setAddrLat(null)
+    setAddrProvince('')
   }
+
+  const bookingZone = useMemo(
+    () => resolvePropertyTimezone({ province: addrProvince, address: selectedAddr || addr }),
+    [addrProvince, selectedAddr, addr],
+  )
+  const propertyTz = bookingZone.tz
+  const propertyAbbrev = zoneAbbrev(propertyTz)
 
   function matchedPackage(): string | null {
     for (const k of Object.keys(PKG_DEFS)) {
@@ -332,7 +342,11 @@ export default function BookingWizard() {
     }
     setSlotsLoading(true)
     setSlotsHint('Loading times…')
-    fetch('/api/book/slots?date=' + encodeURIComponent(ymd), { cache: 'no-store' })
+    const qs = new URLSearchParams({ date: ymd })
+    if (bookingZone.province) qs.set('province', bookingZone.province)
+    if (selectedAddr || addr.trim()) qs.set('address', selectedAddr || addr.trim())
+    qs.set('tz', propertyTz)
+    fetch('/api/book/slots?' + qs.toString(), { cache: 'no-store' })
       .then((r) => r.json().then((j: SlotsResponse) => ({ ok: r.ok && j.ok, j })))
       .then((res) => {
         const list = Array.isArray(res.j.slots) ? res.j.slots : []
@@ -342,19 +356,25 @@ export default function BookingWizard() {
           setSlotsHint(list.length ? '' : 'No remaining shoot hours that day — pick another date.')
           return
         }
-        const local = buildDaySlots(ymd)
+        const local = buildDaySlots(ymd, new Date(), propertyTz)
         setDaySlots(local)
         setSlotsLive(false)
         setSlotsHint(local.length ? '' : 'No remaining shoot hours that day — pick another date.')
       })
       .catch(() => {
-        const local = buildDaySlots(ymd)
+        const local = buildDaySlots(ymd, new Date(), propertyTz)
         setDaySlots(local)
         setSlotsLive(false)
         setSlotsHint(local.length ? "Couldn't check booked times — showing open shoot hours." : 'No remaining shoot hours that day — pick another date.')
       })
       .finally(() => setSlotsLoading(false))
   }
+
+  useEffect(() => {
+    loadSlots(date)
+    // Reload when the property zone changes so Vancouver clocks replace the fallback.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date, propertyTz])
 
   function servicesSummary() {
     const pkg = matchedPackage()
@@ -443,6 +463,8 @@ export default function BookingWizard() {
       preferred_window: null,
       selected_slot_start: selectedSlot?.start || null,
       selected_slot_end: selectedSlot?.end || null,
+      timezone: propertyTz,
+      province: bookingZone.province,
       drone_addon: drone,
       reel_addon: reel,
       tour_addon: tour,
@@ -611,13 +633,12 @@ export default function BookingWizard() {
                 <label>Shoot date <span className="req">*</span></label>
                 <input
                   type="date"
-                  min={torontoYmd()}
+                  min={localYmd(new Date(), propertyTz)}
                   value={date}
                   onChange={(e) => {
                     const next = e.target.value
                     setDate(next)
                     setErrs((er) => ({ ...er, 2: '' }))
-                    loadSlots(next)
                   }}
                 />
               </div>
@@ -644,8 +665,8 @@ export default function BookingWizard() {
                 {!date && <div className="slotmsg">Pick a date above to see clock times.</div>}
                 <p className="hint-sm" style={{ marginTop: 10 }}>
                   {slotsLive
-                    ? `Times are ${BOOK_TZ} shoot hours (${WORK_START}–${WORK_END}). Booked times that day are hidden.`
-                    : `Times are ${BOOK_TZ} shoot hours (${WORK_START}–${WORK_END}). The time you pick is the time we send to the photographer.`}
+                    ? `Canada — times are property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}. Booked times that day are hidden.`
+                    : `Canada — times are property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}. The time you pick is the time we send to the photographer.`}
                 </p>
               </div>
               <div className="field"><label>Access / staging notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Lockbox code, occupied, staging schedule, deadline…" /></div>
@@ -663,7 +684,7 @@ export default function BookingWizard() {
                   ['Package', pkg ? PKG_LABEL[pkg] : 'Custom (à la carte)'],
                   ['Licensed drone', drone ? 'Yes' : 'No — Photos only'], ['Floor plan', drone ? 'Yes' : 'No — Photos only'],
                   ['Cinematic reel', reel ? 'Yes' : 'No'], [TOUR_NAME, tour ? 'Yes' : 'No'], [VISIT_NAME, visit ? `Yes — ${VISIT_PRICE_LABEL.toLowerCase()}` : 'No'], ['Twilight', twilight ? 'Yes' : 'No'], ['Rush delivery', rush ? 'Yes' : 'No'],
-                  ['Shoot time', selectedSlot ? formatBookedWhen(selectedSlot.start) : '—'], ['Notes', notes.trim() || '—'],
+                  ['Shoot time', selectedSlot ? formatBookedWhen(selectedSlot.start, propertyTz) : '—'], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
                   <div key={k} className="rrow"><span className="rk">{k}</span><span className="rv">{esc(v)}</span></div>
                 ))}
