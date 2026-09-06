@@ -44,7 +44,7 @@ export default function TermsPage() {
           <p>You pay the quoted amount in full, including HST, at checkout via Stripe to lock the slot. The quote shown at pay is the contract price for the selected package and add-ons. Prices are CAD. We do not store full card numbers.</p>
 
           <h3>3. Scheduling</h3>
-          <p>After payment, your preferred date and morning / afternoon / evening window are held natively on our systems (not via a third-party calendar). We confirm within one business day. If a window cannot be honoured on our side, we will reschedule or refund per section 5.</p>
+          <p>After payment, the date and clock time you booked are held on our systems and sent to the photographer (not via a third-party calendar). If that time cannot be honoured on our side, we will reschedule or refund per section 5.</p>
 
           <h3>4. Delivery</h3>
           <p>Edited media is typically delivered within 24–48 hours of the shoot. Times are targets, not guarantees. Weather, airspace, site access, equipment failure, or third-party processing can delay. Drone may be skipped if Transport Canada, NAV CANADA, weather, or the site makes it unsafe or unlawful; the rest of the paid ground package is still delivered, and we will refund the drone add-on if it was separately charged and could not be shot.</p>
