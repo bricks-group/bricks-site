@@ -3,8 +3,8 @@
 /** Live product URLs — keep marketing links in one place. */
 export const OS_URL = 'https://app.brxs.ca'
 export const OS_LOGIN = `${OS_URL}/login`
-export const COMPANION_URL = 'https://bricks-companion-web.vercel.app'
-export const GO_URL = 'https://bricks-dispatch-web.vercel.app'
+export const COMPANION_URL = 'https://companion.brxs.ca'
+export const GO_URL = 'https://go.brxs.ca'
 
 /**
  * Locked product truth. Do not invent softer/harder versions.

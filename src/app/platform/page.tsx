@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 type Surface = { over: string; title: string; body: string; href?: string; linkLabel?: string }
 const surfaces: Surface[] = [
   { over: 'Live in preview', title: 'OS', body: 'Roster, pipeline, listing file for brokerage, team, and agent. What you see depends on the account.' },
-  { over: 'Live on the web', title: 'Companion', body: 'The agent app — Jobs and Book with morning, afternoon, or evening windows.', href: COMPANION_URL, linkLabel: 'Open Companion' },
+  { over: 'Live on the web', title: 'Companion', body: 'The agent app — Jobs and Book with an exact clock time.', href: COMPANION_URL, linkLabel: 'Open Companion' },
   { over: 'Live on the web', title: 'GO', body: 'The photographer field app (Dispatch) — jobs, uploads, pay. Independent contractors on a fixed rate card.', href: GO_URL, linkLabel: 'Open GO' },
 ]
 

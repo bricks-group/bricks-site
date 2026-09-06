@@ -7,7 +7,7 @@ import { COMPANION_URL, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'bricks for agents and teams — listing file plus Companion',
-  description: 'OS holds the pipeline and the listing file. Companion is how you order media — Jobs and Book with preferred windows. Clay free; Keystone, Marble, Diamond monthly or yearly. OS is live in preview at app.brxs.ca.',
+  description: 'OS holds the pipeline and the listing file. Companion is how you order media — Jobs and Book with an exact clock time. Clay free; Keystone, Marble, Diamond monthly or yearly. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/agents' },
 }
 
@@ -19,7 +19,7 @@ export default function AgentsPage() {
         <div className="wrap">
           <span className="badge">Agent · Team</span>
           <h1>The listing file. Then Companion.</h1>
-          <p className="sub">OS holds the pipeline and the deal. Companion is how you order media — Jobs and Book with morning, afternoon, or evening windows. What you see depends on whether you are solo or a team. {STATUS.os}</p>
+          <p className="sub">OS holds the pipeline and the deal. Companion is how you order media — Jobs and Book with an exact clock time. What you see depends on whether you are solo or a team. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/pricing">Plans</Link>
@@ -31,7 +31,7 @@ export default function AgentsPage() {
         <div className="prod-copy">
           <span className="over">Companion</span>
           <h2>Order media from the listing.</h2>
-          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. Jobs and Book, morning, afternoon, or evening. <a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a> or book on this site.</p>
+          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. Jobs and Book lock an exact clock time. <a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a> or book on this site.</p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">

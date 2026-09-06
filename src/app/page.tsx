@@ -190,7 +190,7 @@ export default function Home() {
             <Link href="/agents" className="aud-card">
               <span className="over">OS · Companion</span>
               <h3>Agent</h3>
-              <p>The listing file in OS, plus Companion to order media — Jobs and Book with morning, afternoon, or evening windows.</p>
+              <p>The listing file in OS, plus Companion to order media — Jobs and Book with an exact clock time.</p>
             </Link>
             <Link href="/photographers" className="aud-card">
               <span className="over">GO</span>
@@ -243,7 +243,7 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">Companion</span>
           <h2>The agent app.</h2>
-          <p>Jobs and Book with morning, afternoon, or evening windows. Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot.</p>
+          <p>Jobs and Book with an exact clock time. Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot.</p>
           <p className="prod-mini"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a> · <Link href="/book">Book a shoot</Link> · <Link href="/platform">Platform</Link></p>
         </div>
         <div className="tray tray-book tray-phone">
