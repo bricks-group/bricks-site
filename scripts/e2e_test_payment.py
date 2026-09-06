@@ -6,8 +6,11 @@
 #        our webhook writes the paid lead. We then assert the lead exists.
 import json, os, urllib.request, urllib.parse
 
-SUPABASE = "https://ctqwxwrcxwruaqojohpf.supabase.co/functions/v1/"
-ANON = os.environ.get("ANON_KEY", "sb_publishable_dsC8pvo5X9ZVZGbkaotrGQ_VhRINFod")
+SUPABASE_BASE = (os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL") or "").rstrip("/")
+ANON = (os.environ.get("ANON_KEY") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY") or "").strip()
+if not SUPABASE_BASE or not ANON:
+    raise SystemExit("Set SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) and ANON_KEY (or NEXT_PUBLIC_SUPABASE_ANON_KEY).")
+SUPABASE = SUPABASE_BASE + "/functions/v1/"
 # test key from env (never read via `supabase secrets get` — it won't echo)
 SK = os.environ.get("STRIPE_KEY")
 if not SK:
