@@ -209,17 +209,47 @@ brokerage: string | null;
 quote_total: number | null;
 selected_slot_start: string | null;
 timezone: string;
+package_name?: string | null;
+vendor_name?: string | null;
 }) {
 const smsTo = (Deno.env.get('BRXS_FORWARD_PHONE') || '3434534578').replace(/\D/g, '');
 const emailTo = Deno.env.get('NOTIFY_EMAIL') || 'booking@brxs.ca';
+const name = String(lead.agent_name || '').trim() || 'Agent';
+const pkg = String(lead.package_name || '').trim();
+const vendor = String(lead.vendor_name || '').trim();
+const addr = String(lead.property_address || '').trim() || 'Address TBD';
+const addrShort = addr.split(',').slice(0, 2).map((s) => s.trim()).filter(Boolean).join(', ') || addr;
 const when = lead.selected_slot_start
-? formatLocalWhen(lead.selected_slot_start, lead.timezone)
-: 'TBD';
-const total = lead.quote_total != null ? `$${lead.quote_total.toFixed(2)}` : '';
-const office = lead.brokerage ? ` · ${lead.brokerage}` : '';
-const text = `Bricks booking paid #${lead.id}: ${lead.agent_name} (${lead.email})${office} — ${lead.property_address}. Shoot: ${when} ${total}`;
-const emailSubject = `New Bricks booking #${lead.id} — ${lead.agent_name}`;
-const emailHtml = `<div><b>Lead #${lead.id}</b> ${lead.agent_name} ${lead.property_address} ${when} ${total}</div>`;
+  ? formatLocalWhen(lead.selected_slot_start, lead.timezone)
+  : '';
+const total = lead.quote_total != null && Number.isFinite(lead.quote_total)
+  ? `$${lead.quote_total.toFixed(lead.quote_total % 1 ? 2 : 0)}`
+  : '';
+const headline = [name, pkg, total].filter(Boolean).join(' · ');
+const lines = [
+  'New Bricks booking',
+  headline,
+  addrShort,
+];
+if (when) lines.push(when);
+lines.push(vendor ? `Photographer: ${vendor}` : 'Photographer: Unassigned');
+const text = lines.join('\n');
+const emailSubject = `New booking · ${addrShort}`;
+const emailRows = [
+  `<tr><td style="padding:4px 0;color:#666">Agent</td><td style="padding:4px 0">${name}</td></tr>`,
+  pkg ? `<tr><td style="padding:4px 0;color:#666">Package</td><td style="padding:4px 0">${pkg}${total ? ' · ' + total : ''}</td></tr>` : (total ? `<tr><td style="padding:4px 0;color:#666">Paid</td><td style="padding:4px 0">${total}</td></tr>` : ''),
+  lead.email ? `<tr><td style="padding:4px 0;color:#666">Email</td><td style="padding:4px 0">${lead.email}</td></tr>` : '',
+  lead.phone ? `<tr><td style="padding:4px 0;color:#666">Phone</td><td style="padding:4px 0">${lead.phone}</td></tr>` : '',
+  lead.brokerage ? `<tr><td style="padding:4px 0;color:#666">Office</td><td style="padding:4px 0">${lead.brokerage}</td></tr>` : '',
+  `<tr><td style="padding:4px 0;color:#666">Property</td><td style="padding:4px 0">${addr}</td></tr>`,
+  when ? `<tr><td style="padding:4px 0;color:#666">Shoot</td><td style="padding:4px 0">${when}</td></tr>` : '',
+  `<tr><td style="padding:4px 0;color:#666">Photographer</td><td style="padding:4px 0">${vendor || 'Unassigned'}</td></tr>`,
+].filter(Boolean).join('');
+const emailHtml = `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.45;color:#111">
+  <p style="margin:0 0 12px;font-weight:600">New booking paid</p>
+  <table cellpadding="0" cellspacing="0">${emailRows}</table>
+  <p style="margin:16px 0 0;font-size:13px;color:#666"><a href="https://app.brxs.ca/bookings" style="color:#c45c26">Open in OS</a></p>
+</div>`;
 const twSid = Deno.env.get('TWILIO_ACCOUNT_SID');
 const twTok = Deno.env.get('TWILIO_AUTH_TOKEN');
 const twFrom = Deno.env.get('TWILIO_FROM_NUMBER');
@@ -255,6 +285,7 @@ if (!r.ok) console.error('Resend email failed for lead ' + lead.id + ': ' + (awa
 console.warn('Skipped email for lead ' + lead.id + ' -- missing RESEND_API_KEY.');
 }
 }
+
 export { resolvePropertyTimezone } from './tz.ts';
 
 

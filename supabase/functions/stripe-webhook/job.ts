@@ -1,5 +1,47 @@
 import { KAM_VENDOR_ID, ORG_VENDOR_ID, floorplanPurchased, minTierOf, packageIdOf, pickAssignee, restHeaders, tourPurchased, windowBounds } from './helpers.ts';
 
+async function memberName(supabaseUrl: string, serviceKey: string, memberId: string): Promise<string> {
+  if (!memberId) return '';
+  if (memberId === KAM_VENDOR_ID) return 'Ajani Kamali Akio';
+  try {
+    const url = `${supabaseUrl}/rest/v1/vendor_members?id=eq.${encodeURIComponent(memberId)}&select=name&limit=1`;
+    const res = await fetch(url, { headers: restHeaders(serviceKey) });
+    if (!res.ok) return '';
+    const rows = await res.json();
+    return String(rows?.[0]?.name || '').trim();
+  } catch {
+    return '';
+  }
+}
+
+async function jobNotifyFields(
+  supabaseUrl: string,
+  serviceKey: string,
+  jobId: string | null,
+  fallbackPkg: string,
+): Promise<{ jobId: string | null; created: boolean; package_name?: string; vendor_name?: string; assignee_id?: string }> {
+  if (!jobId) return { jobId: null, created: false, package_name: fallbackPkg };
+  try {
+    const url = `${supabaseUrl}/rest/v1/jobs?id=eq.${encodeURIComponent(jobId)}&select=id,assignee_id,vendor_name,package_name&limit=1`;
+    const res = await fetch(url, { headers: restHeaders(serviceKey) });
+    if (!res.ok) return { jobId, created: true, package_name: fallbackPkg };
+    const rows = await res.json();
+    const row = rows?.[0] || {};
+    let vendor = String(row.vendor_name || '').trim();
+    const assignee = String(row.assignee_id || '').trim();
+    if (!vendor && assignee) vendor = await memberName(supabaseUrl, serviceKey, assignee);
+    return {
+      jobId,
+      created: true,
+      package_name: String(row.package_name || fallbackPkg || '').trim(),
+      vendor_name: vendor,
+      assignee_id: assignee || undefined,
+    };
+  } catch {
+    return { jobId, created: true, package_name: fallbackPkg };
+  }
+}
+
 export async function fetchLeadBySession(supabaseUrl: string, serviceKey: string, sessionId: string): Promise<string | null> {
 const url = `${supabaseUrl}/rest/v1/media_booking_leads?stripe_session_id=eq.${encodeURIComponent(sessionId)}&select=id&limit=1`;
 const res = await fetch(url, { headers: restHeaders(serviceKey, 'return=representation') });
@@ -17,12 +59,16 @@ quote: { total: number | null; lat: number | null; lon: number | null };
 preferredDate: string;
 timezone: string;
 province: string | null;
-}): Promise<{ jobId: string | null; created: boolean; error?: string }> {
+}): Promise<{ jobId: string | null; created: boolean; error?: string; package_name?: string; vendor_name?: string; assignee_id?: string }> {
 const existingUrl = `${opts.supabaseUrl}/rest/v1/jobs?booking_id=eq.${encodeURIComponent(opts.leadId)}&select=id&limit=1`;
 const existingRes = await fetch(existingUrl, { headers: restHeaders(opts.serviceKey, 'return=representation') });
 if (existingRes.ok) {
 const rows = await existingRes.json();
-if (rows?.[0]?.id) return { jobId: rows[0].id, created: false };
+if (rows?.[0]?.id) {
+  const pkgName = String(opts.m.package_interest || opts.m.package_id || '').trim();
+  const fields = await jobNotifyFields(opts.supabaseUrl, opts.serviceKey, rows[0].id, pkgName);
+  return { ...fields, created: false };
+}
 }
 const now = new Date().toISOString();
 const rush = opts.m.rush_addon === 'true';
@@ -89,6 +135,9 @@ vendor_payout: null,
 platform_margin: null,
 is_rush: rush,
 ai_flags: [],
+selected_slot_start: opts.m.selected_slot_start || null,
+selected_slot_end: opts.m.selected_slot_end || null,
+preferred_window: opts.m.preferred_window || null,
 };
 let assignee = '';
 const dispatchUrl = (Deno.env.get('DISPATCH_API_URL') || 'https://dispatch-api.brxs.ca').replace(/\/$/, '');
@@ -127,11 +176,21 @@ add_ons: addOns,
 min_tier_required: minTier,
 preferred_tier: minTier,
 is_rush: rush,
+selected_slot_start: opts.m.selected_slot_start || null,
+selected_slot_end: opts.m.selected_slot_end || null,
+preferred_window: opts.m.preferred_window || null,
 }),
 });
 if (intake.ok) {
 const body = await intake.json();
-return { jobId: body.job_id || body.id || null, created: true };
+const jid = body.job_id || body.id || null;
+const pkgName = String(job.package_name || opts.m.package_interest || '').trim();
+const fields = await jobNotifyFields(opts.supabaseUrl, opts.serviceKey, jid, pkgName);
+let vendor = fields.vendor_name || '';
+if (!vendor && (body.assignee_id || body.assigneeId)) {
+  vendor = await memberName(opts.supabaseUrl, opts.serviceKey, String(body.assignee_id || body.assigneeId));
+}
+return { ...fields, vendor_name: vendor || fields.vendor_name, created: true };
 }
 console.error('dispatch intake failed: ' + (await intake.text()).slice(0, 300));
 } catch (e) {
@@ -139,10 +198,12 @@ console.error('dispatch intake error: ' + String(e));
 }
 }
 assignee = await pickAssignee(opts.supabaseUrl, opts.serviceKey, job);
+let vendorName = '';
 if (assignee) {
 job.assignee_id = assignee;
 job.status = 'assigned';
-job.vendor_name = assignee === KAM_VENDOR_ID ? 'Ajani Kamali Akio' : '';
+vendorName = await memberName(opts.supabaseUrl, opts.serviceKey, assignee);
+job.vendor_name = vendorName;
 job.vendor_tier = assignee === KAM_VENDOR_ID ? 3 : job.vendor_tier;
 } else {
 job.status = 'unassigned';
@@ -156,10 +217,16 @@ body: JSON.stringify(job),
 if (!res.ok) {
 const errText = await res.text();
 console.error('jobs insert failed for lead ' + opts.leadId + ': ' + errText.slice(0, 400));
-return { jobId: null, created: false, error: errText.slice(0, 200) };
+return { jobId: null, created: false, error: errText.slice(0, 200), package_name: String(job.package_name || '') };
 }
 const rows = await res.json();
-return { jobId: rows?.[0]?.id || job.id, created: true };
+return {
+  jobId: rows?.[0]?.id || job.id,
+  created: true,
+  package_name: String(rows?.[0]?.package_name || job.package_name || ''),
+  vendor_name: String(rows?.[0]?.vendor_name || vendorName || ''),
+  assignee_id: String(rows?.[0]?.assignee_id || assignee || '') || undefined,
+};
 }
 
 

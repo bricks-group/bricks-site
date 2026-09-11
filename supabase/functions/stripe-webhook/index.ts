@@ -4,21 +4,43 @@ import { ensureDispatchJob, fetchLeadBySession } from './job.ts';
 Deno.serve(async (req: Request) => {
 if (req.method !== 'POST') return msg('method not allowed', 405);
 const raw = await req.text();
-const secret = Deno.env.get('STRIPE_WEBHOOK_SECRET');
 const sig = req.headers.get('stripe-signature');
-if (!secret) {
-console.error('STRIPE_WEBHOOK_SECRET not set -- rejecting webhook (fail closed).');
-return msg('server misconfigured', 500);
+const supabaseUrl = Deno.env.get('SUPABASE_URL');
+const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+if (!supabaseUrl || !serviceKey) return msg('server misconfigured', 500);
+const secrets: string[] = [];
+const primary = (Deno.env.get('STRIPE_WEBHOOK_SECRET') || '').trim();
+const testEnv = (Deno.env.get('STRIPE_WEBHOOK_SECRET_TEST') || '').trim();
+if (primary) secrets.push(primary);
+if (testEnv && !secrets.includes(testEnv)) secrets.push(testEnv);
+try {
+  const secRes = await fetch(`${supabaseUrl}/rest/v1/app_secrets?key=eq.STRIPE_WEBHOOK_SECRET_TEST&select=value&limit=1`, {
+    headers: restHeaders(serviceKey, 'return=representation'),
+  });
+  if (secRes.ok) {
+    const rows = await secRes.json();
+    const dbSec = (rows?.[0]?.value || '').trim();
+    if (dbSec && !secrets.includes(dbSec)) secrets.push(dbSec);
+  }
+} catch (e) {
+  console.warn('app_secrets webhook test secret lookup failed: ' + String(e));
 }
-if (!sig || !(await verify(raw, sig, secret))) return msg('invalid signature', 401);
+if (!secrets.length) {
+  console.error('No STRIPE_WEBHOOK_SECRET / STRIPE_WEBHOOK_SECRET_TEST available -- rejecting webhook (fail closed).');
+  return msg('server misconfigured', 500);
+}
+let okSig = false;
+if (sig) {
+  for (const secret of secrets) {
+    if (await verify(raw, sig, secret)) { okSig = true; break; }
+  }
+}
+if (!okSig) return msg('invalid signature', 401);
 let event: any;
 try { event = JSON.parse(raw); } catch { return msg('bad json', 400); }
 if (event.type !== 'checkout.session.completed') return msg('ignored event ' + event.type);
 const s = event.data.object;
 const m = s.metadata || {};
-const supabaseUrl = Deno.env.get('SUPABASE_URL');
-const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-if (!supabaseUrl || !serviceKey) return msg('server misconfigured', 500);
 const quote = parseQuote(m.quote_json);
 const zone = resolvePropertyTimezone({
 timezone: m.timezone || null,
@@ -98,6 +120,8 @@ brokerage: payload.brokerage,
 quote_total: payload.quote_total,
 selected_slot_start: payload.selected_slot_start,
 timezone: zone.tz,
+package_name: jobResult.package_name || payload.package_interest || null,
+vendor_name: jobResult.vendor_name || null,
 });
 } catch (e) {
 console.error('notifyOwner failed for lead ' + leadId + ': ' + String(e));
