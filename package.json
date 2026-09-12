@@ -2,13 +2,13 @@
   "name": "bricks-prelaunch",
   "version": "1.0.0",
   "private": true,
-  "description": "Bricks pre-launch site — Canadian listing-media booking. Live, revenue-generating site at brxs.ca. Migrated to Next.js 2026-07-27, same live Stripe/Supabase booking flow with native preferred windows.",
+  "description": "Bricks pre-launch site \u2014 Canadian listing-media booking. Live, revenue-generating site at brxs.ca. Migrated to Next.js 2026-07-27, same live Stripe/Supabase booking flow with native preferred windows.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "compile:os": "node scripts/compile-os.js",
-    "test": "node --experimental-strip-types --test src/lib/schedule.test.ts",
+    "test": "npx --yes tsx --test src/lib/schedule.test.ts src/middleware.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "repository": {

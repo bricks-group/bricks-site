@@ -8,11 +8,16 @@ function gateEnabled(): boolean {
   return typeof v === 'string' && v.trim().length > 0
 }
 
-function isPublicPath(pathname: string): boolean {
+export function isPublicPath(pathname: string): boolean {
   if (pathname === '/gate' || pathname === '/api/gate') return true
   if (pathname.startsWith('/_next')) return true
   if (pathname === '/favicon.svg' || pathname === '/favicon.ico') return true
   if (pathname === '/robots.txt') return true
+  // First-booking loop must work while marketing stays gated.
+  // Stripe returns to /book?paid=…; wizard needs suggest + slots APIs.
+  if (pathname === '/book' || pathname.startsWith('/book/')) return true
+  if (pathname === '/api/book' || pathname.startsWith('/api/book/')) return true
+  if (pathname === '/api/address-suggest') return true
   return false
 }
 
