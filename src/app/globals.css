@@ -389,9 +389,8 @@ html[data-theme="dark"] .tray::after{
   overflow:hidden;
 }
 .prod-hero .pwin-scale,.prod-hero .pwin iframe{overflow:hidden;}
-/* Hero OS stage: bring-to-front on the window frames; iframes stay locked. */
-.prod-hero .pwin iframe{pointer-events:none;}
-.prod-hero .prod-stack-main,.prod-hero .prod-stack-sub{cursor:pointer;}
+/* Hero OS stage: in-demo interaction (Cursor-style). lock=1 freezes sidebar. */
+.prod-hero .pwin iframe{pointer-events:auto;}
 
 
 /* Split bands — copy left / tray right, then tray left / copy right.

@@ -1838,7 +1838,7 @@
         display: 'flex',
         flexDirection: 'column',
         minWidth: 0,
-        overflow: locked && cur === 'overview' ? 'hidden' : 'auto'
+        overflow: 'auto'
       }
     }, /*#__PURE__*/React.createElement(TopBar, {
       th: th,
