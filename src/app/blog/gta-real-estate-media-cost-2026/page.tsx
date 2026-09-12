@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'How much does real estate photography cost in the GTA? (2026) | Bricks',
   description: '2026 GTA real estate media pricing: what agents pay for HDR photography, drone, floor plans, virtual tours and video, with real market ranges and what drives the price.',
   alternates: { canonical: '/blog/gta-real-estate-media-cost-2026' },
+  robots: { index: true, follow: true },
   openGraph: {
     type: 'article',
     title: 'How much does real estate photography cost in the GTA? (2026)',
@@ -43,6 +44,8 @@ export default function Post() {
         title="How much does real estate photography cost in the GTA? (2026)"
         sub="A straight look at what listing agents actually pay for HDR photos, drone, floor plans, virtual tours and video — and what moves the number. Regional GTA market ranges below; Bricks is a Canadian listing-media company."
       >
+        <p>Looking for the national frame first? Read the Canada-wide companion: <a href="/blog/canada-real-estate-photography-cost-2026">How much does real estate photography cost in Canada? (2026)</a>. Product page: <a href="/real-estate-photography">Real estate photography &amp; listing photos</a>.</p>
+
         <p className="lead">Most GTA agents don&apos;t buy a single &quot;photo package&quot; — they buy a combination of services, and the price follows the property&apos;s footprint, the services booked, and how far the shoot is from base. Here&apos;s the 2026 market, then how Bricks prices it à la carte.</p>
 
         <h2>The GTA market at a glance (2026)</h2>

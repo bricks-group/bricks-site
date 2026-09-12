@@ -1,25 +1,71 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+const OG =
+  'https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+
 export const metadata: Metadata = {
-  title: 'Canadian Real Estate Media Resources & Blog | Bricks',
-  description: "Canadian real estate media guides by Bricks — 2026 pricing, drone rules in Ontario, virtual tour vs video walkthrough, and what's included in a pro listing shoot. By Raphael Merchant.",
+  title: 'Real Estate Photography Guides & Listing Media Blog | Bricks',
+  description:
+    'Canadian real estate photography guides by Bricks — Canada-wide and GTA listing photo costs, drone rules, virtual tour vs video, and what’s included in a pro MLS shoot.',
   alternates: { canonical: '/blog' },
+  robots: { index: true, follow: true },
   openGraph: {
-    title: 'Canadian Real Estate Media Resources & Blog | Bricks',
-    description: "Canadian real estate media guides — 2026 pricing, drone rules in Ontario, virtual tour vs video walkthrough, what's in a pro listing shoot.",
+    title: 'Real Estate Photography Guides & Listing Media Blog | Bricks',
+    description:
+      'Canada-wide listing media guides — photography cost, drone rules, virtual tours, and what’s in a pro shoot.',
+    images: [OG],
+    url: 'https://www.brxs.ca/blog',
   },
   twitter: {
-    title: 'Canadian Real Estate Media Resources & Blog | Bricks',
-    description: 'Canadian real estate media guides by Bricks — pricing, drone rules, virtual tours, virtual visits, and what\'s in a pro shoot.',
+    card: 'summary_large_image',
+    title: 'Real Estate Photography Guides | Bricks',
+    description: 'Listing photos, MLS media, drone rules, and shoot inclusions for Canadian agents.',
+    images: [OG],
   },
 }
 
 const posts = [
-  { href: '/blog/gta-real-estate-media-cost-2026', tag: 'Pricing', title: 'How much does real estate photography cost in the GTA? (2026)', desc: 'What agents actually pay for HDR, drone, floor plans, virtual tours and video — with real regional market ranges.', read: '7 min' },
-  { href: '/blog/3d-tour-vs-video-walkthrough', tag: 'Strategy', title: 'Virtual tour vs. video walkthrough: which sells faster?', desc: 'When a path-confined virtual tour beats a cinematic reel — and when the reverse is true. Virtual visit is a separate product.', read: '6 min' },
-  { href: '/blog/drone-photography-rules-ontario', tag: 'Rules & safety', title: 'Drone photography rules for real estate in Ontario', desc: 'Transport Canada Advanced RPAS rules, no-fly zones, and what a compliant aerial shoot looks like.', read: '8 min' },
-  { href: '/blog/whats-included-listing-shoot', tag: 'The shoot', title: "What's included in a professional listing photo shoot?", desc: 'The core set every Bricks shoot ships: HDR, licensed drone, floor plan, and 24–48h delivery.', read: '5 min' },
+  {
+    href: '/blog/canada-real-estate-photography-cost-2026',
+    tag: 'Pricing · Canada',
+    title: 'How much does real estate photography cost in Canada? (2026)',
+    desc: 'Canada-wide cost overview for listing photos, MLS media, drone, floor plans, and tours — expands the GTA cluster.',
+    read: '8 min',
+    date: '2026-09-12',
+  },
+  {
+    href: '/blog/gta-real-estate-media-cost-2026',
+    tag: 'Pricing · Regional',
+    title: 'How much does real estate photography cost in the GTA? (2026)',
+    desc: 'What agents actually pay for HDR, drone, floor plans, virtual tours and video — with real regional market ranges.',
+    read: '7 min',
+    date: '2026-07-22',
+  },
+  {
+    href: '/blog/3d-tour-vs-video-walkthrough',
+    tag: 'Strategy',
+    title: 'Virtual tour vs. video walkthrough: which sells faster?',
+    desc: 'When a path-confined virtual tour beats a cinematic reel — and when the reverse is true. Virtual visit is separate.',
+    read: '6 min',
+    date: '2026-07-22',
+  },
+  {
+    href: '/blog/drone-photography-rules-ontario',
+    tag: 'Rules & safety',
+    title: 'Drone photography rules for real estate in Ontario',
+    desc: 'Transport Canada Advanced RPAS rules, no-fly zones, and what a compliant aerial shoot looks like.',
+    read: '8 min',
+    date: '2026-07-22',
+  },
+  {
+    href: '/blog/whats-included-listing-shoot',
+    tag: 'The shoot',
+    title: "What's included in a professional listing photo shoot?",
+    desc: 'The core set every Bricks shoot ships: HDR, licensed drone, floor plan, and 24–48h delivery.',
+    read: '5 min',
+    date: '2026-07-22',
+  },
 ]
 
 export default function BlogPage() {
@@ -32,14 +78,20 @@ export default function BlogPage() {
             '@context': 'https://schema.org',
             '@type': 'Blog',
             name: 'Bricks Resources',
+            description: 'Canadian real estate photography and listing media guides.',
             url: 'https://www.brxs.ca/blog',
-            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', logo: { '@type': 'ImageObject', url: 'https://www.brxs.ca/favicon.svg' } },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Bricks',
+              legalName: 'Bricks Group',
+              logo: { '@type': 'ImageObject', url: 'https://www.brxs.ca/favicon.svg' },
+            },
             blogPost: posts.map((p) => ({
               '@type': 'BlogPosting',
               headline: p.title,
               url: `https://www.brxs.ca${p.href}`,
               author: { '@type': 'Person', name: 'Raphael Merchant' },
-              datePublished: '2026-07-22',
+              datePublished: p.date,
             })),
           }),
         }}
@@ -48,15 +100,28 @@ export default function BlogPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Resources</span>
-          <h1>Real estate media, explained.</h1>
-          <p className="sub">Practical guides for Canadian listing agents — cost, rules, and what a shoot includes. By Raphael Merchant.</p>
+          <h1>Real estate photography &amp; listing media, explained.</h1>
+          <p className="sub">
+            Practical guides for Canadian agents — listing photo costs, MLS media, drone rules, and what a shoot includes. By Raphael Merchant.
+          </p>
+          <div className="cta-row">
+            <Link className="btn btn-brick" href="/book">
+              Book listing photos
+            </Link>
+            <Link className="btn btn-sec" href="/real-estate-photography">
+              Photography overview
+            </Link>
+          </div>
         </div>
       </section>
 
       <section className="block">
         <div className="wrap">
           <div className="sec-head">
-            <div><span className="over">Latest</span><h2>Guides &amp; breakdowns</h2></div>
+            <div>
+              <span className="over">Latest</span>
+              <h2>Guides &amp; breakdowns</h2>
+            </div>
           </div>
           <div className="grid3">
             {posts.map((p) => (
@@ -80,8 +145,12 @@ export default function BlogPage() {
             <h2>Book a listing shoot.</h2>
             <p className="lead">Pick your services à la carte, get a tailored quote, and your MLS-ready media in 24–48 hours.</p>
             <div className="cta-row">
-              <Link className="btn btn-brick" href="/book">Book listing media</Link>
-              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>View pricing</Link>
+              <Link className="btn btn-brick" href="/book">
+                Book listing media
+              </Link>
+              <Link className="btn btn-sec" href="/photographers" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>
+                Photographers apply
+              </Link>
             </div>
           </div>
         </div>

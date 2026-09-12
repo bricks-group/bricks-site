@@ -5,39 +5,44 @@ import Script from 'next/script'
 import RevealObserver from '@/components/RevealObserver'
 
 export const metadata: Metadata = {
-  title: 'Bricks — Work (Canadian listing media)',
-  description: 'Selected Bricks listing media — photo, drone, and floor plans across residential, multifamily, commercial, and industrial.',
+  title: 'Real Estate Photography Gallery — Listing Photos Canada | Bricks',
+  description:
+    'Selected Bricks real estate photography and listing photos — HDR stills, drone real estate photos, and floor plans across residential, multifamily, commercial, and industrial.',
   alternates: { canonical: '/gallery' },
   openGraph: {
-    title: 'Bricks — Work (Canadian listing media)',
-    description: 'Selected Bricks listing media — photo, drone, and floor plans across residential, multifamily, commercial, and industrial.',
+    title: 'Real Estate Photography Gallery | Bricks',
+    description: 'HDR listing photos, drone, and floor plans — Canadian residential and commercial work samples.',
+    images: ['/media/work/02.jpg'],
+    url: 'https://www.brxs.ca/gallery',
   },
   twitter: {
-    title: 'Bricks — Work (Canadian listing media)',
-    description: 'Selected Bricks listing media — photo, drone, and floor plans across residential, multifamily, commercial, and industrial.',
+    card: 'summary_large_image',
+    title: 'Real Estate Photography Gallery | Bricks',
+    description: 'Listing photo samples — residential, multifamily, commercial, industrial.',
+    images: ['/media/work/02.jpg'],
   },
 }
 
 type Shot = { src: string; alt: string; t: string; d?: string }
 
 const residential: Shot[] = [
-  { src: '/media/work/02.jpg', alt: 'Residential exterior', t: 'Exterior' },
-  { src: '/media/res-ext-1.jpg', alt: 'Brick house exterior', t: 'Exterior' },
-  { src: '/media/res-dining-1.jpg', alt: 'Dining room', t: 'Dining' },
-  { src: '/media/res-living-1.jpg', alt: 'Open living and kitchen', t: 'Living' },
-  { src: '/media/res-living-2.jpg', alt: 'Living room', t: 'Living' },
-  { src: '/media/work/07.jpg', alt: 'Living room', t: 'Living' },
-  { src: '/media/work/08.jpg', alt: 'Bedroom', t: 'Bedroom' },
+  { src: '/media/work/02.jpg', alt: 'HDR listing photo — residential exterior for MLS', t: 'Exterior' },
+  { src: '/media/res-ext-1.jpg', alt: 'Real estate photography — brick house exterior listing photo', t: 'Exterior' },
+  { src: '/media/res-dining-1.jpg', alt: 'Listing photos — residential dining room interior HDR', t: 'Dining' },
+  { src: '/media/res-living-1.jpg', alt: 'MLS photos — open living and kitchen interior', t: 'Living' },
+  { src: '/media/res-living-2.jpg', alt: 'Real estate photography — living room listing photo', t: 'Living' },
+  { src: '/media/work/07.jpg', alt: 'Real estate photography — living room listing photo', t: 'Living' },
+  { src: '/media/work/08.jpg', alt: 'Listing photos — bedroom interior', t: 'Bedroom' },
 ]
 
 const multifamily: Shot[] = [
-  { src: '/media/work/03.jpg', alt: 'Condo bedroom', t: 'Bedroom' },
-  { src: '/media/work/04.jpg', alt: 'Condo living room', t: 'Living' },
-  { src: '/media/work/09.jpg', alt: 'Building lobby', t: 'Lobby' },
+  { src: '/media/work/03.jpg', alt: 'Multifamily listing photos — condo bedroom', t: 'Bedroom' },
+  { src: '/media/work/04.jpg', alt: 'Multifamily listing photos — condo living room', t: 'Living' },
+  { src: '/media/work/09.jpg', alt: 'Multifamily listing media — building lobby', t: 'Lobby' },
 ]
 
 const commercial: Shot[] = [
-  { src: '/media/comm-aerial-1.jpg', alt: 'Commercial aerial', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/comm-aerial-1.jpg', alt: 'Drone real estate photos — commercial aerial (Advanced RPAS)', t: 'Aerial', d: 'Drone · Advanced RPAS' },
   { src: '/media/comm-ext-1.jpg', alt: 'Commercial exterior', t: 'Exterior' },
   { src: '/media/work/05.jpg', alt: 'Urban mixed-use aerial', t: 'Urban' },
 ]

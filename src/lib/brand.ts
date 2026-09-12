@@ -67,13 +67,18 @@ export const AREA_SERVED_SCHEMA = [
 
 export const KNOWS_ABOUT = [
   'Real estate photography',
+  'Listing photos',
+  'MLS photos',
+  'Listing media',
   'Aerial photography',
+  'Drone real estate photos',
   'Floor plans',
   'Virtual tours',
   'Virtual visits',
   'Gaussian splat',
   'Real estate media',
   'Drone photography',
+  'Real estate photographer Canada',
 ]
 
 /** Path-confined walkthrough. May be included in Showcase and Full suite. */
@@ -86,16 +91,16 @@ export const VISIT_BLURB = 'Free-roam 3D (Gaussian splat). Not a tour. Always a 
 export const VISIT_PACKAGING = 'Always a paid add-on — never included in any package.'
 
 export const WORK_PHOTOS = [
-  { src: '/media/work/01.jpg', alt: 'Residential street exterior' },
-  { src: '/media/work/02.jpg', alt: 'Residential interior' },
-  { src: '/media/work/03.jpg', alt: 'Residential interior' },
-  { src: '/media/work/04.jpg', alt: 'Residential interior' },
-  { src: '/media/work/05.jpg', alt: 'Residential interior' },
-  { src: '/media/work/06.jpg', alt: 'Residential interior' },
-  { src: '/media/work/07.jpg', alt: 'Residential interior' },
-  { src: '/media/work/08.jpg', alt: 'Residential bedroom' },
-  { src: '/media/work/09.jpg', alt: 'Retail interior' },
-  { src: '/media/work/10.jpg', alt: 'Building exterior' },
-  { src: '/media/work/11.jpg', alt: 'Interior HDR' },
-  { src: '/media/work/12.jpg', alt: 'Residential interior' },
+  { src: '/media/work/01.jpg', alt: 'HDR listing photo — residential street exterior for Canadian MLS' },
+  { src: '/media/work/02.jpg', alt: 'Real estate photography — bright residential living interior' },
+  { src: '/media/work/03.jpg', alt: 'Listing photos — condo living room staged for MLS' },
+  { src: '/media/work/04.jpg', alt: 'MLS photos — open-concept residential interior HDR' },
+  { src: '/media/work/05.jpg', alt: 'Real estate photographer sample — kitchen and dining interior' },
+  { src: '/media/work/06.jpg', alt: 'Listing media — residential interior with natural light' },
+  { src: '/media/work/07.jpg', alt: 'HDR real estate photography — living room for listing' },
+  { src: '/media/work/08.jpg', alt: 'Listing photos — primary bedroom interior' },
+  { src: '/media/work/09.jpg', alt: 'Commercial listing media — retail interior photography' },
+  { src: '/media/work/10.jpg', alt: 'Drone-ready building exterior for real estate listing photos' },
+  { src: '/media/work/11.jpg', alt: 'Interior HDR listing photo with accurate colour' },
+  { src: '/media/work/12.jpg', alt: 'Canadian real estate photography — residential interior sample' },
 ] as const

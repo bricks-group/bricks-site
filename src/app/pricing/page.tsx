@@ -17,16 +17,19 @@ import {
 } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'bricks pricing — software, brokerage seats, listing media',
-  description: 'Clay free. Keystone, Marble, Diamond $49 / $99 / $149 a month or yearly. Brokerage seats Boutique to Franchise, per seat per year. Listing media CAD by footprint from Mississauga.',
+  title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
+  description:
+    'Listing photo pricing à la carte by footprint (HDR, drone, floor plan included on standard shoots) plus Clay–Diamond software and brokerage seats. CAD. Virtual visit quoted by sqft, never packaged.',
   alternates: { canonical: '/pricing' },
   openGraph: {
-    title: 'bricks pricing — software, brokerage seats, listing media',
-    description: 'Software, brokerage seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
+    title: 'Real Estate Photography Pricing & Plans | Bricks',
+    description: 'Canadian listing media rates and software plans. HDR listing photos, drone, floor plans — virtual visit never packaged.',
+    url: 'https://www.brxs.ca/pricing',
   },
   twitter: {
-    title: 'bricks pricing — software, brokerage seats, listing media',
-    description: 'Software, brokerage seats, and Canadian listing media. Virtual visit quoted by sqft, never packaged.',
+    card: 'summary_large_image',
+    title: 'Real Estate Photography Pricing | Bricks',
+    description: 'À la carte listing photo rates and software plans for Canadian real estate.',
   },
 }
 
@@ -94,7 +97,7 @@ export default function PricingPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Pricing</span>
-          <h1>Software, seats, and media.</h1>
+          <h1>Software, seats, and listing photo pricing.</h1>
           <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
         </div>
       </section>

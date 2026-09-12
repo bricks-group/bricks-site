@@ -5,17 +5,20 @@ import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BA
 import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'Fall Market Listing Media | Bricks',
-  description: 'Book your fall listing media early. Bricks delivers HDR photography, licensed drone, floor plans, plus optional virtual tour and virtual visit in 24–48 hours — reserve your September slot before the rush.',
+  title: 'Fall Market Listing Photos & Real Estate Photography | Bricks',
+  description:
+    'Book fall listing photos early. Bricks delivers HDR real estate photography, licensed drone, floor plans, plus optional virtual tour and virtual visit in 24–48 hours — reserve before the rush.',
   alternates: { canonical: '/fall-market' },
   openGraph: {
-    title: 'Fall Market Listing Media | Bricks',
-    description: 'Reserve your September shoot slot before the fall listing rush. HDR, drone, floor plans, 24–48h delivery.',
+    title: 'Fall Market Listing Photos | Bricks',
+    description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans, 24–48h MLS delivery.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    url: 'https://www.brxs.ca/fall-market',
   },
   twitter: {
-    title: 'Fall Market Listing Media | Bricks',
-    description: 'Reserve your September shoot slot before the fall listing rush. HDR, drone, floor plans, 24–48h delivery.',
+    card: 'summary_large_image',
+    title: 'Fall Market Listing Photos | Bricks',
+    description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans, 24–48h.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }

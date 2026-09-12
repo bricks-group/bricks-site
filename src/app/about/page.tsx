@@ -4,24 +4,28 @@ import Link from 'next/link'
 import { FOUNDER_NAME, FOUNDER_PERSON, STATUS, TOUR_SHORT, VISIT_SHORT } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'About Bricks — the operating system for Canadian real estate',
-  description: 'Bricks is the operating system for Canadian real estate. Media is the beachhead — HDR, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca. Built for brokerage, team, agent, and photographer.',
+  title: 'About Bricks — Canadian Real Estate Photography & OS',
+  description:
+    'Bricks Group builds the operating system for Canadian real estate. Media beachhead: HDR listing photos, MLS delivery, licensed drone, floor plans, optional virtual tour and virtual visit. OS live in preview at app.brxs.ca.',
   alternates: { canonical: '/about' },
   openGraph: {
     type: 'website',
-    title: 'About Bricks',
-    description: 'The operating system for Canadian real estate. Media first. Capture to close. 14,000+ properties in the standard.',
+    title: 'About Bricks — Real Estate Photography & OS',
+    description: 'Media first, OS destination. 14,000+ properties in the standard. Founded by Raphael Merchant.',
     images: ['/media/raphael-merchant-640.jpg'],
+    url: 'https://www.brxs.ca/about',
   },
   twitter: {
-    title: 'About Bricks',
-    description: 'The operating system for Canadian real estate. Media first. Capture to close.',
+    card: 'summary_large_image',
+    title: 'About Bricks — Real Estate Photography & OS',
+    description: 'Canadian listing media beachhead and real estate OS. Founded by Raphael Merchant.',
     images: ['/media/raphael-merchant-640.jpg'],
   },
 }
 
 const posts = [
-  { href: '/blog/gta-real-estate-media-cost-2026', tag: 'Pricing', title: 'How much does real estate photography cost in the GTA? (2026)' },
+  { href: '/blog/canada-real-estate-photography-cost-2026', tag: 'Pricing · Canada', title: 'How much does real estate photography cost in Canada? (2026)' },
+  { href: '/blog/gta-real-estate-media-cost-2026', tag: 'Pricing · Regional', title: 'How much does real estate photography cost in the GTA? (2026)' },
   { href: '/blog/3d-tour-vs-video-walkthrough', tag: 'Strategy', title: 'Virtual tour vs. video walkthrough: which sells faster?' },
   { href: '/blog/drone-photography-rules-ontario', tag: 'Rules & safety', title: 'Drone photography rules for real estate in Ontario' },
   { href: '/blog/whats-included-listing-shoot', tag: 'The shoot', title: "What's included in a professional listing photo shoot?" },
@@ -43,7 +47,7 @@ export default function AboutPage() {
             email: 'help@brxs.ca',
             telephone: '+1-343-453-4578',
             sameAs: ['https://www.linkedin.com/company/bricksbybricks', 'https://share.google/7ttYfc6W7JRwlqA9U'],
-            knowsAbout: ['Real estate photography', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate operating system'],
+            knowsAbout: ['Real estate photography', 'Listing photos', 'MLS photos', 'Listing media', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate operating system', 'Real estate photographer Canada'],
             founder: FOUNDER_PERSON,
             image: 'https://www.brxs.ca/media/raphael-merchant-640.jpg',
           }),

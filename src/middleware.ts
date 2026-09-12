@@ -12,7 +12,10 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/gate' || pathname === '/api/gate') return true
   if (pathname.startsWith('/_next')) return true
   if (pathname === '/favicon.svg' || pathname === '/favicon.ico') return true
-  if (pathname === '/robots.txt') return true
+  if (pathname === '/robots.txt' || pathname === '/sitemap.xml') return true
+  // Static assets needed for public pages (OG, author card, gallery thumbs on shared chrome).
+  if (pathname.startsWith('/media/') || pathname.startsWith('/assets/')) return true
+  if (pathname.startsWith('/screens/')) return true
   // First-booking loop must work while marketing stays gated.
   // Stripe returns to /book?paid=…; wizard needs suggest + slots APIs.
   if (pathname === '/book' || pathname.startsWith('/book/')) return true
@@ -22,6 +25,10 @@ export function isPublicPath(pathname: string): boolean {
   // Form loads /legal/ic-agreement.txt; apply POST goes to dispatch-api (other host).
   if (pathname === '/photographers' || pathname.startsWith('/photographers/')) return true
   if (pathname === '/legal/ic-agreement.txt') return true
+  // SEO beachhead: blog + commercial landings crawlable without opening OS/homepage story.
+  if (pathname === '/blog' || pathname.startsWith('/blog/')) return true
+  if (pathname === '/real-estate-photography' || pathname.startsWith('/real-estate-photography/')) return true
+  if (pathname === '/listing-photos' || pathname.startsWith('/listing-photos/')) return true
   return false
 }
 

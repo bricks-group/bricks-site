@@ -1,12 +1,14 @@
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  // Site is hidden until launch — disallow all crawlers.
+  // App-level password gate protects marketing pages. Do not blanket-disallow crawlers —
+  // public paths (/book, /photographers, /blog, SEO landings) must remain crawlable.
   return {
     rules: {
       userAgent: '*',
-      disallow: '/',
+      allow: '/',
     },
+    sitemap: 'https://www.brxs.ca/sitemap.xml',
     host: 'https://www.brxs.ca',
   }
 }

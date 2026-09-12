@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'Virtual tour vs. video walkthrough: which sells listings faster? | Bricks',
   description: 'When a path-confined virtual tour beats a cinematic video walkthrough — and when the reverse is true. Virtual visit (Gaussian splat) is a separate product.',
   alternates: { canonical: '/blog/3d-tour-vs-video-walkthrough' },
+  robots: { index: true, follow: true },
   openGraph: {
     type: 'article',
     title: 'Virtual tour vs. video walkthrough: which sells listings faster?',

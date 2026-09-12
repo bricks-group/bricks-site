@@ -86,17 +86,21 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
 }
 
 export const metadata: Metadata = {
-  title: 'bricks — the operating system for Canadian real estate',
-  description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today. OS is live in preview at app.brxs.ca.',
+  title: 'Bricks — Real Estate Photography & OS for Canadian Real Estate',
+  description:
+    'Bricks is the operating system for Canadian real estate — media beachhead with HDR listing photos, MLS delivery, licensed drone, and floor plans. Book professional real estate photography today. OS live in preview at app.brxs.ca.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today. OS is live in preview at app.brxs.ca.',
+    title: 'Bricks — Real Estate Photography & OS for Canadian Real Estate',
+    description:
+      'From listing photo to close. Book HDR listing photos, drone, and floor plans Canada-wide. OS live in preview.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    url: 'https://www.brxs.ca/',
   },
   twitter: {
-    title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today.',
+    card: 'summary_large_image',
+    title: 'Bricks — Real Estate Photography & OS for Canadian Real Estate',
+    description: 'Listing photos to close. Book Canadian real estate photography today. OS live in preview.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
@@ -114,7 +118,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'Bricks is the operating system for Canadian real estate, from listing photo to close. Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
+            description: 'Bricks is the operating system for Canadian real estate, from listing photo to close. Media beachhead: real estate photography, listing photos, MLS media, licensed drone, floor plans. Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'help@brxs.ca',
@@ -145,9 +149,10 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>From listing photo to close.</h1>
-          <p className="sub">The operating system for Canadian real estate. Book professional media today. {STATUS.os}</p>
+          <p className="sub">The operating system for Canadian real estate. Media is the beachhead — HDR listing photos, MLS-ready delivery, licensed drone, floor plans. Book professional real estate photography today. {STATUS.os}</p>
           <div className="cta-row">
-            <Link className="btn btn-brick" href="/book">Book a shoot</Link>
+            <Link className="btn btn-brick" href="/book">Book listing photos</Link>
+            <Link className="btn btn-sec" href="/real-estate-photography">Real estate photography</Link>
             <Link className="btn btn-sec" href="/platform">See the platform</Link>
           </div>
         </div>

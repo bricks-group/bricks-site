@@ -1,19 +1,30 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import PhotographerForm from './PhotographerForm'
 import { COVERAGE_LINE, GO_URL, STATUS } from '@/lib/brand'
 
+const OG =
+  'https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+
 export const metadata: Metadata = {
-  title: 'Shoot for Bricks | Photographer & videographer network — Canada',
-  description: 'Apply to join the Bricks photographer network. Auto-routed listing shoots, paid via Stripe Connect on a fixed vendor rate card. Apply in about 4 minutes. GO is live on the web.',
+  title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',
+  description:
+    'Applications open now: join the Bricks Canada-wide real estate photographer network. Auto-routed listing photo jobs, fixed vendor rate card, Stripe Connect payouts. Apply in about 4 minutes. GO is live.',
   alternates: { canonical: '/photographers' },
+  robots: { index: true, follow: true },
   openGraph: {
-    title: 'Shoot for Bricks | Photographer & videographer network',
-    description: 'Auto-routed listing shoots, paid via Stripe Connect on a fixed vendor rate card. Apply in about 4 minutes.',
+    title: 'Real Estate Photographer Jobs Canada | Bricks',
+    description:
+      'Applications open now. Auto-routed listing shoots, fixed rate card, Stripe Connect. Apply in about 4 minutes.',
+    images: [OG],
+    url: 'https://www.brxs.ca/photographers',
   },
   twitter: {
-    title: 'Shoot for Bricks | Photographer & videographer network',
-    description: 'Auto-routed listing shoots, paid via Stripe Connect. Apply in about 4 minutes.',
+    card: 'summary_large_image',
+    title: 'Real Estate Photographer Jobs Canada | Bricks',
+    description: 'Applications open now — shoot listing photos Canada-wide. Fixed rate card, Stripe Connect.',
+    images: [OG],
   },
 }
 
@@ -28,12 +39,23 @@ export default function PhotographersPage() {
             '@context': 'https://schema.org',
             '@type': 'JobPosting',
             datePosted: '2026-08-13',
-            title: 'Real Estate Photographer / Videographer — Independent Contractor',
-            description: 'Auto-routed real estate listing shoots in Canada. Paid via Stripe Connect on a fixed vendor rate card. Applications open now.',
-            hiringOrganization: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', sameAs: 'https://www.brxs.ca/' },
+            title: 'Real Estate Photographer / Videographer — Independent Contractor (Canada)',
+            description:
+              'Applications are open now — not launching soon. Auto-routed real estate listing photo and video shoots across Canada. Paid via Stripe Connect on a fixed vendor rate card. Apply in about four minutes. GO field app is live on the web.',
+            hiringOrganization: {
+              '@type': 'Organization',
+              name: 'Bricks',
+              legalName: 'Bricks Group',
+              sameAs: 'https://www.brxs.ca/',
+              url: 'https://www.brxs.ca/photographers',
+            },
             employmentType: 'CONTRACTOR',
-            jobLocationType: 'HYBRID',
+            jobLocationType: 'TELECOMMUTE',
             applicantLocationRequirements: { '@type': 'Country', name: 'Canada' },
+            jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressCountry: 'CA' } },
+            directApply: true,
+            industry: 'Real estate photography',
+            occupationalCategory: 'Real Estate Photographer',
             baseSalary: {
               '@type': 'MonetaryAmount',
               currency: 'CAD',
@@ -44,7 +66,42 @@ export default function PhotographersPage() {
                 unitText: 'PACKAGE PAYOUT',
               },
             },
-            validThrough: '2027-08-13',
+            validThrough: '2027-09-12',
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'Are photographer applications open?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes. Applications are open now Canada-wide. There is no launching-soon waitlist — submit the form on this page and expect a manual review in 1–3 business days.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'How are real estate photographers paid?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Independent contractors are paid a published fixed dollar rate card via Stripe Connect — not a percent of the client fee.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Do I need drone certification?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'For aerial listing jobs, yes — Transport Canada Advanced RPAS certification is required before we route commercial drone work.',
+                },
+              },
+            ],
           }),
         }}
       />
@@ -52,11 +109,12 @@ export default function PhotographersPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Photographers</span>
-          <h1>GO. Shoot listings.<br />Get paid fast.</h1>
-          <p className="sub">Independent contractors on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes. {STATUS.go}</p>
+          <h1>Real estate photographer jobs — Canada.<br />Applications open now.</h1>
+          <p className="sub">Shoot listing photos on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes — not a waitlist. {STATUS.go} {COVERAGE_LINE}</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
             <a className="btn btn-sec" href={GO_URL} rel="noopener noreferrer">Open GO</a>
+            <Link className="btn btn-sec" href="/real-estate-photography">Listing photos product</Link>
           </div>
         </div>
       </section>
@@ -108,13 +166,24 @@ export default function PhotographersPage() {
           </div>
         </section>
 
+        <section className="block rvl">
+          <div className="prose rvl">
+            <p>
+              Agents book listing photos on <Link href="/book">/book</Link>. Product overview:{' '}
+              <Link href="/real-estate-photography">real estate photography</Link>. Cost guides:{' '}
+              <Link href="/blog/canada-real-estate-photography-cost-2026">Canada</Link> ·{' '}
+              <Link href="/blog/gta-real-estate-media-cost-2026">GTA</Link>.
+            </p>
+          </div>
+        </section>
+
         <section className="block rvl" id="apply">
           <div className="sec-head">
             <div>
               <span className="over">Join the network</span>
-              <h2>Application.</h2>
+              <h2>Application — open now.</h2>
             </div>
-            <p>Takes about 4 minutes. We review every application manually.</p>
+            <p>Takes about 4 minutes. We review every application manually. Not a waitlist.</p>
           </div>
           <PhotographerForm />
         </section>

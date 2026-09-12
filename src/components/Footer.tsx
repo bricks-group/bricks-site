@@ -21,8 +21,10 @@ export default function Footer() {
           <div className="foot-links">
             <Link href="/platform">Platform</Link>
             <Link href="/pricing">Pricing</Link>
+            <Link href="/real-estate-photography">Listing photos</Link>
             <Link href="/gallery">Work</Link>
             <Link href="/book">Book a shoot</Link>
+            <Link href="/service-areas">Service areas</Link>
             <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>
             <a href={GO_URL} rel="noopener noreferrer">GO</a>
             <a href={OS_LOGIN}>Log in</a>
@@ -44,6 +46,7 @@ export default function Footer() {
           <div className="foot-links">
             <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy</Link>
+            <Link href="/legal">Legal index</Link>
           </div>
         </div>
       </div>

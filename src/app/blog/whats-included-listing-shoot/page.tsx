@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "What's included in a professional listing photo shoot? | Bricks",
   description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h delivery — plus the add-ons you can stack.',
   alternates: { canonical: '/blog/whats-included-listing-shoot' },
+  robots: { index: true, follow: true },
   openGraph: {
     type: 'article',
     title: "What's included in a professional listing photo shoot?",

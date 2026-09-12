@@ -50,6 +50,9 @@ const nextConfig: NextConfig = {
       { source: '/blog/3d-tour-vs-video-walkthrough.html', destination: '/blog/3d-tour-vs-video-walkthrough', permanent: true },
       { source: '/blog/drone-photography-rules-ontario.html', destination: '/blog/drone-photography-rules-ontario', permanent: true },
       { source: '/blog/whats-included-listing-shoot.html', destination: '/blog/whats-included-listing-shoot', permanent: true },
+      { source: '/listing-photos', destination: '/real-estate-photography', permanent: true },
+      { source: '/listing-photos/', destination: '/real-estate-photography', permanent: true },
+      { source: '/blog/canada-real-estate-photography-cost-2026.html', destination: '/blog/canada-real-estate-photography-cost-2026', permanent: true },
     ]
   },
 }
