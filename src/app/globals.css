@@ -1099,12 +1099,12 @@ html[data-theme="dark"] .cov-map-stage{background:#1a1714;}
 }
 .cov-label{
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  color:#14110e;background:rgba(255,255,255,.92);border:1px solid rgba(20,17,14,.14);border-radius:999px;
-  padding:4px 9px;white-space:nowrap;cursor:pointer;box-shadow:0 1px 2px rgba(20,17,14,.06);
+  color:#14110e;background:rgba(255,255,255,.94);border:1px solid rgba(20,17,14,.14);border-radius:2px;
+  padding:4px 8px;white-space:nowrap;cursor:pointer;box-shadow:0 1px 2px rgba(20,17,14,.06);
 }
-.cov-label.is-base{border-color:rgba(210,84,43,.45);color:#D2542B;font-weight:600;}
+.cov-label.is-base{border-color:rgba(210,84,43,.55);color:#D2542B;font-weight:600;}
 .cov-label.is-soft{color:#6e675f;border-style:dashed;opacity:.92;}
-html[data-theme="dark"] .cov-label{color:#f4f1eb;background:rgba(26,23,20,.9);border-color:rgba(244,241,235,.14);}
+html[data-theme="dark"] .cov-label{color:#f4f1eb;background:rgba(26,23,20,.92);border-color:rgba(244,241,235,.14);}
 html[data-theme="dark"] .cov-label.is-base{color:#e87a52;border-color:rgba(232,122,82,.5);}
 html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 @media (max-width:900px){
