@@ -31,11 +31,11 @@ export async function POST(req: NextRequest) {
   try {
     if (contentType.includes('application/json')) {
       const body = await req.json()
-      password = typeof body?.password === 'string' ? body.password : ''
+      password = typeof body?.password === 'string' ? body.password.trim() : ''
     } else {
       const form = await req.formData()
       const v = form.get('password')
-      password = typeof v === 'string' ? v : ''
+      password = typeof v === 'string' ? v.trim() : ''
     }
   } catch {
     return NextResponse.json({ ok: false, error: 'invalid_body' }, { status: 400 })
