@@ -1069,7 +1069,7 @@ html[data-theme="dark"] .cov-map-stage{background:#1a1714;}
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--inkSoft);
 }
 .cov-map-legend span{display:inline-flex;align-items:center;gap:6px;}
-.cov-leg-base,.cov-leg-hub,.cov-leg-soft{width:8px;height:8px;border-radius:1px;display:inline-block;}
+.cov-leg-base,.cov-leg-hub,.cov-leg-soft{width:10px;height:10px;border-radius:999px;display:inline-block;opacity:.85;}
 .cov-leg-base{background:var(--brick);}
 .cov-leg-hub{background:var(--ink);}
 .cov-leg-soft{background:var(--inkMute);opacity:.7;}
@@ -1097,23 +1097,16 @@ html[data-theme="dark"] .cov-map-stage{background:#1a1714;}
   border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
   padding:48px 28px;text-align:center;display:grid;gap:16px;justify-items:center;background:var(--paperSoft);
 }
-.cov-pin{
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  background:transparent;border:none;cursor:pointer;padding:0;
-}
-.cov-pin-dot{
-  width:12px;height:12px;border-radius:1px;background:#14110e;
-  box-shadow:0 0 0 2px #fff;
-}
-.cov-pin.is-base .cov-pin-dot{background:#D2542B;width:14px;height:14px;}
-.cov-pin.is-soft .cov-pin-dot{background:#8a837a;opacity:.9;}
-.cov-pin-label{
+.cov-label{
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  color:#14110e;background:#fff;border:1px solid rgba(20,17,14,.12);border-radius:2px;
-  padding:3px 6px;white-space:nowrap;
+  color:#14110e;background:rgba(255,255,255,.92);border:1px solid rgba(20,17,14,.14);border-radius:999px;
+  padding:4px 9px;white-space:nowrap;cursor:pointer;box-shadow:0 1px 2px rgba(20,17,14,.06);
 }
-html[data-theme="dark"] .cov-pin-label{color:#f4f1eb;background:#1a1714;border-color:rgba(244,241,235,.12);}
-html[data-theme="dark"] .cov-pin-dot{box-shadow:0 0 0 2px #1a1714;}
+.cov-label.is-base{border-color:rgba(210,84,43,.45);color:#D2542B;font-weight:600;}
+.cov-label.is-soft{color:#6e675f;border-style:dashed;opacity:.92;}
+html[data-theme="dark"] .cov-label{color:#f4f1eb;background:rgba(26,23,20,.9);border-color:rgba(244,241,235,.14);}
+html[data-theme="dark"] .cov-label.is-base{color:#e87a52;border-color:rgba(232,122,82,.5);}
+html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 @media (max-width:900px){
   .cov-map-stage{height:min(520px,64vh);min-height:380px;}
   .cov-map-legend{font-size:9px;gap:8px;left:8px;bottom:8px;padding:6px 8px;}

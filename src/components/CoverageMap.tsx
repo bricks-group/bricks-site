@@ -5,6 +5,10 @@ import { useEffect, useRef, useState } from 'react'
 const BRICK = '#D2542B'
 const STYLE_LIGHT = 'mapbox://styles/mapbox/light-v11'
 const STYLE_DARK = 'mapbox://styles/mapbox/dark-v11'
+const SRC = 'bricks-coverage'
+const FILL = 'bricks-coverage-fill'
+const LINE = 'bricks-coverage-line'
+const HIT = 'bricks-coverage-hit'
 
 export type CoverageHub = {
   id: string
@@ -12,23 +16,25 @@ export type CoverageHub = {
   region: string
   lng: number
   lat: number
+  /** Approximate coverage radius in km */
+  radiusKm: number
   base?: boolean
   onConfirm?: boolean
 }
 
 export const COVERAGE_HUBS: CoverageHub[] = [
-  { id: 'mississauga', name: 'Mississauga', region: 'Ontario · base', lng: -79.6441, lat: 43.589, base: true },
-  { id: 'toronto', name: 'Toronto', region: 'Ontario', lng: -79.3832, lat: 43.6532 },
-  { id: 'brampton', name: 'Brampton', region: 'Ontario', lng: -79.7624, lat: 43.7315 },
-  { id: 'oakville', name: 'Oakville', region: 'Ontario', lng: -79.6877, lat: 43.4675 },
-  { id: 'hamilton', name: 'Hamilton', region: 'Ontario', lng: -79.8661, lat: 43.2557 },
-  { id: 'durham', name: 'Durham', region: 'Ontario', lng: -78.8658, lat: 43.8971 },
-  { id: 'york', name: 'York', region: 'Ontario', lng: -79.5088, lat: 43.8361 },
-  { id: 'niagara', name: 'Niagara', region: 'Ontario', lng: -79.2469, lat: 43.1594 },
-  { id: 'ottawa', name: 'Ottawa', region: 'National Capital', lng: -75.6972, lat: 45.4215, onConfirm: true },
-  { id: 'calgary', name: 'Calgary', region: 'Alberta', lng: -114.0719, lat: 51.0447, onConfirm: true },
-  { id: 'edmonton', name: 'Edmonton', region: 'Alberta', lng: -113.4909, lat: 53.5461, onConfirm: true },
-  { id: 'vancouver', name: 'Vancouver', region: 'British Columbia', lng: -123.1207, lat: 49.2827, onConfirm: true },
+  { id: 'mississauga', name: 'Mississauga', region: 'Ontario · base', lng: -79.6441, lat: 43.589, radiusKm: 36, base: true },
+  { id: 'toronto', name: 'Toronto', region: 'Ontario', lng: -79.3832, lat: 43.6532, radiusKm: 28 },
+  { id: 'brampton', name: 'Brampton', region: 'Ontario', lng: -79.7624, lat: 43.7315, radiusKm: 22 },
+  { id: 'oakville', name: 'Oakville', region: 'Ontario', lng: -79.6877, lat: 43.4675, radiusKm: 18 },
+  { id: 'hamilton', name: 'Hamilton', region: 'Ontario', lng: -79.8661, lat: 43.2557, radiusKm: 26 },
+  { id: 'durham', name: 'Durham', region: 'Ontario', lng: -78.8658, lat: 43.8971, radiusKm: 32 },
+  { id: 'york', name: 'York', region: 'Ontario', lng: -79.5088, lat: 43.8361, radiusKm: 28 },
+  { id: 'niagara', name: 'Niagara', region: 'Ontario', lng: -79.2469, lat: 43.1594, radiusKm: 34 },
+  { id: 'ottawa', name: 'Ottawa', region: 'National Capital', lng: -75.6972, lat: 45.4215, radiusKm: 30, onConfirm: true },
+  { id: 'calgary', name: 'Calgary', region: 'Alberta', lng: -114.0719, lat: 51.0447, radiusKm: 30, onConfirm: true },
+  { id: 'edmonton', name: 'Edmonton', region: 'Alberta', lng: -113.4909, lat: 53.5461, radiusKm: 30, onConfirm: true },
+  { id: 'vancouver', name: 'Vancouver', region: 'British Columbia', lng: -123.1207, lat: 49.2827, radiusKm: 28, onConfirm: true },
 ]
 
 function readThemeDark(): boolean {
@@ -38,20 +44,135 @@ function readThemeDark(): boolean {
 
 function staticUrl(token: string, dark: boolean) {
   const style = dark ? 'dark-v11' : 'light-v11'
-  // Canada overview — high-res static always paints even if GL fails
   return (
     `https://api.mapbox.com/styles/v1/mapbox/${style}/static/` +
     `-96.5,56.1,3.15,0/1280x720@2x?access_token=${encodeURIComponent(token)}`
   )
 }
 
-function pinEl(hub: CoverageHub) {
+/** Rough geodesic circle → polygon ring (km radius). */
+function circleRing(lng: number, lat: number, km: number, steps = 56): [number, number][] {
+  const R = 6371
+  const lat1 = (lat * Math.PI) / 180
+  const lng1 = (lng * Math.PI) / 180
+  const d = km / R
+  const ring: [number, number][] = []
+  for (let i = 0; i <= steps; i++) {
+    const brng = (i / steps) * 2 * Math.PI
+    const lat2 = Math.asin(Math.sin(lat1) * Math.cos(d) + Math.cos(lat1) * Math.sin(d) * Math.cos(brng))
+    const lng2 =
+      lng1 +
+      Math.atan2(Math.sin(brng) * Math.sin(d) * Math.cos(lat1), Math.cos(d) - Math.sin(lat1) * Math.sin(lat2))
+    ring.push([(lng2 * 180) / Math.PI, (lat2 * 180) / Math.PI])
+  }
+  return ring
+}
+
+function coverageGeoJSON() {
+  return {
+    type: 'FeatureCollection' as const,
+    features: COVERAGE_HUBS.map((hub) => ({
+      type: 'Feature' as const,
+      properties: {
+        id: hub.id,
+        name: hub.name,
+        kind: hub.base ? 'base' : hub.onConfirm ? 'soft' : 'hub',
+      },
+      geometry: {
+        type: 'Polygon' as const,
+        coordinates: [circleRing(hub.lng, hub.lat, hub.radiusKm)],
+      },
+    })),
+  }
+}
+
+function labelEl(hub: CoverageHub) {
   const el = document.createElement('button')
   el.type = 'button'
-  el.className = `cov-pin${hub.base ? ' is-base' : ''}${hub.onConfirm ? ' is-soft' : ''}`
+  el.className = `cov-label${hub.base ? ' is-base' : ''}${hub.onConfirm ? ' is-soft' : ''}`
   el.setAttribute('aria-label', hub.name)
-  el.innerHTML = `<span class="cov-pin-dot"></span><span class="cov-pin-label">${hub.name}</span>`
+  el.textContent = hub.name
   return el
+}
+
+function paintAreas(map: any) {
+  const data = coverageGeoJSON()
+  if (map.getSource(SRC)) {
+    ;(map.getSource(SRC) as any).setData(data)
+  } else {
+    map.addSource(SRC, { type: 'geojson', data })
+  }
+
+  if (!map.getLayer(FILL)) {
+    map.addLayer({
+      id: FILL,
+      type: 'fill',
+      source: SRC,
+      paint: {
+        'fill-color': [
+          'match',
+          ['get', 'kind'],
+          'base',
+          BRICK,
+          'soft',
+          '#8a837a',
+          '#14110e',
+        ],
+        'fill-opacity': [
+          'match',
+          ['get', 'kind'],
+          'base',
+          0.28,
+          'soft',
+          0.12,
+          0.18,
+        ],
+      },
+    })
+  }
+
+  if (!map.getLayer(LINE)) {
+    map.addLayer({
+      id: LINE,
+      type: 'line',
+      source: SRC,
+      paint: {
+        'line-color': [
+          'match',
+          ['get', 'kind'],
+          'base',
+          BRICK,
+          'soft',
+          '#8a837a',
+          '#14110e',
+        ],
+        'line-width': [
+          'match',
+          ['get', 'kind'],
+          'base',
+          1.6,
+          1.1,
+        ],
+        'line-opacity': [
+          'match',
+          ['get', 'kind'],
+          'soft',
+          0.45,
+          0.7,
+        ],
+      },
+    })
+  }
+
+  // Invisible wider hit target for clicks
+  if (!map.getLayer(HIT)) {
+    map.addLayer({
+      id: HIT,
+      type: 'fill',
+      source: SRC,
+      paint: { 'fill-opacity': 0 },
+    })
+  }
 }
 
 export default function CoverageMap({ token }: { token: string }) {
@@ -97,51 +218,93 @@ export default function CoverageMap({ token }: { token: string }) {
 
         const clearMarkers = () => {
           markersRef.current.forEach((m) => {
-            try { m.remove() } catch { /* */ }
+            try {
+              m.remove()
+            } catch {
+              /* */
+            }
           })
           markersRef.current = []
         }
 
-        const placeMarkers = () => {
+        const placeLabels = () => {
           clearMarkers()
           COVERAGE_HUBS.forEach((hub) => {
-            const el = pinEl(hub)
+            const el = labelEl(hub)
             el.addEventListener('click', (e) => {
               e.stopPropagation()
               setActive(hub.id)
-              map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 9.2 : 8.4, essential: true })
+              map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 8.6 : 8.1, essential: true })
             })
             markersRef.current.push(
-              new mapboxgl.Marker({ element: el, anchor: 'bottom' }).setLngLat([hub.lng, hub.lat]).addTo(map),
+              new mapboxgl.Marker({ element: el, anchor: 'center' }).setLngLat([hub.lng, hub.lat]).addTo(map),
             )
           })
         }
 
         const kick = () => {
-          try { map.resize() } catch { /* */ }
-          placeMarkers()
+          try {
+            map.resize()
+          } catch {
+            /* */
+          }
+          paintAreas(map)
+          placeLabels()
           setGlOk(true)
         }
 
         map.on('load', kick)
         map.on('style.load', () => {
-          try { map.resize() } catch { /* */ }
-          placeMarkers()
+          try {
+            map.resize()
+          } catch {
+            /* */
+          }
+          paintAreas(map)
+          placeLabels()
         })
+
+        map.on('click', HIT, (e: any) => {
+          const f = e.features?.[0]
+          const id = f?.properties?.id as string | undefined
+          if (!id) return
+          const hub = COVERAGE_HUBS.find((h) => h.id === id)
+          if (!hub) return
+          setActive(hub.id)
+          map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 8.6 : 8.1, essential: true })
+        })
+        map.on('mouseenter', HIT, () => {
+          map.getCanvas().style.cursor = 'pointer'
+        })
+        map.on('mouseleave', HIT, () => {
+          map.getCanvas().style.cursor = ''
+        })
+
         map.on('error', () => {
           /* keep static underneath */
         })
 
-        // GL often needs a second resize after layout
         requestAnimationFrame(() => {
-          try { map.resize() } catch { /* */ }
+          try {
+            map.resize()
+          } catch {
+            /* */
+          }
         })
         setTimeout(() => {
-          try { map.resize() } catch { /* */ }
+          try {
+            map.resize()
+          } catch {
+            /* */
+          }
         }, 250)
 
         resizeObs = new ResizeObserver(() => {
-          try { map.resize() } catch { /* */ }
+          try {
+            map.resize()
+          } catch {
+            /* */
+          }
         })
         resizeObs.observe(hostRef.current)
       } catch {
@@ -153,10 +316,18 @@ export default function CoverageMap({ token }: { token: string }) {
       cancelled = true
       resizeObs?.disconnect()
       markersRef.current.forEach((m) => {
-        try { m.remove() } catch { /* */ }
+        try {
+          m.remove()
+        } catch {
+          /* */
+        }
       })
       markersRef.current = []
-      try { mapRef.current?.remove() } catch { /* */ }
+      try {
+        mapRef.current?.remove()
+      } catch {
+        /* */
+      }
       mapRef.current = null
     }
   }, [token])
@@ -167,7 +338,11 @@ export default function CoverageMap({ token }: { token: string }) {
     const next = dark ? STYLE_DARK : STYLE_LIGHT
     map.setStyle(next)
     map.once('style.load', () => {
-      try { map.resize() } catch { /* */ }
+      try {
+        map.resize()
+      } catch {
+        /* */
+      }
     })
   }, [dark, glOk])
 
@@ -175,7 +350,7 @@ export default function CoverageMap({ token }: { token: string }) {
     setActive(hub.id)
     mapRef.current?.flyTo({
       center: [hub.lng, hub.lat],
-      zoom: hub.base ? 9.2 : 8.4,
+      zoom: hub.base ? 8.6 : 8.1,
       essential: true,
     })
   }
@@ -196,7 +371,6 @@ export default function CoverageMap({ token }: { token: string }) {
         </button>
       </div>
       <div className="cov-map-stage">
-        {/* Always-on static so the page is never a blank tray */}
         <img
           className="cov-map-static"
           src={staticUrl(token, dark)}
@@ -208,9 +382,15 @@ export default function CoverageMap({ token }: { token: string }) {
         />
         <div ref={hostRef} className="cov-map-gl" style={{ opacity: glOk ? 1 : 0 }} />
         <div className="cov-map-legend" aria-hidden="true">
-          <span><i className="cov-leg-base" /> Travel base</span>
-          <span><i className="cov-leg-hub" /> Active hubs</span>
-          <span><i className="cov-leg-soft" /> On confirm</span>
+          <span>
+            <i className="cov-leg-base" /> Travel base
+          </span>
+          <span>
+            <i className="cov-leg-hub" /> Active hubs
+          </span>
+          <span>
+            <i className="cov-leg-soft" /> On confirm
+          </span>
         </div>
       </div>
       <div className="cov-map-rail" role="list">
@@ -238,7 +418,8 @@ export default function CoverageMap({ token }: { token: string }) {
         </p>
       ) : (
         <p className="cov-map-note">
-          Canada-wide network. Tap a hub to zoom. Address on <a href="/book">/book</a> confirms coverage and travel before checkout.
+          Canada-wide network. Tap an area to zoom. Address on <a href="/book">/book</a> confirms coverage and travel
+          before checkout.
         </p>
       )}
     </div>
