@@ -25,7 +25,7 @@ export default function PlatformPage() {
   return (
     <>
       <RevealObserver />
-      <section className="hero">
+      <section className="hero hero-tight">
         <div className="wrap">
           <span className="badge">Platform</span>
           <h1>Property to close.</h1>
@@ -175,11 +175,18 @@ export default function PlatformPage() {
       </div>
 
       <style>{`
-        .platform-surf-head{padding:48px 0 20px;max-width:640px;}
-        .platform-surf-head h2{font-weight:500;font-size:30px;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin-top:10px;}
-        .platform-surf-head p{font-size:15px;color:var(--inkSoft);margin-top:12px;line-height:1.5;}
-        .platform-surf-cta{padding:16px 0 8px;}
-        .platform-os-stage{margin-bottom:24px;}
+        .platform-os-stage{margin:0 0 16px;}
+        .platform-os-stage .prod-hero{margin-top:0;}
+        /* Title + CTA share the same side gutter as the stage — never flush to the viewport */
+        .platform-os-stage > .wrap{
+          max-width:none;width:100%;box-sizing:border-box;
+          padding-left:28px;padding-right:28px;
+        }
+        .platform-surf-head{padding:16px 0 10px;max-width:640px;}
+        .platform-surf-head h2{font-weight:500;font-size:28px;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin-top:6px;}
+        .platform-surf-head p{font-size:15px;color:var(--inkSoft);margin-top:8px;line-height:1.45;}
+        .platform-surf-cta{padding:10px 0 4px;}
+        .platform-os-stage .tray{margin-left:28px;margin-right:28px;}
         .prod-copy .surf-link{margin:14px 0 0;font-size:13.5px;}
         .prod-copy .surf-link a,.book .lead a{color:var(--brickDeep);text-decoration:none;}
         .prod-copy .surf-link a:hover,.book .lead a:hover{text-decoration:underline;}
@@ -192,7 +199,9 @@ export default function PlatformPage() {
         .note a{color:var(--brickDeep);text-decoration:none;}
         @media (max-width:680px){
           .aud-grid{grid-template-columns:1fr;}
-          .platform-surf-head{padding:32px 0 12px;}
+          .platform-os-stage > .wrap{padding-left:24px;padding-right:24px;}
+          .platform-os-stage .tray{margin-left:24px;margin-right:24px;}
+          .platform-surf-head{padding:12px 0 8px;}
         }
       `}</style>
     </>
