@@ -565,12 +565,9 @@ function BrokShell({ dark=false, screen='overview', role='office', customize=fal
         <div style={{ padding:'4px 24px 28px' }}><Wordmark size={17} color={th.ink}/></div>
         <div style={{ padding:'0 16px 10px' }}>
           <Over color={th.ink4}>Workspace</Over>
-          <div style={{ marginTop:10, padding:'12px 14px', border:`1px solid ${th.hair}`, borderRadius:2, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-            <div>
-              <div style={{ fontSize:13, fontWeight:500 }}>{RC.wsNm}</div>
-              <div style={{ fontSize:11, color:th.ink3, marginTop:2 }}>{RC.wsMeta}</div>
-            </div>
-            <I name="cD" size={14} color={th.ink3}/>
+          <div style={{ marginTop:10, padding:'12px 14px', border:`1px solid ${th.hair}`, borderRadius:2 }}>
+            <div style={{ fontSize:13, fontWeight:500 }}>{RC.wsNm}</div>
+            <div style={{ fontSize:11, color:th.ink3, marginTop:2 }}>{RC.wsMeta}</div>
           </div>
         </div>
         <div style={{ padding:'14px 12px', display:'flex', flexDirection:'column', gap:1, flex:1, minHeight:0, overflowY:'auto' }}>

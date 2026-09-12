@@ -1712,12 +1712,9 @@
         marginTop: 10,
         padding: '12px 14px',
         border: `1px solid ${th.hair}`,
-        borderRadius: 2,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        borderRadius: 2
       }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 13,
         fontWeight: 500
@@ -1728,11 +1725,7 @@
         color: th.ink3,
         marginTop: 2
       }
-    }, RC.wsMeta)), /*#__PURE__*/React.createElement(I, {
-      name: "cD",
-      size: 14,
-      color: th.ink3
-    }))), /*#__PURE__*/React.createElement("div", {
+    }, RC.wsMeta))), /*#__PURE__*/React.createElement("div", {
       style: {
         padding: '14px 12px',
         display: 'flex',
