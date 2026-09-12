@@ -12,9 +12,7 @@ export type CoverageHub = {
   region: string
   lng: number
   lat: number
-  /** Mississauga travel origin */
   base?: boolean
-  /** Coverage confirmed at booking, not always staffed */
   onConfirm?: boolean
 }
 
@@ -38,6 +36,15 @@ function readThemeDark(): boolean {
   return document.documentElement.getAttribute('data-theme') === 'dark'
 }
 
+function staticUrl(token: string, dark: boolean) {
+  const style = dark ? 'dark-v11' : 'light-v11'
+  // Canada overview — high-res static always paints even if GL fails
+  return (
+    `https://api.mapbox.com/styles/v1/mapbox/${style}/static/` +
+    `-96.5,56.1,3.15,0/1280x720@2x?access_token=${encodeURIComponent(token)}`
+  )
+}
+
 function pinEl(hub: CoverageHub) {
   const el = document.createElement('button')
   el.type = 'button'
@@ -47,93 +54,103 @@ function pinEl(hub: CoverageHub) {
   return el
 }
 
-export default function CoverageMap({
-  token,
-  hubs = COVERAGE_HUBS,
-}: {
-  token: string
-  hubs?: CoverageHub[]
-}) {
+export default function CoverageMap({ token }: { token: string }) {
   const hostRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<any>(null)
   const markersRef = useRef<any[]>([])
   const [active, setActive] = useState<string | null>(null)
-  const [ready, setReady] = useState(false)
+  const [glOk, setGlOk] = useState(false)
+  const [dark, setDark] = useState(false)
+
+  useEffect(() => {
+    setDark(readThemeDark())
+    const obs = new MutationObserver(() => setDark(readThemeDark()))
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => obs.disconnect()
+  }, [])
 
   useEffect(() => {
     if (!token || !hostRef.current) return
     let cancelled = false
-    let themeObs: MutationObserver | undefined
     let resizeObs: ResizeObserver | undefined
 
     ;(async () => {
-      const mapboxgl = (await import('mapbox-gl')).default
-      await import('mapbox-gl/dist/mapbox-gl.css')
-      if (cancelled || !hostRef.current) return
+      try {
+        const mapboxgl = (await import('mapbox-gl')).default
+        await import('mapbox-gl/dist/mapbox-gl.css')
+        if (cancelled || !hostRef.current) return
 
-      mapboxgl.accessToken = token
-      const night = readThemeDark()
-      const map = new mapboxgl.Map({
-        container: hostRef.current,
-        style: night ? STYLE_DARK : STYLE_LIGHT,
-        center: [-96.5, 56.1],
-        zoom: 3.15,
-        pitch: 0,
-        bearing: 0,
-        attributionControl: false,
-        logoPosition: 'bottom-left',
-        cooperativeGestures: true,
-      })
-      map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right')
-      map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right')
-      mapRef.current = map
-
-      const placeMarkers = () => {
-        markersRef.current.forEach((m) => {
-          try { m.remove() } catch { /* */ }
+        mapboxgl.accessToken = token
+        const night = readThemeDark()
+        const map = new mapboxgl.Map({
+          container: hostRef.current,
+          style: night ? STYLE_DARK : STYLE_LIGHT,
+          center: [-96.5, 56.1],
+          zoom: 3.15,
+          attributionControl: false,
+          logoPosition: 'bottom-left',
+          failIfMajorPerformanceCaveat: false,
         })
-        markersRef.current = []
-        hubs.forEach((hub) => {
-          const el = pinEl(hub)
-          el.addEventListener('click', (e) => {
-            e.stopPropagation()
-            setActive(hub.id)
-            map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 9.2 : 8.4, essential: true })
+        map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right')
+        map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'bottom-right')
+        mapRef.current = map
+
+        const clearMarkers = () => {
+          markersRef.current.forEach((m) => {
+            try { m.remove() } catch { /* */ }
           })
-          const marker = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
-            .setLngLat([hub.lng, hub.lat])
-            .addTo(map)
-          markersRef.current.push(marker)
+          markersRef.current = []
+        }
+
+        const placeMarkers = () => {
+          clearMarkers()
+          COVERAGE_HUBS.forEach((hub) => {
+            const el = pinEl(hub)
+            el.addEventListener('click', (e) => {
+              e.stopPropagation()
+              setActive(hub.id)
+              map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 9.2 : 8.4, essential: true })
+            })
+            markersRef.current.push(
+              new mapboxgl.Marker({ element: el, anchor: 'bottom' }).setLngLat([hub.lng, hub.lat]).addTo(map),
+            )
+          })
+        }
+
+        const kick = () => {
+          try { map.resize() } catch { /* */ }
+          placeMarkers()
+          setGlOk(true)
+        }
+
+        map.on('load', kick)
+        map.on('style.load', () => {
+          try { map.resize() } catch { /* */ }
+          placeMarkers()
         })
+        map.on('error', () => {
+          /* keep static underneath */
+        })
+
+        // GL often needs a second resize after layout
+        requestAnimationFrame(() => {
+          try { map.resize() } catch { /* */ }
+        })
+        setTimeout(() => {
+          try { map.resize() } catch { /* */ }
+        }, 250)
+
+        resizeObs = new ResizeObserver(() => {
+          try { map.resize() } catch { /* */ }
+        })
+        resizeObs.observe(hostRef.current)
+      } catch {
+        if (!cancelled) setGlOk(false)
       }
-
-      map.on('load', () => {
-        if (cancelled) return
-        // Soft Canada tint overlay via fill layer from worldview — skip if unavailable;
-        // pins + Bricks chrome carry the brand.
-        placeMarkers()
-        setReady(true)
-      })
-
-      resizeObs = new ResizeObserver(() => {
-        try { map.resize() } catch { /* */ }
-      })
-      resizeObs.observe(hostRef.current)
-
-      let lastDark = readThemeDark()
-      themeObs = new MutationObserver(() => {
-        const dark = readThemeDark()
-        if (dark === lastDark) return
-        lastDark = dark
-        map.setStyle(dark ? STYLE_DARK : STYLE_LIGHT)
-        map.once('style.load', placeMarkers)
-      })
-      themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
     })()
 
     return () => {
       cancelled = true
-      themeObs?.disconnect()
       resizeObs?.disconnect()
       markersRef.current.forEach((m) => {
         try { m.remove() } catch { /* */ }
@@ -142,13 +159,25 @@ export default function CoverageMap({
       try { mapRef.current?.remove() } catch { /* */ }
       mapRef.current = null
     }
-  }, [token, hubs])
+  }, [token])
+
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !glOk) return
+    const next = dark ? STYLE_DARK : STYLE_LIGHT
+    map.setStyle(next)
+    map.once('style.load', () => {
+      try { map.resize() } catch { /* */ }
+    })
+  }, [dark, glOk])
 
   function focusHub(hub: CoverageHub) {
     setActive(hub.id)
-    const map = mapRef.current
-    if (!map) return
-    map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 9.2 : 8.4, essential: true })
+    mapRef.current?.flyTo({
+      center: [hub.lng, hub.lat],
+      zoom: hub.base ? 9.2 : 8.4,
+      essential: true,
+    })
   }
 
   function resetCanada() {
@@ -156,28 +185,36 @@ export default function CoverageMap({
     mapRef.current?.flyTo({ center: [-96.5, 56.1], zoom: 3.15, essential: true })
   }
 
-  const activeHub = hubs.find((h) => h.id === active) || null
+  const activeHub = COVERAGE_HUBS.find((h) => h.id === active) || null
 
   return (
     <div className="cov-map">
-      <div className="cov-map-chrome" aria-hidden="true">
-        <div className="cov-map-dots"><i /><i /><i /></div>
+      <div className="cov-map-chrome">
         <span className="cov-map-title">bricks · coverage</span>
         <button type="button" className="cov-map-reset" onClick={resetCanada}>
           Canada
         </button>
       </div>
       <div className="cov-map-stage">
-        <div ref={hostRef} className="cov-map-gl" role="img" aria-label="Map of Bricks coverage across Canada" />
-        {!ready ? <div className="cov-map-loading">Loading map…</div> : null}
-        <div className="cov-map-legend">
+        {/* Always-on static so the page is never a blank tray */}
+        <img
+          className="cov-map-static"
+          src={staticUrl(token, dark)}
+          alt="Map of Canada — Bricks coverage"
+          width={1280}
+          height={720}
+          decoding="async"
+          style={{ opacity: glOk ? 0 : 1 }}
+        />
+        <div ref={hostRef} className="cov-map-gl" style={{ opacity: glOk ? 1 : 0 }} />
+        <div className="cov-map-legend" aria-hidden="true">
           <span><i className="cov-leg-base" /> Travel base</span>
           <span><i className="cov-leg-hub" /> Active hubs</span>
           <span><i className="cov-leg-soft" /> On confirm</span>
         </div>
       </div>
       <div className="cov-map-rail" role="list">
-        {hubs.map((hub) => (
+        {COVERAGE_HUBS.map((hub) => (
           <button
             key={hub.id}
             type="button"

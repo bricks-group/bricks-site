@@ -139,16 +139,14 @@ export default function ServiceAreasPage() {
       </section>
 
       <section className="cov-visual" aria-label="Coverage map">
-        <div className="wrap cov-visual-wrap">
-          {mapToken ? (
-            <CoverageMap token={mapToken} />
-          ) : (
-            <div className="cov-map-missing">
-              <p>Map token missing — coverage is still Canada-wide. Book an address and we confirm travel on the quote.</p>
-              <Link className="btn btn-brick" href="/book">Book a shoot</Link>
-            </div>
-          )}
-        </div>
+        {mapToken ? (
+          <CoverageMap token={mapToken} />
+        ) : (
+          <div className="cov-map-missing">
+            <p>Map token missing — coverage is still Canada-wide. Book an address and we confirm travel on the quote.</p>
+            <Link className="btn btn-brick" href="/book">Book a shoot</Link>
+          </div>
+        )}
       </section>
 
       <section className="block">
