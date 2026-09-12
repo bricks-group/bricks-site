@@ -18,7 +18,7 @@ export default function ProductStage() {
   }, [])
 
   // ~720 design width → ~2× readable vs fitting full 1440 into a phone tray
-  const zoomAt = mobile ? 900 : undefined
+  const zoomAt = mobile ? 780 : undefined
 
   return (
     <div className={`prod-stack${mobile ? ' prod-stack-mobile' : ''}`}>

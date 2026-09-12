@@ -228,13 +228,13 @@ export default function Home() {
           <div className="cap-stage tray tray-crm">
             <div className="tray-stage tray-stage-fill">
               <ProductWindow
-                title="Ashfield · overview"
-                src="/screens/os.html?screen=overview&lock=1"
+                title="Ashfield · deal"
+                src="/screens/os.html?screen=transactions&lock=1"
                 nw={1440}
-                nh={900}
-                fit="contain"
+                nh={920}
+                fit="width"
                 chromeMode="lights"
-                zoomAt={1100}
+                zoomAt={820}
                 lazy
               />
             </div>
@@ -540,7 +540,7 @@ export default function Home() {
 
       <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
         <div className="closer-simple-inner">
-          <h2>Ready when the listing is.</h2>
+          <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
           <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h delivery</p>
         </div>
