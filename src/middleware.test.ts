@@ -12,6 +12,7 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/sitemap.xml'), true)
     assert.equal(isPublicPath('/media/work/01.jpg'), true)
     assert.equal(isPublicPath('/assets/protect.js'), true)
+    assert.equal(isPublicPath('/supersplat-viewer/index.html'), true)
   })
 
   it('opens book + booking APIs while marketing stays gated', () => {

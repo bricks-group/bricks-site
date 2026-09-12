@@ -16,6 +16,7 @@ export function isPublicPath(pathname: string): boolean {
   // Static assets needed for public pages (OG, author card, gallery thumbs on shared chrome).
   if (pathname.startsWith('/media/') || pathname.startsWith('/assets/')) return true
   if (pathname.startsWith('/screens/')) return true
+  if (pathname.startsWith('/supersplat-viewer/')) return true
   // First-booking loop must work while marketing stays gated.
   // Stripe returns to /book?paid=…; wizard needs suggest + slots APIs.
   if (pathname === '/book' || pathname.startsWith('/book/')) return true
