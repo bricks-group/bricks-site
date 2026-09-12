@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 }
 
 const roles = [
-  { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'The whole shop. Full OS plus trust accounting, billed per seat yearly.' },
-  { href: '/agents#team', over: 'OS', title: 'Team', body: 'Same OS, team-sized. Shared pipeline for the people you run.' },
-  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Listing file plus Companion. Clay free; paid plans add CRM, checklist e-sign + shareable links, forms, and AI (on-document PDF placement not available yet).' },
-  { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Independent contractor. Auto-routed jobs, fixed dollar rate card, apply here.' },
+  { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'Whole shop · per seat.' },
+  { href: '/agents#team', over: 'OS', title: 'Team', body: 'Shared pipeline.' },
+  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Listing file · Companion.' },
+  { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Fixed rate card · auto-assign.' },
 ]
 
 export default function PlatformPage() {
@@ -29,7 +29,7 @@ export default function PlatformPage() {
         <div className="wrap">
           <span className="badge">Platform</span>
           <h1>Property to close.</h1>
-          <p className="sub">Listing, Companion, GO, media, MLS, transaction. {STATUS.os}</p>
+          <p className="sub">{STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/demo">Try the demo</Link>
@@ -41,8 +41,7 @@ export default function PlatformPage() {
       <section className="prod-hero platform-os-stage" aria-label="OS — web desk">
         <div className="wrap platform-surf-head">
           <span className="over">OS · Web</span>
-          <h2>The desk runs the deal.</h2>
-          <p>Brokerage, team, and agent see the same OS at different depth. Scroll the windows — sidebar stays fixed to the story.</p>
+          <h2>OS.</h2>
         </div>
         <div className="tray tray-os">
           <div className="tray-stage">
@@ -57,8 +56,7 @@ export default function PlatformPage() {
       <section className="prod-row rvl" aria-label="Companion — mobile">
         <div className="prod-copy">
           <span className="over">Companion · Mobile</span>
-          <h2>Book in one clock.</h2>
-          <p>The agent app — Jobs and Book with an exact clock time. Same loop as the desk, in your pocket.</p>
+          <h2>Companion.</h2>
           <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
         <div className="tray tray-book tray-phone">
@@ -100,8 +98,7 @@ export default function PlatformPage() {
         </div>
         <div className="prod-copy">
           <span className="over">GO · Mobile</span>
-          <h2>Shoot on site.</h2>
-          <p>The photographer field app — jobs, uploads, pay. Independent contractors on a fixed rate card.</p>
+          <h2>GO.</h2>
           <p className="surf-link"><a href={GO_URL} rel="noopener noreferrer">Open GO</a></p>
         </div>
       </section>
@@ -110,8 +107,8 @@ export default function PlatformPage() {
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">Built for everyone on the deal</span>
-              <h2>Four audiences.</h2>
+              <span className="over">Audiences</span>
+              <h2>Who it’s for.</h2>
             </div>
           </div>
           <div className="aud-grid">

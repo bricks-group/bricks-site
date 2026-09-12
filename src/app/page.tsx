@@ -14,11 +14,9 @@ import {
   REEL_RATE,
   TOUR_RATE,
   TWILIGHT_RATE,
-  RUSH_FLAT,
   FOOTPRINT_BANDS,
   TOUR_RANGE,
   VISIT_PRICE_LABEL,
-  bandCells,
 } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
@@ -43,17 +41,17 @@ const faqs = [
   {
     id: 'what',
     q: 'What is Bricks?',
-    a: `Bricks is the operating system for Canadian real estate — for brokerage, team, agent, and photographer. Media is the beachhead. Companion is how agents book media. GO is the photographer field app. ${STATUS.os}`,
+    a: `The OS for Canadian real estate. Media is the beachhead. Companion books; GO is the field app. ${STATUS.os}`,
   },
   {
     id: 'included',
     q: "What's included in a standard shoot?",
-    a: 'HDR photography, licensed drone, and a floor plan on every standard shoot. Edited and MLS-ready in 24–48 hours. Photos only drops drone and floor plan; Showcase and Full suite add more. See Pricing for the full à la carte table.',
+    a: 'HDR, licensed drone, and a floor plan on every standard shoot. MLS-ready in 24–48 hours.',
   },
   {
     id: 'booking',
     q: 'How does booking work?',
-    a: 'On this site you pick services, then an exact date and clock time gated by live availability — not morning, afternoon, or evening windows. That clock time locks when you pay and goes to the photographer on GO.',
+    a: 'Pick services, then an exact clock time. That time locks when you pay.',
   },
   {
     id: 'coverage',
@@ -90,9 +88,9 @@ const faqs = [
 function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
   switch (id) {
     case 'included':
-      return <>HDR photography, licensed drone, and a floor plan on every standard shoot. Edited and MLS-ready in 24–48 hours. Photos only drops drone and floor plan; Showcase and Full suite add more. See <Link href="/pricing">Pricing</Link> for the full à la carte table.</>
+      return <>HDR, licensed drone, floor plan. 24–48h. See <Link href="/pricing">Pricing</Link>.</>
     case 'booking':
-      return <>On this site you pick services, then an exact date and clock time gated by live availability — not morning, afternoon, or evening windows. That clock time locks when you pay and goes to the photographer on GO. <Link href="/book">Book a shoot</Link>.</>
+      return <>Exact clock time — not a window. <Link href="/book">Book</Link>.</>
     case 'plans':
       return <>Clay is free through Diamond on OS. Media is always à la carte — software does not bundle shoots. See <Link href="/platform">Platform</Link> for plans and <Link href="/pricing">Pricing</Link> for media rates.</>
     case 'photographers':
@@ -190,30 +188,25 @@ export default function Home() {
 
       <section className="trust-wall rvl" aria-label="Who bricks is for">
         <div className="wrap">
-          <p className="trust-wall-cap">Built for every seat on the deal.</p>
           <div className="trust-tiles">
             <Link href="/brokerage" className="trust-tile">
               <span className="trust-tile-k">Brokerage</span>
-              <span className="trust-tile-v">Whole shop · seats</span>
             </Link>
             <Link href="/agents#team" className="trust-tile">
               <span className="trust-tile-k">Team</span>
-              <span className="trust-tile-v">Shared pipeline</span>
             </Link>
             <Link href="/agents" className="trust-tile">
               <span className="trust-tile-k">Agent</span>
-              <span className="trust-tile-v">Listing · Companion</span>
             </Link>
             <Link href="/photographers" className="trust-tile">
               <span className="trust-tile-k">Photographer</span>
-              <span className="trust-tile-v">GO · fixed rate card</span>
             </Link>
           </div>
           <div className="trust-stats">
-            <div><b>14,000+</b><span>properties shot</span></div>
-            <div><b>Canada-wide</b><span>launch coverage</span></div>
-            <div><b>24–48h</b><span>MLS-ready delivery</span></div>
-            <div><b>Auto-assign</b><span>native vendor routing</span></div>
+            <div><b>14,000+</b><span>shot</span></div>
+            <div><b>Canada</b><span>coverage</span></div>
+            <div><b>24–48h</b><span>delivery</span></div>
+            <div><b>Auto-assign</b><span>routing</span></div>
           </div>
         </div>
       </section>
@@ -221,9 +214,8 @@ export default function Home() {
       <section className="cap-band rvl" aria-label="OS — desk">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>The desk runs the deal.</h2>
-            <p>Property, listing, media, and transaction in one OS — not a shoot queue dressed up as software.</p>
-            <Link className="learn-link" href="/platform">Learn about the OS →</Link>
+            <h2>The desk.</h2>
+            <Link className="learn-link" href="/platform">OS →</Link>
           </div>
           <div className="cap-stage tray tray-crm">
             <div className="tray-stage tray-stage-fill">
@@ -233,7 +225,7 @@ export default function Home() {
                 nw={1440}
                 nh={920}
                 fit="width"
-                chromeMode="lights"
+                hideChrome
                 zoomAt={820}
                 lazy
               />
@@ -245,9 +237,8 @@ export default function Home() {
       <section className="cap-band rvl" aria-label="Companion">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>Book in one clock.</h2>
-            <p>Exact date and time — not a vague window. Address, services, confirm. The photographer is routed.</p>
-            <Link className="learn-link" href="/demo">Learn about Companion →</Link>
+            <h2>Companion.</h2>
+            <Link className="learn-link" href="/demo">Demo →</Link>
           </div>
           <div className="cap-stage tray tray-book tray-phone">
             <div className="phone-stage">
@@ -272,9 +263,8 @@ export default function Home() {
       <section className="cap-band rvl" aria-label="GO">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>Shoot on site.</h2>
-            <p>Jobs, uploads, pay. Independent contractors on a fixed rate card. Auto-assign is the backbone.</p>
-            <Link className="learn-link" href="/photographers">Learn about GO →</Link>
+            <h2>GO.</h2>
+            <Link className="learn-link" href="/photographers">Photographers →</Link>
           </div>
           <div className="cap-stage tray tray-disp tray-phone">
             <div className="phone-stage">
@@ -299,9 +289,8 @@ export default function Home() {
       <section className="work-sec rvl" aria-label="Selected work">
         <div className="wrap">
           <div className="section-head section-head-stack">
-            <span className="over">Selected work</span>
-            <h2>Real shoots,<br /><em>not stock.</em></h2>
-            <p className="lede">Every listing shot by a vetted Bricks photographer. Detached, condo, commercial — one standard.</p>
+            <span className="over">Work</span>
+            <h2>Real shoots.</h2>
           </div>
           <div className="work-row">
             <figure>
@@ -331,8 +320,7 @@ export default function Home() {
             </video>
             <div className="film-in">
               <div>
-                <div className="vt">How Bricks runs a listing — from first call to close.</div>
-                <div className="vs">Book a shoot, the photographer is routed, media lands in 24–48 hours — then the deal runs in the same system.</div>
+                <div className="vt">Book → shoot → desk.</div>
               </div>
             </div>
           </div>
@@ -342,9 +330,8 @@ export default function Home() {
       <section className="edit-sec rvl" aria-label="The edit">
         <div className="wrap">
           <div className="section-head section-head-stack">
-            <span className="over">The edit</span>
-            <h2>Half the work<br />happens <em>after.</em></h2>
-            <p className="lede">Sky replacement, HDR blending, twilight conversion. Hybrid AI and human retouching on every frame. Drag to compare.</p>
+            <span className="over">Edit</span>
+            <h2>After the shoot.</h2>
           </div>
           <div className="edit-grid">
             <div>
@@ -355,10 +342,7 @@ export default function Home() {
                 <span className="lbl r">After</span>
                 <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
               </div>
-              <div className="edit-cap">
-                <div className="t">Sky replacement &amp; HDR blend</div>
-                <div className="d">Flat overcast capture graded to a clean, listing-ready exterior.</div>
-              </div>
+              <div className="edit-cap"><div className="t">Sky · HDR</div></div>
             </div>
             <div>
               <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
@@ -368,10 +352,7 @@ export default function Home() {
                 <span className="lbl r">After</span>
                 <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
               </div>
-              <div className="edit-cap">
-                <div className="t">Window pull &amp; interior balance</div>
-                <div className="d">Blown windows recovered, colour balanced across mixed light sources.</div>
-              </div>
+              <div className="edit-cap"><div className="t">Windows · balance</div></div>
             </div>
           </div>
         </div>
@@ -380,9 +361,8 @@ export default function Home() {
       <section className="visit-sec rvl" aria-label="Virtual Visit">
         <div className="wrap">
           <div className="section-head section-head-stack">
-            <span className="over">Virtual Visit · Gaussian splat · quoted by sqft</span>
-            <h2>Free-roam.<br /><em>Never a tour.</em></h2>
-            <p className="lede">Buyers walk the property on their own path — not a scripted walkthrough. Always a paid add-on, never packaged.</p>
+            <span className="over">Virtual Visit</span>
+            <h2>Free-roam.</h2>
           </div>
           <div className="visit-stage">
             <VirtualVisitEmbed />
@@ -392,40 +372,22 @@ export default function Home() {
 
       <section className="proof-chapter rvl" aria-label="Proof">
         <div className="wrap">
-          <h2 className="proof-chapter-h">The desk for Canadian real estate.</h2>
-          <div className="proof-cards">
-            <blockquote className="proof-card">
-              <p>“We ran shoots out of three spreadsheets and a group text. Bricks turned that into one screen — and the answer to how much we spent on media this month is just there.”</p>
-              <footer>
-                <span className="nm">Jordan Malcolm</span>
-                <span className="rl">Principal · 47-agent office</span>
-              </footer>
-            </blockquote>
-            <div className="proof-card proof-card-fact">
-              <p>Media is the beachhead. The same system then runs the listing file, the vendor job, and the deal — not a separate photography app bolted on later.</p>
-              <footer>
-                <span className="nm">Product truth</span>
-                <span className="rl">OS · Companion · GO</span>
-              </footer>
-            </div>
-            <div className="proof-card proof-card-fact">
-              <p>Photographers are independent contractors on a fixed dollar rate card — not a cut of the client fee. Auto-assign is native, not optional.</p>
-              <footer>
-                <span className="nm">Vendor ops</span>
-                <span className="rl">GO · Dispatch</span>
-              </footer>
-            </div>
-          </div>
-          <Link className="learn-link proof-chapter-link" href="/platform">See the platform →</Link>
+          <blockquote className="proof-card proof-card-solo">
+            <p>“Three spreadsheets and a group text — now one screen.”</p>
+            <footer>
+              <span className="nm">Jordan Malcolm</span>
+              <span className="rl">Principal · 47-agent office</span>
+            </footer>
+          </blockquote>
+          <Link className="learn-link proof-chapter-link" href="/platform">Platform →</Link>
         </div>
       </section>
 
       <section className="home-price-sec rvl" id="home-pricing" aria-label="Listing media pricing">
         <div className="wrap">
           <div className="section-head section-head-stack">
-            <span className="over">Listing media · priced by footprint</span>
-            <h2>Pick the shoot.<br /><em>Pay for the footprint.</em></h2>
-            <p className="lede">HDR photography is on every shoot. Licensed drone and a floor plan come with every standard tier. Build à la carte or take a bundle — the quote is exact before you pay.</p>
+            <span className="over">Media</span>
+            <h2>Priced by footprint.</h2>
           </div>
           <div className="pkgs">
             <div className="pkg">
@@ -478,63 +440,11 @@ export default function Home() {
           <Link className="lean-strip" href="/book">
             <div>
               <span className="pkg-name">Photos only</span>
-              <span className="lean-sub">HDR photography on its own — no drone, no floor plan. For the listing that just needs frames.</span>
+              <span className="lean-sub">HDR only · no drone · no floor plan</span>
             </div>
             <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
           </Link>
-
-          <div className="rate home-rate">
-            <table>
-              <thead>
-                <tr>
-                  <th>À la carte</th>
-                  <th style={{ textAlign: 'right' }}>Small ≤1,200</th>
-                  <th style={{ textAlign: 'right' }}>Mid ≤2,500</th>
-                  <th style={{ textAlign: 'right' }}>Large ≤4,000</th>
-                  <th style={{ textAlign: 'right' }}>XL 4,000+</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>HDR photography<small>Interiors + exteriors, bracketed for MLS</small></th>
-                  {bandCells(PHOTO_RATE).map((c) => <td key={`p-${c}`}>{c}</td>)}
-                </tr>
-                <tr>
-                  <th>Licensed drone<small>Advanced RPAS-certified aerial</small></th>
-                  {bandCells(DRONE_RATE).map((c) => <td key={`d-${c}`}>{c}</td>)}
-                </tr>
-                <tr>
-                  <th>Cinematic reel<small>30–45s vertical-ready edit</small></th>
-                  {bandCells(REEL_RATE).map((c) => <td key={`r-${c}`}>{c}</td>)}
-                </tr>
-                <tr>
-                  <th>{TOUR_NAME}<small>Path walkthrough — you stay on the path</small></th>
-                  {bandCells(TOUR_RATE).map((c) => <td key={`t-${c}`}>{c}</td>)}
-                </tr>
-                <tr>
-                  <th>Twilight exterior<small>Blue-hour session</small></th>
-                  {bandCells(TWILIGHT_RATE).map((c) => <td key={`tw-${c}`}>{c}</td>)}
-                </tr>
-                <tr>
-                  <th>Floor plan<small>Branded 2D with room dimensions</small></th>
-                  <td className="wide" colSpan={4}>Included on every standard shoot</td>
-                </tr>
-                <tr>
-                  <th>Virtual staging<small>By request — not in checkout</small></th>
-                  <td className="wide" colSpan={4}>Email booking@brxs.ca — not available in online checkout yet</td>
-                </tr>
-                <tr>
-                  <th>Rush delivery<small>Same or next day when capacity allows</small></th>
-                  <td className="wide" colSpan={4}>+{'$'}{RUSH_FLAT} flat</td>
-                </tr>
-                <tr>
-                  <th>{VISIT_NAME}<small>Free-roam 3D (Gaussian splat)</small></th>
-                  <td className="wide" colSpan={4}>{VISIT_PRICE_LABEL} — always a paid add-on, never packaged</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="rate-note">CAD, pre-tax; HST applied at checkout. First 25 km of travel is free, then billed per kilometre. A <b>virtual tour</b> is a path-confined walkthrough and can sit in a package. A <b>virtual visit</b> is free-roam Gaussian splat — always quoted separately, never packaged, and never called a tour. <Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
+          <p className="rate-note"><Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
         </div>
       </section>
 
@@ -549,7 +459,7 @@ export default function Home() {
       <div className="wrap">
         <section className="block rvl" id="faq" aria-label="Frequently asked questions">
           <div className="sec-head">
-            <div><span className="over">FAQ</span><h2>Quick answers.</h2></div>
+            <div><span className="over">FAQ</span><h2>FAQ.</h2></div>
           </div>
           <div className="faq">
             {faqs.slice(0, 4).map((f) => (
@@ -579,14 +489,14 @@ export default function Home() {
         .prod-mini a{color:var(--brickDeep);text-decoration:none;}
         .prod-mini a:hover{text-decoration:underline;text-underline-offset:2px;}
         .faq .qa p a{color:var(--brickDeep);text-decoration:none;}
-        .hero-home{padding:88px 36px 56px;border-bottom:none;}
+        .hero-home{padding:64px 36px 40px;border-bottom:none;}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:420px;}
         .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
         .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
         @media (max-width:680px){
-          .hero-home{padding:40px 20px 28px;}
+          .hero-home{padding:36px 20px 24px;}
           .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:20ch;}
           .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:28ch;line-height:1.4;}
           .hero-home .cta-row{margin-top:22px;gap:14px;}

@@ -34,7 +34,7 @@ export default function ProductStage() {
           nw={1440}
           nh={920}
           fit="width"
-          chromeMode="lights"
+          hideChrome
           zoomAt={zoomAt}
         />
       </div>
@@ -50,7 +50,7 @@ export default function ProductStage() {
           nw={1440}
           nh={920}
           fit="width"
-          chromeMode="lights"
+          hideChrome
           zoomAt={zoomAt}
         />
       </div>
