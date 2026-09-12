@@ -18,6 +18,10 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/book' || pathname.startsWith('/book/')) return true
   if (pathname === '/api/book' || pathname.startsWith('/api/book/')) return true
   if (pathname === '/api/address-suggest') return true
+  // Canada-wide contractor apply must work while marketing stays gated.
+  // Form loads /legal/ic-agreement.txt; apply POST goes to dispatch-api (other host).
+  if (pathname === '/photographers' || pathname.startsWith('/photographers/')) return true
+  if (pathname === '/legal/ic-agreement.txt') return true
   return false
 }
 

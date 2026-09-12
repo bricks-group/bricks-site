@@ -18,10 +18,16 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/api/address-suggest'), true)
   })
 
+  it('opens photographers apply + IC agreement while marketing stays gated', () => {
+    assert.equal(isPublicPath('/photographers'), true)
+    assert.equal(isPublicPath('/photographers/'), true)
+    assert.equal(isPublicPath('/legal/ic-agreement.txt'), true)
+  })
+
   it('still gates marketing and other APIs', () => {
     assert.equal(isPublicPath('/'), false)
     assert.equal(isPublicPath('/pricing'), false)
-    assert.equal(isPublicPath('/photographers'), false)
+    assert.equal(isPublicPath('/legal'), false)
     assert.equal(isPublicPath('/api/contact'), false)
     assert.equal(isPublicPath('/api/newsletter'), false)
   })
