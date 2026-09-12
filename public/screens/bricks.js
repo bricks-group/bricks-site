@@ -255,10 +255,11 @@ const BROK_ROLES = {
     wsNm:'Ashfield', wsMeta:'47 agents', ini:'EA', who:'Elena Asare', role:'Operations',
     nav:[
       { group:null,        items:[['grid','Overview','overview']] },
-      { group:'Deal flow', items:[['users','CRM','crm'],['cards','Transactions','transactions'],['up','MLS submission','mls'],['file','Forms & e-sign','forms']] },
-      { group:'Media',     items:[['job','Jobs','jobs'],['cam','Vendors','vendors']] },
-      { group:'Finance',   items:[['dol','Accounting','accounting'],['user','Agents','agents']] },
-      { group:null,        items:[['cog','Settings','settings']] },
+      { group:'Sales',     items:[['users','Contacts','crm'],['cards','Transactions','transactions']] },
+      { group:'Media',     items:[['job','Shoots','jobs'],['cam','Photographers','vendors']] },
+      { group:'Brokerage', items:[['user','Agents','agents'],['dol','Billing','billing'],['sliders','Connected tools','settings'],['cog','Settings','settings']] },
+      { group:'More',      items:[['up','MLS Listings','mls'],['dol','Accounting','accounting']] },
+      { group:'Documents', items:[['file','Forms & e-sign','forms']] },
     ],
   },
   team: {
@@ -572,7 +573,7 @@ function BrokShell({ dark=false, screen='overview', role='office', customize=fal
             <I name="cD" size={14} color={th.ink3}/>
           </div>
         </div>
-        <div style={{ padding:'14px 12px', display:'flex', flexDirection:'column', gap:1 }}>
+        <div style={{ padding:'14px 12px', display:'flex', flexDirection:'column', gap:1, flex:1, minHeight:0, overflowY:'auto' }}>
           {NAV.map((grp, gi) => (
             <React.Fragment key={gi}>
               {grp.group && <div style={{ padding:'16px 14px 6px' }}><Over color={th.ink4} style={{ fontSize:9.5 }}>{grp.group}</Over></div>}

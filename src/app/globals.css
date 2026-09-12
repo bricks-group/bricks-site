@@ -665,3 +665,52 @@ html[data-theme="dark"] .map-cutout-gl img{
     filter:none !important;
   }
 }
+
+/* Newsletter popup — was dropped when homepage went sparse */
+.nl-pop{
+  position:fixed;right:20px;bottom:20px;width:min(330px, calc(100vw - 40px));
+  background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;
+  box-shadow:0 12px 40px rgba(20,17,14,.18);padding:22px 22px 20px;z-index:60;
+  transform:translateY(140%);opacity:0;pointer-events:none;
+  transition:transform .45s ease,opacity .45s ease;
+  font-family:'General Sans',sans-serif;
+}
+.nl-pop.show{transform:translateY(0);opacity:1;pointer-events:auto;}
+.nl-pop .x{
+  position:absolute;top:10px;right:12px;background:none;border:none;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--inkMute);line-height:1;
+  padding:4px 6px;
+}
+.nl-pop .x:hover{color:var(--brickDeep);}
+.nl-pop h4{font-weight:500;font-size:18px;letter-spacing:-0.4px;color:var(--ink);margin:0 28px 6px 0;}
+.nl-pop p{font-size:13px;color:var(--inkSoft);line-height:1.5;margin:0 0 14px;}
+.nl-pop form{display:flex;flex-direction:column;gap:10px;width:100%;}
+.nl-pop input{
+  display:block;width:100%;box-sizing:border-box;
+  font-family:'General Sans',sans-serif;font-size:14px;background:var(--paper);
+  color:var(--ink);border:1px solid var(--hairStrong);border-radius:2px;padding:12px 14px;outline:none;
+}
+.nl-pop input:focus{border-color:var(--brick);}
+.nl-pop .consent{
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--inkFaint);
+  line-height:1.5;margin:2px 0 0;
+}
+.nl-pop .btn,.nl-pop .btn-brick{
+  display:flex;width:100%;box-sizing:border-box;justify-content:center;align-items:center;
+  margin:0;
+}
+.nl-pop .nlmsg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--brickDeep);min-height:14px;}
+.nl-pill{
+  position:fixed;right:20px;bottom:20px;z-index:55;display:flex;align-items:center;gap:7px;
+  background:var(--ink);color:var(--paper);border:none;border-radius:2px;cursor:pointer;
+  font-family:'General Sans',sans-serif;font-weight:500;font-size:13px;padding:11px 16px;
+  box-shadow:0 0 0 1px var(--hair);
+}
+.nl-pill:hover{background:var(--brick);color:#fff;}
+.nl-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--brick);flex:none;}
+.nl-pill:hover::before{background:#fff;}
+@media (max-width:480px){
+  .nl-pop{right:12px;bottom:12px;width:calc(100vw - 24px);padding:20px 18px 18px;}
+  .nl-pill{right:12px;bottom:12px;}
+}
+@media (prefers-reduced-motion: reduce){.nl-pop{transition:none;}}

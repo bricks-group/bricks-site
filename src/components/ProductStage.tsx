@@ -15,7 +15,7 @@ export default function ProductStage() {
       >
         <ProductWindow
           title="bricks"
-          src="/screens/os.html?screen=overview&lock=1"
+          src="/screens/os.html?screen=overview"
           nw={1440}
           nh={920}
           fit="width"
@@ -28,7 +28,7 @@ export default function ProductStage() {
       >
         <ProductWindow
           title="bricks"
-          src="/screens/os.html?screen=transactions&lock=1"
+          src="/screens/os.html?screen=transactions"
           nw={1440}
           nh={920}
           fit="width"

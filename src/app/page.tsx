@@ -211,9 +211,10 @@ export default function Home() {
             <ProductWindow
               variant="phone"
               title="Companion"
-              src="/screens/book.html?lock=1"
+              src="/screens/book.html"
               nw={390}
               nh={844}
+              fit="contain"
               lazy
             />
           </div>
@@ -226,9 +227,10 @@ export default function Home() {
             <ProductWindow
               variant="phone"
               title="GO"
-              src="/screens/disp.html?lock=1"
+              src="/screens/disp.html"
               nw={390}
               nh={844}
+              fit="contain"
               lazy
             />
           </div>

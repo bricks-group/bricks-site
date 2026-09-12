@@ -701,17 +701,20 @@
         group: null,
         items: [['grid', 'Overview', 'overview']]
       }, {
-        group: 'Deal flow',
-        items: [['users', 'CRM', 'crm'], ['cards', 'Transactions', 'transactions'], ['up', 'MLS submission', 'mls'], ['file', 'Forms & e-sign', 'forms']]
+        group: 'Sales',
+        items: [['users', 'Contacts', 'crm'], ['cards', 'Transactions', 'transactions']]
       }, {
         group: 'Media',
-        items: [['job', 'Jobs', 'jobs'], ['cam', 'Vendors', 'vendors']]
+        items: [['job', 'Shoots', 'jobs'], ['cam', 'Photographers', 'vendors']]
       }, {
-        group: 'Finance',
-        items: [['dol', 'Accounting', 'accounting'], ['user', 'Agents', 'agents']]
+        group: 'Brokerage',
+        items: [['user', 'Agents', 'agents'], ['dol', 'Billing', 'billing'], ['sliders', 'Connected tools', 'settings'], ['cog', 'Settings', 'settings']]
       }, {
-        group: null,
-        items: [['cog', 'Settings', 'settings']]
+        group: 'More',
+        items: [['up', 'MLS Listings', 'mls'], ['dol', 'Accounting', 'accounting']]
+      }, {
+        group: 'Documents',
+        items: [['file', 'Forms & e-sign', 'forms']]
       }]
     },
     team: {
@@ -1734,7 +1737,10 @@
         padding: '14px 12px',
         display: 'flex',
         flexDirection: 'column',
-        gap: 1
+        gap: 1,
+        flex: 1,
+        minHeight: 0,
+        overflowY: 'auto'
       }
     }, NAV.map((grp, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
       key: gi
