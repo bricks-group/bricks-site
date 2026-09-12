@@ -7,7 +7,19 @@ import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
-import { PHOTO_RATE, DRONE_RATE, FOOTPRINT_BANDS, TOUR_RANGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import {
+  PHOTO_RATE,
+  DRONE_RATE,
+  REEL_RATE,
+  TOUR_RATE,
+  TWILIGHT_RATE,
+  RUSH_FLAT,
+  STAGING_PER_IMAGE,
+  FOOTPRINT_BANDS,
+  TOUR_RANGE,
+  VISIT_PRICE_LABEL,
+  bandCells,
+} from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
   COMPANION_URL,
@@ -21,7 +33,11 @@ import {
   VISIT_PACKAGING,
 } from '@/lib/brand'
 
-const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
+const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // Essentials Small (~$248)
+const STORY_FROM = CORE_FROM + REEL_RATE[0]
+const SHOWCASE_FROM = STORY_FROM + TOUR_RATE[0]
+const FULL_FROM = SHOWCASE_FROM + TWILIGHT_RATE[0]
+const PHOTO_ONLY_FROM = PHOTO_RATE[0]
 
 const faqs = [
   {
@@ -335,17 +351,160 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="wrap">
-        <section className="block rvl" id="book">
-          <div className="book">
-            <div>
-              <span className="over">Book</span>
-              <h2 style={{ color: 'var(--moon)', marginTop: 8 }}>Ready when the listing is.</h2>
-              <Link className="btn btn-brick" href="/book" style={{ marginTop: 18, display: 'inline-flex' }}>Book a shoot →</Link>
+      <section className="quote-sec rvl" aria-label="Customers">
+        <div className="wrap">
+          <div className="pullquote">
+            <span className="over" style={{ display: 'block', marginBottom: 26 }}>Customers</span>
+            <q>We ran shoots out of three spreadsheets and a group text. Bricks turned that into one screen — and the answer to “how much did we spend on media this month” is just there.</q>
+            <div className="pq-by">
+              <span className="av" aria-hidden="true" />
+              <div>
+                <div className="nm">Jordan Malcolm</div>
+                <div className="rl">Principal · 47-agent office</div>
+              </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      <section className="home-price-sec rvl" id="home-pricing" aria-label="Listing media pricing">
+        <div className="wrap">
+          <div className="section-head section-head-stack">
+            <span className="over">Listing media · priced by footprint</span>
+            <h2>Pick the shoot.<br /><em>Pay for the footprint.</em></h2>
+            <p className="lede">HDR photography is on every shoot. Licensed drone and a floor plan come with every standard tier. Build à la carte or take a bundle — the quote is exact before you pay.</p>
+          </div>
+          <div className="pkgs">
+            <div className="pkg">
+              <div className="pkg-head"><span className="pkg-name">Essentials</span></div>
+              <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
+              <ul>
+                <li>HDR photography — interior + exterior</li>
+                <li>Licensed drone aerial</li>
+                <li>Branded 2D floor plan</li>
+                <li>24–48h delivery</li>
+              </ul>
+              <div className="pkg-foot">Small footprint · scales to XL</div>
+              <Link className="btn btn-ghost" href="/book">Book Essentials</Link>
+            </div>
+            <div className="pkg">
+              <div className="pkg-head"><span className="pkg-name">Story</span></div>
+              <div className="pkg-amt">from {'$'}{STORY_FROM}<small> / shoot</small></div>
+              <ul>
+                <li>Everything in Essentials</li>
+                <li>Cinematic reel — 30–45s</li>
+                <li>24–48h delivery</li>
+              </ul>
+              <div className="pkg-foot">Small footprint · scales to XL</div>
+              <Link className="btn btn-ghost" href="/book">Book Story</Link>
+            </div>
+            <div className="pkg feat">
+              <div className="pkg-head"><span className="pkg-name">Showcase</span><span className="pkg-badge">Most booked</span></div>
+              <div className="pkg-amt">from {'$'}{SHOWCASE_FROM}<small> / shoot</small></div>
+              <ul>
+                <li>Everything in Story</li>
+                <li>{TOUR_NAME} — path walkthrough</li>
+                <li>24–48h delivery</li>
+              </ul>
+              <div className="pkg-foot">Small footprint · scales to XL</div>
+              <Link className="btn btn-brick" href="/book">Book Showcase</Link>
+            </div>
+            <div className="pkg">
+              <div className="pkg-head"><span className="pkg-name">Full suite</span></div>
+              <div className="pkg-amt">from {'$'}{FULL_FROM}<small> / shoot</small></div>
+              <ul>
+                <li>Everything in Showcase</li>
+                <li>Twilight exterior session</li>
+                <li>Virtual staging — {'$'}{STAGING_PER_IMAGE} / image</li>
+                <li>24–48h delivery</li>
+              </ul>
+              <div className="pkg-foot">Small footprint · scales to XL</div>
+              <Link className="btn btn-ghost" href="/book">Book Full suite</Link>
+            </div>
+          </div>
+          <Link className="lean-strip" href="/book">
+            <div>
+              <span className="pkg-name">Photos only</span>
+              <span className="lean-sub">HDR photography on its own — no drone, no floor plan. For the listing that just needs frames.</span>
+            </div>
+            <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
+          </Link>
+
+          <div className="rate home-rate">
+            <table>
+              <thead>
+                <tr>
+                  <th>À la carte</th>
+                  <th style={{ textAlign: 'right' }}>Small ≤1,200</th>
+                  <th style={{ textAlign: 'right' }}>Mid ≤2,500</th>
+                  <th style={{ textAlign: 'right' }}>Large ≤4,000</th>
+                  <th style={{ textAlign: 'right' }}>XL 4,000+</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>HDR photography<small>Interiors + exteriors, bracketed for MLS</small></th>
+                  {bandCells(PHOTO_RATE).map((c) => <td key={`p-${c}`}>{c}</td>)}
+                </tr>
+                <tr>
+                  <th>Licensed drone<small>Advanced RPAS-certified aerial</small></th>
+                  {bandCells(DRONE_RATE).map((c) => <td key={`d-${c}`}>{c}</td>)}
+                </tr>
+                <tr>
+                  <th>Cinematic reel<small>30–45s vertical-ready edit</small></th>
+                  {bandCells(REEL_RATE).map((c) => <td key={`r-${c}`}>{c}</td>)}
+                </tr>
+                <tr>
+                  <th>{TOUR_NAME}<small>Path walkthrough — you stay on the path</small></th>
+                  {bandCells(TOUR_RATE).map((c) => <td key={`t-${c}`}>{c}</td>)}
+                </tr>
+                <tr>
+                  <th>Twilight exterior<small>Blue-hour session</small></th>
+                  {bandCells(TWILIGHT_RATE).map((c) => <td key={`tw-${c}`}>{c}</td>)}
+                </tr>
+                <tr>
+                  <th>Floor plan<small>Branded 2D with room dimensions</small></th>
+                  <td className="wide" colSpan={4}>Included on every standard shoot</td>
+                </tr>
+                <tr>
+                  <th>Virtual staging<small>Furniture added in post</small></th>
+                  <td className="wide" colSpan={4}>{'$'}{STAGING_PER_IMAGE} per image staged</td>
+                </tr>
+                <tr>
+                  <th>Rush delivery<small>Same or next day when capacity allows</small></th>
+                  <td className="wide" colSpan={4}>+{'$'}{RUSH_FLAT} flat</td>
+                </tr>
+                <tr>
+                  <th>{VISIT_NAME}<small>Free-roam 3D (Gaussian splat)</small></th>
+                  <td className="wide" colSpan={4}>{VISIT_PRICE_LABEL} — always a paid add-on, never packaged</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="rate-note">CAD, pre-tax; HST applied at checkout. First 25 km of travel is free, then billed per kilometre. A <b>virtual tour</b> is a path-confined walkthrough and can sit in a package. A <b>virtual visit</b> is free-roam Gaussian splat — always quoted separately, never packaged, and never called a tour. <Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
+        </div>
+      </section>
+
+      <section className="closer rvl" id="book" aria-label="Book a shoot">
+        <div className="closer-inner">
+          <div>
+            <h2>Ready when<br /><em>the listing is.</em></h2>
+            <p>Confirm a slot and we quote the address by footprint and travel before you pay. Edited and MLS-ready in 24–48 hours. Rush available when capacity allows.</p>
+            <div className="closer-cta">
+              <Link className="btn btn-brick btn-l" href="/book">Book a shoot →</Link>
+              <Link className="btn btn-l closer-ghost" href="/contact">Talk to us</Link>
+            </div>
+          </div>
+          <div className="closer-meta">
+            <div>
+              <div className="row"><span className="l">Brand</span><span>Canada · then global</span></div>
+              <div className="row"><span className="l">Coverage</span><span>{COVERAGE_LINE.replace(/\.$/, '')}</span></div>
+              <div className="row"><span className="l">Delivery</span><span>24–48 hours · rush available</span></div>
+              <div className="row" style={{ borderBottom: 'none' }}><span className="l">Pay</span><span>Exact quote before Stripe Checkout</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="wrap">
         <section className="block rvl" id="faq" aria-label="Frequently asked questions">
