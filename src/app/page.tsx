@@ -211,7 +211,7 @@ export default function Home() {
             <ProductWindow
               variant="phone"
               title="Companion"
-              src="/screens/book.html"
+              src="/screens/book.html?lock=1"
               nw={390}
               nh={844}
               fit="contain"
@@ -227,7 +227,7 @@ export default function Home() {
             <ProductWindow
               variant="phone"
               title="GO"
-              src="/screens/disp.html"
+              src="/screens/disp.html?lock=1"
               nw={390}
               nh={844}
               fit="contain"
