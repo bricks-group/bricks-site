@@ -6,6 +6,7 @@ import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
+import PhoneDevice from '@/components/PhoneDevice'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import {
   PHOTO_RATE,
@@ -140,7 +141,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'Bricks is the operating system for Canadian real estate, from listing photo to close. Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
+            description: 'Bricks is the operating system for Canadian real estate, Media is the beachhead; the desk runs the deal. Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'help@brxs.ca',
@@ -173,8 +174,8 @@ export default function Home() {
           <h1>The OS for Canadian real estate.</h1>
           <p className="sub">Media is the beachhead. The desk runs the deal.</p>
           <div className="cta-row">
-            <Link className="btn btn-brick" href="/book">Book a shoot</Link>
-            <Link className="btn btn-sec" href="/platform">Platform</Link>
+            <Link className="btn btn-night" href="/book">Book a shoot</Link>
+            <Link className="learn-link" href="/demo">Try the demo →</Link>
           </div>
         </div>
       </section>
@@ -187,72 +188,111 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="wrap">
-        <section className="trust rvl">
-          <p className="proof-cap">14,000+ properties shot.</p>
-        </section>
-      </div>
-
-      <div className="wrap">
-        <section className="aud-sec rvl" aria-label="Who bricks is for">
-          <div className="aud-grid">
-            <Link href="/brokerage" className="aud-card">
-              <span className="over">OS</span>
-              <h3>Brokerage</h3>
+      <section className="trust-wall rvl" aria-label="Who bricks is for">
+        <div className="wrap">
+          <p className="trust-wall-cap">Built for every seat on the deal.</p>
+          <div className="trust-tiles">
+            <Link href="/brokerage" className="trust-tile">
+              <span className="trust-tile-k">Brokerage</span>
+              <span className="trust-tile-v">Whole shop · seats</span>
             </Link>
-            <Link href="/agents#team" className="aud-card">
-              <span className="over">OS</span>
-              <h3>Team</h3>
+            <Link href="/agents#team" className="trust-tile">
+              <span className="trust-tile-k">Team</span>
+              <span className="trust-tile-v">Shared pipeline</span>
             </Link>
-            <Link href="/agents" className="aud-card">
-              <span className="over">OS · Companion</span>
-              <h3>Agent</h3>
+            <Link href="/agents" className="trust-tile">
+              <span className="trust-tile-k">Agent</span>
+              <span className="trust-tile-v">Listing · Companion</span>
             </Link>
-            <Link href="/photographers" className="aud-card">
-              <span className="over">GO</span>
-              <h3>Photographer</h3>
+            <Link href="/photographers" className="trust-tile">
+              <span className="trust-tile-k">Photographer</span>
+              <span className="trust-tile-v">GO · fixed rate card</span>
             </Link>
           </div>
-        </section>
-      </div>
-
-      <section className="prod-row rvl" aria-label="Companion">
-        <div className="prod-copy">
-          <span className="over">Companion</span>
-          <h2>Book in one clock.</h2>
-        </div>
-        <div className="tray tray-book tray-phone">
-          <div className="tray-stage">
-            <ProductWindow
-              variant="phone"
-              title="Companion"
-              src="/screens/book.html?lock=1"
-              nw={390}
-              nh={844}
-              fit="contain"
-              lazy
-            />
+          <div className="trust-stats">
+            <div><b>14,000+</b><span>properties shot</span></div>
+            <div><b>Canada-wide</b><span>launch coverage</span></div>
+            <div><b>24–48h</b><span>MLS-ready delivery</span></div>
+            <div><b>Auto-assign</b><span>native vendor routing</span></div>
           </div>
         </div>
       </section>
 
-      <section className="prod-row prod-row-flip rvl" aria-label="GO">
-        <div className="tray tray-disp tray-phone">
-          <div className="tray-stage">
-            <ProductWindow
-              variant="phone"
-              title="GO"
-              src="/screens/disp.html?lock=1"
-              nw={390}
-              nh={844}
-              fit="contain"
-              lazy
-            />
+      <section className="cap-band rvl" aria-label="OS — desk">
+        <div className="cap-inner">
+          <div className="cap-copy">
+            <h2>The desk runs the deal.</h2>
+            <p>Property, listing, media, and transaction in one OS — not a shoot queue dressed up as software.</p>
+            <Link className="learn-link" href="/platform">Learn about the OS →</Link>
+          </div>
+          <div className="cap-stage tray tray-crm">
+            <div className="tray-stage tray-stage-fill">
+              <ProductWindow
+                title="Ashfield · overview"
+                src="/screens/os.html?screen=overview&lock=1"
+                nw={1440}
+                nh={900}
+                fit="contain"
+                chromeMode="lights"
+                zoomAt={1100}
+                lazy
+              />
+            </div>
           </div>
         </div>
-        <div className="prod-copy">
-          <span className="over">GO</span>
-          <h2>Shoot on site.</h2>
+      </section>
+
+      <section className="cap-band rvl" aria-label="Companion">
+        <div className="cap-inner">
+          <div className="cap-copy">
+            <h2>Book in one clock.</h2>
+            <p>Exact date and time — not a vague window. Address, services, confirm. The photographer is routed.</p>
+            <Link className="learn-link" href="/demo">Learn about Companion →</Link>
+          </div>
+          <div className="cap-stage tray tray-book tray-phone">
+            <div className="phone-stage">
+              <PhoneDevice label="Companion">
+                <ProductWindow
+                  variant="phone"
+                  title="Companion"
+                  src="/screens/book.html?lock=1"
+                  nw={390}
+                  nh={844}
+                  fit="contain"
+                  hideChrome
+                  zoomAt={390}
+                  lazy
+                />
+              </PhoneDevice>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="cap-band rvl" aria-label="GO">
+        <div className="cap-inner">
+          <div className="cap-copy">
+            <h2>Shoot on site.</h2>
+            <p>Jobs, uploads, pay. Independent contractors on a fixed rate card. Auto-assign is the backbone.</p>
+            <Link className="learn-link" href="/photographers">Learn about GO →</Link>
+          </div>
+          <div className="cap-stage tray tray-disp tray-phone">
+            <div className="phone-stage">
+              <PhoneDevice label="GO">
+                <ProductWindow
+                  variant="phone"
+                  title="GO"
+                  src="/screens/disp.html?lock=1"
+                  nw={390}
+                  nh={844}
+                  fit="contain"
+                  hideChrome
+                  zoomAt={390}
+                  lazy
+                />
+              </PhoneDevice>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -350,19 +390,33 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="quote-sec rvl" aria-label="Customers">
+      <section className="proof-chapter rvl" aria-label="Proof">
         <div className="wrap">
-          <div className="pullquote">
-            <span className="over" style={{ display: 'block', marginBottom: 26 }}>Customers</span>
-            <q>We ran shoots out of three spreadsheets and a group text. Bricks turned that into one screen — and the answer to “how much did we spend on media this month” is just there.</q>
-            <div className="pq-by">
-              <span className="av" aria-hidden="true" />
-              <div>
-                <div className="nm">Jordan Malcolm</div>
-                <div className="rl">Principal · 47-agent office</div>
-              </div>
+          <h2 className="proof-chapter-h">The desk for Canadian real estate.</h2>
+          <div className="proof-cards">
+            <blockquote className="proof-card">
+              <p>“We ran shoots out of three spreadsheets and a group text. Bricks turned that into one screen — and the answer to how much we spent on media this month is just there.”</p>
+              <footer>
+                <span className="nm">Jordan Malcolm</span>
+                <span className="rl">Principal · 47-agent office</span>
+              </footer>
+            </blockquote>
+            <div className="proof-card proof-card-fact">
+              <p>Media is the beachhead. The same system then runs the listing file, the vendor job, and the deal — not a separate photography app bolted on later.</p>
+              <footer>
+                <span className="nm">Product truth</span>
+                <span className="rl">OS · Companion · GO</span>
+              </footer>
+            </div>
+            <div className="proof-card proof-card-fact">
+              <p>Photographers are independent contractors on a fixed dollar rate card — not a cut of the client fee. Auto-assign is native, not optional.</p>
+              <footer>
+                <span className="nm">Vendor ops</span>
+                <span className="rl">GO · Dispatch</span>
+              </footer>
             </div>
           </div>
+          <Link className="learn-link proof-chapter-link" href="/platform">See the platform →</Link>
         </div>
       </section>
 
@@ -467,7 +521,7 @@ export default function Home() {
                 </tr>
                 <tr>
                   <th>Virtual staging<small>By request — not in checkout</small></th>
-                  <td className="wide" colSpan={4}>By request — email booking@brxs.ca (not in online checkout)</td>
+                  <td className="wide" colSpan={4}>Email booking@brxs.ca — not available in online checkout yet</td>
                 </tr>
                 <tr>
                   <th>Rush delivery<small>Same or next day when capacity allows</small></th>
@@ -484,24 +538,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="closer rvl" id="book" aria-label="Book a shoot">
-        <div className="closer-inner">
-          <div>
-            <h2>Ready when<br /><em>the listing is.</em></h2>
-            <p>Confirm a slot and we quote the address by footprint and travel before you pay. Edited and MLS-ready in 24–48 hours. Rush available when capacity allows.</p>
-            <div className="closer-cta">
-              <Link className="btn btn-brick btn-l" href="/book">Book a shoot →</Link>
-              <Link className="btn btn-l closer-ghost" href="/contact">Talk to us</Link>
-            </div>
-          </div>
-          <div className="closer-meta">
-            <div>
-              <div className="row"><span className="l">Brand</span><span>Canada · then global</span></div>
-              <div className="row"><span className="l">Coverage</span><span>{COVERAGE_LINE.replace(/\.$/, '')}</span></div>
-              <div className="row"><span className="l">Delivery</span><span>24–48 hours · rush available</span></div>
-              <div className="row" style={{ borderBottom: 'none' }}><span className="l">Pay</span><span>Exact quote before Stripe Checkout</span></div>
-            </div>
-          </div>
+      <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
+        <div className="closer-simple-inner">
+          <h2>Ready when the listing is.</h2>
+          <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
+          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h delivery</p>
         </div>
       </section>
 
@@ -524,13 +565,14 @@ export default function Home() {
       <NewsletterPopup />
 
       <style>{`
-        .trust{text-align:center;padding:72px 0 28px;}
+        .trust{text-align:center;padding:36px 0 20px;}
         .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin:0 auto;text-align:center;}
-        .aud-sec{padding:0 0 48px;}
+        .aud-sec{padding:0 0 28px;}
         .aud-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
         .aud-card{background:var(--paper);padding:20px 18px;text-decoration:none;color:inherit;display:block;}
         .aud-card:hover{background:var(--paperSoft);}
-        .aud-card h3{font-weight:500;font-size:17px;letter-spacing:-0.3px;color:var(--ink);margin:8px 0 0;}
+        .aud-card h3{font-weight:500;font-size:17px;letter-spacing:-0.3px;color:var(--ink);margin:8px 0 4px;}
+        .aud-card p{font-size:12.5px;color:var(--inkMute);margin:0;line-height:1.35;}
         @media (max-width:800px){.aud-grid{grid-template-columns:1fr 1fr;}}
         @media (max-width:480px){.aud-grid{grid-template-columns:1fr;}}
         .prod-mini{margin-top:12px;font-size:13px;color:var(--inkMute);}
@@ -544,8 +586,10 @@ export default function Home() {
         .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
         @media (max-width:680px){
-          .hero-home{padding:52px 20px 36px;}
-          .hero-home h1{font-size:34px;}
+          .hero-home{padding:40px 20px 28px;}
+          .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:20ch;}
+          .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:28ch;line-height:1.4;}
+          .hero-home .cta-row{margin-top:22px;gap:14px;}
         }
         @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
       `}</style>

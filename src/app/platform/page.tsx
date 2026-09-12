@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
+import PhoneDevice from '@/components/PhoneDevice'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
 import { SOFTWARE_PLANS, OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
@@ -31,7 +32,7 @@ export default function PlatformPage() {
           <p className="sub">Listing, Companion, GO, media, MLS, transaction. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
-            <Link className="btn btn-sec" href="/pricing">Pricing</Link>
+            <Link className="btn btn-sec" href="/demo">Try the demo</Link>
           </div>
         </div>
       </section>
@@ -61,32 +62,40 @@ export default function PlatformPage() {
           <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
         <div className="tray tray-book tray-phone">
-          <div className="tray-stage">
-            <ProductWindow
-              variant="phone"
-              title="Companion"
-              src="/screens/book.html?lock=1"
-              nw={390}
-              nh={844}
-              fit="contain"
-              lazy
-            />
+          <div className="phone-stage">
+            <PhoneDevice label="Companion">
+              <ProductWindow
+                variant="phone"
+                title="Companion"
+                src="/screens/book.html?lock=1"
+                nw={390}
+                nh={844}
+                fit="contain"
+                hideChrome
+                zoomAt={390}
+                lazy
+              />
+            </PhoneDevice>
           </div>
         </div>
       </section>
 
       <section className="prod-row prod-row-flip rvl" aria-label="GO — mobile">
         <div className="tray tray-disp tray-phone">
-          <div className="tray-stage">
-            <ProductWindow
-              variant="phone"
-              title="GO"
-              src="/screens/disp.html?lock=1"
-              nw={390}
-              nh={844}
-              fit="contain"
-              lazy
-            />
+          <div className="phone-stage">
+            <PhoneDevice label="GO">
+              <ProductWindow
+                variant="phone"
+                title="GO"
+                src="/screens/disp.html?lock=1"
+                nw={390}
+                nh={844}
+                fit="contain"
+                hideChrome
+                zoomAt={390}
+                lazy
+              />
+            </PhoneDevice>
           </div>
         </div>
         <div className="prod-copy">
