@@ -6,6 +6,7 @@ import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
+import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import { PHOTO_RATE, DRONE_RATE, FOOTPRINT_BANDS, TOUR_RANGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
@@ -94,21 +95,18 @@ const beforeAfter = [
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
   { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
 ] as const
-const SPLAT_GIF =
-  'https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/GaussianSplatRender.gif'
-
 export const metadata: Metadata = {
   title: 'bricks — the operating system for Canadian real estate',
-  description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today. OS is live in preview at app.brxs.ca.',
+  description: 'The operating system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today. OS is live in preview at app.brxs.ca.',
+    description: 'The operating system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
     title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today.',
+    description: 'The operating system for Canadian real estate. Book professional media today.',
     images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
@@ -157,8 +155,8 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <h1>From listing photo to close.</h1>
-          <p className="sub">The operating system for Canadian real estate.</p>
+          <h1>The OS for Canadian real estate.</h1>
+          <p className="sub">Media is the beachhead. The desk runs the deal.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/platform">Platform</Link>
@@ -247,27 +245,23 @@ export default function Home() {
           <h2>Real shoots.</h2>
           <p className="prod-mini"><Link href="/gallery">Work</Link></p>
         </div>
-        <div className="tray tray-media tray-bleed-end">
-          <div className="tray-stage tray-stage-media">
-            <div className="media-frame">
-              <video className="reel-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
-                <source src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
-              </video>
-            </div>
+        <div className="media-bleed">
+          <div className="media-frame">
+            <video className="reel-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
+              <source src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </section>
 
       <section className="prod-row prod-row-flip rvl" aria-label="The edit">
-        <div className="tray tray-media tray-bleed-start">
-          <div className="tray-stage tray-stage-media">
-            <div className="media-frame ba-split" data-ba>
-              <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width: 900px) 100vw, 55vw" />
-              <Image className="ba-before" src={beforeAfter[1].before} alt="HDR — before" fill sizes="(max-width: 900px) 100vw, 55vw" />
-              <span className="ba-tag ba-tag-before">Before</span>
-              <span className="ba-tag ba-tag-after">After</span>
-              <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-            </div>
+        <div className="media-bleed">
+          <div className="media-frame ba-split" data-ba>
+            <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width: 900px) 100vw, 55vw" />
+            <Image className="ba-before" src={beforeAfter[1].before} alt="HDR — before" fill sizes="(max-width: 900px) 100vw, 55vw" />
+            <span className="ba-tag ba-tag-before">Before</span>
+            <span className="ba-tag ba-tag-after">After</span>
+            <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
           </div>
         </div>
         <div className="prod-copy">
@@ -280,14 +274,11 @@ export default function Home() {
         <div className="prod-copy">
           <span className="over">Virtual Visit</span>
           <h2>Free-roam.</h2>
-          <p className="prod-mini">Add-on · by footprint</p>
+          <p className="prod-mini">Add-on · by footprint · drag to look around</p>
         </div>
-        <div className="tray tray-media tray-bleed-end">
-          <div className="tray-stage tray-stage-media">
-            <div className="media-frame splat-frame">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={SPLAT_GIF} alt="Gaussian splat Virtual Visit" />
-            </div>
+        <div className="media-bleed">
+          <div className="media-frame visit-frame">
+            <VirtualVisitEmbed />
           </div>
         </div>
       </section>
@@ -347,10 +338,6 @@ export default function Home() {
           .hero-home h1{font-size:34px;}
         }
         @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
-        .tray-media{background:var(--paperDeep);}
-        .tray-stage-media{display:flex;align-items:center;justify-content:center;padding:28px 24px;height:100%;}
-        .media-frame{position:relative;width:100%;max-width:920px;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--hair);border-radius:2px;background:#0a0908;}
-        .media-frame .reel-video,.splat-frame img{display:block;width:100%;height:100%;object-fit:cover;}
         .ba-split{touch-action:none;cursor:ew-resize;user-select:none;}
         .ba-split img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;}
         .ba-before{clip-path:inset(0 50% 0 0);}
@@ -359,9 +346,7 @@ export default function Home() {
         .ba-tag{position:absolute;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:2px;z-index:2;}
         .ba-tag-before{left:10px;background:rgba(20,17,14,0.6);color:var(--paper);}
         .ba-tag-after{right:10px;background:var(--brick);color:#fff;}
-        @media (max-width:900px){
-          .tray-stage-media{padding:16px;}
-        }
+        .media-bleed .media-frame .reel-video{display:block;width:100%;height:100%;object-fit:cover;}
       `}</style>
 
     </>
