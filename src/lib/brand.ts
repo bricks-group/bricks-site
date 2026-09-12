@@ -48,14 +48,15 @@ export const BROKERAGE_LOGOS = [
   { src: '/media/logos/engelvoelkers.png', alt: 'Engel & Völkers' },
 ] as const
 
-/** Legacy city list kept for service-areas detail only — not brand geography. */
+/** Hub names for internal lists — live map geometry lives in lib/coverage.ts. */
 export const COVERAGE_CITIES = [
-  'Toronto',
-  'Mississauga',
+  'Greater Toronto',
   'Hamilton',
-  'Durham',
-  'York',
   'Niagara',
+  'Ottawa',
+  'Calgary',
+  'Edmonton',
+  'Vancouver',
 ] as const
 
 /** Public coverage beat — Canada-wide launch; no city laundry list. */

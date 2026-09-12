@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import CoverageMap from '@/components/CoverageMap'
+import { coverageDetailCards } from '@/lib/coverage'
 import { AREA_SERVED_SCHEMA, COVERAGE_LINE, KNOWS_ABOUT, TOUR_NAME, VISIT_NAME } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -19,81 +20,7 @@ export const metadata: Metadata = {
   },
 }
 
-type Area = {
-  name: string
-  region: string
-  headline: string
-  desc: string
-}
-
-const areas: Area[] = [
-  {
-    name: 'Toronto',
-    region: 'Ontario',
-    headline: 'Listing photos Toronto agents actually use on MLS',
-    desc: 'Condos, semis, and detached across the city. Controlled airspace near Pearson and Billy Bishop is why licensed Advanced RPAS drone work matters — not phone aerials.',
-  },
-  {
-    name: 'Mississauga',
-    region: 'Ontario · base',
-    headline: 'Travel origin for quotes',
-    desc: 'Base for travel quotes. First 25 km free, then billed per kilometre — confirmed before you pay.',
-  },
-  {
-    name: 'Hamilton',
-    region: 'Ontario',
-    headline: 'Listing photos Hamilton and the mountain',
-    desc: 'Character homes and new inventory west of Toronto. Travel quoted from Mississauga before you confirm.',
-  },
-  {
-    name: 'Durham',
-    region: 'Ontario',
-    headline: 'Listing media across Durham Region',
-    desc: 'Ajax through Oshawa and north — family detached that benefits from drone context and a clear floor plan.',
-  },
-  {
-    name: 'York',
-    region: 'Ontario',
-    headline: 'Real estate photography in York Region',
-    desc: 'Vaughan, Richmond Hill, Markham, and Newmarket corridors. Higher-value detached often add a path-confined virtual tour or reel.',
-  },
-  {
-    name: 'Niagara',
-    region: 'Ontario',
-    headline: 'Toward the Niagara peninsula',
-    desc: 'Coverage when travel pencils. We confirm drone feasibility and quote travel before you lock the slot.',
-  },
-  {
-    name: 'Brampton',
-    region: 'Ontario',
-    headline: 'Detached & new-build heavy',
-    desc: 'Wide lots and new-build elevations pair well with licensed drone exteriors, HDR interiors, and a floor plan.',
-  },
-  {
-    name: 'Oakville',
-    region: 'Ontario',
-    headline: 'Oakville & waterfront',
-    desc: 'Premium detached and waterfront where twilight and a virtual tour earn their keep beside the standard HDR set.',
-  },
-  {
-    name: 'Ottawa',
-    region: 'National Capital',
-    headline: 'Coverage on confirm',
-    desc: 'National Capital inventory from downtown condos to suburban detached. Confirm photographer coverage before you pay.',
-  },
-  {
-    name: 'Calgary & Edmonton',
-    region: 'Alberta',
-    headline: 'Alberta via the Bricks network',
-    desc: 'Same standard: HDR, optional licensed drone, floor plan on every standard shoot. Confirm local contractor coverage at booking.',
-  },
-  {
-    name: 'Vancouver & Lower Mainland',
-    region: 'British Columbia',
-    headline: 'BC coverage on confirm',
-    desc: 'Condo-dense cores and North Shore detached need disciplined HDR and careful aerial planning. We confirm a local photographer first.',
-  },
-]
+const areas = coverageDetailCards()
 
 const mapToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 

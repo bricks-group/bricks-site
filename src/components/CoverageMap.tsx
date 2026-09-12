@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { COVERAGE_HUBS, chipMeta, hubKind, type CoverageHub } from '@/lib/coverage'
 
 const BRICK = '#D2542B'
 const INK = '#14110e'
@@ -14,32 +15,6 @@ const FILL_SOFT = 'bricks-cov-fill-soft'
 const LINE_BASE = 'bricks-cov-line-base'
 const LINE_HUB = 'bricks-cov-line-hub'
 const LINE_SOFT = 'bricks-cov-line-soft'
-
-export type CoverageHub = {
-  id: string
-  name: string
-  region: string
-  lng: number
-  lat: number
-  radiusKm: number
-  base?: boolean
-  onConfirm?: boolean
-}
-
-export const COVERAGE_HUBS: CoverageHub[] = [
-  { id: 'mississauga', name: 'Mississauga', region: 'Ontario · base', lng: -79.6441, lat: 43.589, radiusKm: 32, base: true },
-  { id: 'toronto', name: 'Toronto', region: 'Ontario', lng: -79.3832, lat: 43.6532, radiusKm: 24 },
-  { id: 'brampton', name: 'Brampton', region: 'Ontario', lng: -79.7624, lat: 43.7315, radiusKm: 20 },
-  { id: 'oakville', name: 'Oakville', region: 'Ontario', lng: -79.6877, lat: 43.4675, radiusKm: 16 },
-  { id: 'hamilton', name: 'Hamilton', region: 'Ontario', lng: -79.8661, lat: 43.2557, radiusKm: 22 },
-  { id: 'durham', name: 'Durham', region: 'Ontario', lng: -78.8658, lat: 43.8971, radiusKm: 28 },
-  { id: 'york', name: 'York', region: 'Ontario', lng: -79.5088, lat: 43.8361, radiusKm: 24 },
-  { id: 'niagara', name: 'Niagara', region: 'Ontario', lng: -79.2469, lat: 43.1594, radiusKm: 30 },
-  { id: 'ottawa', name: 'Ottawa', region: 'National Capital', lng: -75.6972, lat: 45.4215, radiusKm: 28, onConfirm: true },
-  { id: 'calgary', name: 'Calgary', region: 'Alberta', lng: -114.0719, lat: 51.0447, radiusKm: 28, onConfirm: true },
-  { id: 'edmonton', name: 'Edmonton', region: 'Alberta', lng: -113.4909, lat: 53.5461, radiusKm: 28, onConfirm: true },
-  { id: 'vancouver', name: 'Vancouver', region: 'British Columbia', lng: -123.1207, lat: 49.2827, radiusKm: 26, onConfirm: true },
-]
 
 function readThemeDark(): boolean {
   if (typeof document === 'undefined') return false
@@ -80,11 +55,11 @@ function coverageGeoJSON() {
       properties: {
         id: hub.id,
         name: hub.name,
-        kind: hub.base ? 'base' : hub.onConfirm ? 'soft' : 'hub',
+        kind: hubKind(hub),
       },
       geometry: {
         type: 'Polygon' as const,
-        coordinates: [circleRing(hub.lng, hub.lat, hub.radiusKm)],
+        coordinates: [hub.ring && hub.ring.length >= 4 ? hub.ring : circleRing(hub.lng, hub.lat, hub.radiusKm)],
       },
     })),
   }
@@ -111,7 +86,6 @@ function paintAreas(map: any) {
   wipeAreas(map)
   map.addSource(SRC, { type: 'geojson', data: coverageGeoJSON() })
 
-  // Opaque enough to read as real coverage footprints, not tags
   map.addLayer({
     id: FILL_SOFT,
     type: 'fill',
@@ -131,7 +105,7 @@ function paintAreas(map: any) {
     type: 'fill',
     source: SRC,
     filter: ['==', ['get', 'kind'], 'base'],
-    paint: { 'fill-color': BRICK, 'fill-opacity': 0.38 },
+    paint: { 'fill-color': BRICK, 'fill-opacity': 0.34 },
   })
   map.addLayer({
     id: LINE_SOFT,
@@ -159,10 +133,15 @@ function paintAreas(map: any) {
 function labelEl(hub: CoverageHub) {
   const el = document.createElement('button')
   el.type = 'button'
-  el.className = `cov-label${hub.base ? ' is-base' : ''}${hub.onConfirm ? ' is-soft' : ''}`
+  el.className = `cov-label${hub.status === 'base' ? ' is-base' : ''}${hub.status === 'confirm' ? ' is-soft' : ''}`
   el.setAttribute('aria-label', hub.name)
   el.textContent = hub.name
   return el
+}
+
+function flyZoom(hub: CoverageHub) {
+  if (hub.status === 'base') return 7.5
+  return 8.1
 }
 
 export default function CoverageMap({ token }: { token: string }) {
@@ -226,7 +205,7 @@ export default function CoverageMap({ token }: { token: string }) {
             el.addEventListener('click', (e) => {
               e.stopPropagation()
               setActive(hub.id)
-              map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 8.4 : 8.0, essential: true })
+              map.flyTo({ center: [hub.lng, hub.lat], zoom: flyZoom(hub), essential: true })
             })
             markersRef.current.push(
               new mapboxgl.Marker({ element: el, anchor: 'center' }).setLngLat([hub.lng, hub.lat]).addTo(map),
@@ -261,7 +240,7 @@ export default function CoverageMap({ token }: { token: string }) {
           const hub = COVERAGE_HUBS.find((h) => h.id === id)
           if (!hub) return
           setActive(hub.id)
-          map.flyTo({ center: [hub.lng, hub.lat], zoom: hub.base ? 8.4 : 8.0, essential: true })
+          map.flyTo({ center: [hub.lng, hub.lat], zoom: flyZoom(hub), essential: true })
         })
 
         ;[FILL_BASE, FILL_HUB, FILL_SOFT].forEach((layerId) => {
@@ -322,7 +301,6 @@ export default function CoverageMap({ token }: { token: string }) {
     }
   }, [token])
 
-  // Only swap style when the user actually toggles theme — never on first glOk
   useEffect(() => {
     const map = mapRef.current
     if (!map || !glOk) return
@@ -335,7 +313,7 @@ export default function CoverageMap({ token }: { token: string }) {
     setActive(hub.id)
     mapRef.current?.flyTo({
       center: [hub.lng, hub.lat],
-      zoom: hub.base ? 8.4 : 8.0,
+      zoom: flyZoom(hub),
       essential: true,
     })
   }
@@ -384,22 +362,18 @@ export default function CoverageMap({ token }: { token: string }) {
             key={hub.id}
             type="button"
             role="listitem"
-            className={`cov-chip${active === hub.id ? ' is-on' : ''}${hub.base ? ' is-base' : ''}`}
+            className={`cov-chip${active === hub.id ? ' is-on' : ''}${hub.status === 'base' ? ' is-base' : ''}`}
             onClick={() => focusHub(hub)}
           >
             <span className="cov-chip-name">{hub.name}</span>
-            <span className="cov-chip-meta">{hub.base ? 'Base' : hub.onConfirm ? 'Confirm' : hub.region}</span>
+            <span className="cov-chip-meta">{chipMeta(hub)}</span>
           </button>
         ))}
       </div>
       {activeHub ? (
         <p className="cov-map-note">
           <b>{activeHub.name}</b>
-          {activeHub.base
-            ? ' — travel quotes originate here. First 25 km free, then billed per km before you pay.'
-            : activeHub.onConfirm
-              ? ' — photographer coverage expands with booked demand. Confirm before you lock the slot.'
-              : ' — same standard shoot: HDR, licensed drone when booked, floor plan on every standard package.'}
+          {activeHub.note}
         </p>
       ) : (
         <p className="cov-map-note">
