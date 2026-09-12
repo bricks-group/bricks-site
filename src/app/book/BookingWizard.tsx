@@ -754,6 +754,7 @@ export default function BookingWizard() {
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
               <p className="hint">Confirm details, then pay to lock this date and time. Full amount (incl. HST) charged now via Stripe. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media targets 24–48 hours after the shoot{rush ? ' — rush is on for this booking' : ''}. Files land on your listing file, client share, and property microsite — not a WeTransfer chase.</p>
               <div className="review">
                 {[
                   ['Agent', name.trim() || '—'], ['Brokerage', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
@@ -806,6 +807,7 @@ export default function BookingWizard() {
           </div>
           <div className="faq">
             <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Check it in Step 2 and confirm sqft — we quote after booking. It is not charged in Stripe checkout.</p></div>
+            <div className="qa"><h4>How fast is delivery?</h4><p>Standard edited media targets 24–48 hours after the shoot. Rush is a paid add-on in Step 2. You get a client media link and a property microsite on the listing file — MLS / web / print zip presets included.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It&apos;s priced per image staged at <b>$35 / image</b>. Toggle it in Step 2, set the image count, and the line lands in your quote and Stripe total.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
