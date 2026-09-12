@@ -19,7 +19,8 @@ function GateForm() {
       const res = await fetch('/api/gate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        credentials: 'same-origin',
+        body: JSON.stringify({ password: password.trim() }),
       })
       if (!res.ok) {
         setError('Incorrect password')
