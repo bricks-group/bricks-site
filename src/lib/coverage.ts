@@ -6,12 +6,13 @@
  * duplicate hub lists in page or map components.
  *
  * Geography rules (Kam, 2026-09-12):
- * - Launch Ontario footprint = anything within ~2 hours' drive of Mississauga
- *   (travel base). That includes the GGH, Cambridge, Guelph, London, Hamilton,
- *   Niagara, Barrie corridor, etc. — do not list every city as its own hub.
- * - Do not call Hamilton (or other GGH cities) “GTA”; GTA is a subset only.
- * - Markets beyond ~2 hours (e.g. Ottawa) start as status 'confirm' until local
- *   photographers are live.
+ * - Launch Ontario footprint ≈ anything within ~2 hours’ drive of Mississauga
+ *   (INTERNAL sizing rule — never put “2 hour” / “2hr” in public UI copy).
+ * - Public label: Golden Horseshoe (GGH+) with travel base Mississauga.
+ * - Geometry must stay in Canada — clip the US (no NY/PA bleed across the lakes).
+ * - Includes GTA, Hamilton, Niagara (ON), Waterloo Region (Cambridge/KW), Guelph,
+ *   London, Barrie corridor, etc. as ONE hub — not a city laundry list of chips.
+ * - Beyond that shed (e.g. Ottawa) and other provinces = status 'confirm'.
  * - Brand line stays Canada-wide; no city laundry list on the homepage hero.
  */
 export type CoverageStatus = 'base' | 'active' | 'confirm'
@@ -41,12 +42,44 @@ export type CoverageHub = {
 export const TRAVEL_BASE = { lng: -79.6441, lat: 43.589, name: 'Mississauga' } as const
 
 /**
- * ~2 hours highway drive from Mississauga at launch.
- * ~175 km ≈ 2 h at typical 401 / QEW speeds; covers London, Guelph, Cambridge,
- * full GGH, Niagara, Barrie — not Ottawa.
+ * INTERNAL: ~2 h highway from Mississauga. Used when estimating radius only.
+ * Public map uses LAUNCH_RING (Canada-clipped) — do not draw a raw circle.
  */
 export const LAUNCH_DRIVE_HOURS = 2
 export const LAUNCH_DRIVE_RADIUS_KM = 175
+
+/**
+ * Canada-only launch footprint (Ontario).
+ * Sized for ~2 h from Mississauga; clipped so nothing paints into the US.
+ * Clockwise from London.
+ */
+const LAUNCH_RING: [number, number][] = [
+  [-81.5, 43.2], // London west
+  [-81.35, 43.55], // north of London
+  [-80.7, 43.7], // Waterloo Region north
+  [-80.3, 43.75], // Guelph north
+  [-79.95, 44.05], // Dufferin / toward Barrie
+  [-79.7, 44.42], // Barrie / Orillia
+  [-79.15, 44.32], // east Simcoe
+  [-78.5, 44.12], // Peterborough corridor
+  [-78.2, 43.88], // Cobourg — Canadian shore only
+  [-78.55, 43.68], // Clarington lakeshore (ON)
+  [-79.05, 43.62], // Ajax / Pickering shore
+  [-79.35, 43.62], // Scarborough shore — stay north of mid-lake
+  [-79.55, 43.58], // Toronto waterfront
+  [-79.72, 43.5], // Mississauga lakeshore
+  [-79.88, 43.35], // Oakville / Burlington
+  [-79.88, 43.22], // Hamilton harbour
+  [-79.55, 43.18], // Stoney Creek / Grimsby
+  [-79.15, 43.12], // Niagara ON north
+  [-79.05, 43.0], // Niagara Falls ON
+  [-79.0, 42.92], // Fort Erie ON (not Buffalo)
+  [-79.55, 42.88], // peninsula west, Canada
+  [-80.25, 42.86], // Haldimand / Erie north shore ON
+  [-80.85, 42.84], // toward Port Stanley — stay in ON
+  [-81.35, 42.88], // south of London
+  [-81.5, 43.2], // close
+]
 
 /**
  * Live coverage hubs for the map.
@@ -54,18 +87,19 @@ export const LAUNCH_DRIVE_RADIUS_KM = 175
  */
 export const COVERAGE_HUBS: CoverageHub[] = [
   {
-    id: 'drive2h',
-    name: '2-hour range',
+    id: 'ggh',
+    name: 'Golden Horseshoe',
     region: 'Ontario · base',
     lng: TRAVEL_BASE.lng,
     lat: TRAVEL_BASE.lat,
     radiusKm: LAUNCH_DRIVE_RADIUS_KM,
     status: 'base',
+    ring: LAUNCH_RING,
     note:
-      ' — launch coverage is anything within about 2 hours’ drive of Mississauga: Greater Golden Horseshoe, Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby. First 25 km free, then travel billed per km before you pay. Address on /book confirms the quote.',
+      ' — Toronto through the Golden Horseshoe, plus Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie, and nearby. Travel quotes from Mississauga (first 25 km free, then per km before you pay). Address on /book confirms the quote.',
     detail: {
-      headline: 'Within ~2 hours of Mississauga',
-      desc: 'At launch we cover listings inside about a 2-hour drive of Mississauga — GTA and the full Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie, and the rest of that shed. Travel is quoted before you pay (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
+      headline: 'Listing photos across the Golden Horseshoe',
+      desc: 'GTA and the Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby Ontario. Travel quotes from Mississauga (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
     },
   },
   {
@@ -76,10 +110,10 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     lat: 45.4215,
     radiusKm: 28,
     status: 'confirm',
-    note: ' — beyond the 2-hour Mississauga drive shed. Photographer coverage expands with booked demand — confirm before you lock the slot.',
+    note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
     detail: {
       headline: 'Coverage on confirm',
-      desc: 'National Capital is outside the launch 2-hour drive range. Confirm photographer coverage before you pay.',
+      desc: 'National Capital inventory from downtown condos to suburban detached. Confirm photographer coverage before you pay.',
     },
   },
   {
@@ -129,7 +163,7 @@ export function hubKind(hub: CoverageHub): 'base' | 'hub' | 'soft' {
 }
 
 export function chipMeta(hub: CoverageHub): string {
-  if (hub.status === 'base') return '≤2 hr · Mississauga'
+  if (hub.status === 'base') return 'Base · Mississauga'
   if (hub.status === 'confirm') return 'Confirm'
   return hub.region
 }
@@ -150,7 +184,7 @@ export function coverageDetailCards() {
       continue
     }
     cards.push({
-      name: hub.id === 'drive2h' ? '2-hour drive range' : hub.name,
+      name: hub.id === 'ggh' ? 'Greater Golden Horseshoe' : hub.name,
       region: hub.status === 'base' ? 'Ontario · travel base Mississauga' : hub.region,
       headline: hub.detail.headline,
       desc: hub.detail.desc,
