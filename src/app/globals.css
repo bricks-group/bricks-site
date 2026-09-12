@@ -1025,3 +1025,101 @@ html[data-theme="dark"] .map-cutout-gl img{
 }
 .phone-device{padding:3px !important;box-shadow:none !important;}
 .phone-device-notch{height:3px !important;border-radius:1px !important;top:6px !important;}
+
+/* === Service areas — Bricks Mapbox coverage map === */
+.hero-cov{padding-bottom:36px;}
+.cov-visual{padding:0 0 48px;}
+.cov-visual-wrap{padding:0 28px;}
+.cov-map{
+  border:1px solid var(--hairStrong);
+  border-radius:2px;
+  overflow:hidden;
+  background:var(--paper);
+}
+.cov-map-chrome{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-bottom:1px solid var(--hair);
+  background:var(--paperSoft);
+}
+.cov-map-dots{display:flex;gap:6px;}
+.cov-map-dots i{width:10px;height:10px;border-radius:50%;display:block;}
+.cov-map-dots i:nth-child(1){background:#FF5F57;}
+.cov-map-dots i:nth-child(2){background:#FEBC2E;}
+.cov-map-dots i:nth-child(3){background:#28C840;}
+.cov-map-title{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--inkMute);flex:1;
+}
+.cov-map-reset{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--hairStrong);border-radius:2px;
+  color:var(--ink);padding:6px 10px;cursor:pointer;
+}
+.cov-map-reset:hover{border-color:var(--ink);}
+.cov-map-stage{position:relative;height:min(560px,68vh);min-height:420px;background:var(--paperDeep);}
+.cov-map-gl{position:absolute;inset:0;}
+.cov-map-loading{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:14px;color:var(--inkMute);pointer-events:none;z-index:2;
+}
+.cov-map-legend{
+  position:absolute;left:12px;bottom:12px;z-index:3;
+  display:flex;flex-wrap:wrap;gap:10px 14px;
+  padding:8px 10px;background:color-mix(in srgb, var(--paper) 92%, transparent);
+  border:1px solid var(--hair);border-radius:2px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--inkSoft);
+}
+.cov-map-legend span{display:inline-flex;align-items:center;gap:6px;}
+.cov-leg-base,.cov-leg-hub,.cov-leg-soft{
+  width:8px;height:8px;border-radius:1px;display:inline-block;
+}
+.cov-leg-base{background:var(--brick);}
+.cov-leg-hub{background:var(--ink);}
+.cov-leg-soft{background:var(--inkMute);opacity:.7;}
+.cov-map-rail{
+  display:flex;gap:8px;overflow-x:auto;padding:12px 14px;
+  border-top:1px solid var(--hair);background:var(--paper);
+  -webkit-overflow-scrolling:touch;
+}
+.cov-chip{
+  flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+  padding:10px 12px;border:1px solid var(--hair);border-radius:2px;
+  background:var(--paper);color:inherit;cursor:pointer;text-align:left;min-width:108px;
+}
+.cov-chip:hover,.cov-chip.is-on{border-color:var(--brick);background:var(--paperSoft);}
+.cov-chip.is-base{border-color:color-mix(in srgb, var(--brick) 45%, var(--hair));}
+.cov-chip-name{font-size:13.5px;font-weight:500;color:var(--ink);}
+.cov-chip-meta{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkMute);}
+.cov-map-note{
+  margin:0;padding:14px 16px;border-top:1px solid var(--hair);
+  font-size:14px;line-height:1.5;color:var(--inkSoft);background:var(--paperSoft);
+}
+.cov-map-note b{color:var(--ink);font-weight:500;}
+.cov-map-note a{color:var(--brickDeep);font-weight:500;}
+.cov-map-missing{
+  border:1px solid var(--hairStrong);border-radius:2px;padding:48px 28px;
+  text-align:center;display:grid;gap:16px;justify-items:center;background:var(--paperSoft);
+}
+/* Mapbox marker pins — Bricks overlay */
+.cov-pin{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  background:transparent;border:none;cursor:pointer;padding:0;
+}
+.cov-pin-dot{
+  width:12px;height:12px;border-radius:1px;background:var(--ink,#14110e);
+  box-shadow:0 0 0 2px #fff;
+}
+.cov-pin.is-base .cov-pin-dot{background:#D2542B;width:14px;height:14px;}
+.cov-pin.is-soft .cov-pin-dot{background:#8a837a;opacity:.9;}
+.cov-pin-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:#14110e;background:#fff;border:1px solid rgba(20,17,14,.12);border-radius:2px;
+  padding:3px 6px;white-space:nowrap;
+}
+html[data-theme="dark"] .cov-pin-label{color:#f4f1eb;background:#1a1714;border-color:rgba(244,241,235,.12);}
+html[data-theme="dark"] .cov-pin-dot{box-shadow:0 0 0 2px #1a1714;}
+@media (max-width:900px){
+  .cov-visual-wrap{padding:0 16px;}
+  .cov-map-stage{height:min(480px,62vh);min-height:360px;}
+  .cov-map-legend{font-size:9px;gap:8px;left:8px;bottom:8px;padding:6px 8px;}
+}
