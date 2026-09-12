@@ -389,9 +389,9 @@ html[data-theme="dark"] .tray::after{
   overflow:hidden;
 }
 .prod-hero .pwin-scale,.prod-hero .pwin iframe{overflow:hidden;}
-/* Hero OS stage is a composed visual — not an app. */
+/* Hero OS stage: bring-to-front on the window frames; iframes stay locked. */
 .prod-hero .pwin iframe{pointer-events:none;}
-.prod-hero .prod-stack{pointer-events:none;}
+.prod-hero .prod-stack-main,.prod-hero .prod-stack-sub{cursor:pointer;}
 
 
 /* Split bands — copy left / tray right, then tray left / copy right.
@@ -517,15 +517,14 @@ html[data-theme="dark"] .pwin{
 @media (max-width:900px){
   .prod-hero .tray{
     margin:0 16px;
-    height:min(560px, 68vh);
-    min-height:420px;
-    max-height:640px;
-    border-radius:12px;
+    height:min(780px, 70vh);
+    min-height:720px;
+    max-height:780px;
   }
   .prod-hero .tray-stage{
     display:block;
     padding:0;
-    --demo-pad:12px;
+    --demo-pad:16px;
   }
   .prod-hero .pwin{
     width:100%;
@@ -563,7 +562,7 @@ html[data-theme="dark"] .pwin{
 }
 @media (max-width:680px){
   .theme-switch button{padding:6px 8px;}
-  .prod-hero .tray{margin:0 12px;height:min(520px, 64vh);min-height:400px;max-height:600px;}
+  .prod-hero .tray{margin:0 12px;height:min(780px, 70vh);min-height:720px;max-height:780px;}
   .prod-row,.prod-row-flip{padding:0 12px;margin:40px 0;}
 }
 
