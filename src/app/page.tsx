@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
+import Script from 'next/script'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
@@ -16,6 +18,7 @@ import {
   TOUR_NAME,
   VISIT_NAME,
   VISIT_PACKAGING,
+  WORK_PHOTOS,
 } from '@/lib/brand'
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // HDR + drone starting point (~$248)
@@ -85,6 +88,17 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
   }
 }
 
+
+const workPreview = WORK_PHOTOS.slice(0, 6)
+const beforeAfter = [
+  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky replacement before and after' },
+  { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
+  { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
+  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
+] as const
+const SPLAT_GIF =
+  'https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/GaussianSplatRender.gif'
+
 export const metadata: Metadata = {
   title: 'bricks — the operating system for Canadian real estate',
   description: 'The operating system for Canadian real estate, from listing photo to close. Book professional media today. OS is live in preview at app.brxs.ca.',
@@ -105,6 +119,7 @@ export default function Home() {
   return (
     <>
       <RevealObserver />
+      <Script src="/assets/ba.js" strategy="afterInteractive" />
 
       <script
         type="application/ld+json"
@@ -298,6 +313,45 @@ export default function Home() {
               <source src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
             </video>
           </div>
+          <div className="grid3 work-preview">
+            {workPreview.map((w) => (
+              <div key={w.src} className="work-thumb">
+                <Image src={w.src} alt={w.alt} width={640} height={427} sizes="(max-width: 720px) 100vw, 33vw" />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="block rvl" aria-label="Before and after edits">
+          <div className="sec-head">
+            <div><span className="over">The edit</span><h2>Before and after.</h2></div>
+          </div>
+          <p className="ba-hint">Drag across each pair.</p>
+          <div className="ba-grid">
+            {beforeAfter.map((p) => {
+              const name = p.label.replace(/ before and after$/i, '')
+              return (
+                <div key={p.before} className="ba-split" data-ba>
+                  <Image className="ba-after" src={p.after} alt={`${name} — after`} fill sizes="(max-width: 720px) 100vw, 50vw" />
+                  <Image className="ba-before" src={p.before} alt={`${name} — before`} fill sizes="(max-width: 720px) 100vw, 50vw" />
+                  <span className="ba-tag ba-tag-before">Before</span>
+                  <span className="ba-tag ba-tag-after">After</span>
+                  <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        <section className="block rvl" aria-label="Virtual Visit splat">
+          <div className="sec-head">
+            <div><span className="over">Virtual Visit</span><h2>Free-roam, not a tour.</h2></div>
+          </div>
+          <div className="splat-plate" role="img" aria-label="Gaussian splat Virtual Visit render">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={SPLAT_GIF} alt="Gaussian splat Virtual Visit — free-roam 3D of a space" />
+          </div>
+          <p className="splat-note">Always a paid add-on, quoted by footprint — never packaged into a shoot.</p>
         </section>
       </div>
 
@@ -406,7 +460,31 @@ export default function Home() {
         .nl-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--brick);}
         .nl-pill:hover::before{background:var(--paper);}
         @media (prefers-reduced-motion: reduce){.nl-pop{transition:none;}}
-      `}</style>
+        .work-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+        .work-thumb{position:relative;aspect-ratio:3/2;overflow:hidden;border:1px solid var(--hair);border-radius:2px;background:var(--paperDeep);}
+        .work-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+        @media (max-width:680px){ .work-preview{display:none;} }
+        .ba-hint{margin:0 0 4px;font-size:15px;color:var(--inkMute);}
+        .ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px;}
+        .ba-split{position:relative;aspect-ratio:3/2;overflow:hidden;border:1px solid var(--hair);border-radius:2px;touch-action:none;cursor:ew-resize;user-select:none;background:var(--paperDeep);}
+        .ba-split img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;}
+        .ba-before{clip-path:inset(0 50% 0 0);}
+        .ba-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--paper);
+          transform:translateX(-50%);pointer-events:none;z-index:2;}
+        .ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+          width:28px;height:28px;border-radius:999px;background:var(--paper);color:var(--ink);
+          display:grid;place-items:center;font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,.25);}
+        .ba-tag{position:absolute;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:10px;
+          letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:2px;z-index:2;}
+        .ba-tag-before{left:10px;background:rgba(20,17,14,0.6);color:var(--paper);}
+        .ba-tag-after{right:10px;background:var(--brick);color:#fff;}
+        @media(max-width:720px){.ba-grid{grid-template-columns:1fr;}}
+        .splat-plate{margin-top:8px;border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:#050403;aspect-ratio:16/9;}
+        .splat-plate img{display:block;width:100%;height:100%;object-fit:cover;}
+        .splat-note{margin:10px 0 0;font-size:14px;color:var(--inkMute);}
+
+      `}
+      </style>
     </>
   )
 }
