@@ -1,12 +1,12 @@
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
+  // Site is hidden until launch — disallow all crawlers.
   return {
     rules: {
       userAgent: '*',
-      allow: '/',
+      disallow: '/',
     },
-    sitemap: 'https://www.brxs.ca/sitemap.xml',
     host: 'https://www.brxs.ca',
   }
 }
