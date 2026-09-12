@@ -21,12 +21,104 @@ function readThemeDark(): boolean {
   return document.documentElement.getAttribute('data-theme') === 'dark'
 }
 
-function staticUrl(token: string, dark: boolean) {
-  const style = dark ? 'dark-v11' : 'light-v11'
-  return (
-    `https://api.mapbox.com/styles/v1/mapbox/${style}/static/` +
-    `-96.5,56.1,3.15,0/1280x720@2x?access_token=${encodeURIComponent(token)}`
-  )
+/** Bricks paper / ink tokens — retint Mapbox light/dark to match the site. */
+function bricksPalette(dark: boolean) {
+  if (dark) {
+    return {
+      paper: '#141210',
+      paperSoft: '#1C1A17',
+      paperDeep: '#23201C',
+      ink: '#F4F1EB',
+      inkMute: '#8F8678',
+      inkFaint: '#5C564E',
+      water: '#1B2226',
+      park: '#1A1F1A',
+    }
+  }
+  return {
+    paper: '#F4F1EB',
+    paperSoft: '#EDE8DF',
+    paperDeep: '#E4DED2',
+    ink: '#14110E',
+    inkMute: '#6B6054',
+    inkFaint: '#A39684',
+    water: '#D8E0DC',
+    park: '#E8E4DA',
+  }
+}
+
+function applyBricksBasemap(map: any, dark: boolean) {
+  const c = bricksPalette(dark)
+  const style = map.getStyle?.()
+  if (!style?.layers) return
+
+  for (const layer of style.layers as Array<{ id: string; type: string }>) {
+    const id = layer.id
+    const type = layer.type
+    const key = id.toLowerCase()
+    try {
+      if (type === 'background') {
+        map.setPaintProperty(id, 'background-color', c.paper)
+        continue
+      }
+      if (type === 'fill') {
+        if (key.includes('water') || key.includes('ocean') || key.includes('river') || key.includes('lake')) {
+          map.setPaintProperty(id, 'fill-color', c.water)
+        } else if (key.includes('park') || key.includes('pitch') || key.includes('grass') || key.includes('landuse') || key.includes('national-park')) {
+          map.setPaintProperty(id, 'fill-color', c.park)
+        } else if (key.includes('landcover') || key.includes('land') || key.includes('earth')) {
+          map.setPaintProperty(id, 'fill-color', c.paper)
+        }
+        continue
+      }
+      if (type === 'line') {
+        if (key.includes('water')) {
+          map.setPaintProperty(id, 'line-color', c.water)
+        } else if (key.includes('road') || key.includes('bridge') || key.includes('tunnel') || key.includes('street') || key.includes('path')) {
+          map.setPaintProperty(id, 'line-color', c.paperDeep)
+          try {
+            map.setPaintProperty(id, 'line-opacity', 0.55)
+          } catch {
+            /* */
+          }
+        } else if (key.includes('boundary') || key.includes('admin') || key.includes('building')) {
+          map.setPaintProperty(id, 'line-color', c.inkFaint)
+          try {
+            map.setPaintProperty(id, 'line-opacity', 0.35)
+          } catch {
+            /* */
+          }
+        }
+        continue
+      }
+      if (type === 'symbol') {
+        try {
+          map.setPaintProperty(id, 'text-color', c.inkMute)
+        } catch {
+          /* */
+        }
+        try {
+          map.setPaintProperty(id, 'text-halo-color', c.paper)
+          map.setPaintProperty(id, 'text-halo-width', 1.2)
+        } catch {
+          /* */
+        }
+        try {
+          map.setPaintProperty(id, 'icon-opacity', 0.55)
+        } catch {
+          /* */
+        }
+      }
+    } catch {
+      /* layer may not support paint prop */
+    }
+  }
+
+  try {
+    map.getCanvas().style.background = c.paper
+  } catch {
+    /* */
+  }
 }
 
 function circleRing(lng: number, lat: number, km: number, steps = 64): [number, number][] {
@@ -82,7 +174,8 @@ function wipeAreas(map: any) {
   }
 }
 
-function paintAreas(map: any) {
+function paintAreas(map: any, dark = false) {
+  applyBricksBasemap(map, dark)
   wipeAreas(map)
   map.addSource(SRC, { type: 'geojson', data: coverageGeoJSON() })
 
@@ -251,7 +344,7 @@ export default function CoverageMap({ token }: { token: string }) {
             /* */
           }
           try {
-            paintAreas(map)
+            paintAreas(map, readThemeDark())
           } catch {
             /* */
           }
@@ -298,7 +391,7 @@ export default function CoverageMap({ token }: { token: string }) {
         setTimeout(() => {
           try {
             map.resize()
-            if (map.isStyleLoaded()) paintAreas(map)
+            if (map.isStyleLoaded()) paintAreas(map, readThemeDark())
           } catch {
             /* */
           }
@@ -366,15 +459,6 @@ export default function CoverageMap({ token }: { token: string }) {
         </button>
       </div>
       <div className="cov-map-stage">
-        <img
-          className="cov-map-static"
-          src={staticUrl(token, dark)}
-          alt="Map of Canada — Bricks coverage"
-          width={1280}
-          height={720}
-          decoding="async"
-          style={{ opacity: glOk ? 0 : 1 }}
-        />
         <div ref={hostRef} className="cov-map-gl" style={{ opacity: glOk ? 1 : 0 }} />
         <div className="cov-map-legend" aria-hidden="true">
           <span>
