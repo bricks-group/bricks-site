@@ -50,7 +50,7 @@
   }
 
   function boot() {
-    var list = document.querySelectorAll('.ba');
+    var list = document.querySelectorAll('.ba, .ba-split');
     for (var i = 0; i < list.length; i++) initBA(list[i]);
   }
   if (document.readyState === 'loading') {

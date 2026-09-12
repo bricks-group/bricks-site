@@ -26,7 +26,6 @@ export default function VirtualVisitEmbed() {
         loading="lazy"
         onLoad={() => setLoaded(true)}
       />
-      <span className="visit-embed-badge">Drag to look around</span>
     </div>
   )
 }

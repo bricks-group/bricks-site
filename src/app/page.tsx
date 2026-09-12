@@ -241,45 +241,95 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Media">
-        <div className="prod-copy">
-          <span className="over">Media</span>
-          <h2>Real shoots.</h2>
-          <p className="prod-mini"><Link href="/gallery">Work</Link></p>
-        </div>
-        <div className="media-bleed">
-          <div className="media-frame">
-            <video className="reel-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
+      <section className="work-sec rvl" aria-label="Selected work">
+        <div className="wrap">
+          <div className="section-head section-head-stack">
+            <span className="over">Selected work</span>
+            <h2>Real shoots,<br /><em>not stock.</em></h2>
+            <p className="lede">Every listing shot by a vetted Bricks photographer. Detached, condo, commercial — one standard.</p>
+          </div>
+          <div className="work-row">
+            <figure>
+              <Image src="/media/work/01.jpg" alt="Detached home exterior" fill sizes="(max-width:900px) 50vw, 25vw" />
+              <figcaption>Detached · exterior</figcaption>
+            </figure>
+            <figure>
+              <Image src="/media/work/03.jpg" alt="Interior living space" fill sizes="(max-width:900px) 50vw, 25vw" />
+              <figcaption>Interior · living</figcaption>
+            </figure>
+            <figure>
+              <Image src="/media/work/05.jpg" alt="Condo interior" fill sizes="(max-width:900px) 50vw, 25vw" />
+              <figcaption>Condo · interior</figcaption>
+            </figure>
+            <figure>
+              <Image src="/media/work/07.jpg" alt="Licensed drone aerial" fill sizes="(max-width:900px) 50vw, 25vw" />
+              <figcaption>Licensed drone · aerial</figcaption>
+            </figure>
+          </div>
+          <div className="work-more">
+            <Link href="/gallery">See more work →</Link>
+          </div>
+          <div className="film">
+            <span className="tag">Film</span>
+            <video className="film-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
               <source src="https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
             </video>
+            <div className="film-in">
+              <div>
+                <div className="vt">How Bricks runs a listing — from first call to close.</div>
+                <div className="vs">Book a shoot, the photographer is routed, media lands in 24–48 hours — then the deal runs in the same system.</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="prod-row prod-row-flip rvl" aria-label="The edit">
-        <div className="media-bleed">
-          <div className="media-frame ba-split" data-ba>
-            <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width: 900px) 100vw, 55vw" />
-            <Image className="ba-before" src={beforeAfter[1].before} alt="HDR — before" fill sizes="(max-width: 900px) 100vw, 55vw" />
-            <span className="ba-tag ba-tag-before">Before</span>
-            <span className="ba-tag ba-tag-after">After</span>
-            <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+      <section className="edit-sec rvl" aria-label="The edit">
+        <div className="wrap">
+          <div className="section-head section-head-stack">
+            <span className="over">The edit</span>
+            <h2>Half the work<br />happens <em>after.</em></h2>
+            <p className="lede">Sky replacement, HDR blending, twilight conversion. Hybrid AI and human retouching on every frame. Drag to compare.</p>
           </div>
-        </div>
-        <div className="prod-copy">
-          <span className="over">Delivery</span>
-          <h2>MLS-ready.</h2>
+          <div className="edit-grid">
+            <div>
+              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
+                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky — after" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky — before" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <span className="lbl l">Before</span>
+                <span className="lbl r">After</span>
+                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+              </div>
+              <div className="edit-cap">
+                <div className="t">Sky replacement &amp; HDR blend</div>
+                <div className="d">Flat overcast capture graded to a clean, listing-ready exterior.</div>
+              </div>
+            </div>
+            <div>
+              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
+                <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <Image className="ba-before" src={beforeAfter[1].before} alt="HDR — before" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <span className="lbl l">Before</span>
+                <span className="lbl r">After</span>
+                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+              </div>
+              <div className="edit-cap">
+                <div className="t">Window pull &amp; interior balance</div>
+                <div className="d">Blown windows recovered, colour balanced across mixed light sources.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Virtual Visit">
-        <div className="prod-copy">
-          <span className="over">Virtual Visit</span>
-          <h2>Free-roam.</h2>
-          <p className="prod-mini">Add-on · by footprint · drag to look around</p>
-        </div>
-        <div className="media-bleed">
-          <div className="media-frame visit-frame">
+      <section className="visit-sec rvl" aria-label="Virtual Visit">
+        <div className="wrap">
+          <div className="section-head section-head-stack">
+            <span className="over">Virtual Visit · Gaussian splat · quoted by sqft</span>
+            <h2>Free-roam.<br /><em>Never a tour.</em></h2>
+            <p className="lede">Buyers walk the property on their own path — not a scripted walkthrough. Always a paid add-on, never packaged.</p>
+          </div>
+          <div className="visit-stage">
             <VirtualVisitEmbed />
           </div>
         </div>
@@ -340,15 +390,6 @@ export default function Home() {
           .hero-home h1{font-size:34px;}
         }
         @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
-        .ba-split{touch-action:none;cursor:ew-resize;user-select:none;}
-        .ba-split img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;}
-        .ba-before{clip-path:inset(0 50% 0 0);}
-        .ba-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--paper);transform:translateX(-50%);pointer-events:none;z-index:2;}
-        .ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:999px;background:var(--paper);color:var(--ink);display:grid;place-items:center;font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,.25);}
-        .ba-tag{position:absolute;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:2px;z-index:2;}
-        .ba-tag-before{left:10px;background:rgba(20,17,14,0.6);color:var(--paper);}
-        .ba-tag-after{right:10px;background:var(--brick);color:#fff;}
-        .media-bleed .media-frame .reel-video{display:block;width:100%;height:100%;object-fit:cover;}
       `}</style>
 
     </>
