@@ -50,9 +50,7 @@ export const BROKERAGE_LOGOS = [
 
 /** Hub names for internal lists — live map geometry lives in lib/coverage.ts. */
 export const COVERAGE_CITIES = [
-  'Greater Toronto',
-  'Hamilton',
-  'Niagara',
+  '2-hour drive range',
   'Ottawa',
   'Calgary',
   'Edmonton',

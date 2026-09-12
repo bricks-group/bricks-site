@@ -140,7 +140,7 @@ function labelEl(hub: CoverageHub) {
 }
 
 function flyZoom(hub: CoverageHub) {
-  if (hub.status === 'base') return 7.5
+  if (hub.status === 'base') return 6.2
   return 8.1
 }
 

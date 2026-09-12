@@ -5,10 +5,14 @@
  * city moves from on-confirm → active, travel base moves). Do not scatter
  * duplicate hub lists in page or map components.
  *
- * Geography rules:
- * - GTA = Toronto + Peel + York + Durham + Halton only (not Hamilton, not Niagara, not Ottawa).
- * - Hamilton and Niagara are separate Ontario hubs.
- * - National cities start as onConfirm until local photographers are live.
+ * Geography rules (Kam, 2026-09-12):
+ * - Launch Ontario footprint = anything within ~2 hours' drive of Mississauga
+ *   (travel base). That includes the GGH, Cambridge, Guelph, London, Hamilton,
+ *   Niagara, Barrie corridor, etc. — do not list every city as its own hub.
+ * - Do not call Hamilton (or other GGH cities) “GTA”; GTA is a subset only.
+ * - Markets beyond ~2 hours (e.g. Ottawa) start as status 'confirm' until local
+ *   photographers are live.
+ * - Brand line stays Canada-wide; no city laundry list on the homepage hero.
  */
 export type CoverageStatus = 'base' | 'active' | 'confirm'
 
@@ -33,21 +37,16 @@ export type CoverageHub = {
   }
 }
 
-/** Approximate GTA outline (Toronto, Peel, York, Durham, Halton). Excludes Hamilton & Niagara. */
-const GTA_RING: [number, number][] = [
-  [-79.88, 43.4], // Burlington / Halton west
-  [-79.78, 43.32], // Oakville lakeshore
-  [-79.55, 43.48], // Mississauga lakeshore
-  [-79.35, 43.58], // Toronto waterfront
-  [-79.15, 43.72], // Scarborough / Pickering
-  [-78.88, 43.82], // Oshawa
-  [-78.92, 44.02], // north Durham
-  [-79.25, 44.08], // east York / Newmarket edge
-  [-79.55, 43.98], // Vaughan / north Peel
-  [-79.82, 43.78], // Brampton west
-  [-79.9, 43.55], // Halton north-west
-  [-79.88, 43.4], // close
-]
+/** Mississauga travel base */
+export const TRAVEL_BASE = { lng: -79.6441, lat: 43.589, name: 'Mississauga' } as const
+
+/**
+ * ~2 hours highway drive from Mississauga at launch.
+ * ~175 km ≈ 2 h at typical 401 / QEW speeds; covers London, Guelph, Cambridge,
+ * full GGH, Niagara, Barrie — not Ottawa.
+ */
+export const LAUNCH_DRIVE_HOURS = 2
+export const LAUNCH_DRIVE_RADIUS_KM = 175
 
 /**
  * Live coverage hubs for the map.
@@ -55,47 +54,18 @@ const GTA_RING: [number, number][] = [
  */
 export const COVERAGE_HUBS: CoverageHub[] = [
   {
-    id: 'gta',
-    name: 'Greater Toronto',
+    id: 'drive2h',
+    name: '2-hour range',
     region: 'Ontario · base',
-    lng: -79.45,
-    lat: 43.7,
-    radiusKm: 45,
+    lng: TRAVEL_BASE.lng,
+    lat: TRAVEL_BASE.lat,
+    radiusKm: LAUNCH_DRIVE_RADIUS_KM,
     status: 'base',
-    ring: GTA_RING,
     note:
-      ' — Toronto, Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Durham, Oakville, and Burlington. Travel quotes from Mississauga (first 25 km free, then per km before you pay). Hamilton and Niagara are separate hubs.',
+      ' — launch coverage is anything within about 2 hours’ drive of Mississauga: Greater Golden Horseshoe, Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby. First 25 km free, then travel billed per km before you pay. Address on /book confirms the quote.',
     detail: {
-      headline: 'Listing photos across the GTA',
-      desc: 'Toronto, Peel, York, Durham, and Halton — one footprint. Travel quotes from Mississauga (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
-    },
-  },
-  {
-    id: 'hamilton',
-    name: 'Hamilton',
-    region: 'Ontario',
-    lng: -79.8661,
-    lat: 43.2557,
-    radiusKm: 20,
-    status: 'active',
-    note: ' — Hamilton and the mountain. Travel quoted from Mississauga before you confirm. Not part of the GTA footprint.',
-    detail: {
-      headline: 'Listing photos Hamilton and the mountain',
-      desc: 'Character homes and new inventory. Travel quoted from Mississauga before you confirm. Separate from the GTA coverage area.',
-    },
-  },
-  {
-    id: 'niagara',
-    name: 'Niagara',
-    region: 'Ontario',
-    lng: -79.2469,
-    lat: 43.1594,
-    radiusKm: 24,
-    status: 'active',
-    note: ' — Niagara peninsula coverage when travel pencils. Confirm drone feasibility and travel before you lock the slot. Not part of the GTA.',
-    detail: {
-      headline: 'Toward the Niagara peninsula',
-      desc: 'Coverage when travel pencils. We confirm drone feasibility and quote travel before you lock the slot. Separate from the GTA footprint.',
+      headline: 'Within ~2 hours of Mississauga',
+      desc: 'At launch we cover listings inside about a 2-hour drive of Mississauga — GTA and the full Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie, and the rest of that shed. Travel is quoted before you pay (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
     },
   },
   {
@@ -106,10 +76,10 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     lat: 45.4215,
     radiusKm: 28,
     status: 'confirm',
-    note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
+    note: ' — beyond the 2-hour Mississauga drive shed. Photographer coverage expands with booked demand — confirm before you lock the slot.',
     detail: {
       headline: 'Coverage on confirm',
-      desc: 'National Capital inventory from downtown condos to suburban detached. Confirm photographer coverage before you pay.',
+      desc: 'National Capital is outside the launch 2-hour drive range. Confirm photographer coverage before you pay.',
     },
   },
   {
@@ -159,7 +129,7 @@ export function hubKind(hub: CoverageHub): 'base' | 'hub' | 'soft' {
 }
 
 export function chipMeta(hub: CoverageHub): string {
-  if (hub.status === 'base') return 'Base · Mississauga'
+  if (hub.status === 'base') return '≤2 hr · Mississauga'
   if (hub.status === 'confirm') return 'Confirm'
   return hub.region
 }
@@ -167,10 +137,9 @@ export function chipMeta(hub: CoverageHub): string {
 /** Detail cards under the map (dedupe Alberta into one card). */
 export function coverageDetailCards() {
   const cards: { name: string; region: string; headline: string; desc: string }[] = []
-  const seen = new Set<string>()
   for (const hub of COVERAGE_HUBS) {
     if (!hub.detail) continue
-    if (hub.id === 'edmonton') continue // folded into Calgary card copy
+    if (hub.id === 'edmonton') continue
     if (hub.id === 'calgary') {
       cards.push({
         name: 'Calgary & Edmonton',
@@ -180,10 +149,8 @@ export function coverageDetailCards() {
       })
       continue
     }
-    if (seen.has(hub.id)) continue
-    seen.add(hub.id)
     cards.push({
-      name: hub.id === 'gta' ? 'Greater Toronto Area' : hub.name,
+      name: hub.id === 'drive2h' ? '2-hour drive range' : hub.name,
       region: hub.status === 'base' ? 'Ontario · travel base Mississauga' : hub.region,
       headline: hub.detail.headline,
       desc: hub.detail.desc,
