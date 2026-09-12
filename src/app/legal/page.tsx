@@ -4,16 +4,16 @@ import { legalDocCss } from '@/components/legalDocCss'
 
 export const metadata: Metadata = {
   title: 'Bricks — Legal',
-  description: 'Terms of Service, Privacy Policy, and photographer Independent Contractor Agreement for Bricks Group.',
+  description: 'Terms of Service, Privacy Policy, Data Processing Agreement, and photographer Independent Contractor Agreement for Bricks Group.',
   alternates: { canonical: '/legal' },
   openGraph: {
     title: 'Bricks — Legal',
-    description: 'Terms, Privacy, and photographer Independent Contractor Agreement for Bricks Group.',
+    description: 'Terms, Privacy, DPA, and photographer Independent Contractor Agreement for Bricks Group.',
   },
   twitter: {
     card: 'summary',
     title: 'Bricks — Legal',
-    description: 'Terms, Privacy, and photographer Independent Contractor Agreement for Bricks Group.',
+    description: 'Terms, Privacy, DPA, and photographer Independent Contractor Agreement for Bricks Group.',
   },
 }
 
@@ -47,6 +47,9 @@ export default function LegalHubPage() {
               </a>{' '}
               — photographers on GO &amp; Dispatch. Plain text:{' '}
               <a href="/legal/ic-agreement.txt">/legal/ic-agreement.txt</a>.
+            </li>
+            <li>
+              <Link href="/dpa">Data Processing Agreement</Link> — enterprise / brokerage controller–processor terms. Effective 27 August 2026.
             </li>
           </ul>
         </section>

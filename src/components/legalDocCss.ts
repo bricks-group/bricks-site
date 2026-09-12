@@ -8,4 +8,9 @@ export const legalDocCss = `
   section.block li{margin-bottom:6px;}
   section.block a{color:var(--brickDeep);}
   @media (max-width:680px){ .legal-body{padding:0 20px;} }
+  table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14px;}
+  th{text-align:left;padding:10px 12px;background:var(--paper);border:1px solid var(--hair);font-weight:500;color:var(--ink);}
+  td{padding:10px 12px;border:1px solid var(--hair);color:var(--inkSoft);line-height:1.55;vertical-align:top;}
+  .legal-notice{background:var(--paper);border:1px solid var(--hair);border-left:3px solid var(--brick);padding:16px 20px;margin-bottom:24px;border-radius:2px;}
+  .legal-notice p{font-size:13px;color:var(--inkSoft);margin:0;}
 `
