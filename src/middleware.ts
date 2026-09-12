@@ -17,19 +17,21 @@ function isPublicPath(pathname: string): boolean {
 }
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-bricks-pathname', pathname)
+
   if (!gateEnabled()) {
-    return NextResponse.next()
+    return NextResponse.next({ request: { headers: requestHeaders } })
   }
 
-  const { pathname } = request.nextUrl
-
   if (isPublicPath(pathname)) {
-    return NextResponse.next()
+    return NextResponse.next({ request: { headers: requestHeaders } })
   }
 
   const cookie = request.cookies.get(COOKIE)?.value
   if (cookie === '1') {
-    return NextResponse.next()
+    return NextResponse.next({ request: { headers: requestHeaders } })
   }
 
   const url = request.nextUrl.clone()
@@ -43,11 +45,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all paths except Next static internals already handled above;
-     * still run middleware so we can allow-list precisely.
-     */
-    '/((?!_next/static|_next/image).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image).*)'],
 }

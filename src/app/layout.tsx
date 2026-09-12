@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -7,13 +8,17 @@ import './globals.css'
 import './map-cutout.css'
 import './book/book-wizard.css'
 
+const gated = Boolean(process.env.WWW_SITE_GATE_PASSWORD?.trim())
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.brxs.ca'),
   title: {
-    default: 'bricks — the operating system for Canadian real estate',
+    default: gated ? 'bricks' : 'bricks — the operating system for Canadian real estate',
     template: '%s',
   },
-  description: 'The operating system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
+  description: gated
+    ? 'bricks'
+    : 'The operating system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
     type: 'website',
@@ -21,9 +26,13 @@ export const metadata: Metadata = {
     locale: 'en_CA',
   },
   twitter: { card: 'summary_large_image' },
+  ...(gated ? { robots: { index: false, follow: false } } : {}),
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = (await headers()).get('x-bricks-pathname') || ''
+  const bare = pathname === '/gate'
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -45,11 +54,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <Nav />
+        {bare ? null : <Nav />}
         {children}
-        <Footer />
+        {bare ? null : <Footer />}
         <Analytics />
-        <Script src="/assets/protect.js" strategy="afterInteractive" />
+        {bare ? null : <Script src="/assets/protect.js" strategy="afterInteractive" />}
       </body>
     </html>
   )
