@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, STAGING_PER_IMAGE, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
@@ -178,8 +178,6 @@ export default function BookingWizard() {
   const [tour, setTour] = useState(false)
   const [visit, setVisit] = useState(false)
   const [twilight, setTwilight] = useState(false)
-  const [staging, setStaging] = useState(false)
-  const [stagingImages, setStagingImages] = useState(1)
   const [floorPlanOnly, setFloorPlanOnly] = useState(false)
   const [rush, setRush] = useState(false)
   const [quote, setQuote] = useState<Quote | null>(null)
@@ -325,7 +323,7 @@ export default function BookingWizard() {
     setDrone(def.drone); setReel(def.reel); setTour(def.tour); setTwilight(def.twilight)
     if (fpOnly) {
       setVisit(false)
-      // Floor-plan-only is a dedicated SKU — keep staging/rush available as extras.
+      // Floor-plan-only is a dedicated SKU — rush stays available as an extra.
     }
   }
 
@@ -346,8 +344,9 @@ export default function BookingWizard() {
       tour_addon: floorPlanOnly ? false : tour,
       twilight_addon: floorPlanOnly ? false : twilight,
       rush_addon: rush,
-      staging_addon: staging,
-      staging_images: staging ? Math.max(1, stagingImages || 1) : 0,
+      // Owned virtual staging not sold in checkout yet (Kam 2026-09-12) — never charge.
+      staging_addon: false,
+      staging_images: 0,
       floor_plan_only: floorPlanOnly,
       package_id: floorPlanOnly ? 'floor_plan_only' : undefined,
     }
@@ -367,7 +366,7 @@ export default function BookingWizard() {
   useEffect(() => {
     if (firstAddonRun.current) { firstAddonRun.current = false; return }
     if (quote) fetchQuote()
-  }, [drone, reel, tour, twilight, rush, staging, stagingImages, floorPlanOnly])
+  }, [drone, reel, tour, twilight, rush, floorPlanOnly])
 
   function loadSlots(ymd: string) {
     setSelectedSlot(null)
@@ -418,7 +417,6 @@ export default function BookingWizard() {
     const pkg = matchedPackage()
     if (floorPlanOnly) {
       const parts = ['Floor plan only']
-      if (staging) parts.push(`Virtual staging ×${Math.max(1, stagingImages || 1)}`)
       if (rush) parts.push('Rush')
       const label = pkg ? PKG_LABEL[pkg] : 'Floor plan only'
       return label + ' — ' + parts.join(' + ')
@@ -430,7 +428,6 @@ export default function BookingWizard() {
     // Virtual visit is quoted separately — never an add_on / never opens phone tour.
     if (visit) parts.push(`${VISIT_NAME} (${VISIT_PRICE_LABEL.toLowerCase()})`)
     if (twilight) parts.push('Twilight')
-    if (staging) parts.push(`Virtual staging ×${Math.max(1, stagingImages || 1)}`)
     if (rush) parts.push('Rush')
     const base = parts.join(' + ')
     const label = pkg
@@ -493,7 +490,6 @@ export default function BookingWizard() {
     const combinedNotes = [notes.trim(), visitNote].filter(Boolean).join('\n')
     const packageId = packageIdForCheckout()
     const floorPlanIncluded = packageId === 'floor_plan_only' || (packageId !== 'photos_only' && drone)
-    const stagingCount = staging ? Math.max(1, stagingImages || 1) : 0
     const payload = {
       quote,
       agent_name: name.trim(),
@@ -518,8 +514,8 @@ export default function BookingWizard() {
       tour_addon: floorPlanOnly ? false : tour,
       twilight_addon: floorPlanOnly ? false : twilight,
       rush_addon: rush,
-      staging_addon: staging,
-      staging_images: stagingCount,
+      staging_addon: false,
+      staging_images: 0,
       // visit is notes-only — never tour_addon / never phone shutter
       notes: combinedNotes || null,
     }
@@ -682,16 +678,9 @@ export default function BookingWizard() {
                 </>
               )}
               {floorPlanOnly && (
-                <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Floor plan only — add virtual staging or rush below if needed. GO opens floor-plan capture for this job.</p>
+                <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Floor plan only — add rush below if needed. GO opens floor-plan capture for this job. Virtual staging is by request (not in checkout).</p>
               )}
-              <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => { const on = e.target.checked; setStaging(on); if (on && stagingImages < 1) setStagingImages(1) }} /> Virtual staging (+${STAGING_PER_IMAGE} / image)</label>
-              {staging && (
-                <div className="field" style={{ margin: '4px 0 14px' }}>
-                  <label>Images to stage</label>
-                  <input type="number" min={1} max={40} value={stagingImages} onChange={(e) => setStagingImages(Math.max(1, parseInt(e.target.value, 10) || 1))} />
-                  <span className="hint-sm">${STAGING_PER_IMAGE} × {Math.max(1, stagingImages || 1)} = ${(STAGING_PER_IMAGE * Math.max(1, stagingImages || 1)).toFixed(2)} CAD pre-tax — included in your quote and Stripe total.</span>
-                </div>
-              )}
+              <p className="hint-sm" style={{ margin: '0 0 14px' }}>Virtual staging (furniture in post) is by request while we finish our owned pipeline — email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>. It is not sold or charged in this checkout.</p>
               <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+${RUSH_FLAT})</label>
               <div className="quote">
                 {quoteLoading && <div className="qload"><div className="spin"></div><div className="ltxt"><b>Tailoring your quote</b>Measuring footprint · mapping travel · adding tax</div></div>}
@@ -746,7 +735,7 @@ export default function BookingWizard() {
                     : `Canada — times are property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}. The time you pick is the time we send to the photographer.`}
                 </p>
               </div>
-              <div className="field"><label>Access / staging notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Lockbox code, occupied, staging schedule, deadline…" /></div>
+              <div className="field"><label>Access notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Lockbox code, occupied, deadline…" /></div>
               <div className="err">{errs[2]}</div>
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(2)}>← Back</button><button type="button" className="btn btn-brick" onClick={() => goNext(2)}>Review →</button></div>
             </div>
@@ -766,7 +755,7 @@ export default function BookingWizard() {
                   [TOUR_NAME, floorPlanOnly ? 'No' : (tour ? 'Yes' : 'No')],
                   [VISIT_NAME, floorPlanOnly ? 'No' : (visit ? `Yes — ${VISIT_PRICE_LABEL.toLowerCase()}` : 'No')],
                   ['Twilight', floorPlanOnly ? 'No' : (twilight ? 'Yes' : 'No')],
-                  ['Virtual staging', staging ? `Yes — ${Math.max(1, stagingImages || 1)} × $${STAGING_PER_IMAGE}` : 'No'],
+                  ['Virtual staging', 'By request — not in checkout'],
                   ['Rush delivery', rush ? 'Yes' : 'No'],
                   ['Shoot time', selectedSlot ? formatBookedWhen(selectedSlot.start, propertyTz) : '—'], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
@@ -809,7 +798,7 @@ export default function BookingWizard() {
             <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Check it in Step 2 and confirm sqft — we quote after booking. It is not charged in Stripe checkout.</p></div>
             <div className="qa"><h4>How fast is delivery?</h4><p>Standard edited media targets 24–48 hours after the shoot. Rush is a paid add-on in Step 2. You get a client media link and a property microsite on the listing file — MLS / web / print zip presets included.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It&apos;s priced per image staged at <b>$35 / image</b>. Toggle it in Step 2, set the image count, and the line lands in your quote and Stripe total.</p></div>
+            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Online checkout does not sell it yet while we finish our owned staging pipeline. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> for a quote; it will not appear in Stripe on this form.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
             <div className="qa"><h4>What if I need to cancel?</h4><p>More than 48 hours before the shoot window: full refund. 48 hours down to 4 hours: 50% refund. Inside 4 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
             <div className="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>

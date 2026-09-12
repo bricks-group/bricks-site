@@ -137,11 +137,9 @@ Deno.serve(async (req: Request) => {
   const tour = body.tour_addon === true || body.tour_addon === 'true';
   const twilight = body.twilight_addon === true || body.twilight_addon === 'true';
   const rush = body.rush_addon === true || body.rush_addon === 'true';
-  const staging = body.staging_addon === true || body.staging_addon === 'true';
-  let stagingImages = body.staging_images != null ? parseInt(String(body.staging_images), 10) : (staging ? 1 : 0);
-  if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = staging ? 1 : 0;
-  if (staging && stagingImages < 1) stagingImages = 1;
-  if (!staging) stagingImages = 0;
+  // Launch honesty (2026-09-12): owned staging not ready — never price/charge staging in quote.
+  const staging = false;
+  const stagingImages = 0;
   const pkgRaw = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_');
   const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
     || pkgRaw === 'floor_plan_only' || pkgRaw === 'floorplan_only';

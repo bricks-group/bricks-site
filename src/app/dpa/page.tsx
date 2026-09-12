@@ -153,7 +153,7 @@ export default function DpaPage() {
               <tr><td>Twilio Inc.</td><td>SMS notifications</td><td>United States</td></tr>
               <tr><td>Fotello</td><td>AI photo enhancement (property images only, no personal data)</td><td>United States</td></tr>
               <tr><td>Autoenhance.ai</td><td>AI photo enhancement fallback (property images only)</td><td>United Kingdom</td></tr>
-              <tr><td>BoxBrownie</td><td>Virtual staging (on-request, property images only)</td><td>Australia / International</td></tr>
+              <tr><td>Bricks (owned)</td><td>Virtual staging — by request until owned pipeline; no third-party furniture vendor on the launch path</td><td>Canada</td></tr>
             </tbody>
           </table>
         </section>

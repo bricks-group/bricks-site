@@ -14,7 +14,6 @@ import {
   TOUR_RATE,
   TWILIGHT_RATE,
   RUSH_FLAT,
-  STAGING_PER_IMAGE,
   FOOTPRINT_BANDS,
   TOUR_RANGE,
   VISIT_PRICE_LABEL,
@@ -415,7 +414,7 @@ export default function Home() {
               <ul>
                 <li>Everything in Showcase</li>
                 <li>Twilight exterior session</li>
-                <li>Virtual staging — {'$'}{STAGING_PER_IMAGE} / image</li>
+                <li>Virtual staging — by request (not in checkout)</li>
                 <li>24–48h delivery</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
@@ -467,8 +466,8 @@ export default function Home() {
                   <td className="wide" colSpan={4}>Included on every standard shoot</td>
                 </tr>
                 <tr>
-                  <th>Virtual staging<small>Furniture added in post</small></th>
-                  <td className="wide" colSpan={4}>{'$'}{STAGING_PER_IMAGE} per image staged</td>
+                  <th>Virtual staging<small>By request — not in checkout</small></th>
+                  <td className="wide" colSpan={4}>By request — email booking@brxs.ca (not in online checkout)</td>
                 </tr>
                 <tr>
                   <th>Rush delivery<small>Same or next day when capacity allows</small></th>

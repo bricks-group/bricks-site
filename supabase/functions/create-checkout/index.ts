@@ -162,11 +162,12 @@ Deno.serve(async (req: Request) => {
     || pkgNorm === 'floor_plan_only' || pkgNorm === 'floorplan_only'
   const photosOnly = pkgNorm === 'photos_only'
     || /photos\s*only/i.test(String(body.package_interest || ''))
-  const stagingOn = body.staging_addon === true || body.staging_addon === 'true'
-  let stagingImages = body.staging_images != null ? parseInt(String(body.staging_images), 10) : (stagingOn ? 1 : 0)
-  if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = stagingOn ? 1 : 0
-  if (stagingOn && stagingImages < 1) stagingImages = 1
-  if (!stagingOn) stagingImages = 0
+  // Launch honesty (2026-09-12): refuse virtual staging in Stripe until owned pipeline ships.
+  if (body.staging_addon === true || body.staging_addon === 'true' || (parseInt(String(body.staging_images || '0'), 10) || 0) > 0) {
+    return bad('Virtual staging is not sold in online checkout yet. Email booking@brxs.ca for a quote.')
+  }
+  const stagingOn = false
+  const stagingImages = 0
   const floorPlan = floorPlanOnly
     || body.floor_plan_included === true || body.floor_plan_included === 'true'
     || (body.floor_plan_included == null && droneOn && !photosOnly)
