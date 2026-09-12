@@ -49,36 +49,101 @@ export const LAUNCH_DRIVE_HOURS = 2
 export const LAUNCH_DRIVE_RADIUS_KM = 175
 
 /**
- * Canada-only launch footprint (Ontario).
- * Sized for ~2 h from Mississauga; clipped so nothing paints into the US.
- * Clockwise from London.
+ * Canada-only launch footprint (Ontario), land-hugging.
+ * Dense ring follows L. Ontario shore, Niagara River (ON bank), and L. Erie
+ * north shore — no lake chords, no US. Sized for ~2 h from Mississauga.
+ * Counter-clockwise exterior (GeoJSON).
  */
 const LAUNCH_RING: [number, number][] = [
-  [-81.5, 43.2], // London west
-  [-81.35, 43.55], // north of London
-  [-80.7, 43.7], // Waterloo Region north
-  [-80.3, 43.75], // Guelph north
-  [-79.95, 44.05], // Dufferin / toward Barrie
-  [-79.7, 44.42], // Barrie / Orillia
-  [-79.15, 44.32], // east Simcoe
-  [-78.5, 44.12], // Peterborough corridor
-  [-78.2, 43.88], // Cobourg — Canadian shore only
-  [-78.55, 43.68], // Clarington lakeshore (ON)
-  [-79.05, 43.62], // Ajax / Pickering shore
-  [-79.35, 43.62], // Scarborough shore — stay north of mid-lake
-  [-79.55, 43.58], // Toronto waterfront
-  [-79.72, 43.5], // Mississauga lakeshore
-  [-79.88, 43.35], // Oakville / Burlington
-  [-79.88, 43.22], // Hamilton harbour
-  [-79.55, 43.18], // Stoney Creek / Grimsby
-  [-79.15, 43.12], // Niagara ON north
-  [-79.05, 43.0], // Niagara Falls ON
-  [-79.0, 42.92], // Fort Erie ON (not Buffalo)
-  [-79.55, 42.88], // peninsula west, Canada
-  [-80.25, 42.86], // Haldimand / Erie north shore ON
-  [-80.85, 42.84], // toward Port Stanley — stay in ON
-  [-81.35, 42.88], // south of London
-  [-81.5, 43.2], // close
+  [-78.17, 43.959],
+  [-78.29, 43.951],
+  [-78.45, 43.92],
+  [-78.58, 43.905],
+  [-78.68, 43.898],
+  [-78.82, 43.868],
+  [-78.93, 43.855],
+  [-79.02, 43.848],
+  [-79.09, 43.825],
+  [-79.14, 43.805],
+  [-79.2, 43.755],
+  [-79.24, 43.712],
+  [-79.3, 43.675],
+  [-79.34, 43.655],
+  [-79.38, 43.642],
+  [-79.4, 43.635],
+  [-79.44, 43.632],
+  [-79.48, 43.63],
+  [-79.52, 43.615],
+  [-79.56, 43.592],
+  [-79.585, 43.565],
+  [-79.62, 43.555],
+  [-79.67, 43.52],
+  [-79.69, 43.47],
+  [-79.71, 43.42],
+  [-79.74, 43.36],
+  [-79.77, 43.325],
+  [-79.79, 43.295],
+  [-79.78, 43.27],
+  [-79.74, 43.255],
+  [-79.68, 43.24],
+  [-79.6, 43.225],
+  [-79.55, 43.21],
+  [-79.48, 43.195],
+  [-79.4, 43.185],
+  [-79.33, 43.18],
+  [-79.27, 43.195],
+  [-79.18, 43.22],
+  [-79.1, 43.245],
+  [-79.08, 43.2],
+  [-79.085, 43.15],
+  [-79.09, 43.11],
+  [-79.08, 43.06],
+  [-79.06, 43.02],
+  [-79.04, 42.98],
+  [-79.02, 42.935],
+  [-79.01, 42.905],
+  [-79.08, 42.875],
+  [-79.17, 42.87],
+  [-79.25, 42.875],
+  [-79.35, 42.868],
+  [-79.48, 42.875],
+  [-79.58, 42.87],
+  [-79.7, 42.865],
+  [-79.85, 42.85],
+  [-80.0, 42.835],
+  [-80.15, 42.81],
+  [-80.22, 42.785],
+  [-80.35, 42.77],
+  [-80.5, 42.76],
+  [-80.65, 42.745],
+  [-80.8, 42.73],
+  [-80.95, 42.72],
+  [-81.1, 42.7],
+  [-81.22, 42.675],
+  [-81.3, 42.72],
+  [-81.35, 42.82],
+  [-81.4, 42.92],
+  [-81.45, 43.0],
+  [-81.42, 43.08],
+  [-81.25, 43.2],
+  [-81.05, 43.32],
+  [-80.85, 43.4],
+  [-80.7, 43.48],
+  [-80.55, 43.52],
+  [-80.4, 43.56],
+  [-80.2, 43.62],
+  [-80.0, 43.7],
+  [-79.9, 43.85],
+  [-79.8, 44.05],
+  [-79.72, 44.25],
+  [-79.68, 44.38],
+  [-79.45, 44.36],
+  [-79.2, 44.3],
+  [-78.95, 44.2],
+  [-78.7, 44.1],
+  [-78.45, 44.0],
+  [-78.3, 43.97],
+  [-78.17, 43.959],
 ]
 
 /**
@@ -90,8 +155,8 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     id: 'ggh',
     name: 'Golden Horseshoe',
     region: 'Ontario · base',
-    lng: TRAVEL_BASE.lng,
-    lat: TRAVEL_BASE.lat,
+    lng: -79.55,
+    lat: 43.45,
     radiusKm: LAUNCH_DRIVE_RADIUS_KM,
     status: 'base',
     ring: LAUNCH_RING,
