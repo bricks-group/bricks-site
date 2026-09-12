@@ -140,8 +140,37 @@ function labelEl(hub: CoverageHub) {
 }
 
 function flyZoom(hub: CoverageHub) {
-  if (hub.status === 'base') return 6.2
+  if (hub.status === 'base') return 6.35
   return 8.1
+}
+
+const DEFAULT_HUB = COVERAGE_HUBS.find((h) => h.status === 'base') || COVERAGE_HUBS[0]
+
+function focusCamera(map: any, hub: CoverageHub, animate: boolean) {
+  const ring = hub.ring
+  if (ring && ring.length >= 4) {
+    let minLng = ring[0][0]
+    let maxLng = ring[0][0]
+    let minLat = ring[0][1]
+    let maxLat = ring[0][1]
+    for (const [lng, lat] of ring) {
+      if (lng < minLng) minLng = lng
+      if (lng > maxLng) maxLng = lng
+      if (lat < minLat) minLat = lat
+      if (lat > maxLat) maxLat = lat
+    }
+    map.fitBounds(
+      [
+        [minLng, minLat],
+        [maxLng, maxLat],
+      ],
+      { padding: 48, maxZoom: 7.2, duration: animate ? 900 : 0, essential: true },
+    )
+    return
+  }
+  const opts = { center: [hub.lng, hub.lat] as [number, number], zoom: flyZoom(hub), essential: true }
+  if (animate) map.flyTo(opts)
+  else map.jumpTo(opts)
 }
 
 export default function CoverageMap({ token }: { token: string }) {
@@ -149,7 +178,8 @@ export default function CoverageMap({ token }: { token: string }) {
   const mapRef = useRef<any>(null)
   const markersRef = useRef<any[]>([])
   const themeRef = useRef(false)
-  const [active, setActive] = useState<string | null>(null)
+  const bootedRef = useRef(false)
+  const [active, setActive] = useState<string | null>(DEFAULT_HUB?.id ?? null)
   const [glOk, setGlOk] = useState(false)
   const [dark, setDark] = useState(false)
 
@@ -174,11 +204,12 @@ export default function CoverageMap({ token }: { token: string }) {
         mapboxgl.accessToken = token
         const night = readThemeDark()
         themeRef.current = night
+        const start = DEFAULT_HUB
         const map = new mapboxgl.Map({
           container: hostRef.current,
           style: night ? STYLE_DARK : STYLE_LIGHT,
-          center: [-96.5, 56.1],
-          zoom: 3.15,
+          center: start ? [start.lng, start.lat] : [-79.55, 43.55],
+          zoom: start ? flyZoom(start) : 6.35,
           attributionControl: false,
           logoPosition: 'bottom-left',
           failIfMajorPerformanceCaveat: false,
@@ -205,7 +236,7 @@ export default function CoverageMap({ token }: { token: string }) {
             el.addEventListener('click', (e) => {
               e.stopPropagation()
               setActive(hub.id)
-              map.flyTo({ center: [hub.lng, hub.lat], zoom: flyZoom(hub), essential: true })
+              focusCamera(map, hub, true)
             })
             markersRef.current.push(
               new mapboxgl.Marker({ element: el, anchor: 'center' }).setLngLat([hub.lng, hub.lat]).addTo(map),
@@ -225,6 +256,11 @@ export default function CoverageMap({ token }: { token: string }) {
             /* */
           }
           placeLabels()
+          if (!bootedRef.current && DEFAULT_HUB) {
+            bootedRef.current = true
+            setActive(DEFAULT_HUB.id)
+            focusCamera(map, DEFAULT_HUB, false)
+          }
           setGlOk(true)
         }
 
@@ -240,7 +276,7 @@ export default function CoverageMap({ token }: { token: string }) {
           const hub = COVERAGE_HUBS.find((h) => h.id === id)
           if (!hub) return
           setActive(hub.id)
-          map.flyTo({ center: [hub.lng, hub.lat], zoom: flyZoom(hub), essential: true })
+          focusCamera(map, hub, true)
         })
 
         ;[FILL_BASE, FILL_HUB, FILL_SOFT].forEach((layerId) => {
@@ -311,11 +347,7 @@ export default function CoverageMap({ token }: { token: string }) {
 
   function focusHub(hub: CoverageHub) {
     setActive(hub.id)
-    mapRef.current?.flyTo({
-      center: [hub.lng, hub.lat],
-      zoom: flyZoom(hub),
-      essential: true,
-    })
+    if (mapRef.current) focusCamera(mapRef.current, hub, true)
   }
 
   function resetCanada() {
