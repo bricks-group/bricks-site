@@ -1,27 +1,30 @@
-# bricks-prelaunch
+# bricks-site
 
-Bricks **pre-launch** site — GTA listing-media booking, separated from the
-production `bricks-site` / `Bricks-OS` repos. This is the beachhead: sell media
-now, capture leads, upsell to the subscription platform at launch.
+Bricks **production www** — GTA listing-media booking and marketing site live at
+[`www.brxs.ca`](https://www.brxs.ca).
+
+**Rename note (2026-09):** GitHub `bricks-group/bricks-prelaunch` → `bricks-group/bricks-site`;
+Vercel project `bricks-prelaunch` → `bricks-site` (domain `www.brxs.ca` unchanged). The old
+separate `bricks-site` repo was deleted — **this** checkout is the production www repo now.
 
 ## Pages
-- `index.html` — pre-launch landing (overview, flip cards, audiences, live-vs-dev)
+- `index.html` / Next.js `src/app` — landing (overview, flip cards, audiences, live-vs-dev)
 - `pricing.html` — standalone pricing (per-shoot rates by footprint)
-- `book.html` — **corrected 2026-07-27**: this is a real, live **Stripe Checkout** flow, not a lead-capture form — real Cal.com slot booking, a live pricing quote, a real payment redirect, and post-payment confirmation handling. Materially more built than "booking wizard → lead capture" suggests. Backed by a working e2e test (`scripts/e2e_test_payment.py`).
-- `photographers.html` — **added 2026-07-27, live at brxs.ca.** Photographer application form, POSTs to `https://dispatch-api.brxs.ca/api/onboarding/apply`. Nav links added to all 9 other pages. Redesigned same day to actually match this site's visual system (hairline-bordered grids, `.sec-head`/`.over` section headers, reveal-on-scroll) — the first version was a generic form-page bolted on, not built from this repo's own patterns. **CORS status against Dispatch's backend is still unconfirmed** — Dispatch's code defaults to an allowlist that does not include `brxs.ca`/`www.brxs.ca`; whether the live env var differs is unverified. Test an actual submission before trusting this works.
+- `book.html` / `/book` — live **Stripe Checkout** flow (Cal.com slots, pricing quote, payment, confirmation). Backed by e2e (`scripts/e2e_test_payment.py`).
+- `photographers.html` / `/photographers` — photographer application → `https://dispatch-api.brxs.ca/api/onboarding/apply`
 - `bricks-media-onepager.html` — print-out price card (not linked; attach manually)
-- `about.html`, `gallery.html`, `contact.html`, `service-areas.html`, `terms.html`, `blog.html` (+ 4 posts under `blog/`) — static content, mailto CTA only, no backend calls.
+- `about`, `gallery`, `contact`, `service-areas`, `terms`, `blog` — static / Next routes
 
 ## Backend (Supabase)
-**Corrected 2026-07-27 — this list was incomplete.** 6 edge functions exist, not 1: `booking_lead`, `bricks_calendar`, `cal-slots`, `create-checkout`, `newsletter-signup`, `quote`, `stripe-webhook`. `book.html` no longer calls `booking_lead` at all — it uses `cal-slots` → `quote` → `create-checkout` → Stripe redirect → `stripe-webhook`. 4 more migration files exist beyond `20260717_media_booking_leads.sql` (`apply_addons.sql`, `apply_ala_carte_addons.sql`, `apply_newsletter.sql`, `apply_search_path_fix.sql`). All of this repo's edge functions set `Access-Control-Allow-Origin: *` (wide open) — a different backend than Dispatch's, whose CORS posture is stricter and unconfirmed for this domain (see `photographers.html` note above).
+Edge functions in this repo include: `booking_lead`, `bricks_calendar`, `cal-slots`, `create-checkout`, `newsletter-signup`, `quote`, `stripe-webhook`. Booking uses `cal-slots` → `quote` → `create-checkout` → Stripe → `stripe-webhook`. Project ref: `rbywjnnctjglhcdemnnj`.
 
 ### Deploy
 ```bash
 supabase link --project-ref rbywjnnctjglhcdemnnj
 supabase db push
-supabase functions deploy <function-name>   # one of the 6 listed above
+supabase functions deploy <function-name>
 ```
-No `vercel.json` or CI/CD config exists in this repo — whether push-to-`main` auto-deploys to the live Vercel project (`bricks-prelaunch`) can't be determined from repo contents; check the Vercel dashboard.
+Live Vercel project: **`bricks-site`** (`prj_MZMxoOZTgR71Mxto7iMMPvUzJuIj`) → `www.brxs.ca`.
 
 ## Status
-**This is the site actually live at `brxs.ca` right now — confirmed 2026-07-27.** `bricks-site` (the Next.js repo) is fully built, including a complete vendor-onboarding flow, but is NOT deployed/live despite being the more "production-looking" repo — see `/Volumes/BRICKS/BRICKS_STATUS.md` for the full picture. Don't assume repo name implies launch status.
+**This is the site live at `www.brxs.ca`.** Repo + Vercel project are both named `bricks-site`.

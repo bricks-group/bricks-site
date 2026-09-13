@@ -21,7 +21,7 @@ Steps:
    - Type CNAME, name `www`, value `cname.vercel-dns.com`
    (These are Vercel's standard values; confirm at
     https://vercel.com/docs/concepts/projects/domains if they ever change.)
-4. In Vercel project `bricks-prelaunch`: Project → Settings → Domains →
+4. In Vercel project `bricks-site`: Project → Settings → Domains →
    Add `bricks.ag` and `www.bricks.ag`. Vercel issues the SSL cert automatically.
 5. Once live, update the canonical + og:url on the site from brxs.ca → bricks.ag
    (ask the assistant; one commit).

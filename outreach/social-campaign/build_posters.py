@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate Bricks social posters as PNGs — using Bricks' ACTUAL design language.
 
-Pulled from bricks-prelaunch (the live brxs.ca site):
+Pulled from bricks-site (the live www.brxs.ca site):
 - Mark: 3-brick SVG (viewBox 0 0 24 24, fill #D2542B) — exact one from index.html/footer.
 - Type: General Sans (400/500/600) + JetBrains Mono (400/500), self-hosted in ./.fonts.
 - Palette (assets/site.css :root): paper #F4F1EB, paperDeep #E4DED2, ink #14110E,

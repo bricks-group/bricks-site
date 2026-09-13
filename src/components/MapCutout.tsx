@@ -1,5 +1,5 @@
 /* Shared drop-in. Copy to:
- *   bricks-prelaunch: src/components/MapCutout.tsx
+ *   bricks-site: src/components/MapCutout.tsx
  *   Bricks-OS:        frontend/src/components/MapCutout.jsx  (strip types)
  *
  * Live 160px streets-v12 static <img> becomes a Standard 3D GL cutout.

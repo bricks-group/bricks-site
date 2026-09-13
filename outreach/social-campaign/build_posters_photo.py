@@ -5,7 +5,7 @@ palette). Images are loaded by absolute file:// path and center-cropped via CSS
 object-fit:cover (no PIL needed).
 
 Source imagery:
-- bricks-prelaunch/media/res-*.jpg, comm-*.jpg, raphael-merchant.jpg
+- bricks-site/media/res-*.jpg, comm-*.jpg, raphael-merchant.jpg
 - bricks-site/media/0*.jpg, 1*.jpg (higher-res selects)
 - Bricks Project/Before and After/*.png (proof pairs)
 """

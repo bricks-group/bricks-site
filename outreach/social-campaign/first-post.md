@@ -48,6 +48,6 @@ The difference is in the delivery. Sky replacement, HDR blending, twilight, virt
 the Bricks edit, every shoot. See the work: brxs.ca
 
 ---
-Assets (posters): /Volumes/Bricks/bricks-prelaunch/outreach/social-campaign/posters/
+Assets (posters): /Volumes/Bricks/bricks-site/outreach/social-campaign/posters/
 - 01-launch (feed square) · 03-founder (portrait) · 04-reel-cover (vertical) · 06-proof (feed square)
-Gallery updated: /Volumes/Bricks/bricks-prelaunch/gallery.html (Residential / Commercial & aerial / The edit — before/after).
+Gallery updated: /Volumes/Bricks/bricks-site/gallery.html (Residential / Commercial & aerial / The edit — before/after).

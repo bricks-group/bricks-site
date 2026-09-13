@@ -1,8 +1,8 @@
 {
-  "name": "bricks-prelaunch",
+  "name": "bricks-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Bricks pre-launch site — Canadian listing-media booking. Live, revenue-generating site at brxs.ca. Migrated to Next.js 2026-07-27, same live Stripe/Supabase booking flow with native preferred windows.",
+  "description": "Bricks www (www.brxs.ca) \u2014 marketing, book, photographers, platform. Production site. GitHub bricks-group/bricks-site; Vercel project bricks-site (formerly bricks-prelaunch). Old separate bricks-site repo was deleted; this IS production www.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RuletheWorld/bricks-prelaunch.git"
+    "url": "git+https://github.com/bricks-group/bricks-site.git"
   },
   "license": "ISC",
   "dependencies": {

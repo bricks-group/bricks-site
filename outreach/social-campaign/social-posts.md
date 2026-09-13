@@ -1,8 +1,8 @@
 # Bricks — Social & Outreach Pack (prelaunch, GTA)
 
-**Pricing model used here = the LIVE prelaunch site (brxs.ca / `bricks-prelaunch`),
+**Pricing model used here = the LIVE www site (www.brxs.ca / `bricks-site`),
 à la carte by footprint. NOT the `bricks-site` package/credit-ledger model.** Verified
-against `bricks-prelaunch/pricing.html` + `service-areas.html` on 2026-07-23.
+against `bricks-site/pricing.html` + `service-areas.html` on 2026-07-23.
 
 Key facts (source of truth for every asset in this folder):
 - Core shoot = HDR photo + licensed drone + floor plan. **From $248 (Small) → $458 (XL)** by footprint.
