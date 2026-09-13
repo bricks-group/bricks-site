@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import DemoExperience from '@/components/demo/DemoExperience'
+import ContactForm from '@/app/contact/ContactForm'
 
 export const metadata: Metadata = {
-  title: 'bricks demo — guided by Brixton',
+  title: 'Request a Bricks walkthrough',
   description:
-    'Interactive tour of Bricks OS, Companion, and GO. Brixton walks you through the desk, a deal, booking, and the field app.',
+    'Request a guided walkthrough of Bricks OS, Companion, and GO. We schedule a short session with your team — no public interactive demo.',
   alternates: { canonical: '/demo' },
   robots: { index: false, follow: false },
 }
@@ -13,11 +13,17 @@ export default function DemoPage() {
   return (
     <main className="demo-page">
       <div className="demo-page-head wrap">
-        <span className="badge">Interactive demo</span>
-        <h1>Try Bricks with Brixton.</h1>
-        <p className="sub">A short guided tour of the OS desk, Companion, and GO. Ashfield is fictional — the product is real.</p>
+        <span className="badge">Walkthrough</span>
+        <h1>Request a walkthrough.</h1>
+        <p className="sub">
+          Short, scheduled intro to the OS desk, Companion, and GO. Tell us who you are and we&apos;ll set a time.
+        </p>
       </div>
-      <DemoExperience />
+      <section className="block">
+        <div className="wrap">
+          <ContactForm />
+        </div>
+      </section>
     </main>
   )
 }

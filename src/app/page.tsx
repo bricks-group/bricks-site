@@ -6,6 +6,7 @@ import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import ProductWindow from '@/components/ProductWindow'
+import OsDeskShot from '@/components/OsDeskShot'
 import PhoneDevice from '@/components/PhoneDevice'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import {
@@ -173,7 +174,7 @@ export default function Home() {
           <p className="sub">Media is the beachhead. The desk runs the deal.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
-            <Link className="learn-link" href="/demo">Try the demo →</Link>
+            <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
           </div>
         </div>
       </section>
@@ -219,16 +220,7 @@ export default function Home() {
           </div>
           <div className="cap-stage tray tray-crm">
             <div className="tray-stage tray-stage-fill">
-              <ProductWindow
-                title="Ashfield · deal"
-                src="/screens/os.html?screen=transactions&lock=1"
-                nw={1440}
-                nh={920}
-                fit="width"
-                hideChrome
-                zoomAt={820}
-                lazy
-              />
+              <OsDeskShot />
             </div>
           </div>
         </div>
@@ -238,7 +230,7 @@ export default function Home() {
         <div className="cap-inner">
           <div className="cap-copy">
             <h2>Companion.</h2>
-            <Link className="learn-link" href="/demo">Demo →</Link>
+            <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
           </div>
           <div className="cap-stage tray tray-book tray-phone">
             <div className="phone-stage">

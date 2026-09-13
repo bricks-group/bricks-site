@@ -10,7 +10,7 @@ export default function ProductStage() {
   const [mobile, setMobile] = useState(false)
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width:900px)')
+    const mq = window.matchMedia('(max-width:680px)')
     const apply = () => setMobile(mq.matches)
     apply()
     mq.addEventListener('change', apply)
