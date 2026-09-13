@@ -358,26 +358,29 @@ html[data-theme="dark"] .tray::after{background:rgba(8,7,6,.58);}
 }
 .prod-stack{position:absolute;inset:0;overflow:visible;z-index:2;}
 .prod-stack-main,.prod-stack-sub{
-  position:absolute;overflow:hidden;cursor:pointer;
+  position:absolute;overflow:visible;cursor:pointer;
+  transform:translate3d(0,0,0) scale(1);
+  transition:transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s cubic-bezier(.16,1,.3,1), filter .45s ease;
+  will-change:transform;
 }
 .prod-stack-main{
-  /* Cursor main ~1080 in ~1225 stage — cap absolute size so ultrawide doesn't zoom UI */
+  /* Desktop: large primary, Cursor-like presence */
   top:0;left:0;right:0;bottom:0;
   margin:auto;
-  width:min(1080px, 88%);
+  width:min(1120px, 90%);
   height:auto;
-  max-height:84%;
+  max-height:88%;
   aspect-ratio:1440 / 920;
 }
 .prod-stack-sub{
-  /* Nested BR — Cursor ~480/1080≈0.44; slightly larger than prior 40%/480 */
+  /* Nested BR — clear size gap, sits ON the primary */
   top:auto;
   left:auto;
-  right:1%;
-  bottom:2%;
-  width:min(540px, 46%);
+  right:2%;
+  bottom:3%;
+  width:min(520px, 44%);
   height:auto;
-  max-height:54%;
+  max-height:52%;
   aspect-ratio:1440 / 920;
   margin:0;
 }
@@ -388,17 +391,61 @@ html[data-theme="dark"] .tray::after{background:rgba(8,7,6,.58);}
 .prod-hero .pwin{
   width:100%;height:100%;max-height:none;
   display:flex;flex-direction:column;overflow:hidden;
-  border-radius:2px;
-  border:1px solid var(--hairStrong) !important;
-  box-shadow:none !important;
+  border-radius:10px;
+  border:1px solid rgba(20,17,14,.10) !important;
   background:var(--paper);
+  /* Soft Mac depth — back windows quieter, front stronger via is-front */
+  box-shadow:
+    0 1px 1px rgba(20,17,14,.04),
+    0 8px 24px rgba(20,17,14,.10),
+    0 28px 56px rgba(20,17,14,.14) !important;
 }
+.prod-hero .prod-stack-main.is-back .pwin,
+.prod-hero .prod-stack-sub.is-back .pwin{
+  box-shadow:
+    0 1px 1px rgba(20,17,14,.03),
+    0 6px 18px rgba(20,17,14,.08),
+    0 18px 40px rgba(20,17,14,.10) !important;
+  filter:saturate(.96);
+}
+.prod-hero .prod-stack-main.is-front .pwin,
+.prod-hero .prod-stack-sub.is-front .pwin{
+  box-shadow:
+    0 2px 2px rgba(20,17,14,.05),
+    0 12px 28px rgba(20,17,14,.12),
+    0 36px 72px rgba(20,17,14,.18) !important;
+  filter:none;
+}
+/* Hover lift — springy, Cursor-like; stage overflow stays visible */
+@media (hover:hover) and (min-width:901px){
+  .prod-hero .prod-stack-main:hover,
+  .prod-hero .prod-stack-sub:hover{
+    transform:translate3d(0,-10px,0) scale(1.018);
+  }
+  .prod-hero .prod-stack-main.is-front:hover .pwin,
+  .prod-hero .prod-stack-sub.is-front:hover .pwin{
+    box-shadow:
+      0 4px 8px rgba(20,17,14,.06),
+      0 18px 40px rgba(20,17,14,.14),
+      0 48px 96px rgba(20,17,14,.22) !important;
+  }
+}
+.prod-hero .tray-stage{overflow:visible;}
 .prod-hero .pwin-scale{flex:1;width:100%;min-height:0;overflow:hidden;}
 .prod-hero .pwin-scale,.prod-hero .pwin iframe{overflow:hidden;}
 .prod-hero .prod-stack-main.is-back .pwin iframe,
 .prod-hero .prod-stack-sub.is-back .pwin iframe{pointer-events:none;}
 .prod-hero .prod-stack-main.is-front .pwin iframe,
 .prod-hero .prod-stack-sub.is-front .pwin iframe{pointer-events:auto;}
+/* Click front: brief settle animation */
+.prod-hero .prod-stack-main.is-front,
+.prod-hero .prod-stack-sub.is-front{
+  animation:prodFrontIn .4s cubic-bezier(.16,1,.3,1);
+}
+@keyframes prodFrontIn{
+  from{transform:translate3d(0,6px,0) scale(.985);opacity:.92;}
+  to{transform:translate3d(0,0,0) scale(1);opacity:1;}
+}
 
 /* Open-app window — brand hairline border, 2px, no traffic lights, no shadow */
 .pwin{
@@ -1122,9 +1169,14 @@ html[data-theme="dark"] .map-cutout-gl img{
 @media (max-width:900px){.closer-simple{padding:72px 20px;}}
 
 /* Sharp edges lock — Bricks 2px, never pills/soft device chrome on product */
-.tray,.cap-stage,.prod-hero .tray,.prod-hero .pwin,.pwin,.pwin-phone,.pwin-bare,
+.tray,.cap-stage,.prod-hero .tray,.pwin,.pwin-phone,.pwin-bare,
 .trust-tile,.proof-card,.phone-device,.phone-device-screen,.btn-night{
   border-radius:2px !important;
+}
+/* Hero windows keep Mac-soft radius (Cursor) — not the sitewide 2px lock */
+.prod-hero .pwin{border-radius:10px !important;}
+@media (max-width:900px){
+  .prod-hero .pwin{border-radius:2px !important;}
 }
 .phone-device{
   padding:3px !important;box-shadow:none !important;

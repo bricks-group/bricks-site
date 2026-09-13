@@ -1,15 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Cursor-style hero stack — natural aspect (1440×920), no stretch, no zoomAt.
- * Frame capped ~Cursor size; fit=contain shows full 1440×920 with no crop-zoom.
- * Front interactive; rear raise overlay; stable iframe src for animation.
+ * Cursor-style hero stack — desktop feels like a live Mac desktop:
+ * nested overlap, soft depth shadows, hover lift, click-to-front,
+ * readable UI scale (mild zoomAt on desktop only).
  */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
+  const [desktop, setDesktop] = useState(true)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 901px)')
+    const apply = () => setDesktop(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+
+  const zoomAt = desktop ? 1180 : undefined
 
   return (
     <div className="prod-stack">
@@ -23,6 +34,7 @@ export default function ProductStage() {
           nw={1440}
           nh={920}
           fit="contain"
+          zoomAt={zoomAt}
           hideChrome
         />
         {front !== 'overview' ? (
@@ -51,6 +63,7 @@ export default function ProductStage() {
           nw={1440}
           nh={920}
           fit="contain"
+          zoomAt={zoomAt}
           hideChrome
         />
         {front !== 'deal' ? (
