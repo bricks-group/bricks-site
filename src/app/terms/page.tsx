@@ -62,7 +62,7 @@ export default function TermsPage() {
           <ul>
             <li>More than 48 hours before the shoot window: full refund to the original payment method.</li>
             <li>48 hours down to 4 hours before: 50% refund.</li>
-            <li>Inside 4 hours, or no-show / no access: no refund.</li>
+            <li>Inside 4 hours, or no-show / no access: no refund (100% retained).</li>
           </ul>
           <p>If we cancel, fail to attend, or cannot complete the shoot for reasons on our side (including weather that makes a safe shoot impossible and no reschedule you accept): full refund or a free reshoot, your choice.</p>
           <p>Refunds via Stripe typically show in 5–10 business days. Nothing in this section limits rights you have that cannot be waived under Ontario&apos;s Consumer Protection Act, 2002, if that Act applies to you.</p>
