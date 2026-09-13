@@ -1,22 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
 
-/**
- * MATCH CURSOR hero stack:
- * - Large primary window, ~82% of the mat, floating with clear air on all sides
- * - Much smaller secondary window nested ON TOP of primary's bottom-right
- *   corner — deep overlap, not just beside it — sized honestly (no digital
- *   zoom/crop) so its resolution matches what a real smaller window would show
- * - Pure % insets, no breakpoint-specific overrides: the same clear-air
- *   composition scales down naturally at any width, mobile included
- */
+/** Cursor mobile: zoom the desk so UI text is readable, crop intentionally.
+ *  Desktop: full dual-window stack. Front pokeable; rear raises. */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
+  const [mobile, setMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width:900px)')
+    const apply = () => setMobile(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+
+  // ~720 design width → ~2× readable vs fitting full 1440 into a phone tray
+  const zoomAt = mobile ? 780 : undefined
 
   return (
-    <div className="prod-stack">
+    <div className={`prod-stack${mobile ? ' prod-stack-mobile' : ''}`}>
       <div
         className={`prod-stack-main${front === 'overview' ? ' is-front' : ' is-back'}`}
         style={{ zIndex: front === 'overview' ? 100 : 10 }}
@@ -30,6 +35,7 @@ export default function ProductStage() {
           nh={920}
           fit="width"
           hideChrome
+          zoomAt={zoomAt}
         />
       </div>
       <div
@@ -45,6 +51,7 @@ export default function ProductStage() {
           nh={920}
           fit="width"
           hideChrome
+          zoomAt={zoomAt}
         />
       </div>
     </div>
