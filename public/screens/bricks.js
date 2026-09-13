@@ -1702,6 +1702,25 @@ function BookHome({ dark=false }) {
   );
 }
 
+
+function mapboxToken(){
+  try{
+    var q = new URLSearchParams(location.search).get('mb');
+    if (q) return q;
+  }catch(e){}
+  try{
+    if (window.BRICKS_MAPBOX_TOKEN) return window.BRICKS_MAPBOX_TOKEN;
+  }catch(e){}
+  return '';
+}
+function staticMapUrl({ lng, lat, w=720, h=360, zoom=14, dark=true }){
+  const token = mapboxToken();
+  if (!token) return '';
+  const style = dark ? 'mapbox/dark-v11' : 'mapbox/light-v11';
+  // brick pin #D2542B
+  return `https://api.mapbox.com/styles/v1/${style}/static/pin-s+D2542B(${lng},${lat})/${lng},${lat},${zoom},0/${w}x${h}@2x?access_token=${token}`;
+}
+
 // 5) BOOK FLOW — steps 1–3 for marketing (property → package → time)
 function BookFlow({ dark=false, step=2 }) {
   const th = useTheme(dark);
@@ -1742,7 +1761,9 @@ function BookFlow({ dark=false, step=2 }) {
 }
 
 function BookFlowProperty({ th, dark }) {
-  const [hov, setHov] = React.useState(1);
+  const [hov, setHov] = React.useState(0);
+  const lng = -79.3984, lat = 43.6612; // Linden / Annex-ish Toronto
+  const mapSrc = staticMapUrl({ lng, lat, w:720, h:320, zoom:14, dark });
   const opts = [
     { n:'214 Linden St', d:'Toronto · House · 2,140 sqft', sel:true },
     { n:'77 Alder Ave', d:'Mississauga · Condo · 980 sqft', sel:false },
@@ -1752,26 +1773,36 @@ function BookFlowProperty({ th, dark }) {
     <>
       <Over color={T.brick}>Property</Over>
       <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>Where are we shooting?</div>
-      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>Pick a listing or add an address.</div>
-      <div style={{ marginTop:18, padding:'14px 14px', border:`1px solid ${th.hair}`, borderRadius:2, display:'flex', gap:10, alignItems:'center' }}>
-        <I name="pin" size={16} color={th.ink3}/>
+      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>Map from the same Mapbox layer we use for coverage.</div>
+      <div style={{ marginTop:16, borderRadius:2, overflow:'hidden', border:`1px solid ${th.hair}`, height:160, background:th.surf2, position:'relative' }}>
+        {mapSrc ? (
+          <img src={mapSrc} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}/>
+        ) : (
+          <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', color:th.ink3, fontSize:12 }}>Mapbox map</div>
+        )}
+        <div style={{ position:'absolute', left:12, bottom:12, padding:'6px 10px', background:dark?'rgba(20,17,14,.88)':'rgba(255,255,255,.92)', borderRadius:2, border:`1px solid ${th.hair}`, fontSize:11, fontWeight:500 }}>
+          214 Linden St · in coverage
+        </div>
+      </div>
+      <div style={{ marginTop:14, padding:'12px 14px', border:`1px solid ${th.hair}`, borderRadius:2, display:'flex', gap:10, alignItems:'center' }}>
+        <I name="pin" size={16} color={T.brick}/>
         <div style={{ fontSize:14, color:th.ink3 }}>Search address or MLS #</div>
       </div>
-      <div style={{ marginTop:18, display:'flex', flexDirection:'column', gap:10 }}>
+      <div style={{ marginTop:14, display:'flex', flexDirection:'column', gap:8 }}>
         {opts.map((o,i) => (
           <div
             key={o.n}
             onMouseEnter={() => setHov(i)}
             onMouseLeave={() => setHov(-1)}
             style={{
-              padding:18, border:`${o.sel?2:1}px solid ${o.sel?T.brick:th.hair}`,
+              padding:14, border:`${o.sel?2:1}px solid ${o.sel?T.brick:th.hair}`,
               borderRadius:2,
               background: o.sel ? (dark?'#D2542B14':T.brickTint) : (hov===i ? th.surf2 : 'transparent'),
               cursor:'pointer', transition:'background .12s ease',
             }}
           >
-            <div style={{ fontSize:16, fontWeight:500 }}>{o.n}</div>
-            <div style={{ fontSize:12, color:th.ink2, marginTop:6 }}>{o.d}</div>
+            <div style={{ fontSize:15, fontWeight:500 }}>{o.n}</div>
+            <div style={{ fontSize:12, color:th.ink2, marginTop:4 }}>{o.d}</div>
           </div>
         ))}
       </div>
@@ -1781,36 +1812,43 @@ function BookFlowProperty({ th, dark }) {
 
 function BookFlowPackage({ th, dark }) {
   const [hov, setHov] = React.useState(-1);
+  const photo = (typeof SB_IMG !== 'undefined' ? SB_IMG : '') + '74E774C6-1524-4287-B115-25CA213E4BBD.PNG';
   const pkgs = [
-    { n:'Standard', p:'$379', d:'24 HDR photos · Drone aerials · 24h delivery', sel:false },
-    { n:'Premium',  p:'$749', d:'40 photos · Drone · 60-sec reel · Floor plan · 24h', sel:true  },
-    { n:'Luxury',   p:'$1,199', d:'60 photos · Drone · Reel · 3D tour · 12h rush', sel:false },
+    { n:'Essentials', p:'$379', d:'HDR · licensed drone · floor plan · 24–48h', sel:false },
+    { n:'Showcase',  p:'$749', d:'Essentials + reel + virtual tour · 24–48h', sel:true  },
+    { n:'Full suite', p:'$1,049', d:'Showcase + twilight · staging on request', sel:false },
   ];
   return (
     <>
       <Over color={T.brick}>Package</Over>
       <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>How much coverage?</div>
-      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>214 Linden St · House · 2,140 sqft</div>
-      <div style={{ marginTop:22, display:'flex', flexDirection:'column', gap:10 }}>
+      <div style={{ marginTop:14, display:'flex', gap:12, padding:12, border:`1px solid ${th.hair}`, borderRadius:2, alignItems:'center' }}>
+        <img src={photo} alt="" style={{ width:64, height:64, borderRadius:2, objectFit:'cover', flex:'none', background:th.surf2 }}/>
+        <div>
+          <div style={{ fontSize:14, fontWeight:500 }}>214 Linden St</div>
+          <div style={{ fontSize:12, color:th.ink2, marginTop:3 }}>House · 2,140 sqft · Golden Horseshoe</div>
+        </div>
+      </div>
+      <div style={{ marginTop:16, display:'flex', flexDirection:'column', gap:8 }}>
         {pkgs.map((pk,i) => (
           <div
             key={pk.n}
             onMouseEnter={() => setHov(i)}
             onMouseLeave={() => setHov(-1)}
             style={{
-              padding:18, border:`${pk.sel?2:1}px solid ${pk.sel?T.brick:th.hair}`,
+              padding:16, border:`${pk.sel?2:1}px solid ${pk.sel?T.brick:th.hair}`,
               borderRadius:2,
               background: pk.sel ? (dark?'#D2542B14':T.brickTint) : (hov===i ? th.surf2 : 'transparent'),
               position:'relative', cursor:'pointer', transition:'background .12s ease',
             }}
           >
-            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
-              <div style={{ fontSize:17, fontWeight:500 }}>{pk.n}</div>
-              <div style={{ fontFamily:F.mono, fontSize:17 }}>{pk.p}</div>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', paddingRight: pk.sel?22:0 }}>
+              <div style={{ fontSize:16, fontWeight:500 }}>{pk.n}</div>
+              <div style={{ fontFamily:F.mono, fontSize:16 }}>{pk.p}</div>
             </div>
-            <div style={{ fontSize:12, color:th.ink2, marginTop:6, lineHeight:1.5 }}>{pk.d}</div>
+            <div style={{ fontSize:12, color:th.ink2, marginTop:6, lineHeight:1.45 }}>{pk.d}</div>
             {pk.sel && (
-              <div style={{ position:'absolute', top:14, right:14, width:18, height:18, borderRadius:999, background:T.brick, display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <div style={{ position:'absolute', top:14, right:12, width:18, height:18, borderRadius:999, background:T.brick, display:'flex', alignItems:'center', justifyContent:'center' }}>
                 <I name="chk" size={11} color="#fff" sw={2.5}/>
               </div>
             )}
@@ -1823,30 +1861,37 @@ function BookFlowPackage({ th, dark }) {
 
 function BookFlowTime({ th, dark }) {
   const slots = [
-    { t:'Today · 14:30', d:'J. Reyes · 4.9 ★ · 22 min away', sel:true },
-    { t:'Today · 16:00', d:'S. Okafor · 4.8 ★ · 31 min away', sel:false },
-    { t:'Tomorrow · 10:00', d:'J. Reyes · 4.9 ★ · auto-assign', sel:false },
+    { t:'Today · 14:30', d:'J. Reyes · 4.9 ★ · 22 min drive', sel:true },
+    { t:'Today · 16:00', d:'S. Okafor · 4.8 ★ · 31 min drive', sel:false },
+    { t:'Tomorrow · 10:00', d:'Auto-assign · first available', sel:false },
   ];
   const [hov, setHov] = React.useState(-1);
+  const lng = -79.3984, lat = 43.6612;
+  const mapSrc = staticMapUrl({ lng, lat, w:720, h:240, zoom:12, dark });
   return (
     <>
       <Over color={T.brick}>Time</Over>
       <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>When should we arrive?</div>
-      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>Premium · 214 Linden St · exact clock time</div>
-      <div style={{ marginTop:22, display:'flex', flexDirection:'column', gap:10 }}>
+      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>Showcase · exact clock time · drive time baked in</div>
+      <div style={{ marginTop:14, borderRadius:2, overflow:'hidden', border:`1px solid ${th.hair}`, height:110, background:th.surf2 }}>
+        {mapSrc ? (
+          <img src={mapSrc} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}/>
+        ) : null}
+      </div>
+      <div style={{ marginTop:14, display:'flex', flexDirection:'column', gap:8 }}>
         {slots.map((sl,i) => (
           <div
             key={sl.t}
             onMouseEnter={() => setHov(i)}
             onMouseLeave={() => setHov(-1)}
             style={{
-              padding:16, border:`${sl.sel?2:1}px solid ${sl.sel?T.brick:th.hair}`,
+              padding:14, border:`${sl.sel?2:1}px solid ${sl.sel?T.brick:th.hair}`,
               borderRadius:2, display:'flex', alignItems:'center', gap:12,
               background: sl.sel ? (dark?'#D2542B14':T.brickTint) : (hov===i ? th.surf2 : 'transparent'),
               cursor:'pointer', transition:'background .12s ease',
             }}
           >
-            <I name="bolt" size={20} color={sl.sel ? T.brick : th.ink3}/>
+            <I name="bolt" size={18} color={sl.sel ? T.brick : th.ink3}/>
             <div style={{ flex:1 }}>
               <div style={{ fontSize:14, fontWeight:500 }}>{sl.t}</div>
               <div style={{ fontSize:11, color:th.ink3, marginTop:2 }}>{sl.d}</div>
@@ -1854,10 +1899,10 @@ function BookFlowTime({ th, dark }) {
           </div>
         ))}
       </div>
-      <div style={{ marginTop:22, padding:16, border:`1px solid ${th.hair}`, borderRadius:2 }}>
-        <Over color={th.ink3}>What happens next</Over>
+      <div style={{ marginTop:16, padding:14, border:`1px solid ${th.hair}`, borderRadius:2, background:th.surf2 }}>
+        <Over color={th.ink3}>After you pay</Over>
         <div style={{ fontSize:13, color:th.ink2, marginTop:8, lineHeight:1.5 }}>
-          Pay locks the time. GO notifies the photographer. Media lands on the listing file in the desk.
+          Time locks. GO notifies the photographer. Media returns to the listing file on the desk.
         </div>
       </div>
     </>

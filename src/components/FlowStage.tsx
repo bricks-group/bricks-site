@@ -4,14 +4,16 @@ import PhoneDevice from '@/components/PhoneDevice'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Companion booking flow — three main screens:
- * property → package → time (exact clock).
+ * Companion booking flow — three flat phones (no off-angle):
+ * property (Mapbox) → package → time.
  */
 export default function FlowStage() {
+  const mb = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
+  const q = mb ? `&mb=${encodeURIComponent(mb)}` : ''
   const steps = [
-    { cap: '1 · Property', src: '/screens/book.html?lock=1&flow=1', label: 'Pick property' },
-    { cap: '2 · Package', src: '/screens/book.html?lock=1&flow=2', label: 'Choose package' },
-    { cap: '3 · Time', src: '/screens/book.html?lock=1&flow=3', label: 'Lock the time' },
+    { cap: '1 · Property', src: `/screens/book.html?lock=1&flow=1${q}`, label: 'Pick property' },
+    { cap: '2 · Package', src: `/screens/book.html?lock=1&flow=2${q}`, label: 'Choose package' },
+    { cap: '3 · Time', src: `/screens/book.html?lock=1&flow=3${q}`, label: 'Lock the time' },
   ] as const
 
   return (

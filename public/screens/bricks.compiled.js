@@ -4938,6 +4938,30 @@
       }]
     }));
   }
+  function mapboxToken() {
+    try {
+      var q = new URLSearchParams(location.search).get('mb');
+      if (q) return q;
+    } catch (e) {}
+    try {
+      if (window.BRICKS_MAPBOX_TOKEN) return window.BRICKS_MAPBOX_TOKEN;
+    } catch (e) {}
+    return '';
+  }
+  function staticMapUrl({
+    lng,
+    lat,
+    w = 720,
+    h = 360,
+    zoom = 14,
+    dark = true
+  }) {
+    const token = mapboxToken();
+    if (!token) return '';
+    const style = dark ? 'mapbox/dark-v11' : 'mapbox/light-v11';
+    // brick pin #D2542B
+    return `https://api.mapbox.com/styles/v1/${style}/static/pin-s+D2542B(${lng},${lat})/${lng},${lat},${zoom},0/${w}x${h}@2x?access_token=${token}`;
+  }
 
   // 5) BOOK FLOW — steps 1–3 for marketing (property → package → time)
   function BookFlow({
@@ -5069,7 +5093,17 @@
     th,
     dark
   }) {
-    const [hov, setHov] = React.useState(1);
+    const [hov, setHov] = React.useState(0);
+    const lng = -79.3984,
+      lat = 43.6612; // Linden / Annex-ish Toronto
+    const mapSrc = staticMapUrl({
+      lng,
+      lat,
+      w: 720,
+      h: 320,
+      zoom: 14,
+      dark
+    });
     const opts = [{
       n: '214 Linden St',
       d: 'Toronto · House · 2,140 sqft',
@@ -5098,10 +5132,51 @@
         color: th.ink2,
         marginTop: 6
       }
-    }, "Pick a listing or add an address."), /*#__PURE__*/React.createElement("div", {
+    }, "Map from the same Mapbox layer we use for coverage."), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 18,
-        padding: '14px 14px',
+        marginTop: 16,
+        borderRadius: 2,
+        overflow: 'hidden',
+        border: `1px solid ${th.hair}`,
+        height: 160,
+        background: th.surf2,
+        position: 'relative'
+      }
+    }, mapSrc ? /*#__PURE__*/React.createElement("img", {
+      src: mapSrc,
+      alt: "",
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      }
+    }) : /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: th.ink3,
+        fontSize: 12
+      }
+    }, "Mapbox map"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        left: 12,
+        bottom: 12,
+        padding: '6px 10px',
+        background: dark ? 'rgba(20,17,14,.88)' : 'rgba(255,255,255,.92)',
+        borderRadius: 2,
+        border: `1px solid ${th.hair}`,
+        fontSize: 11,
+        fontWeight: 500
+      }
+    }, "214 Linden St \xB7 in coverage")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 14,
+        padding: '12px 14px',
         border: `1px solid ${th.hair}`,
         borderRadius: 2,
         display: 'flex',
@@ -5111,7 +5186,7 @@
     }, /*#__PURE__*/React.createElement(I, {
       name: "pin",
       size: 16,
-      color: th.ink3
+      color: T.brick
     }), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 14,
@@ -5119,17 +5194,17 @@
       }
     }, "Search address or MLS #")), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 18,
+        marginTop: 14,
         display: 'flex',
         flexDirection: 'column',
-        gap: 10
+        gap: 8
       }
     }, opts.map((o, i) => /*#__PURE__*/React.createElement("div", {
       key: o.n,
       onMouseEnter: () => setHov(i),
       onMouseLeave: () => setHov(-1),
       style: {
-        padding: 18,
+        padding: 14,
         border: `${o.sel ? 2 : 1}px solid ${o.sel ? T.brick : th.hair}`,
         borderRadius: 2,
         background: o.sel ? dark ? '#D2542B14' : T.brickTint : hov === i ? th.surf2 : 'transparent',
@@ -5138,14 +5213,14 @@
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: 500
       }
     }, o.n), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
         color: th.ink2,
-        marginTop: 6
+        marginTop: 4
       }
     }, o.d)))));
   }
@@ -5154,20 +5229,21 @@
     dark
   }) {
     const [hov, setHov] = React.useState(-1);
+    const photo = (typeof SB_IMG !== 'undefined' ? SB_IMG : '') + '74E774C6-1524-4287-B115-25CA213E4BBD.PNG';
     const pkgs = [{
-      n: 'Standard',
+      n: 'Essentials',
       p: '$379',
-      d: '24 HDR photos · Drone aerials · 24h delivery',
+      d: 'HDR · licensed drone · floor plan · 24–48h',
       sel: false
     }, {
-      n: 'Premium',
+      n: 'Showcase',
       p: '$749',
-      d: '40 photos · Drone · 60-sec reel · Floor plan · 24h',
+      d: 'Essentials + reel + virtual tour · 24–48h',
       sel: true
     }, {
-      n: 'Luxury',
-      p: '$1,199',
-      d: '60 photos · Drone · Reel · 3D tour · 12h rush',
+      n: 'Full suite',
+      p: '$1,049',
+      d: 'Showcase + twilight · staging on request',
       sel: false
     }];
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
@@ -5181,23 +5257,49 @@
       }
     }, "How much coverage?"), /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: 13,
-        color: th.ink2,
-        marginTop: 6
+        marginTop: 14,
+        display: 'flex',
+        gap: 12,
+        padding: 12,
+        border: `1px solid ${th.hair}`,
+        borderRadius: 2,
+        alignItems: 'center'
       }
-    }, "214 Linden St \xB7 House \xB7 2,140 sqft"), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("img", {
+      src: photo,
+      alt: "",
       style: {
-        marginTop: 22,
+        width: 64,
+        height: 64,
+        borderRadius: 2,
+        objectFit: 'cover',
+        flex: 'none',
+        background: th.surf2
+      }
+    }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        fontWeight: 500
+      }
+    }, "214 Linden St"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        color: th.ink2,
+        marginTop: 3
+      }
+    }, "House \xB7 2,140 sqft \xB7 Golden Horseshoe"))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 16,
         display: 'flex',
         flexDirection: 'column',
-        gap: 10
+        gap: 8
       }
     }, pkgs.map((pk, i) => /*#__PURE__*/React.createElement("div", {
       key: pk.n,
       onMouseEnter: () => setHov(i),
       onMouseLeave: () => setHov(-1),
       style: {
-        padding: 18,
+        padding: 16,
         border: `${pk.sel ? 2 : 1}px solid ${pk.sel ? T.brick : th.hair}`,
         borderRadius: 2,
         background: pk.sel ? dark ? '#D2542B14' : T.brickTint : hov === i ? th.surf2 : 'transparent',
@@ -5209,30 +5311,31 @@
       style: {
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'baseline'
+        alignItems: 'baseline',
+        paddingRight: pk.sel ? 22 : 0
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: 500
       }
     }, pk.n), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: F.mono,
-        fontSize: 17
+        fontSize: 16
       }
     }, pk.p)), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
         color: th.ink2,
         marginTop: 6,
-        lineHeight: 1.5
+        lineHeight: 1.45
       }
     }, pk.d), pk.sel && /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'absolute',
         top: 14,
-        right: 14,
+        right: 12,
         width: 18,
         height: 18,
         borderRadius: 999,
@@ -5254,18 +5357,28 @@
   }) {
     const slots = [{
       t: 'Today · 14:30',
-      d: 'J. Reyes · 4.9 ★ · 22 min away',
+      d: 'J. Reyes · 4.9 ★ · 22 min drive',
       sel: true
     }, {
       t: 'Today · 16:00',
-      d: 'S. Okafor · 4.8 ★ · 31 min away',
+      d: 'S. Okafor · 4.8 ★ · 31 min drive',
       sel: false
     }, {
       t: 'Tomorrow · 10:00',
-      d: 'J. Reyes · 4.9 ★ · auto-assign',
+      d: 'Auto-assign · first available',
       sel: false
     }];
     const [hov, setHov] = React.useState(-1);
+    const lng = -79.3984,
+      lat = 43.6612;
+    const mapSrc = staticMapUrl({
+      lng,
+      lat,
+      w: 720,
+      h: 240,
+      zoom: 12,
+      dark
+    });
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
       color: T.brick
     }, "Time"), /*#__PURE__*/React.createElement("div", {
@@ -5281,19 +5394,37 @@
         color: th.ink2,
         marginTop: 6
       }
-    }, "Premium \xB7 214 Linden St \xB7 exact clock time"), /*#__PURE__*/React.createElement("div", {
+    }, "Showcase \xB7 exact clock time \xB7 drive time baked in"), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 22,
+        marginTop: 14,
+        borderRadius: 2,
+        overflow: 'hidden',
+        border: `1px solid ${th.hair}`,
+        height: 110,
+        background: th.surf2
+      }
+    }, mapSrc ? /*#__PURE__*/React.createElement("img", {
+      src: mapSrc,
+      alt: "",
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      }
+    }) : null), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 14,
         display: 'flex',
         flexDirection: 'column',
-        gap: 10
+        gap: 8
       }
     }, slots.map((sl, i) => /*#__PURE__*/React.createElement("div", {
       key: sl.t,
       onMouseEnter: () => setHov(i),
       onMouseLeave: () => setHov(-1),
       style: {
-        padding: 16,
+        padding: 14,
         border: `${sl.sel ? 2 : 1}px solid ${sl.sel ? T.brick : th.hair}`,
         borderRadius: 2,
         display: 'flex',
@@ -5305,7 +5436,7 @@
       }
     }, /*#__PURE__*/React.createElement(I, {
       name: "bolt",
-      size: 20,
+      size: 18,
       color: sl.sel ? T.brick : th.ink3
     }), /*#__PURE__*/React.createElement("div", {
       style: {
@@ -5324,21 +5455,22 @@
       }
     }, sl.d))))), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 22,
-        padding: 16,
+        marginTop: 16,
+        padding: 14,
         border: `1px solid ${th.hair}`,
-        borderRadius: 2
+        borderRadius: 2,
+        background: th.surf2
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "What happens next"), /*#__PURE__*/React.createElement("div", {
+    }, "After you pay"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 13,
         color: th.ink2,
         marginTop: 8,
         lineHeight: 1.5
       }
-    }, "Pay locks the time. GO notifies the photographer. Media lands on the listing file in the desk.")));
+    }, "Time locks. GO notifies the photographer. Media returns to the listing file on the desk.")));
   }
 
   // 6) JOBS

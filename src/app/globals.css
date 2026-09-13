@@ -1323,13 +1323,13 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 .flow-phones{
   position:absolute;inset:0;
   display:flex;align-items:flex-end;justify-content:center;
-  gap:0;padding:28px 24px 0;
+  gap:14px;padding:24px 20px 0;
 }
 .flow-phone{
   position:relative;
-  width:min(280px,28%);
+  width:min(270px,31%);
   flex:none;
-  transition:transform .55s cubic-bezier(.16,1,.3,1);
+  transform:none !important; /* Bricks: flat phones, never off-angle */
 }
 .flow-phone .phone-device{
   width:100%;
@@ -1343,25 +1343,17 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
   display:block;margin:0 0 10px;
   font-family:'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--inkMute);text-align:center;
+  color:var(--inkSoft);text-align:center;
 }
-.flow-phone-a{z-index:1;transform:translate(18%, 8%) rotate(-2deg);}
-.flow-phone-b{z-index:3;transform:translateY(0);width:min(300px,32%);}
-.flow-phone-c{z-index:2;transform:translate(-18%, 8%) rotate(2deg);}
-@media (prefers-reduced-motion: reduce){
-  .flow-phone{transition:none;}
-  .flow-phone-a,.flow-phone-c{transform:none;}
-}
+.flow-phone-a,.flow-phone-b,.flow-phone-c{z-index:1;transform:none !important;}
+.flow-phone-b{width:min(290px,34%);z-index:2;}
 @media (max-width:900px){
   .flow-stage{min-height:480px;height:min(540px,70vh);}
-  .flow-phones{padding:20px 12px 0;gap:8px;}
-  .flow-phone,.flow-phone-b{width:min(220px,30%);}
-  .flow-phone-a,.flow-phone-c{transform:translateY(12px);}
-  .flow-phone-a:hover,.flow-phone-c:hover{transform:translateY(4px);}
+  .flow-phones{padding:20px 12px 0;gap:10px;}
+  .flow-phone,.flow-phone-b{width:min(230px,31%);}
 }
 @media (max-width:680px){
-  .flow-phones{flex-direction:column;align-items:center;overflow:auto;padding:16px 0 8px;}
-  .flow-phone,.flow-phone-b{width:min(260px,72%);transform:none !important;}
-  .flow-phone-a,.flow-phone-c{display:none;} /* keep primary book flow phone on small */
-  .flow-phone-b{display:block;}
+  .flow-phones{gap:12px;padding:16px 0 8px;overflow-x:auto;justify-content:flex-start;}
+  .flow-phone,.flow-phone-b{width:min(240px,78%);flex:none;}
+  .flow-phone-a,.flow-phone-c{display:block;}
 }
