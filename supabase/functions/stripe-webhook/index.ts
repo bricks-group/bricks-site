@@ -14,16 +14,18 @@ const testEnv = (Deno.env.get('STRIPE_WEBHOOK_SECRET_TEST') || '').trim();
 if (primary) secrets.push(primary);
 if (testEnv && !secrets.includes(testEnv)) secrets.push(testEnv);
 try {
-  const secRes = await fetch(`${supabaseUrl}/rest/v1/app_secrets?key=eq.STRIPE_WEBHOOK_SECRET_TEST&select=value&limit=1`, {
-    headers: restHeaders(serviceKey, 'return=representation'),
-  });
-  if (secRes.ok) {
-    const rows = await secRes.json();
-    const dbSec = (rows?.[0]?.value || '').trim();
-    if (dbSec && !secrets.includes(dbSec)) secrets.push(dbSec);
+  for (const key of ['STRIPE_WEBHOOK_SECRET', 'STRIPE_WEBHOOK_SECRET_TEST']) {
+    const secRes = await fetch(`${supabaseUrl}/rest/v1/app_secrets?key=eq.${key}&select=value&limit=1`, {
+      headers: restHeaders(serviceKey, 'return=representation'),
+    });
+    if (secRes.ok) {
+      const rows = await secRes.json();
+      const dbSec = (rows?.[0]?.value || '').trim();
+      if (dbSec && !secrets.includes(dbSec)) secrets.push(dbSec);
+    }
   }
 } catch (e) {
-  console.warn('app_secrets webhook test secret lookup failed: ' + String(e));
+  console.warn('app_secrets webhook secret lookup failed: ' + String(e));
 }
 if (!secrets.length) {
   console.error('No STRIPE_WEBHOOK_SECRET / STRIPE_WEBHOOK_SECRET_TEST available -- rejecting webhook (fail closed).');
