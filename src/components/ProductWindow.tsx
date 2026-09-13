@@ -177,8 +177,8 @@ export default function ProductWindow({
 
   return (
     <div className={`pwin${variant === 'phone' ? ' pwin-phone' : ''}${hideChrome ? ' pwin-bare' : ''}`}>
-      {/* No traffic lights — screenshots are bare or title-only (Kam). Raise via parent handlers. */}
-      {!hideChrome && chromeMode === 'titled' ? (
+      {/* Cursor-style Mac chrome: greyed traffic lights + app title */}
+      {!hideChrome ? (
         <div
           className={`pwin-bar${onChromeActivate ? ' pwin-bar-raise' : ''}`}
           onMouseDown={onChromeActivate}
@@ -197,7 +197,10 @@ export default function ProductWindow({
           }
           aria-label={onChromeActivate ? `Bring ${title} to front` : undefined}
         >
-          <span>{title}</span>
+          <div className="pwin-dots" aria-hidden="true">
+            <i /><i /><i />
+          </div>
+          <span className="pwin-title">{title}</span>
         </div>
       ) : null}
       <ScaledIframe
