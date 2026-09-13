@@ -588,52 +588,6 @@
     }));
   }
 
-  // Cursor-style hover inspect — blue outline + label (in-product hover, not frame scale)
-  function Inspectable({
-    label,
-    children,
-    style = {}
-  }) {
-    const [on, setOn] = React.useState(false);
-    return /*#__PURE__*/React.createElement("div", {
-      onMouseEnter: () => setOn(true),
-      onMouseLeave: () => setOn(false),
-      style: {
-        position: 'relative',
-        ...style
-      }
-    }, children, on ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-      "aria-hidden": "true",
-      style: {
-        position: 'absolute',
-        inset: -1,
-        border: '1.5px solid #3B82F6',
-        borderRadius: 2,
-        pointerEvents: 'none',
-        zIndex: 60,
-        boxShadow: '0 0 0 1px rgba(59,130,246,0.25)'
-      }
-    }), /*#__PURE__*/React.createElement("div", {
-      "aria-hidden": "true",
-      style: {
-        position: 'absolute',
-        left: -1,
-        top: -23,
-        zIndex: 61,
-        pointerEvents: 'none',
-        background: '#3B82F6',
-        color: '#fff',
-        fontSize: 11,
-        fontWeight: 500,
-        lineHeight: 1.2,
-        padding: '3px 8px',
-        borderRadius: 999,
-        whiteSpace: 'nowrap',
-        fontFamily: "'General Sans',ui-sans-serif,sans-serif"
-      }
-    }, label)) : null);
-  }
-
   // Pill/badge
   function Pill({
     children,
@@ -689,31 +643,34 @@
     style = {}
   }) {
     const th = useTheme(dark);
+    const [hov, setHov] = React.useState(false);
     const styles = {
       primary: {
-        background: T.ink,
+        background: hov ? '#2a2622' : T.ink,
         color: T.paper,
         border: 'none'
       },
       accent: {
-        background: T.brick,
+        background: hov ? T.brickDeep : T.brick,
         color: '#fff',
         border: 'none'
       },
       ghost: {
-        background: 'transparent',
+        background: hov ? th.surf2 : 'transparent',
         color: th.ink,
-        border: `1px solid ${th.hairS}`
+        border: `1px solid ${hov ? th.hairS : th.hairS}`
       },
       secondary: {
-        background: th.surf2,
+        background: hov ? th.surf : th.surf2,
         color: th.ink,
         border: `1px solid ${th.hair}`
       }
     };
     return /*#__PURE__*/React.createElement("button", {
+      onMouseEnter: () => setHov(true),
+      onMouseLeave: () => setHov(false),
       style: {
-        ...styles[variant],
+        ...(styles[variant] || styles.primary),
         padding: '13px 20px',
         borderRadius: 2,
         fontFamily: F.display,
@@ -726,6 +683,7 @@
         gap: 8,
         width: full ? '100%' : 'auto',
         cursor: 'pointer',
+        transition: 'background .15s ease, border-color .15s ease, filter .15s ease',
         ...style
       }
     }, children, icon && /*#__PURE__*/React.createElement(I, {
@@ -733,6 +691,59 @@
       size: 14,
       color: "currentColor"
     }));
+  }
+  function NavItem({
+    ic,
+    lb,
+    k,
+    cur,
+    th,
+    locked,
+    setCur
+  }) {
+    const on = k === cur;
+    const [hov, setHov] = React.useState(false);
+    const bg = on ? th.surf2 : hov ? th.surf : 'transparent';
+    return /*#__PURE__*/React.createElement("div", {
+      role: locked ? undefined : 'button',
+      tabIndex: locked ? undefined : 0,
+      onClick: locked ? undefined : () => setCur(k),
+      onKeyDown: locked ? undefined : e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          setCur(k);
+        }
+      },
+      onMouseEnter: () => setHov(true),
+      onMouseLeave: () => setHov(false),
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+        padding: '9px 14px',
+        borderRadius: 2,
+        background: bg,
+        color: on || hov ? th.ink : th.ink3,
+        fontSize: 13.5,
+        fontWeight: on ? 500 : 400,
+        position: 'relative',
+        cursor: locked ? 'default' : 'pointer',
+        transition: 'background .12s ease, color .12s ease'
+      }
+    }, on && /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        left: 0,
+        top: 9,
+        bottom: 9,
+        width: 2,
+        background: T.brick
+      }
+    }), /*#__PURE__*/React.createElement(I, {
+      name: ic,
+      size: 16,
+      color: on || hov ? th.ink : th.ink3
+    }), lb);
   }
 
   // ─── Role-aware console config (brokerage / team / solo) ───
@@ -1792,47 +1803,16 @@
       style: {
         fontSize: 9.5
       }
-    }, grp.group)), grp.items.map(([ic, lb, k]) => {
-      const on = k === cur;
-      return /*#__PURE__*/React.createElement("div", {
-        key: k,
-        role: locked ? undefined : "button",
-        tabIndex: locked ? undefined : 0,
-        onClick: locked ? undefined : () => setCur(k),
-        onKeyDown: locked ? undefined : e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setCur(k);
-          }
-        },
-        style: {
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          padding: '9px 14px',
-          borderRadius: 2,
-          background: on ? th.surf2 : 'transparent',
-          color: on ? th.ink : th.ink3,
-          fontSize: 13.5,
-          fontWeight: on ? 500 : 400,
-          position: 'relative',
-          cursor: locked ? 'default' : 'pointer'
-        }
-      }, on && /*#__PURE__*/React.createElement("div", {
-        style: {
-          position: 'absolute',
-          left: 0,
-          top: 9,
-          bottom: 9,
-          width: 2,
-          background: T.brick
-        }
-      }), /*#__PURE__*/React.createElement(I, {
-        name: ic,
-        size: 16,
-        color: on ? th.ink : th.ink3
-      }), lb);
-    })))), /*#__PURE__*/React.createElement("div", {
+    }, grp.group)), grp.items.map(([ic, lb, k]) => /*#__PURE__*/React.createElement(NavItem, {
+      key: k,
+      ic: ic,
+      lb: lb,
+      k: k,
+      cur: cur,
+      th: th,
+      locked: locked,
+      setCur: setCur
+    }))))), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 'auto',
         padding: '16px 20px',
@@ -2954,16 +2934,25 @@
         border: `1px solid ${th.hair}`,
         borderRadius: 2
       }
-    }, items.map((k, i) => /*#__PURE__*/React.createElement(Inspectable, {
+    }, items.map((k, i) => /*#__PURE__*/React.createElement(KpiCard, {
       key: i,
-      label: `KpiCard · ${k.l}`,
+      th: th,
+      k: k
+    })));
+  }
+  function KpiCard({
+    th,
+    k
+  }) {
+    const [hov, setHov] = React.useState(false);
+    return /*#__PURE__*/React.createElement("div", {
+      onMouseEnter: () => setHov(true),
+      onMouseLeave: () => setHov(false),
       style: {
-        background: th.bg
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
+        background: hov ? th.surf2 : th.bg,
         padding: '22px 24px 20px',
-        cursor: 'pointer'
+        cursor: 'default',
+        transition: 'background .15s ease'
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
@@ -3001,7 +2990,69 @@
         fontSize: 11,
         color: th.ink4
       }
-    }, k.s))))));
+    }, k.s)));
+  }
+  function DealRow({
+    d,
+    th,
+    dark,
+    fresh,
+    freshBg,
+    reduce
+  }) {
+    const [hov, setHov] = React.useState(false);
+    const bg = fresh ? freshBg : hov ? th.surf2 : 'transparent';
+    return /*#__PURE__*/React.createElement("div", {
+      onMouseEnter: () => setHov(true),
+      onMouseLeave: () => setHov(false),
+      style: {
+        display: 'grid',
+        gridTemplateColumns: '1.5fr 1fr 0.8fr 1fr 0.8fr 130px',
+        padding: '0 24px',
+        height: TX_ROW_H,
+        boxSizing: 'border-box',
+        borderBottom: `1px solid ${th.hair}`,
+        fontSize: 13,
+        alignItems: 'center',
+        background: bg,
+        transition: reduce ? 'none' : 'background .15s ease',
+        cursor: 'pointer'
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontWeight: 500
+      }
+    }, d.addr), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        color: th.ink4,
+        marginTop: 2
+      }
+    }, d.note)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: th.ink2
+      }
+    }, d.client), /*#__PURE__*/React.createElement("div", {
+      style: {
+        color: th.ink3,
+        fontFamily: F.mono,
+        fontSize: 11
+      }
+    }, d.side), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: F.mono,
+        fontSize: 13
+      }
+    }, d.price), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: F.mono,
+        fontSize: 12,
+        color: th.ink2
+      }
+    }, d.close), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Pill, {
+      tone: d.tone,
+      dark: dark
+    }, d.status)));
   }
   function ModHead({
     th,
@@ -3530,67 +3581,20 @@
         transition: !reduce && sliding ? `transform ${TX_SLIDE_MS}ms cubic-bezier(0.16, 0.8, 0.3, 1)` : 'none',
         willChange: sliding ? 'transform' : 'auto'
       }
-    }, deals.map(d => /*#__PURE__*/React.createElement(Inspectable, {
+    }, deals.map(d => /*#__PURE__*/React.createElement(DealRow, {
       key: d.id,
-      label: `DealRow · ${d.addr}`
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: 'grid',
-        gridTemplateColumns: '1.5fr 1fr 0.8fr 1fr 0.8fr 130px',
-        padding: '0 24px',
-        height: TX_ROW_H,
-        boxSizing: 'border-box',
-        borderBottom: `1px solid ${th.hair}`,
-        fontSize: 13,
-        alignItems: 'center',
-        background: d.id === freshId ? freshBg : 'transparent',
-        transition: reduce ? 'none' : 'background 1.4s ease',
-        cursor: 'pointer'
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontWeight: 500
-      }
-    }, d.addr), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: th.ink4,
-        marginTop: 2
-      }
-    }, d.note)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        color: th.ink2
-      }
-    }, d.client), /*#__PURE__*/React.createElement("div", {
-      style: {
-        color: th.ink3,
-        fontFamily: F.mono,
-        fontSize: 11
-      }
-    }, d.side), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontFamily: F.mono,
-        fontSize: 13
-      }
-    }, d.price), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontFamily: F.mono,
-        fontSize: 12,
-        color: th.ink2
-      }
-    }, d.close), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Pill, {
-      tone: d.tone,
-      dark: dark
-    }, d.status)))))))), /*#__PURE__*/React.createElement(Inspectable, {
-      label: "DealTimeline \xB7 214 Linden St",
-      style: {
-        alignSelf: 'start'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
+      d: d,
+      th: th,
+      dark: dark,
+      fresh: d.id === freshId,
+      freshBg: freshBg,
+      reduce: reduce
+    }))))), /*#__PURE__*/React.createElement("div", {
       style: {
         border: `1px solid ${th.hair}`,
         borderRadius: 2,
-        padding: 24
+        padding: 24,
+        alignSelf: 'start'
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
@@ -3675,7 +3679,7 @@
       style: {
         marginTop: 20
       }
-    }, "Open deal")))));
+    }, "Open deal"))));
   }
 
   // ─── MLS SUBMISSION · queue + validation ───
@@ -6686,7 +6690,6 @@
     TabBar,
     Pill,
     Btn,
-    Inspectable,
     BrokShell,
     BrokLogin,
     BookOnboarding,

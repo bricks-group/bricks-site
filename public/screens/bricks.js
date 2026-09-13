@@ -204,36 +204,6 @@ function TabBar({ dark=false, tabs, active, accent=T.brick, onSelect }) {
   );
 }
 
-// Cursor-style hover inspect — blue outline + label (in-product hover, not frame scale)
-function Inspectable({ label, children, style = {} }) {
-  const [on, setOn] = React.useState(false);
-  return (
-    <div
-      onMouseEnter={() => setOn(true)}
-      onMouseLeave={() => setOn(false)}
-      style={{ position:'relative', ...style }}
-    >
-      {children}
-      {on ? (
-        <>
-          <div aria-hidden="true" style={{
-            position:'absolute', inset:-1, border:'1.5px solid #3B82F6',
-            borderRadius:2, pointerEvents:'none', zIndex:60,
-            boxShadow:'0 0 0 1px rgba(59,130,246,0.25)',
-          }}/>
-          <div aria-hidden="true" style={{
-            position:'absolute', left:-1, top:-23, zIndex:61, pointerEvents:'none',
-            background:'#3B82F6', color:'#fff',
-            fontSize:11, fontWeight:500, lineHeight:1.2,
-            padding:'3px 8px', borderRadius:999, whiteSpace:'nowrap',
-            fontFamily:"'General Sans',ui-sans-serif,sans-serif",
-          }}>{label}</div>
-        </>
-      ) : null}
-    </div>
-  );
-}
-
 // Pill/badge
 function Pill({ children, tone='neutral', dark=false }) {
   const th = useTheme(dark);
@@ -257,27 +227,60 @@ function Pill({ children, tone='neutral', dark=false }) {
 // Button
 function Btn({ children, variant='primary', dark=false, full=false, icon, style={} }) {
   const th = useTheme(dark);
+  const [hov, setHov] = React.useState(false);
   const styles = {
-    primary: { background: T.ink, color: T.paper, border: 'none' },
-    accent:  { background: T.brick, color: '#fff', border: 'none' },
-    ghost:   { background: 'transparent', color: th.ink, border: `1px solid ${th.hairS}` },
-    secondary:{ background: th.surf2, color: th.ink, border: `1px solid ${th.hair}` },
+    primary: { background: hov ? '#2a2622' : T.ink, color: T.paper, border: 'none' },
+    accent:  { background: hov ? T.brickDeep : T.brick, color: '#fff', border: 'none' },
+    ghost:   { background: hov ? th.surf2 : 'transparent', color: th.ink, border: `1px solid ${hov ? th.hairS : th.hairS}` },
+    secondary:{ background: hov ? th.surf : th.surf2, color: th.ink, border: `1px solid ${th.hair}` },
   };
   return (
-    <button style={{
-      ...styles[variant],
-      padding:'13px 20px', borderRadius:2,
-      fontFamily:F.display, fontSize:14, fontWeight:500, letterSpacing:-0.1,
-      display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8,
-      width: full ? '100%' : 'auto', cursor:'pointer',
-      ...style,
-    }}>
+    <button
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        ...styles[variant] || styles.primary,
+        padding:'13px 20px', borderRadius:2,
+        fontFamily:F.display, fontSize:14, fontWeight:500, letterSpacing:-0.1,
+        display:'inline-flex', alignItems:'center', justifyContent:'center', gap:8,
+        width: full ? '100%' : 'auto', cursor:'pointer',
+        transition:'background .15s ease, border-color .15s ease, filter .15s ease',
+        ...style,
+      }}
+    >
       {children}{icon && <I name={icon} size={14} color="currentColor"/>}
     </button>
   );
 }
 
 
+
+function NavItem({ ic, lb, k, cur, th, locked, setCur }) {
+  const on = k === cur;
+  const [hov, setHov] = React.useState(false);
+  const bg = on ? th.surf2 : hov ? th.surf : 'transparent';
+  return (
+    <div
+      role={locked ? undefined : 'button'}
+      tabIndex={locked ? undefined : 0}
+      onClick={locked ? undefined : () => setCur(k)}
+      onKeyDown={locked ? undefined : (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCur(k); } }}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display:'flex', alignItems:'center', gap:12, padding:'9px 14px', borderRadius:2,
+        background: bg,
+        color: on || hov ? th.ink : th.ink3,
+        fontSize:13.5, fontWeight: on ? 500 : 400, position:'relative',
+        cursor: locked ? 'default' : 'pointer',
+        transition:'background .12s ease, color .12s ease',
+      }}
+    >
+      {on && <div style={{ position:'absolute', left:0, top:9, bottom:9, width:2, background:T.brick }}/>}
+      <I name={ic} size={16} color={on || hov ? th.ink : th.ink3}/>{lb}
+    </div>
+  );
+}
 
 // ─── Role-aware console config (brokerage / team / solo) ───
 const BROK_ROLES = {
@@ -604,21 +607,9 @@ function BrokShell({ dark=false, screen='overview', role='office', customize=fal
           {NAV.map((grp, gi) => (
             <React.Fragment key={gi}>
               {grp.group && <div style={{ padding:'16px 14px 6px' }}><Over color={th.ink4} style={{ fontSize:9.5 }}>{grp.group}</Over></div>}
-              {grp.items.map(([ic,lb,k]) => {
-                const on = k === cur;
-                return (
-                  <div key={k} role={locked ? undefined : "button"} tabIndex={locked ? undefined : 0} onClick={locked ? undefined : () => setCur(k)} onKeyDown={locked ? undefined : (e)=>{ if(e.key==='Enter'||e.key===' ') { e.preventDefault(); setCur(k); } }} style={{
-                    display:'flex', alignItems:'center', gap:12, padding:'9px 14px', borderRadius:2,
-                    background: on ? th.surf2 : 'transparent',
-                    color: on ? th.ink : th.ink3,
-                    fontSize:13.5, fontWeight: on ? 500 : 400, position:'relative',
-                    cursor: locked ? 'default' : 'pointer',
-                  }}>
-                    {on && <div style={{ position:'absolute', left:0, top:9, bottom:9, width:2, background:T.brick }}/>}
-                    <I name={ic} size={16} color={on ? th.ink : th.ink3}/>{lb}
-                  </div>
-                );
-              })}
+              {grp.items.map(([ic,lb,k]) => (
+                <NavItem key={k} ic={ic} lb={lb} k={k} cur={cur} th={th} locked={locked} setCur={setCur} />
+              ))}
             </React.Fragment>
           ))}
         </div>
@@ -988,19 +979,57 @@ function KpiRow({ th, items }) {
   return (
     <div style={{ display:'grid', gridTemplateColumns:`repeat(${items.length},1fr)`, gap:1, background:th.hair, border:`1px solid ${th.hair}`, borderRadius:2 }}>
       {items.map((k,i)=>(
-        <Inspectable key={i} label={`KpiCard · ${k.l}`} style={{ background:th.bg }}>
-          <div style={{ padding:'22px 24px 20px', cursor:'pointer' }}>
-            <Over color={th.ink3}>{k.l}</Over>
-            <div style={{ fontFamily:F.mono, fontSize:32, letterSpacing:-0.9, marginTop:12, color:th.ink, lineHeight:1 }}>{k.v}</div>
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:12 }}>
-              {k.d && <span style={{ fontSize:12, color: k.down?T.bad:T.ok, fontFamily:F.mono, display:'inline-flex', alignItems:'center', gap:4 }}>
-                <I name={k.down?'arrD':'arrU'} size={11} color={k.down?T.bad:T.ok}/>{k.d}
-              </span>}
-              <span style={{ fontSize:11, color:th.ink4 }}>{k.s}</span>
-            </div>
-          </div>
-        </Inspectable>
+        <KpiCard key={i} th={th} k={k} />
       ))}
+    </div>
+  );
+}
+function KpiCard({ th, k }) {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        background: hov ? th.surf2 : th.bg,
+        padding:'22px 24px 20px',
+        cursor:'default',
+        transition:'background .15s ease',
+      }}
+    >
+      <Over color={th.ink3}>{k.l}</Over>
+      <div style={{ fontFamily:F.mono, fontSize:32, letterSpacing:-0.9, marginTop:12, color:th.ink, lineHeight:1 }}>{k.v}</div>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:12 }}>
+        {k.d && <span style={{ fontSize:12, color: k.down?T.bad:T.ok, fontFamily:F.mono, display:'inline-flex', alignItems:'center', gap:4 }}>
+          <I name={k.down?'arrD':'arrU'} size={11} color={k.down?T.bad:T.ok}/>{k.d}
+        </span>}
+        <span style={{ fontSize:11, color:th.ink4 }}>{k.s}</span>
+      </div>
+    </div>
+  );
+}
+function DealRow({ d, th, dark, fresh, freshBg, reduce }) {
+  const [hov, setHov] = React.useState(false);
+  const bg = fresh ? freshBg : hov ? th.surf2 : 'transparent';
+  return (
+    <div
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display:'grid', gridTemplateColumns:'1.5fr 1fr 0.8fr 1fr 0.8fr 130px',
+        padding:'0 24px', height:TX_ROW_H, boxSizing:'border-box',
+        borderBottom:`1px solid ${th.hair}`, fontSize:13, alignItems:'center',
+        background: bg,
+        transition: reduce ? 'none' : 'background .15s ease',
+        cursor:'pointer',
+      }}
+    >
+      <div><div style={{ fontWeight:500 }}>{d.addr}</div><div style={{ fontSize:11, color:th.ink4, marginTop:2 }}>{d.note}</div></div>
+      <div style={{ color:th.ink2 }}>{d.client}</div>
+      <div style={{ color:th.ink3, fontFamily:F.mono, fontSize:11 }}>{d.side}</div>
+      <div style={{ fontFamily:F.mono, fontSize:13 }}>{d.price}</div>
+      <div style={{ fontFamily:F.mono, fontSize:12, color:th.ink2 }}>{d.close}</div>
+      <div><Pill tone={d.tone} dark={dark}>{d.status}</Pill></div>
     </div>
   );
 }
@@ -1219,29 +1248,12 @@ function TransactionsContent({ th, dark }) {
               }}
             >
               {deals.map(d => (
-                <Inspectable key={d.id} label={`DealRow · ${d.addr}`}>
-                  <div style={{
-                    display:'grid', gridTemplateColumns:'1.5fr 1fr 0.8fr 1fr 0.8fr 130px',
-                    padding:'0 24px', height:TX_ROW_H, boxSizing:'border-box',
-                    borderBottom:`1px solid ${th.hair}`, fontSize:13, alignItems:'center',
-                    background: d.id === freshId ? freshBg : 'transparent',
-                    transition: reduce ? 'none' : 'background 1.4s ease',
-                    cursor:'pointer',
-                  }}>
-                    <div><div style={{ fontWeight:500 }}>{d.addr}</div><div style={{ fontSize:11, color:th.ink4, marginTop:2 }}>{d.note}</div></div>
-                    <div style={{ color:th.ink2 }}>{d.client}</div>
-                    <div style={{ color:th.ink3, fontFamily:F.mono, fontSize:11 }}>{d.side}</div>
-                    <div style={{ fontFamily:F.mono, fontSize:13 }}>{d.price}</div>
-                    <div style={{ fontFamily:F.mono, fontSize:12, color:th.ink2 }}>{d.close}</div>
-                    <div><Pill tone={d.tone} dark={dark}>{d.status}</Pill></div>
-                  </div>
-                </Inspectable>
+                <DealRow key={d.id} d={d} th={th} dark={dark} fresh={d.id === freshId} freshBg={freshBg} reduce={reduce} />
               ))}
             </div>
           </div>
         </div>
-        <Inspectable label="DealTimeline · 214 Linden St" style={{ alignSelf:'start' }}>
-        <div style={{ border:`1px solid ${th.hair}`, borderRadius:2, padding:24 }}>
+        <div style={{ border:`1px solid ${th.hair}`, borderRadius:2, padding:24, alignSelf:'start' }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <Over color={th.ink3}>214 Linden St</Over>
             <Pill tone="warn" dark={dark}>Conditional</Pill>
@@ -1267,7 +1279,6 @@ function TransactionsContent({ th, dark }) {
           </div>
           <Btn variant="ghost" dark={dark} full icon="arr" style={{ marginTop:20 }}>Open deal</Btn>
         </div>
-        </Inspectable>
       </div>
     </>
   );
@@ -2283,7 +2294,7 @@ function DemoDisp({ dark=false, locked=false }) {
 }
 
 Object.assign(global, {
-  T, F, useTheme, BrickMark, Wordmark, Over, Img, I, Phone, TabBar, Pill, Btn, Inspectable,
+  T, F, useTheme, BrickMark, Wordmark, Over, Img, I, Phone, TabBar, Pill, Btn,
   BrokShell, BrokLogin,
   BookOnboarding, BookLogin, BookRegister, BookHome, BookFlow, BookJobs, BookProfile,
   DispOnboarding, DispToday, DispSchedule, DispJobDetail, DispUploads, DispProfile,
