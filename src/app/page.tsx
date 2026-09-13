@@ -230,7 +230,7 @@ export default function Home() {
         <div className="cap-inner">
           <div className="cap-copy">
             <h2>Companion.</h2>
-            <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
+            <Link className="learn-link" href={COMPANION_URL}>Open →</Link>
           </div>
           <div className="cap-stage tray tray-book tray-phone">
             <div className="phone-stage">
@@ -243,7 +243,6 @@ export default function Home() {
                   nh={844}
                   fit="contain"
                   hideChrome
-                  zoomAt={390}
                   lazy
                 />
               </PhoneDevice>
@@ -269,7 +268,6 @@ export default function Home() {
                   nh={844}
                   fit="contain"
                   hideChrome
-                  zoomAt={390}
                   lazy
                 />
               </PhoneDevice>
@@ -386,9 +384,9 @@ export default function Home() {
               <div className="pkg-head"><span className="pkg-name">Essentials</span></div>
               <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
               <ul>
-                <li>HDR photography — interior + exterior</li>
-                <li>Licensed drone aerial</li>
-                <li>Branded 2D floor plan</li>
+                <li>HDR — interior + exterior</li>
+                <li>Licensed drone</li>
+                <li>2D floor plan</li>
                 <li>24–48h delivery</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
@@ -399,7 +397,7 @@ export default function Home() {
               <div className="pkg-amt">from {'$'}{STORY_FROM}<small> / shoot</small></div>
               <ul>
                 <li>Everything in Essentials</li>
-                <li>Cinematic reel — 30–45s</li>
+                <li>Cinematic reel</li>
                 <li>24–48h delivery</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
@@ -410,7 +408,7 @@ export default function Home() {
               <div className="pkg-amt">from {'$'}{SHOWCASE_FROM}<small> / shoot</small></div>
               <ul>
                 <li>Everything in Story</li>
-                <li>{TOUR_NAME} — path walkthrough</li>
+                <li>{TOUR_NAME}</li>
                 <li>24–48h delivery</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
@@ -421,8 +419,8 @@ export default function Home() {
               <div className="pkg-amt">from {'$'}{FULL_FROM}<small> / shoot</small></div>
               <ul>
                 <li>Everything in Showcase</li>
-                <li>Twilight exterior session</li>
-                <li>Virtual staging — by request (not in checkout)</li>
+                <li>Twilight exterior</li>
+                <li>Staging on request</li>
                 <li>24–48h delivery</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
@@ -453,12 +451,12 @@ export default function Home() {
           <div className="sec-head">
             <div><span className="over">FAQ</span><h2>FAQ.</h2></div>
           </div>
-          <div className="faq">
+          <div className="faq faq-home">
             {faqs.slice(0, 4).map((f) => (
-              <div key={f.id} className="qa">
-                <h4>{f.q}</h4>
+              <details key={f.id} className="qa">
+                <summary>{f.q}</summary>
                 <p><FaqAnswer id={f.id} a={f.a} /></p>
-              </div>
+              </details>
             ))}
           </div>
         </section>
