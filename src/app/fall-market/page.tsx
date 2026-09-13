@@ -12,14 +12,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Fall Market Listing Photos | Bricks',
     description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans, 24–48h MLS delivery.',
-    images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
     url: 'https://www.brxs.ca/fall-market',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Fall Market Listing Photos | Bricks',
     description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans, 24–48h.',
-    images: ['https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
 

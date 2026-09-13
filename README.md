@@ -17,7 +17,7 @@ now, capture leads, upsell to the subscription platform at launch.
 
 ### Deploy
 ```bash
-supabase link --project-ref ctqwxwrcxwruaqojohpf
+supabase link --project-ref rbywjnnctjglhcdemnnj
 supabase db push
 supabase functions deploy <function-name>   # one of the 6 listed above
 ```

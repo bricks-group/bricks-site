@@ -5,7 +5,7 @@ import { useState } from 'react'
 /** Live SuperSplat free-roam embed — same capture as old bricks-site homepage. */
 const SPLAT_EMBED_SRC = 'https://superspl.at/s?id=283a2ab0'
 const SPLAT_GIF =
-  'https://ctqwxwrcxwruaqojohpf.supabase.co/storage/v1/object/public/BRX%20Images/GaussianSplatRender.gif'
+  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/GaussianSplatRender.gif'
 
 export default function VirtualVisitEmbed() {
   const [loaded, setLoaded] = useState(false)
