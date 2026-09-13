@@ -139,7 +139,18 @@ preferred_window: opts.m.preferred_window || null,
 };
 let assignee = '';
 const dispatchUrl = (Deno.env.get('DISPATCH_API_URL') || 'https://dispatch-api.brxs.ca').replace(/\/$/, '');
-const internalKey = (Deno.env.get('INTERNAL_API_KEY') || (Deno.env.get('INTERNAL_API_KEYS') || '').split(',')[0] || '').trim();
+let internalKey = (Deno.env.get('INTERNAL_API_KEY') || (Deno.env.get('INTERNAL_API_KEYS') || '').split(',')[0] || '').trim();
+if (!internalKey) {
+  try {
+    const sr = await fetch(`${opts.supabaseUrl}/rest/v1/app_secrets?key=eq.INTERNAL_API_KEY&select=value&limit=1`, {
+      headers: { apikey: opts.serviceKey, Authorization: `Bearer ${opts.serviceKey}` },
+    });
+    if (sr.ok) {
+      const rows = await sr.json();
+      internalKey = String(rows?.[0]?.value || '').trim();
+    }
+  } catch {}
+}
 if (internalKey) {
 try {
 const intake = await fetch(`${dispatchUrl}/api/v1/dispatch/jobs`, {
