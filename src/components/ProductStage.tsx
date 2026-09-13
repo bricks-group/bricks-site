@@ -4,10 +4,11 @@ import { useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Cursor desktop hero stack (measured @1280):
- * - Stage ~720 tall; main ~88%×86% with ~6% side / ~7% top mat; no clip
- * - Sub ~39%×50%, nested BR (top~45%, right~3%), ~0.44 width of main
- * - Click rear to raise (overlay — iframe pointer-events:none would pass through)
+ * Cursor-style hero stack:
+ * - Both windows = full 1440×920 UI at natural scale (fit contain — never zoomAt)
+ * - Nested overlap; click rear to raise (overlay)
+ * - Front iframe interactive; rear covered by raise overlay
+ * - Stable src (no remount on raise) so KPI / transactions animation keeps running
  */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
@@ -17,15 +18,13 @@ export default function ProductStage() {
       <div
         className={`prod-stack-main${front === 'overview' ? ' is-front' : ' is-back'}`}
         style={{ zIndex: front === 'overview' ? 100 : 10 }}
-        onMouseDown={() => setFront('overview')}
-        onTouchStart={() => setFront('overview')}
       >
         <ProductWindow
           title="bricks"
-          src="/screens/os.html?screen=overview&lock=1"
+          src="/screens/os.html?screen=overview"
           nw={1440}
           nh={920}
-          fit="width"
+          fit="contain"
           hideChrome
         />
         {front !== 'overview' ? (
@@ -47,15 +46,13 @@ export default function ProductStage() {
       <div
         className={`prod-stack-sub${front === 'deal' ? ' is-front' : ' is-back'}`}
         style={{ zIndex: front === 'deal' ? 100 : 10 }}
-        onMouseDown={() => setFront('deal')}
-        onTouchStart={() => setFront('deal')}
       >
         <ProductWindow
           title="bricks"
-          src="/screens/os.html?screen=transactions&lock=1"
+          src="/screens/os.html?screen=transactions"
           nw={1440}
           nh={920}
-          fit="width"
+          fit="contain"
           hideChrome
         />
         {front !== 'deal' ? (
