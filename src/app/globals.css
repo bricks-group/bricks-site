@@ -465,35 +465,50 @@ html[data-theme="dark"] .pwin{background:var(--night);border-color:var(--hairStr
 .pwin-bar-raise{cursor:pointer;}
 /* Default off outside hero — ProductStage opts in below */
 .pwin-dots{display:none;}
-.pwin-bar .pwin-title{display:none;font-size:12px;font-weight:500;letter-spacing:-.01em;color:var(--inkSoft);}
-/* Hero = Cursor Mac chrome: greyed lights + app name */
+.pwin-bar .pwin-title{display:none;}
+/* Hero = real macOS title bar: traffic lights left, title centered */
+.prod-hero .pwin-bar{
+  position:relative;
+  display:flex;align-items:center;
+  height:36px;padding:0 12px;
+  gap:0;
+  background:color-mix(in srgb, var(--paperSoft) 88%, var(--paper));
+  border-bottom:1px solid var(--hair);
+}
 .prod-hero .pwin-dots{
-  display:flex !important;align-items:center;gap:6px;flex:none;
+  display:flex !important;align-items:center;gap:8px;
+  flex:none;z-index:2;position:relative;
 }
 .prod-hero .pwin-dots i{
-  display:block;width:10px;height:10px;border-radius:50%;
-  background:rgba(128,128,128,.42);
-  box-shadow:inset 0 0 0 0.5px rgba(0,0,0,.12);
+  display:block;width:12px;height:12px;border-radius:50%;
+  flex:none;
+  /* Authentic macOS traffic lights (Cursor greys via opacity) */
+  box-shadow:inset 0 0 0 0.5px rgba(0,0,0,.18);
 }
+.prod-hero .pwin-dots i:nth-child(1){background:#FF5F57;opacity:.72;}
+.prod-hero .pwin-dots i:nth-child(2){background:#FFBD2E;opacity:.72;}
+.prod-hero .pwin-dots i:nth-child(3){background:#28C840;opacity:.72;}
 html[data-theme="dark"] .prod-hero .pwin-dots i{
-  background:rgba(180,180,180,.38);
-  box-shadow:inset 0 0 0 0.5px rgba(255,255,255,.08);
+  box-shadow:inset 0 0 0 0.5px rgba(0,0,0,.35);
+  opacity:.78;
 }
 .prod-hero .pwin-bar .pwin-title{
+  /* True Mac: title dead-centered in the bar */
   display:block;
-  font-size:12.5px;font-weight:500;letter-spacing:-.015em;
+  position:absolute;left:0;right:0;top:0;bottom:0;
+  margin:0;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  font-size:13px;font-weight:600;letter-spacing:-.01em;
   color:var(--inkSoft);line-height:1;
-  /* Mac-ish: title sits after lights, not dead-center */
-  position:static;transform:none;margin:0;
-}
-.prod-hero .pwin-bar{
-  padding:8px 12px;gap:10px;
-  background:color-mix(in srgb, var(--paperSoft) 92%, var(--paper));
+  pointer-events:none;z-index:1;
+  text-align:center;
 }
 @media (max-width:900px){
-  .prod-hero .pwin-dots i{width:8px;height:8px;gap:5px;}
-  .prod-hero .pwin-bar{padding:7px 10px;gap:8px;}
-  .prod-hero .pwin-bar .pwin-title{font-size:11px;}
+  .prod-hero .pwin-bar{height:30px;padding:0 10px;}
+  .prod-hero .pwin-dots{gap:7px;}
+  .prod-hero .pwin-dots i{width:10px;height:10px;}
+  .prod-hero .pwin-bar .pwin-title{font-size:12px;font-weight:600;}
 }
 .pwin-scale{width:100%;overflow:hidden;position:relative;}
 .pwin iframe{display:block;border:0;pointer-events:auto;filter:none;}
