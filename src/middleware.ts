@@ -30,6 +30,10 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/blog' || pathname.startsWith('/blog/')) return true
   if (pathname === '/real-estate-photography' || pathname.startsWith('/real-estate-photography/')) return true
   if (pathname === '/listing-photos' || pathname.startsWith('/listing-photos/')) return true
+  // Prospect demo: contact-first /demo + signed unlock. Mint UI /demo/invite stays gated.
+  if (pathname === '/demo' || pathname === '/demo/') return true
+  if (pathname === '/demo/unlock' || pathname.startsWith('/demo/unlock/')) return true
+  if (pathname === '/api/demo/invite' || pathname.startsWith('/api/demo/')) return true
   return false
 }
 

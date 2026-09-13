@@ -361,8 +361,10 @@ html[data-theme="dark"] .tray::after{background:rgba(8,7,6,.58);}
 }
 .prod-stack-sub{
   right:-3%;bottom:-7%;left:auto;top:auto;transform:none;
-  width:min(460px,42%);height:min(360px,54%);
+  width:min(540px,48%);height:min(410px,60%);
 }
+.prod-stack-main.is-back,
+.prod-stack-sub.is-back{opacity:1;}
 .prod-stack-main:hover{transform:translate(-50%,-50%) translateY(-6px);}
 .prod-stack-sub:hover{transform:translateY(-6px);}
 .prod-hero .pwin{
@@ -1018,10 +1020,10 @@ html[data-theme="dark"] .map-cutout-gl img{
 
 /* Hero tray — Cursor mat: window floats with clear air, not edge-flush */
 .prod-hero .tray{
-  height:min(680px,68vh);min-height:520px;max-height:760px;
+  height:min(720px,72vh);min-height:560px;max-height:800px;
 }
 .prod-stack-main{width:min(980px,78%);height:min(540px,68%);}
-.prod-stack-sub{width:min(460px,42%);height:min(360px,54%);}
+.prod-stack-sub{width:min(540px,48%);height:min(410px,60%);}
 
 /* Phone stage — moderate float high, bottom crop (desktop default) */
 .tray-phone{height:560px;min-height:500px;}

@@ -3,8 +3,12 @@
 import { useEffect, useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
 
-/** Cursor mobile: zoom the desk so UI text is readable, crop intentionally.
- *  Desktop: full dual-window stack. Front pokeable; rear raises. */
+/**
+ * Cursor-style dual stack:
+ * - Desktop: overview floats in a mat (no zoom); deal overlaps BR with readable zoom crop.
+ * - Mobile ≤680: same overlap, oversized stage crop; both windows zoom for legibility.
+ * Both iframes stay alive (KPI tick + transactions growth). Front pokeable; rear raises.
+ */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
   const [mobile, setMobile] = useState(false)
@@ -17,8 +21,10 @@ export default function ProductStage() {
     return () => mq.removeEventListener('change', apply)
   }, [])
 
-  // ~720 design width → ~2× readable vs fitting full 1440 into a phone tray
-  const zoomAt = mobile ? 780 : undefined
+  // Desktop deal needs zoom crop so the small overlapping window stays legible
+  // (full 1440 crushed into ~45% width is unreadable — Cursor's CLI is native-sized).
+  const overviewZoom = mobile ? 780 : undefined
+  const dealZoom = mobile ? 780 : 760
 
   return (
     <div className={`prod-stack${mobile ? ' prod-stack-mobile' : ''}`}>
@@ -35,7 +41,7 @@ export default function ProductStage() {
           nh={920}
           fit="width"
           hideChrome
-          zoomAt={zoomAt}
+          zoomAt={overviewZoom}
         />
       </div>
       <div
@@ -51,7 +57,7 @@ export default function ProductStage() {
           nh={920}
           fit="width"
           hideChrome
-          zoomAt={zoomAt}
+          zoomAt={dealZoom}
         />
       </div>
     </div>

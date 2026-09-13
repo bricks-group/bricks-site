@@ -35,6 +35,18 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/listing-photos'), true)
   })
 
+  it('opens contact-first /demo + unlock + invite API; keeps mint UI gated', () => {
+    assert.equal(isPublicPath('/demo'), true)
+    assert.equal(isPublicPath('/demo/'), true)
+    assert.equal(isPublicPath('/demo/unlock'), true)
+    assert.equal(isPublicPath('/demo/unlock/'), true)
+    assert.equal(isPublicPath('/api/demo/invite'), true)
+    assert.equal(isPublicPath('/api/demo/other'), true)
+    // Mint UI stays behind marketing gate.
+    assert.equal(isPublicPath('/demo/invite'), false)
+    assert.equal(isPublicPath('/demo/invite/'), false)
+  })
+
   it('still gates marketing and other APIs', () => {
     assert.equal(isPublicPath('/'), false)
     assert.equal(isPublicPath('/pricing'), false)
