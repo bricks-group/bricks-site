@@ -1227,11 +1227,11 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 .cap-copy h2{font-size:clamp(32px,4vw,48px);margin:0 0 10px;}
 .cap-copy .learn-link{font-size:15px;font-weight:500;}
 
-/* Desk fills the painted tray — less empty mat */
-.cap-stage{
+/* Capability stages — default short tray; desk (tray-crm) overrides to 1440×920 lock below */
+.cap-stage:not(.tray-crm):not(.flow-stage){
   min-height:480px;height:min(560px,62vh);
 }
-.cap-stage .tray-stage-fill{inset:24px 28px 0;}
+.cap-stage:not(.tray-crm) .tray-stage-fill{inset:24px 28px 0;}
 
 /* Companion / GO — larger phone, pack bottom-crop, less side rail */
 .cap-stage.tray-phone{
@@ -1403,6 +1403,35 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
   }
 }
 
+
+
+/* Desk band — lock stage to OS 1440×920 so chrome never stretches wider than the UI */
+.cap-stage.tray-crm{
+  width:min(100%, 1100px, calc(min(620px, 68vh) * 1440 / 920));
+  aspect-ratio:1440 / 920;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none;
+  margin-inline:0;
+}
+.cap-stage.tray-crm .tray-stage-fill{
+  inset:16px 16px 0;
+  display:flex;
+  align-items:stretch;
+  justify-content:stretch;
+}
+.cap-stage.tray-crm .tray-stage-fill .pwin{
+  width:100%;
+  height:100%;
+  max-width:none;
+}
+@media (max-width:680px){
+  .cap-stage.tray-crm{
+    width:100%;
+    /* keep aspect; avoid ultrawide letterbox stretch on phone */
+  }
+  .cap-stage.tray-crm .tray-stage-fill{inset:12px 10px 0;}
+}
 
 /* Homepage polish: visit + proof */
 .visit-sec{padding:72px 0 56px;}
