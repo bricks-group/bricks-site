@@ -10,13 +10,14 @@ import FlowStage from '@/components/FlowStage'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import {
   PHOTO_RATE,
-  DRONE_RATE,
-  REEL_RATE,
-  TOUR_RATE,
-  TWILIGHT_RATE,
   FOOTPRINT_BANDS,
   TOUR_RANGE,
   VISIT_PRICE_LABEL,
+  CORE_FROM,
+  STORY_FROM,
+  SHOWCASE_FROM,
+  FULL_FROM,
+  PHOTO_ONLY_FROM,
 } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
@@ -29,12 +30,6 @@ import {
   VISIT_NAME,
   VISIT_PACKAGING,
 } from '@/lib/brand'
-
-const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // Essentials Small (~$248)
-const STORY_FROM = CORE_FROM + REEL_RATE[0]
-const SHOWCASE_FROM = STORY_FROM + TOUR_RATE[0]
-const FULL_FROM = SHOWCASE_FROM + TWILIGHT_RATE[0]
-const PHOTO_ONLY_FROM = PHOTO_RATE[0]
 
 const faqs = [
   {

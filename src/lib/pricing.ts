@@ -58,3 +58,10 @@ export const TOUR_RANGE = bandRange(TOUR_RATE); // "$149–299"
 export const PHOTO_RANGE = bandRange(PHOTO_RATE); // "$149–299"
 export const DRONE_RANGE = bandRange(DRONE_RATE); // "$99–159"
 export const FLOOR_PLAN_ONLY_LABEL = `$${FLOOR_PLAN_ONLY_RATE}` // "$99"
+
+/** Package ladder “from” prices (Small footprint, CAD pre-tax). Mirror /book + homepage. */
+export const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // Essentials
+export const STORY_FROM = CORE_FROM + REEL_RATE[0]
+export const SHOWCASE_FROM = STORY_FROM + TOUR_RATE[0]
+export const FULL_FROM = SHOWCASE_FROM + TWILIGHT_RATE[0]
+export const PHOTO_ONLY_FROM = PHOTO_RATE[0]

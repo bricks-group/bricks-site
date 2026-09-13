@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
-import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { SOFTWARE_PLANS, OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import {
   AREA_SERVED_SCHEMA,
@@ -158,6 +158,40 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+        </section>
+
+
+        <section className="block rvl" aria-label="Media packages">
+          <div className="sec-head">
+            <div>
+              <span className="over">Packages</span>
+              <h2>Essentials through Full suite.</h2>
+            </div>
+          </div>
+          <p className="tbl-cap">Same ladder as /book. Small footprint “from” prices, CAD pre-tax — scales to XL. Floor plan on every standard shoot. Virtual staging by request only.</p>
+          <div className="incl">
+            <div className="c rvl">
+              <span className="ic">{`from $${CORE_FROM}`}</span>
+              <h4>Essentials</h4>
+              <p>HDR interior + exterior. Licensed drone. 2D floor plan. 24–48h delivery.</p>
+            </div>
+            <div className="c rvl">
+              <span className="ic">{`from $${STORY_FROM}`}</span>
+              <h4>Story</h4>
+              <p>Everything in Essentials plus cinematic reel. 24–48h delivery.</p>
+            </div>
+            <div className="c rvl">
+              <span className="ic">{`from $${SHOWCASE_FROM}`}</span>
+              <h4>Showcase</h4>
+              <p>Everything in Story plus {TOUR_NAME}. Most booked. 24–48h delivery.</p>
+            </div>
+            <div className="c rvl">
+              <span className="ic">{`from $${FULL_FROM}`}</span>
+              <h4>Full suite</h4>
+              <p>Everything in Showcase plus twilight exterior. Staging by request (not in checkout). 24–48h delivery.</p>
+            </div>
+          </div>
+          <p className="tbl-cap" style={{ marginTop: 18 }}>Photos only — HDR only, no drone, no floor plan — {`from $${PHOTO_ONLY_FROM}`}. <Link href="/book" style={{ color: 'var(--brickDeep)' }}>Book a shoot →</Link></p>
         </section>
 
         <section className="block rvl rates" aria-label="À la carte rates">
