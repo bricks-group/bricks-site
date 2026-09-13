@@ -588,6 +588,52 @@
     }));
   }
 
+  // Cursor-style hover inspect — blue outline + label (in-product hover, not frame scale)
+  function Inspectable({
+    label,
+    children,
+    style = {}
+  }) {
+    const [on, setOn] = React.useState(false);
+    return /*#__PURE__*/React.createElement("div", {
+      onMouseEnter: () => setOn(true),
+      onMouseLeave: () => setOn(false),
+      style: {
+        position: 'relative',
+        ...style
+      }
+    }, children, on ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      "aria-hidden": "true",
+      style: {
+        position: 'absolute',
+        inset: -1,
+        border: '1.5px solid #3B82F6',
+        borderRadius: 2,
+        pointerEvents: 'none',
+        zIndex: 60,
+        boxShadow: '0 0 0 1px rgba(59,130,246,0.25)'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      "aria-hidden": "true",
+      style: {
+        position: 'absolute',
+        left: -1,
+        top: -23,
+        zIndex: 61,
+        pointerEvents: 'none',
+        background: '#3B82F6',
+        color: '#fff',
+        fontSize: 11,
+        fontWeight: 500,
+        lineHeight: 1.2,
+        padding: '3px 8px',
+        borderRadius: 999,
+        whiteSpace: 'nowrap',
+        fontFamily: "'General Sans',ui-sans-serif,sans-serif"
+      }
+    }, label)) : null);
+  }
+
   // Pill/badge
   function Pill({
     children,
@@ -2908,11 +2954,16 @@
         border: `1px solid ${th.hair}`,
         borderRadius: 2
       }
-    }, items.map((k, i) => /*#__PURE__*/React.createElement("div", {
+    }, items.map((k, i) => /*#__PURE__*/React.createElement(Inspectable, {
       key: i,
+      label: `KpiCard · ${k.l}`,
       style: {
-        background: th.bg,
-        padding: '22px 24px 20px'
+        background: th.bg
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: '22px 24px 20px',
+        cursor: 'pointer'
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
@@ -2950,7 +3001,7 @@
         fontSize: 11,
         color: th.ink4
       }
-    }, k.s)))));
+    }, k.s))))));
   }
   function ModHead({
     th,
@@ -3479,8 +3530,10 @@
         transition: !reduce && sliding ? `transform ${TX_SLIDE_MS}ms cubic-bezier(0.16, 0.8, 0.3, 1)` : 'none',
         willChange: sliding ? 'transform' : 'auto'
       }
-    }, deals.map(d => /*#__PURE__*/React.createElement("div", {
+    }, deals.map(d => /*#__PURE__*/React.createElement(Inspectable, {
       key: d.id,
+      label: `DealRow · ${d.addr}`
+    }, /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
         gridTemplateColumns: '1.5fr 1fr 0.8fr 1fr 0.8fr 130px',
@@ -3491,7 +3544,8 @@
         fontSize: 13,
         alignItems: 'center',
         background: d.id === freshId ? freshBg : 'transparent',
-        transition: reduce ? 'none' : 'background 1.4s ease'
+        transition: reduce ? 'none' : 'background 1.4s ease',
+        cursor: 'pointer'
       }
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
@@ -3527,12 +3581,16 @@
     }, d.close), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Pill, {
       tone: d.tone,
       dark: dark
-    }, d.status))))))), /*#__PURE__*/React.createElement("div", {
+    }, d.status)))))))), /*#__PURE__*/React.createElement(Inspectable, {
+      label: "DealTimeline \xB7 214 Linden St",
+      style: {
+        alignSelf: 'start'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
       style: {
         border: `1px solid ${th.hair}`,
         borderRadius: 2,
-        padding: 24,
-        alignSelf: 'start'
+        padding: 24
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
@@ -3617,7 +3675,7 @@
       style: {
         marginTop: 20
       }
-    }, "Open deal"))));
+    }, "Open deal")))));
   }
 
   // ─── MLS SUBMISSION · queue + validation ───
@@ -6583,9 +6641,11 @@
   }
   function DemoBook({
     dark = false,
-    locked = false
+    locked = false,
+    tab: tabInit = 0
   }) {
-    const [tab, setTab] = React.useState(0);
+    const initial = Math.max(0, Math.min(BOOK_SCREENS.length - 1, tabInit | 0));
+    const [tab, setTab] = React.useState(initial);
     const Screen = BOOK_SCREENS[tab] || BookHome;
     return /*#__PURE__*/React.createElement(DemoNav.Provider, {
       value: {
@@ -6626,6 +6686,7 @@
     TabBar,
     Pill,
     Btn,
+    Inspectable,
     BrokShell,
     BrokLogin,
     BookOnboarding,

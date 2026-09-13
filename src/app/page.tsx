@@ -5,9 +5,8 @@ import Script from 'next/script'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
-import ProductWindow from '@/components/ProductWindow'
 import OsDeskShot from '@/components/OsDeskShot'
-import PhoneDevice from '@/components/PhoneDevice'
+import FlowStage from '@/components/FlowStage'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import {
   PHOTO_RATE,
@@ -21,7 +20,6 @@ import {
 } from '@/lib/pricing'
 import {
   AREA_SERVED_SCHEMA,
-  COMPANION_URL,
   COVERAGE_LINE,
   FOUNDER_PERSON,
   GO_URL,
@@ -226,52 +224,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="cap-band rvl" aria-label="Companion">
+      <section className="cap-band flow-band rvl" aria-label="Book shoot desk loop">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>Companion.</h2>
-            <Link className="learn-link" href={COMPANION_URL}>Open →</Link>
+            <h2>Book → shoot → desk.</h2>
+            <p className="flow-lede">Agent books in Companion. Time locks. GO takes the field. The desk runs the deal.</p>
+            <Link className="learn-link" href="/book">Book a shoot →</Link>
           </div>
-          <div className="cap-stage tray tray-book tray-phone">
-            <div className="phone-stage">
-              <PhoneDevice label="Companion">
-                <ProductWindow
-                  variant="phone"
-                  title="Companion"
-                  src="/screens/book.html?lock=1"
-                  nw={390}
-                  nh={844}
-                  fit="contain"
-                  hideChrome
-                  lazy
-                />
-              </PhoneDevice>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="cap-band rvl" aria-label="GO">
-        <div className="cap-inner">
-          <div className="cap-copy">
-            <h2>GO.</h2>
-            <Link className="learn-link" href="/photographers">Photographers →</Link>
-          </div>
-          <div className="cap-stage tray tray-disp tray-phone">
-            <div className="phone-stage">
-              <PhoneDevice label="GO">
-                <ProductWindow
-                  variant="phone"
-                  title="GO"
-                  src="/screens/disp.html?lock=1"
-                  nw={390}
-                  nh={844}
-                  fit="contain"
-                  hideChrome
-                  lazy
-                />
-              </PhoneDevice>
-            </div>
+          <div className="cap-stage tray tray-book flow-stage">
+            <FlowStage />
           </div>
         </div>
       </section>
