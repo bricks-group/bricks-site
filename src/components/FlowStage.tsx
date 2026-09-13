@@ -4,23 +4,23 @@ import PhoneDevice from '@/components/PhoneDevice'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Companion booking flow — three flat phones (no off-angle):
+ * Companion booking flow — three flat phones inside the painted tray.
+ * No step labels above. Cursor-style: float high, bottom cropped by tray.
  * property (Mapbox) → package → time.
  */
 export default function FlowStage() {
   const mb = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
   const q = mb ? `&mb=${encodeURIComponent(mb)}` : ''
   const steps = [
-    { cap: '1 · Property', src: `/screens/book.html?lock=1&flow=1${q}`, label: 'Pick property' },
-    { cap: '2 · Package', src: `/screens/book.html?lock=1&flow=2${q}`, label: 'Choose package' },
-    { cap: '3 · Time', src: `/screens/book.html?lock=1&flow=3${q}`, label: 'Lock the time' },
+    { key: 'property', src: `/screens/book.html?lock=1&flow=1${q}`, label: 'Property' },
+    { key: 'package', src: `/screens/book.html?lock=1&flow=2${q}`, label: 'Package' },
+    { key: 'time', src: `/screens/book.html?lock=1&flow=3${q}`, label: 'Time' },
   ] as const
 
   return (
     <div className="flow-phones" aria-label="Companion booking flow">
       {steps.map((s, i) => (
-        <div key={s.cap} className={`flow-phone flow-phone-${['a','b','c'][i]}`}>
-          <span className="flow-cap">{s.cap}</span>
+        <div key={s.key} className={`flow-phone flow-phone-${['a','b','c'][i]}`}>
           <PhoneDevice label={s.label}>
             <ProductWindow
               variant="phone"
