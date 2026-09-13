@@ -353,6 +353,7 @@
     var payload = {
       name: name, email: email, phone: phone, city: city,
       max_travel_km: parseInt(document.getElementById('f_travel').value, 10),
+      vendor_type: 'photographer',
       specialties: specs,
       portfolio_links: [portfolio1].concat(portfolio2 ? [portfolio2] : []),
       equipment_list: equipmentList,

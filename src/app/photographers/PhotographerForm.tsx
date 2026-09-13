@@ -94,6 +94,7 @@ export default function PhotographerForm() {
     const payload = {
       name, email, phone, city,
       max_travel_km: parseInt((fd.get('max_travel_km') as string) || '50', 10),
+      vendor_type: 'photographer',
       specialties,
       portfolio_links: [portfolio1].concat(portfolio2 ? [portfolio2] : []),
       equipment_list: equipmentList,
