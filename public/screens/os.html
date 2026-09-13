@@ -74,6 +74,13 @@
   render();
 
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // overview and transactions render in separate iframes (separate JS
+    // realms, no shared state), so "matching counts" means giving both the
+    // same cadence and the same step count rather than literal messaging --
+    // watched side by side, a row lands in the register on the same beat the
+    // KPI ticks up, and both stop after the same 6th step.
+    var TICK_MS = 2500;
+    var STEPS = 6;
     if (screen === 'overview') {
       // KPI count only ever climbs, then settles -- never ticks back down.
       var counts = ['184','185','186','187','188','189','190'];
@@ -91,15 +98,19 @@
             n.nodeValue = n.nodeValue.split(from).join(to);
           }
         }
-      }, 2500);
+      }, TICK_MS);
     } else if (screen === 'transactions') {
-      // New deal rows slide in at the top of the register; the oldest row fades out.
+      // New deal rows slide in at the top of the register and stay --
+      // matching what actually happens in the live app when a deal comes in.
+      // Rows that scroll past the fold are simply clipped by the iframe's
+      // fixed height, same as a real register with more rows than fit.
       var pool = [
         ['77 Wellesley St', 'P. Nakamura', '$1.32M', 'May 12'],
         ['19 Distillery Ln', 'R. Costa', '$860K', 'May 14'],
         ['402 King St W', 'S. Iyer', '$1.05M', 'May 16'],
         ['66 Sorauren Ave', 'J. Whitfield', '$975K', 'May 18'],
-        ['9 Trinity Bellwoods', 'A. Beaulieu', '$1.48M', 'May 20']
+        ['9 Trinity Bellwoods', 'A. Beaulieu', '$1.48M', 'May 20'],
+        ['58 Berkeley St', 'C. Delacroix', '$1.12M', 'May 22']
       ];
       var pi = 0;
       function findHeaderRow(root){
@@ -148,22 +159,13 @@
             newRow.style.transform = 'translateY(0)';
           });
         });
-        setTimeout(function(){
-          var all = rowsAfterHeader(container, header);
-          var last = all[all.length - 1];
-          if (last && last !== newRow){
-            last.style.transition = 'opacity .4s ease';
-            last.style.opacity = '0';
-            setTimeout(function(){
-              if (last.parentElement) last.parentElement.removeChild(last);
-              var remain = rowsAfterHeader(container, header);
-              var newLast = remain[remain.length - 1];
-              if (newLast) newLast.style.borderBottom = 'none';
-            }, 400);
-          }
-        }, 900);
       }
-      setInterval(addRow, 4000);
+      var ai = 0;
+      var adder = setInterval(function(){
+        ai++;
+        if (ai > STEPS) { clearInterval(adder); return; }
+        addRow();
+      }, TICK_MS);
     }
   }
 })();
