@@ -5,9 +5,10 @@ import ProductWindow from '@/components/ProductWindow'
 
 /**
  * MATCH CURSOR hero stack:
- * - Large primary centered in a mat
- * - Much smaller secondary NESTED on primary's bottom-right (stacked, not side-by-side)
- * - Clear size difference; both alive + legible (deal uses zoom crop)
+ * - Large primary window, ~82% of the mat, floating with clear air on all sides
+ * - Much smaller secondary window nested ON TOP of primary's bottom-right
+ *   corner — deep overlap, not just beside it — sized honestly (no digital
+ *   zoom/crop) so its resolution matches what a real smaller window would show
  * - Mobile: same stacked composition, oversized + clipped
  */
 export default function ProductStage() {
@@ -21,10 +22,6 @@ export default function ProductStage() {
     mq.addEventListener('change', apply)
     return () => mq.removeEventListener('change', apply)
   }, [])
-
-  const overviewZoom = mobile ? 780 : undefined
-  // Smaller nested window needs stronger crop to stay legible (Cursor CLI-sized)
-  const dealZoom = mobile ? 720 : 640
 
   return (
     <div className={`prod-stack${mobile ? ' prod-stack-mobile' : ''}`}>
@@ -41,7 +38,6 @@ export default function ProductStage() {
           nh={920}
           fit="width"
           hideChrome
-          zoomAt={overviewZoom}
         />
       </div>
       <div
@@ -57,7 +53,6 @@ export default function ProductStage() {
           nh={920}
           fit="width"
           hideChrome
-          zoomAt={dealZoom}
         />
       </div>
     </div>
