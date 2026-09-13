@@ -25,7 +25,11 @@ export function isPublicPath(pathname: string): boolean {
   // Canada-wide contractor apply must work while marketing stays gated.
   // Form loads /legal/ic-agreement.txt; apply POST goes to dispatch-api (other host).
   if (pathname === '/photographers' || pathname.startsWith('/photographers/')) return true
-  if (pathname === '/legal/ic-agreement.txt') return true
+  // /book pay step links Terms + Privacy; keep legal surface public while marketing stays gated.
+  if (pathname === '/terms' || pathname.startsWith('/terms/')) return true
+  if (pathname === '/privacy' || pathname.startsWith('/privacy/')) return true
+  if (pathname === '/legal' || pathname.startsWith('/legal/')) return true
+  if (pathname === '/dpa' || pathname.startsWith('/dpa/')) return true
   // SEO beachhead: blog + commercial landings crawlable without opening OS/homepage story.
   if (pathname === '/blog' || pathname.startsWith('/blog/')) return true
   if (pathname === '/real-estate-photography' || pathname.startsWith('/real-estate-photography/')) return true

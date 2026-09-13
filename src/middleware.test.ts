@@ -22,10 +22,16 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/api/address-suggest'), true)
   })
 
-  it('opens photographers apply + IC agreement while marketing stays gated', () => {
+  it('opens photographers apply + legal surface while marketing stays gated', () => {
     assert.equal(isPublicPath('/photographers'), true)
     assert.equal(isPublicPath('/photographers/'), true)
+    assert.equal(isPublicPath('/legal'), true)
+    assert.equal(isPublicPath('/legal/'), true)
     assert.equal(isPublicPath('/legal/ic-agreement.txt'), true)
+    assert.equal(isPublicPath('/terms'), true)
+    assert.equal(isPublicPath('/terms/'), true)
+    assert.equal(isPublicPath('/privacy'), true)
+    assert.equal(isPublicPath('/dpa'), true)
   })
 
   it('opens blog + SEO landings without opening OS homepage', () => {
@@ -54,7 +60,6 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/gallery'), false)
     assert.equal(isPublicPath('/service-areas'), false)
     assert.equal(isPublicPath('/platform'), false)
-    assert.equal(isPublicPath('/legal'), false)
     assert.equal(isPublicPath('/api/contact'), false)
     assert.equal(isPublicPath('/api/newsletter'), false)
   })
