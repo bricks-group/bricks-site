@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Cursor-style dual stack:
- * - Desktop: overview floats in a mat (no zoom); deal overlaps BR with readable zoom crop.
- * - Mobile ≤680: same overlap, oversized stage crop; both windows zoom for legibility.
- * Both iframes stay alive (KPI tick + transactions growth). Front pokeable; rear raises.
+ * MATCH CURSOR hero stack:
+ * - Large primary centered in a mat
+ * - Much smaller secondary NESTED on primary's bottom-right (stacked, not side-by-side)
+ * - Clear size difference; both alive + legible (deal uses zoom crop)
+ * - Mobile: same stacked composition, oversized + clipped
  */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
@@ -21,10 +22,9 @@ export default function ProductStage() {
     return () => mq.removeEventListener('change', apply)
   }, [])
 
-  // Desktop deal needs zoom crop so the small overlapping window stays legible
-  // (full 1440 crushed into ~45% width is unreadable — Cursor's CLI is native-sized).
   const overviewZoom = mobile ? 780 : undefined
-  const dealZoom = mobile ? 780 : 760
+  // Smaller nested window needs stronger crop to stay legible (Cursor CLI-sized)
+  const dealZoom = mobile ? 720 : 640
 
   return (
     <div className={`prod-stack${mobile ? ' prod-stack-mobile' : ''}`}>
