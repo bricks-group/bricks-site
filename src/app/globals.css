@@ -338,16 +338,19 @@ html[data-theme="dark"] .tray::after{background:rgba(8,7,6,.58);}
 /* Hero — handoff stack math, flat windows, no border/shadow */
 .prod-hero{padding:0;margin:0;}
 .prod-hero .tray{
-  /* Cursor-scale stage: never full ultrawide. Cap width, center, keep ~720 height. */
-  width:calc(100% - 40px);
-  max-width:1220px;
+  /* One Cursor-proportioned stage that scales with the viewport.
+     Width capped by page gutters, ~1560, and by 85vh×aspect so it never
+     becomes a short ultrawide strip (that cover-crops the 3:2 paint). */
+  width:min(calc(100% - 40px), 1560px, calc(85vh * 1225 / 720));
   margin:0 auto;
-  height:min(720px, 90vh);
-  min-height:600px;
-  max-height:800px;
+  aspect-ratio:1225 / 720;
+  height:auto;
+  min-height:0;
   border-radius:2px;
   overflow:hidden;
   border:none;
+  background-size:cover;
+  background-position:center;
 }
 .prod-hero .tray::after{background:transparent !important;}
 .prod-hero .tray-stage{
@@ -359,24 +362,24 @@ html[data-theme="dark"] .tray::after{background:rgba(8,7,6,.58);}
   transition:transform .5s cubic-bezier(.16,1,.3,1);
 }
 .prod-stack-main{
-  /* Natural 1440×920 frame — never stretch. Sized by height, aspect locks width. */
-  top:7%;
+  /* Natural 1440×920 — height-driven inside the aspect-locked stage; more edge mat. */
+  top:9%;
   left:50%;
   transform:translateX(-50%);
-  height:86%;
+  height:78%;
   width:auto;
-  max-width:88%;
+  max-width:86%;
   aspect-ratio:1440 / 920;
 }
 .prod-stack-sub{
-  /* Smaller nested BR — same design aspect, ~half the main height */
-  top:45%;
-  right:3%;
+  /* Smaller nested BR — clear size gap vs main */
+  top:48%;
+  right:4%;
   left:auto;
   bottom:auto;
-  height:50%;
+  height:42%;
   width:auto;
-  max-width:42%;
+  max-width:38%;
   aspect-ratio:1440 / 920;
   transform:none;
 }
@@ -505,17 +508,17 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
 }
 @media (max-width:900px){
   .prod-hero .tray{
-    width:calc(100% - 40px);max-width:1220px;margin:0 auto;
-    height:min(640px,80vh);min-height:520px;max-height:720px;border-radius:2px;
+    width:min(calc(100% - 40px), 1560px, calc(80vh * 1225 / 720));
+    margin:0 auto;aspect-ratio:1225 / 720;height:auto;min-height:0;border-radius:2px;
   }
   .prod-stack-main{
-    top:7%;left:50%;transform:translateX(-50%);
-    height:86%;width:auto;max-width:88%;aspect-ratio:1440 / 920;
+    top:9%;left:50%;transform:translateX(-50%);
+    height:78%;width:auto;max-width:86%;aspect-ratio:1440 / 920;
   }
   .prod-stack-main:hover{transform:translateX(-50%) translateY(-6px);}
   .prod-stack-sub{
-    top:45%;right:3%;left:auto;bottom:auto;
-    height:50%;width:auto;max-width:42%;aspect-ratio:1440 / 920;
+    top:48%;right:4%;left:auto;bottom:auto;
+    height:42%;width:auto;max-width:38%;aspect-ratio:1440 / 920;
   }
   .prod-row,.prod-row-flip{padding:0 20px;margin:36px 0;gap:18px;}
   .prod-row .prod-copy{order:1;}
@@ -529,7 +532,7 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
   }
 }
 @media (max-width:680px){
-  .prod-hero .tray{width:calc(100% - 40px);max-width:1220px;margin:0 auto;height:min(560px,64vh);min-height:440px;}
+  .prod-hero .tray{width:min(calc(100% - 40px), 1560px, calc(64vh * 1225 / 720));margin:0 auto;aspect-ratio:1225 / 720;height:auto;min-height:0;}
   .prod-row,.prod-row-flip{padding:0 20px;margin:28px 0;gap:14px;}
   .prod-row .tray-phone{height:420px;min-height:380px;}
   /* Phone — nearly tray width, bottom clipped */
