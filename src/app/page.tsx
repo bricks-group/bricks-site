@@ -267,7 +267,7 @@ export default function Home() {
             </video>
             <div className="film-in">
               <div>
-                <div className="vt">One OS for the whole deal.</div>
+                <div className="vt">One System.</div>
               </div>
             </div>
           </div>
