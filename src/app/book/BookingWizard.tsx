@@ -767,6 +767,7 @@ export default function BookingWizard() {
               <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 2 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>.</p>
               <p className="hint-sm" style={{ marginTop: 8 }}>Safari / iOS → Apple Pay. Chrome / Android → Google Pay. Link where Stripe offers it. Card always available.</p>
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
+              <p className="hint-sm" style={{ margin: '10px 0 0' }}>Have a team or brokerage launch code (TEAMLAUNCH / BRXLAUNCH)? Enter it on the Stripe checkout page.</p>
             </div>
           </form>
         )}

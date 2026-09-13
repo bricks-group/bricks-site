@@ -76,8 +76,7 @@ const drone = opts.m.drone_addon === 'true';
 const pkg = packageIdOf(opts.m.package_interest || '', opts.m.package_id || '');
 const tour = tourPurchased(opts.m, pkg);
 const floorplan = floorplanPurchased(opts.m, pkg);
-const stagingOn = opts.m.staging_addon === 'true';
-const stagingImages = Math.max(0, parseInt(String(opts.m.staging_images || '0'), 10) || 0);
+// Launch honesty: never stamp staging on paid→job (owned pipeline only).
 const floorPlanOnly = pkg === 'floor_plan_only' || opts.m.floor_plan_only === 'true';
 const addOns = [
 drone && !floorPlanOnly ? { key: 'drone', included: true } : null,
@@ -86,7 +85,6 @@ tour ? { key: 'tour', included: true } : null,
 opts.m.twilight_addon === 'true' ? { key: 'twilight', included: true } : null,
 rush ? { key: 'rush', included: true } : null,
 floorplan ? { key: floorPlanOnly ? 'floor_plan_only' : 'floorplan_2d', included: true } : null,
-stagingOn ? { key: 'staging', included: true, images: stagingImages || 1, amount: (stagingImages || 1) * 35 } : null,
 ].filter(Boolean);
 const minTier = minTierOf(pkg);
 const cityGuess = (opts.m.property_address || '').split(',').slice(-2, -1)[0]?.trim() || '';

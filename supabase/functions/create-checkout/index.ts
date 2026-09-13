@@ -217,6 +217,8 @@ Deno.serve(async (req: Request) => {
   // cannot appear on this session.
   form.append('payment_method_types[0]', 'card');
   form.append('payment_method_types[1]', 'link');
+  // TEAMLAUNCH / BRXLAUNCH (and other launch coupons) enter on Stripe Checkout.
+  form.set('allow_promotion_codes', 'true');
   if (meta.email) form.set('customer_email', meta.email);
   form.append('line_items[0][price_data][currency]', 'cad');
   form.append('line_items[0][price_data][product_data][name]', `Bricks listing media — ${meta.property_address}`);
