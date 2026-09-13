@@ -220,7 +220,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="cap-band flow-band rvl" aria-label="Book shoot desk loop">
+      <section className="cap-band flow-band rvl" aria-label="Companion booking">
         <div className="cap-inner">
           <div className="cap-copy">
             <h2>Book a shoot in three steps.</h2>
@@ -267,7 +267,7 @@ export default function Home() {
             </video>
             <div className="film-in">
               <div>
-                <div className="vt">Book → shoot → desk.</div>
+                <div className="vt">One OS for the whole deal.</div>
               </div>
             </div>
           </div>
@@ -442,8 +442,9 @@ export default function Home() {
         .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
         .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
+        .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
         @media (max-width:680px){
-          .hero-home{padding:36px 20px 24px;}
+          .hero-home{padding:36px var(--gutter) 24px;}
           .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:20ch;}
           .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:28ch;line-height:1.4;}
           .hero-home .cta-row{margin-top:22px;gap:14px;}
