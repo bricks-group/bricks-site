@@ -338,7 +338,10 @@ html[data-theme="dark"] .tray::after{background:rgba(8,7,6,.58);}
 /* Hero — handoff stack math, flat windows, no border/shadow */
 .prod-hero{padding:0;margin:0;}
 .prod-hero .tray{
-  margin:0 20px;
+  /* Cursor-scale stage: never full ultrawide. Cap width, center, keep ~720 height. */
+  width:calc(100% - 40px);
+  max-width:1220px;
+  margin:0 auto;
   height:min(720px, 90vh);
   min-height:600px;
   max-height:800px;
@@ -502,7 +505,8 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
 }
 @media (max-width:900px){
   .prod-hero .tray{
-    margin:0 20px;height:min(640px,80vh);min-height:520px;max-height:720px;border-radius:2px;
+    width:calc(100% - 40px);max-width:1220px;margin:0 auto;
+    height:min(640px,80vh);min-height:520px;max-height:720px;border-radius:2px;
   }
   .prod-stack-main{
     top:7%;left:50%;transform:translateX(-50%);
@@ -525,7 +529,7 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
   }
 }
 @media (max-width:680px){
-  .prod-hero .tray{margin:0 20px;height:min(560px,64vh);min-height:440px;}
+  .prod-hero .tray{width:calc(100% - 40px);max-width:1220px;margin:0 auto;height:min(560px,64vh);min-height:440px;}
   .prod-row,.prod-row-flip{padding:0 20px;margin:28px 0;gap:14px;}
   .prod-row .tray-phone{height:420px;min-height:380px;}
   /* Phone — nearly tray width, bottom clipped */
