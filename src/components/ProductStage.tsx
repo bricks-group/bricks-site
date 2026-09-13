@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
@@ -9,22 +9,14 @@ import ProductWindow from '@/components/ProductWindow'
  * - Much smaller secondary window nested ON TOP of primary's bottom-right
  *   corner — deep overlap, not just beside it — sized honestly (no digital
  *   zoom/crop) so its resolution matches what a real smaller window would show
- * - Mobile: same stacked composition, oversized + clipped
+ * - Pure % insets, no breakpoint-specific overrides: the same clear-air
+ *   composition scales down naturally at any width, mobile included
  */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
-  const [mobile, setMobile] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width:680px)')
-    const apply = () => setMobile(mq.matches)
-    apply()
-    mq.addEventListener('change', apply)
-    return () => mq.removeEventListener('change', apply)
-  }, [])
 
   return (
-    <div className={`prod-stack${mobile ? ' prod-stack-mobile' : ''}`}>
+    <div className="prod-stack">
       <div
         className={`prod-stack-main${front === 'overview' ? ' is-front' : ' is-back'}`}
         style={{ zIndex: front === 'overview' ? 100 : 10 }}
