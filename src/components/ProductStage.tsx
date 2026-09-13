@@ -5,7 +5,7 @@ import ProductWindow from '@/components/ProductWindow'
 
 /**
  * Cursor-style hero stack — natural aspect (1440×920), no stretch, no zoomAt.
- * Frame uses aspect-ratio so chrome matches design; fit=width fills without distortion.
+ * Frame capped ~Cursor size; fit=contain shows full 1440×920 with no crop-zoom.
  * Front interactive; rear raise overlay; stable iframe src for animation.
  */
 export default function ProductStage() {
@@ -22,7 +22,7 @@ export default function ProductStage() {
           src="/screens/os.html?screen=overview"
           nw={1440}
           nh={920}
-          fit="width"
+          fit="contain"
           hideChrome
         />
         {front !== 'overview' ? (
@@ -50,7 +50,7 @@ export default function ProductStage() {
           src="/screens/os.html?screen=transactions"
           nw={1440}
           nh={920}
-          fit="width"
+          fit="contain"
           hideChrome
         />
         {front !== 'deal' ? (
