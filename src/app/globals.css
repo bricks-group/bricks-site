@@ -1591,3 +1591,35 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 .edit-grid{gap:20px;}
 .home-price-sec{padding:56px 0 64px;}
 .closer-simple{padding:80px var(--gutter);}
+
+
+/* === Integrations band — Connected tools (honest Connect) === */
+.integ-band{padding:56px 0 40px;border-top:1px solid var(--hair);}
+.integ-lede{
+  font-size:16px;line-height:1.5;color:var(--inkSoft);
+  max-width:46ch;margin:0 0 28px;
+}
+.integ-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  margin:0 0 22px;
+}
+.integ-card{
+  background:var(--paper);border:1px solid var(--hair);border-radius:2px;
+  padding:18px 16px;display:flex;flex-direction:column;gap:8px;min-height:140px;
+}
+.integ-card p{font-size:13.5px;line-height:1.45;color:var(--inkSoft);margin:0;flex:1;}
+.integ-k{font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-.02em;}
+.integ-status{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brickDeep);
+}
+.integ-soon{opacity:.72;}
+.integ-soon .integ-status{color:var(--inkMute);}
+.integ-link{margin-top:4px;}
+@media (max-width:900px){
+  .integ-band{padding:40px 0 28px;}
+  .integ-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:560px){
+  .integ-grid{grid-template-columns:1fr;}
+}

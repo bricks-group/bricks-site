@@ -164,7 +164,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system for Canadian real estate.</h1>
-          <p className="sub">Simplifying the broken business.</p>
+          <p className="sub">Replace the patchwork.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
             <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
@@ -172,7 +172,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="prod-hero" aria-label="bricks OS">
+      <section className="prod-hero" aria-label="bricks desk">
         <div className="tray tray-os">
           <div className="tray-stage">
             <ProductStage />
@@ -193,7 +193,7 @@ export default function Home() {
               <span className="trust-tile-k">Agent</span>
             </Link>
             <Link href="/photographers" className="trust-tile">
-              <span className="trust-tile-k">Photographer</span>
+              <span className="trust-tile-k">Vendors</span>
             </Link>
           </div>
           <div className="trust-stats">
@@ -205,12 +205,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="cap-band rvl" aria-label="OS — desk">
+      <section className="cap-band rvl" aria-label="The desk">
         <div className="cap-inner">
           <div className="cap-copy">
             <h2>The desk runs the deal.</h2>
             <p className="cap-lede">Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
-            <Link className="learn-link" href="/platform">Explore the OS →</Link>
+            <Link className="learn-link" href="/platform">Explore the desk →</Link>
           </div>
           <div className="cap-stage tray tray-crm">
             <div className="tray-stage tray-stage-fill">
@@ -267,8 +267,8 @@ export default function Home() {
             </video>
             <div className="film-in">
               <div>
-                <div className="vt">One System.</div>
-                <div className="vs">Simplifying the broken business.</div>
+                <div className="vt">One system for the whole business.</div>
+                <div className="vs">Desk, field, and media — finally one place.</div>
               </div>
             </div>
           </div>
@@ -393,6 +393,49 @@ export default function Home() {
             <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
           </Link>
           <p className="rate-note"><Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
+        </div>
+      </section>
+
+      <section className="integ-band rvl" id="integrations" aria-label="Integrations">
+        <div className="wrap">
+          <div className="section-head section-head-stack">
+            <span className="over">Integrations</span>
+            <h2>Connect what you already use.</h2>
+          </div>
+          <p className="integ-lede">One system only works if it plugs into the rest of the office. Honest Connect — never a fake Connected state.</p>
+          <div className="integ-grid">
+            <div className="integ-card">
+              <span className="integ-k">Calendar</span>
+              <p>Google, Apple, and ICS. FreeBusy gates auto-assign for every vendor.</p>
+              <span className="integ-status">Launch</span>
+            </div>
+            <div className="integ-card">
+              <span className="integ-k">MLS</span>
+              <p>BYO board credentials. Listing file sync via RESO / Bridge — no scraping.</p>
+              <span className="integ-status">Launch</span>
+            </div>
+            <div className="integ-card">
+              <span className="integ-k">E-sign</span>
+              <p>Native forms on the desk. Optional DocuSign when the office already lives there.</p>
+              <span className="integ-status">Launch</span>
+            </div>
+            <div className="integ-card">
+              <span className="integ-k">CRM</span>
+              <p>Follow Up Boss first. Contacts and deals stay in sync with the listing file.</p>
+              <span className="integ-status">Launch</span>
+            </div>
+            <div className="integ-card integ-soon">
+              <span className="integ-k">Showings</span>
+              <p>ShowingTime+ on the listing timeline.</p>
+              <span className="integ-status">Next</span>
+            </div>
+            <div className="integ-card integ-soon">
+              <span className="integ-k">Deal file</span>
+              <p>dotloop / SkySlope import so nothing gets stranded.</p>
+              <span className="integ-status">Next</span>
+            </div>
+          </div>
+          <Link className="learn-link integ-link" href="https://app.brxs.ca/login">Open Connected tools →</Link>
         </div>
       </section>
 
