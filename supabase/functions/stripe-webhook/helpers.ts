@@ -199,6 +199,91 @@ if (diff === 0) return true;
 }
 return false;
 }
+
+/** Internal Stripe smoke / payment-link checkout (not a real listing booking). */
+export function isCheckoutSmoke(meta: Record<string, string> | null | undefined, session: any): boolean {
+  const m = meta || {};
+  if (String(m.bricks_mock || '') === 'true') return true;
+  if (String(m.purpose || '') === 'checkout_smoke') return true;
+  const hasBooking =
+    Boolean(String(m.property_address || '').trim()) ||
+    Boolean(String(m.agent_name || '').trim()) ||
+    Boolean(String(m.package_interest || m.package_id || '').trim());
+  // Payment-link / mock product with no booking fields — canary, not a shoot.
+  if (!hasBooking && (session?.payment_link || String(m.env || '') === 'test')) return true;
+  return false;
+}
+
+/** Owner SMS/email canary for smoke checkouts — keeps proving webhook+Twilio without fake bookings. */
+export async function notifySmokeCanary(session: any, meta: Record<string, string> = {}) {
+  const smsTo = (Deno.env.get('BRXS_FORWARD_PHONE') || '3434534578').replace(/\D/g, '');
+  const emailTo = Deno.env.get('NOTIFY_EMAIL') || 'booking@brxs.ca';
+  const cents = typeof session?.amount_total === 'number' ? session.amount_total : null;
+  const cur = String(session?.currency || 'cad').toUpperCase();
+  const amount = cents != null
+    ? `CA$${(cents / 100).toFixed(2)}`
+    : 'amount unknown';
+  const mode = session?.livemode ? 'LIVE' : 'TEST';
+  const sid = String(session?.id || '').trim() || 'no-session';
+  const email =
+    String(session?.customer_details?.email || session?.customer_email || meta.email || '').trim() ||
+    'no-email';
+  const region = (() => {
+    try {
+      const u = Deno.env.get('SUPABASE_URL') || '';
+      if (u.includes('rbywjnnctjglhcdemnnj')) return 'Canada';
+      if (u.includes('ctqwxwrcxwruaqojohpf')) return 'US';
+      return 'unknown-region';
+    } catch { return 'unknown-region'; }
+  })();
+  const lines = [
+    'Bricks checkout smoke',
+    `${mode} · ${amount} paid`,
+    `Webhook ${region} OK`,
+    sid,
+    email,
+  ];
+  const text = lines.join('\n');
+  const twSid = Deno.env.get('TWILIO_ACCOUNT_SID');
+  const twTok = Deno.env.get('TWILIO_AUTH_TOKEN');
+  const twFrom = Deno.env.get('TWILIO_FROM_NUMBER');
+  if (twSid && twTok && twFrom) {
+    try {
+      const body = new URLSearchParams({ To: smsTo, From: twFrom, Body: text });
+      const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twSid}/Messages.json`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(twSid + ':' + twTok)}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body,
+      });
+      if (!r.ok) console.error('Twilio smoke canary SMS failed: ' + (await r.text()).slice(0, 200));
+    } catch (e) {
+      console.error('Twilio smoke canary SMS error: ' + String(e));
+    }
+  } else {
+    console.warn('Skipped smoke canary SMS -- missing Twilio env.');
+  }
+  const resendKey = Deno.env.get('RESEND_API_KEY');
+  if (resendKey) {
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'Bricks Bookings <booking@brxs.ca>',
+          to: [emailTo],
+          subject: `Checkout smoke · ${mode} · ${amount}`,
+          html: `<div style="font-family:system-ui,sans-serif"><p><b>Checkout smoke canary</b></p><pre style="white-space:pre-wrap">${text}</pre></div>`,
+        }),
+      });
+    } catch (e) {
+      console.error('Resend smoke canary error: ' + String(e));
+    }
+  }
+}
+
 export async function notifyOwner(lead: {
 id: any;
 agent_name: string;
