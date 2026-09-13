@@ -127,6 +127,10 @@ Deno.serve(async (req: Request) => {
   // auto-estimate) so the recompute matches exactly, not a fresh re-estimate.
   // Always forward package_id so quote expands the ladder (Showcase ≠ Essentials).
   const pkgNormEarly = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_')
+  // Refuse silent Companion legacy remaps (would under/over-charge vs Companion rack).
+  if (['standard', 'premium', 'luxury', 'estate'].includes(pkgNormEarly)) {
+    return bad('Legacy Companion package_id is not sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only).')
+  }
   let q: any;
   try {
     const quoteRes = await fetch(`${supabaseUrl}/functions/v1/quote`, {
@@ -136,13 +140,13 @@ Deno.serve(async (req: Request) => {
         address: body.property_address,
         property_type: body.property_type,
         drone_addon: body.drone_addon === true || body.drone_addon === 'true'
-          || ['essentials','story','showcase','suite','full','standard','premium','luxury','estate'].includes(pkgNormEarly),
+          || ['essentials','story','showcase','suite','full'].includes(pkgNormEarly),
         reel_addon: body.reel_addon === true || body.reel_addon === 'true'
           || ['story','showcase','suite','full'].includes(pkgNormEarly),
         tour_addon: body.tour_addon === true || body.tour_addon === 'true'
-          || ['showcase','suite','full','premium','luxury','estate'].includes(pkgNormEarly),
+          || ['showcase','suite','full'].includes(pkgNormEarly),
         twilight_addon: body.twilight_addon === true || body.twilight_addon === 'true'
-          || ['suite','full','luxury','estate'].includes(pkgNormEarly),
+          || ['suite','full'].includes(pkgNormEarly),
         rush_addon: body.rush_addon === true || body.rush_addon === 'true',
         staging_addon: body.staging_addon === true || body.staging_addon === 'true',
         staging_images: body.staging_images,
@@ -177,7 +181,7 @@ Deno.serve(async (req: Request) => {
   // even when the client only sent package_id.
   const droneOn = !photosOnly && !floorPlanOnly && (
     body.drone_addon === true || body.drone_addon === 'true'
-    || ['essentials','story','showcase','suite','full','standard','premium','luxury','estate'].includes(pkgNorm)
+    || ['essentials','story','showcase','suite','full'].includes(pkgNorm)
   )
   const reelOn = !floorPlanOnly && (
     body.reel_addon === true || body.reel_addon === 'true'
@@ -185,11 +189,11 @@ Deno.serve(async (req: Request) => {
   )
   const tourOn = !floorPlanOnly && (
     body.tour_addon === true || body.tour_addon === 'true'
-    || ['showcase','suite','full','premium','luxury','estate'].includes(pkgNorm)
+    || ['showcase','suite','full'].includes(pkgNorm)
   )
   const twilightOn = !floorPlanOnly && (
     body.twilight_addon === true || body.twilight_addon === 'true'
-    || ['suite','full','luxury','estate'].includes(pkgNorm)
+    || ['suite','full'].includes(pkgNorm)
   )
   const floorPlan = floorPlanOnly
     || body.floor_plan_included === true || body.floor_plan_included === 'true'

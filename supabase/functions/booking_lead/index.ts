@@ -11,7 +11,7 @@
 // CORS is open for the static bricks-site origin; tighten allowlist in prod.
 
 const ALLOWED_TYPES = ['Condo','Semi / Town','Detached','Multiplex','Commercial','Estate'];
-const ALLOWED_PKGS = ['Standard (+ floor plan)','Premium','Luxury (+ twilight)','Estate (flat)','Not sure — advise me'];
+const ALLOWED_PKGS = ['Photos only','Essentials','Story','Showcase','Full suite','Floor plan only','Not sure — advise me'];
 const ALLOWED_WINS = ['Morning','Afternoon','Either'];
 
 const corsHeaders = {

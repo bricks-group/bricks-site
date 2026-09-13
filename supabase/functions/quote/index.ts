@@ -136,6 +136,13 @@ Deno.serve(async (req: Request) => {
   // Showcase/Suite checkout cannot undercharge when only package_id is sent.
   // Explicit addon flags still OR-in (custom mixes / add-ons on Essentials).
   const pkgRaw = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_');
+  // Honest mapping: Companion legacy IDs are NOT charge aliases for www à-la-carte rates.
+  if (['standard', 'premium', 'luxury', 'estate'].includes(pkgRaw)) {
+    return bad(
+      'Legacy Companion package_id is not sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only) — same ladder Companion now charges.',
+      400,
+    );
+  }
   const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
     || pkgRaw === 'floor_plan_only' || pkgRaw === 'floorplan_only';
   const photosOnly = pkgRaw === 'photos_only' || pkgRaw === 'photosonly';
@@ -147,14 +154,11 @@ Deno.serve(async (req: Request) => {
   if (photosOnly) {
     drone = false;
   } else if (!floorPlanOnly) {
-    // www ladder
+    // www / Companion shared ladder only (no silent Standard→Essentials remap)
     if (['story', 'showcase', 'suite', 'full'].includes(pkgRaw)) reel = true;
     if (['showcase', 'suite', 'full'].includes(pkgRaw)) tour = true;
     if (['suite', 'full'].includes(pkgRaw)) twilight = true;
-    // Companion/booking-api ladder (Premium+ includes path tour)
-    if (['premium', 'luxury', 'estate'].includes(pkgRaw)) tour = true;
-    if (['luxury', 'estate'].includes(pkgRaw)) twilight = true;
-    if (['essentials', 'story', 'showcase', 'suite', 'full', 'standard', 'premium', 'luxury', 'estate'].includes(pkgRaw)) {
+    if (['essentials', 'story', 'showcase', 'suite', 'full'].includes(pkgRaw)) {
       drone = true;
     }
   }

@@ -65,3 +65,31 @@ export const STORY_FROM = CORE_FROM + REEL_RATE[0]
 export const SHOWCASE_FROM = STORY_FROM + TOUR_RATE[0]
 export const FULL_FROM = SHOWCASE_FROM + TWILIGHT_RATE[0]
 export const PHOTO_ONLY_FROM = PHOTO_RATE[0]
+
+
+/** Sellable media package IDs — shared charge identity with Companion booking-api. */
+export const MEDIA_PACKAGE_IDS = [
+  'photos_only',
+  'essentials',
+  'story',
+  'showcase',
+  'suite',
+  'floor_plan_only',
+] as const
+
+/** Small-band “from” rack (CAD pre-tax) for the shared ladder. */
+export const MEDIA_PACKAGE_FROM = {
+  photos_only: PHOTO_ONLY_FROM,
+  essentials: CORE_FROM,
+  story: STORY_FROM,
+  showcase: SHOWCASE_FROM,
+  suite: FULL_FROM,
+  floor_plan_only: FLOOR_PLAN_ONLY_RATE,
+} as const
+
+/**
+ * Legacy Companion package IDs. Historical jobs / Dispatch enrichment only.
+ * Never alias these onto www à-la-carte rates — that silently misprices.
+ * Companion GET /packages no longer sells them.
+ */
+export const LEGACY_COMPANION_PACKAGE_IDS = ['standard', 'premium', 'luxury', 'estate'] as const
