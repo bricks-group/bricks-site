@@ -356,16 +356,28 @@ html[data-theme="dark"] .tray::after{background:rgba(8,7,6,.58);}
   transition:transform .5s cubic-bezier(.16,1,.3,1);
 }
 .prod-stack-main{
-  /* Cursor @1280: ~88%×86% of stage, ~6% side / ~7% top mat, fully inside */
-  left:6%;right:6%;top:7%;height:86%;
-  transform:none;
+  /* Natural 1440×920 frame — never stretch. Sized by height, aspect locks width. */
+  top:7%;
+  left:50%;
+  transform:translateX(-50%);
+  height:86%;
+  width:auto;
+  max-width:88%;
+  aspect-ratio:1440 / 920;
 }
 .prod-stack-sub{
-  /* Cursor: ~39%×50%, nested BR — top~45%, right~3%; no stage clip */
-  width:39%;height:50%;top:45%;right:3%;
-  left:auto;bottom:auto;transform:none;
+  /* Smaller nested BR — same design aspect, ~half the main height */
+  top:45%;
+  right:3%;
+  left:auto;
+  bottom:auto;
+  height:50%;
+  width:auto;
+  max-width:42%;
+  aspect-ratio:1440 / 920;
+  transform:none;
 }
-.prod-stack-main:hover{transform:translateY(-6px);}
+.prod-stack-main:hover{transform:translateX(-50%) translateY(-6px);}
 .prod-stack-sub:hover{transform:translateY(-6px);}
 .prod-stack-raise{
   position:absolute;inset:0;z-index:20;border:0;padding:0;margin:0;
@@ -492,10 +504,15 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
   .prod-hero .tray{
     margin:0 20px;height:min(640px,80vh);min-height:520px;max-height:720px;border-radius:2px;
   }
-  /* Same Cursor stack ratios — no bleed/clip */
-  .prod-stack-main{left:6%;right:6%;top:7%;height:86%;transform:none;}
-  .prod-stack-main:hover{transform:translateY(-6px);}
-  .prod-stack-sub{width:39%;height:50%;top:45%;right:3%;left:auto;bottom:auto;}
+  .prod-stack-main{
+    top:7%;left:50%;transform:translateX(-50%);
+    height:86%;width:auto;max-width:88%;aspect-ratio:1440 / 920;
+  }
+  .prod-stack-main:hover{transform:translateX(-50%) translateY(-6px);}
+  .prod-stack-sub{
+    top:45%;right:3%;left:auto;bottom:auto;
+    height:50%;width:auto;max-width:42%;aspect-ratio:1440 / 920;
+  }
   .prod-row,.prod-row-flip{padding:0 20px;margin:36px 0;gap:18px;}
   .prod-row .prod-copy{order:1;}
   .prod-row .tray,.prod-row .tray-crm,.prod-row .tray-tx{order:2;height:400px;min-height:340px;}

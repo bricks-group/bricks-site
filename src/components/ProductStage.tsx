@@ -4,11 +4,9 @@ import { useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Cursor-style hero stack:
- * - Both windows = full 1440×920 UI at natural scale (fit contain — never zoomAt)
- * - Nested overlap; click rear to raise (overlay)
- * - Front iframe interactive; rear covered by raise overlay
- * - Stable src (no remount on raise) so KPI / transactions animation keeps running
+ * Cursor-style hero stack — natural aspect (1440×920), no stretch, no zoomAt.
+ * Frame uses aspect-ratio so chrome matches design; fit=width fills without distortion.
+ * Front interactive; rear raise overlay; stable iframe src for animation.
  */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
@@ -24,7 +22,7 @@ export default function ProductStage() {
           src="/screens/os.html?screen=overview"
           nw={1440}
           nh={920}
-          fit="contain"
+          fit="width"
           hideChrome
         />
         {front !== 'overview' ? (
@@ -52,7 +50,7 @@ export default function ProductStage() {
           src="/screens/os.html?screen=transactions"
           nw={1440}
           nh={920}
-          fit="contain"
+          fit="width"
           hideChrome
         />
         {front !== 'deal' ? (
