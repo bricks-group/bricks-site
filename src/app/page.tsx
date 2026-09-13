@@ -35,7 +35,7 @@ const faqs = [
   {
     id: 'what',
     q: 'What is Bricks?',
-    a: `The OS for Canadian real estate. Companion books; GO is the field app. ${STATUS.os}`,
+    a: `The system for Canadian real estate — one place for media, dispatch, and the deal. Companion books; GO is the field app. ${STATUS.os}`,
   },
   {
     id: 'included',
@@ -133,7 +133,7 @@ export default function Home() {
             '@type': 'LocalBusiness',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'Bricks is the operating system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
+            description: 'Bricks is the system for Canadian real estate — simplifying the broken business. Media is live to book. The desk is live in preview at app.brxs.ca. Companion and GO are live on the web.',
             url: 'https://www.brxs.ca/',
             telephone: '+1-343-453-4578',
             email: 'help@brxs.ca',
@@ -163,8 +163,8 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <h1>The OS for Canadian real estate.</h1>
-          <p className="sub">One desk for listing media, dispatch, and the deal.</p>
+          <h1>The system for Canadian real estate.</h1>
+          <p className="sub">Simplifying the broken business.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
             <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
@@ -268,6 +268,7 @@ export default function Home() {
             <div className="film-in">
               <div>
                 <div className="vt">One System.</div>
+                <div className="vs">Simplifying the broken business.</div>
               </div>
             </div>
           </div>
