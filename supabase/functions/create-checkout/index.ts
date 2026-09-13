@@ -125,6 +125,8 @@ Deno.serve(async (req: Request) => {
   // Re-derive the trusted price server-side -- ignore body.quote entirely for
   // pricing. Pass the same sqft the wizard used (agent-confirmed or the
   // auto-estimate) so the recompute matches exactly, not a fresh re-estimate.
+  // Always forward package_id so quote expands the ladder (Showcase ≠ Essentials).
+  const pkgNormEarly = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_')
   let q: any;
   try {
     const quoteRes = await fetch(`${supabaseUrl}/functions/v1/quote`, {
@@ -133,15 +135,19 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify({
         address: body.property_address,
         property_type: body.property_type,
-        drone_addon: body.drone_addon === true || body.drone_addon === 'true',
-        reel_addon: body.reel_addon === true || body.reel_addon === 'true',
-        tour_addon: body.tour_addon === true || body.tour_addon === 'true',
-        twilight_addon: body.twilight_addon === true || body.twilight_addon === 'true',
+        drone_addon: body.drone_addon === true || body.drone_addon === 'true'
+          || ['essentials','story','showcase','suite','full','standard','premium','luxury','estate'].includes(pkgNormEarly),
+        reel_addon: body.reel_addon === true || body.reel_addon === 'true'
+          || ['story','showcase','suite','full'].includes(pkgNormEarly),
+        tour_addon: body.tour_addon === true || body.tour_addon === 'true'
+          || ['showcase','suite','full','premium','luxury','estate'].includes(pkgNormEarly),
+        twilight_addon: body.twilight_addon === true || body.twilight_addon === 'true'
+          || ['suite','full','luxury','estate'].includes(pkgNormEarly),
         rush_addon: body.rush_addon === true || body.rush_addon === 'true',
         staging_addon: body.staging_addon === true || body.staging_addon === 'true',
         staging_images: body.staging_images,
         floor_plan_only: body.floor_plan_only === true || body.floor_plan_only === 'true'
-          || String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_') === 'floor_plan_only',
+          || pkgNormEarly === 'floor_plan_only',
         package_id: body.package_id,
         sqft: body.sqft || undefined,
       }),
@@ -156,7 +162,6 @@ Deno.serve(async (req: Request) => {
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 
-  const droneOn = body.drone_addon === true || body.drone_addon === 'true'
   const pkgNorm = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_')
   const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
     || pkgNorm === 'floor_plan_only' || pkgNorm === 'floorplan_only'
@@ -168,6 +173,24 @@ Deno.serve(async (req: Request) => {
   }
   const stagingOn = false
   const stagingImages = 0
+  // Mirror quote package ladder into Stripe metadata so webhook/GO stamps match paid SKU
+  // even when the client only sent package_id.
+  const droneOn = !photosOnly && !floorPlanOnly && (
+    body.drone_addon === true || body.drone_addon === 'true'
+    || ['essentials','story','showcase','suite','full','standard','premium','luxury','estate'].includes(pkgNorm)
+  )
+  const reelOn = !floorPlanOnly && (
+    body.reel_addon === true || body.reel_addon === 'true'
+    || ['story','showcase','suite','full'].includes(pkgNorm)
+  )
+  const tourOn = !floorPlanOnly && (
+    body.tour_addon === true || body.tour_addon === 'true'
+    || ['showcase','suite','full','premium','luxury','estate'].includes(pkgNorm)
+  )
+  const twilightOn = !floorPlanOnly && (
+    body.twilight_addon === true || body.twilight_addon === 'true'
+    || ['suite','full','luxury','estate'].includes(pkgNorm)
+  )
   const floorPlan = floorPlanOnly
     || body.floor_plan_included === true || body.floor_plan_included === 'true'
     || (body.floor_plan_included == null && droneOn && !photosOnly)
@@ -187,9 +210,9 @@ Deno.serve(async (req: Request) => {
     province: (zone.province || (body.province || '').toString().trim()).slice(0, 8),
     // Explicit false for Photos only — never coerce omitted/string into drone.
     drone_addon: String(droneOn),
-    reel_addon: String(body.reel_addon === true || body.reel_addon === 'true'),
-    tour_addon: String(body.tour_addon === true || body.tour_addon === 'true'),
-    twilight_addon: String(body.twilight_addon === true || body.twilight_addon === 'true'),
+    reel_addon: String(reelOn),
+    tour_addon: String(tourOn),
+    twilight_addon: String(twilightOn),
     rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
     staging_addon: String(stagingOn),
     staging_images: String(stagingImages),

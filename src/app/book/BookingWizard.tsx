@@ -348,7 +348,7 @@ export default function BookingWizard() {
       staging_addon: false,
       staging_images: 0,
       floor_plan_only: floorPlanOnly,
-      package_id: floorPlanOnly ? 'floor_plan_only' : undefined,
+      package_id: packageIdForCheckout(),
     }
     if (manualSqft) payload.sqft = manualSqft
     fetch(SUPABASE + 'quote', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON }, body: JSON.stringify(payload) })

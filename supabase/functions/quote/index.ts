@@ -132,17 +132,35 @@ Deno.serve(async (req: Request) => {
   // is the "Photos only" bare-minimum tier -- drone dropped, floor plan also
   // dropped from the deliverable (it was never a separate priced line, so
   // that half of the drop doesn't change the total).
-  const drone = !(body.drone_addon === false || body.drone_addon === 'false');
-  const reel = body.reel_addon === true || body.reel_addon === 'true';
-  const tour = body.tour_addon === true || body.tour_addon === 'true';
-  const twilight = body.twilight_addon === true || body.twilight_addon === 'true';
-  const rush = body.rush_addon === true || body.rush_addon === 'true';
-  // Launch honesty (2026-09-12): owned staging not ready — never price/charge staging in quote.
-  const staging = false;
-  const stagingImages = 0;
+  // Package ladder (www /book): expand package_id into included lines so a
+  // Showcase/Suite checkout cannot undercharge when only package_id is sent.
+  // Explicit addon flags still OR-in (custom mixes / add-ons on Essentials).
   const pkgRaw = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_');
   const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
     || pkgRaw === 'floor_plan_only' || pkgRaw === 'floorplan_only';
+  const photosOnly = pkgRaw === 'photos_only' || pkgRaw === 'photosonly';
+  let drone = !(body.drone_addon === false || body.drone_addon === 'false');
+  let reel = body.reel_addon === true || body.reel_addon === 'true';
+  let tour = body.tour_addon === true || body.tour_addon === 'true';
+  let twilight = body.twilight_addon === true || body.twilight_addon === 'true';
+  const rush = body.rush_addon === true || body.rush_addon === 'true';
+  if (photosOnly) {
+    drone = false;
+  } else if (!floorPlanOnly) {
+    // www ladder
+    if (['story', 'showcase', 'suite', 'full'].includes(pkgRaw)) reel = true;
+    if (['showcase', 'suite', 'full'].includes(pkgRaw)) tour = true;
+    if (['suite', 'full'].includes(pkgRaw)) twilight = true;
+    // Companion/booking-api ladder (Premium+ includes path tour)
+    if (['premium', 'luxury', 'estate'].includes(pkgRaw)) tour = true;
+    if (['luxury', 'estate'].includes(pkgRaw)) twilight = true;
+    if (['essentials', 'story', 'showcase', 'suite', 'full', 'standard', 'premium', 'luxury', 'estate'].includes(pkgRaw)) {
+      drone = true;
+    }
+  }
+  // Launch honesty (2026-09-12): owned staging not ready — never price/charge staging in quote.
+  const staging = false;
+  const stagingImages = 0;
   const manualSqft = body.sqft ? parseInt(body.sqft) : null;
 
   if (!address) return bad('Address is required');
