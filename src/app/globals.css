@@ -476,11 +476,10 @@ html[data-theme="dark"] .pwin-bare:not(.pwin-phone){background:var(--night);}
   padding:3px;
   box-sizing:border-box;
   box-shadow:none;
-  border:1px solid var(--hairStrong);
+  border:none;
 }
 html[data-theme="dark"] .phone-device{
   background:var(--paperDeep);
-  border-color:var(--hairStrong);
 }
 .phone-device-notch{
   position:absolute;top:7px;left:50%;transform:translateX(-50%);
@@ -490,7 +489,7 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
 .phone-device-screen{
   position:relative;width:100%;height:100%;
   border-radius:1px;overflow:hidden;background:var(--paper);
-  border:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border:none;
 }
 .phone-device .pwin,
 .phone-device .pwin-bare{
@@ -519,7 +518,14 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
   }
 }
 @media (max-width:680px){
-  .prod-hero .tray{width:min(calc(100% - 40px), 1280px, calc(64vh * 1225 / 720));margin:0 auto;aspect-ratio:1225 / 720;height:auto;min-height:0;}
+  .prod-hero .tray{
+    width:min(calc(100% - 32px), 1280px);
+    margin:0 auto;
+    aspect-ratio:1225 / 720;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
   .prod-row,.prod-row-flip{padding:0 20px;margin:28px 0;gap:14px;}
   .prod-row .tray-phone{height:420px;min-height:380px;}
   /* Phone — nearly tray width, bottom clipped */
@@ -1044,9 +1050,11 @@ html[data-theme="dark"] .map-cutout-gl img{
 .proof-chapter-link{display:inline-flex;margin:28px auto 0;width:fit-content;}
 .proof-chapter .wrap{display:flex;flex-direction:column;align-items:center;}
 
-/* Hero tray — Cursor desktop height (~720 @800vh) */
-.prod-hero .tray{
-  height:min(720px,90vh);min-height:600px;max-height:800px;
+/* Hero tray — desktop height only; mobile keeps aspect lock below */
+@media (min-width:901px){
+  .prod-hero .tray{
+    height:min(720px,90vh);min-height:600px;max-height:800px;
+  }
 }
 
 /* Phone stage — moderate float high, bottom crop (desktop default) */
@@ -1071,7 +1079,27 @@ html[data-theme="dark"] .map-cutout-gl img{
   .cap-stage.tray-phone .phone-stage{width:min(300px,86%);top:24px;}
   .proof-cards{grid-template-columns:1fr;max-width:520px;}
   .proof-chapter{padding:56px 0 40px;}
-  .prod-hero .tray{margin:0 20px;height:min(640px,80vh);min-height:520px;}
+  /* Mobile/tablet hero: keep Cursor aspect so nested windows OVERLAP (desktop stack).
+     Do not stretch tray taller than the UI — that parks the sub window in empty air. */
+  .prod-hero .tray{
+    width:min(calc(100% - 40px), 1280px);
+    margin:0 auto;
+    aspect-ratio:1225 / 720;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible;
+  }
+  .prod-stack-main{
+    top:3%;left:2%;right:auto;bottom:auto;margin:0;
+    width:min(92%, 1080px);
+    max-height:none;
+  }
+  .prod-stack-sub{
+    right:1.5%;bottom:2.5%;
+    width:min(52%, 540px);
+    max-height:none;
+  }
 }
 @media (max-width:680px){
   /* Cap desk: left-biased crop, less inset — opposite of desktop mat */
@@ -1100,7 +1128,7 @@ html[data-theme="dark"] .map-cutout-gl img{
 }
 .phone-device{
   padding:3px !important;box-shadow:none !important;
-  border:1px solid var(--hairStrong) !important;
+  border:none !important;
   background:var(--ink) !important;
 }
 html[data-theme="dark"] .phone-device{background:var(--paperDeep) !important;}
@@ -1376,6 +1404,11 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 }
 .flow-phone .phone-device-screen{
   position:absolute;inset:0;
+}
+.flow-phone .phone-device,
+.flow-phone .phone-device-screen{
+  border:none !important;
+  box-shadow:none !important;
 }
 .flow-cap{display:none !important;}
 .flow-phone-a,.flow-phone-b,.flow-phone-c{z-index:1;transform:none !important;}
