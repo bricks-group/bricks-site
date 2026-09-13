@@ -24,7 +24,7 @@ export const DEMO_STEPS: DemoStep[] = [
     label: 'The desk',
     lines: [
       "Hey — I'm Brixton. I'll walk you through Bricks in a few beats.",
-      'This is the OS desk for Ashfield. Media is the beachhead; the desk runs the deal. Scroll the overview — sidebar stays on this story until we move.',
+      'This is the OS desk for Ashfield. Scroll the overview — sidebar stays on this story until we move.',
     ],
     tip: 'Scroll the desk. When you’re ready, Next.',
     src: '/screens/os.html?screen=overview',

@@ -6,7 +6,7 @@ import { FOUNDER_NAME, FOUNDER_PERSON, STATUS, TOUR_SHORT, VISIT_SHORT } from '@
 export const metadata: Metadata = {
   title: 'About Bricks — Canadian Real Estate Photography & OS',
   description:
-    'Bricks Group builds the operating system for Canadian real estate. Media beachhead: HDR listing photos, MLS delivery, licensed drone, floor plans, optional virtual tour and virtual visit. OS live in preview at app.brxs.ca.',
+    'Bricks Group builds the operating system for Canadian real estate. HDR listing photos, MLS delivery, licensed drone, floor plans, optional virtual tour and virtual visit. OS live in preview at app.brxs.ca.',
   alternates: { canonical: '/about' },
   openGraph: {
     type: 'website',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'About Bricks — Real Estate Photography & OS',
-    description: 'Canadian listing media beachhead and real estate OS. Founded by Raphael Merchant.',
+    description: 'Canadian listing media and real estate OS. Founded by Raphael Merchant.',
     images: ['/media/raphael-merchant-640.jpg'],
   },
 }
@@ -42,7 +42,7 @@ export default function AboutPage() {
             '@type': 'Organization',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'The operating system for Canadian real estate. Media is the beachhead — HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca.',
+            description: 'The operating system for Canadian real estate. HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca.',
             url: 'https://www.brxs.ca/',
             email: 'help@brxs.ca',
             telephone: '+1-343-453-4578',

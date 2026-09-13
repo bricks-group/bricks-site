@@ -163,7 +163,7 @@ export default function PlatformPage() {
 
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
-            <span className="over">Media is the beachhead</span>
+            <span className="over">Ready when you are</span>
             <h2>Book a shoot. Open the OS.</h2>
             <p className="lead">Order media on this site or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to the <a href={OS_LOGIN}>OS</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
             <div className="cta-row">

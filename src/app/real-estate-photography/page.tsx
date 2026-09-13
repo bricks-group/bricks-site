@@ -136,7 +136,7 @@ export default function RealEstatePhotographyPage() {
           <span className="badge">Listing media · Canada</span>
           <h1>Real estate photography &amp; listing photos, Canada-wide.</h1>
           <p className="sub">
-            MLS-ready HDR listing photos, licensed drone real estate photos, and a floor plan on every standard shoot — edited in 24–48 hours. Media is the beachhead; book online today.
+            MLS-ready HDR listing photos, licensed drone real estate photos, and a floor plan on every standard shoot — edited in 24–48 hours. Book online today.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
