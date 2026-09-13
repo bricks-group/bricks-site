@@ -1315,24 +1315,26 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 }
 
 
-/* Flow benefit band — flat phones inside painted tray (Cursor crop: float high, clip bottom) */
+/* Flow benefit band — flat phones sized to fit tray (no crop, no labels, no tilt) */
 .flow-stage{
-  min-height:520px;height:min(580px,68vh);
-  overflow:hidden; /* keep screens inside window + painted bg */
+  min-height:560px;height:min(640px,72vh);
+  overflow:hidden;
 }
 .flow-phones{
   position:absolute;inset:0;
-  display:flex;align-items:flex-start;justify-content:center;
-  gap:18px;padding:28px 28px 0;
+  display:flex;align-items:center;justify-content:center;
+  gap:20px;padding:32px 36px;
   overflow:hidden;
 }
 .flow-phone{
   position:relative;
-  width:min(250px,30%);
+  /* Width from available height so full 390×844 phone fits without crop/distort */
+  height:min(100%, 520px);
+  width:auto;
+  aspect-ratio:390 / 844;
+  max-width:calc((100% - 40px) / 3);
   flex:none;
   transform:none !important;
-  /* Cursor phone-stage: device taller than tray → bottom crops */
-  height:calc(100% + 72px);
 }
 .flow-phone .phone-device{
   width:100%;
@@ -1342,15 +1344,16 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 .flow-phone .phone-device-screen{
   position:absolute;inset:0;
 }
-.flow-cap{display:none !important;} /* no labels above screens */
+.flow-cap{display:none !important;}
 .flow-phone-a,.flow-phone-b,.flow-phone-c{z-index:1;transform:none !important;}
-.flow-phone-b{width:min(270px,32%);z-index:2;}
+.flow-phone-b{z-index:2;}
 @media (max-width:900px){
-  .flow-stage{min-height:460px;height:min(520px,66vh);}
-  .flow-phones{padding:20px 16px 0;gap:12px;}
-  .flow-phone,.flow-phone-b{width:min(210px,30%);height:calc(100% + 56px);}
+  .flow-stage{min-height:480px;height:min(560px,70vh);}
+  .flow-phones{padding:24px 20px;gap:14px;}
+  .flow-phone{height:min(100%, 440px);max-width:calc((100% - 28px) / 3);}
 }
 @media (max-width:680px){
-  .flow-phones{gap:10px;padding:16px 12px 0;}
-  .flow-phone,.flow-phone-b{width:min(200px,42%);height:calc(100% + 48px);}
+  .flow-stage{min-height:420px;height:min(480px,68vh);}
+  .flow-phones{padding:18px 14px;gap:10px;}
+  .flow-phone{height:min(100%, 380px);max-width:calc((100% - 20px) / 3);}
 }
