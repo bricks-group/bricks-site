@@ -820,6 +820,24 @@
   };
   BROK_ROLES.brokerage = BROK_ROLES.office;
 
+  // Ashfield demo book — single source so overview + transactions money agrees.
+  // April closed GCI $182K; escrow is pending commission on near-term closings (~2.5% of $5.9M).
+  const ASHFIELD = {
+    shootsMonth: 198,
+    gciMonth: '$182K',
+    gciMonthDelta: '+9.4%',
+    companyDollar: '$47.3K',
+    companyDelta: '+6.0%',
+    agents: 47,
+    trust: '$96,500',
+    trustShort: '$96.5K',
+    closingWeekN: 6,
+    closingWeekVol: '$5.9M',
+    gciEscrow: '$148K',
+    gciEscrowDelta: '+8.2%',
+    openDeals: 48
+  };
+
   // Each role gets a different default dashboard — greeting, KPIs and widgets tuned to what
   // that operator wants to see first. All of it is user-customizable (see customize state).
   const DASHBOARDS = {
@@ -833,23 +851,23 @@
         }
       }, "Close of $1.2M is Thursday.")),
       kpis: [{
-        l: 'Deals this month',
-        v: '184',
+        l: 'Shoots · April',
+        v: String(ASHFIELD.shootsMonth),
         d: '+12.4%',
-        s: 'vs 164 prev.'
+        s: 'vs 176 prev.'
       }, {
         l: 'GCI · April',
-        v: '$182K',
-        d: '+9.4%',
+        v: ASHFIELD.gciMonth,
+        d: ASHFIELD.gciMonthDelta,
         s: 'gross commission'
       }, {
         l: 'Company dollar',
-        v: '$47.3K',
-        d: '+6.0%',
+        v: ASHFIELD.companyDollar,
+        d: ASHFIELD.companyDelta,
         s: 'after splits'
       }, {
         l: 'Active agents',
-        v: '47',
+        v: String(ASHFIELD.agents),
         d: '+3',
         s: 'onboarded · 30d'
       }],
@@ -1185,7 +1203,7 @@
         fontSize: 24,
         letterSpacing: -0.5
       }
-    }, "184 ", /*#__PURE__*/React.createElement("span", {
+    }, ASHFIELD.shootsMonth, " ", /*#__PURE__*/React.createElement("span", {
       style: {
         color: th.ink3,
         fontSize: 13
@@ -1416,7 +1434,7 @@
         fontSize: 30,
         letterSpacing: -0.8
       }
-    }, "$96,500"), /*#__PURE__*/React.createElement("div", {
+    }, ASHFIELD.trust), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
         color: th.ink3,
@@ -3275,7 +3293,7 @@
   const TX_VISIBLE = 6;
   const TX_ROW_H = 64;
   const TX_SLIDE_MS = 640;
-  const TX_SEED_COUNT = 48;
+  const TX_SEED_COUNT = ASHFIELD.openDeals;
   const TX_SEED = [{
     addr: '214 Linden St',
     client: 'J. Delgado',
@@ -3480,14 +3498,14 @@
     };
     const kpis = [{
       l: 'Closing this week',
-      v: '6',
+      v: String(ASHFIELD.closingWeekN),
       d: null,
-      s: '$5.9M volume'
+      s: `${ASHFIELD.closingWeekVol} volume`
     }, {
       l: 'GCI in escrow',
-      v: '$214K',
-      d: '+8.2%',
-      s: `across ${openCount} deals`
+      v: ASHFIELD.gciEscrow,
+      d: ASHFIELD.gciEscrowDelta,
+      s: `~2.5% of closings · ${openCount} open`
     }, {
       l: 'Conditions pending',
       v: '12',
@@ -3508,7 +3526,7 @@
       th: th,
       dark: dark,
       title: "Transactions",
-      sub: `${openCount} open · 6 closing this week · listing to close in one timeline`,
+      sub: `${openCount} open · ${ASHFIELD.closingWeekN} closing this week · listing to close in one timeline`,
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,
@@ -4025,17 +4043,17 @@
   }) {
     const kpis = [{
       l: 'GCI · April',
-      v: '$182K',
-      d: '+9.4%',
+      v: ASHFIELD.gciMonth,
+      d: ASHFIELD.gciMonthDelta,
       s: 'gross commission'
     }, {
       l: 'Company dollar',
-      v: '$47.3K',
-      d: '+6.0%',
+      v: ASHFIELD.companyDollar,
+      d: ASHFIELD.companyDelta,
       s: 'after agent splits'
     }, {
       l: 'Trust balance',
-      v: '$96.5K',
+      v: ASHFIELD.trustShort,
       d: null,
       s: '12 deposits held'
     }, {
@@ -4167,7 +4185,7 @@
         fontSize: 13,
         color: th.ink
       }
-    }, "$96,500")), /*#__PURE__*/React.createElement("div", {
+    }, ASHFIELD.trust)), /*#__PURE__*/React.createElement("div", {
       style: {
         marginTop: 14,
         display: 'flex',

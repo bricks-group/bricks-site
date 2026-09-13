@@ -317,6 +317,24 @@ const BROK_ROLES = {
 };
 BROK_ROLES.brokerage = BROK_ROLES.office;
 
+// Ashfield demo book — single source so overview + transactions money agrees.
+// April closed GCI $182K; escrow is pending commission on near-term closings (~2.5% of $5.9M).
+const ASHFIELD = {
+  shootsMonth: 198,
+  gciMonth: '$182K',
+  gciMonthDelta: '+9.4%',
+  companyDollar: '$47.3K',
+  companyDelta: '+6.0%',
+  agents: 47,
+  trust: '$96,500',
+  trustShort: '$96.5K',
+  closingWeekN: 6,
+  closingWeekVol: '$5.9M',
+  gciEscrow: '$148K',
+  gciEscrowDelta: '+8.2%',
+  openDeals: 48,
+};
+
 // Each role gets a different default dashboard — greeting, KPIs and widgets tuned to what
 // that operator wants to see first. All of it is user-customizable (see customize state).
 const DASHBOARDS = {
@@ -324,10 +342,10 @@ const DASHBOARDS = {
     eyebrow:'Thursday · Week 16', hi:'Good morning, Elena.', cta:'New deal',
     sub:(th)=><>Two deals need signatures. <span style={{color:th.ink}}>Close of $1.2M is Thursday.</span></>,
     kpis:[
-      {l:'Deals this month',v:'184',d:'+12.4%',s:'vs 164 prev.'},
-      {l:'GCI · April',v:'$182K',d:'+9.4%',s:'gross commission'},
-      {l:'Company dollar',v:'$47.3K',d:'+6.0%',s:'after splits'},
-      {l:'Active agents',v:'47',d:'+3',s:'onboarded · 30d'},
+      {l:'Shoots · April',v:String(ASHFIELD.shootsMonth),d:'+12.4%',s:'vs 176 prev.'},
+      {l:'GCI · April',v:ASHFIELD.gciMonth,d:ASHFIELD.gciMonthDelta,s:'gross commission'},
+      {l:'Company dollar',v:ASHFIELD.companyDollar,d:ASHFIELD.companyDelta,s:'after splits'},
+      {l:'Active agents',v:String(ASHFIELD.agents),d:'+3',s:'onboarded · 30d'},
     ],
     widgets:[['pipeline',4],['volume',2],['today',2],['leaderboard',2],['trust',2]],
   },
@@ -449,7 +467,7 @@ function wVolume(th){
   const path=spark.map((v,i)=>`${i===0?'M':'L'}${(i/(spark.length-1))*560},${72-(v/m)*64}`).join(' ');
   return (<>
     <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start' }}>
-      <div style={{ fontFamily:F.mono, fontSize:24, letterSpacing:-0.5 }}>184 <span style={{ color:th.ink3, fontSize:13 }}>jobs</span></div>
+      <div style={{ fontFamily:F.mono, fontSize:24, letterSpacing:-0.5 }}>{ASHFIELD.shootsMonth} <span style={{ color:th.ink3, fontSize:13 }}>jobs</span></div>
       <div style={{ display:'flex', gap:4 }}>{['7d','30d','90d'].map(p=><div key={p} style={{ padding:'4px 9px', fontSize:11, fontFamily:F.mono, color:p==='30d'?th.ink:th.ink3, background:p==='30d'?th.surf2:'transparent', border:`1px solid ${p==='30d'?th.hairS:'transparent'}`, borderRadius:2 }}>{p}</div>)}</div>
     </div>
     <svg viewBox="0 0 560 92" style={{ width:'100%', height:104, marginTop:14, display:'block' }}>
@@ -509,7 +527,7 @@ function wLeaderboard(th){
 }
 function wTrust(th){
   return (<>
-    <div style={{ fontFamily:F.mono, fontSize:30, letterSpacing:-0.8 }}>$96,500</div>
+    <div style={{ fontFamily:F.mono, fontSize:30, letterSpacing:-0.8 }}>{ASHFIELD.trust}</div>
     <div style={{ fontSize:12, color:th.ink3, marginTop:4 }}>12 deposits held in trust</div>
     <div style={{ marginTop:16, display:'flex', alignItems:'center', gap:10, padding:'12px 14px', background:th.surf2, borderRadius:2 }}>
       <div style={{ width:24, height:24, borderRadius:999, background:T.okTint, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}><I name="chk" size={13} color={T.ok} sw={2.4}/></div>
@@ -1117,7 +1135,7 @@ function CRMContent({ th, dark }) {
 const TX_VISIBLE = 6;
 const TX_ROW_H = 64;
 const TX_SLIDE_MS = 640;
-const TX_SEED_COUNT = 48;
+const TX_SEED_COUNT = ASHFIELD.openDeals;
 const TX_SEED = [
   { addr:'214 Linden St', client:'J. Delgado', side:'Listing', price:'$1.15M', close:'Apr 24', note:'2 pending', status:'Conditional', tone:'warn' },
   { addr:'8 Riverbend', client:'M. Ortega', side:'Buyer', price:'$1.28M', close:'Apr 26', note:'Firm', status:'Firm', tone:'ok' },
@@ -1204,8 +1222,8 @@ function TransactionsContent({ th, dark }) {
   };
 
   const kpis = [
-    { l:'Closing this week', v:'6',      d:null,   s:'$5.9M volume' },
-    { l:'GCI in escrow',     v:'$214K',  d:'+8.2%',s:`across ${openCount} deals` },
+    { l:'Closing this week', v:String(ASHFIELD.closingWeekN), d:null, s:`${ASHFIELD.closingWeekVol} volume` },
+    { l:'GCI in escrow',     v:ASHFIELD.gciEscrow, d:ASHFIELD.gciEscrowDelta, s:`~2.5% of closings · ${openCount} open` },
     { l:'Conditions pending',v:'12',     d:null,   s:'4 due ≤ 48h', down:true },
     { l:'Docs to sign',      v:'9',      d:null,   s:'3 buyers waiting' },
   ];
@@ -1221,7 +1239,7 @@ function TransactionsContent({ th, dark }) {
   const freshBg = dark ? 'rgba(210,84,43,0.18)' : T.brickTint;
   return (
     <>
-      <ModHead th={th} dark={dark} title="Transactions" sub={`${openCount} open · 6 closing this week · listing to close in one timeline`}
+      <ModHead th={th} dark={dark} title="Transactions" sub={`${openCount} open · ${ASHFIELD.closingWeekN} closing this week · listing to close in one timeline`}
         actions={<><Btn variant="ghost" dark={dark} icon="sliders">Filter</Btn><Btn variant="primary" dark={dark} icon="plus">New deal</Btn></>}/>
       <KpiRow th={th} items={kpis}/>
       <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr', gap:28 }}>
@@ -1409,9 +1427,9 @@ function FormsContent({ th, dark }) {
 // ─── ACCOUNTING · commissions, trust, agent billing ───
 function AccountingContent({ th, dark }) {
   const kpis = [
-    { l:'GCI · April',     v:'$182K', d:'+9.4%', s:'gross commission' },
-    { l:'Company dollar',  v:'$47.3K',d:'+6.0%', s:'after agent splits' },
-    { l:'Trust balance',   v:'$96.5K',d:null,    s:'12 deposits held' },
+    { l:'GCI · April',     v:ASHFIELD.gciMonth, d:ASHFIELD.gciMonthDelta, s:'gross commission' },
+    { l:'Company dollar',  v:ASHFIELD.companyDollar, d:ASHFIELD.companyDelta, s:'after agent splits' },
+    { l:'Trust balance',   v:ASHFIELD.trustShort, d:null, s:'12 deposits held' },
     { l:'Agent payables',  v:'$134K', d:null,    s:'pays out May 1' },
   ];
   const comm = [
@@ -1452,7 +1470,7 @@ function AccountingContent({ th, dark }) {
           <div style={{ border:`1px solid ${th.hair}`, borderRadius:2, padding:24 }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
               <Over color={th.ink3}>Trust ledger</Over>
-              <span style={{ fontFamily:F.mono, fontSize:13, color:th.ink }}>$96,500</span>
+              <span style={{ fontFamily:F.mono, fontSize:13, color:th.ink }}>{ASHFIELD.trust}</span>
             </div>
             <div style={{ marginTop:14, display:'flex', flexDirection:'column' }}>
               {ledger.map(([l,d,amt,dir],i)=>(
