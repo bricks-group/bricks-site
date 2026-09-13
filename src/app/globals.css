@@ -1315,24 +1315,27 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 }
 
 
-/* Flow benefit band — flat phones sized to fit tray (no crop, no labels, no tilt) */
+/* Flow benefit band — three flat phones, Cursor-style: natural 390×844, readable, no distort */
+.flow-stage.tray,
 .flow-stage{
-  min-height:560px;height:min(640px,72vh);
+  /* Height follows the phones so full devices fit in the painted tray (no bottom crop) */
+  height:auto !important;
+  min-height:0 !important;
   overflow:hidden;
 }
 .flow-phones{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  gap:20px;padding:32px 36px;
-  overflow:hidden;
+  position:relative;z-index:2;
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:18px;
+  padding:40px 28px 0;
+  box-sizing:border-box;
 }
 .flow-phone{
   position:relative;
-  /* Width from available height so full 390×844 phone fits without crop/distort */
-  height:min(100%, 520px);
-  width:auto;
+  /* Width-first: equal share of tray, capped so UI stays readable; height from aspect */
+  width:min(280px, calc((100% - 36px) / 3));
+  height:auto;
   aspect-ratio:390 / 844;
-  max-width:calc((100% - 40px) / 3);
   flex:none;
   transform:none !important;
 }
@@ -1348,12 +1351,24 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 .flow-phone-a,.flow-phone-b,.flow-phone-c{z-index:1;transform:none !important;}
 .flow-phone-b{z-index:2;}
 @media (max-width:900px){
-  .flow-stage{min-height:480px;height:min(560px,70vh);}
-  .flow-phones{padding:24px 20px;gap:14px;}
-  .flow-phone{height:min(100%, 440px);max-width:calc((100% - 28px) / 3);}
+  .flow-phones{padding:32px 18px 0;gap:14px;}
+  .flow-phone{width:min(240px, calc((100% - 28px) / 3));}
 }
 @media (max-width:680px){
-  .flow-stage{min-height:420px;height:min(480px,68vh);}
-  .flow-phones{padding:18px 14px;gap:10px;}
-  .flow-phone{height:min(100%, 380px);max-width:calc((100% - 20px) / 3);}
+  /* Still three phones — large + snap-scroll so none are tiny/distorted */
+  .flow-phones{
+    justify-content:flex-start;
+    gap:14px;
+    padding:28px 16px 0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .flow-phones::-webkit-scrollbar{display:none;}
+  .flow-phone{
+    width:min(300px, 78vw);
+    scroll-snap-align:center;
+  }
 }

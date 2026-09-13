@@ -5,7 +5,7 @@ import ProductWindow from '@/components/ProductWindow'
 
 /**
  * Companion booking flow — three flat phones inside the painted tray.
- * No step labels above. Cursor-style: float high, bottom cropped by tray.
+ * No step labels. Natural 390×844, width-first, full devices (no crop/distort).
  * property (Mapbox) → package → time.
  */
 export default function FlowStage() {
