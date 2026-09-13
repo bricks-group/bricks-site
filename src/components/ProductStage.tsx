@@ -6,7 +6,7 @@ import ProductWindow from '@/components/ProductWindow'
 /**
  * Cursor-style hero stack — desktop feels like a live Mac desktop:
  * nested overlap, soft depth shadows, hover lift, click-to-front,
- * readable UI scale (mild zoomAt on desktop only).
+ * readable UI scale (zoomAt desktop + mobile).
  */
 export default function ProductStage() {
   const [front, setFront] = useState<'deal' | 'overview'>('deal')
@@ -20,7 +20,8 @@ export default function ProductStage() {
     return () => mq.removeEventListener('change', apply)
   }, [])
 
-  const zoomAt = desktop ? 1180 : undefined
+  // Desktop: mild crop. Mobile: stronger crop so OS UI reads like Cursor's zoomed nest.
+  const zoomAt = desktop ? 1180 : 960
 
   return (
     <div className="prod-stack">

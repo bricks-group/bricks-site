@@ -550,8 +550,9 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
 }
 @media (max-width:900px){
   .prod-hero .tray{
-    width:min(calc(100% - 40px), 1280px, calc(80vh * 1225 / 720));
-    margin:0 auto;aspect-ratio:1225 / 720;height:auto;min-height:0;border-radius:2px;
+    /* Cursor mobile: nearly full-bleed; height from later hero block */
+    width:calc(100% - 20px);
+    margin:0 auto;border-radius:2px;
   }
   .prod-row,.prod-row-flip{padding:0 20px;margin:36px 0;gap:18px;}
   .prod-row .prod-copy{order:1;}
@@ -566,12 +567,8 @@ html[data-theme="dark"] .phone-device-notch{background:color-mix(in srgb, var(--
 }
 @media (max-width:680px){
   .prod-hero .tray{
-    width:min(calc(100% - 32px), 1280px);
+    width:calc(100% - 16px);
     margin:0 auto;
-    aspect-ratio:1225 / 720;
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
   }
   .prod-row,.prod-row-flip{padding:0 20px;margin:28px 0;gap:14px;}
   .prod-row .tray-phone{height:420px;min-height:380px;}
@@ -1126,26 +1123,48 @@ html[data-theme="dark"] .map-cutout-gl img{
   .cap-stage.tray-phone .phone-stage{width:min(300px,86%);top:24px;}
   .proof-cards{grid-template-columns:1fr;max-width:520px;}
   .proof-chapter{padding:56px 0 40px;}
-  /* Mobile/tablet hero: keep Cursor aspect so nested windows OVERLAP (desktop stack).
-     Do not stretch tray taller than the UI — that parks the sub window in empty air. */
+  /* Mobile/tablet hero — MATCH CURSOR phone: stage fills phone, windows FILL
+     the stage (height %, no desktop aspect lock — that left empty sky). */
   .prod-hero .tray{
-    width:min(calc(100% - 40px), 1280px);
+    width:calc(100% - 20px);
     margin:0 auto;
-    aspect-ratio:1225 / 720;
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
+    aspect-ratio:auto;
+    height:min(70vw, 440px) !important;
+    min-height:360px !important;
+    max-height:500px !important;
     overflow:visible;
   }
   .prod-stack-main{
-    top:3%;left:2%;right:auto;bottom:auto;margin:0;
-    width:min(92%, 1080px);
+    top:3%;left:2.5%;right:auto;bottom:auto;margin:0;
+    width:95%;
+    height:82%;
     max-height:none;
+    aspect-ratio:auto; /* fill box; iframe zoomAt crops UI inside */
   }
   .prod-stack-sub{
-    right:1.5%;bottom:2.5%;
-    width:min(52%, 540px);
+    right:1.5%;bottom:3%;
+    width:66%;
+    height:50%;
     max-height:none;
+    aspect-ratio:auto;
+  }
+}
+@media (max-width:680px){
+  .prod-hero .tray{
+    width:calc(100% - 14px);
+    height:min(76vw, 460px) !important;
+    min-height:380px !important;
+    max-height:520px !important;
+  }
+  .prod-stack-main{
+    top:2.5%;left:2%;
+    width:96%;
+    height:84%;
+  }
+  .prod-stack-sub{
+    right:1%;bottom:2.5%;
+    width:68%;
+    height:52%;
   }
 }
 @media (max-width:680px){
@@ -1176,7 +1195,7 @@ html[data-theme="dark"] .map-cutout-gl img{
 /* Hero windows keep Mac-soft radius (Cursor) — not the sitewide 2px lock */
 .prod-hero .pwin{border-radius:10px !important;}
 @media (max-width:900px){
-  .prod-hero .pwin{border-radius:2px !important;}
+  .prod-hero .pwin{border-radius:10px !important;}
 }
 .phone-device{
   padding:3px !important;box-shadow:none !important;
