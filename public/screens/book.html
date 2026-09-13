@@ -31,6 +31,17 @@
     }catch(e){}
     return false;
   }
+  function flowParam(){
+    try{
+      var q = new URLSearchParams(location.search).get('flow');
+      if (q === 'property' || q === '1') return 1;
+      if (q === 'package' || q === '2') return 2;
+      if (q === 'time' || q === '3') return 3;
+      var n = parseInt(q, 10);
+      if (n >= 1 && n <= 3) return n;
+    }catch(e){}
+    return 0;
+  }
   function tabParam(){
     try{
       var q = new URLSearchParams(location.search).get('tab');
@@ -61,10 +72,15 @@
   var dark=parentTheme()==='dark';
   var locked=lockParam();
   var tab=tabParam();
+  var flow=flowParam();
   apply(dark?'dark':'light');
   var root=ReactDOM.createRoot(document.getElementById('root'));
   function render(){
-    root.render(React.createElement(DemoBook, {dark: dark, locked: locked, tab: tab}));
+    if (flow) {
+      root.render(React.createElement(BookFlow, {dark: dark, step: flow}));
+    } else {
+      root.render(React.createElement(DemoBook, {dark: dark, locked: locked, tab: tab, step: 2}));
+    }
   }
   window.addEventListener('message', function(e){
     if(e.data && e.data.bricks_theme){

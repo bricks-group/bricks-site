@@ -1702,77 +1702,165 @@ function BookHome({ dark=false }) {
   );
 }
 
-// 5) BOOK FLOW — one screen showing the composed flow
-function BookFlow({ dark=false }) {
+// 5) BOOK FLOW — steps 1–3 for marketing (property → package → time)
+function BookFlow({ dark=false, step=2 }) {
   const th = useTheme(dark);
   const nav = React.useContext(DemoNav);
+  const s = Math.max(1, Math.min(3, step|0 || 2));
+  const pct = (s / 3) * 100;
+  const titles = { 1:'Property', 2:'Package', 3:'Time' };
   return (
     <Phone dark={dark}>
       <div style={{ padding:'12px 22px 0', display:'flex', alignItems:'center', gap:10 }}>
         <I name="arrL" size={18} color={th.ink}/>
-        <div style={{ flex:1, textAlign:'center' }}><Over color={th.ink3}>New booking · step 2 / 4</Over></div>
+        <div style={{ flex:1, textAlign:'center' }}><Over color={th.ink3}>New booking · step {s} / 3</Over></div>
         <span style={{ fontSize:12, color:th.ink3 }}>Save</span>
       </div>
       <div style={{ padding:'0 22px 8px' }}>
         <div style={{ height:2, background:th.hair, marginTop:12, display:'flex' }}>
-          <div style={{ width:'50%', background:T.brick, height:'100%' }}/>
+          <div style={{ width:`${pct}%`, background:T.brick, height:'100%', transition:'width .3s ease' }}/>
         </div>
       </div>
       <div style={{ flex:1, padding:'18px 22px 0', overflow:'auto' }}>
-        <Over color={T.brick}>Package</Over>
-        <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>How much coverage?</div>
-        <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>214 Linden St · House · 2,140 sqft</div>
-
-        <div style={{ marginTop:22, display:'flex', flexDirection:'column', gap:10 }}>
-          {[
-            { n:'Standard', p:'$379', d:'24 HDR photos · Drone aerials · 24h delivery', sel:false },
-            { n:'Premium',  p:'$749', d:'40 photos · Drone · 60-sec reel · Floor plan · 24h', sel:true  },
-            { n:'Luxury',   p:'$1,199', d:'60 photos · Drone · Reel · 3D tour · 12h rush', sel:false },
-            { n:'Estate',   p:'$2,499', d:'Estate-tier · Unlimited shots · 12h rush · Custom site', sel:false },
-          ].map(pk => (
-            <div key={pk.n} style={{
-              padding:18, border:`${pk.sel?2:1}px solid ${pk.sel?T.brick:th.hair}`,
-              borderRadius:2, background: pk.sel ? (dark?'#D2542B14':T.brickTint) : 'transparent',
-              position:'relative',
-            }}>
-              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
-                <div style={{ fontSize:17, fontWeight:500 }}>{pk.n}</div>
-                <div style={{ fontFamily:F.mono, fontSize:17 }}>{pk.p}</div>
-              </div>
-              <div style={{ fontSize:12, color:th.ink2, marginTop:6, lineHeight:1.5 }}>{pk.d}</div>
-              {pk.sel && (
-                <div style={{ position:'absolute', top:14, right:14, width:18, height:18, borderRadius:999, background:T.brick, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                  <I name="chk" size={11} color="#fff" sw={2.5}/>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <div style={{ marginTop:24 }}>
-          <Over color={th.ink3}>Earliest available</Over>
-          <div style={{ marginTop:10, padding:16, border:`1px solid ${th.hair}`, borderRadius:2, display:'flex', alignItems:'center', gap:12 }}>
-            <I name="bolt" size={20} color={T.brick}/>
-            <div style={{ flex:1 }}>
-              <div style={{ fontSize:14, fontWeight:500 }}>Today · 14:30</div>
-              <div style={{ fontSize:11, color:th.ink3, marginTop:2 }}>J. Reyes · 4.9 ★ · 2.1 mi away</div>
-            </div>
-            <span style={{ fontSize:12, color:T.brickDeep }}>Change</span>
-          </div>
-        </div>
+        {s === 1 && <BookFlowProperty th={th} dark={dark} />}
+        {s === 2 && <BookFlowPackage th={th} dark={dark} />}
+        {s === 3 && <BookFlowTime th={th} dark={dark} />}
         <div style={{ height:100 }}/>
       </div>
       <div style={{ padding:'14px 22px 28px', borderTop:`1px solid ${th.hair}`, display:'flex', alignItems:'center', gap:14, background:th.bg }}>
         <div>
-          <div style={{ fontSize:11, color:th.ink3, fontFamily:F.mono, letterSpacing:'0.1em' }}>TOTAL</div>
-          <div style={{ fontFamily:F.mono, fontSize:22, marginTop:2 }}>$749</div>
+          <div style={{ fontSize:11, color:th.ink3, fontFamily:F.mono, letterSpacing:'0.1em' }}>{s === 1 ? 'NEXT' : 'TOTAL'}</div>
+          <div style={{ fontFamily:F.mono, fontSize:22, marginTop:2 }}>{s === 1 ? titles[s] : '$749'}</div>
         </div>
-        <Btn variant="primary" dark={dark} style={{ marginLeft:'auto' }} icon="arr">Continue</Btn>
+        <Btn variant="primary" dark={dark} style={{ marginLeft:'auto' }} icon="arr">{s === 3 ? 'Pay & book' : 'Continue'}</Btn>
       </div>
       {nav && <TabBar dark={dark} active={2} tabs={[
         { icon:'home',label:'Home' },{ icon:'cal',label:'Jobs' },{ icon:'plus',label:'Book' },{ icon:'bell',label:'Inbox' },{ icon:'user',label:'Me' },
       ]}/>}
     </Phone>
+  );
+}
+
+function BookFlowProperty({ th, dark }) {
+  const [hov, setHov] = React.useState(1);
+  const opts = [
+    { n:'214 Linden St', d:'Toronto · House · 2,140 sqft', sel:true },
+    { n:'77 Alder Ave', d:'Mississauga · Condo · 980 sqft', sel:false },
+    { n:'Add new address', d:'Search MLS or paste a listing URL', sel:false },
+  ];
+  return (
+    <>
+      <Over color={T.brick}>Property</Over>
+      <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>Where are we shooting?</div>
+      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>Pick a listing or add an address.</div>
+      <div style={{ marginTop:18, padding:'14px 14px', border:`1px solid ${th.hair}`, borderRadius:2, display:'flex', gap:10, alignItems:'center' }}>
+        <I name="pin" size={16} color={th.ink3}/>
+        <div style={{ fontSize:14, color:th.ink3 }}>Search address or MLS #</div>
+      </div>
+      <div style={{ marginTop:18, display:'flex', flexDirection:'column', gap:10 }}>
+        {opts.map((o,i) => (
+          <div
+            key={o.n}
+            onMouseEnter={() => setHov(i)}
+            onMouseLeave={() => setHov(-1)}
+            style={{
+              padding:18, border:`${o.sel?2:1}px solid ${o.sel?T.brick:th.hair}`,
+              borderRadius:2,
+              background: o.sel ? (dark?'#D2542B14':T.brickTint) : (hov===i ? th.surf2 : 'transparent'),
+              cursor:'pointer', transition:'background .12s ease',
+            }}
+          >
+            <div style={{ fontSize:16, fontWeight:500 }}>{o.n}</div>
+            <div style={{ fontSize:12, color:th.ink2, marginTop:6 }}>{o.d}</div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function BookFlowPackage({ th, dark }) {
+  const [hov, setHov] = React.useState(-1);
+  const pkgs = [
+    { n:'Standard', p:'$379', d:'24 HDR photos · Drone aerials · 24h delivery', sel:false },
+    { n:'Premium',  p:'$749', d:'40 photos · Drone · 60-sec reel · Floor plan · 24h', sel:true  },
+    { n:'Luxury',   p:'$1,199', d:'60 photos · Drone · Reel · 3D tour · 12h rush', sel:false },
+  ];
+  return (
+    <>
+      <Over color={T.brick}>Package</Over>
+      <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>How much coverage?</div>
+      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>214 Linden St · House · 2,140 sqft</div>
+      <div style={{ marginTop:22, display:'flex', flexDirection:'column', gap:10 }}>
+        {pkgs.map((pk,i) => (
+          <div
+            key={pk.n}
+            onMouseEnter={() => setHov(i)}
+            onMouseLeave={() => setHov(-1)}
+            style={{
+              padding:18, border:`${pk.sel?2:1}px solid ${pk.sel?T.brick:th.hair}`,
+              borderRadius:2,
+              background: pk.sel ? (dark?'#D2542B14':T.brickTint) : (hov===i ? th.surf2 : 'transparent'),
+              position:'relative', cursor:'pointer', transition:'background .12s ease',
+            }}
+          >
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline' }}>
+              <div style={{ fontSize:17, fontWeight:500 }}>{pk.n}</div>
+              <div style={{ fontFamily:F.mono, fontSize:17 }}>{pk.p}</div>
+            </div>
+            <div style={{ fontSize:12, color:th.ink2, marginTop:6, lineHeight:1.5 }}>{pk.d}</div>
+            {pk.sel && (
+              <div style={{ position:'absolute', top:14, right:14, width:18, height:18, borderRadius:999, background:T.brick, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <I name="chk" size={11} color="#fff" sw={2.5}/>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function BookFlowTime({ th, dark }) {
+  const slots = [
+    { t:'Today · 14:30', d:'J. Reyes · 4.9 ★ · 22 min away', sel:true },
+    { t:'Today · 16:00', d:'S. Okafor · 4.8 ★ · 31 min away', sel:false },
+    { t:'Tomorrow · 10:00', d:'J. Reyes · 4.9 ★ · auto-assign', sel:false },
+  ];
+  const [hov, setHov] = React.useState(-1);
+  return (
+    <>
+      <Over color={T.brick}>Time</Over>
+      <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>When should we arrive?</div>
+      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>Premium · 214 Linden St · exact clock time</div>
+      <div style={{ marginTop:22, display:'flex', flexDirection:'column', gap:10 }}>
+        {slots.map((sl,i) => (
+          <div
+            key={sl.t}
+            onMouseEnter={() => setHov(i)}
+            onMouseLeave={() => setHov(-1)}
+            style={{
+              padding:16, border:`${sl.sel?2:1}px solid ${sl.sel?T.brick:th.hair}`,
+              borderRadius:2, display:'flex', alignItems:'center', gap:12,
+              background: sl.sel ? (dark?'#D2542B14':T.brickTint) : (hov===i ? th.surf2 : 'transparent'),
+              cursor:'pointer', transition:'background .12s ease',
+            }}
+          >
+            <I name="bolt" size={20} color={sl.sel ? T.brick : th.ink3}/>
+            <div style={{ flex:1 }}>
+              <div style={{ fontSize:14, fontWeight:500 }}>{sl.t}</div>
+              <div style={{ fontSize:11, color:th.ink3, marginTop:2 }}>{sl.d}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop:22, padding:16, border:`1px solid ${th.hair}`, borderRadius:2 }}>
+        <Over color={th.ink3}>What happens next</Over>
+        <div style={{ fontSize:13, color:th.ink2, marginTop:8, lineHeight:1.5 }}>
+          Pay locks the time. GO notifies the photographer. Media lands on the listing file in the desk.
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -2272,13 +2360,14 @@ function DemoOS({ dark=false, screen='overview', locked=false }) {
   return <BrokShell dark={dark} screen={screen} locked={locked} />;
 }
 
-function DemoBook({ dark=false, locked=false, tab: tabInit=0 }) {
+function DemoBook({ dark=false, locked=false, tab: tabInit=0, step=2 }) {
   const initial = Math.max(0, Math.min(BOOK_SCREENS.length - 1, tabInit|0));
   const [tab, setTab] = React.useState(initial);
   const Screen = BOOK_SCREENS[tab] || BookHome;
+  const screenProps = Screen === BookFlow ? { dark, step } : { dark };
   return (
     <DemoNav.Provider value={{ tab, setTab: locked ? undefined : setTab, locked }}>
-      <Screen dark={dark} />
+      <Screen {...screenProps} />
     </DemoNav.Provider>
   );
 }

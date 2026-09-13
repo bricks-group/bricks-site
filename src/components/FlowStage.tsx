@@ -4,57 +4,35 @@ import PhoneDevice from '@/components/PhoneDevice'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Benefit band — three phones: Companion home → book flow → GO.
- * Shows how Bricks simplifies the business loop (not a single pretty tray).
+ * Companion booking flow — three main screens:
+ * property → package → time (exact clock).
  */
 export default function FlowStage() {
+  const steps = [
+    { cap: '1 · Property', src: '/screens/book.html?lock=1&flow=1', label: 'Pick property' },
+    { cap: '2 · Package', src: '/screens/book.html?lock=1&flow=2', label: 'Choose package' },
+    { cap: '3 · Time', src: '/screens/book.html?lock=1&flow=3', label: 'Lock the time' },
+  ] as const
+
   return (
-    <div className="flow-phones" aria-label="Book to shoot to field">
-      <div className="flow-phone flow-phone-a">
-        <span className="flow-cap">1 · Companion</span>
-        <PhoneDevice label="Companion home">
-          <ProductWindow
-            variant="phone"
-            title="Companion"
-            src="/screens/book.html?lock=1&tab=home"
-            nw={390}
-            nh={844}
-            fit="contain"
-            hideChrome
-            lazy
-          />
-        </PhoneDevice>
-      </div>
-      <div className="flow-phone flow-phone-b">
-        <span className="flow-cap">2 · Book</span>
-        <PhoneDevice label="Booking flow">
-          <ProductWindow
-            variant="phone"
-            title="Book"
-            src="/screens/book.html?lock=1&tab=flow"
-            nw={390}
-            nh={844}
-            fit="contain"
-            hideChrome
-            lazy
-          />
-        </PhoneDevice>
-      </div>
-      <div className="flow-phone flow-phone-c">
-        <span className="flow-cap">3 · GO</span>
-        <PhoneDevice label="GO field">
-          <ProductWindow
-            variant="phone"
-            title="GO"
-            src="/screens/disp.html?lock=1"
-            nw={390}
-            nh={844}
-            fit="contain"
-            hideChrome
-            lazy
-          />
-        </PhoneDevice>
-      </div>
+    <div className="flow-phones" aria-label="Companion booking flow">
+      {steps.map((s, i) => (
+        <div key={s.cap} className={`flow-phone flow-phone-${['a','b','c'][i]}`}>
+          <span className="flow-cap">{s.cap}</span>
+          <PhoneDevice label={s.label}>
+            <ProductWindow
+              variant="phone"
+              title="Companion"
+              src={s.src}
+              nw={390}
+              nh={844}
+              fit="contain"
+              hideChrome
+              lazy
+            />
+          </PhoneDevice>
+        </div>
+      ))}
     </div>
   )
 }

@@ -4939,12 +4939,20 @@
     }));
   }
 
-  // 5) BOOK FLOW — one screen showing the composed flow
+  // 5) BOOK FLOW — steps 1–3 for marketing (property → package → time)
   function BookFlow({
-    dark = false
+    dark = false,
+    step = 2
   }) {
     const th = useTheme(dark);
     const nav = React.useContext(DemoNav);
+    const s = Math.max(1, Math.min(3, step | 0 || 2));
+    const pct = s / 3 * 100;
+    const titles = {
+      1: 'Property',
+      2: 'Package',
+      3: 'Time'
+    };
     return /*#__PURE__*/React.createElement(Phone, {
       dark: dark
     }, /*#__PURE__*/React.createElement("div", {
@@ -4965,7 +4973,7 @@
       }
     }, /*#__PURE__*/React.createElement(Over, {
       color: th.ink3
-    }, "New booking \xB7 step 2 / 4")), /*#__PURE__*/React.createElement("span", {
+    }, "New booking \xB7 step ", s, " / 3")), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 12,
         color: th.ink3
@@ -4983,9 +4991,10 @@
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
-        width: '50%',
+        width: `${pct}%`,
         background: T.brick,
-        height: '100%'
+        height: '100%',
+        transition: 'width .3s ease'
       }
     }))), /*#__PURE__*/React.createElement("div", {
       style: {
@@ -4993,7 +5002,175 @@
         padding: '18px 22px 0',
         overflow: 'auto'
       }
-    }, /*#__PURE__*/React.createElement(Over, {
+    }, s === 1 && /*#__PURE__*/React.createElement(BookFlowProperty, {
+      th: th,
+      dark: dark
+    }), s === 2 && /*#__PURE__*/React.createElement(BookFlowPackage, {
+      th: th,
+      dark: dark
+    }), s === 3 && /*#__PURE__*/React.createElement(BookFlowTime, {
+      th: th,
+      dark: dark
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: 100
+      }
+    })), /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: '14px 22px 28px',
+        borderTop: `1px solid ${th.hair}`,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 14,
+        background: th.bg
+      }
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        color: th.ink3,
+        fontFamily: F.mono,
+        letterSpacing: '0.1em'
+      }
+    }, s === 1 ? 'NEXT' : 'TOTAL'), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: F.mono,
+        fontSize: 22,
+        marginTop: 2
+      }
+    }, s === 1 ? titles[s] : '$749')), /*#__PURE__*/React.createElement(Btn, {
+      variant: "primary",
+      dark: dark,
+      style: {
+        marginLeft: 'auto'
+      },
+      icon: "arr"
+    }, s === 3 ? 'Pay & book' : 'Continue')), nav && /*#__PURE__*/React.createElement(TabBar, {
+      dark: dark,
+      active: 2,
+      tabs: [{
+        icon: 'home',
+        label: 'Home'
+      }, {
+        icon: 'cal',
+        label: 'Jobs'
+      }, {
+        icon: 'plus',
+        label: 'Book'
+      }, {
+        icon: 'bell',
+        label: 'Inbox'
+      }, {
+        icon: 'user',
+        label: 'Me'
+      }]
+    }));
+  }
+  function BookFlowProperty({
+    th,
+    dark
+  }) {
+    const [hov, setHov] = React.useState(1);
+    const opts = [{
+      n: '214 Linden St',
+      d: 'Toronto · House · 2,140 sqft',
+      sel: true
+    }, {
+      n: '77 Alder Ave',
+      d: 'Mississauga · Condo · 980 sqft',
+      sel: false
+    }, {
+      n: 'Add new address',
+      d: 'Search MLS or paste a listing URL',
+      sel: false
+    }];
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
+      color: T.brick
+    }, "Property"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 24,
+        fontWeight: 500,
+        letterSpacing: -0.6,
+        marginTop: 8
+      }
+    }, "Where are we shooting?"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        color: th.ink2,
+        marginTop: 6
+      }
+    }, "Pick a listing or add an address."), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 18,
+        padding: '14px 14px',
+        border: `1px solid ${th.hair}`,
+        borderRadius: 2,
+        display: 'flex',
+        gap: 10,
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/React.createElement(I, {
+      name: "pin",
+      size: 16,
+      color: th.ink3
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        color: th.ink3
+      }
+    }, "Search address or MLS #")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 18,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10
+      }
+    }, opts.map((o, i) => /*#__PURE__*/React.createElement("div", {
+      key: o.n,
+      onMouseEnter: () => setHov(i),
+      onMouseLeave: () => setHov(-1),
+      style: {
+        padding: 18,
+        border: `${o.sel ? 2 : 1}px solid ${o.sel ? T.brick : th.hair}`,
+        borderRadius: 2,
+        background: o.sel ? dark ? '#D2542B14' : T.brickTint : hov === i ? th.surf2 : 'transparent',
+        cursor: 'pointer',
+        transition: 'background .12s ease'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 16,
+        fontWeight: 500
+      }
+    }, o.n), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        color: th.ink2,
+        marginTop: 6
+      }
+    }, o.d)))));
+  }
+  function BookFlowPackage({
+    th,
+    dark
+  }) {
+    const [hov, setHov] = React.useState(-1);
+    const pkgs = [{
+      n: 'Standard',
+      p: '$379',
+      d: '24 HDR photos · Drone aerials · 24h delivery',
+      sel: false
+    }, {
+      n: 'Premium',
+      p: '$749',
+      d: '40 photos · Drone · 60-sec reel · Floor plan · 24h',
+      sel: true
+    }, {
+      n: 'Luxury',
+      p: '$1,199',
+      d: '60 photos · Drone · Reel · 3D tour · 12h rush',
+      sel: false
+    }];
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
       color: T.brick
     }, "Package"), /*#__PURE__*/React.createElement("div", {
       style: {
@@ -5015,34 +5192,18 @@
         flexDirection: 'column',
         gap: 10
       }
-    }, [{
-      n: 'Standard',
-      p: '$379',
-      d: '24 HDR photos · Drone aerials · 24h delivery',
-      sel: false
-    }, {
-      n: 'Premium',
-      p: '$749',
-      d: '40 photos · Drone · 60-sec reel · Floor plan · 24h',
-      sel: true
-    }, {
-      n: 'Luxury',
-      p: '$1,199',
-      d: '60 photos · Drone · Reel · 3D tour · 12h rush',
-      sel: false
-    }, {
-      n: 'Estate',
-      p: '$2,499',
-      d: 'Estate-tier · Unlimited shots · 12h rush · Custom site',
-      sel: false
-    }].map(pk => /*#__PURE__*/React.createElement("div", {
+    }, pkgs.map((pk, i) => /*#__PURE__*/React.createElement("div", {
       key: pk.n,
+      onMouseEnter: () => setHov(i),
+      onMouseLeave: () => setHov(-1),
       style: {
         padding: 18,
         border: `${pk.sel ? 2 : 1}px solid ${pk.sel ? T.brick : th.hair}`,
         borderRadius: 2,
-        background: pk.sel ? dark ? '#D2542B14' : T.brickTint : 'transparent',
-        position: 'relative'
+        background: pk.sel ? dark ? '#D2542B14' : T.brickTint : hov === i ? th.surf2 : 'transparent',
+        position: 'relative',
+        cursor: 'pointer',
+        transition: 'background .12s ease'
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
@@ -5085,26 +5246,67 @@
       size: 11,
       color: "#fff",
       sw: 2.5
-    }))))), /*#__PURE__*/React.createElement("div", {
+    }))))));
+  }
+  function BookFlowTime({
+    th,
+    dark
+  }) {
+    const slots = [{
+      t: 'Today · 14:30',
+      d: 'J. Reyes · 4.9 ★ · 22 min away',
+      sel: true
+    }, {
+      t: 'Today · 16:00',
+      d: 'S. Okafor · 4.8 ★ · 31 min away',
+      sel: false
+    }, {
+      t: 'Tomorrow · 10:00',
+      d: 'J. Reyes · 4.9 ★ · auto-assign',
+      sel: false
+    }];
+    const [hov, setHov] = React.useState(-1);
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Over, {
+      color: T.brick
+    }, "Time"), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 24
+        fontSize: 24,
+        fontWeight: 500,
+        letterSpacing: -0.6,
+        marginTop: 8
       }
-    }, /*#__PURE__*/React.createElement(Over, {
-      color: th.ink3
-    }, "Earliest available"), /*#__PURE__*/React.createElement("div", {
+    }, "When should we arrive?"), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 10,
+        fontSize: 13,
+        color: th.ink2,
+        marginTop: 6
+      }
+    }, "Premium \xB7 214 Linden St \xB7 exact clock time"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 22,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10
+      }
+    }, slots.map((sl, i) => /*#__PURE__*/React.createElement("div", {
+      key: sl.t,
+      onMouseEnter: () => setHov(i),
+      onMouseLeave: () => setHov(-1),
+      style: {
         padding: 16,
-        border: `1px solid ${th.hair}`,
+        border: `${sl.sel ? 2 : 1}px solid ${sl.sel ? T.brick : th.hair}`,
         borderRadius: 2,
         display: 'flex',
         alignItems: 'center',
-        gap: 12
+        gap: 12,
+        background: sl.sel ? dark ? '#D2542B14' : T.brickTint : hov === i ? th.surf2 : 'transparent',
+        cursor: 'pointer',
+        transition: 'background .12s ease'
       }
     }, /*#__PURE__*/React.createElement(I, {
       name: "bolt",
       size: 20,
-      color: T.brick
+      color: sl.sel ? T.brick : th.ink3
     }), /*#__PURE__*/React.createElement("div", {
       style: {
         flex: 1
@@ -5114,70 +5316,29 @@
         fontSize: 14,
         fontWeight: 500
       }
-    }, "Today \xB7 14:30"), /*#__PURE__*/React.createElement("div", {
+    }, sl.t), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
         color: th.ink3,
         marginTop: 2
       }
-    }, "J. Reyes \xB7 4.9 \u2605 \xB7 2.1 mi away")), /*#__PURE__*/React.createElement("span", {
+    }, sl.d))))), /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: 12,
-        color: T.brickDeep
+        marginTop: 22,
+        padding: 16,
+        border: `1px solid ${th.hair}`,
+        borderRadius: 2
       }
-    }, "Change"))), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement(Over, {
+      color: th.ink3
+    }, "What happens next"), /*#__PURE__*/React.createElement("div", {
       style: {
-        height: 100
+        fontSize: 13,
+        color: th.ink2,
+        marginTop: 8,
+        lineHeight: 1.5
       }
-    })), /*#__PURE__*/React.createElement("div", {
-      style: {
-        padding: '14px 22px 28px',
-        borderTop: `1px solid ${th.hair}`,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 14,
-        background: th.bg
-      }
-    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        color: th.ink3,
-        fontFamily: F.mono,
-        letterSpacing: '0.1em'
-      }
-    }, "TOTAL"), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontFamily: F.mono,
-        fontSize: 22,
-        marginTop: 2
-      }
-    }, "$749")), /*#__PURE__*/React.createElement(Btn, {
-      variant: "primary",
-      dark: dark,
-      style: {
-        marginLeft: 'auto'
-      },
-      icon: "arr"
-    }, "Continue")), nav && /*#__PURE__*/React.createElement(TabBar, {
-      dark: dark,
-      active: 2,
-      tabs: [{
-        icon: 'home',
-        label: 'Home'
-      }, {
-        icon: 'cal',
-        label: 'Jobs'
-      }, {
-        icon: 'plus',
-        label: 'Book'
-      }, {
-        icon: 'bell',
-        label: 'Inbox'
-      }, {
-        icon: 'user',
-        label: 'Me'
-      }]
-    }));
+    }, "Pay locks the time. GO notifies the photographer. Media lands on the listing file in the desk.")));
   }
 
   // 6) JOBS
@@ -6646,20 +6807,25 @@
   function DemoBook({
     dark = false,
     locked = false,
-    tab: tabInit = 0
+    tab: tabInit = 0,
+    step = 2
   }) {
     const initial = Math.max(0, Math.min(BOOK_SCREENS.length - 1, tabInit | 0));
     const [tab, setTab] = React.useState(initial);
     const Screen = BOOK_SCREENS[tab] || BookHome;
+    const screenProps = Screen === BookFlow ? {
+      dark,
+      step
+    } : {
+      dark
+    };
     return /*#__PURE__*/React.createElement(DemoNav.Provider, {
       value: {
         tab,
         setTab: locked ? undefined : setTab,
         locked
       }
-    }, /*#__PURE__*/React.createElement(Screen, {
-      dark: dark
-    }));
+    }, /*#__PURE__*/React.createElement(Screen, screenProps));
   }
   function DemoDisp({
     dark = false,

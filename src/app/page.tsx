@@ -213,8 +213,9 @@ export default function Home() {
       <section className="cap-band rvl" aria-label="OS — desk">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>The desk.</h2>
-            <Link className="learn-link" href="/platform">OS →</Link>
+            <h2>The desk runs the deal.</h2>
+            <p className="cap-lede">Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
+            <Link className="learn-link" href="/platform">Explore the OS →</Link>
           </div>
           <div className="cap-stage tray tray-crm">
             <div className="tray-stage tray-stage-fill">
@@ -227,9 +228,9 @@ export default function Home() {
       <section className="cap-band flow-band rvl" aria-label="Book shoot desk loop">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>Book → shoot → desk.</h2>
-            <p className="flow-lede">Agent books in Companion. Time locks. GO takes the field. The desk runs the deal.</p>
-            <Link className="learn-link" href="/book">Book a shoot →</Link>
+            <h2>Book a shoot in three steps.</h2>
+            <p className="cap-lede">Companion is the agent app. Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.</p>
+            <Link className="learn-link" href="/book">Start a booking →</Link>
           </div>
           <div className="cap-stage tray tray-book flow-stage">
             <FlowStage />

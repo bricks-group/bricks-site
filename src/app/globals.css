@@ -968,7 +968,13 @@ html[data-theme="dark"] .map-cutout-gl img{
   font-weight:500;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.03em;line-height:1.05;
   color:var(--ink);margin:0 0 12px;
 }
-.cap-copy p{display:none;} /* screens lead — copy is headline + link */
+.cap-copy p{display:none;}
+.cap-copy p.cap-lede,
+.cap-copy p.flow-lede{
+  display:block;
+  font-size:16px;line-height:1.5;color:var(--inkSoft);
+  margin:0 0 16px;max-width:46ch;
+}
 .cap-stage{
   position:relative;border-radius:2px;overflow:hidden;border:none;
   min-height:520px;height:min(620px,70vh);
@@ -1309,12 +1315,7 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 }
 
 
-/* Flow benefit band — stacked phones showing book → shoot → field */
-.flow-lede{
-  display:block !important;
-  font-size:15px;line-height:1.45;color:var(--inkSoft);
-  margin:0 0 14px;max-width:42ch;
-}
+/* Flow benefit band — stacked phones */
 .flow-stage{
   min-height:560px;height:min(620px,72vh);
   overflow:visible;
