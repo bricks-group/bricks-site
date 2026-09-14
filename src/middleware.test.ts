@@ -53,6 +53,12 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/demo/invite/'), false)
   })
 
+  it('opens developer/REIT project microsites — the paid product itself', () => {
+    assert.equal(isPublicPath('/projects'), true)
+    assert.equal(isPublicPath('/projects/'), true)
+    assert.equal(isPublicPath('/projects/ashfield-meadows-a1b2c3d4'), true)
+  })
+
   it('still gates marketing and other APIs', () => {
     assert.equal(isPublicPath('/'), false)
     assert.equal(isPublicPath('/pricing'), false)
