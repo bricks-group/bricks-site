@@ -110,12 +110,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'bricks — the operating system for Canadian real estate',
     description: 'The operating system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
     title: 'bricks — the operating system for Canadian real estate',
     description: 'The operating system for Canadian real estate. Book professional media today.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
 
@@ -263,7 +263,7 @@ export default function Home() {
           <div className="film">
             <span className="tag">Film</span>
             <video className="film-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
-              <source src="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
+              <source src="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4" type="video/mp4" />
             </video>
             <div className="film-in">
               <div>
