@@ -5,7 +5,7 @@ import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 
 const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
 
 export const metadata: Metadata = {
   title: 'Book Real Estate Photography & Listing Photos Canada | Bricks',
