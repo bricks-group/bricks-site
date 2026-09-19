@@ -206,9 +206,8 @@ export default function BookingWizard() {
     }
 
     setDoneMsg('Confirming your shoot…')
-    const OS_API = 'https://api.brxs.ca'
     let cancelled = false
-    fetch(`${OS_API}/api/book/confirm-paid`, {
+    fetch('/api/confirm-paid', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ session_id: sessionId }),

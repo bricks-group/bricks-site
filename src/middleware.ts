@@ -23,7 +23,7 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/api/book' || pathname.startsWith('/api/book/')) return true
   if (pathname === '/api/address-suggest') return true
   // Same-origin quote/checkout (bypass Canada Edge Fair-Use 402).
-  if (pathname === '/api/quote' || pathname === '/api/create-checkout') return true
+  if (pathname === '/api/quote' || pathname === '/api/create-checkout' || pathname === '/api/confirm-paid') return true
   // Canada-wide contractor apply must work while marketing stays gated.
   // Form loads /legal/ic-agreement.txt; apply POST goes to dispatch-api (other host).
   if (pathname === '/photographers' || pathname.startsWith('/photographers/')) return true
