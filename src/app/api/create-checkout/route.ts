@@ -149,7 +149,7 @@ export async function POST(req: Request) {
   }
 
   const quoteBody = {
-    address: body.property_address,
+    address: body.property_address || body.address,
     property_type: body.property_type,
     drone_addon:
       body.drone_addon === true ||

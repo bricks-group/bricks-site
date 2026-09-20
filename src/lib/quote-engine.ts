@@ -142,7 +142,7 @@ function normPkg(raw: unknown): string {
 
 /** Server-side quote. Never trusts client total. */
 export async function buildQuote(body: Record<string, unknown>): Promise<BuildQuoteResult> {
-  const address = (body.address || '').toString().trim()
+  const address = (body.address || body.property_address || '').toString().trim()
   const pkgRaw = normPkg(body.package_id)
 
   if ((LEGACY_COMPANION_PACKAGE_IDS as readonly string[]).includes(pkgRaw)) {
