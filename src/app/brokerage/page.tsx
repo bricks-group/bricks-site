@@ -7,7 +7,7 @@ import { STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'bricks for brokerages — the system for the whole shop',
-  description: 'OS for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live to book. OS is live in preview at app.brxs.ca.',
+  description: 'The system for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live to book. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/brokerage' },
 }
 

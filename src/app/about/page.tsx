@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'About Bricks — Real Estate Photography & OS',
-    description: 'Media first, OS destination. 14,000+ properties in the standard. Founded by Raphael Merchant.',
+    description: 'Media first, system destination. 14,000+ properties in the standard. Founded by Raphael Merchant.',
     images: ['/media/raphael-merchant-640.jpg'],
     url: 'https://www.brxs.ca/about',
   },
@@ -66,7 +66,7 @@ export default function AboutPage() {
         <div className="wrap">
           <div className="brand-story rvl">
             <p>Bricks is the system for the deal — property to listing to book to dispatch to media to MLS to close. We started with the shoot because that is the first thing a listing needs, and the last thing that should live in a separate tool.</p>
-            <p>Four people on the deal. Brokerage, team, agent, photographer. Each gets a surface. OS for the shop and the pipeline. Companion for the agent ordering media. GO for the photographer in the field.</p>
+            <p>Four people on the deal. Brokerage, team, agent, photographer. Each gets a surface. System for the shop and the pipeline. Companion for the agent ordering media. GO for the photographer in the field.</p>
             <p>Media is live to book. HDR, licensed drone, floor plan, plus optional virtual tour ({TOUR_SHORT}) and virtual visit ({VISIT_SHORT}). {STATUS.os}</p>
           </div>
 
