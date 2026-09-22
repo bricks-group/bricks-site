@@ -104,17 +104,17 @@ const beforeAfter = [
   { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
 ] as const
 export const metadata: Metadata = {
-  title: 'bricks — the operating system for Canadian real estate',
-  description: 'The operating system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
+  title: 'bricks — the system for Canadian real estate',
+  description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
+    title: 'bricks — the system for Canadian real estate',
+    description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
-    title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate. Book professional media today.',
+    title: 'bricks — the system for Canadian real estate',
+    description: 'The system for Canadian real estate. Book professional media today.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }

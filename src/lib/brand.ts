@@ -16,7 +16,7 @@ export const STATUS = {
   companion: 'Companion is live on the web.',
   go: 'GO is live on the web.',
   line: 'Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
-  chrome: 'The operating system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
+  chrome: 'The system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
   stores: 'Not in the App Store or Google Play yet.',
 } as const
 

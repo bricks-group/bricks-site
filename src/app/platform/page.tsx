@@ -10,7 +10,7 @@ import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'bricks platform — OS, Companion, GO',
-  description: 'The operating system for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
+  description: 'The system for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/platform' },
 }
 

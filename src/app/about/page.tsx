@@ -6,7 +6,7 @@ import { FOUNDER_NAME, FOUNDER_PERSON, STATUS, TOUR_SHORT, VISIT_SHORT } from '@
 export const metadata: Metadata = {
   title: 'About Bricks — Canadian Real Estate Photography & OS',
   description:
-    'Bricks Group builds the operating system for Canadian real estate. HDR listing photos, MLS delivery, licensed drone, floor plans, optional virtual tour and virtual visit. OS live in preview at app.brxs.ca.',
+    'Bricks Group builds the system for Canadian real estate. HDR listing photos, MLS delivery, licensed drone, floor plans, optional virtual tour and virtual visit. OS live in preview at app.brxs.ca.',
   alternates: { canonical: '/about' },
   openGraph: {
     type: 'website',
@@ -42,12 +42,12 @@ export default function AboutPage() {
             '@type': 'Organization',
             name: 'Bricks',
             legalName: 'Bricks Group',
-            description: 'The operating system for Canadian real estate. HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca.',
+            description: 'The system for Canadian real estate. HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca.',
             url: 'https://www.brxs.ca/',
             email: 'help@brxs.ca',
             telephone: '+1-343-453-4578',
             sameAs: ['https://www.linkedin.com/company/bricksbybricks', 'https://share.google/7ttYfc6W7JRwlqA9U'],
-            knowsAbout: ['Real estate photography', 'Listing photos', 'MLS photos', 'Listing media', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate operating system', 'Real estate photographer Canada'],
+            knowsAbout: ['Real estate photography', 'Listing photos', 'MLS photos', 'Listing media', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate system', 'Real estate photographer Canada'],
             founder: FOUNDER_PERSON,
             image: 'https://www.brxs.ca/media/raphael-merchant-640.jpg',
           }),
@@ -58,14 +58,14 @@ export default function AboutPage() {
         <div className="wrap">
           <span className="badge">About</span>
           <h1>Bricks</h1>
-          <p className="sub">The operating system for Canadian real estate. Media first. Capture to close.</p>
+          <p className="sub">The system for Canadian real estate. Media first. Capture to close.</p>
         </div>
       </section>
 
       <section className="block">
         <div className="wrap">
           <div className="brand-story rvl">
-            <p>Bricks is the operating system for the deal — property to listing to book to dispatch to media to MLS to close. We started with the shoot because that is the first thing a listing needs, and the last thing that should live in a separate tool.</p>
+            <p>Bricks is the system for the deal — property to listing to book to dispatch to media to MLS to close. We started with the shoot because that is the first thing a listing needs, and the last thing that should live in a separate tool.</p>
             <p>Four people on the deal. Brokerage, team, agent, photographer. Each gets a surface. OS for the shop and the pipeline. Companion for the agent ordering media. GO for the photographer in the field.</p>
             <p>Media is live to book. HDR, licensed drone, floor plan, plus optional virtual tour ({TOUR_SHORT}) and virtual visit ({VISIT_SHORT}). {STATUS.os}</p>
           </div>
