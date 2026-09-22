@@ -56,7 +56,7 @@ export default function PrivacyPage() {
           <p>We do not sell personal information. We share what is needed with: Stripe; Supabase; OpenStreetMap/geocoding; the assigned photographer (address, time, access notes, contact name as needed); counsel, accountants, or authorities when required by law. Photographers are independent contractors and must keep booking details confidential under the IC agreement.</p>
 
           <h3>4. Where</h3>
-          <p>Infrastructure currently includes US-hosted processors (Stripe, Supabase, Vercel). By using the site you consent to that transfer. We remain accountable under PIPEDA for personal information we collect.</p>
+          <p>Primary app database, authentication, and storage run on Supabase in Canada. Other processors include Stripe and Vercel (United States), and similar providers listed in section 3. By using the site you consent to those transfers where needed. We remain accountable under PIPEDA for personal information we collect.</p>
 
           <h3>5. Retention</h3>
           <p>Booking and payment records: generally 7 years. Delivered media: until delivered plus a limited operational window. Photographer applications: while we evaluate or engage you, then as required for records. Marketing consent records: as required by CASL. Deletion on request unless we must keep a record.</p>
