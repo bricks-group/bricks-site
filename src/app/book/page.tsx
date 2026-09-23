@@ -10,13 +10,13 @@ const OG =
 export const metadata: Metadata = {
   title: 'Book Real Estate Photography & Listing Photos Canada | Bricks',
   description:
-    'Book Bricks listing photos online: HDR real estate photography, licensed drone, floor plan on standard shoots, 24–48h MLS delivery. Instant quote by footprint + travel.',
+    'Book Bricks listing photos online: HDR real estate photography, licensed drone, floor plan on standard shoots, 24–48h MLS target. Instant quote by footprint + travel.',
   alternates: { canonical: '/book' },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Book Real Estate Photography & Listing Photos | Bricks',
     description:
-      'Book Canadian listing media online — HDR photos, drone, floor plan, 24–48h delivery. Pay to lock an exact clock time.',
+      'Book Canadian listing media online — HDR photos, drone, floor plan, 24–48h target. Pay to lock an exact clock time.',
     images: [OG],
     url: 'https://www.brxs.ca/book',
   },
@@ -91,7 +91,7 @@ export default function BookPage() {
                 name: 'How fast is delivery?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Edited MLS-ready listing photos in 24–48 hours on standard shoots. Floor plan included on every standard HDR shoot. Rush is a flat add-on.',
+                  text: 'Edited MLS-ready listing photos target 24–48 hours on standard shoots. Floor plan included on every standard HDR shoot. Rush aims faster than that window.',
                 },
               },
             ],
@@ -117,7 +117,7 @@ export default function BookPage() {
           <span className="badge">Book · Canada</span>
           <h1>Book real estate photography &amp; listing photos.</h1>
           <p className="sub">
-            Four steps. Live quote from the address — HDR, licensed drone, floor plan on standard shoots, 24–48h MLS delivery. Pay to lock the exact clock time.{' '}
+            Four steps. Live quote from the address — HDR, licensed drone, floor plan on standard shoots, 24–48h MLS target. Pay to lock the exact clock time.{' '}
             <Link href="/real-estate-photography">What&apos;s included</Link> · <Link href="/blog">Guides</Link>
           </p>
         </div>

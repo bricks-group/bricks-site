@@ -7,18 +7,18 @@ import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/bra
 export const metadata: Metadata = {
   title: 'Fall Market Listing Photos & Real Estate Photography | Bricks',
   description:
-    'Book fall listing photos early. Bricks delivers HDR real estate photography, licensed drone, floor plans, plus optional virtual tour and virtual visit in 24–48 hours — reserve before the rush.',
+    'Book fall listing photos early. Bricks delivers HDR real estate photography, licensed drone, floor plans, plus optional virtual tour and virtual visit on a 24–48h target — reserve before the rush.',
   alternates: { canonical: '/fall-market' },
   openGraph: {
     title: 'Fall Market Listing Photos | Bricks',
-    description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans, 24–48h MLS delivery.',
+    description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans, 24–48h MLS target.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
     url: 'https://www.brxs.ca/fall-market',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Fall Market Listing Photos | Bricks',
-    description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans, 24–48h.',
+    description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans, 24–48h target.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
@@ -28,7 +28,7 @@ const faqs = [
   { q: 'How far out should I book?', a: 'As soon as you have a listing date in mind. September and early October fill fastest.' },
   { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan on every standard shoot. Cinematic reel and ${TOUR_NAME.toLowerCase()} are optional add-ons. ${VISIT_NAME} is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}) and never packaged. Build your shoot à la carte on the pricing page.` },
   { q: 'Where do you shoot?', a: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered.` },
-  { q: 'When do I get my media?', a: 'Edited and MLS-ready in 24–48 hours, fall included.' },
+  { q: 'When do I get my media?', a: 'Edited MLS-ready media targets 24–48 hours, fall included — targets, not guarantees.' },
 ]
 
 export default function FallMarket() {
@@ -49,7 +49,7 @@ export default function FallMarket() {
         <div className="wrap">
           <span className="badge">Fall listing season</span>
           <h1>The fall market moves fast.</h1>
-          <p className="sub">Reserve a September slot before the rush. HDR, licensed drone, floor plan — 24–48h.</p>
+          <p className="sub">Reserve a September slot before the rush. HDR, licensed drone, floor plan — 24–48h target.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Reserve a fall slot</Link>
             <Link className="btn btn-sec" href="/pricing">View pricing</Link>
@@ -79,7 +79,7 @@ export default function FallMarket() {
             <div className="c"><span className="ic">01</span><h4>HDR photography</h4><p>Architectural interiors &amp; exteriors, bracketed and edited for MLS.</p></div>
             <div className="c"><span className="ic">02</span><h4>Licensed drone</h4><p>Advanced RPAS-certified aerial of the lot, surroundings, and roofline.</p></div>
             <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
-            <div className="c"><span className="ic">04</span><h4>24–48h delivery</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
+            <div className="c"><span className="ic">04</span><h4>24–48h target</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
           </div>
           <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. {TOUR_NAME} runs +{TOUR_RANGE}. {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}) — {VISIT_PACKAGING} See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full à la carte pricing</Link>.</p>
         </section>

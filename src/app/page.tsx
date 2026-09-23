@@ -40,7 +40,7 @@ const faqs = [
   {
     id: 'included',
     q: "What's included in a standard shoot?",
-    a: 'HDR, licensed drone, and a floor plan on every standard shoot. MLS-ready in 24–48 hours.',
+    a: 'HDR, licensed drone, and a floor plan on every standard shoot. MLS-ready on a 24–48h target (not a guarantee — see Terms).',
   },
   {
     id: 'booking',
@@ -199,7 +199,7 @@ export default function Home() {
           <div className="trust-stats">
             <div><b>14,000+</b><span>shot</span></div>
             <div><b>Canada</b><span>coverage</span></div>
-            <div><b>24–48h</b><span>delivery</span></div>
+            <div><b>24–48h</b><span>target</span></div>
             <div><b>Auto-assign</b><span>routing</span></div>
           </div>
         </div>
@@ -345,7 +345,7 @@ export default function Home() {
                 <li>HDR — interior + exterior</li>
                 <li>Licensed drone</li>
                 <li>2D floor plan</li>
-                <li>24–48h delivery</li>
+                <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
               <Link className="btn btn-ghost" href="/book">Book Essentials</Link>
@@ -356,7 +356,7 @@ export default function Home() {
               <ul>
                 <li>Everything in Essentials</li>
                 <li>Cinematic reel</li>
-                <li>24–48h delivery</li>
+                <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
               <Link className="btn btn-ghost" href="/book">Book Story</Link>
@@ -367,7 +367,7 @@ export default function Home() {
               <ul>
                 <li>Everything in Story</li>
                 <li>{TOUR_NAME}</li>
-                <li>24–48h delivery</li>
+                <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
               <Link className="btn btn-brick" href="/book">Book Showcase</Link>
@@ -379,7 +379,7 @@ export default function Home() {
                 <li>Everything in Showcase</li>
                 <li>Twilight exterior</li>
                 <li>Staging on request</li>
-                <li>24–48h delivery</li>
+                <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
               <Link className="btn btn-ghost" href="/book">Book Full suite</Link>
@@ -443,7 +443,7 @@ export default function Home() {
         <div className="closer-simple-inner">
           <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h delivery</p>
+          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h target</p>
         </div>
       </section>
 

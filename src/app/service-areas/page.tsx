@@ -125,7 +125,7 @@ export default function ServiceAreasPage() {
           <div className="book">
             <span className="over">Book your area</span>
             <h2>Ready when you are.</h2>
-            <p className="lead">Pick services à la carte, get travel on the quote, MLS-ready listing photos in 24–48 hours.</p>
+            <p className="lead">Pick services à la carte, get travel on the quote, MLS-ready listing photos on a 24–48h target.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">
                 Book listing media

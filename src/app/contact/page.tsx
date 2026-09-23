@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Contact Bricks | Canadian real estate media',
-    description: 'Listing media for Canadian real estate — HDR photo, licensed drone, floor plans, with optional virtual tour and virtual visit. Booked direct, delivered in 24–48 hours.',
+    description: 'Listing media for Canadian real estate — HDR photo, licensed drone, floor plans, with optional virtual tour and virtual visit. Booked direct, 24–48h target.',
   },
   twitter: {
     title: 'Contact Bricks | Canadian real estate media',
-    description: 'Listing media for Canadian real estate — booked direct, delivered in 24–48 hours.',
+    description: 'Listing media for Canadian real estate — booked direct, 24–48h target.',
   },
 }
 
@@ -44,7 +44,7 @@ export default function ContactPage() {
         <div className="wrap">
           <span className="badge">Contact</span>
           <h1>Let&apos;s shoot your next listing.</h1>
-          <p className="sub">Direct booking, one standard, MLS-ready media in 24–48 hours. {COVERAGE_LINE} Reach out and we&apos;ll confirm coverage and send pricing by footprint.</p>
+          <p className="sub">Direct booking, one standard, MLS-ready media on a 24–48h target. {COVERAGE_LINE} Reach out and we&apos;ll confirm coverage and send pricing by footprint.</p>
           <p className="sub product-hint">Need the OS or Companion, not a shoot? Say so in the note.</p>
         </div>
       </section>
@@ -56,7 +56,7 @@ export default function ContactPage() {
             <div className="c"><div className="l">Bookings</div><div className="v"><a href="mailto:booking@brxs.ca">booking@brxs.ca</a></div></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+13434534578">343-453-4578</a></div></div>
             <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>
-            <div className="c"><div className="l">Turnaround</div><div className="v">Edited &amp; delivered in 24–48h</div></div>
+            <div className="c"><div className="l">Turnaround</div><div className="v">Edited · 24–48h target</div></div>
           </div>
 
           <div className="sec-head" style={{ marginTop: 8 }}>

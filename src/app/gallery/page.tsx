@@ -164,7 +164,7 @@ export default function GalleryPage() {
           <div className="book">
             <span className="over">Book a shoot</span>
             <h2>Ready when the listing is.</h2>
-            <p className="lead">Confirm a slot. We send pricing by footprint — edited and MLS-ready in 24–48 hours.</p>
+            <p className="lead">Confirm a slot. We send pricing by footprint — edited MLS-ready on a 24–48h target.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>Pricing</Link>

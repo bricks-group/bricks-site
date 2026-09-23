@@ -61,4 +61,4 @@ export const OFFICE_PLANS = [
 ] as const
 
 export const OFFICE_INCLUDES =
-  'Full OS on every seat — CRM, transactions, checklist e-sign + shareable links, forms, BYO MLS — plus trust accounting. On-document PDF placement is not available yet. Agents do not pay individually.'
+  'Full system on every seat — CRM, transactions, checklist e-sign + shareable links, forms, BYO MLS — plus trust accounting. On-document PDF placement is not available yet. Agents do not pay individually.'
