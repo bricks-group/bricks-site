@@ -45,7 +45,7 @@ const rows = [
   { name: VISIT_NAME, inc: `${VISIT_SHORT} — ${FOOTPRINT_BANDS}`, flat: `${VISIT_PRICE_LABEL} — always an add-on, never packaged` },
   { name: 'Twilight exterior', inc: 'golden hour', vals: bandCells(TWILIGHT_RATE) },
   { name: 'Virtual staging', inc: 'by request — not in online checkout yet', flat: 'Email booking@brxs.ca' },
-  { name: 'Rush delivery', inc: 'same / next day', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
+  { name: 'Rush delivery', inc: 'faster than the standard 24–48h target', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
 ]
 
 export default function PricingPage() {
@@ -173,22 +173,22 @@ export default function PricingPage() {
             <div className="c rvl">
               <span className="ic">{`from $${CORE_FROM}`}</span>
               <h4>Essentials</h4>
-              <p>HDR interior + exterior. Licensed drone. 2D floor plan. 24–48h delivery.</p>
+              <p>HDR interior + exterior. Licensed drone. 2D floor plan. 24–48h target.</p>
             </div>
             <div className="c rvl">
               <span className="ic">{`from $${STORY_FROM}`}</span>
               <h4>Story</h4>
-              <p>Everything in Essentials plus cinematic reel. 24–48h delivery.</p>
+              <p>Everything in Essentials plus cinematic reel. 24–48h target.</p>
             </div>
             <div className="c rvl">
               <span className="ic">{`from $${SHOWCASE_FROM}`}</span>
               <h4>Showcase</h4>
-              <p>Everything in Story plus {TOUR_NAME}. Most booked. 24–48h delivery.</p>
+              <p>Everything in Story plus {TOUR_NAME}. Most booked. 24–48h target.</p>
             </div>
             <div className="c rvl">
               <span className="ic">{`from $${FULL_FROM}`}</span>
               <h4>Full suite</h4>
-              <p>Everything in Showcase plus twilight exterior. Staging by request (not in checkout). 24–48h delivery.</p>
+              <p>Everything in Showcase plus twilight exterior. Staging by request (not in checkout). 24–48h target.</p>
             </div>
           </div>
           <p className="tbl-cap" style={{ marginTop: 18 }}>Photos only — HDR only, no drone, no floor plan — {`from $${PHOTO_ONLY_FROM}`}. <Link href="/book" style={{ color: 'var(--brickDeep)' }}>Book a shoot →</Link></p>
