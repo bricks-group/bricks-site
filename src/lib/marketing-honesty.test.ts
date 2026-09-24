@@ -45,3 +45,25 @@ describe('travel base matches Companion / quote-engine', () => {
     assert.ok(Math.abs(TRAVEL_BASE.lng - -79.7482435) < 1e-6)
   })
 })
+
+describe('marketing honesty — legacy static + outreach (no bare 14k)', () => {
+  const rootFiles = [
+    '../../about.html',
+    '../../outreach/social-campaign/first-post.md',
+    '../../outreach/social-campaign/social-posts.md',
+    '../../outreach/social-campaign/build_posters.py',
+    '../../outreach/social-campaign/build_posters_photo.py',
+  ]
+
+  for (const rel of rootFiles) {
+    it(`${rel} has no bare 14,000+ volume claim`, () => {
+      const src = readFileSync(join(__dirname, rel), 'utf8')
+      assert.equal(
+        /14,?000\+/.test(src),
+        false,
+        `${rel} still contains 14,000+ — scrub or attribute as CoStar lineage without inventing Bricks volume`,
+      )
+    })
+  }
+})
+

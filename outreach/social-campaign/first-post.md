@@ -15,7 +15,7 @@ One platform, one standard, predictable media across your whole book. Photo, lic
 floor plan on every shoot, from **$248** by footprint. Add a cinematic reel, 3D tour, twilight, or
 virtual staging à la carte. Delivered in 24–48h.
 
-14,000+ properties shot taught me agents don't want another app — they want the shoot *done.*
+CoStar volume taught me agents don't want another app — they want the shoot *done.*
 That's the operating system.
 
 We're the first subscription real-estate media operating system. GTA agents: your next listing is one booking away.
@@ -25,7 +25,7 @@ We're the first subscription real-estate media operating system. GTA agents: you
 
 ## LINKEDIN — founder angle (alt, more personal)
 Photo: 03-founder-1080x1350.png.
-14,000+ properties shot and one thing's clear — agents don't want another app.
+CoStar volume made one thing clear — agents don't want another app.
 They want the shoot done. Bricks is the operating system that gets it booked, captured, delivered, without the
 follow-up. Live in the GTA — core shoot (photo + drone + floor plan) from $248. brxs.ca
 
