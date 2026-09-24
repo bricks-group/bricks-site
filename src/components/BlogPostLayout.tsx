@@ -40,7 +40,7 @@ export default function BlogPostLayout({
               <div className="ac-bio">
                 <div className="ac-name">Bricks</div>
                 <div className="ac-role">Canadian real estate media · OS</div>
-                <p>14,000+ properties in the standard. <span className="ac-more">About Bricks →</span></p>
+                <p>Media live to book. Same standard, every shoot. <span className="ac-more">About Bricks →</span></p>
               </div>
             </Link>
           </article>

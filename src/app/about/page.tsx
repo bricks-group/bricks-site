@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'About Bricks — Real Estate Photography & OS',
-    description: 'Media first, system destination. 14,000+ properties in the standard. Founded by Raphael Merchant.',
+    description: 'Media first, system destination. Founded by Raphael Merchant.',
     images: ['/media/raphael-merchant-640.jpg'],
     url: 'https://www.brxs.ca/about',
   },
@@ -71,7 +71,7 @@ export default function AboutPage() {
           </div>
 
           <div className="creds">
-            <div className="c"><div className="n">14,000+</div><div className="l">Properties shot and profiled — the volume behind the standard</div></div>
+            <div className="c"><div className="n">CoStar</div><div className="l">Regional creative lead — volume that shaped the standard</div></div>
             <div className="c"><div className="n">Apartments.com</div><div className="l">Photography lineage from CoStar work behind the Greater Golden Horseshoe launch</div></div>
             <div className="c"><div className="n">Advanced RPAS</div><div className="l">Legal commercial drone — including the airspace around Toronto, Mississauga, and Pearson</div></div>
           </div>

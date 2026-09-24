@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "compile:os": "node scripts/compile-os.js",
-    "test": "npx --yes tsx --test src/lib/schedule.test.ts src/lib/demo-invite.test.ts src/middleware.test.ts",
+    "test": "npx --yes tsx --test src/lib/schedule.test.ts src/lib/demo-invite.test.ts src/middleware.test.ts src/lib/marketing-honesty.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "repository": {

@@ -39,7 +39,7 @@ export type CoverageHub = {
 }
 
 /** Mississauga travel base */
-export const TRAVEL_BASE = { lng: -79.6441, lat: 43.589, name: 'Mississauga' } as const
+export const TRAVEL_BASE = { lng: -79.7482435, lat: 43.5860724, name: 'Mississauga' } as const // 6330 Montevideo Rd — same as quote-engine / Companion
 
 /**
  * INTERNAL: ~2 h highway from Mississauga. Used when estimating radius only.

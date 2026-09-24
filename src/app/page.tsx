@@ -197,7 +197,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="trust-stats">
-            <div><b>14,000+</b><span>shot</span></div>
+            <div><b>Book</b><span>media live</span></div>
             <div><b>Canada</b><span>coverage</span></div>
             <div><b>24–48h</b><span>target</span></div>
             <div><b>Auto-assign</b><span>routing</span></div>
@@ -443,7 +443,7 @@ export default function Home() {
         <div className="closer-simple-inner">
           <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h target</p>
+          <p className="closer-proof">Canada-wide · 24–48h MLS target · Media live to book</p>
         </div>
       </section>
 
