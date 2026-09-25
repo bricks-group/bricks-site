@@ -82,7 +82,7 @@ const faqs = [
 function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
   switch (id) {
     case 'included':
-      return <>HDR, licensed drone, floor plan. 24–48h. See <Link href="/pricing">Pricing</Link>.</>
+      return <>HDR, licensed drone, floor plan. 24–48h target. See <Link href="/pricing">Pricing</Link>.</>
     case 'booking':
       return <>Exact clock time — not a window. <Link href="/book">Book</Link>.</>
     case 'plans':

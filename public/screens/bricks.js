@@ -776,7 +776,7 @@ function JobDetailContent({ th, dark }) {
                 ['Booked', 'Apr 16 · 10:04', 'M. Ortega booked Premium package', true],
                 ['Scheduled', 'Apr 17 · 09:12', 'J. Reyes assigned · 14:30 arrival', true],
                 ['Shooting', 'Apr 18 · 14:30', 'Vendor on site', true],
-                ['Editing', '—', 'Queued for 24h turnaround', false],
+                ['Editing', '—', 'Queued · 24–48h target', false],
                 ['Delivered', '—', '—', false],
               ].map(([t, when, detail, done], i) => (
                 <div key={t} style={{ display:'flex', gap:16, paddingBottom:20, position:'relative' }}>
@@ -969,7 +969,7 @@ function BillingContent({ th, dark }) {
 function SettingsContent({ th, dark }) {
   const sections = [
     ['Brokerage', [['Name','Ashfield'],['Domain','harbor.co'],['Time zone','America / Toronto']]],
-    ['Defaults',  [['Default package','Standard · $379'],['Turnaround SLA','24 hours'],['Auto-assign vendor','On · nearest']]],
+    ['Defaults',  [['Default package','Standard · $379'],['Turnaround target','24–48h'],['Auto-assign vendor','On · nearest']]],
     ['Notifications', [['New booking','Email + push'],['Delivery ready','Email'],['Weekly digest','Monday 8:00']]],
   ];
   return (
@@ -1553,7 +1553,7 @@ function BookOnboarding({ dark=false, slide=0 }) {
   const slides = [
     { eye:'FOR AGENTS', head:'Book a shoot in a minute.', body:'Pick a package, pick a time. We handle the vendor, the weather, the edits.', img:'AGENT AT KITCHEN COUNTER' },
     { eye:'SMART SCHEDULING', head:'The right vendor, automatically.', body:'Bricks picks the nearest top-rated vendor for your slot — no phone tag.', img:'MAP WITH VENDOR PINS' },
-    { eye:'TURN AROUND', head:'Photos in 24 hours.', body:'Edited, branded, MLS-sized. Dropped straight to your inbox and Dropbox.', img:'GALLERY GRID' },
+    { eye:'TURN AROUND', head:'Photos in 24–48h target.', body:'Edited, branded, MLS-sized. Dropped straight to your inbox and Dropbox.', img:'GALLERY GRID' },
   ];
   const s = slides[slide];
   return (
@@ -1832,8 +1832,8 @@ function BookFlowPackage({ th, dark }) {
   const [hov, setHov] = React.useState(-1);
   const photo = (typeof SB_IMG !== 'undefined' ? SB_IMG : '') + '74E774C6-1524-4287-B115-25CA213E4BBD.PNG';
   const pkgs = [
-    { n:'Essentials', p:'$379', d:'HDR · licensed drone · floor plan · 24–48h', sel:false },
-    { n:'Showcase',  p:'$749', d:'Essentials + reel + virtual tour · 24–48h', sel:true  },
+    { n:'Essentials', p:'$379', d:'HDR · licensed drone · floor plan · 24–48h target', sel:false },
+    { n:'Showcase',  p:'$749', d:'Essentials + reel + virtual tour · 24–48h target', sel:true  },
     { n:'Full suite', p:'$1,049', d:'Showcase + twilight · staging on request', sel:false },
   ];
   return (
