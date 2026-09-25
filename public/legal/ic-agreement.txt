@@ -1,5 +1,5 @@
-BRICKS INDEPENDENT CONTRACTOR AGREEMENT  v1.5
-Effective: September 6, 2026
+BRICKS INDEPENDENT CONTRACTOR AGREEMENT  v1.6
+Effective: September 25, 2026
 Contracting party: Bricks Group ("Bricks")
 Governing law: Ontario, Canada
 
@@ -73,7 +73,7 @@ Client names, addresses, contact details, access codes, booking notes, payout ra
 For 12 months after your last Bricks job with a client, you will not solicit that client for listing-media services competing with Bricks, where Bricks introduced you to them. This does not stop you working for clients who reach you on their own, or from working for other platforms. There is no non-compete. You may work anywhere in photography and related fields.
 
 13. QUALITY
-Deliverables go through the Bricks app within the booking turnaround (standard 24 hours from shoot end unless the booking says otherwise) and must meet the Shoot Standards Guide. Bricks may require a complimentary re-shoot if work does not meet those standards. Repeated failures, fraud, or serious complaints may mean suspension, tier change, or termination.
+Deliverables go through the Bricks app within the booking turnaround (standard 24–48 hour target from shoot end unless the booking says otherwise; times are targets, not guarantees) and must meet the Shoot Standards Guide. Bricks may require a complimentary re-shoot if work does not meet those standards. Repeated failures, fraud, or serious complaints may mean suspension, tier change, or termination.
 
 14. INDEMNITY
 You will indemnify, defend, and hold harmless Bricks Group and its officers, directors, contractors, and agents from claims, losses, damages, and reasonable legal fees arising out of: (a) your services or those of your assistants; (b) injury or property damage at a job; (c) drone operations; (d) your breach of this agreement or law; (e) alleged infringement by the Deliverables; (f) your tax, WSIB, or employment-status claims against Bricks to the extent they arise from your holding yourself out as an employee contrary to this agreement. Bricks may control the defence of a third-party claim.

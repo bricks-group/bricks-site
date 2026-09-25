@@ -261,7 +261,7 @@ export default function RealEstatePhotographyPage() {
               <div className="meta">
                 <span className="t">The shoot</span>
                 <h3>What&apos;s included in a listing photo shoot?</h3>
-                <p>HDR, drone, floor plan, delivery SLA — and what stays optional.</p>
+                <p>HDR, drone, floor plan, 24–48h target — and what stays optional.</p>
               </div>
             </Link>
           </div>
