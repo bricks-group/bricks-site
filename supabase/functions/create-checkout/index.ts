@@ -163,6 +163,23 @@ Deno.serve(async (req: Request) => {
     return bad('Pricing verification error: ' + String(e), 502);
   }
   if (!q || typeof q.total !== 'number') return bad('Quote total required');
+  // Pre-assign honesty (Kam 2026-09-26): www checkout has no vendor base.
+  // Force $0 travel_pending even if a stale edge quote still billed Mississauga/Montevideo.
+  {
+    const HST = 0.13;
+    const base = Number(q.base_rate) || 0;
+    const addonsTotal = Number(q.addons_total) || 0;
+    q.travel_fee = 0;
+    q.travel_pending = true;
+    q.travel_km_billable = 0;
+    q.distance_km = 0;
+    const subtotal = base + addonsTotal;
+    const tax = Math.round(subtotal * HST * 100) / 100;
+    q.subtotal = Math.round(subtotal * 100) / 100;
+    q.hst = tax;
+    q.hst_rate = HST;
+    q.total = Math.round((subtotal + tax) * 100) / 100;
+  }
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 
@@ -227,7 +244,9 @@ Deno.serve(async (req: Request) => {
     // Stripe metadata values are capped at 500 chars -- store only what
     // stripe-webhook actually reads back (total, and lat/lon for the
     // travel-time check against neighboring bookings), not the full quote.
-    quote_json: JSON.stringify({ total: q.total, lat: q.lat ?? null, lon: q.lon ?? null }).slice(0, 480),
+    travel_fee: String(q.travel_fee ?? 0),
+    travel_pending: String(!!q.travel_pending),
+    quote_json: JSON.stringify({ total: q.total, lat: q.lat ?? null, lon: q.lon ?? null, travel_fee: q.travel_fee ?? 0, travel_pending: !!q.travel_pending, base_rate: q.base_rate ?? null }).slice(0, 480),
   };
 
   const form = new URLSearchParams();
@@ -249,7 +268,10 @@ Deno.serve(async (req: Request) => {
   if (meta.email) form.set('customer_email', meta.email);
   form.append('line_items[0][price_data][currency]', 'cad');
   form.append('line_items[0][price_data][product_data][name]', `Bricks listing media — ${meta.property_address}`);
-  form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). Travel ${q.travel_fee} CAD, base ${q.base_rate} CAD.`);
+  const travelDesc = q.travel_pending
+    ? 'Travel $0 pending photographer assignment (25 km free from their base, then $0.75/km)'
+    : `Travel ${q.travel_fee} CAD`;
+  form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). ${travelDesc}, base ${q.base_rate} CAD.`);
   form.append('line_items[0][price_data][unit_amount]', String(amountCents));
   form.append('line_items[0][quantity]', '1');
   form.append('metadata[agent_name]', meta.agent_name);

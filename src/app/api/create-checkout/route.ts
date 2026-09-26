@@ -250,10 +250,16 @@ export async function POST(req: Request) {
     phone: (body.phone || '').toString(),
     brokerage: (body.brokerage || '').toString(),
     notes: (body.notes || '').toString().slice(0, 500),
-    quote_json: JSON.stringify({ total: q.total, lat: q.lat ?? null, lon: q.lon ?? null }).slice(
-      0,
-      480,
-    ),
+    travel_fee: String(q.travel_fee ?? 0),
+    travel_pending: String(!!q.travel_pending),
+    quote_json: JSON.stringify({
+      total: q.total,
+      lat: q.lat ?? null,
+      lon: q.lon ?? null,
+      travel_fee: q.travel_fee ?? 0,
+      travel_pending: !!q.travel_pending,
+      base_rate: q.base_rate ?? null,
+    }).slice(0, 480),
   }
 
   const form = new URLSearchParams()
@@ -272,9 +278,12 @@ export async function POST(req: Request) {
     'line_items[0][price_data][product_data][name]',
     `Bricks listing media — ${meta.property_address}`,
   )
+  const travelDesc = q.travel_pending
+    ? 'Travel $0 pending photographer assignment (25 km free from their base, then $0.75/km)'
+    : `Travel ${q.travel_fee} CAD`
   form.append(
     'line_items[0][price_data][product_data][description]',
-    `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). Travel ${q.travel_fee} CAD, base ${q.base_rate} CAD.`,
+    `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). ${travelDesc}, base ${q.base_rate} CAD.`,
   )
   form.append('line_items[0][price_data][unit_amount]', String(amountCents))
   form.append('line_items[0][quantity]', '1')

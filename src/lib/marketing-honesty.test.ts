@@ -92,3 +92,74 @@ describe('marketing honesty — legacy static + outreach (founder 14k OK)', () =
     assert.match(src, /CoStar/)
   })
 })
+
+
+
+/** Ban framing Mississauga / Montevideo as the travel *fee* base (map hub OK). */
+const TRAVEL_FEE_BASE_LIE =
+  /(?:Base is Mississauga|25\s*km of Mississauga|from Mississauga is free|25\s*km from Mississauga|Mississauga and charges|Mississauga free,\s*then)/i
+
+describe('marketing honesty — travel from assigned photographer base', () => {
+  const staticSurfaces = [
+    '../../pricing.html',
+    '../../service-areas.html',
+    '../../bricks-media-onepager.html',
+    '../../bricks-media-email.html',
+    '../../bricks-media-email.txt',
+    '../../blog/gta-real-estate-media-cost-2026.html',
+    '../../outreach/social-campaign/social-posts.md',
+    '../../outreach/social-campaign/emails/02-standard-team.html',
+  ]
+
+  for (const rel of staticSurfaces) {
+    it(`${rel} does not price travel from Mississauga fee base`, () => {
+      const src = readFileSync(join(__dirname, rel), 'utf8')
+      assert.equal(
+        TRAVEL_FEE_BASE_LIE.test(src),
+        false,
+        `${rel} still frames Mississauga as travel fee base — use assigned photographer base / travel_pending`,
+      )
+    })
+  }
+
+  const nextSurfaces = [
+    'app/pricing/page.tsx',
+    'app/book/BookingWizard.tsx',
+    'lib/quote-engine.ts',
+    'app/api/create-checkout/route.ts',
+  ]
+
+  for (const rel of nextSurfaces) {
+    it(`${rel} does not price travel from Mississauga fee base`, () => {
+      const src = readSrc(rel)
+      assert.equal(
+        TRAVEL_FEE_BASE_LIE.test(src),
+        false,
+        `${rel} still frames Mississauga as travel fee base — use assigned photographer base / travel_pending`,
+      )
+    })
+  }
+
+  it('quote-engine pre-assign is travel_pending $0', () => {
+    const src = readSrc('lib/quote-engine.ts')
+    assert.match(src, /travel_pending\s*=\s*true/)
+    assert.match(src, /const travel = 0/)
+    assert.match(src, /do NOT use founder home \/ Montevideo/)
+  })
+
+  it('www create-checkout stamps travel_pending into Stripe metadata', () => {
+    const src = readSrc('app/api/create-checkout/route.ts')
+    assert.match(src, /travel_pending:\s*String\(!!q\.travel_pending\)/)
+    assert.match(src, /Travel \$0 pending photographer assignment/)
+  })
+
+  it('edge create-checkout forces travel_pending even if quote is stale', () => {
+    const src = readFileSync(
+      join(__dirname, '../../supabase/functions/create-checkout/index.ts'),
+      'utf8',
+    )
+    assert.match(src, /Force \$0 travel_pending/)
+    assert.match(src, /q\.travel_pending = true/)
+    assert.match(src, /stale edge quote still billed Mississauga\/Montevideo/)
+  })
+})
