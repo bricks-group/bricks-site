@@ -54,7 +54,7 @@ export const LAUNCH_DRIVE_RADIUS_KM = 175
  * north shore — no lake chords, no US. Sized for ~2 h from Mississauga.
  * Counter-clockwise exterior (GeoJSON).
  */
-const LAUNCH_RING: [number, number][] = [
+export const LAUNCH_RING: [number, number][] = [
   [-78.17, 43.959],
   [-78.29, 43.951],
   [-78.45, 43.92],
@@ -220,6 +220,34 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     },
   },
 ]
+
+
+/** Markets with $0 travel (Kam 2026-09-26): Golden Horseshoe / GTA major coverage hub. */
+export const GTA_MAJOR_TRAVEL_ZERO_LABEL =
+  'Golden Horseshoe (GTA major) — Toronto, Mississauga, Peel, Halton, York, Durham, Hamilton, Niagara, Waterloo Region, Guelph, London, and nearby inside the coverage base hub'
+
+/** Ray-cast point-in-polygon. ring entries are [lng, lat]. */
+export function pointInRing(lng: number, lat: number, ring: [number, number][]): boolean {
+  const n = ring.length
+  if (n < 3) return false
+  let inside = false
+  for (let i = 0, j = n - 1; i < n; j = i++) {
+    const xi = ring[i][0]
+    const yi = ring[i][1]
+    const xj = ring[j][0]
+    const yj = ring[j][1]
+    const intersect =
+      yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi || 1e-15) + xi
+    if (intersect) inside = !inside
+  }
+  return inside
+}
+
+/** True when property is inside the coverage Golden Horseshoe base hub (LAUNCH_RING). */
+export function isGtaMajorMarket(lat: number, lon: number): boolean {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false
+  return pointInRing(lon, lat, LAUNCH_RING)
+}
 
 export function hubKind(hub: CoverageHub): 'base' | 'hub' | 'soft' {
   if (hub.status === 'base') return 'base'

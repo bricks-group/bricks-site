@@ -15,11 +15,15 @@ import {
   BAND_LABELS,
   LEGACY_COMPANION_PACKAGE_IDS,
 } from '@/lib/pricing'
+import { isGtaMajorMarket, GTA_MAJOR_TRAVEL_ZERO_LABEL } from '@/lib/coverage'
 
-// Travel fee product law (Kam 2026-09-26): after vendor assign, haversine from
-// that vendor's base. Pre-assign on www (no vendor coords here): charge $0 travel
-// with travel_pending — do NOT use founder home / Montevideo as the fee base.
-// Coverage map hub (TRAVEL_BASE in coverage.ts) is map-only.
+// Travel fee product law (Kam 2026-09-26):
+// Assign photographer near-instant BEFORE checkout; show final fee then pay.
+// GTA major markets (coverage LAUNCH_RING) = $0 travel. Outside GTA: travel from
+// assigned vendor service/home lat/lng (25 km free, $0.75/km). Never founder home
+// / Montevideo / Mississauga HQ as fee base. travel_pending is NOT the happy path.
+// Coverage TRAVEL_BASE is map-only. www quote uses GTA $0 locally; checkout/OS
+// allocates vendor and blocks if none available.
 const FREE_KM = 25
 const PER_KM = 0.75
 const HST = 0.13
@@ -50,8 +54,11 @@ export type QuoteResult = {
   travel_per_km: number
   travel_km_billable: number
   travel_fee: number
-  /** True when travel is $0 pending photographer assignment (www pre-assign). */
+  /** True only when assign failed — checkout must block (not the happy path). */
   travel_pending: boolean
+  travel_basis?: 'gta_major' | 'vendor_assigned' | 'pending'
+  gta_major?: boolean
+  assignee_id?: string | null
   addons: QuoteAddon[]
   addons_total: number
   subtotal: number
@@ -243,11 +250,29 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
     drone_included = drone
   }
 
-  // Pre-assign honesty: no vendor base on www → $0 travel until assign adjusts.
-  const dist = 0
-  const billableKm = 0
-  const travel = 0
-  const travel_pending = true
+  // Assign-first law: GTA major = $0 final travel. Outside GTA, www quote cannot
+  // invent a vendor base — mark pending so checkout/OS allocate+block path runs.
+  // (OS www-create-checkout / www-quote allocates near-instant and refuses pay if unassigned.)
+  const gta_major = isGtaMajorMarket(geo.lat, geo.lon)
+  let dist = 0
+  let billableKm = 0
+  let travel = 0
+  let travel_pending = false
+  let travel_basis: 'gta_major' | 'vendor_assigned' | 'pending' = 'gta_major'
+  if (gta_major) {
+    travel = 0
+    billableKm = 0
+    travel_pending = false
+    travel_basis = 'gta_major'
+  } else {
+    // Outside GTA major: final travel requires assigned vendor (OS checkout).
+    // Do not bill Mississauga/Montevideo. Soft-pending here; checkout blocks until assign.
+    travel = 0
+    billableKm = 0
+    dist = 0
+    travel_pending = true
+    travel_basis = 'pending'
+  }
 
   const addons: QuoteAddon[] = []
   if (reel) addons.push({ label: 'Cinematic reel', amount: REEL_RATE[finalBand] })
@@ -294,6 +319,9 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
       travel_km_billable: Math.round(billableKm * 10) / 10,
       travel_fee: travel,
       travel_pending,
+      travel_basis,
+      gta_major,
+      assignee_id: null,
       addons,
       addons_total: addonsTotal,
       subtotal: Math.round(subtotal * 100) / 100,

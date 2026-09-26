@@ -163,22 +163,14 @@ Deno.serve(async (req: Request) => {
     return bad('Pricing verification error: ' + String(e), 502);
   }
   if (!q || typeof q.total !== 'number') return bad('Quote total required');
-  // Pre-assign honesty (Kam 2026-09-26): www checkout has no vendor base.
-  // Force $0 travel_pending even if a stale edge quote still billed Mississauga/Montevideo.
-  {
-    const HST = 0.13;
-    const base = Number(q.base_rate) || 0;
-    const addonsTotal = Number(q.addons_total) || 0;
-    q.travel_fee = 0;
-    q.travel_pending = true;
-    q.travel_km_billable = 0;
-    q.distance_km = 0;
-    const subtotal = base + addonsTotal;
-    const tax = Math.round(subtotal * HST * 100) / 100;
-    q.subtotal = Math.round(subtotal * 100) / 100;
-    q.hst = tax;
-    q.hst_rate = HST;
-    q.total = Math.round((subtotal + tax) * 100) / 100;
+  // Assign-first (Kam 2026-09-26): never force travel_pending=$0. Edge checkout
+  // requires a final quote (GTA $0 or vendor travel). Prefer OS www-create-checkout
+  // when this edge lacks an assignee — block rather than charge fake travel.
+  if (q.travel_pending || !q.assignee_id) {
+    return bad(
+      'Checkout blocked: a photographer must be assigned and the final fee (including any travel outside GTA major markets) shown before payment. Use the www checkout path.',
+      409,
+    );
   }
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
@@ -268,9 +260,9 @@ Deno.serve(async (req: Request) => {
   if (meta.email) form.set('customer_email', meta.email);
   form.append('line_items[0][price_data][currency]', 'cad');
   form.append('line_items[0][price_data][product_data][name]', `Bricks listing media — ${meta.property_address}`);
-  const travelDesc = q.travel_pending
-    ? 'Travel $0 pending photographer assignment (25 km free from their base, then $0.75/km)'
-    : `Travel ${q.travel_fee} CAD`;
+  const travelDesc = q.gta_major
+    ? 'Travel $0 (GTA major market)'
+    : `Travel ${q.travel_fee} CAD from assigned photographer`;
   form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). ${travelDesc}, base ${q.base_rate} CAD.`);
   form.append('line_items[0][price_data][unit_amount]', String(amountCents));
   form.append('line_items[0][quantity]', '1');

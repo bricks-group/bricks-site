@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { buildQuote } from '@/lib/quote-engine'
+import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
 import { resolvePropertyTimezone, localYmd } from '@/lib/schedule'
 
 export const runtime = 'nodejs'
@@ -50,6 +50,30 @@ async function createCheckoutSession(stripeKey: string, form: URLSearchParams) {
   })
   const j = await res.json()
   return { ok: res.ok, status: res.status, j }
+}
+
+const OS_QUOTE = 'https://api.brxs.ca/api/book/www-quote'
+
+async function proxyToOsQuote(body: Record<string, unknown>) {
+  const key = (
+    process.env.INTERNAL_API_KEY ||
+    process.env.BRICKS_INTERNAL_API_KEY ||
+    ''
+  ).trim()
+  if (!key) return null
+  const res = await fetch(OS_QUOTE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Internal-Api-Key': key,
+    },
+    body: JSON.stringify({
+      ...body,
+      property_address: body.property_address || body.address,
+    }),
+  })
+  const j = await res.json().catch(() => ({}))
+  return { ok: res.ok && j?.ok, status: res.status, j }
 }
 
 async function proxyToOs(body: Record<string, unknown>) {
@@ -178,11 +202,64 @@ export async function POST(req: Request) {
     sqft: body.sqft || undefined,
   }
 
-  const priced = await buildQuote(quoteBody as Record<string, unknown>)
-  if (!priced.ok) {
-    return bad('Could not verify pricing for this booking: ' + priced.error, priced.status === 422 ? 422 : 502)
+  // Assign-first: prefer OS (allocates vendor + final travel / GTA $0). Fall back to
+  // local buildQuote only when OS is unreachable; never charge with travel_pending.
+  let q: QuoteResult | null = null
+  let viaOs = false
+  try {
+    const proxied = await proxyToOsQuote(quoteBody as Record<string, unknown>)
+    if (proxied?.ok && proxied.j?.quote) {
+      q = proxied.j.quote
+      viaOs = true
+    } else if (proxied && proxied.status === 409) {
+      return bad(
+        proxied.j?.error ||
+          proxied.j?.detail ||
+          'No photographer available — checkout blocked until one is assigned.',
+        409,
+      )
+    }
+  } catch {
+    /* fall through */
   }
-  const q = priced.quote
+  if (!viaOs) {
+    const priced = await buildQuote(quoteBody as Record<string, unknown>)
+    if (!priced.ok) {
+      return bad('Could not verify pricing for this booking: ' + priced.error, priced.status === 422 ? 422 : 502)
+    }
+    q = priced.quote
+  }
+  if (!q) {
+    return bad('Could not verify pricing for this booking', 502)
+  }
+  if (q.travel_pending || !(q as QuoteResult & { assignee_id?: string }).assignee_id) {
+    // Last resort: try full OS checkout proxy (re-allocates + Stripe)
+    try {
+      const proxied = await proxyToOs(body)
+      if (proxied?.ok) {
+        return NextResponse.json({
+          ok: true,
+          url: proxied.j.url,
+          session_id: proxied.j.session_id,
+          via: 'os-proxy-assign',
+        })
+      }
+      if (proxied && proxied.status === 409) {
+        return bad(
+          proxied.j?.error ||
+            proxied.j?.detail ||
+            'No photographer available — checkout blocked until one is assigned.',
+          409,
+        )
+      }
+    } catch {
+      /* continue to explicit block */
+    }
+    return bad(
+      'Checkout blocked: a photographer must be assigned and the final fee shown before payment.',
+      409,
+    )
+  }
   const amountCents = Math.round(q.total * 100)
   if (amountCents < 50) return bad('Amount too small')
 
@@ -251,13 +328,19 @@ export async function POST(req: Request) {
     brokerage: (body.brokerage || '').toString(),
     notes: (body.notes || '').toString().slice(0, 500),
     travel_fee: String(q.travel_fee ?? 0),
-    travel_pending: String(!!q.travel_pending),
+    travel_pending: 'false',
+    travel_basis: String((q as { travel_basis?: string }).travel_basis || 'vendor_assigned').slice(0, 40),
+    gta_major: String(!!(q as { gta_major?: boolean }).gta_major),
+    assignee_id: String((q as { assignee_id?: string }).assignee_id || '').slice(0, 80),
     quote_json: JSON.stringify({
       total: q.total,
       lat: q.lat ?? null,
       lon: q.lon ?? null,
       travel_fee: q.travel_fee ?? 0,
-      travel_pending: !!q.travel_pending,
+      travel_pending: false,
+      travel_basis: (q as { travel_basis?: string }).travel_basis || null,
+      gta_major: !!(q as { gta_major?: boolean }).gta_major,
+      assignee_id: (q as { assignee_id?: string }).assignee_id || null,
       base_rate: q.base_rate ?? null,
     }).slice(0, 480),
   }
@@ -278,9 +361,9 @@ export async function POST(req: Request) {
     'line_items[0][price_data][product_data][name]',
     `Bricks listing media — ${meta.property_address}`,
   )
-  const travelDesc = q.travel_pending
-    ? 'Travel $0 pending photographer assignment (25 km free from their base, then $0.75/km)'
-    : `Travel ${q.travel_fee} CAD`
+  const travelDesc = (q as { gta_major?: boolean }).gta_major
+    ? 'Travel $0 (GTA major market)'
+    : `Travel ${q.travel_fee} CAD from assigned photographer`
   form.append(
     'line_items[0][price_data][product_data][description]',
     `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). ${travelDesc}, base ${q.base_rate} CAD.`,

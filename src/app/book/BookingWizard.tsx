@@ -92,6 +92,9 @@ type Quote = {
   travel_per_km: number
   travel_fee: number
   travel_pending?: boolean
+  travel_basis?: string
+  gta_major?: boolean
+  assignee_id?: string | null
   addons: { label: string; amount: number }[]
   subtotal: number
   hst: number
@@ -465,6 +468,10 @@ export default function BookingWizard() {
 
   function pay() {
     if (!quote) { setErrs((e) => ({ ...e, 3: 'Quote missing — go back to step 2.' })); return }
+    if (quote.travel_pending || (!quote.gta_major && !quote.assignee_id)) {
+      setErrs((e) => ({ ...e, 3: 'A photographer must be assigned and the final fee shown before payment. Re-quote or email booking@brxs.ca.' }))
+      return
+    }
     if (!selectedSlot) { setErrs((e) => ({ ...e, 3: 'Pick a clock time on the When step.' })); return }
     setErrs((e) => ({ ...e, 3: '' }))
     setPaying(true)
@@ -525,7 +532,7 @@ export default function BookingWizard() {
     return (
       <>
         <div className="qhead"><div className="qhead-l">Your tailored quote</div><div className="qhead-t">${q.total.toFixed(2)} <span>CAD · incl. HST</span></div></div>
-        <div className="qmeta">{q.sqft ? q.sqft.toLocaleString() + ' sqft' : 'sqft n/a'} · {q.footprint_label}{q.travel_pending ? ' · travel confirmed at assignment' : (q.distance_km != null ? ' · ' + q.distance_km + ' km from photographer base' : '')}{q.sqft_source ? ' · ' + q.sqft_source : ''}</div>
+        <div className="qmeta">{q.sqft ? q.sqft.toLocaleString() + ' sqft' : 'sqft n/a'} · {q.footprint_label}{q.gta_major ? ' · GTA major — $0 travel' : q.travel_pending ? ' · assigning photographer…' : (q.distance_km != null ? ' · ' + q.distance_km + ' km from photographer base' : '')}{q.sqft_source ? ' · ' + q.sqft_source : ''}</div>
         <div className="qlines">
           {q.floor_plan_only ? (
             <div className="qrow"><span className="qk">Floor plan only</span><span className="qv">${(q.floor_plan_only_rate ?? q.base_rate ?? FLOOR_PLAN_ONLY_RATE).toFixed(2)}</span></div>
@@ -539,7 +546,7 @@ export default function BookingWizard() {
               )}
             </>
           )}
-          <div className="qrow"><span className="qk">Travel {q.travel_pending ? <em>estimate — confirmed when photographer assigned (25 km free from their base, then $0.75/km)</em> : <>({q.distance_km} km) <em>{q.travel_km_billable > 0 ? `$${q.travel_per_km}/km after 25 km free` : 'first 25 km free'}</em></>}</span><span className="qv">${q.travel_fee.toFixed(2)}</span></div>
+          <div className="qrow"><span className="qk">Travel {q.gta_major ? <em>GTA major market — no travel fee</em> : q.travel_pending ? <em>confirming photographer — checkout blocked until assigned</em> : <>({q.distance_km} km from assigned photographer) <em>{q.travel_km_billable > 0 ? `$${q.travel_per_km}/km after 25 km free` : 'first 25 km free'}</em></>}</span><span className="qv">${q.travel_fee.toFixed(2)}</span></div>
           {q.addons.map((a) => (
             <div key={a.label} className="qrow"><span className="qk">{a.label}</span><span className="qv">${a.amount.toFixed(2)}</span></div>
           ))}
