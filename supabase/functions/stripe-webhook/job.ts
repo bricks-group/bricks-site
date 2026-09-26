@@ -108,7 +108,7 @@ priority: rush ? 'rush' : 'normal',
 property_details: `${opts.m.property_type || 'listing'} · paid www.brxs.ca/book · lead ${opts.leadId} · stripe ${opts.sessionId} · tz ${opts.timezone}`,
 client_instructions: opts.m.notes || '',
 checklist: [],
-assignee_id: '',
+assignee_id: String(opts.m.assignee_id || '').trim(),
 vendor_id: ORG_VENDOR_ID,
 scheduled_date: opts.preferredDate,
 agent_name: opts.m.agent_name || null,
@@ -173,7 +173,7 @@ property_details: job.property_details,
 client_instructions: job.client_instructions,
 scheduled_date: job.scheduled_date,
 vendor_id: ORG_VENDOR_ID,
-assignee_id: '',
+assignee_id: String(opts.m.assignee_id || job.assignee_id || '').trim(),
 agent_name: job.agent_name,
 agent_email: job.agent_email,
 agent_brokerage: job.agent_brokerage,
@@ -206,7 +206,10 @@ console.error('dispatch intake failed: ' + (await intake.text()).slice(0, 300));
 console.error('dispatch intake error: ' + String(e));
 }
 }
+assignee = String(opts.m.assignee_id || job.assignee_id || '').trim();
+if (!assignee) {
 assignee = await pickAssignee(opts.supabaseUrl, opts.serviceKey, job);
+}
 let vendorName = '';
 if (assignee) {
 job.assignee_id = assignee;
