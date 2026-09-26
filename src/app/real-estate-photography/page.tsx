@@ -56,7 +56,7 @@ const faqs = [
   },
   {
     q: 'How much do listing photos cost in Canada?',
-    a: `HDR photography starts at $${PHOTO_RATE[0]} CAD by footprint (${PHOTO_RANGE}). Licensed drone is ${DRONE_RANGE}. Floor plan is included on every standard shoot. Travel: first 25 km from Mississauga free, then $0.75/km — quoted before you confirm.`,
+    a: `HDR photography starts at $${PHOTO_RATE[0]} CAD by footprint (${PHOTO_RANGE}). Licensed drone is ${DRONE_RANGE}. Floor plan is included on every standard shoot. Travel: first 25 km from the assigned photographer’s base free, then $0.75/km — confirmed at assignment.`,
   },
   {
     q: 'Do you shoot MLS photos Canada-wide?',

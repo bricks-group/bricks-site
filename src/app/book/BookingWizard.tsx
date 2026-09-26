@@ -91,6 +91,7 @@ type Quote = {
   travel_km_billable: number
   travel_per_km: number
   travel_fee: number
+  travel_pending?: boolean
   addons: { label: string; amount: number }[]
   subtotal: number
   hst: number
@@ -524,7 +525,7 @@ export default function BookingWizard() {
     return (
       <>
         <div className="qhead"><div className="qhead-l">Your tailored quote</div><div className="qhead-t">${q.total.toFixed(2)} <span>CAD · incl. HST</span></div></div>
-        <div className="qmeta">{q.sqft ? q.sqft.toLocaleString() + ' sqft' : 'sqft n/a'} · {q.footprint_label}{q.distance_km != null ? ' · ' + q.distance_km + ' km from base' : ''}{q.sqft_source ? ' · ' + q.sqft_source : ''}</div>
+        <div className="qmeta">{q.sqft ? q.sqft.toLocaleString() + ' sqft' : 'sqft n/a'} · {q.footprint_label}{q.travel_pending ? ' · travel confirmed at assignment' : (q.distance_km != null ? ' · ' + q.distance_km + ' km from photographer base' : '')}{q.sqft_source ? ' · ' + q.sqft_source : ''}</div>
         <div className="qlines">
           {q.floor_plan_only ? (
             <div className="qrow"><span className="qk">Floor plan only</span><span className="qv">${(q.floor_plan_only_rate ?? q.base_rate ?? FLOOR_PLAN_ONLY_RATE).toFixed(2)}</span></div>
@@ -538,7 +539,7 @@ export default function BookingWizard() {
               )}
             </>
           )}
-          <div className="qrow"><span className="qk">Travel ({q.distance_km} km) <em>{q.travel_km_billable > 0 ? `$${q.travel_per_km}/km after 25 km free` : 'first 25 km free'}</em></span><span className="qv">${q.travel_fee.toFixed(2)}</span></div>
+          <div className="qrow"><span className="qk">Travel {q.travel_pending ? <em>estimate — confirmed when photographer assigned (25 km free from their base, then $0.75/km)</em> : <>({q.distance_km} km) <em>{q.travel_km_billable > 0 ? `$${q.travel_per_km}/km after 25 km free` : 'first 25 km free'}</em></>}</span><span className="qv">${q.travel_fee.toFixed(2)}</span></div>
           {q.addons.map((a) => (
             <div key={a.label} className="qrow"><span className="qk">{a.label}</span><span className="qv">${a.amount.toFixed(2)}</span></div>
           ))}

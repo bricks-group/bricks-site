@@ -91,7 +91,7 @@ export default function FallMarket() {
             <div>
               <span className="over">Priority fall booking</span>
               <h2 style={{ color: 'var(--moon)', marginTop: 8 }}>Lock your date before the rush books the calendar solid.</h2>
-              <p className="lead" style={{ color: 'var(--moonSoft)' }}>This isn&apos;t a discount — it&apos;s a reserved slot. Book before Labour Day and your listing&apos;s shoot date is held ahead of the September wave, at the same pricing as always. First 25 km from Mississauga is free either way.</p>
+              <p className="lead" style={{ color: 'var(--moonSoft)' }}>This isn&apos;t a discount — it&apos;s a reserved slot. Book before Labour Day and your listing&apos;s shoot date is held ahead of the September wave, at the same pricing as always. First 25 km from the assigned photographer’s base is free either way.</p>
               <p className="deadline">Priority window closes Monday, September 7</p>
               <div className="cta-row">
                 <Link className="btn btn-brick" href="/book">Reserve a fall slot</Link>

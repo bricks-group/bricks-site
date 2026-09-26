@@ -98,7 +98,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and listing photo pricing.</h1>
-          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media à la carte by footprint, CAD, from Mississauga. Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
+          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media à la carte by footprint, CAD. Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
         </div>
       </section>
 
@@ -221,7 +221,7 @@ export default function PricingPage() {
           </table>
         </section>
 
-        <p className="note price-foot">Small ≈ ≤1,200 sq ft · Mid ≈ 1,200–2,500 · Large ≈ 2,500–4,000 · XL ≈ 4,000+. First 25 km from Mississauga is free; $0.75/km after, quoted before you confirm. CAD, exclude HST (13%).</p>
+        <p className="note price-foot">Small ≈ ≤1,200 sq ft · Mid ≈ 1,200–2,500 · Large ≈ 2,500–4,000 · XL ≈ 4,000+. Travel from the assigned photographer’s base: first 25 km free; $0.75/km after, confirmed at assignment. CAD, exclude HST (13%).</p>
 
         <section className="block rvl">
           <div className="sec-head"><div><span className="over">Pricing questions</span><h2>Before you book.</h2></div></div>

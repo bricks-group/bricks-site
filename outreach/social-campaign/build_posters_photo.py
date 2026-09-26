@@ -107,7 +107,7 @@ p2 = page(f"""
 p3 = page(f"""
   <div class="brandrow">{BRICK_MARK}<span class="wordmark">bricks</span></div>
   <div class="spacer"></div>
-  <h1 class="h1" style="font-size:50px;">CoStar volume shaped the standard.<br/>They want the shoot <span class="ac">done.</span></h1>
+  <h1 class="h1" style="font-size:50px;">14,000+ properties shot.<br/>They want the shoot <span class="ac">done.</span></h1>
   <p class="sub" style="margin-top:18px;">Bricks is the OS that gets it booked, captured, delivered — without the follow-up. — Raphael Merchant, founder</p>
   <div class="foot"><span class="url">brxs.ca</span><span class="geo">Live in the GTA</span></div>
 """, S["founder"], "scrim-top", 1080, 1350)

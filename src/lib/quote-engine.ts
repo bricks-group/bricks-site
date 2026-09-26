@@ -16,7 +16,10 @@ import {
   LEGACY_COMPANION_PACKAGE_IDS,
 } from '@/lib/pricing'
 
-const BASE = { lat: 43.5860724, lon: -79.7482435 } // Mississauga
+// Travel fee product law (Kam 2026-09-26): after vendor assign, haversine from
+// that vendor's base. Pre-assign on www (no vendor coords here): charge $0 travel
+// with travel_pending — do NOT use founder home / Montevideo as the fee base.
+// Coverage map hub (TRAVEL_BASE in coverage.ts) is map-only.
 const FREE_KM = 25
 const PER_KM = 0.75
 const HST = 0.13
@@ -47,6 +50,8 @@ export type QuoteResult = {
   travel_per_km: number
   travel_km_billable: number
   travel_fee: number
+  /** True when travel is $0 pending photographer assignment (www pre-assign). */
+  travel_pending: boolean
   addons: QuoteAddon[]
   addons_total: number
   subtotal: number
@@ -66,16 +71,6 @@ function band(sqft: number): number {
   return 3
 }
 
-function haversine(a: { lat: number; lon: number }, b: { lat: number; lon: number }): number {
-  const R = 6371
-  const dLat = ((b.lat - a.lat) * Math.PI) / 180
-  const dLon = ((b.lon - a.lon) * Math.PI) / 180
-  const la1 = (a.lat * Math.PI) / 180
-  const la2 = (b.lat * Math.PI) / 180
-  const h =
-    Math.sin(dLat / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin(dLon / 2) ** 2
-  return 2 * R * Math.asin(Math.sqrt(h))
-}
 
 async function geocode(address: string): Promise<{ lat: number; lon: number; display: string } | null> {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&countrycodes=ca`
@@ -248,9 +243,11 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
     drone_included = drone
   }
 
-  const dist = haversine(BASE, geo)
-  const billableKm = Math.max(0, dist - FREE_KM)
-  const travel = Math.round(billableKm * PER_KM * 100) / 100
+  // Pre-assign honesty: no vendor base on www → $0 travel until assign adjusts.
+  const dist = 0
+  const billableKm = 0
+  const travel = 0
+  const travel_pending = true
 
   const addons: QuoteAddon[] = []
   if (reel) addons.push({ label: 'Cinematic reel', amount: REEL_RATE[finalBand] })
@@ -296,6 +293,7 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
       travel_per_km: PER_KM,
       travel_km_billable: Math.round(billableKm * 10) / 10,
       travel_fee: travel,
+      travel_pending,
       addons,
       addons_total: addonsTotal,
       subtotal: Math.round(subtotal * 100) / 100,

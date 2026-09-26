@@ -3,8 +3,8 @@
 // Flow: address -> Nominatim geocode (lat/lng, travel distance) ->
 // FREE sqft guess (OSM building footprint at the coord, clamped to the
 // property-type range; agent confirms in wizard) -> footprint band ->
-// photo + drone base (always included) -> travel fee (haversine from BASE,
-// FREE_KM free, $/km after) -> add-ons (reel, virtual tour, twilight, rush) ->
+// photo + drone base (always included) -> travel (pre-assign: $0 pending
+// photographer assign — not founder-home Montevideo) -> add-ons ->
 // +13% HST = total.
 // No paid sqft API: CleverTech's free tier is unusable for sqft and its
 // monthly limit is too small to call per-quote; GeoWarehouse (~$100/mo) is
@@ -28,7 +28,7 @@ const corsHeaders = {
 };
 
 // ----- Config (change here; one-line constants) -----
-const BASE = { lat: 43.5860724, lon: -79.7482435 }; // 6330 Montevideo Rd, Mississauga
+// Coverage map hub is map-only. Pre-assign fee: $0 until photographer base known.
 const FREE_KM = 25;
 const PER_KM = 0.75; // market rate (CRA vehicle cost ~$0.73/km)
 const HST = 0.13;
@@ -61,14 +61,6 @@ function band(sqft: number): number {
   return 3;
 }
 
-function haversine(a: { lat: number; lon: number }, b: { lat: number; lon: number }): number {
-  const R = 6371;
-  const dLat = (b.lat - a.lat) * Math.PI / 180;
-  const dLon = (b.lon - a.lon) * Math.PI / 180;
-  const la1 = a.lat * Math.PI / 180, la2 = b.lat * Math.PI / 180;
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin(dLon / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
-}
 
 async function geocode(address: string): Promise<{ lat: number; lon: number; display: string } | null> {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&countrycodes=ca`;
@@ -232,9 +224,11 @@ Deno.serve(async (req: Request) => {
   }
 
   // 5) travel
-  const dist = haversine(BASE, geo);
-  const billableKm = Math.max(0, dist - FREE_KM);
-  const travel = Math.round(billableKm * PER_KM * 100) / 100;
+  // Pre-assign: no vendor base → $0 travel_pending (Kam 2026-09-26).
+  const dist = 0;
+  const billableKm = 0;
+  const travel = 0;
+  const travel_pending = true;
 
   // 6) add-ons
   const addons: { label: string; amount: number }[] = [];
@@ -269,7 +263,7 @@ Deno.serve(async (req: Request) => {
       floor_plan_only_rate: floorPlanOnly ? FLOOR_PLAN_ONLY_RATE : 0,
       staging_addon: staging, staging_images: stagingImages, staging_per_image: STAGING_PER_IMAGE,
       base_rate: base,
-      travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel,
+      travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel, travel_pending,
       addons, addons_total: addonsTotal,
       subtotal: Math.round(subtotal * 100) / 100,
       hst_rate: HST, hst: tax,

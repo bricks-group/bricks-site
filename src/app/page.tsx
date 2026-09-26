@@ -50,7 +50,7 @@ const faqs = [
   {
     id: 'coverage',
     q: 'Where do you cover?',
-    a: `Canada-wide launch. ${COVERAGE_LINE} Travel is quoted from Mississauga — first 25 km free; $0.75/km after, quoted before you confirm.`,
+    a: `Canada-wide launch. ${COVERAGE_LINE} Travel is from the assigned photographer’s base — first 25 km free; $0.75/km after. Pre-assign quotes estimate from the nearest available vendor when we have coords, otherwise travel is confirmed at assignment.`,
   },
   {
     id: 'drone',
@@ -197,7 +197,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="trust-stats">
-            <div><b>Book</b><span>media live</span></div>
+            <div><b>14,000+</b><span>founder experience</span></div>
             <div><b>Canada</b><span>coverage</span></div>
             <div><b>24–48h</b><span>target</span></div>
             <div><b>Auto-assign</b><span>routing</span></div>
@@ -443,7 +443,7 @@ export default function Home() {
         <div className="closer-simple-inner">
           <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">Canada-wide · 24–48h MLS target · Media live to book</p>
+          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h target</p>
         </div>
       </section>
 

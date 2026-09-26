@@ -123,7 +123,7 @@ p2 = page(f"""
 p3 = page(f"""
   <div class="brandrow">{BRICK_MARK}<span class="wordmark">bricks</span></div>
   <div style="margin-top:54px;"><span class="kicker">From the founder</span></div>
-  <h1 class="h1" style="margin-top:28px;font-size:62px;">CoStar volume shaped the standard. Agents don't want another app — they want the shoot <span class="ac">done.</span></h1>
+  <h1 class="h1" style="margin-top:28px;font-size:62px;">14,000+ properties shot. Agents don't want another app — they want the shoot <span class="ac">done.</span></h1>
   <div class="spacer"></div>
   <p class="sub" style="margin-bottom:24px;">Bricks is the OS that gets it <b>booked, captured, delivered</b> — without the follow-up.</p>
   <div class="foot">

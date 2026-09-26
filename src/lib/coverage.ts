@@ -8,7 +8,7 @@
  * Geography rules (Kam, 2026-09-12):
  * - Launch Ontario footprint ≈ anything within ~2 hours’ drive of Mississauga
  *   (INTERNAL sizing rule — never put “2 hour” / “2hr” in public UI copy).
- * - Public label: Golden Horseshoe (GGH+) with travel base Mississauga.
+ * - Public label: Golden Horseshoe (GGH+) with Mississauga as coverage map hub.
  * - Geometry must stay in Canada — clip the US (no NY/PA bleed across the lakes).
  * - Includes GTA, Hamilton, Niagara (ON), Waterloo Region (Cambridge/KW), Guelph,
  *   London, Barrie corridor, etc. as ONE hub — not a city laundry list of chips.
@@ -38,8 +38,8 @@ export type CoverageHub = {
   }
 }
 
-/** Mississauga travel base */
-export const TRAVEL_BASE = { lng: -79.7482435, lat: 43.5860724, name: 'Mississauga' } as const // 6330 Montevideo Rd — same as quote-engine / Companion
+/** Mississauga coverage map hub (market hub — NOT founder home, NOT travel-fee base when a vendor is known). */
+export const TRAVEL_BASE = { lng: -79.7482435, lat: 43.5860724, name: 'Mississauga' } as const
 
 /**
  * INTERNAL: ~2 h highway from Mississauga. Used when estimating radius only.
@@ -161,10 +161,10 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     status: 'base',
     ring: LAUNCH_RING,
     note:
-      ' — Toronto through the Golden Horseshoe, plus Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie, and nearby. Travel quotes from Mississauga (first 25 km free, then per km before you pay). Address on /book confirms the quote.',
+      ' — Toronto through the Golden Horseshoe, plus Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie, and nearby. Travel is from the assigned photographer’s base (first 25 km free, then per km). Address on /book confirms the quote.',
     detail: {
       headline: 'Listing photos across the Golden Horseshoe',
-      desc: 'GTA and the Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby Ontario. Travel quotes from Mississauga (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
+      desc: 'GTA and the Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby Ontario. Travel from the assigned photographer’s base (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
     },
   },
   {

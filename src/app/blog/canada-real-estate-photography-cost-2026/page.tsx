@@ -84,7 +84,7 @@ export default function Post() {
                 name: 'Is real estate photography more expensive in Toronto than other Canadian cities?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Major metros (Toronto, Vancouver, Calgary) often sit at the higher end of national ranges because of travel density and demand. Smaller markets may price lower for stills but charge more for licensed drone if certified operators are scarce. Bricks publishes one Canada-facing à la carte menu with travel quoted from Mississauga.',
+                  text: 'Major metros (Toronto, Vancouver, Calgary) often sit at the higher end of national ranges because of travel density and demand. Smaller markets may price lower for stills but charge more for licensed drone if certified operators are scarce. Bricks publishes one Canada-facing à la carte menu with travel from the assigned photographer’s base.',
                 },
               },
               {
@@ -151,7 +151,7 @@ export default function Post() {
         </p>
         <h3>3. Travel and access</h3>
         <p>
-          Canada is large. Desks either include a free radius from base or quote travel up front. Bricks: first 25 km from Mississauga free, then $0.75/km — confirmed before you pay. {COVERAGE_LINE}
+          Canada is large. Desks either include a free radius from base or quote travel up front. Bricks: first 25 km from the assigned photographer’s base free, then $0.75/km — confirmed at assignment. {COVERAGE_LINE}
         </p>
         <h3>4. Turnaround</h3>
         <p>

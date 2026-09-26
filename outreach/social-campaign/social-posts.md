@@ -53,7 +53,7 @@ Live in the GTA → brxs.ca
 #realtor #GTA
 
 ### C. Founder / pain (post)
-CoStar volume made one thing clear — agents don't want another app, they want the
+14,000+ properties shot and one thing's clear — agents don't want another app, they want the
 shoot done.
 
 Bricks is the operating system that gets it booked, captured, delivered — without the follow-up. Live in the GTA,

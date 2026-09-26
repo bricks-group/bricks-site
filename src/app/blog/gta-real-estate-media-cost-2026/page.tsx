@@ -67,7 +67,7 @@ export default function Post() {
         <h3>2. Services booked</h3>
         <p>Every add-on is optional. A floor plan is often included; a virtual tour, twilight, and rush delivery are usually extra. A virtual visit is always extra and never packaged. The more you stack, the higher the total — but you only pay for what the listing needs.</p>
         <h3>3. Travel</h3>
-        <p>Many GTA providers include a free radius (25–50 km from base) and charge per kilometre beyond. Bricks includes the first 25 km from Mississauga and charges $0.75/km after — quoted up front, never a surprise.</p>
+        <p>Many GTA providers include a free radius (25–50 km from base) and charge per kilometre beyond. Bricks includes the first 25 km from the assigned photographer’s base and charges $0.75/km after — confirmed at assignment, never a surprise.</p>
         <h3>4. Turnaround</h3>
         <p>Standard delivery targets 24–48 hours. Rush is a flat add-on aimed at faster than that window — not a same-day guarantee.</p>
 
