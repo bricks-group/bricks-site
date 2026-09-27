@@ -40,7 +40,7 @@ export default function BlogPostLayout({
               <div className="ac-bio">
                 <div className="ac-name">Bricks</div>
                 <div className="ac-role">Canadian real estate media · OS</div>
-                <p>14,000+ properties in founder experience. Same standard, every shoot. <span className="ac-more">About Bricks →</span></p>
+                <p>Before Bricks, Raphael shot 14,000+ properties at CoStar. Same standard, every shoot. <span className="ac-more">About Bricks →</span></p>
               </div>
             </Link>
           </article>
