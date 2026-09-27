@@ -40,17 +40,22 @@ const faqs = [
   {
     id: 'included',
     q: "What's included in a standard shoot?",
-    a: 'HDR, licensed drone, and a floor plan on every standard shoot. MLS-ready on a 24–48h target (not a guarantee — see Terms).',
+    a: `Essentials from $${CORE_FROM}: HDR + licensed drone + floor plan — the drone-included listing set (Photos only drops drone and floor plan). MLS-ready on a 24–48h target, not a guarantee. Real windows; no invent sky or dusk by default.`,
   },
   {
     id: 'booking',
     q: 'How does booking work?',
-    a: 'Pick services, then an exact clock time. That time locks when you pay.',
+    a: 'Pick services, see assignee and travel on the quote, then pay to lock the exact clock time (not pay-on-delivery). Refund schedule is on the pay step and in Terms.',
   },
   {
     id: 'coverage',
     q: 'Where do you cover?',
-    a: `Canada-wide launch. ${COVERAGE_LINE} Travel is from the assigned photographer’s base — first 25 km free; $0.75/km after. Pre-assign quotes estimate from the nearest available vendor when we have coords, otherwise travel is confirmed at assignment.`,
+    a: `Canada-wide launch. ${COVERAGE_LINE} Travel: GTA assign-first is often $0; otherwise from the assigned photographer’s base — first 25 km free, then $0.75/km — shown before you pay. Not free Canada-wide.`,
+  },
+  {
+    id: 'mls-safe',
+    q: 'Are listing stills MLS-safe?',
+    a: 'Real window views. We do not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on.',
   },
   {
     id: 'drone',
@@ -339,15 +344,14 @@ export default function Home() {
           </div>
           <div className="pkgs">
             <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Essentials</span></div>
+              <div className="pkg-head"><span className="pkg-name">Essentials</span><span className="pkg-badge">Listing set</span></div>
               <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
               <ul>
-                <li>HDR — interior + exterior</li>
-                <li>Licensed drone</li>
-                <li>2D floor plan</li>
+                <li>HDR + licensed drone + floor plan</li>
+                <li>Not a photo-only peer stack</li>
                 <li>24–48h target</li>
               </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
+              <div className="pkg-foot">Drone-included listing set · Small→XL</div>
               <Link className="btn btn-ghost" href="/book">Book Essentials</Link>
             </div>
             <div className="pkg">
@@ -378,7 +382,7 @@ export default function Home() {
               <ul>
                 <li>Everything in Showcase</li>
                 <li>Twilight exterior</li>
-                <li>Staging on request</li>
+                <li>Staging by request (not in checkout)</li>
                 <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
@@ -392,7 +396,7 @@ export default function Home() {
             </div>
             <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
           </Link>
-          <p className="rate-note"><Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
+          <p className="rate-note">Real windows — no invent sky or dusk by default. GTA travel often $0 at assign-first. <Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
         </div>
       </section>
 

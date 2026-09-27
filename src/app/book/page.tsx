@@ -117,7 +117,7 @@ export default function BookPage() {
           <span className="badge">Book · Canada</span>
           <h1>Book real estate photography &amp; listing photos.</h1>
           <p className="sub">
-            Four steps. Live quote from the address — HDR, licensed drone, floor plan on standard shoots, 24–48h MLS target. Pay to lock the exact clock time.{' '}
+            Four steps. Live quote from the address — Essentials from $248 is HDR + licensed drone + floor plan. 24–48h MLS target (not a guarantee). Pay to lock the exact clock; assignee and travel are final on the quote before Stripe.{' '}
             <Link href="/real-estate-photography">What&apos;s included</Link> · <Link href="/blog">Guides</Link>
           </p>
         </div>

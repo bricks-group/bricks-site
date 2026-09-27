@@ -19,11 +19,11 @@ import {
 export const metadata: Metadata = {
   title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
   description:
-    'Listing photo pricing à la carte by footprint (HDR, drone, floor plan included on standard shoots) plus Clay–Diamond software and brokerage seats. CAD. Virtual visit quoted by sqft, never packaged.',
+    'Essentials from $248 — HDR + licensed drone + floor plan. À la carte by footprint plus Clay–Diamond software and brokerage seats. CAD. 24–48h target. Virtual visit quoted by sqft, never packaged.',
   alternates: { canonical: '/pricing' },
   openGraph: {
     title: 'Real Estate Photography Pricing & Plans | Bricks',
-    description: 'Canadian listing media rates and software plans. HDR listing photos, drone, floor plans — virtual visit never packaged.',
+    description: 'Essentials from $248 (HDR + licensed drone + floor plan). Listing media by footprint — virtual visit never packaged.',
     url: 'https://www.brxs.ca/pricing',
   },
   twitter: {
@@ -84,6 +84,9 @@ export default function PricingPage() {
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
             mainEntity: [
+              { '@type': 'Question', name: 'Why Essentials from $248?', acceptedAnswer: { '@type': 'Answer', text: 'Essentials is HDR + licensed drone + floor plan — the drone-included listing set from $248. Compare that stack to photo-only peers that upsell drone later.' } },
+              { '@type': 'Question', name: 'Are the stills MLS-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Real window views. Bricks does not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on.' } },
+              { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'GTA assign-first is often $0. Outside that: first 25 km from the assigned photographer base free, then $0.75/km — shown before you pay. Not free Canada-wide.' } },
               { '@type': 'Question', name: 'How is footprint defined?', acceptedAnswer: { '@type': 'Answer', text: 'Small / Mid / Large / XL map to the property\'s finished area and complexity. Not sure which tier? Pick "advise me" in booking and we\'ll size it from the address.' } },
               { '@type': 'Question', name: `Virtual tour vs virtual visit?`, acceptedAnswer: { '@type': 'Answer', text: `${TOUR_NAME} (${TOUR_SHORT}) is a ${TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. ${VISIT_NAME} (${VISIT_SHORT}) is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()}, never packaged.` } },
               { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: 'Furniture and décor added to empty or dated interior photos in post. Online checkout does not sell it yet — email booking@brxs.ca for a quote while we finish our owned staging pipeline.' } },
@@ -98,7 +101,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and listing photo pricing.</h1>
-          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media à la carte by footprint, CAD. Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
+          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media leads with <strong>Essentials from ${CORE_FROM}</strong> — HDR + licensed drone + floor plan (not a photo-only peer stack). Virtual visit ({VISIT_SHORT}) is always quoted by sqft — never packaged. {STATUS.os}</p>
         </div>
       </section>
 
@@ -168,12 +171,12 @@ export default function PricingPage() {
               <h2>Essentials through Full suite.</h2>
             </div>
           </div>
-          <p className="tbl-cap">Same ladder as /book. Small footprint “from” prices, CAD pre-tax — scales to XL. Floor plan on every standard shoot. Virtual staging by request only.</p>
+          <p className="tbl-cap">Same ladder as /book. Small footprint “from” prices, CAD pre-tax — scales to XL. Essentials is the drone-included listing set vs photo-only peers. Floor plan on every standard shoot. Virtual staging by request only (not in checkout).</p>
           <div className="incl">
             <div className="c rvl">
               <span className="ic">{`from $${CORE_FROM}`}</span>
               <h4>Essentials</h4>
-              <p>HDR interior + exterior. Licensed drone. 2D floor plan. 24–48h target.</p>
+              <p>HDR + licensed drone + floor plan — the listing set. 24–48h target (not a guarantee).</p>
             </div>
             <div className="c rvl">
               <span className="ic">{`from $${STORY_FROM}`}</span>
@@ -221,11 +224,14 @@ export default function PricingPage() {
           </table>
         </section>
 
-        <p className="note price-foot">Small ≈ ≤1,200 sq ft · Mid ≈ 1,200–2,500 · Large ≈ 2,500–4,000 · XL ≈ 4,000+. Travel from the assigned photographer’s base: first 25 km free; $0.75/km after, confirmed at assignment. CAD, exclude HST (13%).</p>
+        <p className="note price-foot">Small ≈ ≤1,200 sq ft · Mid ≈ 1,200–2,500 · Large ≈ 2,500–4,000 · XL ≈ 4,000+. Travel: GTA assign-first is often $0; otherwise from the assigned photographer’s base — first 25 km free, then $0.75/km — shown before you pay. Not free Canada-wide. CAD, exclude HST (13%).</p>
 
         <section className="block rvl">
           <div className="sec-head"><div><span className="over">Pricing questions</span><h2>Before you book.</h2></div></div>
           <div className="faq">
+            <div className="qa"><h4>Why Essentials from ${CORE_FROM}?</h4><p>Essentials is HDR + licensed drone + floor plan — the drone-included listing set. Photo-only peers often start lower and upsell drone later; compare that stack to Essentials, not to Photos only.</p></div>
+            <div className="qa"><h4>Are the stills MLS-safe?</h4><p>Real window views. We do not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on; enhance options are on request — not a guaranteed blue-sky default.</p></div>
+            <div className="qa"><h4>How does travel work?</h4><p>GTA assign-first is often $0. Outside that: first 25 km from the assigned photographer&apos;s base free, then $0.75/km — shown on the quote before you pay. Not free Canada-wide.</p></div>
             <div className="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property&apos;s finished area and complexity. Not sure which tier? Pick &quot;advise me&quot; in booking and we&apos;ll size it from the address.</p></div>
             <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} ({TOUR_SHORT}) is a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} ({VISIT_SHORT}) is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()}, never packaged.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Online checkout does not sell it yet while we finish our owned staging pipeline. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> for a quote.</p></div>

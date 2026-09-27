@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
@@ -128,7 +128,7 @@ const PKG_LABEL: Record<string, string> = {
 const PKG_DESC: Record<string, string> = {
   floorPlanOnly: `Branded 2D floor plan capture — $${FLOOR_PLAN_ONLY_RATE} flat (no HDR / no drone)`,
   photosOnly: 'HDR photo only — no drone, no floor plan',
-  essentials: 'Photo · drone · floor plan',
+  essentials: `HDR + licensed drone + floor plan — from $${CORE_FROM}`,
   story: '+ cinematic reel',
   showcase: `+ reel + ${TOUR_NAME.toLowerCase()}`,
   suite: `+ reel + ${TOUR_NAME.toLowerCase()} + twilight`,
@@ -644,7 +644,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">Pick a package, or Floor plan only (${FLOOR_PLAN_ONLY_RATE} flat) when you just need the branded 2D plan. HDR photography is included on photo shoots; licensed drone and a floor plan are on the standard tiers, or drop both for Photos only. {TOUR_NAME} may be included in Showcase and Full suite. {VISIT_NAME} is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}), never packaged, and not charged at checkout. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
+              <p className="hint">Lead with <strong>Essentials</strong> (from ${CORE_FROM}) — HDR + licensed drone + floor plan, not a photo-only peer stack. Or Floor plan only (${FLOOR_PLAN_ONLY_RATE} flat), Photos only (HDR alone), or build up to Story / Showcase / Full suite. {TOUR_NAME} is included in Showcase and Full suite. {VISIT_NAME} and virtual staging are never sold in this checkout ({VISIT_NAME}: {VISIT_PRICE_LABEL.toLowerCase()}; staging: email booking@brxs.ca). See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
               <div className="choices">
                 {Object.keys(PKG_DEFS).map((k) => (
                   <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
@@ -734,8 +734,9 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
-              <p className="hint">Confirm details, then pay to lock this date and time. Full amount (incl. HST) charged now via Stripe. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media targets 24–48 hours after the shoot{rush ? ' — rush is on for this booking' : ''}. Files land on your listing file, client share, and property microsite — not a WeTransfer chase.</p>
+              <p className="hint">Confirm details, then pay to lock this exact clock time. Full amount (incl. HST) charged now via Stripe — not pay-on-delivery. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media targets 24–48 hours after the shoot{rush ? ' — rush is on for this booking' : ''} (target, not a guarantee). Files land on your listing file, client share, and property microsite — not a WeTransfer chase.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Assignee and travel on the quote above are final before you pay — GTA assign-first is often $0; outside that, first 25 km from the assigned photographer&apos;s base are free, then $0.75/km.</p>
               <div className="review">
                 {[
                   ['Agent', name.trim() || '—'], ['Brokerage', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
@@ -792,8 +793,11 @@ export default function BookingWizard() {
             <p>Add-ons, scheduling, and what happens if plans change.</p>
           </div>
           <div className="faq">
+            <div className="qa"><h4>Why Essentials from ${CORE_FROM}?</h4><p>Essentials is the drone-included listing set: HDR interiors + exteriors, licensed drone, and a branded floor plan. Photo-only peers often start lower and add drone later — compare apples to apples.</p></div>
+            <div className="qa"><h4>Are the stills MLS-safe?</h4><p>Yes — real window views. We do not invent sky or dusk by default. Buy twilight for a real blue-hour exterior, or ask about enhance options after the shoot.</p></div>
+            <div className="qa"><h4>How does travel work?</h4><p>GTA assign-first is often $0. Outside that, travel is from the assigned photographer&apos;s base — first 25 km free, then $0.75/km — shown on your quote before you pay. Not free Canada-wide.</p></div>
             <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Check it in Step 2 and confirm sqft — we quote after booking. It is not charged in Stripe checkout.</p></div>
-            <div className="qa"><h4>How fast is delivery?</h4><p>Standard edited media targets 24–48 hours after the shoot. Rush is a paid add-on in Step 2. You get a client media link and a property microsite on the listing file — MLS / web / print zip presets included.</p></div>
+            <div className="qa"><h4>How fast is delivery?</h4><p>Edited media targets 24–48 hours after the shoot — a target, not a guarantee. Rush (+${RUSH_FLAT}) aims faster than that window. You get a client media link and a property microsite on the listing file — MLS / web / print zip presets included.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Online checkout does not sell it yet while we finish our owned staging pipeline. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> for a quote; it will not appear in Stripe on this form.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
