@@ -43,7 +43,7 @@ export default function LegalHubPage() {
             </li>
             <li>
               <a href="https://dispatch-api.brxs.ca/api/onboarding/ic-agreement" rel="noopener noreferrer">
-                Independent Contractor Agreement v1.5
+                Independent Contractor Agreement v1.7
               </a>{' '}
               — photographers on GO &amp; Dispatch. Plain text:{' '}
               <a href="/legal/ic-agreement.txt">/legal/ic-agreement.txt</a>.

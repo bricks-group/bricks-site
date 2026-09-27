@@ -61,8 +61,8 @@ export default function PhotographersPage() {
               currency: 'CAD',
               value: {
                 '@type': 'QuantitativeValue',
-                minValue: 104.65,
-                maxValue: 1374.45,
+                minValue: 55.15,
+                maxValue: 578.90,
                 unitText: 'PACKAGE PAYOUT',
               },
             },
