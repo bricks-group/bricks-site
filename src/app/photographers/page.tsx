@@ -162,7 +162,7 @@ export default function PhotographersPage() {
             <div className="qa"><h4>How long does review take?</h4><p>We review every application manually. Portfolio quality is the primary gate — sharp composition, accurate colour, consistent exposure across a full property set. Expect a response within 1–3 business days.</p></div>
             <div className="qa"><h4>What equipment do I need?</h4><p>Full-frame or equivalent, fast primes, and ideally a DJI/Autel drone if you&apos;re applying for aerial work. List your kit in the application.</p></div>
             <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes — controlled airspace near Pearson / Billy Bishop requires Transport Canada Advanced RPAS certification. We verify before routing any drone job.</p></div>
-            <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability. Insurance and WSIB proof are required before a first dispatched job — see the IC agreement.</p></div>
+            <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability.</p></div>
           </div>
         </section>
 
