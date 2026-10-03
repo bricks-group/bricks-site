@@ -129,7 +129,7 @@ export default function PlatformPage() {
               <h2>Clay, Keystone, Marble, Diamond.</h2>
             </div>
           </div>
-          <p className="sub-line">{SOFTWARE_BLURB} Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Virtual visit is always quoted by sqft, never packaged.</p>
+          <p className="sub-line">{SOFTWARE_BLURB} Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Virtual visit is $249–$399 by footprint, never packaged.</p>
           <div className="incl" style={{ marginTop: 22 }}>
             {SOFTWARE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">

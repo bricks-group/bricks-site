@@ -59,7 +59,7 @@ export default function BookPage() {
                 name: `Is the ${VISIT_NAME.toLowerCase()} included?`,
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: `Never. ${VISIT_PACKAGING} ${VISIT_PRICE_LABEL} (${FOOTPRINT_BANDS}). The book-a-shoot form collects the request and sqft; it is not charged in Stripe checkout.`,
+                  text: `Never. ${VISIT_PACKAGING} ${VISIT_PRICE_LABEL} (${FOOTPRINT_BANDS}). It is a paid add-on on the book-a-shoot form and is charged in Stripe checkout.`,
                 },
               },
               {

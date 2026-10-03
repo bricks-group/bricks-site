@@ -49,7 +49,10 @@ Story — Small (≤1,200 sqft) $146.90 / $166.75 / $190.55; Mid (1,201–2,500 
 Showcase — Small (≤1,200 sqft) $202.00 / $229.30 / $262.10; Mid (1,201–2,500 sqft) $257.50 / $292.30 / $334.10; Large (2,501–4,000 sqft) $313.00 / $355.30 / $406.10; XL (4,001+ sqft) $372.20 / $422.50 / $482.90
 Full suite — Small (≤1,200 sqft) $257.50 / $292.30 / $334.10; Mid (1,201–2,500 sqft) $320.40 / $363.70 / $415.70; Large (2,501–4,000 sqft) $381.45 / $433.00 / $494.90; XL (4,001+ sqft) $446.20 / $506.50 / $578.90
 
-Add-on payouts are fixed published dollar amounts from the add-on rate card for your tier — fixed dollars, not a percentage of rack. Virtual Visit payout is the published Virtual Visit add-on cell for your tier (quoted by footprint for the client; never a percent of rack).
+Add-on payouts are fixed published dollar amounts from the add-on rate card for your tier — fixed dollars, not a percentage of rack.
+
+Virtual Visit — Small (≤1,200 sqft) $92.15 / $104.60 / $119.50; Mid (1,201–2,500 sqft) $110.65 / $125.60 / $143.50; Large (2,501–4,000 sqft) $129.15 / $146.60 / $167.50; XL (4,001+ sqft) $147.65 / $167.60 / $191.50
+Virtual staging — $12.95 / $14.70 / $16.80 per image (Tier C / Tier B / Tier A). Not banded by footprint.
 
 Tier is assigned by Bricks based on quality, reliability, volume, and compliance. Tier C is the starting tier. Bricks may change your tier on notice. Payouts are via Stripe Connect within 7 business days of client acceptance of deliverables, or within 14 days of shoot completion if the client has not acted. Raise payout disputes in writing to booking@brxs.ca within 30 days of the payment date.
 

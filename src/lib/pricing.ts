@@ -26,13 +26,40 @@ export const STAGING_PER_IMAGE = 35;
 export const FLOOR_PLAN_ONLY_RATE = 99;
 
 /**
- * Virtual visit (Gaussian splat / SuperSplat) has no published dollar table.
- * Quoted by the same footprint bands as photo / reel / virtual tour.
- * Always a paid add-on. Never invent a VISIT_RATE. Never package it. Never
- * charge it in Stripe — booking collects the request + sqft, then we quote.
+ * Virtual visit (free-roam Gaussian splat). Same four footprint bands as other
+ * add-ons. Always a paid add-on — never included in Photos / Essentials /
+ * Story / Showcase / Full suite. Not a per-square-foot multiplier.
  */
+export const VISIT_RATE = [249, 299, 349, 399] as const;
 export const FOOTPRINT_BANDS = 'Small ≤1,200 / Mid ≤2,500 / Large ≤4,000 / XL 4,000+'
-export const VISIT_PRICE_LABEL = 'Quoted by sqft'
+export const VISIT_PRICE_LABEL = '$249 / $299 / $349 / $399'
+export const STAGING_PRICE_LABEL = '$35 / photo'
+
+const TYPE_FLOOR: Record<string, number> = {
+  Condo: 0,
+  'Semi / Town': 1,
+  Detached: 1,
+  Multiplex: 2,
+  Commercial: 2,
+  Estate: 3,
+}
+
+/** Sqft band only: Small ≤1,200 / Mid ≤2,500 / Large ≤4,000 / XL. */
+export function sqftBandIndex(sqft: number): 0 | 1 | 2 | 3 {
+  if (sqft <= 1200) return 0
+  if (sqft <= 2500) return 1
+  if (sqft <= 4000) return 2
+  return 3
+}
+
+/**
+ * Higher of the sqft band and the property-type floor.
+ * Unknown type floors at Mid (1), matching the quote engines.
+ */
+export function finalFootprintBand(sqft: number, propertyType: string): 0 | 1 | 2 | 3 {
+  const floor = TYPE_FLOOR[propertyType.trim()] ?? 1
+  return Math.max(sqftBandIndex(sqft), floor) as 0 | 1 | 2 | 3
+}
 
 /** Format a rate band as a display range, e.g. [149,199,249,299] -> "$149–299". */
 export function bandRange(rate: readonly number[]): string {
@@ -58,6 +85,7 @@ export const TOUR_RANGE = bandRange(TOUR_RATE); // "$149–299"
 export const PHOTO_RANGE = bandRange(PHOTO_RATE); // "$149–299"
 export const DRONE_RANGE = bandRange(DRONE_RATE); // "$99–159"
 export const FLOOR_PLAN_ONLY_LABEL = `$${FLOOR_PLAN_ONLY_RATE}` // "$99"
+export const VISIT_RANGE = bandRange(VISIT_RATE); // "$249–399"
 
 /** Package ladder “from” prices (Small footprint, CAD pre-tax). Mirror /book + homepage. */
 export const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0] // Essentials

@@ -142,13 +142,13 @@ export default function PhotographersPage() {
               <h2>Fixed package payouts.</h2>
             </div>
           </div>
-          <p className="rate-lead">Photographers are independent contractors, paid a published dollar rate card — not a percent of what the client paid. Tiers C / B / A are assigned by Bricks on quality, reliability, volume, and compliance; the full card lives in the contractor agreement after you apply. Virtual visit is a client add-on quoted by sqft — never packaged.</p>
+          <p className="rate-lead">Photographers are independent contractors, paid a published dollar rate card — not a percent of what the client paid. Tiers C / B / A are assigned by Bricks on quality, reliability, volume, and compliance; the full card lives in the contractor agreement after you apply. Virtual visit is a client add-on at $249 / $299 / $349 / $399 — never packaged.</p>
           <div className="adds">
             <div className="a rvl"><div className="nm">Tier C — Entry</div><p>Starting tier. Assigned by Bricks based on quality, reliability, volume, and compliance.</p></div>
             <div className="a rvl"><div className="nm">Tier B — Core</div><p>Assigned for consistent quality and reliability on the network.</p></div>
             <div className="a rvl"><div className="nm">Tier A — Elite</div><p>Highest assigned tier for quality, volume, and compliance.</p></div>
           </div>
-          <p className="note">Canada-wide recruiting. Payout is the published rate-card amount. Virtual visit is a client add-on, quoted by sqft — never packaged.</p>
+          <p className="note">Canada-wide recruiting. Payout is the published rate-card amount. Virtual visit is a client add-on at $249 / $299 / $349 / $399 — never packaged.</p>
         </section>
 
         <section className="block rvl">

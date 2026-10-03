@@ -136,14 +136,6 @@ export async function POST(req: Request) {
     )
   }
 
-  if (
-    body.staging_addon === true ||
-    body.staging_addon === 'true' ||
-    (parseInt(String(body.staging_images || '0'), 10) || 0) > 0
-  ) {
-    return bad('Virtual staging is not sold in online checkout yet. Email booking@brxs.ca for a quote.')
-  }
-
   const stripeKey = (process.env.STRIPE_SECRET_KEY || '').trim()
   if (!stripeKey) {
     // No local Stripe — proxy to OS (same recompute + session create).
@@ -192,8 +184,9 @@ export async function POST(req: Request) {
       body.twilight_addon === 'true' ||
       ['suite', 'full'].includes(pkgNormEarly),
     rush_addon: body.rush_addon === true || body.rush_addon === 'true',
-    staging_addon: false,
-    staging_images: 0,
+    staging_addon: body.staging_addon === true || body.staging_addon === 'true',
+    staging_images: body.staging_images,
+    visit_addon: body.visit_addon === true || body.visit_addon === 'true',
     floor_plan_only:
       body.floor_plan_only === true ||
       body.floor_plan_only === 'true' ||
@@ -321,8 +314,10 @@ export async function POST(req: Request) {
     tour_addon: String(tourOn),
     twilight_addon: String(twilightOn),
     rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
-    staging_addon: 'false',
-    staging_images: '0',
+    staging_addon: String(!!(q as { staging_addon?: boolean }).staging_addon),
+    staging_images: String((q as { staging_images?: number }).staging_images || 0),
+    visit_addon: String(!!(q as { visit_addon?: boolean }).visit_addon),
+    visit_sqft_tier: ['small', 'mid', 'large', 'xl'][(q as { footprint_band?: number }).footprint_band ?? 0] || 'small',
     floor_plan_only: String(!!floorPlanOnly),
     phone: (body.phone || '').toString(),
     brokerage: (body.brokerage || '').toString(),

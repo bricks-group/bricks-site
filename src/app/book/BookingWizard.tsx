@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, FOOTPRINT_BANDS, CORE_FROM } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
@@ -176,6 +176,8 @@ export default function BookingWizard() {
   const [reel, setReel] = useState(false)
   const [tour, setTour] = useState(false)
   const [visit, setVisit] = useState(false)
+  const [staging, setStaging] = useState(false)
+  const [stagingImages, setStagingImages] = useState(1)
   const [twilight, setTwilight] = useState(false)
   const [floorPlanOnly, setFloorPlanOnly] = useState(false)
   const [rush, setRush] = useState(false)
@@ -320,8 +322,7 @@ export default function BookingWizard() {
     setFloorPlanOnly(fpOnly)
     setDrone(def.drone); setReel(def.reel); setTour(def.tour); setTwilight(def.twilight)
     if (fpOnly) {
-      setVisit(false)
-      // Floor-plan-only is a dedicated SKU — rush stays available as an extra.
+      // Floor-plan-only drops HDR/drone. Visit and staging stay optional add-ons.
     }
   }
 
@@ -336,13 +337,14 @@ export default function BookingWizard() {
       tour_addon: floorPlanOnly ? false : tour,
       twilight_addon: floorPlanOnly ? false : twilight,
       rush_addon: rush,
-      // Owned virtual staging not sold in checkout yet (Kam 2026-09-12) — never charge.
-      staging_addon: false,
-      staging_images: 0,
+      visit_addon: visit,
+      staging_addon: staging,
+      staging_images: staging ? Math.max(1, stagingImages || 1) : 0,
       floor_plan_only: floorPlanOnly,
       package_id: packageIdForCheckout(),
     }
-    if (manualSqft) payload.sqft = manualSqft
+    const typed = manualSqft ?? (sqftInput ? parseInt(sqftInput, 10) : null)
+    if (typed && Number.isFinite(typed)) payload.sqft = typed
     // Same-origin Next API — bypasses Canada Edge Fair-Use 402.
     fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
@@ -359,7 +361,7 @@ export default function BookingWizard() {
   useEffect(() => {
     if (firstAddonRun.current) { firstAddonRun.current = false; return }
     if (quote) fetchQuote()
-  }, [drone, reel, tour, twilight, rush, floorPlanOnly])
+  }, [drone, reel, tour, twilight, rush, floorPlanOnly, visit, staging, stagingImages])
 
   function loadSlots(ymd: string) {
     setSelectedSlot(null)
@@ -410,6 +412,8 @@ export default function BookingWizard() {
     const pkg = matchedPackage()
     if (floorPlanOnly) {
       const parts = ['Floor plan only']
+      if (visit) parts.push(VISIT_NAME)
+      if (staging) parts.push(`Virtual staging ×${Math.max(1, stagingImages || 1)}`)
       if (rush) parts.push('Rush')
       const label = pkg ? PKG_LABEL[pkg] : 'Floor plan only'
       return label + ' — ' + parts.join(' + ')
@@ -419,7 +423,8 @@ export default function BookingWizard() {
     if (reel) parts.push('Cinematic reel')
     if (tour) parts.push(TOUR_NAME)
     // Virtual visit is quoted separately — never an add_on / never opens phone tour.
-    if (visit) parts.push(`${VISIT_NAME} (${VISIT_PRICE_LABEL.toLowerCase()})`)
+    if (visit) parts.push(`${VISIT_NAME} (${VISIT_PRICE_LABEL})`)
+    if (staging) parts.push(`Virtual staging (${Math.max(1, stagingImages || 1)} × ${STAGING_PRICE_LABEL})`)
     if (twilight) parts.push('Twilight')
     if (rush) parts.push('Rush')
     const base = parts.join(' + ')
@@ -482,9 +487,12 @@ export default function BookingWizard() {
     const visitSqft = (sqftInput ? parseInt(sqftInput, 10) : null) || quote.sqft
     const visitBand = quote.footprint_label || 'unbanded'
     const visitNote = visit
-      ? `${VISIT_NAME} (Gaussian splat, free-roam) requested — ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}). Footprint: ${visitBand}${visitSqft ? ` · ${visitSqft} sqft` : ''}${quote.sqft_estimated ? ' (estimated — confirm)' : ''}. Never packaged. Not in Stripe total.`
+      ? `${VISIT_NAME} (Gaussian splat, free-roam) paid add-on — ${VISIT_PRICE_LABEL}. Footprint: ${visitBand}${visitSqft ? ` · ${visitSqft} sqft` : ''}. Never packaged.`
       : ''
-    const combinedNotes = [notes.trim(), visitNote].filter(Boolean).join('\n')
+    const stagingNote = staging
+      ? `Virtual staging paid — ${Math.max(1, stagingImages || 1)} × ${STAGING_PRICE_LABEL}.`
+      : ''
+    const combinedNotes = [notes.trim(), visitNote, stagingNote].filter(Boolean).join('\n')
     const packageId = packageIdForCheckout()
     const floorPlanIncluded = packageId === 'floor_plan_only' || (packageId !== 'photos_only' && drone)
     const payload = {
@@ -511,9 +519,9 @@ export default function BookingWizard() {
       tour_addon: floorPlanOnly ? false : tour,
       twilight_addon: floorPlanOnly ? false : twilight,
       rush_addon: rush,
-      staging_addon: false,
-      staging_images: 0,
-      // visit is notes-only — never tour_addon / never phone shutter
+      staging_addon: staging,
+      staging_images: staging ? Math.max(1, stagingImages || 1) : 0,
+      visit_addon: visit,
       notes: combinedNotes || null,
     }
     // Same-origin Next API — bypasses Canada Edge Fair-Use 402.
@@ -559,7 +567,7 @@ export default function BookingWizard() {
             <button type="button" onClick={() => fetchQuote(sqftInput ? parseInt(sqftInput, 10) : null)}>Re-quote</button>
           </div>
         )}
-        {visit && <div className="qnote">{VISIT_NAME} requested — {VISIT_PRICE_LABEL.toLowerCase()} ({q.footprint_label}{q.sqft ? ` · ${q.sqft.toLocaleString()} sqft` : ''}). Not in this total, not charged at checkout. Never packaged.</div>}
+        {visit && <div className="qnote">{VISIT_NAME} is in this total ({q.footprint_label}{q.sqft ? ` · ${q.sqft.toLocaleString()} sqft` : ''}). Never included in the package.</div>}
         {q.floor_plan_only && <div className="qnote">Floor plan only — GO opens floor-plan capture mode. No HDR stills / no drone on this booking.</div>}
         {q.floor_plan_included === false && !q.floor_plan_only && <div className="qnote">Photos only: no floor plan drafted for this booking.</div>}
         {q.sqft_estimated && <div className="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>}
@@ -644,7 +652,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">Lead with <strong>Essentials</strong> (from ${CORE_FROM}) — HDR + licensed drone + floor plan, not a photo-only peer stack. Or Floor plan only (${FLOOR_PLAN_ONLY_RATE} flat), Photos only (HDR alone), or build up to Story / Showcase / Full suite. {TOUR_NAME} is included in Showcase and Full suite. {VISIT_NAME} and virtual staging are never sold in this checkout ({VISIT_NAME}: {VISIT_PRICE_LABEL.toLowerCase()}; staging: email booking@brxs.ca). See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
+              <p className="hint">Lead with <strong>Essentials</strong> (from ${CORE_FROM}) — HDR + licensed drone + floor plan, not a photo-only peer stack. Or Floor plan only (${FLOOR_PLAN_ONLY_RATE} flat), Photos only (HDR alone), or build up to Story / Showcase / Full suite. {TOUR_NAME} is included in Showcase and Full suite. {VISIT_NAME} ({VISIT_PRICE_LABEL}) and virtual staging ({STAGING_PRICE_LABEL}) are paid add-ons — never included. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
               <div className="choices">
                 {Object.keys(PKG_DEFS).map((k) => (
                   <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
@@ -658,21 +666,31 @@ export default function BookingWizard() {
                   <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Or build à la carte:</p>
                   <label className="toggle"><input type="checkbox" checked={reel} onChange={(e) => setReel(e.target.checked)} /> Cinematic reel (+{REEL_RANGE}, by footprint)</label>
                   <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> {TOUR_NAME} (+{TOUR_RANGE}, by footprint) — {TOUR_BLURB}</label>
-                  <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL.toLowerCase()}) — {VISIT_BLURB} {VISIT_PACKAGING} Not charged in Stripe.</label>
+                  <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL}) — {VISIT_BLURB} {VISIT_PACKAGING}</label>
                   {visit && (
                     <div className="field" style={{ margin: '4px 0 14px' }}>
-                      <label>Sqft for {VISIT_NAME.toLowerCase()} quote</label>
+                      <label>Sqft (sets the footprint band)</label>
                       <input type="number" min={1} value={sqftInput} onChange={(e) => setSqftInput(e.target.value)} placeholder={quote?.sqft ? String(quote.sqft) : 'e.g. 2200'} />
-                      <span className="hint-sm">{FOOTPRINT_BANDS}. Same bands as photo, reel, and virtual tour. We quote the visit after booking using this footprint — not in checkout.</span>
+                      <span className="hint-sm">{FOOTPRINT_BANDS}. Same band picker as the rest of the menu — higher of sqft and property type. Charged in this checkout.</span>
                     </div>
                   )}
                   <label className="toggle"><input type="checkbox" checked={twilight} onChange={(e) => setTwilight(e.target.checked)} /> Twilight photography (+{TWILIGHT_RANGE}, by footprint)</label>
                 </>
               )}
               {floorPlanOnly && (
-                <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Floor plan only — add rush below if needed. GO opens floor-plan capture for this job. Virtual staging is by request (not in checkout).</p>
+                <>
+                  <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL}) — {VISIT_PACKAGING}</label>
+                  <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Floor plan only — no HDR, no drone. Visit and staging below are optional. Rush is +${RUSH_FLAT}.</p>
+                </>
               )}
-              <p className="hint-sm" style={{ margin: '0 0 14px' }}>Virtual staging (furniture in post) is by request while we finish our owned pipeline — email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>. It is not sold or charged in this checkout.</p>
+              <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging ({STAGING_PRICE_LABEL})</label>
+              {staging && (
+                <div className="field" style={{ margin: '4px 0 14px' }}>
+                  <label>Photos to stage</label>
+                  <input type="number" min={1} value={stagingImages} onChange={(e) => setStagingImages(Math.max(1, parseInt(e.target.value || '1', 10) || 1))} />
+                  <span className="hint-sm">{STAGING_PER_IMAGE} CAD per photo, before tax. Not included in any package.</span>
+                </div>
+              )}
               <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+${RUSH_FLAT})</label>
               <div className="quote">
                 {quoteLoading && <div className="qload"><div className="spin"></div><div className="ltxt"><b>Tailoring your quote</b>Measuring footprint · mapping travel · adding tax</div></div>}
@@ -746,9 +764,9 @@ export default function BookingWizard() {
                   ['Floor plan', floorPlanOnly || drone ? 'Yes' : 'No — Photos only'],
                   ['Cinematic reel', floorPlanOnly ? 'No' : (reel ? 'Yes' : 'No')],
                   [TOUR_NAME, floorPlanOnly ? 'No' : (tour ? 'Yes' : 'No')],
-                  [VISIT_NAME, floorPlanOnly ? 'No' : (visit ? `Yes — ${VISIT_PRICE_LABEL.toLowerCase()}` : 'No')],
+                  [VISIT_NAME, visit ? `Yes — ${VISIT_PRICE_LABEL}` : 'No'],
                   ['Twilight', floorPlanOnly ? 'No' : (twilight ? 'Yes' : 'No')],
-                  ['Virtual staging', 'By request — not in checkout'],
+                  ['Virtual staging', staging ? `Yes — ${Math.max(1, stagingImages || 1)} × ${STAGING_PRICE_LABEL}` : 'No'],
                   ['Rush delivery', rush ? 'Yes' : 'No'],
                   ['Shoot time', selectedSlot ? formatBookedWhen(selectedSlot.start, propertyTz) : '—'], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
@@ -796,14 +814,14 @@ export default function BookingWizard() {
             <div className="qa"><h4>Why Essentials from ${CORE_FROM}?</h4><p>Essentials is the drone-included listing set: HDR interiors + exteriors, licensed drone, and a branded floor plan. Photo-only peers often start lower and add drone later — compare apples to apples.</p></div>
             <div className="qa"><h4>Are the stills MLS-safe?</h4><p>Yes — real window views. We do not invent sky or dusk by default. Buy twilight for a real blue-hour exterior, or ask about enhance options after the shoot.</p></div>
             <div className="qa"><h4>How does travel work?</h4><p>GTA assign-first is often $0. Outside that, travel is from the assigned photographer&apos;s base — first 25 km free, then $0.75/km — shown on your quote before you pay. Not free Canada-wide.</p></div>
-            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Check it in Step 2 and confirm sqft — we quote after booking. It is not charged in Stripe checkout.</p></div>
+            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Check it in Step 2 — it is in the Stripe total, not bundled into a package.</p></div>
             <div className="qa"><h4>How fast is delivery?</h4><p>Edited media targets 24–48 hours after the shoot — a target, not a guarantee. Rush (+${RUSH_FLAT}) aims faster than that window. You get a client media link and a property microsite on the listing file — MLS / web / print zip presets included.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. Online checkout does not sell it yet while we finish our owned staging pipeline. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> for a quote; it will not appear in Stripe on this form.</p></div>
+            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. {STAGING_PRICE_LABEL}, before tax. Pick how many photos in Step 2. It is not included in any package.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
             <div className="qa"><h4>What if I need to cancel?</h4><p>More than 48 hours before the shoot window: full refund. 48 hours down to 4 hours: 50% refund. Inside 4 hours, or no-show / no access: no refund (100% retained). If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
             <div className="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
-            <div className="qa"><h4>Can I pay with Apple Pay or Google Pay?</h4><p>Yes. Pay &amp; book opens Stripe Checkout: Apple Pay in Safari/iOS, Google Pay in Chrome/Android, Link where Stripe shows it, plus cards. We don&apos;t take PayPal, Klarna, Afterpay, or Interac. The virtual visit is still never charged here.</p></div>
+            <div className="qa"><h4>Can I pay with Apple Pay or Google Pay?</h4><p>Yes. Pay &amp; book opens Stripe Checkout: Apple Pay in Safari/iOS, Google Pay in Chrome/Android, Link where Stripe shows it, plus cards. We don&apos;t take PayPal, Klarna, Afterpay, or Interac. Virtual visit and virtual staging, if selected, are in this total.</p></div>
           </div>
         </section>
       </div>

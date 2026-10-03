@@ -150,6 +150,7 @@ Deno.serve(async (req: Request) => {
         rush_addon: body.rush_addon === true || body.rush_addon === 'true',
         staging_addon: body.staging_addon === true || body.staging_addon === 'true',
         staging_images: body.staging_images,
+        visit_addon: body.visit_addon === true || body.visit_addon === 'true',
         floor_plan_only: body.floor_plan_only === true || body.floor_plan_only === 'true'
           || pkgNormEarly === 'floor_plan_only',
         package_id: body.package_id,
@@ -180,12 +181,9 @@ Deno.serve(async (req: Request) => {
     || pkgNorm === 'floor_plan_only' || pkgNorm === 'floorplan_only'
   const photosOnly = pkgNorm === 'photos_only'
     || /photos\s*only/i.test(String(body.package_interest || ''))
-  // Launch honesty (2026-09-12): refuse virtual staging in Stripe until owned pipeline ships.
-  if (body.staging_addon === true || body.staging_addon === 'true' || (parseInt(String(body.staging_images || '0'), 10) || 0) > 0) {
-    return bad('Virtual staging is not sold in online checkout yet. Email booking@brxs.ca for a quote.')
-  }
-  const stagingOn = false
-  const stagingImages = 0
+  const stagingOn = !!q.staging_addon
+  const stagingImages = Number(q.staging_images) || 0
+  const visitOn = !!q.visit_addon
   // Mirror quote package ladder into Stripe metadata so webhook/GO stamps match paid SKU
   // even when the client only sent package_id.
   const droneOn = !photosOnly && !floorPlanOnly && (
@@ -229,6 +227,8 @@ Deno.serve(async (req: Request) => {
     rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
     staging_addon: String(stagingOn),
     staging_images: String(stagingImages),
+    visit_addon: String(visitOn),
+    visit_sqft_tier: ['small', 'mid', 'large', 'xl'][Number(q.footprint_band) || 0] || 'small',
     floor_plan_only: String(!!floorPlanOnly),
     phone: (body.phone || '').toString(),
     brokerage: (body.brokerage || '').toString(),
@@ -282,6 +282,8 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[rush_addon]', meta.rush_addon);
   form.append('metadata[staging_addon]', meta.staging_addon);
   form.append('metadata[staging_images]', meta.staging_images);
+  form.append('metadata[visit_addon]', meta.visit_addon);
+  form.append('metadata[visit_sqft_tier]', meta.visit_sqft_tier);
   form.append('metadata[floor_plan_only]', meta.floor_plan_only);
   form.append('metadata[preferred_date]', meta.preferred_date);
   form.append('metadata[preferred_window]', meta.preferred_window);

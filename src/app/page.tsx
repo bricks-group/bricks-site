@@ -65,7 +65,7 @@ const faqs = [
   {
     id: 'tour-visit',
     q: `Virtual tour vs ${VISIT_NAME.toLowerCase()}?`,
-    a: `${TOUR_NAME} is a path-confined walkthrough — a ${TOUR_RANGE} add-on by footprint; Showcase and Full suite include it. ${VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), never packaged, and not charged at checkout. ${VISIT_PACKAGING}`,
+    a: `${TOUR_NAME} is a path-confined walkthrough — a ${TOUR_RANGE} add-on by footprint; Showcase and Full suite include it. ${VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), never packaged. Priced by footprint and charged at checkout. ${VISIT_PACKAGING}`,
   },
   {
     id: 'plans',
@@ -382,7 +382,7 @@ export default function Home() {
               <ul>
                 <li>Everything in Showcase</li>
                 <li>Twilight exterior</li>
-                <li>Staging by request (not in checkout)</li>
+                <li>Virtual staging is $35 / photo — not included</li>
                 <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>

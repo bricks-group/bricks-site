@@ -1,6 +1,6 @@
 /**
  * Node/TS port of supabase/functions/quote/index.ts — same rates, geocode,
- * OSM footprint, package ladder, staging always false, refuse legacy IDs.
+ * OSM footprint, package ladder, visit bands + staging per image, refuse legacy IDs.
  * Keep lockstep with src/lib/pricing.ts and the Deno edge function.
  */
 import {
@@ -9,11 +9,13 @@ import {
   REEL_RATE,
   TWILIGHT_RATE,
   TOUR_RATE,
+  VISIT_RATE,
   RUSH_FLAT,
   STAGING_PER_IMAGE,
   FLOOR_PLAN_ONLY_RATE,
   BAND_LABELS,
   LEGACY_COMPANION_PACKAGE_IDS,
+  finalFootprintBand,
 } from '@/lib/pricing'
 import { isGtaMajorMarket, GTA_MAJOR_TRAVEL_ZERO_LABEL } from '@/lib/coverage'
 
@@ -49,6 +51,8 @@ export type QuoteResult = {
   staging_addon: boolean
   staging_images: number
   staging_per_image: number
+  visit_addon: boolean
+  visit_rate: number
   base_rate: number
   travel_free_km: number
   travel_per_km: number
@@ -70,13 +74,6 @@ export type QuoteResult = {
 export type BuildQuoteOk = { ok: true; quote: QuoteResult }
 export type BuildQuoteErr = { ok: false; error: string; status: number }
 export type BuildQuoteResult = BuildQuoteOk | BuildQuoteErr
-
-function band(sqft: number): number {
-  if (sqft <= 1200) return 0
-  if (sqft <= 2500) return 1
-  if (sqft <= 4000) return 2
-  return 3
-}
 
 
 async function geocode(address: string): Promise<{ lat: number; lon: number; display: string } | null> {
@@ -142,6 +139,33 @@ function normPkg(raw: unknown): string {
     .replace(/[^a-z0-9_]+/g, '_')
 }
 
+
+export function mediaAddonLines(opts: {
+  finalBand: number
+  reel: boolean
+  tour: boolean
+  twilight: boolean
+  rush: boolean
+  visit: boolean
+  stagingImages: number
+}): QuoteAddon[] {
+  const addons: QuoteAddon[] = []
+  const b = opts.finalBand
+  if (opts.reel) addons.push({ label: 'Cinematic reel', amount: REEL_RATE[b] })
+  if (opts.tour) addons.push({ label: 'Virtual tour', amount: TOUR_RATE[b] })
+  if (opts.twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[b] })
+  if (opts.rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT })
+  if (opts.visit) addons.push({ label: 'Virtual visit', amount: VISIT_RATE[b] })
+  if (opts.stagingImages > 0) {
+    const n = opts.stagingImages
+    addons.push({
+      label: n === 1 ? 'Virtual staging (1 image)' : `Virtual staging (${n} images)`,
+      amount: n * STAGING_PER_IMAGE,
+    })
+  }
+  return addons
+}
+
 /** Server-side quote. Never trusts client total. */
 export async function buildQuote(body: Record<string, unknown>): Promise<BuildQuoteResult> {
   const address = (body.address || body.property_address || '').toString().trim()
@@ -180,9 +204,14 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
     }
   }
 
-  // Launch honesty: owned staging not ready — never price/charge staging.
-  const staging = false
-  const stagingImages = 0
+  // Virtual staging is $35/photo. Visit is the footprint-band add-on. Neither is packaged.
+  const stagingRequested = body.staging_addon === true || body.staging_addon === 'true'
+  let stagingImages = parseInt(String(body.staging_images ?? '0'), 10)
+  if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = 0
+  if (stagingRequested && stagingImages < 1) stagingImages = 1
+  if (!stagingRequested) stagingImages = 0
+  const staging = stagingImages > 0
+  const visit = body.visit_addon === true || body.visit_addon === 'true'
   const manualSqft = body.sqft ? parseInt(String(body.sqft), 10) : null
 
   if (!address) return { ok: false, error: 'Address is required', status: 400 }
@@ -224,15 +253,7 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
     }
   }
 
-  const typeBand: Record<string, number> = {
-    Condo: 0,
-    'Semi / Town': 1,
-    Detached: 1,
-    Multiplex: 2,
-    Commercial: 2,
-    Estate: 3,
-  }
-  const finalBand = Math.max(band(sqft!), typeBand[pt] ?? 1)
+  const finalBand = finalFootprintBand(sqft!, pt)
 
   let photo_rate = 0
   let drone_rate = 0
@@ -274,19 +295,15 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
     travel_basis = 'pending'
   }
 
-  const addons: QuoteAddon[] = []
-  if (reel) addons.push({ label: 'Cinematic reel', amount: REEL_RATE[finalBand] })
-  if (tour) addons.push({ label: 'Virtual tour', amount: TOUR_RATE[finalBand] })
-  if (twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[finalBand] })
-  if (rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT })
-  // staging always false at launch — keep branch for lockstep with edge quote
-  if (staging && stagingImages > 0) {
-    const n = stagingImages as number
-    addons.push({
-      label: n === 1 ? 'Virtual staging (1 image)' : `Virtual staging (${n} images)`,
-      amount: n * STAGING_PER_IMAGE,
-    })
-  }
+  const addons = mediaAddonLines({
+    finalBand,
+    reel,
+    tour,
+    twilight,
+    rush,
+    visit,
+    stagingImages,
+  })
   const addonsTotal = addons.reduce((s, a) => s + a.amount, 0)
   const subtotal = base + travel + addonsTotal
   const tax = Math.round(subtotal * HST * 100) / 100
@@ -313,6 +330,8 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
       staging_addon: staging,
       staging_images: stagingImages,
       staging_per_image: STAGING_PER_IMAGE,
+      visit_addon: visit,
+      visit_rate: visit ? VISIT_RATE[finalBand] : 0,
       base_rate: base,
       travel_free_km: FREE_KM,
       travel_per_km: PER_KM,

@@ -58,6 +58,7 @@ const DRONE_RATE = [99, 119, 139, 159];
 const REEL_RATE = [149, 179, 209, 249];
 const TWILIGHT_RATE = [150, 170, 185, 200];
 const TOUR_RATE = [149, 199, 249, 299];
+const VISIT_RATE = [249, 299, 349, 399];
 const RUSH_FLAT = 75;
 const STAGING_PER_IMAGE = 35;
 const FLOOR_PLAN_ONLY_RATE = 99;
@@ -168,9 +169,14 @@ Deno.serve(async (req: Request) => {
       drone = true;
     }
   }
-  // Launch honesty (2026-09-12): owned staging not ready — never price/charge staging in quote.
-  const staging = false;
-  const stagingImages = 0;
+  // Virtual staging is $35/photo. Visit is the footprint-band add-on. Neither is packaged.
+  const stagingRequested = body.staging_addon === true || body.staging_addon === 'true';
+  let stagingImages = parseInt(String(body.staging_images ?? '0'), 10);
+  if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = 0;
+  if (stagingRequested && stagingImages < 1) stagingImages = 1;
+  if (!stagingRequested) stagingImages = 0;
+  const staging = stagingImages > 0;
+  const visit = body.visit_addon === true || body.visit_addon === 'true';
   const manualSqft = body.sqft ? parseInt(body.sqft) : null;
 
   if (!address) return bad('Address is required');
@@ -252,6 +258,7 @@ Deno.serve(async (req: Request) => {
   if (tour) addons.push({ label: 'Virtual tour', amount: TOUR_RATE[finalBand] });
   if (twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[finalBand] });
   if (rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT });
+  if (visit) addons.push({ label: 'Virtual visit', amount: VISIT_RATE[finalBand] });
   if (staging && stagingImages > 0) {
     addons.push({
       label: stagingImages === 1 ? 'Virtual staging (1 image)' : `Virtual staging (${stagingImages} images)`,
@@ -278,6 +285,7 @@ Deno.serve(async (req: Request) => {
       floor_plan_only: floorPlanOnly,
       floor_plan_only_rate: floorPlanOnly ? FLOOR_PLAN_ONLY_RATE : 0,
       staging_addon: staging, staging_images: stagingImages, staging_per_image: STAGING_PER_IMAGE,
+      visit_addon: visit, visit_rate: visit ? VISIT_RATE[finalBand] : 0,
       base_rate: base,
       travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel, travel_pending, travel_basis, gta_major, assignee_id: null,
       addons, addons_total: addonsTotal,
