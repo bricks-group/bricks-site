@@ -65,10 +65,10 @@ const industrial: Shot[] = [
 ]
 
 const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky replacement before and after' },
+  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
   { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
+  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging ($35/photo add-on) before and after' },
 ]
 
 function Grid({ images }: { images: Shot[] }) {
@@ -113,9 +113,9 @@ export default function GalleryPage() {
       <div className="wrap work-wrap">
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">The edit</span><h2>Before and after.</h2></div>
+            <div><span className="over">Examples</span><h2>Before and after.</h2></div>
           </div>
-          <p className="ba-hint">Drag across each pair.</p>
+          <p className="ba-hint">Drag across each pair. HDR balance is standard. Sky enhance is on request (no invent sky/dusk by default). Virtual staging is $35/photo — never packaged. Twilight is a real blue-hour exterior add-on.</p>
           <div className="ba-grid">
             {beforeAfter.map((p) => {
               const name = p.label.replace(/ before and after$/i, '')

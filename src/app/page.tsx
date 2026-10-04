@@ -103,10 +103,10 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
 
 
 const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky replacement before and after' },
+  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
   { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
+  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging ($35/photo add-on) before and after' },
 ] as const
 export const metadata: Metadata = {
   title: 'bricks — the system for Canadian real estate',
@@ -280,23 +280,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="edit-sec rvl" aria-label="The edit">
+      <section className="edit-sec rvl" aria-label="After the shoot">
         <div className="wrap">
           <div className="section-head section-head-stack">
-            <span className="over">Edit</span>
+            <span className="over">Delivery</span>
             <h2>After the shoot.</h2>
+            <p className="sub" style={{ maxWidth: 520, marginTop: 8 }}>HDR balance for MLS is the standard path. Sky enhance is on request — we do not invent sky or dusk by default. Virtual staging is $35/photo, never packaged.</p>
           </div>
           <div className="edit-grid">
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-              </div>
-              <div className="edit-cap"><div className="t">Sky · HDR</div></div>
-            </div>
             <div>
               <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
                 <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width:900px) 100vw, 50vw" />
@@ -305,7 +296,17 @@ export default function Home() {
                 <span className="lbl r">After</span>
                 <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
               </div>
-              <div className="edit-cap"><div className="t">Windows · balance</div></div>
+              <div className="edit-cap"><div className="t">HDR · windows</div></div>
+            </div>
+            <div>
+              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
+                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky enhance on request — after" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky enhance on request — before" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <span className="lbl l">Before</span>
+                <span className="lbl r">After</span>
+                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+              </div>
+              <div className="edit-cap"><div className="t">Sky · on request</div></div>
             </div>
           </div>
         </div>
