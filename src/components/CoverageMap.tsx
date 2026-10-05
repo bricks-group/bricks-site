@@ -6,6 +6,10 @@ import { COVERAGE_HUBS, chipMeta, hubKind, type CoverageHub } from '@/lib/covera
 const BRICK = '#D2542B'
 const INK = '#14110e'
 const SOFT = '#8a837a'
+// light-v11 / dark-v11 on purpose. applyBricksBasemap retints root style
+// layers to the Bricks paper/ink palette. Mapbox Standard keeps those layers
+// inside the basemap import and lights them itself, so the overlay fights it.
+// HD lanes, 3D, and rain/snow also only read at street pitch — see MapCutout.
 const STYLE_LIGHT = 'mapbox://styles/mapbox/light-v11'
 const STYLE_DARK = 'mapbox://styles/mapbox/dark-v11'
 const SRC = 'bricks-coverage-areas'
