@@ -2,12 +2,14 @@
  *   bricks-site: src/components/MapCutout.tsx
  *   Bricks-OS:        frontend/src/components/MapCutout.jsx  (strip types)
  *
- * Live 160px streets-v12 static <img> becomes a Standard 3D GL cutout.
+ * Standard 3D GL cutout: HD lanes + 3D objects, and one rain or snow pass.
+ * Streets-v12 static <img> stays as the error fallback.
  * Does not touch autocomplete, quote, checkout, or listing-file walk state.
  */
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { CUTOUT_HD_BASEMAP, applyCutoutWeather } from '@/lib/cutout-weather'
 
 const BRICK = '#D2542B'
 const HEIGHT = 200 // 160 was too short for 3D buildings; still a cutout
@@ -61,11 +63,11 @@ export default function MapCutout({ lng, lat, label, dark, token, className }: M
         attributionControl: false,
         logoPosition: 'bottom-left',
         fadeDuration: 0,
+        antialias: true,
         config: {
           basemap: {
+            ...CUTOUT_HD_BASEMAP,
             lightPreset: night ? 'night' : 'day',
-            showPointOfInterestLabels: false,
-            showTransitLabels: false,
           },
         },
       })
@@ -80,7 +82,25 @@ export default function MapCutout({ lng, lat, label, dark, token, className }: M
         }
       }
 
-      map.on('style.load', () => applyLight(dark ?? readThemeDark()))
+      const applyHd = () => {
+        for (const [key, value] of Object.entries(CUTOUT_HD_BASEMAP)) {
+          try {
+            map.setConfigProperty('basemap', key, value)
+          } catch {
+            /* import config not ready */
+          }
+        }
+      }
+
+      map.on('style.load', () => {
+        applyLight(dark ?? readThemeDark())
+        applyHd()
+        try {
+          applyCutoutWeather(map)
+        } catch {
+          /* precipitation is optional; the basemap still renders */
+        }
+      })
 
       const marker = new mapboxgl.Marker({ color: BRICK, scale: 0.85 })
         .setLngLat([lng, lat])
