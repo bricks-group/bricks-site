@@ -2,9 +2,13 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
 import {
+  CORE_FROM,
+  REEL_RATE,
+  REEL_RANGE,
   RUSH_FLAT,
   STAGING_PER_IMAGE,
   STAGING_PRICE_LABEL,
+  STORY_FROM,
   VISIT_PRICE_LABEL,
   VISIT_RATE,
   finalFootprintBand,
@@ -56,13 +60,33 @@ test('visit and staging are add-on lines, not bundled, rush stays flat', () => {
     stagingImages: 0,
   })
   assert.equal(packaged.some((l) => l.label.startsWith('Virtual visit')), false)
+  assert.equal(packaged.find((l) => l.label === 'Cinematic reel')?.amount, 349)
   assert.equal(packaged.find((l) => l.label === 'Virtual tour')?.amount, 299)
 })
 
 test('edge quote publishes the same visit rate and does not force staging off', () => {
   const edge = readFileSync(new URL('../../supabase/functions/quote/index.ts', import.meta.url), 'utf8')
   assert.match(edge, /const VISIT_RATE = \[249, 299, 349, 399\]/)
+  assert.match(edge, /const REEL_RATE = \[199, 249, 299, 349\]/)
   assert.match(edge, /const RUSH_FLAT = 75/)
   assert.match(edge, /const STAGING_PER_IMAGE = 35/)
   assert.doesNotMatch(edge, /const staging = false/)
+})
+
+test('cinematic reel catalog matches OS/Companion charge rack (not package-embedded 149–249)', () => {
+  assert.deepEqual([...REEL_RATE], [199, 249, 299, 349])
+  assert.equal(REEL_RANGE, '$199–349')
+  // Small Story “from” recomposes Essentials + new reel (Companion SQFT_PRICING stays locked separately)
+  assert.equal(CORE_FROM, 248)
+  assert.equal(STORY_FROM, 447)
+  const mid = mediaAddonLines({
+    finalBand: 1,
+    reel: true,
+    tour: false,
+    twilight: false,
+    rush: false,
+    visit: false,
+    stagingImages: 0,
+  })
+  assert.equal(mid.find((l) => l.label === 'Cinematic reel')?.amount, 249)
 })

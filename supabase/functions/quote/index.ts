@@ -55,7 +55,7 @@ const BAND_LABEL = ['Small', 'Mid', 'Large', 'XL'];
 // always-included base; everything else is an optional add-on.
 const PHOTO_RATE = [149, 199, 249, 299];
 const DRONE_RATE = [99, 119, 139, 159];
-const REEL_RATE = [149, 179, 209, 249];
+const REEL_RATE = [199, 249, 299, 349];  // lockstep pricing.ts + OS _WWW_REEL
 const TWILIGHT_RATE = [150, 170, 185, 200];
 const TOUR_RATE = [149, 199, 249, 299];
 const VISIT_RATE = [249, 299, 349, 399];
