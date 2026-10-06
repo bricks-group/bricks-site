@@ -16,7 +16,7 @@ export type FootprintBand = 0 | 1 | 2 | 3;
 /** À la carte rates (CAD, pre-tax) by footprint band. */
 export const PHOTO_RATE = [149, 199, 249, 299] as const;
 export const DRONE_RATE = [99, 119, 139, 159] as const;
-export const REEL_RATE = [149, 179, 209, 249] as const;
+export const REEL_RATE = [199, 249, 299, 349] as const;
 export const TWILIGHT_RATE = [150, 170, 185, 200] as const;
 /** Virtual tour (path-confined walkthrough) — paid add-on. Not the virtual visit splat. */
 export const TOUR_RATE = [149, 199, 249, 299] as const;
@@ -53,7 +53,7 @@ export function bandCells(rate: readonly number[]): string[] {
 
 // Convenience display strings (used in FAQ / JSON-LD / inline labels).
 export const TWILIGHT_RANGE = bandRange(TWILIGHT_RATE); // "$150–200"
-export const REEL_RANGE = bandRange(REEL_RATE); // "$149–249"
+export const REEL_RANGE = bandRange(REEL_RATE); // "$199–349"
 export const TOUR_RANGE = bandRange(TOUR_RATE); // "$149–299"
 export const PHOTO_RANGE = bandRange(PHOTO_RATE); // "$149–299"
 export const DRONE_RANGE = bandRange(DRONE_RATE); // "$99–159"
