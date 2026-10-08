@@ -1,18 +1,12 @@
 // Supabase Edge Function: cal-slots
-// Proxies Cal.com's real v2 availability for the Bricks Listing Media Shoot
-// event type, so book.html can show real bookable times during the flow
-// instead of a plain date/window input.
+// Returns bookable times for a civil date.
 //
-// Also enforces a travel-time gap: Cal.com's own availability only knows
-// whether a time is booked, not where the shoot is. If the caller passes the
-// candidate property's lat/lon (already geocoded client-side by the /quote
-// call in Step 2), we pull the day's neighboring Cal.com bookings, read the
-// property_lat/property_lon stripe-webhook stamped into each booking's
-// metadata, and drop any slot that doesn't leave enough drive time to/from
-// whichever real shoot is adjacent to it.
+// Prefer Cal.com when CAL_KEY is set (legacy path + travel-time filtering).
+// When CAL_KEY is missing, fall back to the same native hours + paid-lead
+// occupancy model as www `/api/book/slots` so booking never hard-fails with 503.
 //
 // Deploy:  supabase functions deploy cal-slots
-// Needs:   CAL_KEY (Cal.com API key)
+// Optional: CAL_KEY (Cal.com API key)
 // Invoke:  GET /functions/v1/cal-slots?date=YYYY-MM-DD&lat=43.6&lon=-79.4
 
 const corsHeaders = {
@@ -21,17 +15,29 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
 };
 
-const EVENT_TYPE_ID = 6387567; // bricks-media-shoot -- recreated 2026-07-20 after Hermes deleted the original (6358903)
+const EVENT_TYPE_ID = 6387567; // bricks-media-shoot
 
-// ----- Travel-time config (change here; one-line constants) -----
-const AVG_SPEED_KMH = 35; // blended GTA city/highway driving speed w/ traffic
-const SETUP_BUFFER_MIN = 20; // flat pack-up-at-A + set-up-at-B overhead
-const MIN_GAP_MIN = 30; // floor even for two addresses right next to each other
-const BOOKINGS_WINDOW_PAD_HOURS = 4; // catch bookings just outside the target day
+const WORK_START = '09:00';
+const WORK_END = '17:00';
+const SLOT_DURATION_MIN = 60;
+const SLOT_STEP_MIN = 30;
+const FALLBACK_TZ = 'America/Toronto';
+
+// ----- Travel-time config (Cal.com path only) -----
+const AVG_SPEED_KMH = 35;
+const SETUP_BUFFER_MIN = 20;
+const MIN_GAP_MIN = 30;
+const BOOKINGS_WINDOW_PAD_HOURS = 4;
 
 function bad(msg: string, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: msg }), {
     status, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+function ok(body: Record<string, unknown>) {
+  return new Response(JSON.stringify(body), {
+    status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 }
 
@@ -48,11 +54,6 @@ function requiredGapMin(distKm: number): number {
   return Math.max(MIN_GAP_MIN, (distKm / AVG_SPEED_KMH) * 60 + SETUP_BUFFER_MIN);
 }
 
-// Fetches this event type's upcoming bookings in a padded window around the
-// target day and returns only the ones we can geo-check (metadata carries
-// property_lat/property_lon). Bookings without that metadata (pre-existing
-// or manually made) are left out of the check entirely rather than blocking
-// every slot -- missing data should never fail the whole day closed.
 async function fetchNeighborBookings(calKey: string, date: string): Promise<{ start: string; end: string; lat: number; lon: number }[]> {
   const dayStart = new Date(`${date}T00:00:00Z`);
   const after = new Date(dayStart); after.setUTCHours(after.getUTCHours() - BOOKINGS_WINDOW_PAD_HOURS);
@@ -82,12 +83,10 @@ async function fetchNeighborBookings(calKey: string, date: string): Promise<{ st
     }
     return out;
   } catch {
-    return []; // upstream hiccup -- degrade to no travel-time filtering, not a hard fail
+    return [];
   }
 }
 
-// Drops any candidate slot that doesn't leave enough drive time between it
-// and whichever real, geo-tagged booking is immediately before/after it.
 function filterByTravelTime<T extends { start: string; end: string }>(
   slots: T[],
   candidate: { lat: number; lon: number },
@@ -102,40 +101,136 @@ function filterByTravelTime<T extends { start: string; end: string }>(
       const nEnd = new Date(n.end).getTime();
       const distKm = haversineKm(candidate, n);
       const needMin = requiredGapMin(distKm);
-      // neighbor ends before this slot starts -- check the gap after it
       if (nEnd <= slotStart) {
         const gapMin = (slotStart - nEnd) / 60000;
         if (gapMin < needMin) return false;
       }
-      // neighbor starts after this slot ends -- check the gap before it
       if (nStart >= slotEnd) {
         const gapMin = (nStart - slotEnd) / 60000;
         if (gapMin < needMin) return false;
       }
-      // overlapping bookings shouldn't be possible (Cal.com already blocks the
-      // time itself), but if one somehow does, reject the slot outright.
       if (nStart < slotEnd && nEnd > slotStart) return false;
     }
     return true;
   });
 }
 
-Deno.serve(async (req: Request) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
-  if (req.method !== 'GET') return bad('Method not allowed');
+function pad2(n: number) {
+  return String(n).padStart(2, '0');
+}
 
-  const calKey = Deno.env.get('CAL_KEY');
-  if (!calKey) return bad('Cal.com not configured (set CAL_KEY)', 503);
+/** Build 30-min-step slots for a civil date in America/Toronto (native fallback). */
+function buildNativeSlots(date: string): { start: string; end: string }[] {
+  const [ys, ms, ds] = date.split('-').map(Number);
+  const [sh, sm] = WORK_START.split(':').map(Number);
+  const [eh, em] = WORK_END.split(':').map(Number);
+  const startMin = sh * 60 + sm;
+  const endMin = eh * 60 + em;
+  const slots: { start: string; end: string }[] = [];
+  const now = Date.now();
 
-  const url = new URL(req.url);
-  const date = url.searchParams.get('date');
-  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return bad('date=YYYY-MM-DD required');
-  const latParam = url.searchParams.get('lat');
-  const lonParam = url.searchParams.get('lon');
-  const candidate = (latParam && lonParam && Number.isFinite(+latParam) && Number.isFinite(+lonParam))
-    ? { lat: +latParam, lon: +lonParam }
-    : null;
+  for (let m = startMin; m + SLOT_DURATION_MIN <= endMin; m += SLOT_STEP_MIN) {
+    const h0 = Math.floor(m / 60);
+    const mi0 = m % 60;
+    const h1 = Math.floor((m + SLOT_DURATION_MIN) / 60);
+    const mi1 = (m + SLOT_DURATION_MIN) % 60;
+    // Build ISO via Intl parts so DST is respected without a TZ library.
+    const start = zonedCivilToUtcIso(ys, ms, ds, h0, mi0, FALLBACK_TZ);
+    const end = zonedCivilToUtcIso(ys, ms, ds, h1, mi1, FALLBACK_TZ);
+    if (!start || !end) continue;
+    if (new Date(start).getTime() <= now) continue;
+    slots.push({ start, end });
+  }
+  return slots;
+}
 
+/** Convert a civil local time in `tz` to an ISO UTC string. */
+function zonedCivilToUtcIso(
+  year: number, month: number, day: number,
+  hour: number, minute: number, tz: string,
+): string | null {
+  // Binary-search a UTC instant whose tz wall-clock matches the civil time.
+  let lo = Date.UTC(year, month - 1, day - 1, 0, 0);
+  let hi = Date.UTC(year, month - 1, day + 1, 23, 59);
+  const target = `${year}-${pad2(month)}-${pad2(day)}T${pad2(hour)}:${pad2(minute)}`;
+  for (let i = 0; i < 40; i++) {
+    const mid = Math.floor((lo + hi) / 2);
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: tz,
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+    }).formatToParts(new Date(mid));
+    const get = (t: string) => parts.find((p) => p.type === t)?.value || '';
+    const wall = `${get('year')}-${get('month')}-${get('day')}T${get('hour')}:${get('minute')}`;
+    if (wall === target) return new Date(mid).toISOString();
+    if (wall < target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return null;
+}
+
+type Taken = { start: string; end: string };
+
+async function takenFromPaidLeads(ymd: string): Promise<Taken[]> {
+  const supabaseUrl = (Deno.env.get('SUPABASE_URL') || '').replace(/\/$/, '');
+  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
+  if (!supabaseUrl || !serviceKey) return [];
+  const qs =
+    `preferred_date=eq.${encodeURIComponent(ymd)}` +
+    `&status=eq.paid` +
+    `&select=selected_slot_start,selected_slot_end`;
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/media_booking_leads?${qs}`, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    });
+    if (!res.ok) return [];
+    const rows = await res.json();
+    if (!Array.isArray(rows)) return [];
+    const out: Taken[] = [];
+    for (const row of rows) {
+      const start = typeof row.selected_slot_start === 'string' ? row.selected_slot_start : '';
+      if (!start) continue;
+      const end = typeof row.selected_slot_end === 'string' && row.selected_slot_end
+        ? row.selected_slot_end
+        : start;
+      out.push({ start, end });
+    }
+    return out;
+  } catch {
+    return [];
+  }
+}
+
+function overlaps(a: Taken, b: Taken): boolean {
+  const as = new Date(a.start).getTime();
+  const ae = new Date(a.end).getTime();
+  const bs = new Date(b.start).getTime();
+  const be = new Date(b.end).getTime();
+  return as < be && ae > bs;
+}
+
+function filterOpenSlots(slots: Taken[], taken: Taken[]): Taken[] {
+  if (!taken.length) return slots;
+  return slots.filter((s) => !taken.some((t) => overlaps(s, t)));
+}
+
+async function nativeSlotsResponse(date: string) {
+  const generated = buildNativeSlots(date);
+  const taken = await takenFromPaidLeads(date);
+  const slots = filterOpenSlots(generated, taken);
+  return ok({
+    ok: true,
+    date,
+    source: 'native',
+    slots,
+  });
+}
+
+async function calSlotsResponse(
+  calKey: string,
+  date: string,
+  candidate: { lat: number; lon: number } | null,
+) {
   const start = `${date}T00:00:00`;
   const endDate = new Date(`${date}T00:00:00Z`);
   endDate.setUTCDate(endDate.getUTCDate() + 1);
@@ -154,7 +249,10 @@ Deno.serve(async (req: Request) => {
       headers: { Authorization: `Bearer ${calKey}`, 'cal-api-version': '2024-09-04' },
     });
     const j = await res.json();
-    if (!res.ok || j.status !== 'success') return bad('Cal.com error: ' + (j.error?.message || res.status), 502);
+    if (!res.ok || j.status !== 'success') {
+      // Cal misconfigured / upstream error → native fallback, not a hard 502 for bookers.
+      return nativeSlotsResponse(date);
+    }
     let daySlots = j.data?.[date] || [];
 
     if (candidate && daySlots.length) {
@@ -162,10 +260,26 @@ Deno.serve(async (req: Request) => {
       daySlots = filterByTravelTime(daySlots, candidate, neighbors);
     }
 
-    return new Response(JSON.stringify({ ok: true, date, slots: daySlots }), {
-      status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  } catch (e) {
-    return bad('Cal.com upstream error: ' + String(e), 502);
+    return ok({ ok: true, date, source: 'cal', slots: daySlots });
+  } catch {
+    return nativeSlotsResponse(date);
   }
+}
+
+Deno.serve(async (req: Request) => {
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+  if (req.method !== 'GET') return bad('Method not allowed');
+
+  const url = new URL(req.url);
+  const date = url.searchParams.get('date');
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return bad('date=YYYY-MM-DD required');
+  const latParam = url.searchParams.get('lat');
+  const lonParam = url.searchParams.get('lon');
+  const candidate = (latParam && lonParam && Number.isFinite(+latParam) && Number.isFinite(+lonParam))
+    ? { lat: +latParam, lon: +lonParam }
+    : null;
+
+  const calKey = Deno.env.get('CAL_KEY');
+  if (!calKey) return nativeSlotsResponse(date);
+  return calSlotsResponse(calKey, date, candidate);
 });

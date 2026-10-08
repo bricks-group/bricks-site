@@ -3,9 +3,9 @@ import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import PhotographerForm from './PhotographerForm'
 import { COVERAGE_LINE, GO_URL, STATUS } from '@/lib/brand'
+import { OG_SHARE_IMAGE } from '@/lib/site-media'
 
-const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+const OG = OG_SHARE_IMAGE
 
 export const metadata: Metadata = {
   title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',
