@@ -525,7 +525,7 @@
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok, j:j}; }); })
       .then(function(res){
         document.getElementById('err1').textContent='';
-        if(!res.ok){ box.innerHTML = '<div class="qmsg">We couldn\'t auto-price this address. Enter the square footage above and hit <b>Re-quote</b>, or email <b>booking@brxs.ca</b>.</div>'; return; }
+        if(!res.ok){ box.innerHTML = '<div class="qmsg">We couldn\'t auto-price this address. Enter the square footage below and hit <b>Re-quote</b>, or email <b>booking@brxs.ca</b>.</div><div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" /><button onclick="requote()">Re-quote</button></div>'; return; }
         data.quote = res.j.quote;
         renderQuote(box, res.j.quote, true);
       })
@@ -671,3 +671,4 @@
   <script src="assets/protect.js"></script>
 </body>
 </html>
+
