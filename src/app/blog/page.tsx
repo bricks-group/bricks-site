@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { OG_SHARE_IMAGE } from '@/lib/site-media'
 
-const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+const OG = OG_SHARE_IMAGE
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Guides & Listing Media Blog | Bricks',

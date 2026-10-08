@@ -14,11 +14,11 @@
 <meta property="og:url" content="https://www.brxs.ca/book.html" />
 <meta property="og:title" content="Bricks — Book a shoot (GTA listing media)" />
 <meta property="og:description" content="Book Bricks listing media in the GTA: instant tailored quote by footprint + travel, pay to lock your slot." />
-<meta property="og:image" content="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG" />
+<meta property="og:image" content="https://www.brxs.ca/media/og-share.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Bricks — Book a shoot (GTA listing media)" />
 <meta name="twitter:description" content="Book Bricks listing media in the GTA: instant tailored quote by footprint + travel, pay to lock your slot." />
-<meta name="twitter:image" content="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG" />
+<meta name="twitter:image" content="https://www.brxs.ca/media/og-share.jpg" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -488,8 +488,8 @@
     });
   })();
 
-  // ---- real slot picker (cal-slots, live Cal.com availability) ----
-  var CAL_SLOTS_URL = SUPABASE + 'cal-slots';
+  // ---- real slot picker (www /api/book/slots — native hours + paid-lead occupancy) ----
+  var SLOTS_URL = '/api/book/slots';
   // Note: date changes now handled by Bricks custom picker above (calls fetchSlots directly)
   function fetchSlots(date){
     var box = document.getElementById('slotBox');
@@ -499,14 +499,15 @@
     if(data.quote && data.quote.lat != null && data.quote.lon != null){
       geoQS = '&lat=' + encodeURIComponent(data.quote.lat) + '&lon=' + encodeURIComponent(data.quote.lon);
     }
-    fetch(CAL_SLOTS_URL + '?date=' + encodeURIComponent(date) + geoQS, { headers: { apikey: ANON } })
+    if(data.address){ geoQS += '&address=' + encodeURIComponent(data.address); }
+    fetch(SLOTS_URL + '?date=' + encodeURIComponent(date) + geoQS)
       .then(function(r){ return r.json(); })
       .then(function(j){
         if(!j.ok){ box.innerHTML = '<div class="slotmsg">Couldn\'t load times for this date — try another, or email <b>booking@brxs.ca</b>.</div>'; return; }
         if(!j.slots || !j.slots.length){ box.innerHTML = '<div class="slotmsg">No open times that day — try another date.</div>'; return; }
+        var tz = j.tz || 'America/Toronto';
         box.innerHTML = '<div class="slotgrid">' + j.slots.map(function(s, i){
-          var t = new Date(s.start);
-          var label = t.toLocaleTimeString('en-CA', { hour:'numeric', minute:'2-digit', timeZone:'America/Toronto' });
+          var label = s.label || new Date(s.start).toLocaleTimeString('en-CA', { hour:'numeric', minute:'2-digit', timeZone: tz });
           return '<div class="slotbtn" data-i="'+i+'">'+esc(label)+'</div>';
         }).join('') + '</div>';
         var btns = box.querySelectorAll('.slotbtn');

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import NewsletterInline from '../NewsletterInline'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
+import { OG_SHARE_IMAGE } from '@/lib/site-media'
 
 export const metadata: Metadata = {
   title: 'Fall Market Listing Photos & Real Estate Photography | Bricks',
@@ -12,14 +13,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Fall Market Listing Photos | Bricks',
     description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans, 24–48h MLS delivery.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    images: [OG_SHARE_IMAGE],
     url: 'https://www.brxs.ca/fall-market',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Fall Market Listing Photos | Bricks',
     description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans, 24–48h.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    images: [OG_SHARE_IMAGE],
   },
 }
 
