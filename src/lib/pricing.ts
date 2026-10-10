@@ -32,8 +32,8 @@ export const FLOOR_PLAN_ONLY_RATE = 99;
  */
 export const VISIT_RATE = [249, 299, 349, 399] as const;
 export const FOOTPRINT_BANDS = 'Small ≤1,200 / Mid ≤2,500 / Large ≤4,000 / XL 4,000+'
-export const VISIT_PRICE_LABEL = '$249 / $299 / $349 / $399'
-export const STAGING_PRICE_LABEL = '$35 / photo'
+export const VISIT_PRICE_LABEL = bandCells(VISIT_RATE).join(' / ') // "$249 / $299 / $349 / $399"
+export const STAGING_PRICE_LABEL = `$${STAGING_PER_IMAGE} / photo` // "$35 / photo"
 
 const TYPE_FLOOR: Record<string, number> = {
   Condo: 0,

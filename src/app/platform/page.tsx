@@ -7,6 +7,7 @@ import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
 import { SOFTWARE_PLANS, OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
+import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'bricks platform — OS, Companion, GO',
@@ -25,6 +26,10 @@ export default function PlatformPage() {
   return (
     <>
       <RevealObserver />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(osSoftwareApplicationSchema('https://www.brxs.ca/platform')) }}
+      />
       <section className="hero hero-tight">
         <div className="wrap">
           <span className="badge">Platform</span>

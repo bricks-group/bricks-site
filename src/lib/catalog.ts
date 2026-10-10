@@ -52,12 +52,26 @@ export const ADDONS = [
 export const ADDONS_BLURB =
   'Add-ons attach to any paid-capable plan; Diamond includes the AI suite.'
 
+/**
+ * Brokerage seat rates (CAD per seat per year, billed annually).
+ * Mirrors Bricks OS backend brokerage_seat_prices (monthly 59 / 45 / 35 / 25 × 12).
+ * Single source for the visible seat cards and the SoftwareApplication JSON-LD.
+ */
+export const OFFICE_SEAT_PRICE_PER_YEAR = {
+  boutique: 708,
+  growth: 540,
+  enterprise: 420,
+  franchise: 300,
+} as const
+
+const seatPerYear = (n: number) => `$${n.toLocaleString('en-US')} / seat / yr`
+
 /** Brokerage seats: per seat, billed annually. Full OS on every seat — not a Clay–Diamond bundle. */
 export const OFFICE_PLANS = [
-  { id: 'boutique', name: 'Boutique', seats: '5–24 seats', price: '$708 / seat / yr' },
-  { id: 'growth', name: 'Growth', seats: '25–74 seats', price: '$540 / seat / yr' },
-  { id: 'enterprise', name: 'Enterprise', seats: '75–199 seats', price: '$420 / seat / yr' },
-  { id: 'franchise', name: 'Franchise', seats: '200+ seats', price: '$300 / seat / yr' },
+  { id: 'boutique', name: 'Boutique', seats: '5–24 seats', seatPricePerYear: OFFICE_SEAT_PRICE_PER_YEAR.boutique, price: seatPerYear(OFFICE_SEAT_PRICE_PER_YEAR.boutique) },
+  { id: 'growth', name: 'Growth', seats: '25–74 seats', seatPricePerYear: OFFICE_SEAT_PRICE_PER_YEAR.growth, price: seatPerYear(OFFICE_SEAT_PRICE_PER_YEAR.growth) },
+  { id: 'enterprise', name: 'Enterprise', seats: '75–199 seats', seatPricePerYear: OFFICE_SEAT_PRICE_PER_YEAR.enterprise, price: seatPerYear(OFFICE_SEAT_PRICE_PER_YEAR.enterprise) },
+  { id: 'franchise', name: 'Franchise', seats: '200+ seats', seatPricePerYear: OFFICE_SEAT_PRICE_PER_YEAR.franchise, price: seatPerYear(OFFICE_SEAT_PRICE_PER_YEAR.franchise) },
 ] as const
 
 export const OFFICE_INCLUDES =

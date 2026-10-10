@@ -1,21 +1,17 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
-import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { SOFTWARE_PLANS, OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import {
-  AREA_SERVED_SCHEMA,
   COVERAGE_LINE,
   STATUS,
-  TOUR_BLURB,
   TOUR_NAME,
   TOUR_SHORT,
-  VISIT_BLURB,
   VISIT_NAME,
-  VISIT_PACKAGING,
   VISIT_SHORT,
 } from '@/lib/brand'
-import { ORG_REF } from '@/lib/schema'
+import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
@@ -36,6 +32,12 @@ export const metadata: Metadata = {
 
 const BANDS = ['Small', 'Mid', 'Large', 'XL'] as const
 
+/** Offers whose prices this page renders (packages + priced rows of the à la carte table). */
+const PRICING_PAGE_OFFERS: readonly MediaOfferId[] = [
+  'photos_only', 'essentials', 'story', 'showcase', 'suite', 'floor_plan_only',
+  'drone', 'reel', 'tour', 'visit', 'twilight', 'staging', 'rush',
+]
+
 const rows = [
   { name: 'HDR photography', inc: 'interiors + exteriors', vals: bandCells(PHOTO_RATE) },
   { name: 'Licensed drone', inc: 'Advanced RPAS-certified aerial', vals: bandCells(DRONE_RATE) },
@@ -55,28 +57,11 @@ export default function PricingPage() {
       <RevealObserver />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Service',
-            serviceType: 'Real estate listing media',
-            provider: ORG_REF,
-            areaServed: AREA_SERVED_SCHEMA,
-            hasOfferCatalog: {
-              type: 'OfferCatalog',
-              name: 'Bricks listing media — à la carte',
-              itemListElement: [
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'HDR photography' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 149, maxPrice: 299, priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Licensed aerial drone' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 99, maxPrice: 159, priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cinematic reel' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: REEL_RATE[0], maxPrice: REEL_RATE[REEL_RATE.length - 1], priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: TOUR_NAME, description: TOUR_BLURB }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 149, maxPrice: 299, priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: VISIT_NAME, description: `${VISIT_BLURB} ${VISIT_PACKAGING}` }, priceSpecification: { '@type': 'PriceSpecification', minPrice: VISIT_RATE[0], maxPrice: VISIT_RATE[3], priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Twilight exterior' }, priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, maxPrice: 200, priceCurrency: 'CAD' } },
-                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Virtual staging', description: '$35 per photo, before tax. Charged at checkout. Not included in any package.' }, priceSpecification: { '@type': 'PriceSpecification', price: 35, priceCurrency: 'CAD' } },
-              ],
-            },
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(mediaServiceSchema({ url: 'https://www.brxs.ca/pricing', offers: PRICING_PAGE_OFFERS })) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(osSoftwareApplicationSchema('https://www.brxs.ca/pricing')) }}
       />
       <script
         type="application/ld+json"
@@ -85,12 +70,12 @@ export default function PricingPage() {
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
             mainEntity: [
-              { '@type': 'Question', name: 'Why Essentials from $248?', acceptedAnswer: { '@type': 'Answer', text: 'Essentials is HDR + licensed drone + floor plan — the drone-included listing set from $248. Compare that stack to photo-only peers that upsell drone later.' } },
+              { '@type': 'Question', name: `Why Essentials from $${CORE_FROM}?`, acceptedAnswer: { '@type': 'Answer', text: `Essentials is HDR + licensed drone + floor plan — the drone-included listing set from $${CORE_FROM}. Compare that stack to photo-only peers that upsell drone later.` } },
               { '@type': 'Question', name: 'Are the stills MLS-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Real window views. Bricks does not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on.' } },
               { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'GTA assign-first is often $0. Outside that: first 25 km from the assigned photographer base free, then $0.75/km — shown before you pay. Not free Canada-wide.' } },
               { '@type': 'Question', name: 'How is footprint defined?', acceptedAnswer: { '@type': 'Answer', text: 'Small / Mid / Large / XL map to the property\'s finished area and complexity. Not sure which tier? Pick "advise me" in booking and we\'ll size it from the address.' } },
               { '@type': 'Question', name: `Virtual tour vs virtual visit?`, acceptedAnswer: { '@type': 'Answer', text: `${TOUR_NAME} (${TOUR_SHORT}) is a ${TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. ${VISIT_NAME} (${VISIT_SHORT}) is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()}, never packaged.` } },
-              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: 'Furniture and décor added to empty or dated interior photos in post. Furniture and décor added in post. $35 per photo, before tax, charged at checkout. Not included in any package.' } },
+              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture and décor added to empty or dated interior photos in post. Furniture and décor added in post. $${STAGING_PER_IMAGE} per photo, before tax, charged at checkout. Not included in any package.` } },
               { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered and quote travel if needed.` } },
               { '@type': 'Question', name: 'Can I add AI without upgrading?', acceptedAnswer: { '@type': 'Answer', text: ADDONS_BLURB } },
             ],
@@ -102,7 +87,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and listing photo pricing.</h1>
-          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media leads with <strong>Essentials from ${CORE_FROM}</strong> — HDR + licensed drone + floor plan (not a photo-only peer stack). Virtual visit ({VISIT_SHORT}) is $249 / $299 / $349 / $399 by footprint — never packaged. {STATUS.os}</p>
+          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media leads with <strong>Essentials from ${CORE_FROM}</strong> — HDR + licensed drone + floor plan (not a photo-only peer stack). Virtual visit ({VISIT_SHORT}) is {VISIT_PRICE_LABEL} by footprint — never packaged. {STATUS.os}</p>
         </div>
       </section>
 
@@ -172,7 +157,7 @@ export default function PricingPage() {
               <h2>Essentials through Full suite.</h2>
             </div>
           </div>
-          <p className="tbl-cap">Same ladder as /book. Small footprint “from” prices, CAD pre-tax — scales to XL. Essentials is the drone-included listing set vs photo-only peers. Floor plan on every standard shoot. Virtual staging is $35 / photo and is not included.</p>
+          <p className="tbl-cap">Same ladder as /book. Small footprint “from” prices, CAD pre-tax — scales to XL. Essentials is the drone-included listing set vs photo-only peers. Floor plan on every standard shoot. Virtual staging is {STAGING_PRICE_LABEL} and is not included.</p>
           <div className="incl">
             <div className="c rvl">
               <span className="ic">{`from $${CORE_FROM}`}</span>
@@ -192,7 +177,7 @@ export default function PricingPage() {
             <div className="c rvl">
               <span className="ic">{`from $${FULL_FROM}`}</span>
               <h4>Full suite</h4>
-              <p>Everything in Showcase plus twilight exterior. Virtual staging is $35 / photo, not included. 24–48h target.</p>
+              <p>Everything in Showcase plus twilight exterior. Virtual staging is {STAGING_PRICE_LABEL}, not included. 24–48h target.</p>
             </div>
           </div>
           <p className="tbl-cap" style={{ marginTop: 18 }}>Photos only — HDR only, no drone, no floor plan — {`from $${PHOTO_ONLY_FROM}`}. <Link href="/book" style={{ color: 'var(--brickDeep)' }}>Book a shoot →</Link></p>
@@ -235,7 +220,7 @@ export default function PricingPage() {
             <div className="qa"><h4>How does travel work?</h4><p>GTA assign-first is often $0. Outside that: first 25 km from the assigned photographer&apos;s base free, then $0.75/km — shown on the quote before you pay. Not free Canada-wide.</p></div>
             <div className="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property&apos;s finished area and complexity. Not sure which tier? Pick &quot;advise me&quot; in booking and we&apos;ll size it from the address.</p></div>
             <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} ({TOUR_SHORT}) is a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} ({VISIT_SHORT}) is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()}, never packaged.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. $35 per photo, before tax, in checkout. Not included in Photos, Essentials, Story, Showcase, or Full suite.</p></div>
+            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. ${STAGING_PER_IMAGE} per photo, before tax, in checkout. Not included in Photos, Essentials, Story, Showcase, or Full suite.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>
             <div className="qa"><h4>Is software live?</h4><p>Yes. Stripe tiers are live on OS. Media is live to book. Companion and GO are live on the web.</p></div>
             <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>

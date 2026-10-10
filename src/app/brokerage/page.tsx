@@ -4,6 +4,7 @@ import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
 import { STATUS } from '@/lib/brand'
+import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'bricks for brokerages — the system for the whole shop',
@@ -15,6 +16,10 @@ export default function BrokeragePage() {
   return (
     <>
       <RevealObserver />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(osSoftwareApplicationSchema('https://www.brxs.ca/brokerage')) }}
+      />
       <section className="hero">
         <div className="wrap">
           <span className="badge">Brokerage</span>

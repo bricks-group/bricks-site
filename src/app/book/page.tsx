@@ -3,7 +3,7 @@ import Link from 'next/link'
 import BookingWizard from './BookingWizard'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
-import { ORG_REF } from '@/lib/schema'
+import { mediaServiceSchema } from '@/lib/schema'
 
 const OG =
   'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
@@ -101,17 +101,12 @@ export default function BookPage() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Service',
-            name: 'Book Bricks listing photos',
-            serviceType: 'Real estate photography booking',
-            provider: ORG_REF,
-            areaServed: { '@type': 'Country', name: 'Canada' },
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(mediaServiceSchema({
             url: 'https://www.brxs.ca/book',
-          }),
-        }}
+            name: 'Book Bricks listing photos',
+            // Only what the booking form visibly prices.
+            offers: ['essentials', 'floor_plan_only', 'reel', 'tour', 'visit', 'twilight', 'staging', 'rush'],
+          })) }}
       />
       <section className="hero">
         <div className="wrap">
