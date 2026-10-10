@@ -3,6 +3,7 @@ import Link from 'next/link'
 import BookingWizard from './BookingWizard'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { ORG_REF } from '@/lib/schema'
 
 const OG =
   'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
@@ -106,7 +107,7 @@ export default function BookPage() {
             '@type': 'Service',
             name: 'Book Bricks listing photos',
             serviceType: 'Real estate photography booking',
-            provider: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group', url: 'https://www.brxs.ca/' },
+            provider: ORG_REF,
             areaServed: { '@type': 'Country', name: 'Canada' },
             url: 'https://www.brxs.ca/book',
           }),

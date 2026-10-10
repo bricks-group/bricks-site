@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { PHOTO_RATE, DRONE_RATE, REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, bandCells, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
+import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'How much does real estate photography cost in the GTA? (2026) | Bricks',
@@ -33,7 +34,7 @@ export default function Post() {
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
-            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
+            publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             mainEntityOfPage: 'https://www.brxs.ca/blog/gta-real-estate-media-cost-2026',
             keywords: 'real estate photography cost GTA, GTA listing media pricing, Toronto real estate photographer price',
           }),

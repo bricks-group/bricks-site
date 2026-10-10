@@ -5,7 +5,6 @@ import RevealObserver from '@/components/RevealObserver'
 import {
   AREA_SERVED_SCHEMA,
   COVERAGE_LINE,
-  KNOWS_ABOUT,
   TOUR_NAME,
   VISIT_NAME,
   VISIT_PACKAGING,
@@ -20,6 +19,7 @@ import {
   PHOTO_RANGE,
   DRONE_RANGE,
 } from '@/lib/pricing'
+import { ORG_REF } from '@/lib/schema'
 
 const OG =
   'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
@@ -88,22 +88,7 @@ export default function RealEstatePhotographyPage() {
             serviceType: 'Real estate photography',
             description:
               'Professional real estate photography and MLS listing photos for Canadian agents — HDR, licensed drone, floor plan, 24–48h target.',
-            provider: {
-              '@type': 'LocalBusiness',
-              name: 'Bricks',
-              legalName: 'Bricks Group',
-              url: 'https://www.brxs.ca/',
-              telephone: '+1-343-453-4578',
-              email: 'help@brxs.ca',
-              priceRange: `$$ (HDR from $${PHOTO_RATE[0]}; HDR + drone + floor plan from ~$${CORE_FROM})`,
-              areaServed: AREA_SERVED_SCHEMA,
-              knowsAbout: [
-                ...KNOWS_ABOUT,
-                'Listing photos',
-                'MLS photos',
-                'Real estate photographer Canada',
-              ],
-            },
+            provider: ORG_REF,
             areaServed: AREA_SERVED_SCHEMA,
             offers: {
               '@type': 'AggregateOffer',

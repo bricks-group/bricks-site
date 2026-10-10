@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FOUNDER_NAME, FOUNDER_PERSON, STATUS, TOUR_SHORT, VISIT_SHORT } from '@/lib/brand'
+import { ORG_REF, SITE_ID } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'About Bricks — Canadian Real Estate Photography & OS',
@@ -39,17 +40,11 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'Organization',
-            name: 'Bricks',
-            legalName: 'Bricks Group',
-            description: 'The system for Canadian real estate. HDR photography, licensed drone, floor plans, optional virtual tour and virtual visit. OS is live in preview at app.brxs.ca.',
-            url: 'https://www.brxs.ca/',
-            email: 'help@brxs.ca',
-            telephone: '+1-343-453-4578',
-            sameAs: ['https://www.linkedin.com/company/bricksbybricks', 'https://share.google/7ttYfc6W7JRwlqA9U'],
-            knowsAbout: ['Real estate photography', 'Listing photos', 'MLS photos', 'Listing media', 'Aerial photography', 'Floor plans', 'Virtual tours', 'Virtual visits', 'Drone photography', 'Transport Canada RPAS regulations', 'Real estate system', 'Real estate photographer Canada'],
-            founder: FOUNDER_PERSON,
-            image: 'https://www.brxs.ca/media/raphael-merchant-640.jpg',
+            '@type': 'AboutPage',
+            url: 'https://www.brxs.ca/about',
+            about: ORG_REF,
+            mainEntity: FOUNDER_PERSON,
+            isPartOf: { '@id': SITE_ID },
           }),
         }}
       />

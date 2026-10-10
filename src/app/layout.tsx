@@ -13,7 +13,7 @@ const gated = Boolean(process.env.WWW_SITE_GATE_PASSWORD?.trim())
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.brxs.ca'),
   title: {
-    default: gated ? 'bricks' : 'bricks — the system for Canadian real estate',
+    default: gated ? 'bricks' : 'Bricks — the system for Canadian real estate',
     template: '%s',
   },
   description: gated

@@ -9,7 +9,6 @@ import OsDeskShot from '@/components/OsDeskShot'
 import FlowStage from '@/components/FlowStage'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import {
-  PHOTO_RATE,
   FOOTPRINT_BANDS,
   TOUR_RANGE,
   VISIT_PRICE_LABEL,
@@ -20,16 +19,14 @@ import {
   PHOTO_ONLY_FROM,
 } from '@/lib/pricing'
 import {
-  AREA_SERVED_SCHEMA,
   COVERAGE_LINE,
-  FOUNDER_PERSON,
   GO_URL,
-  KNOWS_ABOUT,
   STATUS,
   TOUR_NAME,
   VISIT_NAME,
   VISIT_PACKAGING,
 } from '@/lib/brand'
+import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 
 const faqs = [
   {
@@ -109,16 +106,20 @@ const beforeAfter = [
   { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging ($35/photo add-on) before and after' },
 ] as const
 export const metadata: Metadata = {
-  title: 'bricks — the system for Canadian real estate',
+  title: 'Bricks — the system for Canadian real estate',
   description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'bricks — the system for Canadian real estate',
+    type: 'website',
+    siteName: 'Bricks',
+    url: 'https://www.brxs.ca/',
+    locale: 'en_CA',
+    title: 'Bricks — the system for Canadian real estate',
     description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
-    title: 'bricks — the system for Canadian real estate',
+    title: 'Bricks — the system for Canadian real estate',
     description: 'The system for Canadian real estate. Book professional media today.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
@@ -135,18 +136,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
-            name: 'Bricks',
-            legalName: 'Bricks Group',
-            description: 'Bricks is the system for Canadian real estate — simplifying the broken business. Media is live to book. The desk is live in preview at app.brxs.ca. Companion and GO are live on the web.',
-            url: 'https://www.brxs.ca/',
-            telephone: '+1-343-453-4578',
-            email: 'help@brxs.ca',
-            priceRange: `$$ (à la carte from $${PHOTO_RATE[0]}; HDR + drone + floor plan from ~$${CORE_FROM})`,
-            areaServed: AREA_SERVED_SCHEMA,
-            knowsAbout: KNOWS_ABOUT,
-            founder: FOUNDER_PERSON,
-            sameAs: ['https://share.google/7ttYfc6W7JRwlqA9U'],
+            '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA],
           }),
         }}
       />

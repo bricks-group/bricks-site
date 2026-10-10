@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CoverageMap from '@/components/CoverageMap'
 import { coverageDetailCards } from '@/lib/coverage'
-import { AREA_SERVED_SCHEMA, COVERAGE_LINE, KNOWS_ABOUT, TOUR_NAME, VISIT_NAME } from '@/lib/brand'
+import { AREA_SERVED_SCHEMA, COVERAGE_LINE, TOUR_NAME, VISIT_NAME } from '@/lib/brand'
+import { ORG_REF } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Service Areas | Listing Photos & Real Estate Photography Canada — Bricks',
@@ -32,17 +33,13 @@ export default function ServiceAreasPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
-            name: 'Bricks',
-            legalName: 'Bricks Group',
+            '@type': 'Service',
+            serviceType: 'Real estate photography',
             description:
               'Listing photos and real estate photography for Canadian agents — HDR, licensed drone, floor plans, optional virtual tour and virtual visit.',
             url: 'https://www.brxs.ca/service-areas',
-            telephone: '+1-343-453-4578',
-            email: 'help@brxs.ca',
-            priceRange: '$$ (à la carte from $149)',
+            provider: ORG_REF,
             areaServed: AREA_SERVED_SCHEMA,
-            knowsAbout: KNOWS_ABOUT,
           }),
         }}
       />

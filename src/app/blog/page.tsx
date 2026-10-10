@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 
 const OG =
   'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
@@ -80,12 +81,7 @@ export default function BlogPage() {
             name: 'Bricks Resources',
             description: 'Canadian real estate photography and listing media guides.',
             url: 'https://www.brxs.ca/blog',
-            publisher: {
-              '@type': 'Organization',
-              name: 'Bricks',
-              legalName: 'Bricks Group',
-              logo: { '@type': 'ImageObject', url: 'https://www.brxs.ca/favicon.svg' },
-            },
+            publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             blogPost: posts.map((p) => ({
               '@type': 'BlogPosting',
               headline: p.title,

@@ -15,6 +15,7 @@ import {
   DRONE_RANGE,
 } from '@/lib/pricing'
 import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
+import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 
 const OG =
   'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
@@ -56,7 +57,7 @@ export default function Post() {
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-09-12',
             dateModified: '2026-09-12',
-            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
+            publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             mainEntityOfPage: 'https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026',
             keywords:
               'real estate photography cost Canada, listing photos price, MLS photos Canada, real estate photographer Canada, drone real estate photos cost',

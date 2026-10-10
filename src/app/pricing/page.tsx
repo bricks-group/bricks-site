@@ -15,6 +15,7 @@ import {
   VISIT_PACKAGING,
   VISIT_SHORT,
 } from '@/lib/brand'
+import { ORG_REF } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
@@ -59,7 +60,7 @@ export default function PricingPage() {
             '@context': 'https://schema.org',
             '@type': 'Service',
             serviceType: 'Real estate listing media',
-            provider: { '@type': 'LocalBusiness', name: 'Bricks', legalName: 'Bricks Group', url: 'https://www.brxs.ca/' },
+            provider: ORG_REF,
             areaServed: AREA_SERVED_SCHEMA,
             hasOfferCatalog: {
               type: 'OfferCatalog',

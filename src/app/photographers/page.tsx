@@ -3,6 +3,7 @@ import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import PhotographerForm from './PhotographerForm'
 import { COVERAGE_LINE, GO_URL, STATUS } from '@/lib/brand'
+import { ORG_ID } from '@/lib/schema'
 
 const OG =
   'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
@@ -44,10 +45,10 @@ export default function PhotographersPage() {
               'Applications are open now — not launching soon. Auto-routed real estate listing photo and video shoots across Canada. Paid via Stripe Connect on a fixed vendor rate card. Apply in about four minutes. GO field app is live on the web.',
             hiringOrganization: {
               '@type': 'Organization',
+              '@id': ORG_ID,
               name: 'Bricks',
-              legalName: 'Bricks Group',
               sameAs: 'https://www.brxs.ca/',
-              url: 'https://www.brxs.ca/photographers',
+              logo: 'https://www.brxs.ca/bricks-mark.png',
             },
             employmentType: 'CONTRACTOR',
             jobLocationType: 'TELECOMMUTE',

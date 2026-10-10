@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
+import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: "What's included in a professional listing photo shoot? | Bricks",
@@ -33,7 +34,7 @@ export default function Post() {
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
-            publisher: { '@type': 'Organization', name: 'Bricks', legalName: 'Bricks Group' },
+            publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             mainEntityOfPage: 'https://www.brxs.ca/blog/whats-included-listing-shoot',
             keywords: "what's included in real estate photo shoot, listing media package, professional listing photography Canada",
           }),

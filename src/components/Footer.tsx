@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
+import { LEGAL_NAME, SOCIAL_PROFILES } from '@/lib/schema'
 import BrandMark from '@/components/BrandMark'
 import ThemeToggle from '@/components/ThemeToggle'
 
@@ -51,10 +52,13 @@ export default function Footer() {
         </div>
       </div>
       <div className="foot-meta">
-        <span>© Bricks Group · Canada</span>
+        <span>© {LEGAL_NAME} · Canada</span>
         <a href="mailto:help@brxs.ca">help@brxs.ca</a>
         <span className="mono">343-453-4578</span>
         <a href="https://share.google/7ttYfc6W7JRwlqA9U" target="_blank" rel="noopener noreferrer">Find us on Google</a>
+        {SOCIAL_PROFILES.map((p) => (
+          <a key={p.url} href={p.url} target="_blank" rel="me noopener noreferrer">{p.label}</a>
+        ))}
         <ThemeToggle />
       </div>
     </footer>

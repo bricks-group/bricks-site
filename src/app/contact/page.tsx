@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import ContactForm from './ContactForm'
 import { AREA_SERVED_SCHEMA, COVERAGE_LINE } from '@/lib/brand'
+import { ORG_REF } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Contact Bricks | Canadian real estate media',
@@ -29,9 +30,7 @@ export default function ContactPage() {
             description: 'Contact Bricks for Canadian real estate listing media.',
             url: 'https://www.brxs.ca/contact',
             mainEntity: {
-              '@type': 'Organization',
-              name: 'Bricks',
-              legalName: 'Bricks Group',
+              ...ORG_REF,
               email: 'help@brxs.ca',
               telephone: '+1-343-453-4578',
               areaServed: AREA_SERVED_SCHEMA,
