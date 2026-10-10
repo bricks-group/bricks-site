@@ -122,7 +122,7 @@ header{position:sticky;top:0;z-index:70;background:color-mix(in srgb, var(--pape
   .hero-tight{padding:36px var(--gutter) 20px;}
 }
 
-.hero .wrap{padding:0;}
+.hero .wrap{padding:0 var(--gutter-lg);}
 .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;
   background:var(--brickTint);color:var(--brickDeep);margin-bottom:18px;}
@@ -1623,3 +1623,4 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 @media (max-width:560px){
   .integ-grid{grid-template-columns:1fr;}
 }
+

@@ -37,7 +37,7 @@
     {
       "@type": "Question",
       "name": "What if I need to cancel?",
-      "acceptedAnswer": { "@type": "Answer", "text": "More than 48 hours before the shoot window: full refund. 48 hours down to 4 hours: 50% refund. Inside 4 hours, or no-show / no access: no refund (100% retained). If we cancel on our side: full refund or a free reshoot, your choice." }
+      "acceptedAnswer": { "@type": "Answer", "text": "More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice." }
     },
     {
       "@type": "Question",
@@ -130,6 +130,21 @@
 .sqft-edit{display:flex;align-items:center;gap:8px;margin:12px 0 2px;}
 .sqft-edit input{width:110px;padding:7px 9px;font-size:13px;}
 .sqft-edit button{font-size:12px;padding:7px 12px;border:1px solid var(--hairStrong);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer;font-family:'JetBrains Mono',monospace;}
+/* Bricks date picker */
+.bx-date-wrap{position:relative;}
+.bx-date-input{width:100%;cursor:pointer;}
+.bx-cal{position:absolute;top:100%;left:0;z-index:30;background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;margin-top:4px;padding:14px;min-width:280px;box-shadow:0 8px 24px rgba(0,0,0,0.12);}
+.bx-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.bx-cal-title{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);}
+.bx-cal-nav{background:transparent;border:1px solid var(--hairStrong);border-radius:2px;width:28px;height:28px;cursor:pointer;color:var(--ink);font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;}
+.bx-cal-nav:hover{border-color:var(--brick);color:var(--brickDeep);}
+.bx-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.bx-cal-dow{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--inkFaint);text-align:center;padding:6px 0;}
+.bx-cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:2px;cursor:pointer;color:var(--ink);border:1px solid transparent;}
+.bx-cal-day:hover:not(.dis):not(.sel){background:var(--paperSoft);border-color:var(--hairStrong);}
+.bx-cal-day.dis{color:var(--inkFaint);opacity:0.35;cursor:default;}
+.bx-cal-day.sel{background:var(--brick);color:#fff;border-color:var(--brick);font-weight:500;}
+.bx-cal-day.today{border-color:var(--brick);}
 .loading{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);letter-spacing:0.08em;}
 .qload{display:flex;align-items:center;gap:14px;padding:10px 2px 6px;}
 .qload .spin{width:22px;height:22px;border-radius:50%;border:2px solid var(--brickSoft);
@@ -265,7 +280,7 @@
     <div class="panel" data-panel="2">
       <h2>When?</h2>
       <p class="hint">Pick a real time below — it's checked live against our calendar and locked the moment you pay.</p>
-      <div class="field"><label>Shoot date <span class="req">*</span></label><input id="f_date" type="date" /></div>
+      <div class="field"><label>Shoot date <span class="req">*</span></label><div class="bx-date-wrap"><input id="f_date" type="text" readonly class="bx-date-input" placeholder="Select a date" /><input id="f_date_val" type="hidden" /><div id="bxCal" class="bx-cal" style="display:none;"></div></div></div>
       <div id="slotBox"><div class="slotmsg">Pick a date above to see real available times.</div></div>
       <div class="field"><label>Access / staging notes</label><textarea id="f_notes" placeholder="Lockbox code, occupied, staging schedule, deadline…"></textarea></div>
       <div class="err" id="err2"></div>
@@ -309,7 +324,7 @@
       <div class="qa"><h4>What's included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It's an optional add-on (+$150–200 by footprint) on any shoot; pick it in Step 2.</p></div>
       <div class="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It's priced per image staged at <b>$35 / image</b>; tell us how many rooms to stage in the access notes and we'll confirm the count before delivery.</p></div>
       <div class="qa"><h4>Can I reschedule after booking?</h4><p>More than 48 hours before the shoot window is free. Inside 48 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <a href="terms.html#refunds">cancellation policy</a>.</p></div>
-      <div class="qa"><h4>What if I need to cancel?</h4><p>More than 48 hours before the shoot window: full refund. 48 hours down to 4 hours: 50% refund. Inside 4 hours, or no-show / no access: no refund (100% retained). If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <a href="terms.html#refunds">Terms</a>.</p></div>
+      <div class="qa"><h4>What if I need to cancel?</h4><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <a href="terms.html#refunds">Terms</a>.</p></div>
       <div class="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
     </div>
   </section>
@@ -367,7 +382,7 @@
       if(!data.quote){ e.textContent='Quote still calculating — give it a moment.'; return false; }
     }
     if(s===2){
-      if(!document.getElementById('f_date').value){ e.textContent='Pick a shoot date.'; return false; }
+      if(!bxGetDate()){ e.textContent='Pick a shoot date.'; return false; }
       if(!data.selectedSlot){ e.textContent='Pick a real time slot above.'; return false; }
     }
     return true;
@@ -407,12 +422,75 @@
   });
   document.addEventListener('click', function(e){ if(!e.target.closest('#suggest') && e.target!==addrInput) sugBox.style.display='none'; });
 
+  // ---- Bricks custom date picker ----
+  function bxGetDate(){ var h=document.getElementById('f_date_val'); return h ? h.value : ''; }
+  (function(){
+    var displayInput = document.getElementById('f_date');
+    var hiddenInput = document.getElementById('f_date_val');
+    var calEl = document.getElementById('bxCal');
+    var viewDate = new Date();
+    var selectedDate = null;
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var DOWS = ['S','M','T','W','T','F','S'];
+
+    function fmtYMD(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+    function fmtDisplay(d){ return MONTHS[d.getMonth()].slice(0,3)+' '+d.getDate()+', '+d.getFullYear(); }
+
+    function render(){
+      var y = viewDate.getFullYear(), m = viewDate.getMonth();
+      var first = new Date(y, m, 1).getDay();
+      var daysInMonth = new Date(y, m+1, 0).getDate();
+      var today = new Date(); today.setHours(0,0,0,0);
+      var html = '<div class="bx-cal-head"><button class="bx-cal-nav" id="bxPrev">‹</button>'
+        + '<div class="bx-cal-title">'+MONTHS[m]+' '+y+'</div>'
+        + '<button class="bx-cal-nav" id="bxNext">›</button></div>';
+      html += '<div class="bx-cal-grid">';
+      DOWS.forEach(function(d){ html += '<div class="bx-cal-dow">'+d+'</div>'; });
+      for(var i=0;i<first;i++) html += '<div></div>';
+      for(var d=1;d<=daysInMonth;d++){
+        var dt = new Date(y, m, d);
+        var isPast = dt < today;
+        var isSel = selectedDate && dt.getTime()===selectedDate.getTime();
+        var isToday = dt.getTime()===today.getTime();
+        var cls = 'bx-cal-day'+(isPast?' dis':'')+(isSel?' sel':'')+(isToday?' today':'');
+        html += '<div class="'+cls+'" data-d="'+d+'"'+(isPast?'':' data-pick="1"')+'>'+d+'</div>';
+      }
+      html += '</div>';
+      calEl.innerHTML = html;
+      document.getElementById('bxPrev').onclick = function(e){ e.stopPropagation(); viewDate.setMonth(viewDate.getMonth()-1); render(); };
+      document.getElementById('bxNext').onclick = function(e){ e.stopPropagation(); viewDate.setMonth(viewDate.getMonth()+1); render(); };
+      calEl.querySelectorAll('[data-pick]').forEach(function(el){
+        el.onclick = function(e){
+          e.stopPropagation();
+          selectedDate = new Date(y, m, parseInt(el.getAttribute('data-d')));
+          var ymd = fmtYMD(selectedDate);
+          displayInput.value = fmtDisplay(selectedDate);
+          hiddenInput.value = ymd;
+          // Update the f_date value for existing validation logic
+          displayInput.setAttribute('data-ymd', ymd);
+          calEl.style.display = 'none';
+          data.selectedSlot = null;
+          fetchSlots(ymd);
+          render();
+        };
+      });
+    }
+
+    displayInput.addEventListener('click', function(e){
+      e.stopPropagation();
+      // Sync view to selected date if any
+      if(selectedDate) viewDate = new Date(selectedDate);
+      render();
+      calEl.style.display = calEl.style.display==='none' ? 'block' : 'none';
+    });
+    document.addEventListener('click', function(e){
+      if(!e.target.closest('.bx-date-wrap')) calEl.style.display='none';
+    });
+  })();
+
   // ---- real slot picker (cal-slots, live Cal.com availability) ----
   var CAL_SLOTS_URL = SUPABASE + 'cal-slots';
-  document.getElementById('f_date').addEventListener('change', function(){
-    data.selectedSlot = null;
-    fetchSlots(this.value);
-  });
+  // Note: date changes now handled by Bricks custom picker above (calls fetchSlots directly)
   function fetchSlots(date){
     var box = document.getElementById('slotBox');
     if(!date){ box.innerHTML = '<div class="slotmsg">Pick a date above to see real available times.</div>'; return; }
@@ -525,7 +603,7 @@
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok, j:j}; }); })
       .then(function(res){
         document.getElementById('err1').textContent='';
-        if(!res.ok){ box.innerHTML = '<div class="qmsg">We couldn\'t auto-price this address. Enter the square footage above and hit <b>Re-quote</b>, or email <b>booking@brxs.ca</b>.</div>'; return; }
+        if(!res.ok){ box.innerHTML = '<div class="qmsg">We couldn\'t auto-price this address. Enter the square footage below and hit <b>Re-quote</b>, or email <b>booking@brxs.ca</b>.</div><div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" /><button onclick="requote()">Re-quote</button></div>'; return; }
         data.quote = res.j.quote;
         renderQuote(box, res.j.quote, true);
       })
@@ -601,7 +679,7 @@
       property_type: document.getElementById('f_type').value,
       package_interest: servicesSummary(),
       sqft: data.quote && data.quote.sqft ? data.quote.sqft : null,
-      preferred_date: document.getElementById('f_date').value,
+      preferred_date: bxGetDate(),
       selected_slot_start: data.selectedSlot ? data.selectedSlot.start : null,
       selected_slot_end: data.selectedSlot ? data.selectedSlot.end : null,
       reel_addon: document.getElementById('f_reel').checked,
@@ -674,3 +752,4 @@
   <script src="assets/protect.js"></script>
 </body>
 </html>
+

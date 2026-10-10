@@ -40,6 +40,10 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/demo' || pathname === '/demo/') return true
   if (pathname === '/demo/unlock' || pathname.startsWith('/demo/unlock/')) return true
   if (pathname === '/api/demo/invite' || pathname.startsWith('/api/demo/')) return true
+  // Developer/REIT project microsites (/projects/[slug]) are the paid
+  // product itself -- a buyer needs the link to work without opening the
+  // gate, same reasoning as /book and /photographers above.
+  if (pathname === '/projects' || pathname.startsWith('/projects/')) return true
   return false
 }
 

@@ -254,12 +254,12 @@ export default function Home() {
               <figcaption>Interior · living</figcaption>
             </figure>
             <figure>
-              <Image src="/media/work/05.jpg" alt="Condo interior" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Condo · interior</figcaption>
+              <Image src="/media/work/05.jpg" alt="Licensed drone aerial" fill sizes="(max-width:900px) 50vw, 25vw" />
+              <figcaption>Licensed drone · aerial</figcaption>
             </figure>
             <figure>
-              <Image src="/media/work/07.jpg" alt="Licensed drone aerial" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Licensed drone · aerial</figcaption>
+              <Image src="/media/work/07.jpg" alt="Condo interior" fill sizes="(max-width:900px) 50vw, 25vw" />
+              <figcaption>Condo · interior</figcaption>
             </figure>
           </div>
           <div className="work-more">
@@ -411,12 +411,12 @@ export default function Home() {
           <div className="integ-grid">
             <div className="integ-card">
               <span className="integ-k">Calendar</span>
-              <p>Google, Apple, and ICS. FreeBusy gates auto-assign for every vendor.</p>
+              <p>Google, Apple, and ICS. Your calendar availability controls auto-assign for every vendor.</p>
               <span className="integ-status">Launch</span>
             </div>
             <div className="integ-card">
               <span className="integ-k">MLS</span>
-              <p>BYO board credentials. Listing file sync via RESO / Bridge — no scraping.</p>
+              <p>Use your own board credentials. Listing file sync via RESO / Bridge — no scraping.</p>
               <span className="integ-status">Launch</span>
             </div>
             <div className="integ-card">
@@ -504,3 +504,5 @@ export default function Home() {
     </>
   )
 }
+
+

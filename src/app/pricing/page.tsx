@@ -242,16 +242,13 @@ export default function PricingPage() {
           </div>
         </section>
 
-        <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
-          <div className="book">
-            <span className="over">Book a shoot</span>
-            <h2>Ready when the listing is.</h2>
-            <p className="lead">Start the booking flow — pick the services you want and a date.</p>
-            <div className="cta-row">
-              <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
-            </div>
-          </div>
-        </section>
+      <section className="closer closer-simple rvl" aria-label="Book a shoot">
+        <div className="closer-simple-inner">
+          <h2>Ready when the listing is.</h2>
+          <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
+          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h delivery</p>
+        </div>
+      </section>
       </div>
 
       <style>{`
@@ -288,3 +285,4 @@ export default function PricingPage() {
     </>
   )
 }
+
