@@ -11,7 +11,7 @@
   } /*EDITMODE-END*/;
 
   // Real Bricks listing photos, reused as sample thumbnails in mockups.
-  const SB_IMG = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/';
+  const SB_IMG = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/';
 
   // Shared primitives — used by all screen files. Lean tokens + helpers.
   const T = {
@@ -2336,7 +2336,7 @@
         flexDirection: 'column',
         gap: 0
       }
-    }, [['Booked', 'Apr 16 · 10:04', 'M. Ortega booked Premium package', true], ['Scheduled', 'Apr 17 · 09:12', 'J. Reyes assigned · 14:30 arrival', true], ['Shooting', 'Apr 18 · 14:30', 'Vendor on site', true], ['Editing', '—', 'Queued for 24h turnaround', false], ['Delivered', '—', '—', false]].map(([t, when, detail, done], i) => /*#__PURE__*/React.createElement("div", {
+    }, [['Booked', 'Apr 16 · 10:04', 'M. Ortega booked Premium package', true], ['Scheduled', 'Apr 17 · 09:12', 'J. Reyes assigned · 14:30 arrival', true], ['Shooting', 'Apr 18 · 14:30', 'Vendor on site', true], ['Editing', '—', 'Queued · 24–48h target', false], ['Delivered', '—', '—', false]].map(([t, when, detail, done], i) => /*#__PURE__*/React.createElement("div", {
       key: t,
       style: {
         display: 'flex',
@@ -2884,7 +2884,7 @@
     th,
     dark
   }) {
-    const sections = [['Brokerage', [['Name', 'Ashfield'], ['Domain', 'harbor.co'], ['Time zone', 'America / Toronto']]], ['Defaults', [['Default package', 'Standard · $379'], ['Turnaround SLA', '24 hours'], ['Auto-assign vendor', 'On · nearest']]], ['Notifications', [['New booking', 'Email + push'], ['Delivery ready', 'Email'], ['Weekly digest', 'Monday 8:00']]]];
+    const sections = [['Brokerage', [['Name', 'Ashfield'], ['Domain', 'harbor.co'], ['Time zone', 'America / Toronto']]], ['Defaults', [['Default package', 'Standard · $379'], ['Turnaround target', '24–48h'], ['Auto-assign vendor', 'On · nearest']]], ['Notifications', [['New booking', 'Email + push'], ['Delivery ready', 'Email'], ['Weekly digest', 'Monday 8:00']]]];
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 30,
@@ -4436,7 +4436,7 @@
       img: 'MAP WITH VENDOR PINS'
     }, {
       eye: 'TURN AROUND',
-      head: 'Photos in 24 hours.',
+      head: 'Photos in 24–48h target.',
       body: 'Edited, branded, MLS-sized. Dropped straight to your inbox and Dropbox.',
       img: 'GALLERY GRID'
     }];
@@ -5251,12 +5251,12 @@
     const pkgs = [{
       n: 'Essentials',
       p: '$379',
-      d: 'HDR · licensed drone · floor plan · 24–48h',
+      d: 'HDR · licensed drone · floor plan · 24–48h target',
       sel: false
     }, {
       n: 'Showcase',
       p: '$749',
-      d: 'Essentials + reel + virtual tour · 24–48h',
+      d: 'Essentials + reel + virtual tour · 24–48h target',
       sel: true
     }, {
       n: 'Full suite',

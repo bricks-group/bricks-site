@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Guides & Listing Media Blog | Bricks',
@@ -62,7 +62,7 @@ const posts = [
     href: '/blog/whats-included-listing-shoot',
     tag: 'The shoot',
     title: "What's included in a professional listing photo shoot?",
-    desc: 'The core set every Bricks shoot ships: HDR, licensed drone, floor plan, and 24–48h delivery.',
+    desc: 'The core set every Bricks shoot ships: HDR, licensed drone, floor plan, and 24–48h target.',
     read: '5 min',
     date: '2026-07-22',
   },
@@ -143,7 +143,7 @@ export default function BlogPage() {
           <div className="book">
             <span className="over">Ready?</span>
             <h2>Book a listing shoot.</h2>
-            <p className="lead">Pick your services à la carte, get a tailored quote, and your MLS-ready media in 24–48 hours.</p>
+            <p className="lead">Pick your services à la carte, get a tailored quote, and your MLS-ready media on a 24–48h target.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">
                 Book listing media

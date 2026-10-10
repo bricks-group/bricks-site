@@ -76,14 +76,18 @@ const drone = opts.m.drone_addon === 'true';
 const pkg = packageIdOf(opts.m.package_interest || '', opts.m.package_id || '');
 const tour = tourPurchased(opts.m, pkg);
 const floorplan = floorplanPurchased(opts.m, pkg);
-// Launch honesty: never stamp staging on paid→job (owned pipeline only).
 const floorPlanOnly = pkg === 'floor_plan_only' || opts.m.floor_plan_only === 'true';
+const visitOn = opts.m.visit_addon === 'true';
+const stagingOn = opts.m.staging_addon === 'true';
+const stagingImages = stagingOn ? Math.max(1, parseInt(String(opts.m.staging_images || '1'), 10) || 1) : 0;
 const addOns = [
 drone && !floorPlanOnly ? { key: 'drone', included: true } : null,
 opts.m.reel_addon === 'true' ? { key: 'reel', included: true } : null,
 tour ? { key: 'tour', included: true } : null,
 opts.m.twilight_addon === 'true' ? { key: 'twilight', included: true } : null,
 rush ? { key: 'rush', included: true } : null,
+visitOn ? { key: 'visit', included: true, sqft_tier: String(opts.m.visit_sqft_tier || '') } : null,
+stagingOn ? { key: 'staging', included: true, images: stagingImages } : null,
 floorplan ? { key: floorPlanOnly ? 'floor_plan_only' : 'floorplan_2d', included: true } : null,
 ].filter(Boolean);
 const minTier = minTierOf(pkg);
@@ -108,7 +112,7 @@ priority: rush ? 'rush' : 'normal',
 property_details: `${opts.m.property_type || 'listing'} · paid www.brxs.ca/book · lead ${opts.leadId} · stripe ${opts.sessionId} · tz ${opts.timezone}`,
 client_instructions: opts.m.notes || '',
 checklist: [],
-assignee_id: '',
+assignee_id: String(opts.m.assignee_id || '').trim(),
 vendor_id: ORG_VENDOR_ID,
 scheduled_date: opts.preferredDate,
 agent_name: opts.m.agent_name || null,
@@ -173,7 +177,7 @@ property_details: job.property_details,
 client_instructions: job.client_instructions,
 scheduled_date: job.scheduled_date,
 vendor_id: ORG_VENDOR_ID,
-assignee_id: '',
+assignee_id: String(opts.m.assignee_id || job.assignee_id || '').trim(),
 agent_name: job.agent_name,
 agent_email: job.agent_email,
 agent_brokerage: job.agent_brokerage,
@@ -206,7 +210,10 @@ console.error('dispatch intake failed: ' + (await intake.text()).slice(0, 300));
 console.error('dispatch intake error: ' + String(e));
 }
 }
+assignee = String(opts.m.assignee_id || job.assignee_id || '').trim();
+if (!assignee) {
 assignee = await pickAssignee(opts.supabaseUrl, opts.serviceKey, job);
+}
 let vendorName = '';
 if (assignee) {
 job.assignee_id = assignee;

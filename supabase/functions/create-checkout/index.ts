@@ -150,6 +150,7 @@ Deno.serve(async (req: Request) => {
         rush_addon: body.rush_addon === true || body.rush_addon === 'true',
         staging_addon: body.staging_addon === true || body.staging_addon === 'true',
         staging_images: body.staging_images,
+        visit_addon: body.visit_addon === true || body.visit_addon === 'true',
         floor_plan_only: body.floor_plan_only === true || body.floor_plan_only === 'true'
           || pkgNormEarly === 'floor_plan_only',
         package_id: body.package_id,
@@ -163,6 +164,15 @@ Deno.serve(async (req: Request) => {
     return bad('Pricing verification error: ' + String(e), 502);
   }
   if (!q || typeof q.total !== 'number') return bad('Quote total required');
+  // Assign-first (Kam 2026-09-26): never force travel_pending=$0. Edge checkout
+  // requires a final quote (GTA $0 or vendor travel). Prefer OS www-create-checkout
+  // when this edge lacks an assignee — block rather than charge fake travel.
+  if (q.travel_pending || !q.assignee_id) {
+    return bad(
+      'Checkout blocked: a photographer must be assigned and the final fee (including any travel outside GTA major markets) shown before payment. Use the www checkout path.',
+      409,
+    );
+  }
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 
@@ -171,12 +181,9 @@ Deno.serve(async (req: Request) => {
     || pkgNorm === 'floor_plan_only' || pkgNorm === 'floorplan_only'
   const photosOnly = pkgNorm === 'photos_only'
     || /photos\s*only/i.test(String(body.package_interest || ''))
-  // Launch honesty (2026-09-12): refuse virtual staging in Stripe until owned pipeline ships.
-  if (body.staging_addon === true || body.staging_addon === 'true' || (parseInt(String(body.staging_images || '0'), 10) || 0) > 0) {
-    return bad('Virtual staging is not sold in online checkout yet. Email booking@brxs.ca for a quote.')
-  }
-  const stagingOn = false
-  const stagingImages = 0
+  const stagingOn = !!q.staging_addon
+  const stagingImages = Number(q.staging_images) || 0
+  const visitOn = !!q.visit_addon
   // Mirror quote package ladder into Stripe metadata so webhook/GO stamps match paid SKU
   // even when the client only sent package_id.
   const droneOn = !photosOnly && !floorPlanOnly && (
@@ -220,6 +227,8 @@ Deno.serve(async (req: Request) => {
     rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
     staging_addon: String(stagingOn),
     staging_images: String(stagingImages),
+    visit_addon: String(visitOn),
+    visit_sqft_tier: ['small', 'mid', 'large', 'xl'][Number(q.footprint_band) || 0] || 'small',
     floor_plan_only: String(!!floorPlanOnly),
     phone: (body.phone || '').toString(),
     brokerage: (body.brokerage || '').toString(),
@@ -227,7 +236,9 @@ Deno.serve(async (req: Request) => {
     // Stripe metadata values are capped at 500 chars -- store only what
     // stripe-webhook actually reads back (total, and lat/lon for the
     // travel-time check against neighboring bookings), not the full quote.
-    quote_json: JSON.stringify({ total: q.total, lat: q.lat ?? null, lon: q.lon ?? null }).slice(0, 480),
+    travel_fee: String(q.travel_fee ?? 0),
+    travel_pending: String(!!q.travel_pending),
+    quote_json: JSON.stringify({ total: q.total, lat: q.lat ?? null, lon: q.lon ?? null, travel_fee: q.travel_fee ?? 0, travel_pending: !!q.travel_pending, base_rate: q.base_rate ?? null }).slice(0, 480),
   };
 
   const form = new URLSearchParams();
@@ -244,12 +255,15 @@ Deno.serve(async (req: Request) => {
   // cannot appear on this session.
   form.append('payment_method_types[0]', 'card');
   form.append('payment_method_types[1]', 'link');
-  // TEAMLAUNCH / BRXLAUNCH (and other launch coupons) enter on Stripe Checkout.
+  // TEAMLAUNCH / BRICKSLAUNCH (and other launch coupons) enter on Stripe Checkout.
   form.set('allow_promotion_codes', 'true');
   if (meta.email) form.set('customer_email', meta.email);
   form.append('line_items[0][price_data][currency]', 'cad');
   form.append('line_items[0][price_data][product_data][name]', `Bricks listing media — ${meta.property_address}`);
-  form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). Travel ${q.travel_fee} CAD, base ${q.base_rate} CAD.`);
+  const travelDesc = q.gta_major
+    ? 'Travel $0 (GTA major market)'
+    : `Travel ${q.travel_fee} CAD from assigned photographer`;
+  form.append('line_items[0][price_data][product_data][description]', `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). ${travelDesc}, base ${q.base_rate} CAD.`);
   form.append('line_items[0][price_data][unit_amount]', String(amountCents));
   form.append('line_items[0][quantity]', '1');
   form.append('metadata[agent_name]', meta.agent_name);
@@ -268,6 +282,8 @@ Deno.serve(async (req: Request) => {
   form.append('metadata[rush_addon]', meta.rush_addon);
   form.append('metadata[staging_addon]', meta.staging_addon);
   form.append('metadata[staging_images]', meta.staging_images);
+  form.append('metadata[visit_addon]', meta.visit_addon);
+  form.append('metadata[visit_sqft_tier]', meta.visit_sqft_tier);
   form.append('metadata[floor_plan_only]', meta.floor_plan_only);
   form.append('metadata[preferred_date]', meta.preferred_date);
   form.append('metadata[preferred_window]', meta.preferred_window);

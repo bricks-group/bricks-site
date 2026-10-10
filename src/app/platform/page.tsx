@@ -10,7 +10,7 @@ import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'bricks platform — OS, Companion, GO',
-  description: 'The operating system for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
+  description: 'The system for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/platform' },
 }
 
@@ -129,7 +129,7 @@ export default function PlatformPage() {
               <h2>Clay, Keystone, Marble, Diamond.</h2>
             </div>
           </div>
-          <p className="sub-line">{SOFTWARE_BLURB} Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Virtual visit is always quoted by sqft, never packaged.</p>
+          <p className="sub-line">{SOFTWARE_BLURB} Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Virtual visit is $249–$399 by footprint, never packaged.</p>
           <div className="incl" style={{ marginTop: 22 }}>
             {SOFTWARE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">

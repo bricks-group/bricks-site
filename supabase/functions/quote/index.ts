@@ -3,8 +3,8 @@
 // Flow: address -> Nominatim geocode (lat/lng, travel distance) ->
 // FREE sqft guess (OSM building footprint at the coord, clamped to the
 // property-type range; agent confirms in wizard) -> footprint band ->
-// photo + drone base (always included) -> travel fee (haversine from BASE,
-// FREE_KM free, $/km after) -> add-ons (reel, virtual tour, twilight, rush) ->
+// photo + drone base (always included) -> travel (pre-assign: $0 pending
+// photographer assign — not founder-home Montevideo) -> add-ons ->
 // +13% HST = total.
 // No paid sqft API: CleverTech's free tier is unusable for sqft and its
 // monthly limit is too small to call per-quote; GeoWarehouse (~$100/mo) is
@@ -28,10 +28,24 @@ const corsHeaders = {
 };
 
 // ----- Config (change here; one-line constants) -----
-const BASE = { lat: 43.5860724, lon: -79.7482435 }; // 6330 Montevideo Rd, Mississauga
+// Coverage map hub is map-only. Pre-assign fee: $0 until photographer base known.
 const FREE_KM = 25;
 const PER_KM = 0.75; // market rate (CRA vehicle cost ~$0.73/km)
 const HST = 0.13;
+// GTA major = coverage LAUNCH_RING (Golden Horseshoe base hub). $0 travel.
+const GTA_MAJOR_RING: [number, number][] = [[-78.17, 43.959], [-78.29, 43.951], [-78.45, 43.92], [-78.58, 43.905], [-78.68, 43.898], [-78.82, 43.868], [-78.93, 43.855], [-79.02, 43.848], [-79.09, 43.825], [-79.14, 43.805], [-79.2, 43.755], [-79.24, 43.712], [-79.3, 43.675], [-79.34, 43.655], [-79.38, 43.642], [-79.4, 43.635], [-79.44, 43.632], [-79.48, 43.63], [-79.52, 43.615], [-79.56, 43.592], [-79.585, 43.565], [-79.62, 43.555], [-79.67, 43.52], [-79.69, 43.47], [-79.71, 43.42], [-79.74, 43.36], [-79.77, 43.325], [-79.79, 43.295], [-79.78, 43.27], [-79.74, 43.255], [-79.68, 43.24], [-79.6, 43.225], [-79.55, 43.21], [-79.48, 43.195], [-79.4, 43.185], [-79.33, 43.18], [-79.27, 43.195], [-79.18, 43.22], [-79.1, 43.245], [-79.08, 43.2], [-79.085, 43.15], [-79.09, 43.11], [-79.08, 43.06], [-79.06, 43.02], [-79.04, 42.98], [-79.02, 42.935], [-79.01, 42.905], [-79.08, 42.875], [-79.17, 42.87], [-79.25, 42.875], [-79.35, 42.868], [-79.48, 42.875], [-79.58, 42.87], [-79.7, 42.865], [-79.85, 42.85], [-80.0, 42.835], [-80.15, 42.81], [-80.22, 42.785], [-80.35, 42.77], [-80.5, 42.76], [-80.65, 42.745], [-80.8, 42.73], [-80.95, 42.72], [-81.1, 42.7], [-81.22, 42.675], [-81.3, 42.72], [-81.35, 42.82], [-81.4, 42.92], [-81.45, 43.0], [-81.42, 43.08], [-81.25, 43.2], [-81.05, 43.32], [-80.85, 43.4], [-80.7, 43.48], [-80.55, 43.52], [-80.4, 43.56], [-80.2, 43.62], [-80.0, 43.7], [-79.9, 43.85], [-79.8, 44.05], [-79.72, 44.25], [-79.68, 44.38], [-79.45, 44.36], [-79.2, 44.3], [-78.95, 44.2], [-78.7, 44.1], [-78.45, 44.0], [-78.3, 43.97], [-78.17, 43.959]];
+function pointInRing(lng: number, lat: number, ring: [number, number][]): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+    if ((yi > lat) !== (yj > lat) && lng < ((xj - xi) * (lat - yi)) / (yj - yi || 1e-15) + xi) inside = !inside;
+  }
+  return inside;
+}
+function isGtaMajorMarket(lat: number, lon: number): boolean {
+  return pointInRing(lon, lat, GTA_MAJOR_RING);
+}
+
 
 // Footprint bands, aligned to the pricing page: small <=1,200 / mid <=2,500 /
 // large <=4,000 / xl 4,000+ sq ft.
@@ -41,9 +55,10 @@ const BAND_LABEL = ['Small', 'Mid', 'Large', 'XL'];
 // always-included base; everything else is an optional add-on.
 const PHOTO_RATE = [149, 199, 249, 299];
 const DRONE_RATE = [99, 119, 139, 159];
-const REEL_RATE = [199, 249, 299, 349];
+const REEL_RATE = [199, 249, 299, 349];  // lockstep pricing.ts + OS _WWW_REEL
 const TWILIGHT_RATE = [150, 170, 185, 200];
 const TOUR_RATE = [149, 199, 249, 299];
+const VISIT_RATE = [249, 299, 349, 399];
 const RUSH_FLAT = 75;
 const STAGING_PER_IMAGE = 35;
 const FLOOR_PLAN_ONLY_RATE = 99;
@@ -61,14 +76,6 @@ function band(sqft: number): number {
   return 3;
 }
 
-function haversine(a: { lat: number; lon: number }, b: { lat: number; lon: number }): number {
-  const R = 6371;
-  const dLat = (b.lat - a.lat) * Math.PI / 180;
-  const dLon = (b.lon - a.lon) * Math.PI / 180;
-  const la1 = a.lat * Math.PI / 180, la2 = b.lat * Math.PI / 180;
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin(dLon / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
-}
 
 async function geocode(address: string): Promise<{ lat: number; lon: number; display: string } | null> {
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&countrycodes=ca`;
@@ -162,9 +169,14 @@ Deno.serve(async (req: Request) => {
       drone = true;
     }
   }
-  // Launch honesty (2026-09-12): owned staging not ready — never price/charge staging in quote.
-  const staging = false;
-  const stagingImages = 0;
+  // Virtual staging is $35/photo. Visit is the footprint-band add-on. Neither is packaged.
+  const stagingRequested = body.staging_addon === true || body.staging_addon === 'true';
+  let stagingImages = parseInt(String(body.staging_images ?? '0'), 10);
+  if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = 0;
+  if (stagingRequested && stagingImages < 1) stagingImages = 1;
+  if (!stagingRequested) stagingImages = 0;
+  const staging = stagingImages > 0;
+  const visit = body.visit_addon === true || body.visit_addon === 'true';
   const manualSqft = body.sqft ? parseInt(body.sqft) : null;
 
   if (!address) return bad('Address is required');
@@ -232,9 +244,13 @@ Deno.serve(async (req: Request) => {
   }
 
   // 5) travel
-  const dist = haversine(BASE, geo);
-  const billableKm = Math.max(0, dist - FREE_KM);
-  const travel = Math.round(billableKm * PER_KM * 100) / 100;
+  // Assign-first: GTA major = $0 final. Outside GTA needs OS assign (pending here blocks checkout).
+  const gta_major = isGtaMajorMarket(geo.lat, geo.lon);
+  const dist = 0;
+  const billableKm = 0;
+  const travel = 0;
+  const travel_pending = !gta_major;
+  const travel_basis = gta_major ? 'gta_major' : 'pending';
 
   // 6) add-ons
   const addons: { label: string; amount: number }[] = [];
@@ -242,6 +258,7 @@ Deno.serve(async (req: Request) => {
   if (tour) addons.push({ label: 'Virtual tour', amount: TOUR_RATE[finalBand] });
   if (twilight) addons.push({ label: 'Twilight photography', amount: TWILIGHT_RATE[finalBand] });
   if (rush) addons.push({ label: 'Rush delivery', amount: RUSH_FLAT });
+  if (visit) addons.push({ label: 'Virtual visit', amount: VISIT_RATE[finalBand] });
   if (staging && stagingImages > 0) {
     addons.push({
       label: stagingImages === 1 ? 'Virtual staging (1 image)' : `Virtual staging (${stagingImages} images)`,
@@ -268,8 +285,9 @@ Deno.serve(async (req: Request) => {
       floor_plan_only: floorPlanOnly,
       floor_plan_only_rate: floorPlanOnly ? FLOOR_PLAN_ONLY_RATE : 0,
       staging_addon: staging, staging_images: stagingImages, staging_per_image: STAGING_PER_IMAGE,
+      visit_addon: visit, visit_rate: visit ? VISIT_RATE[finalBand] : 0,
       base_rate: base,
-      travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel,
+      travel_free_km: FREE_KM, travel_per_km: PER_KM, travel_km_billable: Math.round(billableKm * 10) / 10, travel_fee: travel, travel_pending, travel_basis, gta_major, assignee_id: null,
       addons, addons_total: addonsTotal,
       subtotal: Math.round(subtotal * 100) / 100,
       hst_rate: HST, hst: tax,

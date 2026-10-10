@@ -40,17 +40,22 @@ const faqs = [
   {
     id: 'included',
     q: "What's included in a standard shoot?",
-    a: 'HDR, licensed drone, and a floor plan on every standard shoot. MLS-ready in 24–48 hours.',
+    a: `Essentials from $${CORE_FROM}: HDR + licensed drone + floor plan — the drone-included listing set (Photos only drops drone and floor plan). MLS-ready on a 24–48h target, not a guarantee. Real windows; no invent sky or dusk by default.`,
   },
   {
     id: 'booking',
     q: 'How does booking work?',
-    a: 'Pick services, then an exact clock time. That time locks when you pay.',
+    a: 'Pick services, see assignee and travel on the quote, then pay to lock the exact clock time (not pay-on-delivery). Refund schedule is on the pay step and in Terms.',
   },
   {
     id: 'coverage',
     q: 'Where do you cover?',
-    a: `Canada-wide launch. ${COVERAGE_LINE} Travel is quoted from Mississauga — first 25 km free; $0.75/km after, quoted before you confirm.`,
+    a: `Canada-wide launch. ${COVERAGE_LINE} Travel: GTA assign-first is often $0; otherwise from the assigned photographer’s base — first 25 km free, then $0.75/km — shown before you pay. Not free Canada-wide.`,
+  },
+  {
+    id: 'mls-safe',
+    q: 'Are listing stills MLS-safe?',
+    a: 'Real window views. We do not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on.',
   },
   {
     id: 'drone',
@@ -60,7 +65,7 @@ const faqs = [
   {
     id: 'tour-visit',
     q: `Virtual tour vs ${VISIT_NAME.toLowerCase()}?`,
-    a: `${TOUR_NAME} is a path-confined walkthrough — a ${TOUR_RANGE} add-on by footprint; Showcase and Full suite include it. ${VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), never packaged, and not charged at checkout. ${VISIT_PACKAGING}`,
+    a: `${TOUR_NAME} is a path-confined walkthrough — a ${TOUR_RANGE} add-on by footprint; Showcase and Full suite include it. ${VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), never packaged. Priced by footprint and charged at checkout. ${VISIT_PACKAGING}`,
   },
   {
     id: 'plans',
@@ -82,7 +87,7 @@ const faqs = [
 function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
   switch (id) {
     case 'included':
-      return <>HDR, licensed drone, floor plan. 24–48h. See <Link href="/pricing">Pricing</Link>.</>
+      return <>HDR, licensed drone, floor plan. 24–48h target. See <Link href="/pricing">Pricing</Link>.</>
     case 'booking':
       return <>Exact clock time — not a window. <Link href="/book">Book</Link>.</>
     case 'plans':
@@ -98,24 +103,24 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
 
 
 const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky replacement before and after' },
+  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
   { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
+  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging ($35/photo add-on) before and after' },
 ] as const
 export const metadata: Metadata = {
-  title: 'bricks — the operating system for Canadian real estate',
-  description: 'The operating system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
+  title: 'bricks — the system for Canadian real estate',
+  description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    title: 'bricks — the system for Canadian real estate',
+    description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
+    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
   twitter: {
-    title: 'bricks — the operating system for Canadian real estate',
-    description: 'The operating system for Canadian real estate. Book professional media today.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    title: 'bricks — the system for Canadian real estate',
+    description: 'The system for Canadian real estate. Book professional media today.',
+    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
 
@@ -197,9 +202,9 @@ export default function Home() {
             </Link>
           </div>
           <div className="trust-stats">
-            <div><b>14,000+</b><span>shot</span></div>
+            <div><b>14,000+</b><span>properties shot before Bricks</span></div>
             <div><b>Canada</b><span>coverage</span></div>
-            <div><b>24–48h</b><span>delivery</span></div>
+            <div><b>24–48h</b><span>target</span></div>
             <div><b>Auto-assign</b><span>routing</span></div>
           </div>
         </div>
@@ -263,7 +268,7 @@ export default function Home() {
           <div className="film">
             <span className="tag">Film</span>
             <video className="film-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
-              <source src="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/Video/bid.mp4" type="video/mp4" />
+              <source src="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4" type="video/mp4" />
             </video>
             <div className="film-in">
               <div>
@@ -275,23 +280,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="edit-sec rvl" aria-label="The edit">
+      <section className="edit-sec rvl" aria-label="After the shoot">
         <div className="wrap">
           <div className="section-head section-head-stack">
-            <span className="over">Edit</span>
+            <span className="over">Delivery</span>
             <h2>After the shoot.</h2>
+            <p className="sub" style={{ maxWidth: 520, marginTop: 8 }}>HDR balance for MLS is the standard path. Sky enhance is on request — we do not invent sky or dusk by default. Virtual staging is $35/photo, never packaged.</p>
           </div>
           <div className="edit-grid">
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-              </div>
-              <div className="edit-cap"><div className="t">Sky · HDR</div></div>
-            </div>
             <div>
               <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
                 <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width:900px) 100vw, 50vw" />
@@ -300,7 +296,17 @@ export default function Home() {
                 <span className="lbl r">After</span>
                 <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
               </div>
-              <div className="edit-cap"><div className="t">Windows · balance</div></div>
+              <div className="edit-cap"><div className="t">HDR · windows</div></div>
+            </div>
+            <div>
+              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
+                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky enhance on request — after" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky enhance on request — before" fill sizes="(max-width:900px) 100vw, 50vw" />
+                <span className="lbl l">Before</span>
+                <span className="lbl r">After</span>
+                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+              </div>
+              <div className="edit-cap"><div className="t">Sky · on request</div></div>
             </div>
           </div>
         </div>
@@ -339,15 +345,14 @@ export default function Home() {
           </div>
           <div className="pkgs">
             <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Essentials</span></div>
+              <div className="pkg-head"><span className="pkg-name">Essentials</span><span className="pkg-badge">Listing set</span></div>
               <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
               <ul>
-                <li>HDR — interior + exterior</li>
-                <li>Licensed drone</li>
-                <li>2D floor plan</li>
-                <li>24–48h delivery</li>
+                <li>HDR + licensed drone + floor plan</li>
+                <li>Not a photo-only peer stack</li>
+                <li>24–48h target</li>
               </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
+              <div className="pkg-foot">Drone-included listing set · Small→XL</div>
               <Link className="btn btn-ghost" href="/book">Book Essentials</Link>
             </div>
             <div className="pkg">
@@ -356,7 +361,7 @@ export default function Home() {
               <ul>
                 <li>Everything in Essentials</li>
                 <li>Cinematic reel</li>
-                <li>24–48h delivery</li>
+                <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
               <Link className="btn btn-ghost" href="/book">Book Story</Link>
@@ -367,7 +372,7 @@ export default function Home() {
               <ul>
                 <li>Everything in Story</li>
                 <li>{TOUR_NAME}</li>
-                <li>24–48h delivery</li>
+                <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
               <Link className="btn btn-brick" href="/book">Book Showcase</Link>
@@ -378,8 +383,8 @@ export default function Home() {
               <ul>
                 <li>Everything in Showcase</li>
                 <li>Twilight exterior</li>
-                <li>Staging on request</li>
-                <li>24–48h delivery</li>
+                <li>Virtual staging is $35 / photo — not included</li>
+                <li>24–48h target</li>
               </ul>
               <div className="pkg-foot">Small footprint · scales to XL</div>
               <Link className="btn btn-ghost" href="/book">Book Full suite</Link>
@@ -392,7 +397,7 @@ export default function Home() {
             </div>
             <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
           </Link>
-          <p className="rate-note"><Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
+          <p className="rate-note">Real windows — no invent sky or dusk by default. GTA travel often $0 at assign-first. <Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
         </div>
       </section>
 
@@ -443,7 +448,7 @@ export default function Home() {
         <div className="closer-simple-inner">
           <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h delivery</p>
+          <p className="closer-proof">Before Bricks, Raphael shot 14,000+ properties at CoStar · Canada-wide · 24–48h target</p>
         </div>
       </section>
 

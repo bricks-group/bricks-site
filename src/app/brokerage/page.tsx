@@ -6,8 +6,8 @@ import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
 import { STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'bricks for brokerages — the operating system for the whole shop',
-  description: 'OS for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live to book. OS is live in preview at app.brxs.ca.',
+  title: 'bricks for brokerages — the system for the whole shop',
+  description: 'The system for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live to book. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/brokerage' },
 }
 
@@ -18,8 +18,8 @@ export default function BrokeragePage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Brokerage</span>
-          <h1>The operating system for the whole shop.</h1>
-          <p className="sub">Roster, pipeline, listing file, and trust accounting. Every seat gets the full OS — CRM, transactions, checklist e-sign + shareable links, forms, MLS. On-document PDF placement is not available yet. {STATUS.os}</p>
+          <h1>The system for the whole shop.</h1>
+          <p className="sub">Roster, pipeline, listing file, and trust accounting. Every seat gets the full OS — CRM, transactions, checklist e-sign + shareable links, forms, BYO MLS. On-document PDF placement is not available yet. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/contact">Talk to us</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>

@@ -50,7 +50,7 @@ export default function Post() {
         <h3>{TOUR_NAME}</h3>
         <p>{TOUR_BLURB} Click to move room to room along the captured path. Delivered as an interactive embed on the listing and often MLS-ready. Best for letting serious buyers pre-screen a property before a showing. À la carte add-on; included in Showcase and Full suite.</p>
         <h3>{VISIT_NAME}</h3>
-        <p>{VISIT_BLURB} {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). No published dollar table — never bundled into Premium or any other package, and not charged at checkout.</p>
+        <p>{VISIT_BLURB} {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Published at $249 / $299 / $349 / $399 by footprint — never bundled into a package, and charged at checkout when selected.</p>
         <h3>Video walkthrough / cinematic reel</h3>
         <p>A produced, set to music, paced edit — usually 30–90 seconds. It&apos;s an emotional asset: it makes the home feel desirable and is built for social, portals, and the top of a listing page. It sells the <em>lifestyle</em>, not the measurements.</p>
 

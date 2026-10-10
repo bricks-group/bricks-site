@@ -20,6 +20,9 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/book/'), true)
     assert.equal(isPublicPath('/api/book/slots'), true)
     assert.equal(isPublicPath('/api/address-suggest'), true)
+    assert.equal(isPublicPath('/api/quote'), true)
+    assert.equal(isPublicPath('/api/create-checkout'), true)
+    assert.equal(isPublicPath('/api/confirm-paid'), true)
   })
 
   it('opens photographers apply + legal surface while marketing stays gated', () => {

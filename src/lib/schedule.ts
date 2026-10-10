@@ -230,6 +230,11 @@ export function localYmd(d = new Date(), tz: string = FALLBACK_TZ): string {
   return d.toLocaleDateString('en-CA', { timeZone: tz })
 }
 
+/** ISO instant → civil YYYY-MM-DD in `tz` (edge create-checkout name). */
+export function civilYmd(iso: string, tz: string = FALLBACK_TZ): string {
+  return localYmd(new Date(iso), tz)
+}
+
 export function localClockHm(iso: string, tz: string = FALLBACK_TZ): string {
   const t = new Date(iso).toLocaleTimeString('en-CA', {
     hour: '2-digit',

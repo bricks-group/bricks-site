@@ -8,7 +8,7 @@ Key facts (source of truth for every asset in this folder):
 - Core shoot = HDR photo + licensed drone + floor plan. **From $248 (Small) → $458 (XL)** by footprint.
 - Photo alone: $149→$299 · Drone alone: $99→$159 · Floor plan: included on every shoot.
 - Add-ons: cinematic reel $199–349 · 3D tour $149–299 · twilight $150–200 · rush +$75 flat.
-- Delivery: 24–48h. Travel: first 25 km from Mississauga free, then $0.75/km. HST 13% extra.
+- Delivery: 24–48h. Travel: first 25 km from the assigned photographer’s base free, then $0.75/km (confirmed at assignment). HST 13% extra.
 - Booking app in development — "self-serve Booking app will show your live total." Frame as
   "book direct," not "subscribe / member discount / credits." Those claims belong to bricks-site,
   not this prelaunch site.
@@ -53,7 +53,7 @@ Live in the GTA → brxs.ca
 #realtor #GTA
 
 ### C. Founder / pain (post)
-14,000+ properties shot and one thing's clear — agents don't want another app, they want the
+Before Bricks, I shot and profiled 14,000+ properties at CoStar, and one thing's clear — agents don't want another app, they want the
 shoot done.
 
 Bricks is the operating system that gets it booked, captured, delivered — without the follow-up. Live in the GTA,

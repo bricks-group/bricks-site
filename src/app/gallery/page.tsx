@@ -36,29 +36,39 @@ const residential: Shot[] = [
 ]
 
 const multifamily: Shot[] = [
+  { src: '/media/mf-riverbend-lobby.jpg', alt: 'Multifamily lobby — amenity listing photo', t: 'Lobby', d: 'MF · amenity' },
+  { src: '/media/mf-20george-rooftop.jpg', alt: 'Condo rooftop amenity listing photo', t: 'Rooftop', d: 'MF · amenity' },
+  { src: '/media/mf-dialogue-balcony.jpg', alt: 'Balcony amenity — multifamily listing still', t: 'Balcony', d: 'MF · amenity' },
+  { src: '/media/mf-trillium-amenity.jpg', alt: 'Multifamily amenity interior listing photo', t: 'Amenity', d: 'MF · amenity' },
   { src: '/media/work/03.jpg', alt: 'Multifamily listing photos — condo bedroom', t: 'Bedroom' },
   { src: '/media/work/04.jpg', alt: 'Multifamily listing photos — condo living room', t: 'Living' },
-  { src: '/media/work/09.jpg', alt: 'Multifamily listing media — building lobby', t: 'Lobby' },
 ]
 
 const commercial: Shot[] = [
-  { src: '/media/comm-aerial-1.jpg', alt: 'Drone real estate photos — commercial aerial (Advanced RPAS)', t: 'Aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/comm-ext-1.jpg', alt: 'Commercial exterior', t: 'Exterior' },
-  { src: '/media/work/05.jpg', alt: 'Urban mixed-use aerial', t: 'Urban' },
+  { src: '/media/drone-cre-0439.jpg', alt: 'Drone real estate photos — CRE aerial (Advanced RPAS)', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/drone-cre-2267.jpg', alt: 'Licensed drone — commercial industrial aerial', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/drone-cre-2263.jpg', alt: 'CRE rooftop and site drone still', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/drone-cre-2241.jpg', alt: 'Industrial park drone listing photo', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/drone-cre-2236.jpg', alt: 'Commercial site drone still for listing media', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/drone-cre-1570.jpg', alt: 'CRE exterior drone — listing media sample', t: 'Aerial', d: 'Drone · Advanced RPAS' },
 ]
 
 const industrial: Shot[] = [
-  { src: '/media/work/06.jpg', alt: 'Industrial aerial', t: 'Aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/comm-unit-1.jpg', alt: 'Industrial unit', t: 'Unit' },
-  { src: '/media/comm-interior-1.jpg', alt: 'Industrial suite', t: 'Suite' },
-  { src: '/media/work/11.jpg', alt: 'Construction aerial', t: 'Site' },
+  { src: '/media/cre-harvester-exterior.jpg', alt: 'Commercial industrial exterior — HDR listing photo', t: 'Exterior', d: 'CRE · industrial' },
+  { src: '/media/cre-harvester-dock.jpg', alt: 'Loading dock exterior — commercial listing photo', t: 'Dock', d: 'CRE · industrial' },
+  { src: '/media/cre-hanlon-exterior.jpg', alt: 'Industrial park exterior listing photo', t: 'Exterior', d: 'CRE · industrial' },
+  { src: '/media/cre-industrial-1.jpg', alt: 'Industrial building exterior — MLS-ready still', t: 'Exterior', d: 'CRE · industrial' },
+  { src: '/media/cre-industrial-2.jpg', alt: 'Industrial facade listing photo', t: 'Facade', d: 'CRE · industrial' },
+  { src: '/media/cre-industrial-3.jpg', alt: 'Industrial site exterior listing photo', t: 'Site', d: 'CRE · industrial' },
+  { src: '/media/cre-portfolio-flex.jpg', alt: 'Flex / industrial exterior listing photo', t: 'Flex', d: 'CRE · industrial' },
+  { src: '/media/cre-harvester-office.jpg', alt: 'Commercial office interior — CRE listing still', t: 'Interior', d: 'CRE · office' },
 ]
 
 const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky replacement before and after' },
+  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
   { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
+  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging ($35/photo add-on) before and after' },
 ]
 
 function Grid({ images }: { images: Shot[] }) {
@@ -103,9 +113,9 @@ export default function GalleryPage() {
       <div className="wrap work-wrap">
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">The edit</span><h2>Before and after.</h2></div>
+            <div><span className="over">Examples</span><h2>Before and after.</h2></div>
           </div>
-          <p className="ba-hint">Drag across each pair.</p>
+          <p className="ba-hint">Drag across each pair. HDR balance is standard. Sky enhance is on request (no invent sky/dusk by default). Virtual staging is $35/photo — never packaged. Twilight is a real blue-hour exterior add-on.</p>
           <div className="ba-grid">
             {beforeAfter.map((p) => {
               const name = p.label.replace(/ before and after$/i, '')
@@ -141,21 +151,21 @@ export default function GalleryPage() {
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Multifamily</span><h2>Units, amenity, the lobby.</h2></div>
+            <div><span className="over">Multifamily</span><h2>Lobby, amenity, the unit.</h2></div>
           </div>
           <Grid images={multifamily} />
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Commercial</span><h2>Offices, flex, and the roof.</h2></div>
+            <div><span className="over">Commercial</span><h2>Licensed drone and the site.</h2></div>
           </div>
           <Grid images={commercial} />
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Industrial</span><h2>Units, docks, and the site.</h2></div>
+            <div><span className="over">Industrial</span><h2>Docks, facades, and the site.</h2></div>
           </div>
           <Grid images={industrial} />
         </section>
@@ -164,7 +174,7 @@ export default function GalleryPage() {
           <div className="book">
             <span className="over">Book a shoot</span>
             <h2>Ready when the listing is.</h2>
-            <p className="lead">Confirm a slot. We send pricing by footprint — edited and MLS-ready in 24–48 hours.</p>
+            <p className="lead">Confirm a slot. We send pricing by footprint — edited MLS-ready on a 24–48h target.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>Pricing</Link>

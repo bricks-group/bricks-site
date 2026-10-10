@@ -27,7 +27,7 @@ export default function LegalHubPage() {
           <p className="sub">
             Agreements for Bricks Group (Ontario, Canada).
           </p>
-          <div className="updated">Updated · 6 September 2026</div>
+          <div className="updated">Updated · 3 October 2026</div>
         </div>
       </section>
 
@@ -42,11 +42,8 @@ export default function LegalHubPage() {
               <Link href="/privacy">Privacy Policy</Link> — how we handle personal information. Effective 27 August 2026.
             </li>
             <li>
-              <a href="https://dispatch-api.brxs.ca/api/onboarding/ic-agreement" rel="noopener noreferrer">
-                Independent Contractor Agreement v1.5
-              </a>{' '}
-              — photographers on GO &amp; Dispatch. Plain text:{' '}
-              <a href="/legal/ic-agreement.txt">/legal/ic-agreement.txt</a>.
+              <a href="/legal/ic-agreement.txt">Independent Contractor Agreement v1.8</a>
+              {' '}— photographers on GO &amp; Dispatch. Effective 3 October 2026.
             </li>
             <li>
               <Link href="/dpa">Data Processing Agreement</Link> — enterprise / brokerage controller–processor terms. Effective 27 August 2026.

@@ -5,7 +5,7 @@ import PhotographerForm from './PhotographerForm'
 import { COVERAGE_LINE, GO_URL, STATUS } from '@/lib/brand'
 
 const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
 
 export const metadata: Metadata = {
   title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',
@@ -61,8 +61,8 @@ export default function PhotographersPage() {
               currency: 'CAD',
               value: {
                 '@type': 'QuantitativeValue',
-                minValue: 104.65,
-                maxValue: 1374.45,
+                minValue: 55.15,
+                maxValue: 578.90,
                 unitText: 'PACKAGE PAYOUT',
               },
             },
@@ -142,13 +142,13 @@ export default function PhotographersPage() {
               <h2>Fixed package payouts.</h2>
             </div>
           </div>
-          <p className="rate-lead">Photographers are independent contractors, paid a published dollar rate card — not a percent of what the client paid. Tiers C / B / A are assigned by Bricks on quality, reliability, volume, and compliance; the full card lives in the contractor agreement after you apply. Virtual visit is a client add-on quoted by sqft — never packaged.</p>
+          <p className="rate-lead">Photographers are independent contractors, paid a published dollar rate card — not a percent of what the client paid. Tiers C / B / A are assigned by Bricks on quality, reliability, volume, and compliance; the full card lives in the contractor agreement after you apply. Virtual visit is a client add-on at $249 / $299 / $349 / $399 — never packaged.</p>
           <div className="adds">
             <div className="a rvl"><div className="nm">Tier 1 — Entry</div><p>Starting tier. Assigned by Bricks based on quality, reliability, volume, and compliance.</p></div>
             <div className="a rvl"><div className="nm">Tier 2 — Core</div><p>Assigned for consistent quality and reliability on the network.</p></div>
             <div className="a rvl"><div className="nm">Tier 3 — Elite</div><p>Highest assigned tier for quality, volume, and compliance.</p></div>
           </div>
-          <p className="note">Canada-wide recruiting. Payout is the published rate-card amount. Virtual visit is a client add-on, quoted by sqft — never packaged.</p>
+          <p className="note">Canada-wide recruiting. Payout is the published rate-card amount. Virtual visit is a client add-on at $249 / $299 / $349 / $399 — never packaged.</p>
         </section>
 
         <section className="block rvl">
@@ -162,7 +162,7 @@ export default function PhotographersPage() {
             <div className="qa"><h4>How long does review take?</h4><p>We review every application manually. Portfolio quality is the primary gate — sharp composition, accurate colour, consistent exposure across a full property set. Expect a response within 1–3 business days.</p></div>
             <div className="qa"><h4>What equipment do I need?</h4><p>Full-frame or equivalent, fast primes, and ideally a DJI/Autel drone if you&apos;re applying for aerial work. List your kit in the application.</p></div>
             <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes — controlled airspace near Pearson / Billy Bishop requires Transport Canada Advanced RPAS certification. We verify before routing any drone job.</p></div>
-            <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability. Insurance and WSIB proof are required before a first dispatched job — see the IC agreement.</p></div>
+            <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability.</p></div>
           </div>
         </section>
 

@@ -144,8 +144,9 @@ export default function DpaPage() {
               </tr>
             </thead>
             <tbody>
-              <tr><td>Supabase Inc.</td><td>Database, authentication, real-time infrastructure</td><td>US East (AWS)</td></tr>
+              <tr><td>Supabase Inc.</td><td>Database, authentication, real-time infrastructure</td><td>Canada (AWS ca-central-1)</td></tr>
               <tr><td>Cloudflare Inc.</td><td>CDN, R2 file storage, DDoS protection</td><td>Distributed (global CDN)</td></tr>
+              <tr><td>Vercel Inc.</td><td>Hosting and edge for brxs.ca apps</td><td>United States</td></tr>
               <tr><td>Stripe Inc.</td><td>Payment processing, billing</td><td>United States</td></tr>
               <tr><td>Google LLC</td><td>Maps API (geocoding), Google Sign-In, Gemini AI dispatch routing</td><td>United States</td></tr>
               <tr><td>Mapbox Inc.</td><td>Address suggest / map imagery</td><td>United States</td></tr>
@@ -153,7 +154,7 @@ export default function DpaPage() {
               <tr><td>Twilio Inc.</td><td>SMS notifications</td><td>United States</td></tr>
               <tr><td>Fotello</td><td>AI photo enhancement (property images only, no personal data)</td><td>United States</td></tr>
               <tr><td>Autoenhance.ai</td><td>AI photo enhancement fallback (property images only)</td><td>United Kingdom</td></tr>
-              <tr><td>Bricks (owned)</td><td>Virtual staging — by request until owned pipeline; no third-party furniture vendor on the launch path</td><td>Canada</td></tr>
+              <tr><td>Bricks (owned)</td><td>Virtual staging — owned pipeline, $35 per photo at checkout; no third-party furniture vendor</td><td>Canada</td></tr>
             </tbody>
           </table>
         </section>

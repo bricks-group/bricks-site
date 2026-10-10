@@ -14,11 +14,11 @@
 <meta property="og:url" content="https://www.brxs.ca/book.html" />
 <meta property="og:title" content="Bricks — Book a shoot (GTA listing media)" />
 <meta property="og:description" content="Book Bricks listing media in the GTA: instant tailored quote by footprint + travel, pay to lock your slot." />
-<meta property="og:image" content="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG" />
+<meta property="og:image" content="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Bricks — Book a shoot (GTA listing media)" />
 <meta name="twitter:description" content="Book Bricks listing media in the GTA: instant tailored quote by footprint + travel, pay to lock your slot." />
-<meta name="twitter:image" content="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG" />
+<meta name="twitter:image" content="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -620,8 +620,11 @@
     var lines = [];
     lines.push(['HDR photography', '$'+q.photo_rate.toFixed(2)]);
     lines.push(['Licensed drone', '$'+q.drone_rate.toFixed(2)]);
-    var travelNote = q.travel_km_billable>0 ? ('$'+q.travel_per_km+'/km after 25 km free') : 'first 25 km free';
-    lines.push(['Travel ('+q.distance_km+' km)', '$'+q.travel_fee.toFixed(2), travelNote]);
+    var travelPending = !!q.travel_pending;
+    var travelNote = travelPending
+      ? 'confirmed when photographer assigned (25 km free from their base, then $0.75/km)'
+      : (q.travel_km_billable>0 ? ('$'+q.travel_per_km+'/km after 25 km free') : 'first 25 km free');
+    lines.push([travelPending ? 'Travel (pending assignment)' : ('Travel ('+q.distance_km+' km)'), '$'+Number(q.travel_fee||0).toFixed(2), travelNote]);
     q.addons.forEach(function(a){ lines.push([a.label, '$'+a.amount.toFixed(2)]); });
     lines.push(['Subtotal', '$'+q.subtotal.toFixed(2)]);
     lines.push(['HST (13%)', '$'+q.hst.toFixed(2)]);

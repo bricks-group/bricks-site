@@ -73,5 +73,5 @@ Book: https://brxs.ca/book.html
 Photo + drone + floor plan from $248, by footprint (up to $458 for XL) — floor plan always
 included. Add a cinematic reel ($199–349), 3D virtual tour (+$149–299), twilight (+$150–200), or virtual staging (+$35 / image),
 or rush delivery (+$75), all à la carte and priced to the property. First 25 km of travel from
-Mississauga is free, then $0.75/km. HST added at checkout. Pay at booking via Stripe; schedule
+from the assigned photographer’s base is free (first 25 km), then $0.75/km — confirmed at assignment. HST added at checkout. Pay at booking via Stripe; schedule
 the slot after.

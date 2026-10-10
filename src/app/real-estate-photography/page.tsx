@@ -22,14 +22,14 @@ import {
 } from '@/lib/pricing'
 
 const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/BRX%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0]
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography & Listing Photos Canada | Bricks',
   description:
-    'Professional real estate photography and MLS listing photos across Canada. HDR stills, licensed drone, floor plan included on standard shoots, 24–48h delivery. Book listing media online.',
+    'Professional real estate photography and MLS listing photos across Canada. HDR stills, licensed drone, floor plan included on standard shoots, 24–48h target. Book listing media online.',
   alternates: { canonical: '/real-estate-photography' },
   robots: { index: true, follow: true },
   openGraph: {
@@ -52,11 +52,11 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'What is included in Bricks real estate photography?',
-    a: 'Every standard shoot includes HDR interiors and exteriors, licensed drone (Advanced RPAS), and a branded floor plan. Edited MLS-ready listing photos deliver in 24–48 hours. Photos-only drops drone and floor plan; Showcase and Full suite add more.',
+    a: 'Every standard shoot includes HDR interiors and exteriors, licensed drone (Advanced RPAS), and a branded floor plan. Edited MLS-ready listing photos target 24–48 hours. Photos-only drops drone and floor plan; Showcase and Full suite add more.',
   },
   {
     q: 'How much do listing photos cost in Canada?',
-    a: `HDR photography starts at $${PHOTO_RATE[0]} CAD by footprint (${PHOTO_RANGE}). Licensed drone is ${DRONE_RANGE}. Floor plan is included on every standard shoot. Travel: first 25 km from Mississauga free, then $0.75/km — quoted before you confirm.`,
+    a: `HDR photography starts at $${PHOTO_RATE[0]} CAD by footprint (${PHOTO_RANGE}). Licensed drone is ${DRONE_RANGE}. Floor plan is included on every standard shoot. Travel: first 25 km from the assigned photographer’s base free, then $0.75/km — confirmed at assignment.`,
   },
   {
     q: 'Do you shoot MLS photos Canada-wide?',
@@ -68,7 +68,7 @@ const faqs = [
   },
   {
     q: 'How fast is delivery?',
-    a: 'Edited and MLS-ready in 24–48 hours on standard shoots. Rush is a flat add-on when you need same/next day.',
+    a: 'Edited MLS-ready media targets 24–48 hours on standard shoots. Rush is a flat add-on aimed at faster than that window — targets, not guarantees.',
   },
 ]
 
@@ -87,7 +87,7 @@ export default function RealEstatePhotographyPage() {
             name: 'Real estate photography & listing photos',
             serviceType: 'Real estate photography',
             description:
-              'Professional real estate photography and MLS listing photos for Canadian agents — HDR, licensed drone, floor plan, 24–48h delivery.',
+              'Professional real estate photography and MLS listing photos for Canadian agents — HDR, licensed drone, floor plan, 24–48h target.',
             provider: {
               '@type': 'LocalBusiness',
               name: 'Bricks',
@@ -136,7 +136,7 @@ export default function RealEstatePhotographyPage() {
           <span className="badge">Listing media · Canada</span>
           <h1>Real estate photography &amp; listing photos, Canada-wide.</h1>
           <p className="sub">
-            MLS-ready HDR listing photos, licensed drone real estate photos, and a floor plan on every standard shoot — edited in 24–48 hours. Book online today.
+            MLS-ready HDR listing photos, licensed drone real estate photos, and a floor plan on every standard shoot — edited on a 24–48h target. Book online today.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
@@ -178,8 +178,8 @@ export default function RealEstatePhotographyPage() {
             </div>
             <div className="c rvl">
               <span className="ic">04</span>
-              <h4>24–48h delivery</h4>
-              <p>Edited, MLS-ready media in one to two business days. Rush available when the listing date is tight.</p>
+              <h4>24–48h target</h4>
+              <p>Edited, MLS-ready media typically within one to two business days. Rush targets faster when the listing date is tight.</p>
             </div>
           </div>
         </section>
@@ -261,7 +261,7 @@ export default function RealEstatePhotographyPage() {
               <div className="meta">
                 <span className="t">The shoot</span>
                 <h3>What&apos;s included in a listing photo shoot?</h3>
-                <p>HDR, drone, floor plan, delivery SLA — and what stays optional.</p>
+                <p>HDR, drone, floor plan, 24–48h target — and what stays optional.</p>
               </div>
             </Link>
           </div>
@@ -287,7 +287,7 @@ export default function RealEstatePhotographyPage() {
         <section className="block rvl">
           <div className="book">
             <span className="over">Book</span>
-            <h2>Get MLS listing photos in 24–48 hours.</h2>
+            <h2>Get MLS listing photos on a 24–48h target.</h2>
             <p className="lead">
               Pick services, get a tailored quote by footprint and travel, pay to lock an exact clock time. {COVERAGE_LINE}
             </p>

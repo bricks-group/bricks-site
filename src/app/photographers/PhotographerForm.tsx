@@ -25,13 +25,18 @@ export default function PhotographerForm() {
     })
   }
 
-  async function uploadResume(memberId: string, file: File) {
+  async function uploadResume(memberId: string, applicationToken: string, file: File) {
     const base64 = await fileToBase64(file)
     const fd = new FormData()
     fd.append('member_id', memberId)
     fd.append('doc_type', 'resume')
     fd.append('filename', file.name)
     fd.append('file_data', base64)
+    // Server _check_application_token requires the token from /apply (Form field token or application_token).
+    if (applicationToken) {
+      fd.append('token', applicationToken)
+      fd.append('application_token', applicationToken)
+    }
     const r = await fetch(DISPATCH_API + '/documents', { method: 'POST', body: fd })
     if (!r.ok) throw new Error('resume upload failed')
   }
@@ -105,7 +110,7 @@ export default function PhotographerForm() {
       rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
       rpas_certificate_number: (fd.get('rpas_certificate_number') as string || '').trim() || null,
       accepted_terms: true,
-      ic_agreement_version: '1.5',
+      ic_agreement_version: '1.8',
       preferred_regions: [] as string[],
     }
 
@@ -119,7 +124,7 @@ export default function PhotographerForm() {
 
       if (resumeFile && resumeFile.size > 0 && data.member_id) {
         try {
-          await uploadResume(data.member_id, resumeFile)
+          await uploadResume(data.member_id, data.application_token || '', resumeFile)
         } catch {
           setResumeWarning('Application received, but your resume didn’t upload — email it to booking@brxs.ca if you’d like it reviewed.')
         }
@@ -235,7 +240,7 @@ export default function PhotographerForm() {
       <div className="ic-box">{icText}</div>
       <label className="ic-accept">
         <input type="checkbox" id="f_accept" required />
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.5</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes, equipment, and required insurance and WSIB proof before a first job; and that Transport Canada drone regulations are my sole responsibility.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.8</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes and equipment; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
 
       <div className="err">{err}</div>

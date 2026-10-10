@@ -8,7 +8,7 @@
  * Geography rules (Kam, 2026-09-12):
  * - Launch Ontario footprint ≈ anything within ~2 hours’ drive of Mississauga
  *   (INTERNAL sizing rule — never put “2 hour” / “2hr” in public UI copy).
- * - Public label: Golden Horseshoe (GGH+) with travel base Mississauga.
+ * - Public label: Golden Horseshoe (GGH+) with Mississauga as coverage map hub.
  * - Geometry must stay in Canada — clip the US (no NY/PA bleed across the lakes).
  * - Includes GTA, Hamilton, Niagara (ON), Waterloo Region (Cambridge/KW), Guelph,
  *   London, Barrie corridor, etc. as ONE hub — not a city laundry list of chips.
@@ -38,8 +38,8 @@ export type CoverageHub = {
   }
 }
 
-/** Mississauga travel base */
-export const TRAVEL_BASE = { lng: -79.6441, lat: 43.589, name: 'Mississauga' } as const
+/** Mississauga coverage map hub (market hub — NOT founder home, NOT travel-fee base when a vendor is known). */
+export const TRAVEL_BASE = { lng: -79.7482435, lat: 43.5860724, name: 'Mississauga' } as const
 
 /**
  * INTERNAL: ~2 h highway from Mississauga. Used when estimating radius only.
@@ -54,7 +54,7 @@ export const LAUNCH_DRIVE_RADIUS_KM = 175
  * north shore — no lake chords, no US. Sized for ~2 h from Mississauga.
  * Counter-clockwise exterior (GeoJSON).
  */
-const LAUNCH_RING: [number, number][] = [
+export const LAUNCH_RING: [number, number][] = [
   [-78.17, 43.959],
   [-78.29, 43.951],
   [-78.45, 43.92],
@@ -161,10 +161,10 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     status: 'base',
     ring: LAUNCH_RING,
     note:
-      ' — Toronto through the Golden Horseshoe, plus Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie, and nearby. Travel quotes from Mississauga (first 25 km free, then per km before you pay). Address on /book confirms the quote.',
+      ' — Toronto through the Golden Horseshoe, plus Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie, and nearby. Travel is from the assigned photographer’s base (first 25 km free, then per km). Address on /book confirms the quote.',
     detail: {
       headline: 'Listing photos across the Golden Horseshoe',
-      desc: 'GTA and the Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby Ontario. Travel quotes from Mississauga (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
+      desc: 'GTA and the Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby Ontario. Travel from the assigned photographer’s base (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
     },
   },
   {
@@ -220,6 +220,34 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     },
   },
 ]
+
+
+/** Markets with $0 travel (Kam 2026-09-26): Golden Horseshoe / GTA major coverage hub. */
+export const GTA_MAJOR_TRAVEL_ZERO_LABEL =
+  'Golden Horseshoe (GTA major) — Toronto, Mississauga, Peel, Halton, York, Durham, Hamilton, Niagara, Waterloo Region, Guelph, London, and nearby inside the coverage base hub'
+
+/** Ray-cast point-in-polygon. ring entries are [lng, lat]. */
+export function pointInRing(lng: number, lat: number, ring: [number, number][]): boolean {
+  const n = ring.length
+  if (n < 3) return false
+  let inside = false
+  for (let i = 0, j = n - 1; i < n; j = i++) {
+    const xi = ring[i][0]
+    const yi = ring[i][1]
+    const xj = ring[j][0]
+    const yj = ring[j][1]
+    const intersect =
+      yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi || 1e-15) + xi
+    if (intersect) inside = !inside
+  }
+  return inside
+}
+
+/** True when property is inside the coverage Golden Horseshoe base hub (LAUNCH_RING). */
+export function isGtaMajorMarket(lat: number, lon: number): boolean {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false
+  return pointInRing(lon, lat, LAUNCH_RING)
+}
 
 export function hubKind(hub: CoverageHub): 'base' | 'hub' | 'soft' {
   if (hub.status === 'base') return 'base'
