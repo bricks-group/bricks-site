@@ -1624,6 +1624,7 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 .integ-soon-list li{display:flex;flex-direction:column;gap:4px;}
 .integ-soon-mark{display:inline-flex;align-self:flex-start;align-items:center;height:30px;padding:0 10px;border-radius:2px;background:#F4F1EB;border:1px solid #1411100F;}
 .integ-img-s{max-height:16px;max-width:110px;}
+.integ-wordmark-s{font-size:13px;}
 .integ-soon .integ-what{font-size:12px;color:var(--inkMute);}
 .integ-link{margin-top:2px;}
 .integ-fine{
