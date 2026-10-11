@@ -34,6 +34,7 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/terms'), true)
     assert.equal(isPublicPath('/terms/'), true)
     assert.equal(isPublicPath('/privacy'), true)
+    assert.equal(isPublicPath('/account-deletion'), true)
     assert.equal(isPublicPath('/dpa'), true)
   })
 

@@ -32,6 +32,8 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/privacy' || pathname.startsWith('/privacy/')) return true
   if (pathname === '/legal' || pathname.startsWith('/legal/')) return true
   if (pathname === '/dpa' || pathname.startsWith('/dpa/')) return true
+  // App Store / Google Play require a public account-deletion page.
+  if (pathname === '/account-deletion' || pathname.startsWith('/account-deletion/')) return true
   // SEO beachhead: blog + commercial landings crawlable without opening OS/homepage story.
   if (pathname === '/blog' || pathname.startsWith('/blog/')) return true
   if (pathname === '/real-estate-photography' || pathname.startsWith('/real-estate-photography/')) return true

@@ -29,6 +29,7 @@ const GATED_READY = [
   { path: '/contact', changeFrequency: 'yearly' as const, priority: 0.4 },
   { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.3 },
+  { path: '/account-deletion', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/legal', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/dpa', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/construction', changeFrequency: 'monthly' as const, priority: 0.45 },
