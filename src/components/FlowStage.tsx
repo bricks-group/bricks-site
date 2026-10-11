@@ -4,7 +4,7 @@ import PhoneDevice from '@/components/PhoneDevice'
 import ProductWindow from '@/components/ProductWindow'
 
 /**
- * Companion booking flow — three flat phones inside the painted tray.
+ * Booking flow (this site / OS) — three flat phones inside the painted tray.
  * No step labels. Natural 390×844, width-first, full devices (no crop/distort).
  * property (Mapbox) → package → time.
  */
@@ -18,13 +18,13 @@ export default function FlowStage() {
   ] as const
 
   return (
-    <div className="flow-phones" aria-label="Companion booking flow">
+    <div className="flow-phones" aria-label="Booking flow">
       {steps.map((s, i) => (
         <div key={s.key} className={`flow-phone flow-phone-${['a','b','c'][i]}`}>
           <PhoneDevice label={s.label}>
             <ProductWindow
               variant="phone"
-              title="Companion"
+              title="Book a shoot"
               src={s.src}
               nw={390}
               nh={844}

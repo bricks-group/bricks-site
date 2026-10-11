@@ -107,7 +107,7 @@ export default function FallMarket() {
             <div>
               <span className="over">While you&apos;re booking media</span>
               <h2>Stay on the list.</h2>
-              <p>Product notes for OS, Companion, and GO — no spam. Media is live to book now.</p>
+              <p>Product notes for OS and GO — no spam. Media is live to book now.</p>
             </div>
           </div>
           <NewsletterInline />

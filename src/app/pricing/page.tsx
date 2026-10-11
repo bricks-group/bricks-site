@@ -222,7 +222,7 @@ export default function PricingPage() {
             <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} ({TOUR_SHORT}) is a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} ({VISIT_SHORT}) is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()}, never packaged.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. ${STAGING_PER_IMAGE} per photo, before tax, in checkout. Not included in Photos, Essentials, Story, Showcase, or Full suite.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>
-            <div className="qa"><h4>Is software live?</h4><p>Yes. Stripe tiers are live on OS. Media is live to book. Companion and GO are live on the web.</p></div>
+            <div className="qa"><h4>Is software live?</h4><p>Yes. Stripe tiers are live on OS. Media is live to book on this site and in the OS. GO is live on the web.</p></div>
             <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>
             <div className="qa"><h4>Brokerage vs individual plans?</h4><p>Individuals pick Clay through Diamond. Brokerages buy seats yearly — Boutique, Growth, Enterprise, Franchise. Every brokerage seat is the full OS plus trust accounting, not a bundle of the individual plans.</p></div>
           </div>

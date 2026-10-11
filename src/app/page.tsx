@@ -32,7 +32,7 @@ const faqs = [
   {
     id: 'what',
     q: 'What is Bricks?',
-    a: `The system for Canadian real estate — one place for media, dispatch, and the deal. Companion books; GO is the field app. ${STATUS.os}`,
+    a: `The system for Canadian real estate — one place for media, dispatch, and the deal. Book media on this site or in the OS; GO is the field app. ${STATUS.os}`,
   },
   {
     id: 'included',
@@ -215,11 +215,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="cap-band flow-band rvl" aria-label="Companion booking">
+      <section className="cap-band flow-band rvl" aria-label="Book a shoot">
         <div className="cap-inner">
           <div className="cap-copy">
             <h2>Book a shoot in three steps.</h2>
-            <p className="cap-lede">Companion is the agent app. Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.</p>
+            <p className="cap-lede">Book here or in the OS. Property, package, then lock an exact clock time. The photographer gets it in GO, and media lands back on the listing file.</p>
             <Link className="learn-link" href="/book">Start a booking →</Link>
           </div>
           <div className="cap-stage tray tray-book flow-stage">

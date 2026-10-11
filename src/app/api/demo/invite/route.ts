@@ -67,7 +67,7 @@ function inviteHtml(name: string | undefined, unlockUrl: string, days: number): 
   const hello = name ? `Hello ${escapeHtml(name)},` : 'Hello,'
   return `<div style="font-family:system-ui,sans-serif;max-width:520px;color:#14110E">
 <p style="font-size:16px;line-height:1.5">${hello}</p>
-<p style="color:#555;line-height:1.6">You're invited to a short Bricks walkthrough — OS, Companion, and GO. No account needed; open the link below.</p>
+<p style="color:#555;line-height:1.6">You're invited to a short Bricks walkthrough — OS, booking, and GO. No account needed; open the link below.</p>
 <p style="margin:24px 0"><a href="${escapeAttr(unlockUrl)}" style="display:inline-block;padding:12px 20px;background:#D2542B;color:#fff;text-decoration:none;border-radius:2px;font-weight:500">Open walkthrough</a></p>
 <p style="color:#555;font-size:13px;line-height:1.5">Or paste this URL:<br/><a href="${escapeAttr(unlockUrl)}" style="color:#D2542B;word-break:break-all">${escapeHtml(unlockUrl)}</a></p>
 <p style="color:#999;font-size:12px;margin-top:28px">This invite expires in ${days} day${days === 1 ? '' : 's'}. Questions: help@brxs.ca</p>
