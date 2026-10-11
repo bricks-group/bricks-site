@@ -48,7 +48,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="block">
+      <section className="block" style={{paddingBottom: 32}}>
         <div className="wrap">
           <div className="contact-grid">
             <div className="c"><div className="l">General</div><div className="v"><a href="mailto:help@brxs.ca">help@brxs.ca</a></div></div>
@@ -80,3 +80,4 @@ export default function ContactPage() {
     </>
   )
 }
+
