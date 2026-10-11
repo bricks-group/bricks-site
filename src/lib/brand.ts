@@ -3,7 +3,6 @@
 /** Live product URLs — keep marketing links in one place. */
 export const OS_URL = 'https://app.brxs.ca'
 export const OS_LOGIN = `${OS_URL}/login`
-/** Legacy: Companion merged into Bricks OS (2026-09-20); companion.brxs.ca redirects to app.brxs.ca. Do not link publicly. */
 export const COMPANION_URL = 'https://companion.brxs.ca'
 export const GO_URL = 'https://go.brxs.ca'
 
@@ -12,10 +11,11 @@ export const GO_URL = 'https://go.brxs.ca'
  * One status beat per page (hero or a single closer). Store line: footer only.
  */
 export const STATUS = {
-  media: 'Media is live to book on this site and in the OS.',
+  media: 'Media is live to book on this site and in Companion.',
   os: 'OS is live in preview at app.brxs.ca.',
+  companion: 'Companion is live on the web.',
   go: 'GO is live on the web.',
-  line: 'Media is live to book. OS is live in preview at app.brxs.ca. GO is live on the web.',
+  line: 'Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
   chrome: 'The system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
   stores: 'Not in the App Store or Google Play yet.',
 } as const

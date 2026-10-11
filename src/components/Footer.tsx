@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
+import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { LEGAL_NAME, SOCIAL_PROFILES } from '@/lib/schema'
 import BrandMark from '@/components/BrandMark'
 import ThemeToggle from '@/components/ThemeToggle'
@@ -26,6 +26,7 @@ export default function Footer() {
             <Link href="/gallery">Work</Link>
             <Link href="/book">Book a shoot</Link>
             <Link href="/service-areas">Service areas</Link>
+            <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>
             <a href={GO_URL} rel="noopener noreferrer">GO</a>
             <a href={OS_LOGIN}>Log in</a>
           </div>

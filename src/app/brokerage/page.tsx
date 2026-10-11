@@ -75,7 +75,7 @@ export default function BrokeragePage() {
           <div className="faq">
             <div className="qa"><h4>Roster</h4><p>Agents under the brokerage, seats, and who can book media.</p></div>
             <div className="qa"><h4>Pipeline</h4><p>Deals and the listing file — not a jobs queue pretending to be the product.</p></div>
-            <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the OS or on this site. Photographers shoot in GO (Dispatch).</p></div>
+            <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the OS or Companion. Photographers shoot in GO (Dispatch).</p></div>
             <div className="qa"><h4>Trust accounting</h4><p>Brokerage-only. Solo and team plans do not unlock it.</p></div>
           </div>
         </section>

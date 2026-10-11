@@ -3,11 +3,11 @@ import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import { SOFTWARE_PLANS, SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
-import { OS_LOGIN, STATUS } from '@/lib/brand'
+import { COMPANION_URL, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
-  title: 'Bricks for agents and teams — listing file and booking in the OS',
-  description: 'OS holds the pipeline and the listing file. Order media in the OS or on this site and lock an exact clock time. Clay free; Keystone, Marble, Diamond monthly or yearly. OS is live in preview at app.brxs.ca.',
+  title: 'bricks for agents and teams — listing file plus Companion',
+  description: 'OS holds the pipeline and the listing file. Companion is how you order media — Jobs and Book with an exact clock time. Clay free; Keystone, Marble, Diamond monthly or yearly. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/agents' },
 }
 
@@ -18,8 +18,8 @@ export default function AgentsPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Agent · Team</span>
-          <h1>The listing file. Then the shoot.</h1>
-          <p className="sub">OS holds the pipeline and the deal. Order media in the OS or on this site and lock an exact clock time. What you see depends on whether you are solo or a team. {STATUS.os}</p>
+          <h1>The listing file. Then Companion.</h1>
+          <p className="sub">OS holds the pipeline and the deal. Companion is how you order media — Jobs and Book with an exact clock time. What you see depends on whether you are solo or a team. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/pricing">Plans</Link>
@@ -27,15 +27,15 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Book in the OS">
+      <section className="prod-row rvl" aria-label="Companion">
         <div className="prod-copy">
-          <span className="over">Book in the OS</span>
+          <span className="over">Companion</span>
           <h2>Order media from the listing.</h2>
-          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. Jobs and Book lock an exact clock time. <a href={OS_LOGIN}>Open the OS</a> or book on this site.</p>
+          <p>Drop the address, pick the services, confirm. The photographer is routed — you do not cast the shoot. Jobs and Book lock an exact clock time. <a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a> or book on this site.</p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">
-            <ProductWindow variant="phone" title="Book in the OS" src="/screens/book.html?lock=1" nw={390} nh={844} lazy />
+            <ProductWindow variant="phone" title="Companion" src="/screens/book.html?lock=1" nw={390} nh={844} lazy />
           </div>
         </div>
       </section>
@@ -85,7 +85,7 @@ export default function AgentsPage() {
           <div className="book">
             <span className="over">Ready</span>
             <h2>Book the shoot. Open the OS.</h2>
-            <p className="lead">Order the shoot in the OS or on this site. Open the OS when you want the pipeline.</p>
+            <p className="lead">Order the shoot from Companion or this site. Open the OS when you want the pipeline.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/brokerage">For brokerages</Link>

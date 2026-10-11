@@ -6,19 +6,19 @@ import PhoneDevice from '@/components/PhoneDevice'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
 import { SOFTWARE_PLANS, OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
-import { GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
+import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'Bricks platform — OS and GO',
-  description: 'The system for Canadian real estate. Property to close: listing, booking, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
+  title: 'bricks platform — OS, Companion, GO',
+  description: 'The system for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
   alternates: { canonical: '/platform' },
 }
 
 const roles = [
   { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'Whole shop · per seat.' },
   { href: '/agents#team', over: 'OS', title: 'Team', body: 'Shared pipeline.' },
-  { href: '/agents', over: 'OS', title: 'Agent', body: 'Listing file · Book in the OS.' },
+  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Listing file · Companion.' },
   { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Fixed rate card · auto-assign.' },
 ]
 
@@ -58,18 +58,18 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Book in the OS">
+      <section className="prod-row rvl" aria-label="Companion — mobile">
         <div className="prod-copy">
-          <span className="over">OS · Booking</span>
-          <h2>Book in the OS.</h2>
-          <p className="surf-link"><a href={OS_LOGIN}>Open the OS</a></p>
+          <span className="over">Companion · Mobile</span>
+          <h2>Companion.</h2>
+          <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="phone-stage">
-            <PhoneDevice label="Book in the OS">
+            <PhoneDevice label="Companion">
               <ProductWindow
                 variant="phone"
-                title="Book in the OS"
+                title="Companion"
                 src="/screens/book.html?lock=1"
                 nw={390}
                 nh={844}
@@ -170,7 +170,7 @@ export default function PlatformPage() {
           <div className="book">
             <span className="over">Ready when you are</span>
             <h2>Book a shoot. Open the OS.</h2>
-            <p className="lead">Order media on this site or in the OS. Sign in to the <a href={OS_LOGIN}>OS</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
+            <p className="lead">Order media on this site or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to the <a href={OS_LOGIN}>OS</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>
