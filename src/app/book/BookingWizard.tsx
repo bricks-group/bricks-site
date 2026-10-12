@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, FOOTPRINT_BANDS, CORE_FROM } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
+import { BookCalendar } from './BookCalendar'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
@@ -708,12 +709,11 @@ export default function BookingWizard() {
               <p className="hint">Pick a date and a clock time. That time is locked when you pay and sent to the photographer.</p>
               <div className="field">
                 <label>Shoot date <span className="req">*</span></label>
-                <input
-                  type="date"
-                  min={localYmd(new Date(), propertyTz)}
+<BookCalendar
+                  tz={propertyTz}
+                  area={selectedAddr || addr.trim()}
                   value={date}
-                  onChange={(e) => {
-                    const next = e.target.value
+                  onChange={(next) => {
                     setDate(next)
                     setErrs((er) => ({ ...er, 2: '' }))
                   }}
