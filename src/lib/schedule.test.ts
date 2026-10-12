@@ -168,3 +168,15 @@ describe('slot generation', () => {
     assert.ok(open.every((s) => Date.parse(s.end) <= Date.parse(taken[0].start) || Date.parse(s.start) >= Date.parse(taken[0].end)))
   })
 })
+
+describe('date-only values at 11 PM Toronto', () => {
+  it('localYmd/civil day stay on the tapped Toronto day (no UTC rollover)', () => {
+    const elevenPm = new Date('2026-10-13T03:00:00Z') // Mon Oct 12, 23:00 EDT
+    assert.equal(localYmd(elevenPm, 'America/Toronto'), '2026-10-12')
+    assert.notEqual(localYmd(elevenPm, 'America/Toronto'), elevenPm.toISOString().slice(0, 10))
+    const iso = civilLocalToIso('2026-10-13', '09:00', 'America/Toronto')!
+    assert.equal(localYmd(new Date(iso), 'America/Toronto'), '2026-10-13')
+    const late = civilLocalToIso('2026-10-13', '23:00', 'America/Toronto')!
+    assert.equal(localYmd(new Date(late), 'America/Toronto'), '2026-10-13')
+  })
+})
