@@ -81,3 +81,16 @@ export const OFFICE_PLANS = [
 
 export const OFFICE_INCLUDES =
   'Full system on every seat — CRM, transactions, checklist e-sign + shareable links, forms, BYO MLS — plus trust accounting. On-document PDF placement is not available yet. Agents do not pay individually.'
+
+/** Plan matrix: same rows, same order on every card. `from` = first plan that includes it. */
+export const PLAN_ORDER = ['clay', 'keystone', 'marble', 'diamond'] as const
+export const PLAN_FEATURES: readonly { label: string; from: (typeof PLAN_ORDER)[number]; note?: string; addon?: string }[] = [
+  { label: 'Book media at rack rate', from: 'clay' },
+  { label: 'Listing file, transactions, and BYO MLS', from: 'clay' },
+  { label: 'CRM', from: 'keystone' },
+  { label: 'Checklist e-sign + shareable links', from: 'keystone', note: 'On-document PDF placement not available yet' },
+  { label: 'Forms', from: 'marble' },
+  { label: 'AI Listing Copy', from: 'diamond', addon: '$19 / mo' },
+  { label: 'AI CMA', from: 'diamond', addon: '$25 / mo' },
+  { label: 'AI Document Drafter', from: 'diamond', addon: '$19 / mo' },
+]
