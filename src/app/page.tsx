@@ -8,6 +8,7 @@ import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
 import FlowStage from '@/components/FlowStage'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
+import IntegrationsBand from '@/components/IntegrationsBand'
 import {
   FOOTPRINT_BANDS,
   TOUR_RANGE,
@@ -391,48 +392,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="integ-band rvl" id="integrations" aria-label="Integrations">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Integrations</span>
-            <h2>Connect what you already use.</h2>
-          </div>
-          <p className="integ-lede">One system only works if it plugs into the rest of the office. Honest Connect — never a fake Connected state.</p>
-          <div className="integ-grid">
-            <div className="integ-card">
-              <span className="integ-k">Calendar</span>
-              <p>Google, Apple, and ICS. Your calendar availability controls auto-assign for every vendor.</p>
-              <span className="integ-status">Launch</span>
-            </div>
-            <div className="integ-card">
-              <span className="integ-k">MLS</span>
-              <p>Use your own board credentials. Listing file sync via RESO / Bridge — no scraping.</p>
-              <span className="integ-status">Launch</span>
-            </div>
-            <div className="integ-card">
-              <span className="integ-k">E-sign</span>
-              <p>Native forms on the desk. Optional DocuSign when the office already lives there.</p>
-              <span className="integ-status">Launch</span>
-            </div>
-            <div className="integ-card">
-              <span className="integ-k">CRM</span>
-              <p>Follow Up Boss first. Contacts and deals stay in sync with the listing file.</p>
-              <span className="integ-status">Launch</span>
-            </div>
-            <div className="integ-card integ-soon">
-              <span className="integ-k">Showings</span>
-              <p>ShowingTime+ on the listing timeline.</p>
-              <span className="integ-status">Next</span>
-            </div>
-            <div className="integ-card integ-soon">
-              <span className="integ-k">Deal file</span>
-              <p>dotloop / SkySlope import so nothing gets stranded.</p>
-              <span className="integ-status">Next</span>
-            </div>
-          </div>
-          <Link className="learn-link integ-link" href="https://app.brxs.ca/login">Open Connected tools →</Link>
-        </div>
-      </section>
+      <IntegrationsBand />
 
       <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
         <div className="closer-simple-inner">
