@@ -7,6 +7,7 @@ import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, l
 import Link from 'next/link'
 import { track } from '@vercel/analytics'
 import MapCutout from '@/components/MapCutout'
+import BricksLoader from '@/components/BricksLoader'
 const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 type AddrSuggestion = {
@@ -693,7 +694,7 @@ export default function BookingWizard() {
               )}
               <label className="toggle"><input type="checkbox" checked={rush} onChange={(e) => setRush(e.target.checked)} /> Rush delivery (+${RUSH_FLAT})</label>
               <div className="quote">
-                {quoteLoading && <div className="qload"><div className="spin"></div><div className="ltxt"><b>Tailoring your quote</b>Measuring footprint · mapping travel · adding tax</div></div>}
+                {quoteLoading && <div className="qload"><BricksLoader variant="cycle" size={22} label="Tailoring your quote" /><div className="ltxt"><b>Tailoring your quote</b>Measuring footprint · mapping travel · adding tax</div></div>}
                 {!quoteLoading && quote && <QuoteBlock q={quote} editable />}
                 {!quoteLoading && !quote && quoteError && <div className="qmsg">{quoteError}</div>}
                 {!quoteLoading && !quote && !quoteError && <div className="qmsg">Tailoring your quote…</div>}
@@ -790,6 +791,7 @@ export default function BookingWizard() {
         {step === 'done' && (
           <div className="panel active">
             <div className="done-box">
+              {doneMsg.endsWith('…') && <BricksLoader variant="assemble" size={40} label={doneMsg} style={{ marginBottom: 16 }} />}
               <h2>{doneTitle}</h2>
               <p>{doneMsg}</p>
               {scheduleCtaVisible && (
