@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
-import { SOFTWARE_PLANS, OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
+import { OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import {
   COVERAGE_LINE,
   STATUS,
@@ -100,15 +101,7 @@ export default function PricingPage() {
             </div>
           </div>
           <p className="tbl-cap">{SOFTWARE_BLURB} Monthly, or yearly — pay 10, get 12.</p>
-          <div className="incl">
-            {SOFTWARE_PLANS.map((p) => (
-              <div key={p.id} className="c rvl">
-                <span className="ic">{p.price}</span>
-                <h4>{p.name}</h4>
-                <p>{p.yearly}. {p.points.join('. ')}.</p>
-              </div>
-            ))}
-          </div>
+          <PlanCards />
         </section>
 
         <section className="block rvl" aria-label="AI add-ons">

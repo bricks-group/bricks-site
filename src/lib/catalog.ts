@@ -11,6 +11,7 @@ export const SOFTWARE_PLANS = [
     price: 'Free',
     yearly: 'No card',
     over: 'Individual',
+    value: 'Free desk. No card.',
     points: ['Book media at rack rate', 'Listing file, transactions, and BYO MLS'],
   },
   {
@@ -19,6 +20,7 @@ export const SOFTWARE_PLANS = [
     price: '$49 / mo',
     yearly: '$490 / yr · 2 months free',
     over: 'Individual',
+    value: '≈ $40.83 / mo billed yearly.',
     points: ['Everything in Clay', 'CRM', 'Checklist e-sign + shareable links (on-document PDF placement not available yet)'],
   },
   {
@@ -27,6 +29,8 @@ export const SOFTWARE_PLANS = [
     price: '$99 / mo',
     yearly: '$990 / yr · 2 months free',
     over: 'Individual',
+    value: '≈ $82.50 / mo billed yearly.',
+    recommended: true,
     points: ['Everything in Keystone', 'Forms'],
   },
   {
@@ -35,7 +39,8 @@ export const SOFTWARE_PLANS = [
     price: '$149 / mo',
     yearly: '$1,490 / yr · 2 months free',
     over: 'Individual',
-    points: ['Everything in Marble', 'AI suite included — same AI as add-ons on lower plans'],
+    value: '≈ $124.17 / mo billed yearly. AI suite sold as $63 / mo of add-ons, included.',
+    points: ['Everything in Marble', 'AI suite included — same AI as add-ons on lower plans', 'AI Listing Copy', 'AI CMA', 'AI Document Drafter'],
   },
 ] as const
 

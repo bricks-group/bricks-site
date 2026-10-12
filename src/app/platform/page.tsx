@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import PhoneDevice from '@/components/PhoneDevice'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
-import { SOFTWARE_PLANS, OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
+import { OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 
@@ -135,15 +136,7 @@ export default function PlatformPage() {
             </div>
           </div>
           <p className="sub-line">{SOFTWARE_BLURB} Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Virtual visit is $249–$399 by footprint, never packaged.</p>
-          <div className="incl" style={{ marginTop: 22 }}>
-            {SOFTWARE_PLANS.map((p) => (
-              <div key={p.id} className="c rvl">
-                <span className="ic">{p.price}</span>
-                <h4>{p.name}</h4>
-                <p>{p.yearly}. {p.points.join('. ')}.</p>
-              </div>
-            ))}
-          </div>
+          <PlanCards style={{ marginTop: 22 }} />
           <div className="incl" style={{ marginTop: 1, borderTop: 'none' }}>
             {OFFICE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">

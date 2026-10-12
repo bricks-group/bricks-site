@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
-import { SOFTWARE_PLANS, SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
+import { SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, STATUS } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -69,15 +70,7 @@ export default function AgentsPage() {
               <h2>Clay, Keystone, Marble, Diamond.</h2>
             </div>
           </div>
-          <div className="incl">
-            {SOFTWARE_PLANS.map((p) => (
-              <div key={p.id} className="c rvl">
-                <span className="ic">{p.price}</span>
-                <h4>{p.name}</h4>
-                <p>{p.yearly}. {p.points.join('. ')}.</p>
-              </div>
-            ))}
-          </div>
+          <PlanCards />
           <p className="note">{SOFTWARE_BLURB} {ADDONS_BLURB} Yearly is pay 10, get 12.</p>
         </section>
 
