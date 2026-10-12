@@ -4,11 +4,28 @@ import { useState, useEffect } from 'react'
 
 const DISPATCH_API = 'https://dispatch-api.brxs.ca/api/onboarding'
 
+// "How did you hear about Bricks?" keys match Dispatch backend/app/shared/applicant_source.py.
+const SOURCE_OPTIONS: { value: string; label: string }[] = [
+  { value: 'instagram', label: 'Instagram' },
+  { value: 'facebook', label: 'Facebook' },
+  { value: 'linkedin', label: 'LinkedIn' },
+  { value: 'tiktok', label: 'TikTok' },
+  { value: 'google', label: 'Google search' },
+  { value: 'indeed', label: 'Indeed' },
+  { value: 'craigslist_kijiji', label: 'Craigslist/Kijiji' },
+  { value: 'referral_photographer', label: 'Referral from a photographer' },
+  { value: 'referral_realtor', label: 'Referral from a realtor/brokerage' },
+  { value: 'event', label: 'Event or meetup' },
+  { value: 'other', label: 'Other' },
+]
+const SOURCE_DETAIL_MAX = 80
+
 export default function PhotographerForm() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [droneVisible, setDroneVisible] = useState(false)
   const [hstExempt, setHstExempt] = useState(false)
+  const [source, setSource] = useState('')
   const [icText, setIcText] = useState('Loading agreement…')
   const [err, setErr] = useState('')
   const [resumeWarning, setResumeWarning] = useState('')
@@ -75,6 +92,12 @@ export default function PhotographerForm() {
     if (!hstNumber && !hstExemptChecked) {
       setErr('Enter your HST/GST number, or confirm the small-supplier exemption below.'); return
     }
+    const sourceVal = (fd.get('source') as string || '').trim()
+    const sourceDetailRaw = (fd.get('source_detail') as string || '').replace(/\s+/g, ' ').trim().slice(0, SOURCE_DETAIL_MAX)
+    if (!SOURCE_OPTIONS.some((o) => o.value === sourceVal)) { setErr('Tell us how you heard about Bricks.'); return }
+    if (sourceVal === 'other' && !sourceDetailRaw) { setErr('Tell us where you heard about Bricks.'); return }
+    const sourceDetail = sourceVal === 'other' || sourceVal.startsWith('referral_') ? (sourceDetailRaw || null) : null
+
     if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
 
     const droneChecked = specialties.includes('drone')
@@ -112,6 +135,8 @@ export default function PhotographerForm() {
       accepted_terms: true,
       ic_agreement_version: '1.8',
       preferred_regions: [] as string[],
+      source: sourceVal,
+      source_detail: sourceDetail,
     }
 
     setSubmitting(true)
@@ -235,7 +260,25 @@ export default function PhotographerForm() {
         <span>I&apos;m not GST/HST registered — my revenue across all clients is under $30,000 CAD/year, so I&apos;m not required to register (CRA small-supplier exemption).</span>
       </label>
 
-      <div className="fsec">05 · Independent contractor agreement</div>
+      <div className="fsec">05 · How you found us</div>
+      <div className="field"><label htmlFor="f_source">How did you hear about Bricks? <span className="req">*</span></label>
+        <select id="f_source" name="source" required value={source} onChange={(e) => setSource(e.target.value)}>
+          <option value="" disabled>Choose one</option>
+          {SOURCE_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+      {source === 'other' && (
+        <div className="field"><label htmlFor="f_source_detail">Where? <span className="req">*</span></label>
+          <input id="f_source_detail" key="source-other" name="source_detail" required maxLength={SOURCE_DETAIL_MAX} placeholder="Podcast, newsletter, a friend…" />
+        </div>
+      )}
+      {source.startsWith('referral_') && (
+        <div className="field"><label htmlFor="f_source_detail">Who referred you? <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label>
+          <input id="f_source_detail" key="source-referral" name="source_detail" maxLength={SOURCE_DETAIL_MAX} placeholder="Their name or brokerage" autoComplete="off" />
+        </div>
+      )}
+
+      <div className="fsec">06 · Independent contractor agreement</div>
       <p className="hint-sm" style={{ margin: '0 0 4px' }}>Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
       <div className="ic-box">{icText}</div>
       <label className="ic-accept">
@@ -253,7 +296,7 @@ export default function PhotographerForm() {
 
       <style>{`
         .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:32px;margin-top:4px;max-width:100%;min-width:0;box-sizing:border-box;}
-        .aform .fsec{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+        .aform .fsec{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
           color:var(--brickDeep);margin:26px 0 14px;padding-top:22px;border-top:1px solid var(--hair);}
         .aform .fsec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
         .aform .check-col{display:grid;gap:8px;min-width:0;max-width:100%;}
@@ -277,13 +320,13 @@ export default function PhotographerForm() {
         .success-box p{color:var(--inkMute);font-size:14.5px;line-height:1.6;max-width:400px;margin:0 auto;}
         .aform .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0;max-width:100%;}
         .aform .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;min-width:0;max-width:100%;}
-        .aform .field > label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--inkMute);}
+        .aform .field > label{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--inkMute);}
         .aform .field .req{color:var(--brickDeep);}
         .aform .field input,.aform .field select{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paperDeep);color:var(--ink);
           border:1px solid var(--hairStrong);border-radius:2px;padding:11px 12px;outline:none;width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
         .aform .field input:focus,.aform .field select:focus{border-color:var(--brick);}
         .aform .hint-sm{font-size:11.5px;color:var(--inkFaint);line-height:1.4;display:block;margin-top:4px;}
-        .aform .err{color:var(--brickDeep);font-size:12.5px;font-family:'JetBrains Mono',monospace;min-height:14px;}
+        .aform .err{color:var(--brickDeep);font-size:12.5px;font-family:'Ioskeley Mono','JetBrains Mono',monospace;min-height:14px;}
         @media (max-width:680px){ .aform .grid2{grid-template-columns:1fr;} .aform .radio-row{flex-direction:column;} .aform{padding:22px;} }
       `}</style>
     </form>
