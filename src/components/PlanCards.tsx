@@ -31,7 +31,7 @@ export default function PlanCards({ style }: { style?: React.CSSProperties }) {
                   <li key={r.label} className={`st-${st}`}>
                     {r.label}
                     {st === 'addon' ? <span className="add"> · add-on {r.addon}</span> : null}
-                    {r.note && (st === 'new' || st === 'inherited') ? <span className="nt">{r.note}</span> : null}
+                    {r.note ? <span className="nt">{r.note}</span> : null}
                   </li>
                 )
               })}

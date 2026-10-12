@@ -286,7 +286,10 @@ html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
 .incl.three{grid-template-columns:repeat(3,1fr);}
 .incl.plans .c{display:flex;flex-direction:column;gap:6px;}
 .incl.plans .c h4{margin-bottom:0;}
-.incl.plans .c .yr,.incl.plans .c .val{min-height:2.9em;}
+.incl.plans .c .yr{min-height:1.5em;}
+.incl.plans .c .val{min-height:4.4em;}
+.incl.plans .c .inh{min-height:2.9em;}
+.incl.plans .c li{min-height:3.9em!important;}
 .incl.plans .c .val{color:var(--ink);}
 .incl.plans .c .inh{color:var(--ink);font-weight:500;margin-top:6px;}
 .incl.plans .c .inh .cnt{color:var(--inkMute);font-weight:400;font-variant-numeric:tabular-nums;}
