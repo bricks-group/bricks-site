@@ -4,11 +4,13 @@ import Image from 'next/image'
 import Script from 'next/script'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
-import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
-import FlowStage from '@/components/FlowStage'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import IntegrationsBand from '@/components/IntegrationsBand'
+import SmoothScroll from '@/components/rev/SmoothScroll'
+import CtaLink from '@/components/rev/CtaLink'
+import { HOME_COPY } from '@/lib/home-copy'
+import './home-rev.css'
 import {
   FOOTPRINT_BANDS,
   TOUR_RANGE,
@@ -18,6 +20,13 @@ import {
   SHOWCASE_FROM,
   FULL_FROM,
   PHOTO_ONLY_FROM,
+  PHOTO_RANGE,
+  DRONE_RANGE,
+  REEL_RANGE,
+  TWILIGHT_RANGE,
+  FLOOR_PLAN_ONLY_LABEL,
+  STAGING_PRICE_LABEL,
+  VISIT_RANGE,
 } from '@/lib/pricing'
 import {
   COVERAGE_LINE,
@@ -126,333 +135,294 @@ export const metadata: Metadata = {
   },
 }
 
+const t = HOME_COPY.en
+
+const WORK = [
+  { src: '/media/work/02.jpg', k: 'Detached', v: 'Exterior · front' , cls: 'w-a' },
+  { src: '/media/work/04.jpg', k: 'Condo', v: 'Living · window light', cls: 'w-b' },
+  { src: '/media/work/05.jpg', k: 'Licensed drone', v: 'Aerial · towers', cls: 'w-c' },
+  { src: '/media/work/09.jpg', k: 'Interior', v: 'Open plan', cls: 'w-d' },
+  { src: '/media/work/01.jpg', k: 'Street', v: 'Exterior · row', cls: 'w-e' },
+  { src: '/media/work/12.jpg', k: 'Commercial', v: 'Exterior · industrial', cls: 'w-f' },
+] as const
+
+const SERVICES = [
+  { n: '01', name: 'HDR photos', note: 'Real windows. MLS-ready on a 24–48h target.', price: PHOTO_RANGE },
+  { n: '02', name: 'Licensed drone', note: 'Advanced RPAS-certified aerial.', price: DRONE_RANGE },
+  { n: '03', name: 'Floor plan', note: 'Included from Essentials · standalone capture available.', price: FLOOR_PLAN_ONLY_LABEL },
+  { n: '04', name: 'Cinematic reel', note: 'Included from Story.', price: REEL_RANGE },
+  { n: '05', name: TOUR_NAME, note: 'Path-confined walkthrough. Included from Showcase.', price: TOUR_RANGE },
+  { n: '06', name: VISIT_NAME, note: 'Free-roam Gaussian splat. Always a paid add-on, never packaged.', price: VISIT_RANGE },
+  { n: '07', name: 'Twilight', note: 'A real blue-hour exterior — not invented dusk.', price: TWILIGHT_RANGE },
+  { n: '08', name: 'Virtual staging', note: 'Per photo add-on, never packaged.', price: STAGING_PRICE_LABEL },
+] as const
+
 export default function Home() {
   return (
-    <>
+    <div className="rv-home">
       <RevealObserver />
+      <SmoothScroll />
       <Script src="/assets/ba.js" strategy="afterInteractive" />
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA],
-          }),
+          __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA] }),
         }}
       />
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
-            mainEntity: faqs.map((f) => ({
-              '@type': 'Question',
-              name: f.q,
-              acceptedAnswer: { '@type': 'Answer', text: f.a },
-            })),
+            mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
           }),
         }}
       />
 
-      <section className="hero hero-home">
-        <div className="wrap">
-          <h1>The system for Canadian real estate.</h1>
-          <p className="sub">Replace the patchwork.</p>
-          <div className="cta-row">
-            <Link className="btn btn-night" href="/book">Book a shoot</Link>
-            <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="prod-hero" aria-label="bricks desk">
-        <div className="tray tray-os">
-          <div className="tray-stage">
-            <ProductStage />
-          </div>
-        </div>
-      </section>
-
-      <section className="trust-wall rvl" aria-label="Who bricks is for">
-        <div className="wrap">
-          <div className="trust-tiles">
-            <Link href="/brokerage" className="trust-tile">
-              <span className="trust-tile-k">Brokerage</span>
-            </Link>
-            <Link href="/agents#team" className="trust-tile">
-              <span className="trust-tile-k">Team</span>
-            </Link>
-            <Link href="/agents" className="trust-tile">
-              <span className="trust-tile-k">Agent</span>
-            </Link>
-            <Link href="/photographers" className="trust-tile">
-              <span className="trust-tile-k">Vendors</span>
-            </Link>
-          </div>
-          <div className="trust-stats">
-            <div><b>14,000+</b><span>properties shot before Bricks</span></div>
-            <div><b>Canada</b><span>coverage</span></div>
-            <div><b>24–48h</b><span>target</span></div>
-            <div><b>Auto-assign</b><span>routing</span></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="cap-band rvl" aria-label="The desk">
-        <div className="cap-inner">
-          <div className="cap-copy">
-            <h2>The desk runs the deal.</h2>
-            <p className="cap-lede">Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
-            <Link className="learn-link" href="/platform">Explore the desk →</Link>
-          </div>
-          <div className="cap-stage tray tray-crm">
-            <div className="tray-stage tray-stage-fill">
-              <OsDeskShot />
+      {/* 1 · Hero — split: copy + framed photo card */}
+      <section className="rv-hero" aria-label="Bricks">
+        <div className="rv-wrap rv-hero-grid">
+          <div className="rv-hero-copy">
+            <span className="rv-mono rv-eyebrow rv-up" style={{ ['--d' as string]: 0 }}><i className="rv-dot" aria-hidden /> {t.heroKicker}</span>
+            <h1 className="rv-up" style={{ ['--d' as string]: 1 }}>
+              {t.heroTitleA} <span className="rv-serif">{t.heroTitleSerif}</span> {t.heroTitleB}
+            </h1>
+            <p className="rv-lede rv-up" style={{ ['--d' as string]: 2 }}>{t.heroSub}</p>
+            <div className="rv-cta-row rv-up" style={{ ['--d' as string]: 3 }}>
+              <CtaLink href="/book" className="rv-btn-brick">{t.ctaPrimary}</CtaLink>
+              <CtaLink href="/contact" className="rv-btn-ghost" loaderColor="#D2542B">{t.ctaSecondary}</CtaLink>
             </div>
+            <p className="rv-mono rv-trust rv-up" style={{ ['--d' as string]: 4 }}>{t.heroTrust}</p>
+          </div>
+          <figure className="rv-frame rv-hero-card rv-up" style={{ ['--d' as string]: 2 }}>
+            <div className="rv-frame-img">
+              <Image src="/media/work/02.jpg" alt="Detached home exterior shot by Bricks" fill priority sizes="(max-width:900px) 100vw, 46vw" />
+            </div>
+            <figcaption className="rv-frame-cap">
+              <span className="rv-mono">Detached · Exterior</span>
+              <span className="rv-mono rv-muted">HDR · Real windows</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {/* 2 · Single big proof stat, ruled band */}
+      <section className="rv-band rv-proof rvl" aria-label="Proof">
+        <div className="rv-wrap rv-proof-grid">
+          <span className="rv-mono rv-k">{t.proofLabel}</span>
+          <div className="rv-proof-main">
+            <b className="rv-stat">{t.proofStat}</b>
+            <p><span className="rv-serif">{t.proofLine}</span><br /><span className="rv-mono rv-muted">{t.proofSource}</span></p>
+          </div>
+          <dl className="rv-proof-side">
+            <div><dt className="rv-mono">Coverage</dt><dd>Canada</dd></div>
+            <div><dt className="rv-mono">Delivery</dt><dd>24–48h target</dd></div>
+            <div><dt className="rv-mono">Routing</dt><dd>Auto-assign</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      {/* 3 · Two paths */}
+      <section className="rv-band rv-paths rvl" aria-label={t.pathsLabel}>
+        <div className="rv-wrap">
+          <div className="rv-head"><span className="rv-mono rv-k">{t.pathsLabel}</span></div>
+          <div className="rv-paths-grid">
+            <Link href="/book" className="rv-path">
+              <span className="rv-mono rv-muted">01 · Agents & teams</span>
+              <h2>Book a shoot in <span className="rv-serif">three steps.</span></h2>
+              <p>Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.</p>
+              <span className="rv-path-go">Start a booking <span aria-hidden>→</span></span>
+            </Link>
+            <Link href="/brokerage" className="rv-path">
+              <span className="rv-mono rv-muted">02 · Brokerages</span>
+              <h2>The desk <span className="rv-serif">runs the deal.</span></h2>
+              <p>Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
+              <span className="rv-path-go">For brokerages <span aria-hidden>→</span></span>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="cap-band flow-band rvl" aria-label="Companion booking">
-        <div className="cap-inner">
-          <div className="cap-copy">
-            <h2>Book a shoot in three steps.</h2>
-            <p className="cap-lede">Companion is the agent app. Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.</p>
-            <Link className="learn-link" href="/book">Start a booking →</Link>
+      {/* 4 · Work — framed cards, one grade, mono labels */}
+      <section className="rv-band rv-work rvl" aria-label="Selected work">
+        <div className="rv-wrap">
+          <div className="rv-head rv-head-split">
+            <div><span className="rv-mono rv-k">Work</span><h2>Real shoots. <span className="rv-serif">Real windows.</span></h2></div>
+            <Link className="rv-textlink" href="/gallery">See more work →</Link>
           </div>
-          <div className="cap-stage tray tray-book flow-stage">
-            <FlowStage />
+          <div className="rv-work-grid">
+            {WORK.map((w) => (
+              <figure key={w.src} className={`rv-frame ${w.cls}`}>
+                <div className="rv-frame-img">
+                  <Image src={w.src} alt={`${w.k} — ${w.v}`} fill sizes="(max-width:900px) 100vw, 33vw" />
+                </div>
+                <figcaption className="rv-frame-cap">
+                  <span className="rv-mono">{w.k}</span>
+                  <span className="rv-mono rv-muted">{w.v}</span>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="work-sec rvl" aria-label="Selected work">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Work</span>
-            <h2>Real shoots.</h2>
+      {/* 5 · Services index — editorial table, mono price data */}
+      <section className="rv-band rv-services rvl" id="services" aria-label="Services">
+        <div className="rv-wrap rv-split">
+          <div className="rv-split-l">
+            <span className="rv-mono rv-k">Services</span>
+            <h2>À la carte, <span className="rv-serif">priced by footprint.</span></h2>
+            <p className="rv-muted-p">{FOOTPRINT_BANDS} sq ft. CAD, pre-tax. Exact total on the quote before you pay.</p>
           </div>
-          <div className="work-row">
-            <figure>
-              <Image src="/media/work/01.jpg" alt="Detached home exterior" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Detached · exterior</figcaption>
-            </figure>
-            <figure>
-              <Image src="/media/work/03.jpg" alt="Interior living space" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Interior · living</figcaption>
-            </figure>
-            <figure>
-              <Image src="/media/work/05.jpg" alt="Licensed drone aerial" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Licensed drone · aerial</figcaption>
-            </figure>
-            <figure>
-              <Image src="/media/work/07.jpg" alt="Condo interior" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Condo · interior</figcaption>
-            </figure>
+          <ol className="rv-index">
+            {SERVICES.map((s) => (
+              <li key={s.n}>
+                <span className="rv-mono rv-muted">{s.n}</span>
+                <div><b>{s.name}</b><small>{s.note}</small></div>
+                <span className="rv-mono rv-price">{s.price}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 6 · Packages */}
+      <section className="rv-band home-price-sec rvl" id="home-pricing" aria-label="Listing media pricing">
+        <div className="rv-wrap">
+          <div className="rv-head rv-head-split">
+            <div><span className="rv-mono rv-k">Packages</span><h2>Media, <span className="rv-serif">bundled honestly.</span></h2></div>
+            <Link className="rv-textlink" href="/pricing">Full pricing →</Link>
           </div>
-          <div className="work-more">
-            <Link href="/gallery">See more work →</Link>
-          </div>
-          <div className="film">
-            <span className="tag">Film</span>
-            <video className="film-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
-              <source src="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4" type="video/mp4" />
-            </video>
-            <div className="film-in">
-              <div>
-                <div className="vt">One system for the whole business.</div>
-                <div className="vs">Desk, field, and media — finally one place.</div>
+          <div className="rv-pkgs">
+            {[
+              { name: 'Essentials', badge: 'Listing set', from: CORE_FROM, items: ['HDR + licensed drone + floor plan', 'Not a photo-only peer stack', '24–48h target'], foot: 'Drone-included listing set · Small→XL' },
+              { name: 'Story', from: STORY_FROM, items: ['Everything in Essentials', 'Cinematic reel', '24–48h target'], foot: 'Small footprint · scales to XL' },
+              { name: 'Showcase', badge: 'Most booked', from: SHOWCASE_FROM, items: ['Everything in Story', TOUR_NAME, '24–48h target'], foot: 'Small footprint · scales to XL', feat: true },
+              { name: 'Full suite', from: FULL_FROM, items: ['Everything in Showcase', 'Twilight exterior', 'Virtual staging is $35 / photo — not included', '24–48h target'], foot: 'Small footprint · scales to XL' },
+            ].map((p) => (
+              <div key={p.name} className={`rv-pkg${p.feat ? ' feat' : ''}`}>
+                <div className="rv-pkg-head"><span>{p.name}</span>{p.badge ? <span className="rv-mono rv-badge">{p.badge}</span> : null}</div>
+                <div className="rv-pkg-amt"><span className="rv-mono rv-muted">from</span> ${p.from}<small className="rv-mono"> / shoot</small></div>
+                <ul>{p.items.map((i) => <li key={i}>{i}</li>)}</ul>
+                <div className="rv-mono rv-pkg-foot">{p.foot}</div>
+                <CtaLink href="/book" className={p.feat ? 'rv-btn-brick rv-btn-block' : 'rv-btn-ghost rv-btn-block'} loaderColor={p.feat ? '#fff' : '#D2542B'}>{`Book ${p.name}`}</CtaLink>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </section>
-
-      <section className="edit-sec rvl" aria-label="After the shoot">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Delivery</span>
-            <h2>After the shoot.</h2>
-            <p className="sub" style={{ maxWidth: 520, marginTop: 8 }}>HDR balance for MLS is the standard path. Sky enhance is on request — we do not invent sky or dusk by default. Virtual staging is $35/photo, never packaged.</p>
-          </div>
-          <div className="edit-grid">
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[1].before} alt="HDR — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-              </div>
-              <div className="edit-cap"><div className="t">HDR · windows</div></div>
-            </div>
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky enhance on request — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky enhance on request — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-              </div>
-              <div className="edit-cap"><div className="t">Sky · on request</div></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="visit-sec rvl" aria-label="Virtual Visit">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Virtual Visit</span>
-            <h2>Free-roam.</h2>
-          </div>
-          <div className="visit-stage">
-            <VirtualVisitEmbed />
-          </div>
-        </div>
-      </section>
-
-      <section className="proof-chapter rvl" aria-label="Proof">
-        <div className="wrap">
-          <blockquote className="proof-card proof-card-solo">
-            <p>“Three spreadsheets and a group text — now one screen.”</p>
-            <footer>
-              <span className="nm">Jordan Malcolm</span>
-              <span className="rl">Principal · 47-agent office</span>
-            </footer>
-          </blockquote>
-          <Link className="learn-link proof-chapter-link" href="/platform">Platform →</Link>
-        </div>
-      </section>
-
-      <section className="home-price-sec rvl" id="home-pricing" aria-label="Listing media pricing">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Media</span>
-            <h2>Priced by footprint.</h2>
-          </div>
-          <div className="pkgs">
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Essentials</span><span className="pkg-badge">Listing set</span></div>
-              <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>HDR + licensed drone + floor plan</li>
-                <li>Not a photo-only peer stack</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Drone-included listing set · Small→XL</div>
-              <Link className="btn btn-ghost" href="/book">Book Essentials</Link>
-            </div>
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Story</span></div>
-              <div className="pkg-amt">from {'$'}{STORY_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Essentials</li>
-                <li>Cinematic reel</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
-              <Link className="btn btn-ghost" href="/book">Book Story</Link>
-            </div>
-            <div className="pkg feat">
-              <div className="pkg-head"><span className="pkg-name">Showcase</span><span className="pkg-badge">Most booked</span></div>
-              <div className="pkg-amt">from {'$'}{SHOWCASE_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Story</li>
-                <li>{TOUR_NAME}</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
-              <Link className="btn btn-brick" href="/book">Book Showcase</Link>
-            </div>
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Full suite</span></div>
-              <div className="pkg-amt">from {'$'}{FULL_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Showcase</li>
-                <li>Twilight exterior</li>
-                <li>Virtual staging is $35 / photo — not included</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
-              <Link className="btn btn-ghost" href="/book">Book Full suite</Link>
-            </div>
-          </div>
-          <Link className="lean-strip" href="/book">
-            <div>
-              <span className="pkg-name">Photos only</span>
-              <span className="lean-sub">HDR only · no drone · no floor plan</span>
-            </div>
-            <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
+          <Link className="rv-lean" href="/book">
+            <span><b>Photos only</b> <span className="rv-mono rv-muted">HDR only · no drone · no floor plan</span></span>
+            <span className="rv-mono">from ${PHOTO_ONLY_FROM} →</span>
           </Link>
-          <p className="rate-note">Real windows — no invent sky or dusk by default. GTA travel often $0 at assign-first. <Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
+          <p className="rv-note">Real windows — no invent sky or dusk by default. GTA travel often $0 at assign-first.</p>
+        </div>
+      </section>
+
+      {/* 7 · After the shoot */}
+      <section className="rv-band edit-sec rvl" aria-label="After the shoot">
+        <div className="rv-wrap rv-split">
+          <div className="rv-split-l">
+            <span className="rv-mono rv-k">Delivery</span>
+            <h2>After <span className="rv-serif">the shoot.</span></h2>
+            <p className="rv-muted-p">HDR balance for MLS is the standard path. Sky enhance is on request — we do not invent sky or dusk by default. Virtual staging is $35/photo, never packaged.</p>
+          </div>
+          <div className="rv-ba-grid">
+            {[{ b: beforeAfter[1], cap: 'HDR · windows' }, { b: beforeAfter[0], cap: 'Sky · on request' }].map(({ b, cap }) => (
+              <figure key={cap} className="rv-frame">
+                <div className="ba" data-ba role="slider" aria-label={b.label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
+                  <Image className="ba-after" src={b.after} alt={`${cap} — after`} fill sizes="(max-width:900px) 100vw, 33vw" />
+                  <Image className="ba-before" src={b.before} alt={`${cap} — before`} fill sizes="(max-width:900px) 100vw, 33vw" />
+                  <span className="lbl l">Before</span>
+                  <span className="lbl r">After</span>
+                  <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+                </div>
+                <figcaption className="rv-frame-cap"><span className="rv-mono">{cap}</span><span className="rv-mono rv-muted">Drag</span></figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8 · Virtual Visit */}
+      <section className="rv-band visit-sec rvl" id="virtual-visit" aria-label="Virtual Visit">
+        <div className="rv-wrap">
+          <div className="rv-head rv-head-split">
+            <div><span className="rv-mono rv-k">{VISIT_NAME}</span><h2>Free-roam. <span className="rv-serif">Walk it yourself.</span></h2></div>
+            <span className="rv-mono rv-muted">{VISIT_PRICE_LABEL} · paid add-on</span>
+          </div>
+          <div className="rv-frame rv-visit"><div className="visit-stage"><VirtualVisitEmbed /></div></div>
+        </div>
+      </section>
+
+      {/* 9 · The desk + quote */}
+      <section className="rv-band rv-desk rvl" aria-label="The desk">
+        <div className="rv-wrap rv-split">
+          <div className="rv-split-l">
+            <span className="rv-mono rv-k">Platform</span>
+            <h2>One system for <span className="rv-serif">the whole business.</span></h2>
+            <p className="rv-muted-p">Desk, field, and media — finally one place. {STATUS.os}</p>
+            <blockquote className="rv-quote">
+              <p className="rv-serif">“Three spreadsheets and a group text — now one screen.”</p>
+              <footer className="rv-mono">Jordan Malcolm · Principal, 47-agent office</footer>
+            </blockquote>
+            <Link className="rv-textlink" href="/platform">Explore the desk →</Link>
+          </div>
+          <div className="rv-frame rv-desk-shot"><div className="tray tray-crm"><div className="tray-stage tray-stage-fill"><OsDeskShot /></div></div></div>
+        </div>
+      </section>
+
+      {/* 10 · Data handling for brokerages */}
+      <section className="rv-band rv-data rvl" id="data" aria-label={t.dataTitle}>
+        <div className="rv-wrap rv-split">
+          <div className="rv-split-l">
+            <span className="rv-mono rv-k">{t.dataLabel}</span>
+            <h2>How we handle <span className="rv-serif">your data.</span></h2>
+            <p className="rv-muted-p">Plain answers for brokerage compliance. Full detail in the <Link href="/privacy">Privacy policy</Link> and <Link href="/dpa">DPA</Link>.</p>
+            <div className="rv-cta-row">
+              <CtaLink href="/contact" className="rv-btn-ghost" loaderColor="#D2542B">Talk to us</CtaLink>
+              <Link className="rv-textlink" href="/dpa">Read the DPA →</Link>
+            </div>
+          </div>
+          <ul className="rv-facts">
+            <li><span className="rv-mono rv-k">01 · Residency</span><b>Canadian-hosted core.</b><p>Primary app database, authentication, and file storage run on Supabase in Canada (AWS ca-central-1).</p></li>
+            <li><span className="rv-mono rv-k">02 · Law</span><b>PIPEDA-aligned.</b><p>Bricks Group stays accountable under PIPEDA and applicable Ontario privacy rules for what we collect.</p></li>
+            <li><span className="rv-mono rv-k">03 · Contract</span><b>A DPA for brokerages.</b><p>A Data Processing Agreement for brokerages, teams, and enterprise clients that process third-party personal data.</p></li>
+            <li><span className="rv-mono rv-k">04 · Disclosure</span><b>Named processors.</b><p>Some providers are in the US — e.g. Stripe and Vercel. They are listed in the Privacy policy, not hidden.</p></li>
+          </ul>
         </div>
       </section>
 
       <IntegrationsBand />
 
-      <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
-        <div className="closer-simple-inner">
-          <h2>Ready when you are.</h2>
-          <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">Before Bricks, Raphael shot 14,000+ properties at CoStar · Canada-wide · 24–48h target</p>
-        </div>
-      </section>
-
-      <div className="wrap">
-        <section className="block rvl" id="faq" aria-label="Frequently asked questions">
-          <div className="sec-head">
-            <div><span className="over">FAQ</span><h2>FAQ.</h2></div>
-          </div>
-          <div className="faq faq-home">
+      {/* 11 · FAQ */}
+      <section className="rv-band rvl" id="faq" aria-label="Frequently asked questions">
+        <div className="rv-wrap rv-split">
+          <div className="rv-split-l"><span className="rv-mono rv-k">FAQ</span><h2>Questions.</h2></div>
+          <div className="rv-faq">
             {faqs.slice(0, 4).map((f) => (
-              <details key={f.id} className="qa">
-                <summary>{f.q}</summary>
+              <details key={f.id}>
+                <summary>{f.q}<span aria-hidden className="rv-plus" /></summary>
                 <p><FaqAnswer id={f.id} a={f.a} /></p>
               </details>
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* 12 · Closer */}
+      <section className="rv-band rv-closer rvl" id="book" aria-label="Book a shoot">
+        <div className="rv-wrap">
+          <h2>Ready <span className="rv-serif">when you are.</span></h2>
+          <div className="rv-cta-row rv-center">
+            <CtaLink href="/book" className="rv-btn-brick">{t.ctaPrimary}</CtaLink>
+            <CtaLink href="/contact" className="rv-btn-ghost" loaderColor="#D2542B">{t.ctaSecondary}</CtaLink>
+          </div>
+          <p className="rv-mono rv-trust rv-center-t">Before Bricks, Raphael shot 14,000+ properties at CoStar · Canada-wide · 24–48h target</p>
+        </div>
+      </section>
 
       <NewsletterPopup />
-
-      <style>{`
-        .trust{text-align:center;padding:36px 0 20px;}
-        .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin:0 auto;text-align:center;}
-        .aud-sec{padding:0 0 28px;}
-        .aud-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .aud-card{background:var(--paper);padding:20px 18px;text-decoration:none;color:inherit;display:block;}
-        .aud-card:hover{background:var(--paperSoft);}
-        .aud-card h3{font-weight:500;font-size:17px;letter-spacing:-0.3px;color:var(--ink);margin:8px 0 4px;}
-        .aud-card p{font-size:12.5px;color:var(--inkMute);margin:0;line-height:1.35;}
-        @media (max-width:800px){.aud-grid{grid-template-columns:1fr 1fr;}}
-        @media (max-width:480px){.aud-grid{grid-template-columns:1fr;}}
-        .prod-mini{margin-top:12px;font-size:13px;color:var(--inkMute);}
-        .prod-mini a{color:var(--brickDeep);text-decoration:none;}
-        .prod-mini a:hover{text-decoration:underline;text-underline-offset:2px;}
-        .faq .qa p a{color:var(--brickDeep);text-decoration:none;}
-        .hero-home{padding:64px 36px 40px;border-bottom:none;}
-        .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
-        .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:420px;}
-        .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
-        .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
-        @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
-        .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
-        @media (max-width:680px){
-          .hero-home{padding:36px var(--gutter) 24px;}
-          .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:20ch;}
-          .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:28ch;line-height:1.4;}
-          .hero-home .cta-row{margin-top:22px;gap:14px;}
-        }
-        @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
-      `}</style>
-
-    </>
+    </div>
   )
 }
-
-
