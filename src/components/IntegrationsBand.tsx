@@ -59,9 +59,9 @@ function Mark({ t, soon = false }: { t: Tile; soon?: boolean }) {
   )
 }
 
-export default function IntegrationsBand() {
+export default function IntegrationsBand({ compact = false }: { compact?: boolean }) {
   return (
-    <section className="integ-band rvl" id="integrations" aria-label="Integrations">
+    <section className={compact ? 'integ-band integ-compact rvl' : 'integ-band rvl'} id="integrations" aria-label="Integrations">
       <div className="wrap">
         <div className="section-head section-head-stack">
           <span className="over">Integrations</span>

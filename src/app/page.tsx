@@ -5,6 +5,7 @@ import NewsletterPopup from './NewsletterPopup'
 import SmoothScroll from '@/components/SmoothScroll'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
+import IntegrationsBand from '@/components/IntegrationsBand'
 import FlowStage from '@/components/FlowStage'
 import { CORE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
@@ -34,6 +35,7 @@ export default function Home() {
     <>
       <RevealObserver />
       <SmoothScroll />
+      <div className="home-v2">
 
       <script
         type="application/ld+json"
@@ -48,7 +50,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system for Canadian real estate.</h1>
-          <p className="sub">Replace the patchwork.</p>
+          <p className="sub">Run the deal and book the media on one system — the desk, transactions, e-sign, and CRM for agents, teams, and brokerages, plus listing shoots booked to an exact time.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/contact">Talk to us</Link>
@@ -90,10 +92,34 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="plat-sec rvl" id="platform" aria-label="The platform">
+        <div className="wrap">
+          <div className="section-head section-head-stack">
+            <span className="over">Bricks OS</span>
+            <h2>The desk runs the deal.</h2>
+            <p className="lede">Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
+          </div>
+          <ul className="plat-grid">
+            <li><span className="over">Deals</span><h3>Listing file + transactions</h3><p>Every listing and deal on one file, with BYO MLS. Free on Clay.</p></li>
+            <li><span className="over">Signatures</span><h3>Checklist e-sign</h3><p>Checklist e-sign and shareable links from the deal. Keystone and up.</p></li>
+            <li><span className="over">Contacts</span><h3>CRM + sync</h3><p>CRM with two-way Follow Up Boss contact sync and kvCORE / BoldTrail sync.</p></li>
+            <li><span className="over">Calendar</span><h3>Google + Apple Calendar</h3><p>Calendar sync with Google, plus iCloud and a private ICS feed.</p></li>
+            <li><span className="over">Brokerage</span><h3>Roster, pipeline, trust account</h3><p>Brokerage seats get the full OS plus trust accounting. Brokerage-only.</p></li>
+            <li><span className="over">Field</span><h3>Companion + GO</h3><p>Agents book in Companion; photographers get jobs in GO; media lands on the listing.</p></li>
+          </ul>
+          <div className="plat-links">
+            <Link className="learn-link" href="/platform">Explore the platform →</Link>
+            <Link className="learn-link" href="/brokerage">For brokerages →</Link>
+          </div>
+        </div>
+      </section>
+
+      <IntegrationsBand compact />
+
       <section className="cap-band flow-band rvl" aria-label="Companion booking">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>Book a shoot in three steps.</h2>
+            <h2>Listing media, booked in three steps.</h2>
             <p className="cap-lede">Companion is the agent app. Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.</p>
             <Link className="learn-link" href="/book">Start a booking →</Link>
           </div>
@@ -105,10 +131,6 @@ export default function Home() {
 
       <section className="work-sec rvl" aria-label="Selected work">
         <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Work</span>
-            <h2>Real shoots.</h2>
-          </div>
           <div className="work-row home-graded">
             <figure>
               <Image src="/media/work/01.jpg" alt="Detached home exterior" fill sizes="(max-width:900px) 50vw, 25vw" />
@@ -127,22 +149,7 @@ export default function Home() {
               <figcaption>Condo · interior</figcaption>
             </figure>
           </div>
-          <div className="home-teasers">
-            <Link className="lean-strip" href="/pricing">
-              <div>
-                <span className="pkg-name">Essentials from {'$'}{CORE_FROM}</span>
-                <span className="lean-sub">HDR + licensed drone + floor plan · Photos only from {'$'}{PHOTO_ONLY_FROM} · up to Full suite from {'$'}{FULL_FROM} · 24–48h target</span>
-              </div>
-              <div className="lean-amt">Pricing →</div>
-            </Link>
-            <Link className="lean-strip" href="/gallery">
-              <div>
-                <span className="pkg-name">More work</span>
-                <span className="lean-sub">Residential, multifamily, commercial, and a free-roam Virtual Visit</span>
-              </div>
-              <div className="lean-amt">Gallery →</div>
-            </Link>
-          </div>
+          <div className="work-more"><Link href="/gallery">Real shoots — see more work, before/after edits, and a free-roam Virtual Visit →</Link></div>
         </div>
       </section>
 
@@ -166,14 +173,34 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
-        <div className="closer-simple-inner">
-          <h2>Ready when you are.</h2>
-          <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-links"><Link href="/pricing#faq">FAQ</Link> · <Link href="/platform#integrations">Integrations</Link> · <Link href="/platform">Platform</Link></p>
+      <section className="price-teaser rvl" aria-label="Pricing">
+        <div className="wrap home-teasers">
+          <Link className="lean-strip" href="/platform">
+            <div>
+              <span className="pkg-name">Software · Clay is free</span>
+              <span className="lean-sub">Keystone, Marble, Diamond from $49 / $99 / $149 a month · brokerage seats yearly · media always à la carte</span>
+            </div>
+            <div className="lean-amt">Plans →</div>
+          </Link>
+          <Link className="lean-strip" href="/pricing">
+            <div>
+              <span className="pkg-name">Media · Essentials from {'$'}{CORE_FROM}</span>
+              <span className="lean-sub">HDR + licensed drone + floor plan · Photos only from {'$'}{PHOTO_ONLY_FROM} · Full suite from {'$'}{FULL_FROM} · 24–48h target</span>
+            </div>
+            <div className="lean-amt">Pricing →</div>
+          </Link>
         </div>
       </section>
 
+      <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
+        <div className="closer-simple-inner">
+          <h2>Ready when you are.</h2>
+          <div className="closer-ctas"><Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link><Link className="btn btn-sec btn-l" href="/contact">Talk to us</Link></div>
+          <p className="closer-links"><Link href="/pricing#faq">FAQ</Link> · <Link href="/platform">Platform</Link> · <Link href="/brokerage">Brokerage</Link></p>
+        </div>
+      </section>
+
+      </div>
       <NewsletterPopup />
 
       <style>{`
@@ -222,6 +249,31 @@ export default function Home() {
         .data-facts p{margin:0;font-size:13px;line-height:1.45;color:var(--inkMute);}
         @media (max-width:900px){.data-grid{grid-template-columns:1fr;gap:22px;}}
         @media (max-width:480px){.data-facts{grid-template-columns:1fr;}.data-facts li{padding:14px 16px;}}
+        .plat-sec{padding:56px 0 8px;}
+        .plat-sec .section-head-stack{margin-bottom:24px;}
+        .plat-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
+        .plat-grid li{background:var(--paper);padding:18px 18px 20px;}
+        .plat-grid h3{font-size:16px;letter-spacing:-.25px;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+        .plat-grid p{margin:0;font-size:13px;line-height:1.45;color:var(--inkMute);}
+        .plat-links{display:flex;gap:22px;margin-top:16px;flex-wrap:wrap;}
+        @media (max-width:900px){.plat-grid{grid-template-columns:1fr 1fr;}}
+        @media (max-width:480px){.plat-grid li{padding:14px;}.plat-grid h3{font-size:14.5px;}.plat-grid p{font-size:12.5px;}}
+        .price-teaser{padding:8px 0 48px;}
+        .price-teaser .home-teasers{margin-top:0;}
+        .work-sec{padding:16px 0 48px;}
+        .work-more a{color:var(--brickDeep);text-decoration:none;}
+        .closer-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+        .closer-simple .btn-sec{color:#fff;border-color:rgba(255,255,255,.45);}
+        .hero-home .btn-sec{border-color:var(--ink);color:var(--ink);}
+        @media (max-width:680px){
+          .hero-home .cta-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+          .hero-home .cta-row .btn{text-align:center;justify-content:center;padding:14px 12px;font-size:15px;}
+        }
+        /* One weight scale for the homepage (mockups inside .tray excluded):
+           display/headings/titles/labels/buttons/numbers = 500 · body/support = 400 */
+        .home-v2 :is(h1,h2,h3,h4,b,strong,.over,.btn,.learn-link,.pkg-name,.lean-amt,.trust-tile-k,.integ-wordmark,.integ-tag):not(.tray *){font-weight:500;}
+        .home-v2 :is(p,li,.sub,.lede,.lean-sub,.cta-for,.integ-what,.integ-fine,figcaption,.trust-stats span):not(.tray *){font-weight:400;}
+        .home-v2 .data-facts b,.home-v2 .trust-stats b{font-weight:500;}
         .closer-links{margin-top:14px;font-size:13px;color:var(--inkMute);}
         .closer-links a{color:var(--brickDeep);text-decoration:none;}
       `}</style>

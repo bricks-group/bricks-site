@@ -20,12 +20,21 @@ export default function NewsletterPopup() {
     setSeen(alreadySeen)
     if (alreadySeen) return
 
-    const timer = setTimeout(() => setShow(true), 4000)
-    const onMouseOut = (e: MouseEvent) => {
-      if (e.clientY < 10) setShow(true)
+    // Never over the hero: arm only after the visitor scrolls well past it,
+    // then show after a short pause (or on exit intent once armed).
+    let armed = false
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const onScroll = () => {
+      if (armed || window.scrollY < window.innerHeight * 1.5) return
+      armed = true
+      timer = setTimeout(() => setShow(true), 2500)
     }
+    const onMouseOut = (e: MouseEvent) => {
+      if (armed && e.clientY < 10) setShow(true)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
     document.addEventListener('mouseout', onMouseOut)
-    return () => { clearTimeout(timer); document.removeEventListener('mouseout', onMouseOut) }
+    return () => { if (timer) clearTimeout(timer); window.removeEventListener('scroll', onScroll); document.removeEventListener('mouseout', onMouseOut) }
   }, [])
 
   function hide() {

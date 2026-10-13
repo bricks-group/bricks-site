@@ -1659,3 +1659,19 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
   .integ-img{max-height:calc(24px * var(--s,1));}
   .integ-wordmark{font-size:14.5px;}
 }
+
+/* Compact integrations (homepage) — same tiles, tighter */
+.integ-compact{padding:40px 0 24px;border-top:none;}
+.integ-compact .section-head-stack{margin-bottom:18px;}
+.integ-compact .section-head-stack h2{font-size:clamp(24px,2.6vw,32px);letter-spacing:-.8px;}
+.integ-compact .integ-tile{padding:10px;gap:8px;}
+.integ-compact .integ-plate{height:52px;padding:8px 10px;}
+.integ-compact .integ-img{max-height:calc(22px * var(--s,1));}
+.integ-compact .integ-wordmark{font-size:13.5px;}
+.integ-compact .integ-what{font-size:12px;}
+.integ-compact .integ-grid{margin-bottom:14px;}
+@media (max-width:680px){
+  .integ-compact .integ-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .integ-compact .integ-plate{height:44px;}
+  .integ-compact .integ-meta .integ-tag{display:none;}
+}
