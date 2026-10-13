@@ -50,12 +50,13 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system for Canadian real estate.</h1>
-          <p className="sub">Run the deal and book the media on one system — the desk, transactions, e-sign, and CRM for agents, teams, and brokerages, plus listing shoots booked to an exact time.</p>
+          <p className="sub">Run the deal and book the media — one system for agents, teams, and brokerages.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/contact">Talk to us</Link>
           </div>
           <span className="cta-for">Brokerage or team? Talk to us about seats and onboarding.</span>
+          <p className="hero-proof"><Link href="/agents">Agents</Link> · <Link href="/agents#team">Teams</Link> · <Link href="/brokerage">Brokerages</Link> · <Link href="/photographers">Photographers</Link></p>
         </div>
       </section>
 
@@ -63,31 +64,6 @@ export default function Home() {
         <div className="tray tray-os">
           <div className="tray-stage">
             <ProductStage />
-          </div>
-        </div>
-      </section>
-
-      <section className="trust-wall rvl" aria-label="Who bricks is for">
-        <div className="wrap">
-          <div className="trust-tiles">
-            <Link href="/brokerage" className="trust-tile">
-              <span className="trust-tile-k">Brokerage</span>
-            </Link>
-            <Link href="/agents#team" className="trust-tile">
-              <span className="trust-tile-k">Team</span>
-            </Link>
-            <Link href="/agents" className="trust-tile">
-              <span className="trust-tile-k">Agent</span>
-            </Link>
-            <Link href="/photographers" className="trust-tile">
-              <span className="trust-tile-k">Vendors</span>
-            </Link>
-          </div>
-          <div className="trust-stats">
-            <div><b>14,000+</b><span>properties shot before Bricks</span></div>
-            <div><b>Canada</b><span>coverage</span></div>
-            <div><b>24–48h</b><span>target</span></div>
-            <div><b>Auto-assign</b><span>routing</span></div>
           </div>
         </div>
       </section>
@@ -119,7 +95,7 @@ export default function Home() {
       <section className="cap-band flow-band rvl" aria-label="Companion booking">
         <div className="cap-inner">
           <div className="cap-copy">
-            <h2>Listing media, booked in three steps.</h2>
+            <h2>Media, booked in three steps.</h2>
             <p className="cap-lede">Companion is the agent app. Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.</p>
             <Link className="learn-link" href="/book">Start a booking →</Link>
           </div>
@@ -149,6 +125,7 @@ export default function Home() {
               <figcaption>Condo · interior</figcaption>
             </figure>
           </div>
+          <p className="media-proof">Before Bricks, Raphael shot <b>14,000+</b> properties at CoStar · Canada-wide · 24–48h target</p>
           <div className="work-more"><Link href="/gallery">Real shoots — see more work, before/after edits, and a free-roam Virtual Visit →</Link></div>
         </div>
       </section>
@@ -165,10 +142,10 @@ export default function Home() {
             </div>
           </div>
           <ul className="data-facts">
-            <li><b>Canadian-hosted core.</b><p>Primary app database, authentication, and file storage run on Supabase in Canada (AWS ca-central-1).</p></li>
-            <li><b>PIPEDA.</b><p>Bricks Group collects, uses, and discloses personal information under PIPEDA and remains accountable for it.</p></li>
-            <li><b>A DPA for brokerages.</b><p>A Data Processing Agreement for brokerages, teams, and enterprise clients that process third-party personal data.</p></li>
-            <li><b>Named processors.</b><p>Some providers are in the US — e.g. Stripe and Vercel. They are listed in the Privacy policy and DPA.</p></li>
+            <li><b>Canadian-hosted core.</b><p>App database, auth, and file storage on Supabase in Canada (AWS ca-central-1).</p></li>
+            <li><b>PIPEDA.</b><p>We handle personal information under PIPEDA and stay accountable for it.</p></li>
+            <li><b>A DPA for brokerages.</b><p>For brokerages, teams, and enterprise clients processing third-party data.</p></li>
+            <li><b>Named processors.</b><p>US providers (e.g. Stripe, Vercel) are listed in the Privacy policy and DPA.</p></li>
           </ul>
         </div>
       </section>
@@ -221,8 +198,8 @@ export default function Home() {
         .hero-home{padding:64px 36px 40px;border-bottom:none;}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:420px;}
-        .hero-home h1,.hero-home p.sub,.hero-home .cta-row,.hero-home .cta-for{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
-        .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;} .hero-home .cta-for{animation-delay:.36s;}
+        .hero-home h1,.hero-home p.sub,.hero-home .cta-row,.hero-home .cta-for,.hero-home .hero-proof{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
+        .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;} .hero-home .cta-for,.hero-home .hero-proof{animation-delay:.36s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
         @media (max-width:680px){
@@ -272,8 +249,15 @@ export default function Home() {
         /* One weight scale for the homepage (mockups inside .tray excluded):
            display/headings/titles/labels/buttons/numbers = 500 · body/support = 400 */
         .home-v2 :is(h1,h2,h3,h4,b,strong,.over,.btn,.learn-link,.pkg-name,.lean-amt,.trust-tile-k,.integ-wordmark,.integ-tag):not(.tray *){font-weight:500;}
-        .home-v2 :is(p,li,.sub,.lede,.lean-sub,.cta-for,.integ-what,.integ-fine,figcaption,.trust-stats span):not(.tray *){font-weight:400;}
+        .home-v2 :is(p,li,.sub,.lede,.lean-sub,.cta-for,.hero-proof,.media-proof,.integ-what,.integ-fine,figcaption,.trust-stats span):not(.tray *){font-weight:400;}
         .home-v2 .data-facts b,.home-v2 .trust-stats b{font-weight:500;}
+        .hero-proof{margin-top:14px;font-size:13px;color:var(--inkMute);}
+        .hero-proof a{color:var(--inkSoft);text-decoration:none;}
+        .hero-proof a:hover{color:var(--ink);}
+        .media-proof{margin:14px 0 0;font-size:13.5px;color:var(--inkSoft);}
+        .media-proof b{color:var(--ink);}
+        .closer-simple{padding-top:64px;padding-bottom:64px;}
+        @media (max-width:480px){.data-facts{grid-template-columns:1fr 1fr;}.data-facts li{padding:12px;}.data-facts b{font-size:14px;}.data-facts p{font-size:12px;}.data-sec{padding:40px 0;}.closer-simple{padding-top:48px;padding-bottom:48px;}}
         .closer-links{margin-top:14px;font-size:13px;color:var(--inkMute);}
         .closer-links a{color:var(--brickDeep);text-decoration:none;}
       `}</style>

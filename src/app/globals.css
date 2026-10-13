@@ -1670,8 +1670,13 @@ html[data-theme="dark"] .cov-label.is-soft{color:#a8a096;}
 .integ-compact .integ-wordmark{font-size:13.5px;}
 .integ-compact .integ-what{font-size:12px;}
 .integ-compact .integ-grid{margin-bottom:14px;}
+.integ-compact .section-head-stack .lede{font-size:14px;}
 @media (max-width:680px){
-  .integ-compact .integ-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .integ-compact .integ-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .integ-compact .integ-tile{padding:8px;}
+  .integ-compact .integ-what{font-size:11px;}
+  .integ-compact .integ-wordmark{font-size:12px;}
+  .integ-compact .integ-soon{grid-column:span 3;}
   .integ-compact .integ-plate{height:44px;}
   .integ-compact .integ-meta .integ-tag{display:none;}
 }
