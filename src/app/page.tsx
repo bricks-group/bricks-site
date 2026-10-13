@@ -6,7 +6,7 @@ import NewsletterPopup from './NewsletterPopup'
 import SmoothScroll from '@/components/SmoothScroll'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
-import IntegrationsBand from '@/components/IntegrationsBand'
+import StackRow from '@/components/StackRow'
 import FlowStage from '@/components/FlowStage'
 import { CORE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
@@ -60,31 +60,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="trust-wall rvl" aria-label="Who bricks is for">
-        <div className="wrap">
-          <div className="trust-tiles stagger">
-            <Link href="/brokerage" className="trust-tile lift" style={{ '--i': 0 } as CSSProperties}><span className="trust-tile-k">Brokerage</span></Link>
-            <Link href="/agents#team" className="trust-tile lift" style={{ '--i': 1 } as CSSProperties}><span className="trust-tile-k">Team</span></Link>
-            <Link href="/agents" className="trust-tile lift" style={{ '--i': 2 } as CSSProperties}><span className="trust-tile-k">Agent</span></Link>
-            <Link href="/photographers" className="trust-tile lift" style={{ '--i': 3 } as CSSProperties}><span className="trust-tile-k">Vendors</span></Link>
-          </div>
-        </div>
-      </section>
+      <StackRow />
 
       <section className="hsec hsec-band rvl" id="platform" aria-label="The platform">
         <div className="wrap">
           <div className="section-head section-head-stack">
             <span className="over">Bricks OS</span>
             <h2>The desk runs the deal.</h2>
-            <p className="lede">Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
+            <p className="lede">Deals, media, MLS®, signatures, and trust on one screen — so the office stops living in spreadsheets and group chats.</p>
           </div>
           <ul className="hcards hcards-3 stagger">
-            <li className="hcard lift" style={{ '--i': 0 } as CSSProperties}><span className="over">Deals</span><h3>Listing file + transactions</h3><p>Every listing and deal on one file, with BYO MLS. Free on Clay.</p></li>
-            <li className="hcard lift" style={{ '--i': 1 } as CSSProperties}><span className="over">Signatures</span><h3>Checklist e-sign</h3><p>Checklist e-sign and shareable links from the deal. Keystone and up.</p></li>
-            <li className="hcard lift" style={{ '--i': 2 } as CSSProperties}><span className="over">Contacts</span><h3>CRM + sync</h3><p>CRM with two-way Follow Up Boss contact sync and kvCORE / BoldTrail sync.</p></li>
-            <li className="hcard lift" style={{ '--i': 3 } as CSSProperties}><span className="over">Calendar</span><h3>Google + Apple Calendar</h3><p>Calendar sync with Google, plus iCloud and a private ICS feed.</p></li>
-            <li className="hcard lift" style={{ '--i': 4 } as CSSProperties}><span className="over">Brokerage</span><h3>Roster, pipeline, trust account</h3><p>Brokerage seats get the full OS plus trust accounting. Brokerage-only.</p></li>
-            <li className="hcard lift" style={{ '--i': 5 } as CSSProperties}><span className="over">Field</span><h3>Companion + GO</h3><p>Agents book in Companion, photographers get jobs in GO, media lands on the listing.</p></li>
+            <li className="hcard lift" style={{ '--i': 0 } as CSSProperties}><span className="over">Deals</span><h3>Listing file + transactions</h3><p>Every listing and deal on one file, with your own MLS® feed. Free on Clay.</p><ul className="hsub"><li>Showings, closings, and shoots on one record</li><li>PropTx / TRREB, Bridge, or other RESO feed</li></ul></li>
+            <li className="hcard lift" style={{ '--i': 1 } as CSSProperties}><span className="over">Signatures</span><h3>Checklist e-sign</h3><p>Send from the deal checklist. Keystone and up.</p><ul className="hsub"><li>Signing deadlines and automatic reminders</li><li>Signer decline and sender void</li><li>Signed-record PDF on completion</li></ul></li>
+            <li className="hcard lift" style={{ '--i': 2 } as CSSProperties}><span className="over">Contacts</span><h3>CRM + Follow Up Boss sync</h3><p>Two-way Follow Up Boss sync, plus kvCORE / BoldTrail.</p><ul className="hsub"><li>Listing-site inquiries land in Contacts as leads</li><li>New leads push to Follow Up Boss on sync</li></ul></li>
+            <li className="hcard lift" style={{ '--i': 3 } as CSSProperties}><span className="over">Calendar</span><h3>Month view + feeds</h3><p>Showings, closings, and shoots from your listing files.</p><ul className="hsub"><li>Month view on desktop, list on phones</li><li>Google, iCloud, and a private ICS feed</li></ul></li>
+            <li className="hcard lift" style={{ '--i': 4 } as CSSProperties}><span className="over">Brokerage</span><h3>Splits + trust accounting</h3><p>Roster, pipeline, and the full OS on every seat. Brokerage-only.</p><ul className="hsub"><li>Commission splits on percentage, flat, or graduated plans</li><li>Trust ledger with monthly reconciliation</li></ul></li>
+            <li className="hcard lift" style={{ '--i': 5 } as CSSProperties}><span className="over">Field</span><h3>Companion + GO</h3><p>Agents book in Companion; photographers get the job in GO.</p><ul className="hsub"><li>Exact clock-time booking, paid to lock</li><li>Delivered media lands on the listing file</li></ul></li>
           </ul>
           <div className="hsec-cta">
             <Link className="btn btn-tint" href="/platform">Explore the platform</Link>
@@ -92,8 +83,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <IntegrationsBand />
 
       <section className="cap-band flow-band rvl" id="media" aria-label="Listing media">
         <div className="cap-inner">
@@ -137,17 +126,18 @@ export default function Home() {
       </section>
 
       <section className="hsec hsec-band rvl" id="data" aria-label="How we handle your data">
-        <div className="wrap data-grid">
-          <div className="section-head section-head-stack">
+        <div className="wrap">
+          <div className="section-head section-head-stack data-head"><div>
             <span className="over">For brokerages</span>
             <h2>How we handle your data.</h2>
+            </div>
             <p className="lede">Plain answers for brokerage compliance. Full detail in the <Link href="/privacy">Privacy policy</Link> and <Link href="/dpa">DPA</Link>.</p>
             <div className="hsec-cta">
               <Link className="btn btn-tint" href="/contact">Talk to us</Link>
               <Link className="learn-link" href="/dpa">Read the DPA →</Link>
             </div>
           </div>
-          <ul className="hcards hcards-2 stagger">
+          <ul className="hcards hcards-4 stagger">
             <li className="hcard lift" style={{ '--i': 0 } as CSSProperties}><span className="over">Residency</span><h3>Canadian-hosted core.</h3><p>App database, auth, and file storage on Supabase in Canada (AWS ca-central-1).</p></li>
             <li className="hcard lift" style={{ '--i': 1 } as CSSProperties}><span className="over">Law</span><h3>PIPEDA.</h3><p>We handle personal information under PIPEDA and stay accountable for it.</p></li>
             <li className="hcard lift" style={{ '--i': 2 } as CSSProperties}><span className="over">Contract</span><h3>A DPA for brokerages.</h3><p>For brokerages, teams, and enterprise clients processing third-party data.</p></li>
@@ -192,7 +182,7 @@ export default function Home() {
             <Link className="btn btn-night btn-l closer-primary" href="/book">Book a shoot →</Link>
             <Link className="btn btn-tint btn-l" href="/contact">Talk to us</Link>
           </div>
-          <p className="closer-links"><Link href="/pricing#faq">FAQ</Link> · <Link href="/platform">Platform</Link> · <Link href="/brokerage">Brokerage</Link></p>
+          <p className="closer-links"><Link href="/brokerage">Brokerages</Link> · <Link href="/agents#team">Teams</Link> · <Link href="/agents">Agents</Link> · <Link href="/photographers">Vendors</Link> · <Link href="/pricing#faq">FAQ</Link></p>
         </div>
       </section>
       </div>
@@ -230,14 +220,14 @@ export default function Home() {
         .closer .btn-night.closer-primary:hover{filter:none;background:var(--brickDeep);}
 
         /* Section rhythm — one scale, alternating bands, hairline breaks (live grammar) */
-        .hsec{padding:80px 0;}
+        .hsec{padding:72px 0;}
         .hsec-band{background:var(--paperSoft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);}
-        .hsec .section-head-stack{margin-bottom:40px;}
+        .hsec .section-head-stack{margin-bottom:36px;}
         .hsec-cta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:32px;}
         .home-v3 .integ-band{padding:80px 0 64px;border-top:none;}
-        .home-v3 .flow-band{padding:80px 0 24px;border-top:1px solid var(--hair);}
+        .home-v3 .flow-band{padding:72px 0 24px;border-top:1px solid var(--hair);}
         .home-v3 .flow-band .cap-copy{margin-bottom:40px;}
-        .home-v3 .work-sec{padding:32px 0 80px;}
+        .home-v3 .work-sec{padding:24px 0 72px;}
         .home-v3 .trust-wall{padding:40px 0 64px;}
         .work-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap;}
         .work-line{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);}
@@ -249,9 +239,10 @@ export default function Home() {
         .hcards{list-style:none;margin:0;padding:0;display:grid;gap:16px;}
         .hcards-3{grid-template-columns:repeat(3,minmax(0,1fr));}
         .hcards-2{grid-template-columns:repeat(2,minmax(0,1fr));}
-        .hcard{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:26px 24px 28px;}
+        .hcard{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:24px 24px 24px;}
         .hcard h3{font-size:19px;letter-spacing:-.4px;line-height:1.2;color:var(--ink);margin:14px 0 8px;}
         .hcard p{margin:0;font-size:14px;line-height:1.5;color:var(--inkSoft);}
+        .hcards-3 .hcard > p{margin-bottom:16px;}
         .lift{transition:transform .2s var(--ease-out),border-color .2s var(--ease-out),box-shadow .2s var(--ease-out);}
         @media (hover:hover) and (pointer:fine){
           .lift:hover{transform:translateY(-2px);border-color:var(--hairStrong);box-shadow:0 10px 24px -14px rgba(20,17,14,.22);}
@@ -262,6 +253,53 @@ export default function Home() {
         .data-grid .lede a:hover{text-decoration:underline;text-underline-offset:3px;}
         .pkgs-2{grid-template-columns:repeat(2,minmax(0,1fr));}
         .pkgs-2 .btn{margin-top:8px;}
+
+
+        /* Platform sub-points */
+        .hcards-3 > .hcard{display:flex;flex-direction:column;}
+        .hsub{list-style:none;margin:auto 0 0;padding:14px 0 0;border-top:1px solid var(--hair);display:grid;gap:7px;}
+        .hsub li{position:relative;padding-left:14px;font-size:13px;line-height:1.45;color:var(--inkSoft);}
+        .hsub li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--brick);}
+        /* Works with your stack — compact monochrome logo row */
+        .stack-row{padding:48px 0 52px;text-align:center;}
+        .stack-row .wrap{max-width:1240px;}
+        .home-v3 .work-sec .wrap{max-width:1180px;padding:0 var(--gutter);}
+        .stack-over{display:block;margin-bottom:24px;}
+        .stack-logos{list-style:none;margin:0 auto;padding:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px 30px;max-width:1240px;}
+        .stack-logos li{height:32px;display:flex;align-items:center;}
+        .stack-logos img{display:block;width:auto;height:calc(22px * var(--s,1));max-width:150px;object-fit:contain;filter:grayscale(1) brightness(0);opacity:.62;transition:opacity .2s var(--ease-out);}
+        .stack-word{font-size:15px;letter-spacing:-.3px;color:var(--ink);opacity:.62;white-space:nowrap;transition:opacity .2s var(--ease-out);}
+        @media (hover:hover){.stack-logos li:hover img,.stack-logos li:hover .stack-word{opacity:1;}}
+        .stack-link{display:inline-block;margin-top:20px;font-size:14px;}
+        @media (max-width:680px){
+          .stack-row{padding:40px 0 44px;}
+          .stack-logos{gap:16px 26px;}
+          .stack-logos li{height:26px;}
+          .stack-logos img{height:calc(17px * var(--s,1));max-width:110px;}
+          .stack-word{font-size:13.5px;}
+          .hsub{margin-top:12px;padding-top:10px;gap:5px;}
+          .hsub li{font-size:12px;}
+        }
+
+
+        .hcards-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+        .data-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:12px 48px;align-items:end;max-width:none;}
+        .data-head h2{max-width:none;white-space:nowrap;}
+        .data-head .hcard p{font-size:13.5px;}
+        .data-head .lede{margin:0;}
+        .data-head .hsec-cta{grid-column:2;margin-top:0;}
+        .data-head .lede a{color:var(--brickDeep);text-decoration:none;}
+        .data-head .lede a:hover{text-decoration:underline;text-underline-offset:3px;}
+        @media (max-width:900px){.hcards-4{grid-template-columns:1fr 1fr;}.data-head{grid-template-columns:1fr;}.data-head h2{white-space:normal;}.data-head .hsec-cta{grid-column:1;}}
+        @media (max-width:680px){
+          #platform .hcards-3{grid-template-columns:1fr;}
+          #platform .hcards{gap:8px;}
+          #platform .hcard{padding:16px 16px 16px;}
+          #platform .hcard > .over{display:none;}
+          #platform .hcard h3{margin:0 0 4px;}
+          #platform .hcard > p{display:none;}
+          #platform .hsub{margin-top:8px;padding-top:8px;}
+        }
 
         /* Staggered entrance inside revealed sections (transform + opacity only) */
         html.reveal-ready .stagger > *{opacity:0;transform:translateY(12px);
@@ -300,8 +338,8 @@ export default function Home() {
         /* One weight scale (product mockups inside .tray excluded):
            500 = display, headings, card titles, eyebrows, buttons, links, prices
            400 = body, ledes, captions, list items */
-        .home-v3 :is(h1,h2,h3,h4,b,strong,.over,.btn,.learn-link,.pkg-name,.pkg-amt,.pkg-badge,.trust-tile-k,.integ-wordmark,.integ-tag,.work-line):not(.tray *){font-weight:500;}
-        .home-v3 :is(p,li,.sub,.lede,.integ-what,.integ-fine,figcaption,.pkg-amt small):not(.tray *){font-weight:400;}
+        .home-v3 :is(h1,h2,h3,h4,b,strong,.over,.btn,.learn-link,.pkg-name,.pkg-amt,.pkg-badge,.trust-tile-k,.stack-word,.work-line):not(.tray *){font-weight:500;}
+        .home-v3 :is(p,li,.sub,.lede,.hsub li,figcaption,.pkg-amt small):not(.tray *){font-weight:400;}
 
         @media (prefers-reduced-motion:reduce){
           .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}
