@@ -1791,7 +1791,6 @@ function BookFlowProperty({ th, dark }) {
     <>
       <Over color={T.brick}>Property</Over>
       <div style={{ fontSize:24, fontWeight:500, letterSpacing:-0.6, marginTop:8 }}>Where are we shooting?</div>
-      <div style={{ fontSize:13, color:th.ink2, marginTop:6 }}>Map from the same Mapbox layer we use for coverage.</div>
       <div style={{ marginTop:16, borderRadius:2, overflow:'hidden', border:`1px solid ${th.hair}`, height:160, background:th.surf2, position:'relative' }}>
         {mapSrc ? (
           <img src={mapSrc} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}/>

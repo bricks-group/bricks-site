@@ -5146,12 +5146,6 @@
       }
     }, "Where are we shooting?"), /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: 13,
-        color: th.ink2,
-        marginTop: 6
-      }
-    }, "Map from the same Mapbox layer we use for coverage."), /*#__PURE__*/React.createElement("div", {
-      style: {
         marginTop: 16,
         borderRadius: 2,
         overflow: 'hidden',
