@@ -10,6 +10,10 @@ import FlowStage from '@/components/FlowStage'
 import { CORE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 
+// Homepage is brand-only: drop the founder node from the Organization schema here.
+const { founder: _founder, ...HOME_ORG_SCHEMA } = ORGANIZATION_SCHEMA as typeof ORGANIZATION_SCHEMA & { founder?: unknown }
+void _founder
+
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
   description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
@@ -42,7 +46,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA],
+            '@graph': [HOME_ORG_SCHEMA, WEBSITE_SCHEMA],
           }),
         }}
       />
@@ -125,7 +129,7 @@ export default function Home() {
               <figcaption>Condo · interior</figcaption>
             </figure>
           </div>
-          <p className="media-proof">Before Bricks, Raphael shot <b>14,000+</b> properties at CoStar · Canada-wide · 24–48h target</p>
+          <p className="media-proof">Canada-wide · 24–48h delivery target</p>
           <div className="work-more"><Link href="/gallery">Real shoots — see more work, before/after edits, and a free-roam Virtual Visit →</Link></div>
         </div>
       </section>
