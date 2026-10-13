@@ -13,7 +13,7 @@ type Item = { name: string; src?: string; w?: number; h?: number; s?: number }
 const ITEMS: Item[] = [
   { name: 'Follow Up Boss' },
   { name: 'kvCORE / BoldTrail' },
-  { name: 'PropTx', src: '/integrations/proptx-symbol.svg', w: 102, h: 92, s: 1.25 },
+  { name: 'PropTx', src: '/integrations/proptx-symbol.svg', w: 102, h: 92, s: 1.4 },
   { name: 'Bridge Interactive', src: '/integrations/bridge-interactive.png', w: 263, h: 80, s: 0.95 },
   { name: 'Repliers', src: '/integrations/repliers.png', w: 401, h: 101, s: 0.85 },
   { name: 'Stripe', src: '/integrations/stripe.svg', w: 360, h: 150, s: 1.15 },
@@ -28,7 +28,7 @@ export default function StackRow() {
         <span className="over stack-over">Works with your stack</span>
         <ul className="stack-logos stagger">
           {ITEMS.map((t, i) => (
-            <li key={t.name} style={{ '--i': i } as CSSProperties}>
+            <li key={t.name} className="stack-plate" style={{ '--i': i } as CSSProperties}>
               {t.src ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={t.src} width={t.w} height={t.h} alt={t.name} loading="lazy" decoding="async"

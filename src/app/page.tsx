@@ -6,6 +6,7 @@ import NewsletterPopup from './NewsletterPopup'
 import SmoothScroll from '@/components/SmoothScroll'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
+import OsDeskShot from '@/components/OsDeskShot'
 import StackRow from '@/components/StackRow'
 import FlowStage from '@/components/FlowStage'
 import { CORE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
@@ -62,21 +63,28 @@ export default function Home() {
 
       <StackRow />
 
-      <section className="hsec hsec-band rvl" id="platform" aria-label="The platform">
-        <div className="wrap">
+      <section className="hsec hsec-band plat-sec rvl" id="platform" aria-label="The platform">
+        <div className="cap-inner">
           <div className="section-head section-head-stack">
             <span className="over">Bricks OS</span>
             <h2>The desk runs the deal.</h2>
-            <p className="lede">Deals, media, MLS®, signatures, and trust on one screen — so the office stops living in spreadsheets and group chats.</p>
+            <p className="lede">Deals, conditions, signatures, contacts, and trust on one screen — so the office stops living in spreadsheets and group chats.</p>
           </div>
-          <ul className="hcards hcards-3 stagger">
-            <li className="hcard lift" style={{ '--i': 0 } as CSSProperties}><span className="over">Deals</span><h3>Listing file + transactions</h3><p>Every listing and deal on one file, with your own MLS® feed. Free on Clay.</p><ul className="hsub"><li>Showings, closings, and shoots on one record</li><li>PropTx / TRREB, Bridge, or other RESO feed</li></ul></li>
-            <li className="hcard lift" style={{ '--i': 1 } as CSSProperties}><span className="over">Signatures</span><h3>Checklist e-sign</h3><p>Send from the deal checklist. Keystone and up.</p><ul className="hsub"><li>Signing deadlines and automatic reminders</li><li>Signer decline and sender void</li><li>Signed-record PDF on completion</li></ul></li>
-            <li className="hcard lift" style={{ '--i': 2 } as CSSProperties}><span className="over">Contacts</span><h3>CRM + Follow Up Boss sync</h3><p>Two-way Follow Up Boss sync, plus kvCORE / BoldTrail.</p><ul className="hsub"><li>Listing-site inquiries land in Contacts as leads</li><li>New leads push to Follow Up Boss on sync</li></ul></li>
-            <li className="hcard lift" style={{ '--i': 3 } as CSSProperties}><span className="over">Calendar</span><h3>Month view + feeds</h3><p>Showings, closings, and shoots from your listing files.</p><ul className="hsub"><li>Month view on desktop, list on phones</li><li>Google, iCloud, and a private ICS feed</li></ul></li>
-            <li className="hcard lift" style={{ '--i': 4 } as CSSProperties}><span className="over">Brokerage</span><h3>Splits + trust accounting</h3><p>Roster, pipeline, and the full OS on every seat. Brokerage-only.</p><ul className="hsub"><li>Commission splits on percentage, flat, or graduated plans</li><li>Trust ledger with monthly reconciliation</li></ul></li>
-            <li className="hcard lift" style={{ '--i': 5 } as CSSProperties}><span className="over">Field</span><h3>Companion + GO</h3><p>Agents book in Companion; photographers get the job in GO.</p><ul className="hsub"><li>Exact clock-time booking, paid to lock</li><li>Delivered media lands on the listing file</li></ul></li>
-          </ul>
+          <div className="plat-grid">
+            <div className="cap-stage tray tray-crm plat-stage">
+              <div className="tray-stage tray-stage-fill">
+                <OsDeskShot />
+              </div>
+            </div>
+            <ul className="plat-list stagger">
+              <li style={{ '--i': 0 } as CSSProperties}><span className="over">Deals</span><div><h3>Listing file + transactions</h3><p>One file per listing and deal, on your own MLS® feed. Free on Clay.</p></div></li>
+              <li style={{ '--i': 1 } as CSSProperties}><span className="over">Conditions</span><div><h3>Conditional to Firm</h3><p>Financing, inspection, and other conditions with deadlines; deal shows Conditional / Firm; deadlines on the calendar.</p></div></li>
+              <li style={{ '--i': 2 } as CSSProperties}><span className="over">Signatures</span><div><h3>Checklist e-sign</h3><p>Signing deadlines, reminders, signer decline, sender void, signed-record PDF. Keystone and up.</p></div></li>
+              <li style={{ '--i': 3 } as CSSProperties}><span className="over">Contacts</span><div><h3>CRM + Follow Up Boss</h3><p>Two-way FUB sync, kvCORE / BoldTrail; listing-site inquiries land in Contacts as leads.</p></div></li>
+              <li style={{ '--i': 4 } as CSSProperties}><span className="over">Calendar</span><div><h3>Month view + feeds</h3><p>Showings, closings, shoots, and deadlines. Google, iCloud, private ICS feed.</p></div></li>
+              <li style={{ '--i': 5 } as CSSProperties}><span className="over">Brokerage</span><div><h3>Splits + trust accounting</h3><p>Commission splits on percentage, flat, or graduated plans; trust ledger with monthly reconciliation.</p></div></li>
+            </ul>
+          </div>
           <div className="hsec-cta">
             <Link className="btn btn-tint" href="/platform">Explore the platform</Link>
             <Link className="learn-link" href="/brokerage">For brokerages →</Link>
@@ -95,6 +103,7 @@ export default function Home() {
           <div className="cap-stage tray tray-book flow-stage">
             <FlowStage />
           </div>
+          <p className="flow-note">Example prices for a 2,140 sq ft house. Pricing is by footprint.</p>
         </div>
       </section>
 
@@ -137,20 +146,21 @@ export default function Home() {
               <Link className="learn-link" href="/dpa">Read the DPA →</Link>
             </div>
           </div>
-          <ul className="hcards hcards-4 stagger">
-            <li className="hcard lift" style={{ '--i': 0 } as CSSProperties}><span className="over">Residency</span><h3>Canadian-hosted core.</h3><p>App database, auth, and file storage on Supabase in Canada (AWS ca-central-1).</p></li>
-            <li className="hcard lift" style={{ '--i': 1 } as CSSProperties}><span className="over">Law</span><h3>PIPEDA.</h3><p>We handle personal information under PIPEDA and stay accountable for it.</p></li>
-            <li className="hcard lift" style={{ '--i': 2 } as CSSProperties}><span className="over">Contract</span><h3>A DPA for brokerages.</h3><p>For brokerages, teams, and enterprise clients processing third-party data.</p></li>
-            <li className="hcard lift" style={{ '--i': 3 } as CSSProperties}><span className="over">Disclosure</span><h3>Named processors.</h3><p>US providers (e.g. Stripe, Vercel) are listed in the Privacy policy and DPA.</p></li>
+          <ul className="dlist stagger">
+            <li style={{ '--i': 0 } as CSSProperties}><span className="over">Residency</span><h3>Canadian-hosted core.</h3><p>App database, auth, and file storage on Supabase in Canada (AWS ca-central-1).</p></li>
+            <li style={{ '--i': 1 } as CSSProperties}><span className="over">Law</span><h3>PIPEDA.</h3><p>We handle personal information under PIPEDA and stay accountable for it.</p></li>
+            <li style={{ '--i': 2 } as CSSProperties}><span className="over">Contract</span><h3>A DPA for brokerages.</h3><p>For brokerages, teams, and enterprise clients processing third-party data.</p></li>
+            <li style={{ '--i': 3 } as CSSProperties}><span className="over">Disclosure</span><h3>Named processors.</h3><p>US providers (e.g. Stripe, Vercel) are listed in the Privacy policy and DPA.</p></li>
           </ul>
         </div>
       </section>
 
       <section className="hsec rvl" id="pricing" aria-label="Pricing">
-        <div className="wrap">
+        <div className="wrap price-grid">
           <div className="section-head section-head-stack">
             <span className="over">Pricing</span>
             <h2>Priced in the open.</h2>
+            <p className="lede">Software is free to start. Listing media is priced by footprint, in CAD before tax.</p>
           </div>
           <div className="pkgs pkgs-2 stagger">
             <div className="pkg" style={{ '--i': 0 } as CSSProperties}>
@@ -190,7 +200,7 @@ export default function Home() {
       <NewsletterPopup />
 
       <style>{`
-        .hero-home{padding:72px var(--gutter) 48px;border-bottom:none;}
+        .hero-home{padding:60px var(--gutter) 40px;border-bottom:none;}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:460px;line-height:1.45;}
         .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,1,.3,1) forwards;}
@@ -220,14 +230,15 @@ export default function Home() {
         .closer .btn-night.closer-primary:hover{filter:none;background:var(--brickDeep);}
 
         /* Section rhythm — one scale, alternating bands, hairline breaks (live grammar) */
-        .hsec{padding:72px 0;}
+        .hsec{padding:64px 0;}
         .hsec-band{background:var(--paperSoft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);}
         .hsec .section-head-stack{margin-bottom:36px;}
         .hsec-cta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:32px;}
         .home-v3 .integ-band{padding:80px 0 64px;border-top:none;}
-        .home-v3 .flow-band{padding:72px 0 24px;border-top:1px solid var(--hair);}
-        .home-v3 .flow-band .cap-copy{margin-bottom:40px;}
-        .home-v3 .work-sec{padding:24px 0 72px;}
+        .home-v3 .flow-band{padding:64px 0 20px;border-top:1px solid var(--hair);}
+        .home-v3 .flow-band .cap-copy{margin-bottom:28px;}
+        .home-v3 .work-sec{padding:16px 0 64px;}
+        .home-v3 .work-row.home-graded figure{aspect-ratio:3/2;}
         .home-v3 .trust-wall{padding:40px 0 64px;}
         .work-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap;}
         .work-line{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);}
@@ -261,22 +272,22 @@ export default function Home() {
         .hsub li{position:relative;padding-left:14px;font-size:13px;line-height:1.45;color:var(--inkSoft);}
         .hsub li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--brick);}
         /* Works with your stack — compact monochrome logo row */
-        .stack-row{padding:48px 0 52px;text-align:center;}
-        .stack-row .wrap{max-width:1240px;}
+        .stack-row{padding:36px 0 40px;text-align:center;}
+        .stack-row .wrap{max-width:1180px;padding:0 var(--gutter);}
         .home-v3 .work-sec .wrap{max-width:1180px;padding:0 var(--gutter);}
         .stack-over{display:block;margin-bottom:24px;}
-        .stack-logos{list-style:none;margin:0 auto;padding:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px 30px;max-width:1240px;}
-        .stack-logos li{height:32px;display:flex;align-items:center;}
-        .stack-logos img{display:block;width:auto;height:calc(22px * var(--s,1));max-width:150px;object-fit:contain;filter:grayscale(1) brightness(0);opacity:.62;transition:opacity .2s var(--ease-out);}
-        .stack-word{font-size:15px;letter-spacing:-.3px;color:var(--ink);opacity:.62;white-space:nowrap;transition:opacity .2s var(--ease-out);}
-        @media (hover:hover){.stack-logos li:hover img,.stack-logos li:hover .stack-word{opacity:1;}}
+        .stack-logos{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;max-width:1180px;}
+        .stack-plate{height:64px;display:flex;align-items:center;justify-content:center;padding:0 12px;background:var(--paper);border:1px solid var(--hair);border-radius:2px;transition:border-color .2s var(--ease-out),box-shadow .2s var(--ease-out);}
+        .stack-plate img{display:block;width:auto;height:calc(20px * var(--s,1));max-width:100%;object-fit:contain;filter:grayscale(1) brightness(.18);opacity:.8;transition:opacity .2s var(--ease-out),filter .2s var(--ease-out);}
+        .stack-word{font-family:'General Sans',system-ui,sans-serif;font-size:13.5px;white-space:nowrap;line-height:1.1;letter-spacing:-.02em;color:#2a2622;text-align:center;opacity:.8;transition:opacity .2s var(--ease-out);}
+        @media (hover:hover) and (pointer:fine){.stack-plate:hover{border-color:var(--hairStrong);box-shadow:0 8px 20px -14px rgba(20,17,14,.22);}.stack-plate:hover img,.stack-plate:hover .stack-word{opacity:1;}}
         .stack-link{display:inline-block;margin-top:20px;font-size:14px;}
         @media (max-width:680px){
-          .stack-row{padding:40px 0 44px;}
-          .stack-logos{gap:16px 26px;}
-          .stack-logos li{height:26px;}
-          .stack-logos img{height:calc(17px * var(--s,1));max-width:110px;}
-          .stack-word{font-size:13.5px;}
+          .stack-row{padding:36px 0 40px;}
+          .stack-logos{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;}
+          .stack-plate{height:52px;padding:0 6px;}
+          .stack-plate img{height:calc(15px * var(--s,1));}
+          .stack-word{font-size:11px;white-space:normal;}
           .hsub{margin-top:12px;padding-top:10px;gap:5px;}
           .hsub li{font-size:12px;}
         }
@@ -299,6 +310,40 @@ export default function Home() {
           #platform .hcard h3{margin:0 0 4px;}
           #platform .hcard > p{display:none;}
           #platform .hsub{margin-top:8px;padding-top:8px;}
+        }
+
+
+        .home-v3 .hsec .wrap{max-width:1180px;padding:0 var(--gutter);}
+        .home-v3 .closer-simple{padding-top:44px;padding-bottom:48px;}
+        .price-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;align-items:start;}
+        .price-grid .section-head-stack{margin-bottom:0;}
+        @media (max-width:900px){.price-grid{grid-template-columns:1fr;gap:0;}.price-grid .section-head-stack{margin-bottom:28px;}}
+        #data.hsec{padding:56px 0;}
+        /* Platform — live desk screenshot + compact capability list */
+        .plat-sec .section-head-stack{margin-bottom:28px;}
+        .plat-sec .hsec-cta{margin-top:20px;}
+        .plat-sec.hsec{padding:56px 0;}
+        .plat-grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:36px;align-items:center;}
+        .plat-stage.cap-stage.tray-crm{width:100%;box-shadow:0 24px 48px -32px rgba(20,17,14,.35);}
+        .plat-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair);}
+        .plat-list li{display:grid;grid-template-columns:minmax(0,1fr);gap:0;padding:9px 0;border-bottom:1px solid var(--hair);}
+        .plat-list .over{display:none;}
+        .plat-list h3{font-size:15px;letter-spacing:-.3px;line-height:1.25;color:var(--ink);margin:0 0 3px;}
+        .plat-list p{margin:0;font-size:12.5px;line-height:1.45;color:var(--inkSoft);}
+        .flow-note{margin:12px 0 0;font-size:12px;color:var(--inkMute);}
+        .dlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 32px;border-top:1px solid var(--hairStrong);}
+        .dlist li{padding:18px 0 0;}
+        .dlist h3{font-size:16px;letter-spacing:-.3px;color:var(--ink);margin:10px 0 6px;}
+        .dlist p{margin:0;font-size:13px;line-height:1.5;color:var(--inkSoft);}
+        @media (max-width:900px){.plat-grid{grid-template-columns:1fr;gap:24px;}.dlist{grid-template-columns:1fr 1fr;gap:20px 20px;}}
+        @media (max-width:680px){
+          .plat-list li{grid-template-columns:1fr;gap:2px;padding:11px 0;}
+          .plat-list .over{display:none;}
+          .plat-list h3{font-size:15px;}
+          .plat-list p{font-size:12.5px;}
+          .dlist li{padding-top:14px;}
+          .dlist h3{font-size:14.5px;margin:6px 0 4px;}
+          .dlist p{font-size:12px;}
         }
 
         /* Staggered entrance inside revealed sections (transform + opacity only) */
