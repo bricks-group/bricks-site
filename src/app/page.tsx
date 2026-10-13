@@ -210,7 +210,7 @@ export default function Home() {
         .work-sec{padding:48px 0;}
         .home-teasers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;}
         .home-teasers .lean-strip{margin-top:0;}
-        @media (max-width:680px){.home-teasers{grid-template-columns:1fr;}}
+        @media (max-width:680px){.home-teasers{grid-template-columns:1fr;}.work-sec .work-row.home-graded{grid-template-columns:1fr 1fr;gap:8px;}}
         .data-sec{padding:56px 0;border-top:1px solid var(--hair);}
         .data-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:start;}
         .data-grid h2{margin:6px 0 10px;}
