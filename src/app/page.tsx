@@ -241,7 +241,8 @@ export default function Home() {
         .work-more a{color:var(--brickDeep);text-decoration:none;}
         .closer-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
         .closer-simple .btn-sec{color:#fff;border-color:rgba(255,255,255,.45);}
-        .hero-home .btn-sec{border-color:var(--ink);color:var(--ink);}
+        .hero-home .cta-row .btn-sec{border:1.5px solid var(--ink) !important;color:var(--ink);background:transparent;}
+        .closer-simple .closer-ctas .btn-sec{border:1.5px solid rgba(255,255,255,.55) !important;color:#fff;}
         @media (max-width:680px){
           .hero-home .cta-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
           .hero-home .cta-row .btn{text-align:center;justify-content:center;padding:14px 12px;font-size:15px;}
