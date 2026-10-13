@@ -287,6 +287,7 @@ export default function Home() {
           .home-v3 .flow-band{padding:56px 0 16px;}
           .home-v3 .work-sec{padding:24px 0 56px;}
           .home-v3 .trust-wall{padding:32px 0 48px;}
+          .home-v3 .trust-tiles{grid-template-columns:1fr 1fr;}
           .hcards{gap:10px;}
           .hcard{padding:18px 16px 20px;}
           .hcard h3{font-size:16px;margin:10px 0 6px;}
