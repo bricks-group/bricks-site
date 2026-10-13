@@ -169,7 +169,6 @@ export default function Home() {
               <ul>
                 <li>Keystone, Marble, Diamond from $49 / $99 / $149 a month</li>
                 <li>Brokerage seats yearly — full OS on every seat</li>
-                <li>Software never bundles shoots</li>
               </ul>
               <Link className="btn btn-tint" href="/platform">See plans</Link>
             </div>
@@ -178,8 +177,7 @@ export default function Home() {
               <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
               <ul>
                 <li>Essentials: HDR + licensed drone + floor plan</li>
-                <li>Photos only from {'$'}{PHOTO_ONLY_FROM} · Full suite from {'$'}{FULL_FROM}</li>
-                <li>24–48h target</li>
+                <li>Photos only from {'$'}{PHOTO_ONLY_FROM} · Full suite from {'$'}{FULL_FROM} · 24–48h target</li>
               </ul>
               <Link className="btn btn-brick" href="/pricing">See pricing</Link>
             </div>
@@ -232,15 +230,15 @@ export default function Home() {
         .closer .btn-night.closer-primary:hover{filter:none;background:var(--brickDeep);}
 
         /* Section rhythm — one scale, alternating bands, hairline breaks (live grammar) */
-        .hsec{padding:96px 0;}
+        .hsec{padding:80px 0;}
         .hsec-band{background:var(--paperSoft);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);}
         .hsec .section-head-stack{margin-bottom:40px;}
         .hsec-cta{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:32px;}
-        .home-v3 .integ-band{padding:96px 0 80px;border-top:none;}
-        .home-v3 .flow-band{padding:96px 0 24px;border-top:1px solid var(--hair);}
+        .home-v3 .integ-band{padding:80px 0 64px;border-top:none;}
+        .home-v3 .flow-band{padding:80px 0 24px;border-top:1px solid var(--hair);}
         .home-v3 .flow-band .cap-copy{margin-bottom:40px;}
-        .home-v3 .work-sec{padding:40px 0 96px;}
-        .home-v3 .trust-wall{padding:48px 0 72px;}
+        .home-v3 .work-sec{padding:32px 0 80px;}
+        .home-v3 .trust-wall{padding:40px 0 64px;}
         .work-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap;}
         .work-line{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);}
         .home-graded img{filter:saturate(.94) contrast(1.04) brightness(1.01) sepia(.05);transition:transform .6s var(--ease-out);}
@@ -262,7 +260,7 @@ export default function Home() {
         .data-grid .section-head-stack{margin-bottom:0;}
         .data-grid .lede a{color:var(--brickDeep);text-decoration:none;}
         .data-grid .lede a:hover{text-decoration:underline;text-underline-offset:3px;}
-        .pkgs-2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:880px;}
+        .pkgs-2{grid-template-columns:repeat(2,minmax(0,1fr));}
         .pkgs-2 .btn{margin-top:8px;}
 
         /* Staggered entrance inside revealed sections (transform + opacity only) */
@@ -283,11 +281,11 @@ export default function Home() {
           .data-grid{grid-template-columns:1fr;gap:32px;}
         }
         @media (max-width:680px){
-          .hsec{padding:64px 0;}
+          .hsec{padding:56px 0;}
           .hsec .section-head-stack{margin-bottom:28px;}
-          .home-v3 .integ-band{padding:64px 0 56px;}
-          .home-v3 .flow-band{padding:64px 0 16px;}
-          .home-v3 .work-sec{padding:28px 0 64px;}
+          .home-v3 .integ-band{padding:56px 0 48px;}
+          .home-v3 .flow-band{padding:56px 0 16px;}
+          .home-v3 .work-sec{padding:24px 0 56px;}
           .home-v3 .trust-wall{padding:32px 0 48px;}
           .hcards{gap:10px;}
           .hcard{padding:18px 16px 20px;}
@@ -296,7 +294,7 @@ export default function Home() {
           .pkgs-2{grid-template-columns:1fr;}
           .hsec-cta{margin-top:24px;}
         }
-        @media (max-width:420px){.hcards-2{grid-template-columns:1fr;}}
+        @media (max-width:680px){.closer-ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:360px;margin:0 auto;}.closer-ctas .btn{width:100%;justify-content:center;padding:14px 10px;}.hcards-2 .hcard p{font-size:12.5px;}}
 
         /* One weight scale (product mockups inside .tray excluded):
            500 = display, headings, card titles, eyebrows, buttons, links, prices
