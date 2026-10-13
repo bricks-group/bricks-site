@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
 import RevealObserver from '@/components/RevealObserver'
+import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Gallery — Listing Photos Canada | Bricks',
@@ -168,6 +169,15 @@ export default function GalleryPage() {
             <div><span className="over">Industrial</span><h2>Docks, facades, and the site.</h2></div>
           </div>
           <Grid images={industrial} />
+        </section>
+
+        <section className="block rvl" id="virtual-visit" aria-label="Virtual Visit">
+          <div className="sec-head">
+            <div><span className="over">Virtual Visit</span><h2>Free-roam.</h2></div>
+          </div>
+          <div className="visit-stage">
+            <VirtualVisitEmbed />
+          </div>
         </section>
 
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>

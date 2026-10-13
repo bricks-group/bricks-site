@@ -6,6 +6,7 @@ import ProductWindow from '@/components/ProductWindow'
 import PhoneDevice from '@/components/PhoneDevice'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
+import IntegrationsBand from '@/components/IntegrationsBand'
 import { OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
@@ -108,6 +109,8 @@ export default function PlatformPage() {
           <p className="surf-link"><a href={GO_URL} rel="noopener noreferrer">Open GO</a></p>
         </div>
       </section>
+
+      <IntegrationsBand />
 
       <div className="wrap">
         <section className="block rvl">

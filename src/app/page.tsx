@@ -1,111 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import Script from 'next/script'
 import NewsletterPopup from './NewsletterPopup'
+import SmoothScroll from '@/components/SmoothScroll'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
-import OsDeskShot from '@/components/OsDeskShot'
 import FlowStage from '@/components/FlowStage'
-import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
-import IntegrationsBand from '@/components/IntegrationsBand'
-import {
-  FOOTPRINT_BANDS,
-  TOUR_RANGE,
-  VISIT_PRICE_LABEL,
-  CORE_FROM,
-  STORY_FROM,
-  SHOWCASE_FROM,
-  FULL_FROM,
-  PHOTO_ONLY_FROM,
-} from '@/lib/pricing'
-import {
-  COVERAGE_LINE,
-  GO_URL,
-  STATUS,
-  TOUR_NAME,
-  VISIT_NAME,
-  VISIT_PACKAGING,
-} from '@/lib/brand'
+import { CORE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 
-const faqs = [
-  {
-    id: 'what',
-    q: 'What is Bricks?',
-    a: `The system for Canadian real estate — one place for media, dispatch, and the deal. Companion books; GO is the field app. ${STATUS.os}`,
-  },
-  {
-    id: 'included',
-    q: "What's included in a standard shoot?",
-    a: `Essentials from $${CORE_FROM}: HDR + licensed drone + floor plan — the drone-included listing set (Photos only drops drone and floor plan). MLS-ready on a 24–48h target, not a guarantee. Real windows; no invent sky or dusk by default.`,
-  },
-  {
-    id: 'booking',
-    q: 'How does booking work?',
-    a: 'Pick services, see assignee and travel on the quote, then pay to lock the exact clock time (not pay-on-delivery). Refund schedule is on the pay step and in Terms.',
-  },
-  {
-    id: 'coverage',
-    q: 'Where do you cover?',
-    a: `Canada-wide launch. ${COVERAGE_LINE} Travel: GTA assign-first is often $0; otherwise from the assigned photographer’s base — first 25 km free, then $0.75/km — shown before you pay. Not free Canada-wide.`,
-  },
-  {
-    id: 'mls-safe',
-    q: 'Are listing stills MLS-safe?',
-    a: 'Real window views. We do not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on.',
-  },
-  {
-    id: 'drone',
-    q: 'Do you fly drone / RPAS?',
-    a: 'Yes — licensed drone means Advanced RPAS-certified aerial. It is included on packages that include drone (Essentials and up), or à la carte. Required for legal commercial aerial work in Canadian airspace.',
-  },
-  {
-    id: 'tour-visit',
-    q: `Virtual tour vs ${VISIT_NAME.toLowerCase()}?`,
-    a: `${TOUR_NAME} is a path-confined walkthrough — a ${TOUR_RANGE} add-on by footprint; Showcase and Full suite include it. ${VISIT_NAME} is a free-roam Gaussian splat, always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), never packaged. Priced by footprint and charged at checkout. ${VISIT_PACKAGING}`,
-  },
-  {
-    id: 'plans',
-    q: 'What about software plans?',
-    a: 'Clay is free through Diamond on OS. Media is always à la carte — software does not bundle shoots. See Platform for plans and Pricing for media rates.',
-  },
-  {
-    id: 'photographers',
-    q: 'How do photographers work with Bricks?',
-    a: 'Photographers are independent contractors on a fixed dollar rate card, not a percent of the client fee. Apply at Photographers; jobs route in GO.',
-  },
-  {
-    id: 'help',
-    q: 'How do I get help?',
-    a: 'Use the Contact form, or email help@brxs.ca. For a listing shoot, Book a shoot or booking@brxs.ca is fastest.',
-  },
-] as const
-
-function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
-  switch (id) {
-    case 'included':
-      return <>HDR, licensed drone, floor plan. 24–48h target. See <Link href="/pricing">Pricing</Link>.</>
-    case 'booking':
-      return <>Exact clock time — not a window. <Link href="/book">Book</Link>.</>
-    case 'plans':
-      return <>Clay is free through Diamond on OS. Media is always à la carte — software does not bundle shoots. See <Link href="/platform">Platform</Link> for plans and <Link href="/pricing">Pricing</Link> for media rates.</>
-    case 'photographers':
-      return <>Photographers are independent contractors on a fixed dollar rate card, not a percent of the client fee. Apply at <Link href="/photographers">Photographers</Link>; jobs route in GO.</>
-    case 'help':
-      return <>Use the <Link href="/contact">Contact</Link> form, or email <a href="mailto:help@brxs.ca">help@brxs.ca</a>. For a listing shoot, <Link href="/book">Book a shoot</Link> or <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</>
-    default:
-      return <>{a}</>
-  }
-}
-
-
-const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
-  { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
-  { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging ($35/photo add-on) before and after' },
-] as const
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
   description: 'The system for Canadian real estate. Book professional media today. OS is live in preview at app.brxs.ca.',
@@ -130,7 +33,7 @@ export default function Home() {
   return (
     <>
       <RevealObserver />
-      <Script src="/assets/ba.js" strategy="afterInteractive" />
+      <SmoothScroll />
 
       <script
         type="application/ld+json"
@@ -142,29 +45,15 @@ export default function Home() {
         }}
       />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: faqs.map((f) => ({
-              '@type': 'Question',
-              name: f.q,
-              acceptedAnswer: { '@type': 'Answer', text: f.a },
-            })),
-          }),
-        }}
-      />
-
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system for Canadian real estate.</h1>
           <p className="sub">Replace the patchwork.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
-            <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
+            <Link className="btn btn-sec" href="/contact">Talk to us</Link>
           </div>
+          <span className="cta-for">Brokerage or team? Talk to us about seats and onboarding.</span>
         </div>
       </section>
 
@@ -201,21 +90,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="cap-band rvl" aria-label="The desk">
-        <div className="cap-inner">
-          <div className="cap-copy">
-            <h2>The desk runs the deal.</h2>
-            <p className="cap-lede">Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
-            <Link className="learn-link" href="/platform">Explore the desk →</Link>
-          </div>
-          <div className="cap-stage tray tray-crm">
-            <div className="tray-stage tray-stage-fill">
-              <OsDeskShot />
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="cap-band flow-band rvl" aria-label="Companion booking">
         <div className="cap-inner">
           <div className="cap-copy">
@@ -235,7 +109,7 @@ export default function Home() {
             <span className="over">Work</span>
             <h2>Real shoots.</h2>
           </div>
-          <div className="work-row">
+          <div className="work-row home-graded">
             <figure>
               <Image src="/media/work/01.jpg" alt="Detached home exterior" fill sizes="(max-width:900px) 50vw, 25vw" />
               <figcaption>Detached · exterior</figcaption>
@@ -253,170 +127,52 @@ export default function Home() {
               <figcaption>Condo · interior</figcaption>
             </figure>
           </div>
-          <div className="work-more">
-            <Link href="/gallery">See more work →</Link>
-          </div>
-          <div className="film">
-            <span className="tag">Film</span>
-            <video className="film-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
-              <source src="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4" type="video/mp4" />
-            </video>
-            <div className="film-in">
+          <div className="home-teasers">
+            <Link className="lean-strip" href="/pricing">
               <div>
-                <div className="vt">One system for the whole business.</div>
-                <div className="vs">Desk, field, and media — finally one place.</div>
+                <span className="pkg-name">Essentials from {'$'}{CORE_FROM}</span>
+                <span className="lean-sub">HDR + licensed drone + floor plan · Photos only from {'$'}{PHOTO_ONLY_FROM} · up to Full suite from {'$'}{FULL_FROM} · 24–48h target</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="edit-sec rvl" aria-label="After the shoot">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Delivery</span>
-            <h2>After the shoot.</h2>
-            <p className="sub" style={{ maxWidth: 520, marginTop: 8 }}>HDR balance for MLS is the standard path. Sky enhance is on request — we do not invent sky or dusk by default. Virtual staging is $35/photo, never packaged.</p>
-          </div>
-          <div className="edit-grid">
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[1].before} alt="HDR — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
+              <div className="lean-amt">Pricing →</div>
+            </Link>
+            <Link className="lean-strip" href="/gallery">
+              <div>
+                <span className="pkg-name">More work</span>
+                <span className="lean-sub">Residential, multifamily, commercial, and a free-roam Virtual Visit</span>
               </div>
-              <div className="edit-cap"><div className="t">HDR · windows</div></div>
-            </div>
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky enhance on request — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky enhance on request — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-              </div>
-              <div className="edit-cap"><div className="t">Sky · on request</div></div>
-            </div>
+              <div className="lean-amt">Gallery →</div>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="visit-sec rvl" aria-label="Virtual Visit">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Virtual Visit</span>
-            <h2>Free-roam.</h2>
+      <section className="data-sec rvl" id="data" aria-label="How we handle your data">
+        <div className="wrap data-grid">
+          <div>
+            <span className="over">For brokerages</span>
+            <h2>How we handle your data.</h2>
+            <p className="sub">Plain answers for brokerage compliance. Full detail in the <Link href="/privacy">Privacy policy</Link> and <Link href="/dpa">DPA</Link>.</p>
+            <div className="data-links">
+              <Link className="btn btn-sec" href="/contact">Talk to us</Link>
+              <Link href="/dpa">Read the DPA →</Link>
+            </div>
           </div>
-          <div className="visit-stage">
-            <VirtualVisitEmbed />
-          </div>
+          <ul className="data-facts">
+            <li><b>Canadian-hosted core.</b><p>Primary app database, authentication, and file storage run on Supabase in Canada (AWS ca-central-1).</p></li>
+            <li><b>PIPEDA.</b><p>Bricks Group collects, uses, and discloses personal information under PIPEDA and remains accountable for it.</p></li>
+            <li><b>A DPA for brokerages.</b><p>A Data Processing Agreement for brokerages, teams, and enterprise clients that process third-party personal data.</p></li>
+            <li><b>Named processors.</b><p>Some providers are in the US — e.g. Stripe and Vercel. They are listed in the Privacy policy and DPA.</p></li>
+          </ul>
         </div>
       </section>
-
-      <section className="proof-chapter rvl" aria-label="Proof">
-        <div className="wrap">
-          <blockquote className="proof-card proof-card-solo">
-            <p>“Three spreadsheets and a group text — now one screen.”</p>
-            <footer>
-              <span className="nm">Jordan Malcolm</span>
-              <span className="rl">Principal · 47-agent office</span>
-            </footer>
-          </blockquote>
-          <Link className="learn-link proof-chapter-link" href="/platform">Platform →</Link>
-        </div>
-      </section>
-
-      <section className="home-price-sec rvl" id="home-pricing" aria-label="Listing media pricing">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Media</span>
-            <h2>Priced by footprint.</h2>
-          </div>
-          <div className="pkgs">
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Essentials</span><span className="pkg-badge">Listing set</span></div>
-              <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>HDR + licensed drone + floor plan</li>
-                <li>Not a photo-only peer stack</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Drone-included listing set · Small→XL</div>
-              <Link className="btn btn-ghost" href="/book">Book Essentials</Link>
-            </div>
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Story</span></div>
-              <div className="pkg-amt">from {'$'}{STORY_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Essentials</li>
-                <li>Cinematic reel</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
-              <Link className="btn btn-ghost" href="/book">Book Story</Link>
-            </div>
-            <div className="pkg feat">
-              <div className="pkg-head"><span className="pkg-name">Showcase</span><span className="pkg-badge">Most booked</span></div>
-              <div className="pkg-amt">from {'$'}{SHOWCASE_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Story</li>
-                <li>{TOUR_NAME}</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
-              <Link className="btn btn-brick" href="/book">Book Showcase</Link>
-            </div>
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Full suite</span></div>
-              <div className="pkg-amt">from {'$'}{FULL_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Showcase</li>
-                <li>Twilight exterior</li>
-                <li>Virtual staging is $35 / photo — not included</li>
-                <li>24–48h target</li>
-              </ul>
-              <div className="pkg-foot">Small footprint · scales to XL</div>
-              <Link className="btn btn-ghost" href="/book">Book Full suite</Link>
-            </div>
-          </div>
-          <Link className="lean-strip" href="/book">
-            <div>
-              <span className="pkg-name">Photos only</span>
-              <span className="lean-sub">HDR only · no drone · no floor plan</span>
-            </div>
-            <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
-          </Link>
-          <p className="rate-note">Real windows — no invent sky or dusk by default. GTA travel often $0 at assign-first. <Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
-        </div>
-      </section>
-
-      <IntegrationsBand />
 
       <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
         <div className="closer-simple-inner">
           <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">Before Bricks, Raphael shot 14,000+ properties at CoStar · Canada-wide · 24–48h target</p>
+          <p className="closer-links"><Link href="/pricing#faq">FAQ</Link> · <Link href="/platform#integrations">Integrations</Link> · <Link href="/platform">Platform</Link></p>
         </div>
       </section>
-
-      <div className="wrap">
-        <section className="block rvl" id="faq" aria-label="Frequently asked questions">
-          <div className="sec-head">
-            <div><span className="over">FAQ</span><h2>FAQ.</h2></div>
-          </div>
-          <div className="faq faq-home">
-            {faqs.slice(0, 4).map((f) => (
-              <details key={f.id} className="qa">
-                <summary>{f.q}</summary>
-                <p><FaqAnswer id={f.id} a={f.a} /></p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </div>
 
       <NewsletterPopup />
 
@@ -438,8 +194,8 @@ export default function Home() {
         .hero-home{padding:64px 36px 40px;border-bottom:none;}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:420px;}
-        .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
-        .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
+        .hero-home h1,.hero-home p.sub,.hero-home .cta-row,.hero-home .cta-for{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
+        .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;} .hero-home .cta-for{animation-delay:.36s;}
         @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
         @media (max-width:680px){
@@ -448,7 +204,26 @@ export default function Home() {
           .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:28ch;line-height:1.4;}
           .hero-home .cta-row{margin-top:22px;gap:14px;}
         }
-        @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
+        @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row,.hero-home .cta-for{opacity:1;transform:none;animation:none;}}
+        .cta-for{display:block;font-size:12.5px;color:var(--inkMute);margin-top:12px;}
+        .home-graded img{filter:saturate(.94) contrast(1.04) brightness(1.01) sepia(.05);}
+        .work-sec{padding:48px 0;}
+        .home-teasers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;}
+        .home-teasers .lean-strip{margin-top:0;}
+        @media (max-width:680px){.home-teasers{grid-template-columns:1fr;}}
+        .data-sec{padding:56px 0;border-top:1px solid var(--hair);}
+        .data-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:start;}
+        .data-grid h2{margin:6px 0 10px;}
+        .data-grid p.sub a,.data-links a{color:var(--brickDeep);text-decoration:none;}
+        .data-links{display:flex;gap:18px;align-items:center;margin-top:18px;flex-wrap:wrap;}
+        .data-facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
+        .data-facts li{background:var(--paper);padding:18px;}
+        .data-facts b{display:block;font-weight:500;font-size:15.5px;color:var(--ink);letter-spacing:-.2px;margin-bottom:4px;}
+        .data-facts p{margin:0;font-size:13px;line-height:1.45;color:var(--inkMute);}
+        @media (max-width:900px){.data-grid{grid-template-columns:1fr;gap:22px;}}
+        @media (max-width:480px){.data-facts{grid-template-columns:1fr;}.data-facts li{padding:14px 16px;}}
+        .closer-links{margin-top:14px;font-size:13px;color:var(--inkMute);}
+        .closer-links a{color:var(--brickDeep);text-decoration:none;}
       `}</style>
 
     </>

@@ -205,7 +205,7 @@ export default function PricingPage() {
 
         <p className="note price-foot">Small ≈ ≤1,200 sq ft · Mid ≈ 1,200–2,500 · Large ≈ 2,500–4,000 · XL ≈ 4,000+. Travel: GTA assign-first is often $0; otherwise from the assigned photographer’s base — first 25 km free, then $0.75/km — shown before you pay. Not free Canada-wide. CAD, exclude HST (13%).</p>
 
-        <section className="block rvl">
+        <section className="block rvl" id="faq">
           <div className="sec-head"><div><span className="over">Pricing questions</span><h2>Before you book.</h2></div></div>
           <div className="faq">
             <div className="qa"><h4>Why Essentials from ${CORE_FROM}?</h4><p>Essentials is HDR + licensed drone + floor plan — the drone-included listing set. Photo-only peers often start lower and upsell drone later; compare that stack to Essentials, not to Photos only.</p></div>
