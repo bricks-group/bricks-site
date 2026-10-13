@@ -23,7 +23,7 @@ type Tile = {
 }
 
 const LIVE: Tile[] = [
-  { name: 'Follow Up Boss', what: 'Two-way contact sync' },
+  { name: 'Follow Up Boss', what: 'Two-way contacts & deals' },
   { name: 'kvCORE / BoldTrail', what: 'Contact sync' },
   { name: 'PropTx', what: 'PropTx · TRREB MLS® feed via RESO Web API', logo: { src: '/integrations/proptx-symbol.svg', w: 102, h: 92, scale: 1.4, alt: 'PropTx logo symbol' } },
   { name: 'Bridge Interactive', what: 'Cornerstone & ITSO MLS® feeds', logo: { src: '/integrations/bridge-interactive.png', w: 263, h: 80, scale: 0.8 } },
@@ -36,7 +36,6 @@ const LIVE: Tile[] = [
 
 const SOON: Tile[] = [
   { name: 'Docusign', what: 'Send from the deal', logo: { src: '/integrations/docusign.svg', w: 70, h: 15 } },
-  { name: 'Follow Up Boss', what: 'Deal sync' },
 ]
 
 function Mark({ t, soon = false }: { t: Tile; soon?: boolean }) {
