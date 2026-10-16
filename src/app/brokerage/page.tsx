@@ -24,7 +24,7 @@ export default function BrokeragePage() {
         <div className="wrap">
           <span className="badge">Brokerage</span>
           <h1>The system for the whole shop.</h1>
-          <p className="sub">Roster, pipeline, listing file, and trust accounting. Every seat gets the full OS — CRM, transactions, checklist e-sign + shareable links, forms, BYO MLS. On-document PDF placement is not available yet. {STATUS.os}</p>
+          <p className="sub">Roster, pipeline, listing file, and trust accounting. Every seat gets the full OS — CRM, transactions, e-sign on the PDF + shareable links, forms, BYO MLS. {STATUS.os}</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/contact">Talk to us</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>

@@ -21,7 +21,7 @@ export const SOFTWARE_PLANS = [
     yearly: '$490 / yr · 2 months free',
     over: 'Individual',
     value: '≈ $40.83 / mo billed yearly.',
-    points: ['Everything in Clay', 'CRM', 'Checklist e-sign + shareable links (on-document PDF placement not available yet)'],
+    points: ['Everything in Clay', 'CRM', 'E-sign fields placed on the PDF + shareable links'],
   },
   {
     id: 'marble',
@@ -80,7 +80,7 @@ export const OFFICE_PLANS = [
 ] as const
 
 export const OFFICE_INCLUDES =
-  'Full system on every seat — CRM, transactions, checklist e-sign + shareable links, forms, BYO MLS — plus trust accounting. On-document PDF placement is not available yet. Agents do not pay individually.'
+  'Full system on every seat — CRM, transactions, e-sign on the PDF + shareable links, forms, BYO MLS — plus trust accounting. Agents do not pay individually.'
 
 /** Plan matrix: same rows, same order on every card. `from` = first plan that includes it. */
 export const PLAN_ORDER = ['clay', 'keystone', 'marble', 'diamond'] as const
@@ -88,7 +88,7 @@ export const PLAN_FEATURES: readonly { label: string; from: (typeof PLAN_ORDER)[
   { label: 'Book media at rack rate', from: 'clay' },
   { label: 'Listing file, transactions, and BYO MLS', from: 'clay' },
   { label: 'CRM', from: 'keystone' },
-  { label: 'Checklist e-sign + shareable links', from: 'keystone', note: 'On-document PDF placement not available yet' },
+  { label: 'E-sign on the PDF + shareable links', from: 'keystone', note: 'Signature, initials, date and text fields placed on the page' },
   { label: 'Forms', from: 'marble' },
   { label: 'AI Listing Copy', from: 'diamond', addon: '$19 / mo' },
   { label: 'AI CMA', from: 'diamond', addon: '$25 / mo' },

@@ -88,7 +88,7 @@ export default function PricingPage() {
         <div className="wrap">
           <span className="badge">Pricing</span>
           <h1>Software, seats, and listing photo pricing.</h1>
-          <p className="sub">Clay is free. Paid plans add CRM, checklist e-sign + shareable links, forms, and AI. On-document PDF placement is not available yet. Brokerage seats yearly. Listing media leads with <strong>Essentials from ${CORE_FROM}</strong> — HDR + licensed drone + floor plan (not a photo-only peer stack). Virtual visit ({VISIT_SHORT}) is {VISIT_PRICE_LABEL} by footprint — never packaged. {STATUS.os}</p>
+          <p className="sub">Clay is free. Paid plans add CRM, e-sign on the PDF + shareable links, forms, and AI. Brokerage seats yearly. Listing media leads with <strong>Essentials from ${CORE_FROM}</strong> — HDR + licensed drone + floor plan (not a photo-only peer stack). Virtual visit ({VISIT_SHORT}) is {VISIT_PRICE_LABEL} by footprint — never packaged. {STATUS.os}</p>
         </div>
       </section>
 
