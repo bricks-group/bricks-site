@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Contact Bricks | Canadian real estate media',
-    description: 'Listing media for Canadian real estate — HDR photo, licensed drone, floor plans, with optional virtual tour and virtual visit. Booked direct, 24–48h target.',
+    description: 'Listing media for Canadian real estate: HDR photos, licensed drone and floor plans.',
   },
   twitter: {
     title: 'Contact Bricks | Canadian real estate media',
-    description: 'Listing media for Canadian real estate — booked direct, 24–48h target.',
+    description: 'Listing media for Canadian real estate.',
   },
 }
 

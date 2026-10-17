@@ -11,13 +11,13 @@ const OG =
 export const metadata: Metadata = {
   title: 'Book Real Estate Photography & Listing Photos Canada | Bricks',
   description:
-    'Book Bricks listing photos online: HDR real estate photography, licensed drone, floor plan on standard shoots, 24–48h MLS target. Instant quote by footprint + travel.',
+    'Book listing photos online: HDR photography, licensed drone and a floor plan on standard shoots. Live quote from the address.',
   alternates: { canonical: '/book' },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Book Real Estate Photography & Listing Photos | Bricks',
     description:
-      'Book Canadian listing media online — HDR photos, drone, floor plan, 24–48h target. Pay to lock an exact clock time.',
+      'Book listing media online: HDR photos, drone and a floor plan. Pick an exact time.',
     images: [OG],
     url: 'https://www.brxs.ca/book',
   },

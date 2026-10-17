@@ -11,20 +11,20 @@ const OG =
 export const metadata: Metadata = {
   title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',
   description:
-    'Applications open now: join the Bricks Canada-wide real estate photographer network. Auto-routed listing photo jobs, fixed vendor rate card, Stripe Connect payouts. Apply in about 4 minutes. GO is live.',
+    'Shoot listings for Bricks across Canada. Jobs come to you in GO at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
   alternates: { canonical: '/photographers' },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Real Estate Photographer Jobs Canada | Bricks',
     description:
-      'Applications open now. Auto-routed listing shoots, fixed rate card, Stripe Connect. Apply in about 4 minutes.',
+      'Shoot listings across Canada at a fixed rate per job. Apply in about four minutes.',
     images: [OG],
     url: 'https://www.brxs.ca/photographers',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Real Estate Photographer Jobs Canada | Bricks',
-    description: 'Applications open now — shoot listing photos Canada-wide. Fixed rate card, Stripe Connect.',
+    description: 'Shoot listings across Canada at a fixed rate per job.',
     images: [OG],
   },
 }
