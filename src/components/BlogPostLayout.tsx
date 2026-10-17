@@ -17,7 +17,7 @@ export default function BlogPostLayout({
 
       <section className="block">
         <div className="wrap">
-          <article className="prose rvl">
+          <article className="prose">
             {children}
 
             <p style={{ marginTop: 28 }}><Link href="/book" className="btn btn-brick">Book a listing shoot →</Link></p>

@@ -249,8 +249,9 @@ footer{border-top:1px solid var(--hair);margin-top:64px;}
 
 /* scroll reveal — hidden state only applies once JS marks the doc ready,
    so content is never permanently invisible if the observer fails to run. */
-html.reveal-ready .rvl{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease,ease-out),transform .6s var(--ease,ease-out);
+html.reveal-ready .rvl:not(.prose):not(article):not(.in){opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease,ease-out),transform .6s var(--ease,ease-out);
   transition-delay:var(--rd,0s);}
+html.reveal-ready .rvl{transition:opacity .6s var(--ease,ease-out),transform .6s var(--ease,ease-out);transition-delay:var(--rd,0s);}
 html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
 
 @media (max-width:680px){
@@ -272,7 +273,7 @@ html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
 }
 
 @media (prefers-reduced-motion: reduce){
-  html.reveal-ready .rvl{opacity:1;transform:none;transition:none;}
+  html.reveal-ready .rvl,html.reveal-ready .rvl:not(.prose):not(article):not(.in){opacity:1;transform:none;transition:none;}
   .brand:hover .brand-mark svg rect{animation:none;}
 }
 @media print{.btn,.nav-cta,.book{display:none;}}
