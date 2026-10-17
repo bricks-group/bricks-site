@@ -91,7 +91,7 @@ export default function ConstructionForm() {
       </div>
       <div>
         <label htmlFor="cxNotes">Project notes</label>
-        <textarea id="cxNotes" name="notes" placeholder="Sites, cadence, drone / 3D needs, timeline" required />
+        <textarea id="cxNotes" name="notes" placeholder="Sites, visual or mapped, cadence, insurance minimum, timeline" required />
       </div>
       <div className="cta-row">
         <button type="submit" className="btn btn-brick" disabled={submitting}>{submitting && <BricksLoader variant="cycle" size={16} color="currentColor" style={{ marginRight: 8 }} />}{submitting ? 'Sending…' : 'Request a pilot'}</button>

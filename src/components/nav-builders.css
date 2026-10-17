@@ -1,0 +1,15 @@
+/* "For builders & developers" is the longest primary link: one line, and a
+   short "Builders" label on narrow desktops so the bar never overflows. */
+.nav-links a.nav-nowrap{white-space:nowrap;}
+.nav-links a.nav-nowrap .nav-short{display:none;}
+@media (min-width:900px) and (max-width:1139px){
+  /* side columns size to content here so the links get the room */
+  header .nav{grid-template-columns:auto 1fr auto;}
+  header .nav-links{gap:20px;justify-self:center;}
+  .nav-links a.nav-nowrap .nav-full{display:none;}
+  .nav-links a.nav-nowrap .nav-short{display:inline;}
+}
+@media (min-width:900px) and (max-width:1039px){
+  header .nav-links{gap:14px;}
+  header .nav-links a{font-size:13px;}
+}

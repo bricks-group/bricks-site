@@ -9,6 +9,7 @@ import OsDeskShot from '@/components/OsDeskShot'
 import StepsRail from '@/components/steps-rail/StepsRail'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import IntegrationsBand from '@/components/IntegrationsBand'
+import AudienceCards from '@/components/AudienceCards'
 import {
   FOOTPRINT_BANDS,
   TOUR_RANGE,
@@ -167,6 +168,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <AudienceCards />
 
       <section className="prod-hero" aria-label="bricks desk">
         <div className="tray tray-os">

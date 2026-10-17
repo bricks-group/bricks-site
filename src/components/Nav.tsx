@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
 import { OS_LOGIN } from '@/lib/brand'
+import './nav-builders.css'
 
 const links = [
   { href: '/gallery', label: 'Work' },
   { href: '/pricing', label: 'Pricing' },
+  { href: '/builders', label: 'For builders & developers' },
   { href: '/photographers', label: 'Photographers' },
   { href: '/brokerage', label: 'Brokerage' },
 ]
@@ -55,9 +57,12 @@ export default function Nav() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={pathname === l.href ? 'active' : ''}
+                className={`${pathname === l.href || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}${l.href === '/builders' ? ' nav-nowrap' : ''}`}
+                aria-label={l.href === '/builders' ? l.label : undefined}
               >
-                {l.label}
+                {l.href === '/builders' ? (
+                  <><span className="nav-full">{l.label}</span><span className="nav-short">Builders</span></>
+                ) : l.label}
               </Link>
             ))}
           </nav>
@@ -112,7 +117,7 @@ export default function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className={pathname === l.href || (l.href === '/brokerage' && pathname === '/office') ? 'active' : ''}
+              className={pathname === l.href || (l.href === '/brokerage' && pathname === '/office') || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}
               onClick={() => setOpen(false)}
             >
               {l.label}
