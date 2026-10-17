@@ -11,8 +11,8 @@ import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'bricks platform — web, Companion, GO',
-  description: 'The system for Canadian real estate, from listing to close: Bricks on the web, Companion and GO on mobile, plus media, MLS and transactions.',
+  title: 'bricks platform — web and mobile',
+  description: 'The system for Canadian real estate, from listing to close: Bricks on the web, Companion and the photographer app on mobile, plus media, MLS and transactions.',
   alternates: { canonical: '/platform' },
 }
 
@@ -20,7 +20,7 @@ const roles = [
   { href: '/brokerage', over: 'Bricks', title: 'Brokerage', body: 'The whole office, priced per seat.' },
   { href: '/agents#team', over: 'Bricks', title: 'Team', body: 'One shared pipeline.' },
   { href: '/agents', over: 'Bricks + Companion', title: 'Agent', body: 'Your listings, and shoots booked from your phone.' },
-  { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Jobs come to you, at a fixed rate.' },
+  { href: '/photographers', over: 'Bricks', title: 'Photographer', body: 'Jobs come to you, at a fixed rate.' },
 ]
 
 export default function PlatformPage() {
@@ -86,13 +86,13 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      <section className="prod-row prod-row-flip rvl" aria-label="GO — mobile">
+      <section className="prod-row prod-row-flip rvl" aria-label="Photographer app — mobile">
         <div className="tray tray-disp tray-phone">
           <div className="phone-stage">
-            <PhoneDevice label="GO">
+            <PhoneDevice label="Bricks">
               <ProductWindow
                 variant="phone"
-                title="GO"
+                title="Bricks"
                 src="/screens/disp.html?lock=1"
                 nw={390}
                 nh={844}
@@ -106,9 +106,9 @@ export default function PlatformPage() {
         </div>
         <div className="prod-copy">
           <span className="over">Mobile</span>
-          <h2>GO.</h2>
+          <h2>Bricks, for photographers.</h2>
           <p>The field app for photographers.</p>
-          <p className="surf-link"><a href={GO_URL} rel="noopener noreferrer">Open GO</a></p>
+          <p className="surf-link"><a href={GO_URL} rel="noopener noreferrer">Open the photographer app</a></p>
         </div>
       </section>
 
@@ -166,7 +166,7 @@ export default function PlatformPage() {
           <div className="book">
             <span className="over">Ready when you are</span>
             <h2>Book a shoot. Open Bricks.</h2>
-            <p className="lead">Book here or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to <a href={OS_LOGIN}>Bricks</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
+            <p className="lead">Book here or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to <a href={OS_LOGIN}>Bricks</a> or the <a href={GO_URL} rel="noopener noreferrer">photographer app</a>.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

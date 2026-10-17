@@ -11,7 +11,7 @@ const OG =
 export const metadata: Metadata = {
   title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',
   description:
-    'Shoot listings for Bricks across Canada. Jobs come to you in GO at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
+    'Shoot listings for Bricks across Canada. Jobs come to you in the Bricks app at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
   alternates: { canonical: '/photographers' },
   robots: { index: true, follow: true },
   openGraph: {
@@ -42,7 +42,7 @@ export default function PhotographersPage() {
             datePosted: '2026-08-13',
             title: 'Real Estate Photographer / Videographer — Independent Contractor (Canada)',
             description:
-              'Applications are open now — not launching soon. Auto-routed real estate listing photo and video shoots across Canada. Paid via Stripe Connect on a fixed vendor rate card. Apply in about four minutes. GO field app is live on the web.',
+              'Applications are open now — not launching soon. Auto-routed real estate listing photo and video shoots across Canada. Paid via Stripe Connect on a fixed vendor rate card. Apply in about four minutes. The Bricks app for photographers is live on the web.',
             hiringOrganization: {
               '@type': 'Organization',
               '@id': ORG_ID,
@@ -111,10 +111,10 @@ export default function PhotographersPage() {
         <div className="wrap">
           <span className="badge">Photographers</span>
           <h1>Real estate photographer jobs across Canada.</h1>
-          <p className="sub">Shoot listings for a fixed rate per job. Jobs come to you in GO, and you&apos;re paid automatically.</p>
+          <p className="sub">Shoot listings for a fixed rate per job. Jobs come to you in the Bricks app, and you&apos;re paid automatically.</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
-            <a className="btn btn-sec" href={GO_URL} rel="noopener noreferrer">Open GO</a>
+            <a className="btn btn-sec" href={GO_URL} rel="noopener noreferrer">Open the Bricks app</a>
           </div>
         </div>
       </section>
@@ -128,7 +128,7 @@ export default function PhotographersPage() {
             </div>
           </div>
           <div className="incl">
-            <div className="c rvl"><span className="ic">01</span><h4>No bidding</h4><p>Paid bookings are sent to you in GO based on specialty, tier and distance.</p></div>
+            <div className="c rvl"><span className="ic">01</span><h4>No bidding</h4><p>Paid bookings are sent to you in the Bricks app based on specialty, tier and distance.</p></div>
             <div className="c rvl"><span className="ic">02</span><h4>You set availability</h4><p>Accept or decline any job. Declining is never a breach of contract.</p></div>
             <div className="c rvl"><span className="ic">03</span><h4>Automatic payouts</h4><p>Paid for every completed job. No invoices, no chasing clients.</p></div>
             <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>If you can&apos;t get in or the client doesn&apos;t show, report it in the app and get the standard trip fee.</p></div>
@@ -158,7 +158,7 @@ export default function PhotographersPage() {
               <h2>Builder &amp; developer jobs pay at the top of Tier 3.</h2>
             </div>
           </div>
-          <p className="rate-lead">Construction site jobs go only to Tier 3 pilots with Advanced RPAS and verified drone liability insurance of at least $2M ($5M on some sites). Upload your certificate in GO.</p>
+          <p className="rate-lead">Construction site jobs go only to Tier 3 pilots with Advanced RPAS and verified drone liability insurance of at least $2M ($5M on some sites). Upload your certificate in the Bricks app.</p>
           <div className="adds">
             <div className="a rvl"><div className="nm">Progress visit — $185</div><p>Drone photos and video of the site.</p></div>
             <div className="a rvl"><div className="nm">Mapped capture — $735</div><p>A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.</p></div>

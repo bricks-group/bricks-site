@@ -34,7 +34,7 @@ const faqs = [
   {
     id: 'what',
     q: 'What is Bricks?',
-    a: 'The system for Canadian real estate: listing media, deals, e-sign and CRM in one place. Agents book shoots in Companion; photographers work in GO.',
+    a: 'The system for Canadian real estate: listing media, deals, e-sign and CRM in one place. Agents book shoots in Companion; photographers work in the Bricks app.',
   },
   {
     id: 'included',
@@ -74,7 +74,7 @@ const faqs = [
   {
     id: 'photographers',
     q: 'How do photographers work with Bricks?',
-    a: 'Photographers are independent contractors paid a fixed amount per job. Jobs arrive in GO.',
+    a: 'Photographers are independent contractors paid a fixed amount per job. Jobs arrive in the Bricks app.',
   },
   {
     id: 'help',
@@ -92,7 +92,7 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
     case 'plans':
       return <>Clay is free. Keystone, Marble and Diamond add more. Media is always booked separately. <Link href="/pricing">See pricing</Link>.</>
     case 'photographers':
-      return <>Photographers are independent contractors paid a fixed amount per job. Jobs arrive in GO. <Link href="/photographers">Apply</Link>.</>
+      return <>Photographers are independent contractors paid a fixed amount per job. Jobs arrive in the Bricks app. <Link href="/photographers">Apply</Link>.</>
     case 'help':
       return <>Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> or use the <Link href="/contact">contact form</Link>. For a shoot, <Link href="/book">book online</Link> or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</>
     default:

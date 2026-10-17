@@ -66,15 +66,15 @@ export const DEMO_STEPS: DemoStep[] = [
   {
     id: 'go',
     surface: 'go',
-    label: 'GO',
+    label: 'Photographers',
     lines: [
-      'GO is Dispatch in the field — photographers get the job, shoot, upload, get paid on a fixed rate card.',
+      'The Bricks app in the field: photographers get the job, shoot, upload, get paid on a fixed rate card.',
       'Independent contractors. Auto-assign is the backbone. Take a look at Today.',
     ],
-    tip: 'Explore GO, then Next for how to try the real thing.',
+    tip: 'Explore the photographer app, then Next for how to try the real thing.',
     src: '/screens/disp.html',
     kind: 'phone',
-    title: 'GO',
+    title: 'bricks',
     nw: 390,
     nh: 844,
   },
@@ -83,7 +83,7 @@ export const DEMO_STEPS: DemoStep[] = [
     surface: 'os-overview',
     label: 'You’re set',
     lines: [
-      'That’s the spine: Bricks on the desk, Companion for agents, GO for photographers.',
+      'That’s the spine: Bricks on the desk, Companion for agents, the Bricks app for photographers.',
       'Media is live to book. The Bricks app is live in preview. Want the real loop? Book a shoot or open Bricks.',
     ],
     tip: 'Book a shoot, open Bricks, or restart the tour.',

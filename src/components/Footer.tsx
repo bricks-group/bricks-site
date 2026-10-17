@@ -29,7 +29,7 @@ export default function Footer() {
             <Link href="/book">Book a shoot</Link>
             <Link href="/service-areas">Service areas</Link>
             <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>
-            <a href={GO_URL} rel="noopener noreferrer">GO</a>
+            <a href={GO_URL} rel="noopener noreferrer">Photographer app</a>
             <a href={OS_LOGIN}>Log in</a>
           </div>
         </div>

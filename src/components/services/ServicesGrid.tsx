@@ -10,7 +10,7 @@ const TILES: Tile[] = [
   { t: 'Media', d: 'HDR photos, drone, floor plans, reels and video.', href: '/media', img: 'media' },
   { t: 'Virtual Visit', d: 'Free-roam 3D of the home.', href: '/media#visit', img: 'visit' },
   { t: 'Site Progress', d: 'Maps, models and reports for builders.', href: '/builders', img: 'site' },
-  { t: 'Photographers', d: 'Independent pros, dispatched through GO.', href: '/photographers', art: 'network' },
+  { t: 'Photographers', d: 'Independent pros, dispatched through Bricks.', href: '/photographers', art: 'network' },
   { t: 'Integrations', d: 'Your MLS® feed and calendar, connected.', href: '#integrations', art: 'connect' },
 ]
 

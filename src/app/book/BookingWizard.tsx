@@ -209,7 +209,7 @@ export default function BookingWizard() {
     const sessionId = new URLSearchParams(window.location.search).get('session_id') || ''
     if (!sessionId) {
       // Edge may be stale without session_id — webhook (or manual nudge) is the only path.
-      setDoneMsg('Payment confirmed. Your shoot is on Bricks GO — finalizing dispatch.')
+      setDoneMsg('Payment confirmed. Your shoot is booked — finalizing dispatch.')
       return
     }
 
@@ -227,8 +227,8 @@ export default function BookingWizard() {
           const agent = (j as { agent_user_id?: string | null }).agent_user_id
           setDoneMsg(
             agent
-              ? 'Payment confirmed. Your shoot is on Bricks GO — and the listing is in Bricks at app.brxs.ca.'
-              : 'Payment confirmed. Your shoot is on Bricks GO',
+              ? 'Payment confirmed. Your shoot is booked, and the listing is in Bricks at app.brxs.ca.'
+              : 'Payment confirmed. Your shoot is booked.',
           )
           return
         }
@@ -570,7 +570,7 @@ export default function BookingWizard() {
           </div>
         )}
         {visit && <div className="qnote">{VISIT_NAME} is in this total ({q.footprint_label}{q.sqft ? ` · ${q.sqft.toLocaleString()} sqft` : ''}).</div>}
-        {q.floor_plan_only && <div className="qnote">Floor plan only — GO opens floor-plan capture mode. No HDR stills / no drone on this booking.</div>}
+        {q.floor_plan_only && <div className="qnote">Floor plan only — the photographer's app opens floor-plan capture mode. No HDR stills / no drone on this booking.</div>}
         {q.floor_plan_included === false && !q.floor_plan_only && <div className="qnote">Photos only: no floor plan drafted for this booking.</div>}
         {q.sqft_estimated && <div className="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>}
       </>
@@ -797,7 +797,7 @@ export default function BookingWizard() {
               {scheduleCtaVisible && (
                 <div style={{ display: 'block', marginTop: 18, padding: 18, border: '1px solid var(--hairStrong)', borderRadius: 2 }}>
                   <h3 style={{ margin: '0 0 6px', fontSize: 17, fontWeight: 500, color: 'var(--ink)' }}>Shoot booked ✓</h3>
-                  <p style={{ margin: '0 0 14px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and on GO for the photographer. A confirmation email is on its way.</p>
+                  <p style={{ margin: '0 0 14px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and sent to the photographer. A confirmation email is on its way.</p>
                 </div>
               )}
               <p style={{ marginTop: 14 }}><Link href="/" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>← Back to overview</Link></p>

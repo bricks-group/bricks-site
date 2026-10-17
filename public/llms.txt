@@ -6,7 +6,7 @@ Bricks is a real estate media company operated by Bricks Group in Canada. Agents
 
 Two spatial products, never collapsed: **virtual tour** is a path-confined walkthrough; **virtual visit** is a Gaussian splat (SuperSplat), free-roam, never called a tour, always a paid add-on, never packaged.
 
-Do not call the photographer field app "Vendor OS" — it is **GO** (Dispatch).
+Every Bricks app is called **Bricks** for customers and photographers (the photographer app is "the Bricks app"). Do not use internal names such as "Bricks OS", "GO" or "Vendor OS".
 
 ## Core pages
 
