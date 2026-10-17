@@ -1,6 +1,5 @@
 import {
   AREA_SERVED_SCHEMA,
-  FOUNDER_PERSON,
   OS_URL,
   TOUR_BLURB,
   TOUR_NAME,
@@ -59,9 +58,6 @@ export const LOGO_SCHEMA = {
   caption: 'Bricks',
 }
 
-/** Founder node — values come from brand.ts (no new name strings here). */
-export const FOUNDER_SCHEMA = { ...FOUNDER_PERSON }
-
 export const ORGANIZATION_SCHEMA = {
   '@type': 'Organization',
   '@id': ORG_ID,
@@ -75,7 +71,6 @@ export const ORGANIZATION_SCHEMA = {
     'Bricks is a Canadian real estate media and software company based in Mississauga, Ontario. Agents book HDR listing photography, licensed drone, and floor plans online at brxs.ca; the Bricks OS is live in preview at app.brxs.ca.',
   slogan: 'The system for Canadian real estate.',
   foundingDate: FOUNDING_YEAR,
-  founder: FOUNDER_SCHEMA,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Mississauga',
