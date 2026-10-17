@@ -6,7 +6,7 @@ import { MARK_BRICKS } from '@/lib/brandMark'
  * 24-unit grid (viewBox 240 = 10 × 24), 1.5px non-scaling stroke, square caps, mitred joins, no fills,
  * graphite on off-white, no accent (the accent is reserved for state). Glyphs reuse the Bricks icon set.
  */
-export type ArtKind = 'os' | 'integrations'
+export type ArtKind = 'os' | 'integrations' | 'pros'
 
 function Glyph({ name, x, y, s = 1 }: { name: IconName; x: number; y: number; s?: number }) {
   return <path d={ICONS[name].d} transform={`translate(${x} ${y}) scale(${s})`} vectorEffect="non-scaling-stroke" />
@@ -53,10 +53,24 @@ function Integrations() {
   )
 }
 
+function Pros() {
+  return (
+    <>
+      {/* the photographer's phone: a job, dispatched */}
+      {P('M78 24H162V216H78ZM78 48H162M78 192H162M114 204H126', 'la-1')}
+      {P('M90 60H150V132H90Z', 'la-1')}
+      <Glyph name="assigned" x={108} y={72} />
+      {P('M96 108H144M96 120H132', 'la-2')}
+      {P('M90 144H150V180H90Z', 'la-2')}
+      <Glyph name="media" x={108} y={150} />
+    </>
+  )
+}
+
 export default function ServiceArt({ kind }: { kind: ArtKind }) {
   return (
     <svg className={`la la-${kind}`} viewBox="0 0 240 240" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="square" strokeLinejoin="miter">
-      {kind === 'os' ? <Os /> : <Integrations />}
+      {kind === 'os' ? <Os /> : kind === 'pros' ? <Pros /> : <Integrations />}
     </svg>
   )
 }

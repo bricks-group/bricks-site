@@ -8,10 +8,10 @@ import './media-showcase.css'
 
 /** Homepage listing media — one stage, one switch (Photos / Before-after / Film / 3D). Kam 2026-10-17. */
 const TABS = [
-  { id: 'photos', label: 'Photos', cap: 'HDR photos, balanced on every shoot.' },
-  { id: 'ba', label: 'Before/after', cap: 'Drag to compare.' },
-  { id: 'film', label: 'Film', cap: 'A cinematic reel for the listing.' },
-  { id: '3d', label: '3D', cap: 'Virtual Visit: free-roam 3D of the home.' },
+  { id: 'photos', label: 'Photos' },
+  { id: 'ba', label: 'Before/after' },
+  { id: 'film', label: 'Film' },
+  { id: '3d', label: '3D' },
 ] as const
 type Tab = (typeof TABS)[number]['id']
 
@@ -50,7 +50,6 @@ export default function MediaShowcase() {
     const r = baRef.current?.getBoundingClientRect()
     if (r && r.width) setPos(Math.max(0, Math.min(100, ((x - r.left) / r.width) * 100)))
   }
-  const cap = TABS.find((t) => t.id === tab)?.cap
 
   return (
     <section className="ms-sec ms-page rvl" id="media" aria-label="Listing media">
@@ -108,8 +107,6 @@ export default function MediaShowcase() {
                   <Image className="ms-ba-img" src={PAIRS[pair].before} alt={`${PAIRS[pair].k} — before`} fill loading="eager" sizes="(max-width:900px) 100vw, 1100px" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
                 </>
               ) : null}
-              <span className="ms-lbl l">Before</span>
-              <span className="ms-lbl r">After</span>
               <div className="ms-handle" style={{ left: `${pos}%` }} aria-hidden="true"><span className="ms-knob">↔</span></div>
             </div>
           </div>
@@ -134,9 +131,7 @@ export default function MediaShowcase() {
                 <button key={p.k} type="button" className={i === pair ? 'ms-pair is-on' : 'ms-pair'} aria-pressed={i === pair} onClick={() => { setPair(i); setPos(50) }}>{p.k}</button>
               ))}
             </div>
-          ) : (
-            <p className="ms-cap" aria-live="polite">{cap}</p>
-          )}
+          ) : <span />}
           <Link className="learn-link" href="/gallery">See more work →</Link>
         </div>
       </div>

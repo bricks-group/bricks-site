@@ -31,7 +31,6 @@ const residential: Shot[] = [
   { src: '/media/res-dining-1.jpg', alt: 'Listing photos — residential dining room interior HDR', t: 'Dining' },
   { src: '/media/res-living-1.jpg', alt: 'MLS photos — open living and kitchen interior', t: 'Living' },
   { src: '/media/res-living-2.jpg', alt: 'Real estate photography — living room listing photo', t: 'Living' },
-  { src: '/media/work/07.jpg', alt: 'Real estate photography — living room listing photo', t: 'Living' },
   { src: '/media/work/08.jpg', alt: 'Listing photos — bedroom interior', t: 'Bedroom' },
 ]
 
@@ -60,8 +59,6 @@ const industrial: Shot[] = [
   { src: '/media/cre-industrial-1.jpg', alt: 'Industrial building exterior — MLS-ready still', t: 'Exterior' },
   { src: '/media/cre-industrial-2.jpg', alt: 'Industrial facade listing photo', t: 'Facade' },
   { src: '/media/cre-industrial-3.jpg', alt: 'Industrial site exterior listing photo', t: 'Site' },
-  { src: '/media/cre-portfolio-flex.jpg', alt: 'Flex / industrial exterior listing photo', t: 'Flex' },
-  { src: '/media/cre-harvester-office.jpg', alt: 'Commercial office interior — CRE listing still', t: 'Interior' },
 ]
 
 const beforeAfter = [
@@ -77,7 +74,6 @@ function Grid({ images }: { images: Shot[] }) {
       {images.map((img) => (
         <div key={img.src} className="work-card">
           <div className="img"><Image src={img.src} alt={img.alt} width={720} height={540} loading="lazy" /></div>
-          <div className="meta"><div className="t">{img.t}</div>{img.d && <div className="d">{img.d}</div>}</div>
         </div>
       ))}
     </div>
@@ -115,7 +111,7 @@ export default function GalleryPage() {
           <div className="sec-head">
             <div><span className="over">Examples</span><h2>Before and after.</h2></div>
           </div>
-          <p className="ba-hint">Drag to compare.</p>
+                    <p className="ba-hint">Drag to compare.</p>
           <div className="ba-grid">
             {beforeAfter.map((p) => {
               const name = p.label.replace(/ before and after$/i, '')
@@ -133,8 +129,6 @@ export default function GalleryPage() {
                 >
                   <img className="ba-after" src={p.after} alt={`${name} — after`} />
                   <img className="ba-before" src={p.before} alt={`${name} — before`} />
-                  <span className="ba-tag ba-tag-before">Before</span>
-                  <span className="ba-tag ba-tag-after">After</span>
                   <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
                 </div>
               )
