@@ -64,18 +64,14 @@ export default function IntegrationsBand() {
       <div className="wrap">
         <div className="section-head section-head-stack">
           <span className="over">Integrations</span>
-          <h2>Works with the tools your brokerage already runs.</h2>
-          <p className="lede">Plug Bricks into your current stack today. Move to Bricks-native when you&rsquo;re ready.</p>
+          <h2>Works with the tools you already use.</h2>
+          <p className="lede">Keep your current setup. Bricks connects to it.</p>
         </div>
 
         <ul className="integ-grid" aria-label="Works with now">
           {LIVE.map((t) => (
             <li key={t.name} className="integ-tile">
               <div className="integ-plate"><Mark t={t} /></div>
-              <div className="integ-meta">
-                <span className="integ-what">{t.what}</span>
-                <span className="integ-tag">Live</span>
-              </div>
             </li>
           ))}
           <li className="integ-tile integ-soon" aria-label="Coming soon">
@@ -84,7 +80,6 @@ export default function IntegrationsBand() {
               {SOON.map((t) => (
                 <li key={`${t.name}-${t.what}`}>
                   <span className="integ-soon-mark"><Mark t={t} soon /></span>
-                  <span className="integ-what">{t.what}</span>
                 </li>
               ))}
             </ul>

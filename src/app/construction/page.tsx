@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 }
 
 const USES = [
-  { t: 'Progress documentation', d: 'Weekly or monthly ground + aerial stills on a fixed cadence — same standards as listing media.' },
-  { t: 'Stakeholder share links', d: 'Deliver into a listing-file style share for GCs, lenders, and asset managers — not a ZIP in email.' },
-  { t: 'Optional free-roam 3D', d: 'Virtual visit (Gaussian splat) quoted by footprint. Always a paid add-on — never packaged as a tour.' },
+  { t: 'Progress photos', d: 'Ground and aerial photos, weekly or monthly, to the same standard as our listing work.' },
+  { t: 'Share links', d: 'One link for GCs, lenders and asset managers.' },
+  { t: 'Free-roam 3D', d: 'Add a virtual visit, quoted by site size.' },
 ]
 
 const pageCss = `
@@ -40,14 +40,10 @@ export default function ConstructionPage() {
     <>
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Construction · REITs · Developers</span>
-          <h1>Progress you can see.<br />Not just a status report.</h1>
+          <span className="badge">Construction and development</span>
+          <h1>Progress you can see.</h1>
           <p className="sub">
-            The same Canada-wide dispatch network behind Bricks listing media — pointed at job sites, builds, and
-            portfolios. Recurring visual documentation without you managing a photographer roster.
-          </p>
-          <p className="sub product-hint">
-            Pilots quoted directly. Listing media for agents stays on <Link href="/book">/book</Link>.
+            Regular photo and drone updates for job sites, builds and portfolios, from the same network behind our listing media.
           </p>
         </div>
       </section>
@@ -57,7 +53,7 @@ export default function ConstructionPage() {
           <div className="cx-grid">
             <div>
               <div className="sec-head">
-                <div><span className="over">What we run</span><h2>Same network. Different job site.</h2></div>
+                <div><span className="over">What we capture</span><h2>Same network, new job site.</h2></div>
               </div>
               <ul className="cx-list">
                 {USES.map((u) => (
@@ -68,12 +64,12 @@ export default function ConstructionPage() {
                 ))}
               </ul>
               <p className="cx-note">
-                Lead-capture today — no self-serve Stripe SKU yet. Agent listing media: <Link href="/pricing">/pricing</Link>.
+                Quoted per project. Booking a listing shoot? <Link href="/book">Book here</Link>.
               </p>
             </div>
             <div>
               <div className="sec-head">
-                <div><span className="over">Pilot</span><h2>Request a quote.</h2></div>
+                <div><span className="over">Quote</span><h2>Request a quote.</h2></div>
               </div>
               <ConstructionForm />
             </div>

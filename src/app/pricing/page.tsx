@@ -17,11 +17,11 @@ import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } fr
 export const metadata: Metadata = {
   title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
   description:
-    'Essentials from $248 — HDR + licensed drone + floor plan. À la carte by footprint plus Clay–Diamond software and brokerage seats. CAD. 24–48h target. Virtual visit $249–$399 by footprint, never packaged.',
+    'Listing media from $248 for HDR photos, licensed drone and a floor plan, priced by home size. Software plans from free, plus brokerage seats. CAD.',
   alternates: { canonical: '/pricing' },
   openGraph: {
     title: 'Real Estate Photography Pricing & Plans | Bricks',
-    description: 'Essentials from $248 (HDR + licensed drone + floor plan). Listing media by footprint — virtual visit never packaged.',
+    description: 'Listing media from $248 for HDR photos, licensed drone and a floor plan. Software plans from free.',
     url: 'https://www.brxs.ca/pricing',
   },
   twitter: {
@@ -40,16 +40,16 @@ const PRICING_PAGE_OFFERS: readonly MediaOfferId[] = [
 ]
 
 const rows = [
-  { name: 'HDR photography', inc: 'interiors + exteriors', vals: bandCells(PHOTO_RATE) },
-  { name: 'Licensed drone', inc: 'Advanced RPAS-certified aerial', vals: bandCells(DRONE_RATE) },
-  { name: 'Floor plan', inc: 'branded 2D — every standard shoot', flat: 'Included on every standard shoot' },
-  { name: 'Floor plan only', inc: 'standalone 2D capture — no HDR / no drone', flat: `$${FLOOR_PLAN_ONLY_RATE} flat` },
-  { name: 'Cinematic reel', inc: '30–45s', vals: bandCells(REEL_RATE) },
-  { name: TOUR_NAME, inc: TOUR_SHORT, vals: bandCells(TOUR_RATE) },
-  { name: VISIT_NAME, inc: `${VISIT_SHORT} — add-on, never packaged`, vals: bandCells(VISIT_RATE) },
-  { name: 'Twilight exterior', inc: 'golden hour', vals: bandCells(TWILIGHT_RATE) },
-  { name: 'Virtual staging', inc: 'per photo — not included in any package', flat: STAGING_PRICE_LABEL },
-  { name: 'Rush delivery', inc: 'faster than the standard 24–48h target', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
+  { name: 'HDR photography', inc: 'Interiors and exteriors', vals: bandCells(PHOTO_RATE) },
+  { name: 'Licensed drone', inc: 'Advanced RPAS certified', vals: bandCells(DRONE_RATE) },
+  { name: 'Floor plan', inc: 'Branded 2D', flat: 'Included on every standard shoot' },
+  { name: 'Floor plan only', inc: 'No photos or drone', flat: `$${FLOOR_PLAN_ONLY_RATE} flat` },
+  { name: 'Cinematic reel', inc: '30–45 seconds', vals: bandCells(REEL_RATE) },
+  { name: TOUR_NAME, inc: 'Path walkthrough', vals: bandCells(TOUR_RATE) },
+  { name: VISIT_NAME, inc: 'Free-roam 3D', vals: bandCells(VISIT_RATE) },
+  { name: 'Twilight exterior', inc: 'Shot at blue hour', vals: bandCells(TWILIGHT_RATE) },
+  { name: 'Virtual staging', inc: 'Per photo', flat: STAGING_PRICE_LABEL },
+  { name: 'Rush delivery', inc: 'Faster than standard 24–48h delivery', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
 ]
 
 export default function PricingPage() {
@@ -71,13 +71,13 @@ export default function PricingPage() {
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
             mainEntity: [
-              { '@type': 'Question', name: `Why Essentials from $${CORE_FROM}?`, acceptedAnswer: { '@type': 'Answer', text: `Essentials is HDR + licensed drone + floor plan — the drone-included listing set from $${CORE_FROM}. Compare that stack to photo-only peers that upsell drone later.` } },
-              { '@type': 'Question', name: 'Are the stills MLS-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Real window views. Bricks does not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on.' } },
-              { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'GTA assign-first is often $0. Outside that: first 25 km from the assigned photographer base free, then $0.75/km — shown before you pay. Not free Canada-wide.' } },
-              { '@type': 'Question', name: 'How is footprint defined?', acceptedAnswer: { '@type': 'Answer', text: 'Small / Mid / Large / XL map to the property\'s finished area and complexity. Not sure which tier? Pick "advise me" in booking and we\'ll size it from the address.' } },
-              { '@type': 'Question', name: `Virtual tour vs virtual visit?`, acceptedAnswer: { '@type': 'Answer', text: `${TOUR_NAME} (${TOUR_SHORT}) is a ${TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. ${VISIT_NAME} (${VISIT_SHORT}) is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()}, never packaged.` } },
-              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture and décor added to empty or dated interior photos in post. Furniture and décor added in post. $${STAGING_PER_IMAGE} per photo, before tax, charged at checkout. Not included in any package.` } },
-              { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered and quote travel if needed.` } },
+              { '@type': 'Question', name: "What's in Essentials?", acceptedAnswer: { '@type': 'Answer', text: `HDR photos, licensed drone and a floor plan in one shoot, from $${CORE_FROM}.` } },
+              { '@type': 'Question', name: 'Are the photos MLS-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.' } },
+              { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75/km. It’s often free in the GTA, and you see it before you pay.' } },
+              { '@type': 'Question', name: 'How is home size measured?', acceptedAnswer: { '@type': 'Answer', text: 'By finished area and complexity. Not sure? Choose "advise me" when you book and we\'ll size it from the address.' } },
+              { '@type': 'Question', name: 'Virtual tour or virtual visit?', acceptedAnswer: { '@type': 'Answer', text: `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).` } },
+              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture and décor added to photos of empty or dated rooms. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.` } },
+              { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: 'Across Canada. Ask and we’ll confirm your area and quote any travel.' } },
               { '@type': 'Question', name: 'Can I add AI without upgrading?', acceptedAnswer: { '@type': 'Answer', text: ADDONS_BLURB } },
             ],
           }),
@@ -87,8 +87,8 @@ export default function PricingPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Pricing</span>
-          <h1>Software, seats, and listing photo pricing.</h1>
-          <p className="sub">Clay is free. Paid plans add CRM, e-sign on the PDF + shareable links, forms, and AI. Brokerage seats yearly. Listing media leads with <strong>Essentials from ${CORE_FROM}</strong> — HDR + licensed drone + floor plan (not a photo-only peer stack). Virtual visit ({VISIT_SHORT}) is {VISIT_PRICE_LABEL} by footprint — never packaged. {STATUS.os}</p>
+          <h1>Software and media pricing.</h1>
+          <p className="sub">Start free on software. Book listing media per shoot.</p>
         </div>
       </section>
 
@@ -96,11 +96,11 @@ export default function PricingPage() {
         <section className="block rvl" aria-label="Software plans">
           <div className="sec-head">
             <div>
-              <span className="over">Individuals</span>
-              <h2>Clay, Keystone, Marble, Diamond.</h2>
+              <span className="over">Agents</span>
+              <h2>Software plans.</h2>
             </div>
           </div>
-          <p className="tbl-cap">{SOFTWARE_BLURB} Monthly, or yearly — pay 10, get 12.</p>
+          <p className="tbl-cap">{SOFTWARE_BLURB}</p>
           <PlanCards />
         </section>
 
@@ -108,16 +108,16 @@ export default function PricingPage() {
           <div className="sec-head">
             <div>
               <span className="over">Add-ons</span>
-              <h2>AI without jumping plans.</h2>
+              <h2>AI, without upgrading.</h2>
             </div>
           </div>
-          <p className="tbl-cap">{ADDONS_BLURB} CAD / month.</p>
+          <p className="tbl-cap">{ADDONS_BLURB}</p>
           <div className="incl three">
             {ADDONS.map((a) => (
               <div key={a.id} className="c rvl">
                 <span className="ic">{a.price}</span>
                 <h4>{a.name}</h4>
-                <p>CAD / month. Included in Diamond.</p>
+                <p>Included in Diamond.</p>
               </div>
             ))}
           </div>
@@ -146,44 +146,44 @@ export default function PricingPage() {
         <section className="block rvl" aria-label="Media packages">
           <div className="sec-head">
             <div>
-              <span className="over">Packages</span>
-              <h2>Essentials through Full suite.</h2>
+              <span className="over">Listing media</span>
+              <h2>Media packages.</h2>
             </div>
           </div>
-          <p className="tbl-cap">Same ladder as /book. Small footprint “from” prices, CAD pre-tax — scales to XL. Essentials is the drone-included listing set vs photo-only peers. Floor plan on every standard shoot. Virtual staging is {STAGING_PRICE_LABEL} and is not included.</p>
+          <p className="tbl-cap">Prices are for smaller homes and scale with size.</p>
           <div className="incl">
             <div className="c rvl">
               <span className="ic">{`from $${CORE_FROM}`}</span>
               <h4>Essentials</h4>
-              <p>HDR + licensed drone + floor plan — the listing set. 24–48h target (not a guarantee).</p>
+              <p>HDR photos, licensed drone and a floor plan.</p>
             </div>
             <div className="c rvl">
               <span className="ic">{`from $${STORY_FROM}`}</span>
               <h4>Story</h4>
-              <p>Everything in Essentials plus cinematic reel. 24–48h target.</p>
+              <p>Essentials, plus a cinematic reel.</p>
             </div>
             <div className="c rvl">
               <span className="ic">{`from $${SHOWCASE_FROM}`}</span>
               <h4>Showcase</h4>
-              <p>Everything in Story plus {TOUR_NAME}. Most booked. 24–48h target.</p>
+              <p>Story, plus a virtual tour. Most booked.</p>
             </div>
             <div className="c rvl">
               <span className="ic">{`from $${FULL_FROM}`}</span>
               <h4>Full suite</h4>
-              <p>Everything in Showcase plus twilight exterior. Virtual staging is {STAGING_PRICE_LABEL}, not included. 24–48h target.</p>
+              <p>Showcase, plus a twilight exterior.</p>
             </div>
           </div>
-          <p className="tbl-cap" style={{ marginTop: 18 }}>Photos only — HDR only, no drone, no floor plan — {`from $${PHOTO_ONLY_FROM}`}. <Link href="/book" style={{ color: 'var(--brickDeep)' }}>Book a shoot →</Link></p>
+          <p className="tbl-cap" style={{ marginTop: 18 }}>Just need photos? HDR only, {`from $${PHOTO_ONLY_FROM}`}. <Link href="/book" style={{ color: 'var(--brickDeep)' }}>Book a shoot →</Link></p>
         </section>
 
         <section className="block rvl rates" aria-label="À la carte rates">
           <div className="sec-head">
             <div>
-              <span className="over">Listing media</span>
-              <h2>Priced by footprint.</h2>
+              <span className="over">À la carte</span>
+              <h2>Priced by home size.</h2>
             </div>
           </div>
-          <p className="tbl-cap">Starting points — your quote is tailored per booking</p>
+          <p className="tbl-cap">Your exact quote comes from the address.</p>
           <table className="tbl">
             <thead>
               <tr><th style={{ textAlign: 'left' }}>Service</th><th>Small</th><th>Mid</th><th>Large</th><th>XL</th></tr>
@@ -203,21 +203,20 @@ export default function PricingPage() {
           </table>
         </section>
 
-        <p className="note price-foot">Small ≈ ≤1,200 sq ft · Mid ≈ 1,200–2,500 · Large ≈ 2,500–4,000 · XL ≈ 4,000+. Travel: GTA assign-first is often $0; otherwise from the assigned photographer’s base — first 25 km free, then $0.75/km — shown before you pay. Not free Canada-wide. CAD, exclude HST (13%).</p>
+        <p className="note price-foot">Small: up to 1,200 sq ft. Mid: 1,200–2,500. Large: 2,500–4,000. XL: 4,000+.<br />Travel is priced from the assigned photographer’s location: first 25 km free, then $0.75/km. Prices in CAD, before HST.</p>
 
         <section className="block rvl">
-          <div className="sec-head"><div><span className="over">Pricing questions</span><h2>Before you book.</h2></div></div>
+          <div className="sec-head"><div><span className="over">FAQ</span><h2>Before you book.</h2></div></div>
           <div className="faq">
-            <div className="qa"><h4>Why Essentials from ${CORE_FROM}?</h4><p>Essentials is HDR + licensed drone + floor plan — the drone-included listing set. Photo-only peers often start lower and upsell drone later; compare that stack to Essentials, not to Photos only.</p></div>
-            <div className="qa"><h4>Are the stills MLS-safe?</h4><p>Real window views. We do not invent sky or dusk by default. Twilight is a real blue-hour exterior add-on; enhance options are on request — not a guaranteed blue-sky default.</p></div>
-            <div className="qa"><h4>How does travel work?</h4><p>GTA assign-first is often $0. Outside that: first 25 km from the assigned photographer&apos;s base free, then $0.75/km — shown on the quote before you pay. Not free Canada-wide.</p></div>
-            <div className="qa"><h4>How is footprint defined?</h4><p>Small / Mid / Large / XL map to the property&apos;s finished area and complexity. Not sure which tier? Pick &quot;advise me&quot; in booking and we&apos;ll size it from the address.</p></div>
-            <div className="qa"><h4>Virtual tour vs virtual visit?</h4><p>{TOUR_NAME} ({TOUR_SHORT}) is a {TOUR_RANGE} add-on by footprint. Showcase and Full suite include it. {VISIT_NAME} ({VISIT_SHORT}) is always a paid add-on, {VISIT_PRICE_LABEL.toLowerCase()}, never packaged.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. ${STAGING_PER_IMAGE} per photo, before tax, in checkout. Not included in Photos, Essentials, Story, Showcase, or Full suite.</p></div>
-            <div className="qa"><h4>Where do you shoot?</h4><p>Canada — {COVERAGE_LINE} Ask and we&apos;ll tell you if it&apos;s covered and quote travel if needed.</p></div>
-            <div className="qa"><h4>Is software live?</h4><p>Yes. Stripe tiers are live on OS. Media is live to book. Companion and GO are live on the web.</p></div>
+            <div className="qa"><h4>What&apos;s in Essentials?</h4><p>HDR photos, licensed drone and a floor plan in one shoot.</p></div>
+            <div className="qa"><h4>Are the photos MLS-safe?</h4><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
+            <div className="qa"><h4>How does travel work?</h4><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and you see it before you pay.</p></div>
+            <div className="qa"><h4>How is home size measured?</h4><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
+            <div className="qa"><h4>Virtual tour or virtual visit?</h4><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
+            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. Priced per photo and not part of any package.</p></div>
+            <div className="qa"><h4>Where do you shoot?</h4><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
             <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>
-            <div className="qa"><h4>Brokerage vs individual plans?</h4><p>Individuals pick Clay through Diamond. Brokerages buy seats yearly — Boutique, Growth, Enterprise, Franchise. Every brokerage seat is the full OS plus trust accounting, not a bundle of the individual plans.</p></div>
+            <div className="qa"><h4>Brokerage or individual plan?</h4><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, and every seat gets the full OS plus trust accounting.</p></div>
           </div>
         </section>
 
@@ -225,7 +224,6 @@ export default function PricingPage() {
         <div className="closer-simple-inner">
           <h2>Ready when the listing is.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">Canada-wide · Exact clock-time booking · 24–48h target</p>
         </div>
       </section>
       </div>
@@ -234,13 +232,12 @@ export default function PricingPage() {
         .trust{text-align:center;padding:8px 0 28px;}
         .rates{overflow-x:clip;}
         .tbl{width:100%;max-width:100%;border-collapse:collapse;}
-        .tbl-cap{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);padding:0 0 16px;}
+        .tbl-cap{text-align:left;font-size:15px;line-height:1.5;color:var(--inkSoft);max-width:560px;padding:0 0 18px;margin-top:-8px;}
         .tbl th,.tbl td{padding:16px 22px;text-align:right;border-bottom:1px solid var(--hair);}
         .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
           text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperSoft);}
         .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);font-size:15px;}
-        .tbl td.pkg .inc{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
-          letter-spacing:0.08em;text-transform:uppercase;color:var(--brickDeep);font-weight:500;margin-top:3px;}
+        .tbl td.pkg .inc{display:block;font-size:13px;color:var(--inkMute);font-weight:400;margin-top:3px;}
         .tbl td.num{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--inkSoft);}
         .tbl td.num.flat-val{text-align:center;}
         .tbl tr.flat td{background:var(--paperDeep);}

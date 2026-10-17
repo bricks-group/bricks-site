@@ -39,13 +39,13 @@ export const SOFTWARE_PLANS = [
     price: '$149 / mo',
     yearly: '$1,490 / yr · 2 months free',
     over: 'Individual',
-    value: '≈ $124.17 / mo billed yearly. AI suite sold as $63 / mo of add-ons, included.',
+    value: '≈ $124.17 / mo billed yearly. AI suite included.',
     points: ['Everything in Marble', 'AI suite included — same AI as add-ons on lower plans', 'AI Listing Copy', 'AI CMA', 'AI Document Drafter'],
   },
 ] as const
 
 export const SOFTWARE_BLURB =
-  'Stripe tiers are live on OS. Media is always à la carte. Modular add-ons attach without a plan jump.'
+  'Clay is free. Pay monthly, or yearly and get two months free.'
 
 /** Modular Stripe AI add-ons. Attach to paid-capable plans; included in Diamond. No credit pools. */
 export const ADDONS = [
@@ -55,7 +55,7 @@ export const ADDONS = [
 ] as const
 
 export const ADDONS_BLURB =
-  'Add-ons attach to any paid-capable plan; Diamond includes the AI suite.'
+  'Add AI to any paid plan. Diamond includes all three.'
 
 /**
  * Brokerage seat rates (CAD per seat per year, billed annually).
@@ -80,7 +80,7 @@ export const OFFICE_PLANS = [
 ] as const
 
 export const OFFICE_INCLUDES =
-  'Full system on every seat — CRM, transactions, e-sign on the PDF + shareable links, forms, BYO MLS — plus trust accounting. Agents do not pay individually.'
+  'Every seat gets the full OS, plus trust accounting. Agents don’t pay separately.'
 
 /** Plan matrix: same rows, same order on every card. `from` = first plan that includes it. */
 export const PLAN_ORDER = ['clay', 'keystone', 'marble', 'diamond'] as const
@@ -88,7 +88,7 @@ export const PLAN_FEATURES: readonly { label: string; from: (typeof PLAN_ORDER)[
   { label: 'Book media at rack rate', from: 'clay' },
   { label: 'Listing file, transactions, and BYO MLS', from: 'clay' },
   { label: 'CRM', from: 'keystone' },
-  { label: 'E-sign on the PDF + shareable links', from: 'keystone', note: 'Signature, initials, date and text fields placed on the page' },
+  { label: 'E-sign and shareable links', from: 'keystone', note: 'Place signature, initials, date and text fields on the PDF' },
   { label: 'Forms', from: 'marble' },
   { label: 'AI Listing Copy', from: 'diamond', addon: '$19 / mo' },
   { label: 'AI CMA', from: 'diamond', addon: '$25 / mo' },

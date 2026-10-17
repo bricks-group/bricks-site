@@ -8,7 +8,7 @@ import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'bricks for brokerages — the system for the whole shop',
-  description: 'The system for the brokerage: roster, pipeline, listing file, and trust accounting. Per-seat yearly. Media is live to book. OS is live in preview at app.brxs.ca.',
+  description: 'The system for the brokerage: roster, pipeline, listings and trust accounting. Priced per seat, billed yearly.',
   alternates: { canonical: '/brokerage' },
 }
 
@@ -24,7 +24,7 @@ export default function BrokeragePage() {
         <div className="wrap">
           <span className="badge">Brokerage</span>
           <h1>The system for the whole shop.</h1>
-          <p className="sub">Roster, pipeline, listing file, and trust accounting. Every seat gets the full OS — CRM, transactions, e-sign on the PDF + shareable links, forms, BYO MLS. {STATUS.os}</p>
+          <p className="sub">Roster, pipeline, listings and trust accounting in one system.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/contact">Talk to us</Link>
             <Link className="btn btn-sec" href="/pricing">Pricing</Link>
@@ -36,7 +36,7 @@ export default function BrokeragePage() {
         <div className="prod-copy">
           <span className="over">What you see</span>
           <h2>One OS. Brokerage-sized.</h2>
-          <p>Sign in as the brokerage and you get agents, deals, and media as a loop inside the listing file. A team or a solo agent sees fewer rooms. Same product, different account.</p>
+          <p>Agents, deals and media together, inside each listing. Teams and solo agents get a smaller view of the same product.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
           <div className="tray-stage">
@@ -53,7 +53,7 @@ export default function BrokeragePage() {
               <h2>Per seat, billed yearly.</h2>
             </div>
           </div>
-          <p className="lede-soft">{OFFICE_INCLUDES} Not a bundle of Clay / Keystone / Marble / Diamond.</p>
+          <p className="lede-soft">{OFFICE_INCLUDES}</p>
           <div className="incl">
             {OFFICE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">
@@ -69,14 +69,14 @@ export default function BrokeragePage() {
           <div className="sec-head">
             <div>
               <span className="over">In the OS</span>
-              <h2>The loop lives here.</h2>
+              <h2>What’s inside.</h2>
             </div>
           </div>
           <div className="faq">
-            <div className="qa"><h4>Roster</h4><p>Agents under the brokerage, seats, and who can book media.</p></div>
-            <div className="qa"><h4>Pipeline</h4><p>Deals and the listing file — not a jobs queue pretending to be the product.</p></div>
-            <div className="qa"><h4>Media inside the file</h4><p>Shoots attach to the listing. Book from the OS or Companion. Photographers shoot in GO (Dispatch).</p></div>
-            <div className="qa"><h4>Trust accounting</h4><p>Brokerage-only. Solo and team plans do not unlock it.</p></div>
+            <div className="qa"><h4>Roster</h4><p>Your agents, their seats, and who can book media.</p></div>
+            <div className="qa"><h4>Pipeline</h4><p>Every deal and listing in one view.</p></div>
+            <div className="qa"><h4>Media on the listing</h4><p>Shoots attach to the listing. Book from OS or Companion.</p></div>
+            <div className="qa"><h4>Trust accounting</h4><p>For brokerages only. Not included in agent or team plans.</p></div>
           </div>
         </section>
 
@@ -84,7 +84,7 @@ export default function BrokeragePage() {
           <div className="book">
             <span className="over">Brokerage</span>
             <h2>See the shop in one OS.</h2>
-            <p className="lead">Book listing media today. Talk to us about seats for the shop.</p>
+            <p className="lead">Book a shoot today, or talk to us about seats.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>

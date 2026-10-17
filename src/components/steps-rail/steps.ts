@@ -8,7 +8,7 @@ import { CORE_FROM } from '@/lib/pricing'
  */
 export const STEPS_TITLE = 'Book a shoot in three steps.'
 export const STEPS_LEDE =
-  'Companion is the agent app. Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.'
+  'Book from Companion or right here. Finished media lands back on the listing.'
 
 export const STEPS = [
   {
@@ -16,7 +16,7 @@ export const STEPS = [
     n: '01',
     label: 'Property',
     title: 'Drop the address.',
-    body: 'The quote is live from the address — tailored by footprint and travel.',
+    body: 'Your quote updates live, based on home size and travel.',
     flow: 1,
   },
   {
@@ -24,15 +24,15 @@ export const STEPS = [
     n: '02',
     label: 'Package',
     title: 'Pick the services.',
-    body: `Essentials from $${CORE_FROM} is HDR + licensed drone + floor plan. Media is always à la carte.`,
+    body: `Start with Essentials, from $${CORE_FROM}: HDR photos, drone and a floor plan.`,
     flow: 2,
   },
   {
     key: 'time',
     n: '03',
     label: 'Time',
-    title: 'Lock an exact clock time.',
-    body: 'Exact clock time — not a window. Assignee and travel are final on the quote; pay locks it.',
+    title: 'Pick an exact time.',
+    body: 'A real time, not a window. Paying locks it in.',
     flow: 3,
   },
 ] as const
