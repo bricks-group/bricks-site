@@ -6,7 +6,7 @@ import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
-import FlowStage from '@/components/FlowStage'
+import StepsRail from '@/components/steps-rail/StepsRail'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import IntegrationsBand from '@/components/IntegrationsBand'
 import {
@@ -216,18 +216,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="cap-band flow-band rvl" aria-label="Companion booking">
-        <div className="cap-inner">
-          <div className="cap-copy">
-            <h2>Book a shoot in three steps.</h2>
-            <p className="cap-lede">Companion is the agent app. Property, package, exact clock time — pay locks it, the photographer gets GO, media lands back on the listing file.</p>
-            <Link className="learn-link" href="/book">Start a booking →</Link>
-          </div>
-          <div className="cap-stage tray tray-book flow-stage">
-            <FlowStage />
-          </div>
-        </div>
-      </section>
+      <StepsRail />
 
       <section className="work-sec rvl" aria-label="Selected work">
         <div className="wrap">
