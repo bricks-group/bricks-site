@@ -15,6 +15,10 @@
 .svc-tile:hover{background:var(--brickTint);}
 .svc-tile:hover .svc-vis img{transform:scale(1.04);}
 .svc-tile:hover .svc-ar{transform:translateX(3px);}
+.svc-art{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--ink);stroke-width:1.4;padding:14%;box-sizing:border-box;}
+.svc-art rect{fill:var(--paper);}
+.svc-art .svc-hub{fill:var(--brick);stroke:var(--brick);}
+.svc-art .svc-door{stroke:var(--brick);}
 
 /* The Bricks mark assembling: the logo's own three bricks set in one by one (BricksLoader "assemble" motion, played once). */
 .svc-assemble{display:block;width:104px;height:104px;margin:-12px 0 auto -12px;overflow:visible;}
