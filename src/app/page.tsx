@@ -7,7 +7,9 @@ import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
 import ServicesGrid from '@/components/services/ServicesGrid'
 import IntegrationsBand from '@/components/IntegrationsBand'
-import PhoneScreen from '@/components/PhoneScreen'
+import PhoneFrame from '@/components/phone/PhoneFrame'
+import BookingFlow from '@/components/phone/BookingFlow'
+import JobsFlow from '@/components/phone/JobsFlow'
 import './home-v10.css'
 import './home-v3.css'
 import {
@@ -204,9 +206,7 @@ export default function Home() {
             <Link className="hf-link" href="/media">See the media →</Link>
           </div>
           <div className="hf-frame tray tray-book tray-phone">
-            <div className="phone-stage">
-              <PhoneScreen name="book" alt="Bricks booking app: next shoot, Book a shoot button and your listings" />
-            </div>
+            <PhoneFrame label="Bricks booking app, sample data: listing, package, time slot, then Booked"><BookingFlow /></PhoneFrame>
           </div>
         </section>
 
@@ -233,9 +233,7 @@ export default function Home() {
             <Link className="hf-link" href="/photographers">For photographers →</Link>
           </div>
           <div className="hf-frame tray tray-disp tray-phone">
-            <div className="phone-stage">
-              <PhoneScreen name="disp" alt="Bricks photographer app: next job, navigate and pre-shoot checklist" />
-            </div>
+            <PhoneFrame label="Bricks photographer app, sample data: new jobs, one accepted, navigating, uploading, delivered"><JobsFlow /></PhoneFrame>
           </div>
         </section>
       </div>

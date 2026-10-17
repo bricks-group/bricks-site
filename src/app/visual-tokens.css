@@ -79,3 +79,10 @@ html[data-theme="dark"] .scr-dark{display:block;}
 html[data-theme="dark"] .scr-light{display:none;}
 .scr-desk{position:absolute;inset:0;overflow:hidden;background:var(--vs-surface);box-shadow:0 0 0 1px var(--vs-rule);}
 .scr-phone{position:absolute;inset:0;overflow:hidden;}
+
+/* PhoneFrame placement in phone trays: rises from the bottom edge, clipped by the tray */
+.tray-phone{--pf-w:min(300px,62%);--pf-top:6%;}
+.prod-row .tray-phone{--pf-w:min(290px,66%);--pf-top:6%;}
+@media (min-width:1001px){.hf .tray-phone{--pf-w:min(272px,60%);--pf-top:4.5%;}}
+/* /platform fixed-height trays (520px): size the phone so the panel clips it, as on home */
+.tray.tray-phone:not(.hf .tray-phone){--pf-w:min(290px,80%);--pf-top:6%;}

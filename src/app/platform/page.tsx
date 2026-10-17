@@ -3,7 +3,9 @@ import Link from 'next/link'
 import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
-import PhoneScreen from '@/components/PhoneScreen'
+import PhoneFrame from '@/components/phone/PhoneFrame'
+import BookingFlow from '@/components/phone/BookingFlow'
+import JobsFlow from '@/components/phone/JobsFlow'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
 import { OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
@@ -68,17 +70,13 @@ export default function PlatformPage() {
           <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
         <div className="tray tray-book tray-phone">
-          <div className="phone-stage">
-            <PhoneScreen name="book" label="Companion" alt="Companion booking app: next shoot, Book a shoot button and your listings" />
-          </div>
+          <PhoneFrame label="Bricks booking app, sample data: listing, package, time slot, then Booked"><BookingFlow /></PhoneFrame>
         </div>
       </section>
 
       <section className="prod-row prod-row-flip rvl" aria-label="Photographer app — mobile">
         <div className="tray tray-disp tray-phone">
-          <div className="phone-stage">
-            <PhoneScreen name="disp" alt="Bricks photographer app: next job, navigate and pre-shoot checklist" />
-          </div>
+          <PhoneFrame label="Bricks photographer app, sample data: new jobs, one accepted, navigating, uploading, delivered"><JobsFlow /></PhoneFrame>
         </div>
         <div className="prod-copy">
           <span className="over">Mobile</span>
