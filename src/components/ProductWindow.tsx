@@ -177,7 +177,7 @@ export default function ProductWindow({
 
   return (
     <div className={`pwin${variant === 'phone' ? ' pwin-phone' : ''}${hideChrome ? ' pwin-bare' : ''}`}>
-      {/* Cursor-style Mac chrome: greyed traffic lights + app title */}
+      {/* Minimal Mac chrome: traffic lights only, no window title text (title still labels the iframe for a11y) */}
       {!hideChrome ? (
         <div
           className={`pwin-bar${onChromeActivate ? ' pwin-bar-raise' : ''}`}
@@ -200,7 +200,6 @@ export default function ProductWindow({
           <div className="pwin-dots" aria-hidden="true">
             <i /><i /><i />
           </div>
-          <span className="pwin-title">{title}</span>
         </div>
       ) : null}
       <ScaledIframe

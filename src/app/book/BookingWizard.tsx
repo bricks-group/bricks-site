@@ -209,7 +209,7 @@ export default function BookingWizard() {
     const sessionId = new URLSearchParams(window.location.search).get('session_id') || ''
     if (!sessionId) {
       // Edge may be stale without session_id — webhook (or manual nudge) is the only path.
-      setDoneMsg('Payment confirmed. Your shoot is on Bricks GO — finalizing dispatch.')
+      setDoneMsg('Payment confirmed. Your shoot is booked — finalizing dispatch.')
       return
     }
 
@@ -227,8 +227,8 @@ export default function BookingWizard() {
           const agent = (j as { agent_user_id?: string | null }).agent_user_id
           setDoneMsg(
             agent
-              ? 'Payment confirmed. Your shoot is on Bricks GO — and the listing is in OS at app.brxs.ca.'
-              : 'Payment confirmed. Your shoot is on Bricks GO',
+              ? 'Payment confirmed. Your shoot is booked, and the listing is in Bricks at app.brxs.ca.'
+              : 'Payment confirmed. Your shoot is booked.',
           )
           return
         }
@@ -569,8 +569,8 @@ export default function BookingWizard() {
             <button type="button" onClick={() => fetchQuote(sqftInput ? parseInt(sqftInput, 10) : null)}>Re-quote</button>
           </div>
         )}
-        {visit && <div className="qnote">{VISIT_NAME} is in this total ({q.footprint_label}{q.sqft ? ` · ${q.sqft.toLocaleString()} sqft` : ''}). Never included in the package.</div>}
-        {q.floor_plan_only && <div className="qnote">Floor plan only — GO opens floor-plan capture mode. No HDR stills / no drone on this booking.</div>}
+        {visit && <div className="qnote">{VISIT_NAME} is in this total ({q.footprint_label}{q.sqft ? ` · ${q.sqft.toLocaleString()} sqft` : ''}).</div>}
+        {q.floor_plan_only && <div className="qnote">Floor plan only — the photographer's app opens floor-plan capture mode. No HDR stills / no drone on this booking.</div>}
         {q.floor_plan_included === false && !q.floor_plan_only && <div className="qnote">Photos only: no floor plan drafted for this booking.</div>}
         {q.sqft_estimated && <div className="qnote">⚠ Sqft estimated from footprint — confirm above for an exact quote. Final invoice reflects actual scope.</div>}
       </>
@@ -599,7 +599,7 @@ export default function BookingWizard() {
           <form onSubmit={(e) => e.preventDefault()}>
             <div className={`panel${step === 0 ? ' active' : ''}`}>
               <h2>What are we shooting?</h2>
-              <p className="hint">Tell us about the listing and who&apos;s booking. Start typing the address for suggestions.</p>
+              <p className="hint">Start typing the address.</p>
               <div className="grid2">
                 <div className="field"><label>Listing agent name <span className="req">*</span></label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Agent" /></div>
                 <div className="field"><label>Brokerage <span className="req">*</span></label><input value={brokerage} onChange={(e) => setBrokerage(e.target.value)} placeholder="e.g. Your brokerage" /></div>
@@ -646,7 +646,7 @@ export default function BookingWizard() {
                   <option>Condo</option><option>Semi / Town</option><option>Detached</option>
                   <option>Multiplex</option><option>Commercial</option><option>Estate</option>
                 </select>
-                <span className="hint-sm">Optional — helps us size the shoot. We estimate from the footprint either way.</span>
+                <span className="hint-sm">Optional. Helps us size the shoot.</span>
               </div>
               <div className="err">{errs[0]}</div>
               <div className="nav-btns"><span></span><button type="button" className="btn btn-brick" onClick={() => goNext(0)}>Next →</button></div>
@@ -654,7 +654,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">Lead with <strong>Essentials</strong> (from ${CORE_FROM}) — HDR + licensed drone + floor plan, not a photo-only peer stack. Or Floor plan only (${FLOOR_PLAN_ONLY_RATE} flat), Photos only (HDR alone), or build up to Story / Showcase / Full suite. {TOUR_NAME} is included in Showcase and Full suite. {VISIT_NAME} ({VISIT_PRICE_LABEL}) and virtual staging ({STAGING_PRICE_LABEL}) are paid add-ons — never included. See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full pricing</Link>.</p>
+              <p className="hint">Pick a package, then add extras. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>Full pricing</Link></p>
               <div className="choices">
                 {Object.keys(PKG_DEFS).map((k) => (
                   <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
@@ -673,7 +673,7 @@ export default function BookingWizard() {
                     <div className="field" style={{ margin: '4px 0 14px' }}>
                       <label>Sqft (sets the footprint band)</label>
                       <input type="number" min={1} value={sqftInput} onChange={(e) => setSqftInput(e.target.value)} placeholder={quote?.sqft ? String(quote.sqft) : 'e.g. 2200'} />
-                      <span className="hint-sm">{FOOTPRINT_BANDS}. Same band picker as the rest of the menu — higher of sqft and property type. Charged in this checkout.</span>
+                      <span className="hint-sm">{FOOTPRINT_BANDS}.</span>
                     </div>
                   )}
                   <label className="toggle"><input type="checkbox" checked={twilight} onChange={(e) => setTwilight(e.target.checked)} /> Twilight photography (+{TWILIGHT_RANGE}, by footprint)</label>
@@ -706,7 +706,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 2 ? ' active' : ''}`}>
               <h2>When?</h2>
-              <p className="hint">Pick a date and a clock time. That time is locked when you pay and sent to the photographer.</p>
+              <p className="hint">Pick a date and an exact time.</p>
               <div className="field">
                 <label>Shoot date <span className="req">*</span></label>
 <BookCalendar
@@ -741,9 +741,7 @@ export default function BookingWizard() {
                 )}
                 {!date && <div className="slotmsg">Pick a date above to see clock times.</div>}
                 <p className="hint-sm" style={{ marginTop: 10 }}>
-                  {slotsLive
-                    ? `Canada — times are property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}. Booked times that day are hidden.`
-                    : `Canada — times are property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}. The time you pick is the time we send to the photographer.`}
+                  {`Property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}.${slotsLive ? ' Booked times are hidden.' : ''}`}
                 </p>
               </div>
               <div className="field"><label>Access notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Lockbox code, occupied, deadline…" /></div>
@@ -753,9 +751,9 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
-              <p className="hint">Confirm details, then pay to lock this exact clock time. Full amount (incl. HST) charged now via Stripe — not pay-on-delivery. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media targets 24–48 hours after the shoot{rush ? ' — rush is on for this booking' : ''} (target, not a guarantee). Files land on your listing file, client share, and property microsite — not a WeTransfer chase.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>Assignee and travel on the quote above are final before you pay — GTA assign-first is often $0; outside that, first 25 km from the assigned photographer&apos;s base are free, then $0.75/km.</p>
+              <p className="hint">Pay now to lock this time. Full amount, incl. HST, charged via Stripe.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media in 24–48 hours{rush ? ' (rush on)' : ''}. A target, not a guarantee.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Photographer and travel are final before you pay.</p>
               <div className="review">
                 {[
                   ['Agent', name.trim() || '—'], ['Brokerage', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
@@ -781,9 +779,8 @@ export default function BookingWizard() {
                 More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. Full schedule in the <Link href="/terms#refunds" style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
               </p>
               <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 10 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>Safari / iOS → Apple Pay. Chrome / Android → Google Pay. Link where Stripe offers it. Card always available.</p>
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
-              <p className="hint-sm" style={{ margin: '10px 0 0' }}>Have a team or brokerage launch code (TEAMLAUNCH / BRICKSLAUNCH)? Enter it on the Stripe checkout page.</p>
+              <p className="hint-sm" style={{ margin: '10px 0 0' }}>Have a launch code? Enter it at checkout.</p>
             </div>
           </form>
         )}
@@ -797,7 +794,7 @@ export default function BookingWizard() {
               {scheduleCtaVisible && (
                 <div style={{ display: 'block', marginTop: 18, padding: 18, border: '1px solid var(--hairStrong)', borderRadius: 2 }}>
                   <h3 style={{ margin: '0 0 6px', fontSize: 17, fontWeight: 500, color: 'var(--ink)' }}>Shoot booked ✓</h3>
-                  <p style={{ margin: '0 0 14px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and on GO for the photographer. A confirmation email is on its way.</p>
+                  <p style={{ margin: '0 0 14px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and sent to the photographer. A confirmation email is on its way.</p>
                 </div>
               )}
               <p style={{ marginTop: 14 }}><Link href="/" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>← Back to overview</Link></p>
@@ -813,17 +810,17 @@ export default function BookingWizard() {
             <p>Add-ons, scheduling, and what happens if plans change.</p>
           </div>
           <div className="faq">
-            <div className="qa"><h4>Why Essentials from ${CORE_FROM}?</h4><p>Essentials is the drone-included listing set: HDR interiors + exteriors, licensed drone, and a branded floor plan. Photo-only peers often start lower and add drone later — compare apples to apples.</p></div>
-            <div className="qa"><h4>Are the stills MLS-safe?</h4><p>Yes — real window views. We do not invent sky or dusk by default. Buy twilight for a real blue-hour exterior, or ask about enhance options after the shoot.</p></div>
-            <div className="qa"><h4>How does travel work?</h4><p>GTA assign-first is often $0. Outside that, travel is from the assigned photographer&apos;s base — first 25 km free, then $0.75/km — shown on your quote before you pay. Not free Canada-wide.</p></div>
-            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>Never. {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Check it in Step 2 — it is in the Stripe total, not bundled into a package.</p></div>
-            <div className="qa"><h4>How fast is delivery?</h4><p>Edited media targets 24–48 hours after the shoot — a target, not a guarantee. Rush (+${RUSH_FLAT}) aims faster than that window. You get a client media link and a property microsite on the listing file — MLS / web / print zip presets included.</p></div>
-            <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It&apos;s an optional add-on (+{TWILIGHT_RANGE} by footprint) on any shoot; pick it in Step 2.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to empty or dated interior photos in post — no physical staging. {STAGING_PRICE_LABEL}, before tax. Pick how many photos in Step 2. It is not included in any package.</p></div>
+            <div className="qa"><h4>What&apos;s in Essentials?</h4><p>HDR interiors and exteriors, licensed drone and a branded floor plan, from ${CORE_FROM}.</p></div>
+            <div className="qa"><h4>Are the photos MLS-safe?</h4><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
+            <div className="qa"><h4>How does travel work?</h4><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and it&apos;s on your quote before you pay.</p></div>
+            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>No. It&apos;s an add-on, {VISIT_PRICE_LABEL.toLowerCase()}. Pick it in Step 2.</p></div>
+            <div className="qa"><h4>How fast is delivery?</h4><p>We aim to deliver edited media 24–48 hours after the shoot. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
+            <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photos at blue hour, with the windows lit and colour still in the sky. Add it to any shoot in Step 2.</p></div>
+            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
             <div className="qa"><h4>What if I need to cancel?</h4><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
-            <div className="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
-            <div className="qa"><h4>Can I pay with Apple Pay or Google Pay?</h4><p>Yes. Pay &amp; book opens Stripe Checkout: Apple Pay in Safari/iOS, Google Pay in Chrome/Android, Link where Stripe shows it, plus cards. We don&apos;t take PayPal, Klarna, Afterpay, or Interac. Virtual visit and virtual staging, if selected, are in this total.</p></div>
+            <div className="qa"><h4>How do refunds work?</h4><p>Refunds go back to your original payment method, typically within 5–10 business days.</p></div>
+            <div className="qa"><h4>Can I pay with Apple Pay or Google Pay?</h4><p>Yes, plus cards. Apple Pay works in Safari and on iOS, Google Pay in Chrome and on Android. We don&apos;t take PayPal, Klarna, Afterpay or Interac.</p></div>
           </div>
         </section>
       </div>

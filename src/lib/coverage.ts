@@ -163,8 +163,8 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     note:
       ' — Toronto through the Golden Horseshoe, plus Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie, and nearby. Travel is from the assigned photographer’s base (first 25 km free, then per km). Address on /book confirms the quote.',
     detail: {
-      headline: 'Listing photos across the Golden Horseshoe',
-      desc: 'GTA and the Greater Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, Barrie corridor, and nearby Ontario. Travel from the assigned photographer’s base (first 25 km free). Licensed Advanced RPAS where airspace requires it.',
+      headline: 'Our home base',
+      desc: 'The GTA and Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, the Barrie corridor and nearby Ontario.',
     },
   },
   {
@@ -177,8 +177,8 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     status: 'confirm',
     note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
     detail: {
-      headline: 'Coverage on confirm',
-      desc: 'National Capital inventory from downtown condos to suburban detached. Confirm photographer coverage before you pay.',
+      headline: 'Confirmed at booking',
+      desc: 'Downtown condos to suburban homes. We confirm a photographer before you pay.',
     },
   },
   {
@@ -191,8 +191,8 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     status: 'confirm',
     note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
     detail: {
-      headline: 'Alberta via the Bricks network',
-      desc: 'Same standard: HDR, optional licensed drone, floor plan on every standard shoot. Confirm local contractor coverage at booking.',
+      headline: 'Confirmed at booking',
+      desc: 'HDR photos, optional drone and a floor plan on every standard shoot. We confirm a local photographer when you book.',
     },
   },
   {
@@ -215,8 +215,8 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     status: 'confirm',
     note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
     detail: {
-      headline: 'BC coverage on confirm',
-      desc: 'Condo-dense cores and North Shore detached need disciplined HDR and careful aerial planning. We confirm a local photographer first.',
+      headline: 'Confirmed at booking',
+      desc: 'Dense condo cores and North Shore homes. We confirm a local photographer first.',
     },
   },
 ]
@@ -278,7 +278,7 @@ export function coverageDetailCards() {
     }
     cards.push({
       name: hub.id === 'ggh' ? 'Greater Golden Horseshoe' : hub.name,
-      region: hub.status === 'base' ? 'Ontario · travel base Mississauga' : hub.region,
+      region: hub.status === 'base' ? 'Ontario' : hub.region,
       headline: hub.detail.headline,
       desc: hub.detail.desc,
     })

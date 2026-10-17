@@ -1,0 +1,88 @@
+/*
+ * Bricks visual system — tokens (first pass, 2026-10-17).
+ * Spec: /workspace/ship/visual-system/bricks-visual-tokens.md (copy kept in docs/visual-system.md).
+ * Industrial minimalism: black, off-white, graphite. ONE accent, reserved for state.
+ */
+:root{
+  /* Palette */
+  --vs-black:#14110E;      /* = --ink */
+  --vs-offwhite:#F4F1EB;   /* = --paper */
+  --vs-g-900:#24211E; --vs-g-800:#35322E; --vs-g-700:#4A4642; --vs-g-600:#615D57;
+  --vs-g-500:#7A756E; --vs-g-400:#97928A; --vs-g-300:#B7B2AA; --vs-g-200:#D6D2CA;
+  --vs-g-100:#E6E2DA; --vs-g-50:#EEEAE3;
+  --vs-accent:#D2542B;     /* state only: booked, in flight, delivered */
+  --vs-accent-ink:#A8401F; /* accent text on off-white (5.45:1) */
+
+  /* Semantic */
+  --vs-bg:var(--vs-offwhite); --vs-fg:var(--vs-black);
+  --vs-fg-2:var(--vs-g-700); --vs-fg-3:var(--vs-g-600);   /* g-500 is 4.05:1, too low for small text */
+  --vs-surface:var(--vs-g-50); --vs-surface-2:var(--vs-g-100);
+  --vs-rule:var(--vs-g-200); --vs-rule-strong:var(--vs-g-300);
+  --vs-state-live:var(--vs-accent); --vs-state-idle:var(--vs-g-400); --vs-state-hold:var(--vs-g-700);
+
+  /* Type */
+  --vs-sans:'General Sans',system-ui,sans-serif;          /* quiet grotesque: headings + copy */
+  --vs-mono:'JetBrains Mono',ui-monospace,monospace;       /* figures, IDs, timestamps, status only */
+  --vs-fs-h2:clamp(24px,2.4vw,34px); --vs-fs-h3:18px;
+  --vs-fs-body:16px; --vs-fs-small:13.5px; --vs-fs-figure:13px; --vs-fs-micro:11px;
+  --vs-track-display:-.03em; --vs-track-h:-.02em;
+
+  /* Fluid type: linear from 360px to 1440px viewport, clamped at both ends */
+  --vs-fs-display:clamp(28px, 1.296vw + 23.33px, 42px);   /* hero H1 28→42 */
+  --vs-fs-section:clamp(22px, 1.111vw + 18px, 34px);      /* section heads, proof quote 22→34 */
+  --vs-fs-title:clamp(20px, .185vw + 19.33px, 22px);      /* row and card titles 20→22 */
+  --vs-fs-body:clamp(15px, .093vw + 14.67px, 16px);       /* body 15→16 */
+  --vs-fs-small:clamp(13px, .093vw + 12.67px, 14px);      /* captions, links, meta 13→14 */
+  --vs-fs-cta:clamp(36px, 3.704vw + 22.67px, 76px);       /* final CTA 36→76 */
+  /* Fluid space */
+  --vs-sec:clamp(56px, 5.185vw + 37.33px, 112px);         /* gap between homepage sections */
+  --vs-pad:clamp(16px, 2.222vw + 8px, 40px);              /* panel padding */
+  --vs-gap:clamp(8px, .741vw + 5.33px, 16px);             /* gap between panels/cards */
+
+  /* Space: 4px base, 24px layout grid */
+  --vs-1:4px; --vs-2:8px; --vs-3:12px; --vs-4:16px; --vs-6:24px; --vs-8:32px; --vs-12:48px; --vs-16:64px; --vs-24:96px;
+  --vs-grid:24px;
+
+  /* Lines */
+  --vs-hair:1px solid var(--vs-rule);
+  --vs-hair-strong:1px solid var(--vs-rule-strong);
+  --vs-stroke:1.5px;       /* icons + technical drawings */
+  --vs-radius:0;           /* square edges; 2px max on inputs */
+
+  /* Fallback surface behind product windows (the original painted trays from globals.css sit on top) */
+  --vs-tray:var(--vs-g-100);
+}
+html[data-theme="dark"]{
+  --vs-bg:#141210; --vs-fg:#F4F1EB; --vs-fg-2:#C9C4BB; --vs-fg-3:#8F8A82;
+  --vs-surface:#1C1A17; --vs-surface-2:#23201C; --vs-rule:#F4F1EB1F; --vs-rule-strong:#F4F1EB33;
+  --vs-tray:#1C1A17; --vs-accent-ink:#E07A55;
+}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){
+  --vs-bg:#141210; --vs-fg:#F4F1EB; --vs-fg-2:#C9C4BB; --vs-fg-3:#8F8A82;
+  --vs-surface:#1C1A17; --vs-surface-2:#23201C; --vs-rule:#F4F1EB1F; --vs-rule-strong:#F4F1EB33;
+  --vs-tray:#1C1A17; --vs-accent-ink:#E07A55;
+}}
+
+/* Utilities */
+.vs-fig{font-family:var(--vs-mono);font-size:var(--vs-fs-figure);font-variant-numeric:tabular-nums;letter-spacing:0;}
+.bx-icon{display:inline-block;flex:none;vertical-align:middle;color:currentColor;}
+
+/* Product windows sit on a flat graphite surface — no painted backdrops */
+
+.tray{border-radius:0;}
+
+/* Static product-screen captures (ScreenStatic): theme-matched, always painted */
+.scr-static{display:block;width:100%;height:100%;}
+.scr-static img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top;}
+.scr-dark{display:none;}
+html[data-theme="dark"] .scr-dark{display:block;}
+html[data-theme="dark"] .scr-light{display:none;}
+.scr-desk{position:absolute;inset:0;overflow:hidden;background:var(--vs-surface);box-shadow:0 0 0 1px var(--vs-rule);}
+.scr-phone{position:absolute;inset:0;overflow:hidden;}
+
+/* PhoneFrame placement in phone trays: rises from the bottom edge, clipped by the tray */
+.tray-phone{--pf-w:min(300px,62%);--pf-top:6%;}
+.prod-row .tray-phone{--pf-w:min(290px,66%);--pf-top:6%;}
+@media (min-width:1001px){.hf .tray-phone{--pf-w:min(272px,60%);--pf-top:4.5%;}}
+/* /platform fixed-height trays (520px): size the phone so the panel clips it, as on home */
+.tray.tray-phone:not(.hf .tray-phone){--pf-w:min(290px,80%);--pf-top:6%;}

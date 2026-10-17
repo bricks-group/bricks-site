@@ -5,21 +5,21 @@ import { FOUNDER_NAME, FOUNDER_PERSON, STATUS, TOUR_SHORT, VISIT_SHORT } from '@
 import { ORG_REF, SITE_ID } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'About Bricks — Canadian Real Estate Photography & OS',
+  title: 'About Bricks — Canadian Real Estate Photography & Software',
   description:
-    'Bricks Group builds the system for Canadian real estate. Founder experience: 14,000+ properties shot (CoStar regional creative lead lineage). HDR listing photos, MLS delivery, licensed drone, floor plans, optional virtual tour and virtual visit. OS live in preview at app.brxs.ca.',
+    'Bricks Group builds the system for Canadian real estate. Founder experience: 14,000+ properties shot (CoStar regional creative lead lineage). HDR listing photos, MLS delivery, licensed drone, floor plans, optional virtual tour and virtual visit. The Bricks app is live in preview at app.brxs.ca.',
   alternates: { canonical: '/about' },
   openGraph: {
     type: 'website',
-    title: 'About Bricks — Real Estate Photography & OS',
+    title: 'About Bricks — Real Estate Photography & Software',
     description: 'Media first, system destination. 14,000+ properties in founder experience. Founded by Raphael Merchant.',
     images: ['/media/raphael-merchant-640.jpg'],
     url: 'https://www.brxs.ca/about',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About Bricks — Real Estate Photography & OS',
-    description: 'Canadian listing media and real estate OS. Founded by Raphael Merchant.',
+    title: 'About Bricks — Real Estate Photography & Software',
+    description: 'Canadian listing media and real estate software. Founded by Raphael Merchant.',
     images: ['/media/raphael-merchant-640.jpg'],
   },
 }
@@ -61,7 +61,7 @@ export default function AboutPage() {
         <div className="wrap">
           <div className="brand-story rvl">
             <p>Bricks is the system for the deal — property to listing to book to dispatch to media to MLS to close. We started with the shoot because that is the first thing a listing needs, and the last thing that should live in a separate tool.</p>
-            <p>Four people on the deal. Brokerage, team, agent, photographer. Each gets a surface. System for the shop and the pipeline. Companion for the agent ordering media. GO for the photographer in the field.</p>
+            <p>Four people on the deal. Brokerage, team, agent, photographer. Each gets a surface. System for the shop and the pipeline. Companion for the agent ordering media. The Bricks app for the photographer in the field.</p>
             <p>Media is live to book. HDR, licensed drone, floor plan, plus optional virtual tour ({TOUR_SHORT}) and virtual visit ({VISIT_SHORT}). {STATUS.os}</p>
           </div>
 

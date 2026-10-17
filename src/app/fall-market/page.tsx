@@ -24,11 +24,11 @@ export const metadata: Metadata = {
 }
 
 const faqs = [
-  { q: 'Is "priority booking" a discount?', a: 'No — pricing is the same as always (see the pricing page). Priority booking reserves your shoot date ahead of the fall demand spike so it doesn’t get pushed by later requests.' },
+  { q: 'Is booking early a discount?', a: 'No. Prices stay the same. Booking early holds your shoot date before the fall rush.' },
   { q: 'How far out should I book?', a: 'As soon as you have a listing date in mind. September and early October fill fastest.' },
-  { q: "What's included?", a: `HDR photo, licensed drone, and a floor plan on every standard shoot. Cinematic reel and ${TOUR_NAME.toLowerCase()} are optional add-ons. ${VISIT_NAME} is always a paid add-on, ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}) and never packaged. Build your shoot à la carte on the pricing page.` },
-  { q: 'Where do you shoot?', a: `Canada — ${COVERAGE_LINE} Ask and we'll tell you if it's covered.` },
-  { q: 'When do I get my media?', a: 'Edited MLS-ready media targets 24–48 hours, fall included — targets, not guarantees.' },
+  { q: "What's included?", a: 'HDR photos, licensed drone and a floor plan on every standard shoot. Reels, virtual tours and virtual visits are add-ons.' },
+  { q: 'Where do you shoot?', a: 'Across Canada. Ask and we’ll confirm your area.' },
+  { q: 'When do I get my media?', a: 'We aim to deliver edited, MLS-ready media in 24–48 hours, fall included.' },
 ]
 
 export default function FallMarket() {
@@ -49,7 +49,7 @@ export default function FallMarket() {
         <div className="wrap">
           <span className="badge">Fall listing season</span>
           <h1>The fall market moves fast.</h1>
-          <p className="sub">Reserve a September slot before the rush. HDR, licensed drone, floor plan — 24–48h target.</p>
+          <p className="sub">Book early and hold your shoot date.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Reserve a fall slot</Link>
             <Link className="btn btn-sec" href="/pricing">View pricing</Link>
@@ -60,12 +60,12 @@ export default function FallMarket() {
       <div className="wrap">
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Why this season is different</span><h2>Everyone lists in the same six weeks.</h2></div>
+            <div><span className="over">Why book early</span><h2>Everyone lists at once.</h2></div>
           </div>
           <div className="reasons">
-            <div className="r"><span className="ic">01</span><h4>Compressed timing</h4><p>Fall listings cluster right after Labour Day through late October — most agents are booking media in the same narrow window.</p></div>
-            <div className="r"><span className="ic">02</span><h4>Weekend open houses</h4><p>Miss your shoot slot by a few days and you miss the weekend window your listing needed to launch into.</p></div>
-            <div className="r"><span className="ic">03</span><h4>Finite capacity</h4><p>One shooter, one standard, booked slots — capacity doesn&apos;t expand just because demand spikes. Earlier bookings hold their date.</p></div>
+            <div className="r"><span className="ic">01</span><h4>Compressed timing</h4><p>Fall listings cluster between Labour Day and late October.</p></div>
+            <div className="r"><span className="ic">02</span><h4>Weekend open houses</h4><p>Miss your shoot by a few days and you can miss the weekend your listing needed.</p></div>
+            <div className="r"><span className="ic">03</span><h4>Finite capacity</h4><p>Capacity doesn&apos;t grow when demand does. Earlier bookings keep their date.</p></div>
           </div>
         </section>
       </div>
@@ -73,15 +73,15 @@ export default function FallMarket() {
       <div className="wrap">
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Every shoot, every season</span><h2>Same standard, no rush pricing to book early.</h2></div>
+            <div><span className="over">Every shoot</span><h2>Same standard, same prices.</h2></div>
           </div>
           <div className="incl">
-            <div className="c"><span className="ic">01</span><h4>HDR photography</h4><p>Architectural interiors &amp; exteriors, bracketed and edited for MLS.</p></div>
-            <div className="c"><span className="ic">02</span><h4>Licensed drone</h4><p>Advanced RPAS-certified aerial of the lot, surroundings, and roofline.</p></div>
+            <div className="c"><span className="ic">01</span><h4>HDR photography</h4><p>Interiors and exteriors, edited for MLS.</p></div>
+            <div className="c"><span className="ic">02</span><h4>Licensed drone</h4><p>Aerial photos of the lot, roofline and surroundings.</p></div>
             <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
-            <div className="c"><span className="ic">04</span><h4>24–48h target</h4><p>Edited media in one hosted portal, branded and MLS-ready.</p></div>
+            <div className="c"><span className="ic">04</span><h4>Fast delivery</h4><p>We aim to deliver in 24–48 hours, in one branded portal.</p></div>
           </div>
-          <p className="note">Twilight exteriors (+{TWILIGHT_RANGE}) and cinematic reels (+{REEL_RANGE}) are popular fall add-ons for listings competing on curb appeal in shorter daylight. {TOUR_NAME} runs +{TOUR_RANGE}. {VISIT_NAME} is {VISIT_PRICE_LABEL.toLowerCase()} ({FOOTPRINT_BANDS}) — {VISIT_PACKAGING} See <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>full à la carte pricing</Link>.</p>
+          <p className="note">Twilight exteriors and cinematic reels help in shorter fall daylight. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>See pricing →</Link></p>
         </section>
       </div>
 
@@ -89,10 +89,9 @@ export default function FallMarket() {
         <section className="block rvl" id="priority">
           <div className="book">
             <div>
-              <span className="over">Priority fall booking</span>
-              <h2 style={{ color: 'var(--moon)', marginTop: 8 }}>Lock your date before the rush books the calendar solid.</h2>
-              <p className="lead" style={{ color: 'var(--moonSoft)' }}>This isn&apos;t a discount — it&apos;s a reserved slot. Book before Labour Day and your listing&apos;s shoot date is held ahead of the September wave, at the same pricing as always. First 25 km from the assigned photographer’s base is free either way.</p>
-              <p className="deadline">Priority window closes Monday, September 7</p>
+              <span className="over">Book early</span>
+              <h2 style={{ color: 'var(--moon)', marginTop: 8 }}>Lock your date before the calendar fills.</h2>
+              <p className="lead" style={{ color: 'var(--moonSoft)' }}>Same prices as always. Your shoot date is held once you book.</p>
               <div className="cta-row">
                 <Link className="btn btn-brick" href="/book">Reserve a fall slot</Link>
               </div>
@@ -104,20 +103,7 @@ export default function FallMarket() {
       <div className="wrap">
         <section className="block rvl">
           <div className="sec-head">
-            <div>
-              <span className="over">While you&apos;re booking media</span>
-              <h2>Stay on the list.</h2>
-              <p>Product notes for OS, Companion, and GO — no spam. Media is live to book now.</p>
-            </div>
-          </div>
-          <NewsletterInline />
-        </section>
-      </div>
-
-      <div className="wrap">
-        <section className="block rvl">
-          <div className="sec-head">
-            <div><span className="over">Questions</span><h2>Before you book.</h2></div>
+            <div><span className="over">FAQ</span><h2>Before you book.</h2></div>
           </div>
           <div className="faq">
             {faqs.map((f) => (

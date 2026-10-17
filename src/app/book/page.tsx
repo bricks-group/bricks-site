@@ -11,13 +11,13 @@ const OG =
 export const metadata: Metadata = {
   title: 'Book Real Estate Photography & Listing Photos Canada | Bricks',
   description:
-    'Book Bricks listing photos online: HDR real estate photography, licensed drone, floor plan on standard shoots, 24–48h MLS target. Instant quote by footprint + travel.',
+    'Book listing photos online: HDR photography, licensed drone and a floor plan on standard shoots. Live quote from the address.',
   alternates: { canonical: '/book' },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Book Real Estate Photography & Listing Photos | Bricks',
     description:
-      'Book Canadian listing media online — HDR photos, drone, floor plan, 24–48h target. Pay to lock an exact clock time.',
+      'Book listing media online: HDR photos, drone and a floor plan. Pick an exact time.',
     images: [OG],
     url: 'https://www.brxs.ca/book',
   },
@@ -60,7 +60,7 @@ export default function BookPage() {
                 name: `Is the ${VISIT_NAME.toLowerCase()} included?`,
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: `Never. ${VISIT_PACKAGING} ${VISIT_PRICE_LABEL} (${FOOTPRINT_BANDS}). It is a paid add-on on the book-a-shoot form and is charged in Stripe checkout.`,
+                  text: `No. It's an add-on, ${VISIT_PRICE_LABEL.toLowerCase()}, that you can pick in Step 2.`,
                 },
               },
               {
@@ -84,7 +84,7 @@ export default function BookPage() {
                 name: 'How do refunds work?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Back to your original payment method via Stripe, typically within 5-10 business days.',
+                  text: 'Back to your original payment method, typically within 5–10 business days.',
                 },
               },
               {
@@ -92,7 +92,7 @@ export default function BookPage() {
                 name: 'How fast is delivery?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Edited MLS-ready listing photos target 24–48 hours on standard shoots. Floor plan included on every standard HDR shoot. Rush aims faster than that window.',
+                  text: 'We aim to deliver edited, MLS-ready media in 24–48 hours. Rush delivery is faster.',
                 },
               },
             ],
@@ -110,11 +110,11 @@ export default function BookPage() {
       />
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Book · Canada</span>
-          <h1>Book real estate photography &amp; listing photos.</h1>
+          <span className="badge">Book</span>
+          <h1>Book a listing shoot.</h1>
           <p className="sub">
-            Four steps. Live quote from the address — Essentials from $248 is HDR + licensed drone + floor plan. 24–48h MLS target (not a guarantee). Pay to lock the exact clock; assignee and travel are final on the quote before Stripe.{' '}
-            <Link href="/real-estate-photography">What&apos;s included</Link> · <Link href="/blog">Guides</Link>
+            Get a live quote from the address, then pick an exact time.{' '}
+            <Link href="/real-estate-photography">What&apos;s included</Link>
           </p>
         </div>
       </section>

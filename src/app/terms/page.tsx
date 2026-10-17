@@ -53,6 +53,16 @@ export default function TermsPage() {
       </div>
 
       <div className="legal-body">
+        <section className="block" id="site-progress" data-legal-review="true">
+          <h2>Site Progress (builders &amp; developers)</h2>
+          <p><strong>Draft — needs legal review before publishing.</strong></p>
+          <p>One-off progress visits and mapped captures are billed per visit at the price shown when you order. Monitoring plans are billed monthly in advance per site, month to month, through Stripe; cancel any time from billing, effective at the end of the paid month. Mapped plans include a one-time setup charge on the first capture. Prices are CAD plus HST.</p>
+          <p>Commercial site work is assigned only to vetted pilots holding a Transport Canada Advanced Operations certificate and drone liability insurance (their own or Bricks&apos; company policy) verified by Bricks: at least $2,000,000 per occurrence, or the higher minimum you set on the order (for example $5,000,000 under CCDC 41). On request, Bricks provides the certificate of insurance covering the flight before it happens.</p>
+          <p>Flights depend on weather, airspace (including NAV CANADA authorization), and site access and safety rules. A visit that cannot be flown safely is rescheduled within the same billing month where possible.</p>
+        </section>
+      </div>
+
+      <div className="legal-body">
         <section className="block" id="refunds">
           <h2>5. Reschedule, cancellation, refunds</h2>
           <p>Contact <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know.</p>

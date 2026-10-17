@@ -5482,7 +5482,7 @@
         marginTop: 8,
         lineHeight: 1.5
       }
-    }, "Time locks. GO notifies the photographer. Media returns to the listing file on the desk.")));
+    }, "Time locks. Bricks notifies the photographer. Media returns to the listing file on the desk.")));
   }
 
   // 6) JOBS

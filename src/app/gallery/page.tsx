@@ -31,44 +31,41 @@ const residential: Shot[] = [
   { src: '/media/res-dining-1.jpg', alt: 'Listing photos — residential dining room interior HDR', t: 'Dining' },
   { src: '/media/res-living-1.jpg', alt: 'MLS photos — open living and kitchen interior', t: 'Living' },
   { src: '/media/res-living-2.jpg', alt: 'Real estate photography — living room listing photo', t: 'Living' },
-  { src: '/media/work/07.jpg', alt: 'Real estate photography — living room listing photo', t: 'Living' },
   { src: '/media/work/08.jpg', alt: 'Listing photos — bedroom interior', t: 'Bedroom' },
 ]
 
 const multifamily: Shot[] = [
-  { src: '/media/mf-riverbend-lobby.jpg', alt: 'Multifamily lobby — amenity listing photo', t: 'Lobby', d: 'MF · amenity' },
-  { src: '/media/mf-20george-rooftop.jpg', alt: 'Condo rooftop amenity listing photo', t: 'Rooftop', d: 'MF · amenity' },
-  { src: '/media/mf-dialogue-balcony.jpg', alt: 'Balcony amenity — multifamily listing still', t: 'Balcony', d: 'MF · amenity' },
-  { src: '/media/mf-trillium-amenity.jpg', alt: 'Multifamily amenity interior listing photo', t: 'Amenity', d: 'MF · amenity' },
+  { src: '/media/mf-riverbend-lobby.jpg', alt: 'Multifamily lobby — amenity listing photo', t: 'Lobby' },
+  { src: '/media/mf-20george-rooftop.jpg', alt: 'Condo rooftop amenity listing photo', t: 'Rooftop' },
+  { src: '/media/mf-dialogue-balcony.jpg', alt: 'Balcony amenity — multifamily listing still', t: 'Balcony' },
+  { src: '/media/mf-trillium-amenity.jpg', alt: 'Multifamily amenity interior listing photo', t: 'Amenity' },
   { src: '/media/work/03.jpg', alt: 'Multifamily listing photos — condo bedroom', t: 'Bedroom' },
   { src: '/media/work/04.jpg', alt: 'Multifamily listing photos — condo living room', t: 'Living' },
 ]
 
 const commercial: Shot[] = [
-  { src: '/media/drone-cre-0439.jpg', alt: 'Drone real estate photos — CRE aerial (Advanced RPAS)', t: 'Aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/drone-cre-2267.jpg', alt: 'Licensed drone — commercial industrial aerial', t: 'Aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/drone-cre-2263.jpg', alt: 'CRE rooftop and site drone still', t: 'Aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/drone-cre-2241.jpg', alt: 'Industrial park drone listing photo', t: 'Aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/drone-cre-2236.jpg', alt: 'Commercial site drone still for listing media', t: 'Aerial', d: 'Drone · Advanced RPAS' },
-  { src: '/media/drone-cre-1570.jpg', alt: 'CRE exterior drone — listing media sample', t: 'Aerial', d: 'Drone · Advanced RPAS' },
+  { src: '/media/drone-cre-0439.jpg', alt: 'Drone real estate photos — CRE aerial (Advanced RPAS)', t: 'Aerial' },
+  { src: '/media/drone-cre-2267.jpg', alt: 'Licensed drone — commercial industrial aerial', t: 'Aerial' },
+  { src: '/media/drone-cre-2263.jpg', alt: 'CRE rooftop and site drone still', t: 'Aerial' },
+  { src: '/media/drone-cre-2241.jpg', alt: 'Industrial park drone listing photo', t: 'Aerial' },
+  { src: '/media/drone-cre-2236.jpg', alt: 'Commercial site drone still for listing media', t: 'Aerial' },
+  { src: '/media/drone-cre-1570.jpg', alt: 'CRE exterior drone — listing media sample', t: 'Aerial' },
 ]
 
 const industrial: Shot[] = [
-  { src: '/media/cre-harvester-exterior.jpg', alt: 'Commercial industrial exterior — HDR listing photo', t: 'Exterior', d: 'CRE · industrial' },
-  { src: '/media/cre-harvester-dock.jpg', alt: 'Loading dock exterior — commercial listing photo', t: 'Dock', d: 'CRE · industrial' },
-  { src: '/media/cre-hanlon-exterior.jpg', alt: 'Industrial park exterior listing photo', t: 'Exterior', d: 'CRE · industrial' },
-  { src: '/media/cre-industrial-1.jpg', alt: 'Industrial building exterior — MLS-ready still', t: 'Exterior', d: 'CRE · industrial' },
-  { src: '/media/cre-industrial-2.jpg', alt: 'Industrial facade listing photo', t: 'Facade', d: 'CRE · industrial' },
-  { src: '/media/cre-industrial-3.jpg', alt: 'Industrial site exterior listing photo', t: 'Site', d: 'CRE · industrial' },
-  { src: '/media/cre-portfolio-flex.jpg', alt: 'Flex / industrial exterior listing photo', t: 'Flex', d: 'CRE · industrial' },
-  { src: '/media/cre-harvester-office.jpg', alt: 'Commercial office interior — CRE listing still', t: 'Interior', d: 'CRE · office' },
+  { src: '/media/cre-harvester-exterior.jpg', alt: 'Commercial industrial exterior — HDR listing photo', t: 'Exterior' },
+  { src: '/media/cre-harvester-dock.jpg', alt: 'Loading dock exterior — commercial listing photo', t: 'Dock' },
+  { src: '/media/cre-hanlon-exterior.jpg', alt: 'Industrial park exterior listing photo', t: 'Exterior' },
+  { src: '/media/cre-industrial-1.jpg', alt: 'Industrial building exterior — MLS-ready still', t: 'Exterior' },
+  { src: '/media/cre-industrial-2.jpg', alt: 'Industrial facade listing photo', t: 'Facade' },
+  { src: '/media/cre-industrial-3.jpg', alt: 'Industrial site exterior listing photo', t: 'Site' },
 ]
 
 const beforeAfter = [
   { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
   { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging ($35/photo add-on) before and after' },
+  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
 ]
 
 function Grid({ images }: { images: Shot[] }) {
@@ -77,7 +74,6 @@ function Grid({ images }: { images: Shot[] }) {
       {images.map((img) => (
         <div key={img.src} className="work-card">
           <div className="img"><Image src={img.src} alt={img.alt} width={720} height={540} loading="lazy" /></div>
-          <div className="meta"><div className="t">{img.t}</div>{img.d && <div className="d">{img.d}</div>}</div>
         </div>
       ))}
     </div>
@@ -115,7 +111,7 @@ export default function GalleryPage() {
           <div className="sec-head">
             <div><span className="over">Examples</span><h2>Before and after.</h2></div>
           </div>
-          <p className="ba-hint">Drag across each pair. HDR balance is standard. Sky enhance is on request (no invent sky/dusk by default). Virtual staging is $35/photo — never packaged. Twilight is a real blue-hour exterior add-on.</p>
+                    <p className="ba-hint">Drag to compare.</p>
           <div className="ba-grid">
             {beforeAfter.map((p) => {
               const name = p.label.replace(/ before and after$/i, '')
@@ -133,8 +129,6 @@ export default function GalleryPage() {
                 >
                   <img className="ba-after" src={p.after} alt={`${name} — after`} />
                   <img className="ba-before" src={p.before} alt={`${name} — before`} />
-                  <span className="ba-tag ba-tag-before">Before</span>
-                  <span className="ba-tag ba-tag-after">After</span>
                   <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
                 </div>
               )
@@ -144,28 +138,28 @@ export default function GalleryPage() {
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Residential</span><h2>Houses, interiors, the street.</h2></div>
+            <div><span className="over">Residential</span><h2>Homes, inside and out.</h2></div>
           </div>
           <Grid images={residential} />
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Multifamily</span><h2>Lobby, amenity, the unit.</h2></div>
+            <div><span className="over">Multifamily</span><h2>Lobbies, amenities and units.</h2></div>
           </div>
           <Grid images={multifamily} />
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Commercial</span><h2>Licensed drone and the site.</h2></div>
+            <div><span className="over">Commercial</span><h2>Commercial sites from above.</h2></div>
           </div>
           <Grid images={commercial} />
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
-            <div><span className="over">Industrial</span><h2>Docks, facades, and the site.</h2></div>
+            <div><span className="over">Industrial</span><h2>Docks, facades and sites.</h2></div>
           </div>
           <Grid images={industrial} />
         </section>
@@ -174,7 +168,7 @@ export default function GalleryPage() {
           <div className="book">
             <span className="over">Book a shoot</span>
             <h2>Ready when the listing is.</h2>
-            <p className="lead">Confirm a slot. We send pricing by footprint — edited MLS-ready on a 24–48h target.</p>
+            <p className="lead">Book online and get a quote from the address.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>Pricing</Link>
@@ -186,7 +180,7 @@ export default function GalleryPage() {
       <style>{`
         .work-wrap{max-width:980px;}
         .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px;margin-top:8px;}
-        .work-card{border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:var(--paper);}
+        .work-card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);}
         .work-card .img{aspect-ratio:4/3;background:var(--paperDeep);overflow:hidden;}
         .work-card .img img{width:100%;height:100%;object-fit:cover;display:block;filter:none;}
         .work-card .meta{padding:16px 18px 18px;}

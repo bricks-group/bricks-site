@@ -46,10 +46,10 @@ export default function ServiceAreasPage() {
 
       <section className="hero hero-cov">
         <div className="wrap">
-          <span className="badge">Service areas · Canada</span>
+          <span className="badge">Service areas</span>
           <h1>Where we shoot.</h1>
           <p className="sub">
-            {COVERAGE_LINE} The map is the coverage story — hubs we run today, plus cities we confirm at booking. Travel is quoted before you pay.
+            We shoot across Canada. We confirm your area and quote travel before you pay.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
@@ -67,7 +67,7 @@ export default function ServiceAreasPage() {
           <CoverageMap token={mapToken} />
         ) : (
           <div className="cov-map-missing">
-            <p>Map token missing — coverage is still Canada-wide. Book an address and we confirm travel on the quote.</p>
+            <p>We shoot across Canada. Enter an address to confirm coverage and travel.</p>
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
           </div>
         )}
@@ -77,17 +77,13 @@ export default function ServiceAreasPage() {
         <div className="wrap">
           <div className="sec-head">
             <div>
-              <span className="over">How booking works</span>
-              <h2>Coverage first, then the clock time.</h2>
+              <span className="over">How it works</span>
+              <h2>Start with the address.</h2>
             </div>
           </div>
           <div className="prose">
             <p>
-              Enter the listing address on <Link href="/book">/book</Link>. We size footprint, quote travel, and only then offer exact clock times from live availability — not vague morning/afternoon windows. If your city is not pinned above, ask anyway; network coverage follows booked demand.
-            </p>
-            <p>
-              {TOUR_NAME} stays path-confined; {VISIT_NAME.toLowerCase()} is free-roam splat and never packaged. Photographers join at{' '}
-              <Link href="/photographers">/photographers</Link>.
+              <Link href="/book">Enter the listing address</Link> and we&apos;ll size the home, quote travel and show the exact times available. City not on the map? Ask anyway.
             </p>
           </div>
         </div>
@@ -97,10 +93,9 @@ export default function ServiceAreasPage() {
         <div className="wrap">
           <div className="sec-head">
             <div>
-              <span className="over">Hub notes</span>
-              <h2>Same standard, local stock.</h2>
+              <span className="over">Regions</span>
+              <h2>Same standard, everywhere.</h2>
             </div>
-            <p>Context for housing stock and aerial constraints — not a spam laundry list.</p>
           </div>
           <div className="areas">
             {areas.map((a) => (
@@ -120,12 +115,12 @@ export default function ServiceAreasPage() {
       <section className="block">
         <div className="wrap">
           <div className="book">
-            <span className="over">Book your area</span>
+            <span className="over">Book</span>
             <h2>Ready when you are.</h2>
-            <p className="lead">Pick services à la carte, get travel on the quote, MLS-ready listing photos on a 24–48h target.</p>
+            <p className="lead">Pick your services and see travel on the quote before you pay.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">
-                Book listing media
+                Book a shoot
               </Link>
               <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>
                 View pricing

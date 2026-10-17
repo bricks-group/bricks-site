@@ -11,20 +11,20 @@ const OG =
 export const metadata: Metadata = {
   title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',
   description:
-    'Applications open now: join the Bricks Canada-wide real estate photographer network. Auto-routed listing photo jobs, fixed vendor rate card, Stripe Connect payouts. Apply in about 4 minutes. GO is live.',
+    'Shoot listings for Bricks across Canada. Jobs come to you in the Bricks app at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
   alternates: { canonical: '/photographers' },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Real Estate Photographer Jobs Canada | Bricks',
     description:
-      'Applications open now. Auto-routed listing shoots, fixed rate card, Stripe Connect. Apply in about 4 minutes.',
+      'Shoot listings across Canada at a fixed rate per job. Apply in about four minutes.',
     images: [OG],
     url: 'https://www.brxs.ca/photographers',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Real Estate Photographer Jobs Canada | Bricks',
-    description: 'Applications open now — shoot listing photos Canada-wide. Fixed rate card, Stripe Connect.',
+    description: 'Shoot listings across Canada at a fixed rate per job.',
     images: [OG],
   },
 }
@@ -42,7 +42,7 @@ export default function PhotographersPage() {
             datePosted: '2026-08-13',
             title: 'Real Estate Photographer / Videographer — Independent Contractor (Canada)',
             description:
-              'Applications are open now — not launching soon. Auto-routed real estate listing photo and video shoots across Canada. Paid via Stripe Connect on a fixed vendor rate card. Apply in about four minutes. GO field app is live on the web.',
+              'Applications are open now — not launching soon. Auto-routed real estate listing photo and video shoots across Canada. Paid via Stripe Connect on a fixed vendor rate card. Apply in about four minutes. The Bricks app for photographers is live on the web.',
             hiringOrganization: {
               '@type': 'Organization',
               '@id': ORG_ID,
@@ -110,12 +110,11 @@ export default function PhotographersPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Photographers</span>
-          <h1>Real estate photographer jobs — Canada.<br />Applications open now.</h1>
-          <p className="sub">Shoot listing photos on a fixed dollar rate card. Auto-routed jobs in GO. Stripe Connect payouts. Apply in about four minutes — not a waitlist. {STATUS.go} {COVERAGE_LINE}</p>
+          <h1>Real estate photographer jobs across Canada.</h1>
+          <p className="sub">Shoot listings for a fixed rate per job. Jobs come to you in the Bricks app, and you&apos;re paid automatically.</p>
           <div className="cta-row">
             <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
-            <a className="btn btn-sec" href={GO_URL} rel="noopener noreferrer">Open GO</a>
-            <Link className="btn btn-sec" href="/real-estate-photography">Listing photos product</Link>
+            <a className="btn btn-sec" href={GO_URL} rel="noopener noreferrer">Open the Bricks app</a>
           </div>
         </div>
       </section>
@@ -125,31 +124,47 @@ export default function PhotographersPage() {
           <div className="sec-head">
             <div>
               <span className="over">How it works</span>
-              <h2>GO, the field app.</h2>
+              <h2>Jobs come to you.</h2>
             </div>
           </div>
           <div className="incl">
-            <div className="c rvl"><span className="ic">01</span><h4>Auto-routed jobs</h4><p>Paid bookings auto-route into GO by specialty, tier, and proximity — no bidding.</p></div>
-            <div className="c rvl"><span className="ic">02</span><h4>You set availability</h4><p>Accept or decline any job. Declining is not a breach. Routing may still consider your availability and history.</p></div>
-            <div className="c rvl"><span className="ic">03</span><h4>Stripe Connect payouts</h4><p>No invoicing, no chasing clients — paid automatically per completed job.</p></div>
-            <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>Inaccessible property or a client no-show reported in-app qualifies for the standard trip fee.</p></div>
+            <div className="c rvl"><span className="ic">01</span><h4>No bidding</h4><p>Paid bookings are sent to you in the Bricks app based on specialty, tier and distance.</p></div>
+            <div className="c rvl"><span className="ic">02</span><h4>You set availability</h4><p>Accept or decline any job. Declining is never a breach of contract.</p></div>
+            <div className="c rvl"><span className="ic">03</span><h4>Automatic payouts</h4><p>Paid for every completed job. No invoices, no chasing clients.</p></div>
+            <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>If you can&apos;t get in or the client doesn&apos;t show, report it in the app and get the standard trip fee.</p></div>
           </div>
         </section>
 
         <section className="block rvl" id="payouts" aria-label="Vendor rate card">
           <div className="sec-head">
             <div>
-              <span className="over">Vendor rate card</span>
-              <h2>Fixed package payouts.</h2>
+              <span className="over">Pay</span>
+              <h2>Fixed pay per job.</h2>
             </div>
           </div>
-          <p className="rate-lead">Photographers are independent contractors, paid a published dollar rate card — not a percent of what the client paid. Tiers C / B / A are assigned by Bricks on quality, reliability, volume, and compliance; the full card lives in the contractor agreement after you apply. Virtual visit is a client add-on at $249 / $299 / $349 / $399 — never packaged.</p>
+          <p className="rate-lead">You earn a set dollar amount per job, not a percentage of what the client pays. Full rates are in the contractor agreement.</p>
           <div className="adds">
-            <div className="a rvl"><div className="nm">Tier 1 — Entry</div><p>Starting tier. Assigned by Bricks based on quality, reliability, volume, and compliance.</p></div>
-            <div className="a rvl"><div className="nm">Tier 2 — Core</div><p>Assigned for consistent quality and reliability on the network.</p></div>
-            <div className="a rvl"><div className="nm">Tier 3 — Elite</div><p>Highest assigned tier for quality, volume, and compliance.</p></div>
+            <div className="a rvl"><div className="nm">Tier 1 — Entry</div><p>The starting tier.</p></div>
+            <div className="a rvl"><div className="nm">Tier 2 — Core</div><p>For consistent quality and reliability.</p></div>
+            <div className="a rvl"><div className="nm">Tier 3 — Elite</div><p>Our highest tier, for top quality, volume and compliance. Needs $2M+ verified drone insurance and unlocks builder site jobs.</p></div>
           </div>
-          <p className="note">Canada-wide recruiting. Payout is the published rate-card amount. Virtual visit is a client add-on at $249 / $299 / $349 / $399 — never packaged.</p>
+          <p className="note">Tiers are set by Bricks based on quality, reliability, volume and compliance.</p>
+        </section>
+
+        <section className="block rvl" aria-label="Commercial site work">
+          <div className="sec-head">
+            <div>
+              <span className="over">Tier 3</span>
+              <h2>Builder &amp; developer jobs pay at the top of Tier 3.</h2>
+            </div>
+          </div>
+          <p className="rate-lead">Construction site jobs go only to Tier 3 pilots with Advanced RPAS and verified drone liability insurance of at least $2M ($5M on some sites). Upload your certificate in the Bricks app.</p>
+          <div className="adds">
+            <div className="a rvl"><div className="nm">Progress visit — $185</div><p>Drone photos and video of the site.</p></div>
+            <div className="a rvl"><div className="nm">Mapped capture — $735</div><p>A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.</p></div>
+            <div className="a rvl"><div className="nm">Mapping setup — +$315</div><p>Ground control for the first mapped flight on a site.</p></div>
+          </div>
+          <p className="note" data-legal-review="true">Draft — needs legal review before publishing. The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
         </section>
 
         <section className="block rvl">
@@ -160,31 +175,21 @@ export default function PhotographersPage() {
             </div>
           </div>
           <div className="faq">
-            <div className="qa"><h4>How long does review take?</h4><p>We review every application manually. Portfolio quality is the primary gate — sharp composition, accurate colour, consistent exposure across a full property set. Expect a response within 1–3 business days.</p></div>
-            <div className="qa"><h4>What equipment do I need?</h4><p>Full-frame or equivalent, fast primes, and ideally a DJI/Autel drone if you&apos;re applying for aerial work. List your kit in the application.</p></div>
-            <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes — controlled airspace near Pearson / Billy Bishop requires Transport Canada Advanced RPAS certification. We verify before routing any drone job.</p></div>
-            <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability.</p></div>
-          </div>
-        </section>
-
-        <section className="block rvl">
-          <div className="prose rvl">
-            <p>
-              Agents book listing photos on <Link href="/book">/book</Link>. Product overview:{' '}
-              <Link href="/real-estate-photography">real estate photography</Link>. Cost guides:{' '}
-              <Link href="/blog/canada-real-estate-photography-cost-2026">Canada</Link> ·{' '}
-              <Link href="/blog/gta-real-estate-media-cost-2026">GTA</Link>.
-            </p>
+            <div className="qa"><h4>How long does review take?</h4><p>We review every application by hand, mostly on portfolio quality. Expect a reply within 1–3 business days.</p></div>
+            <div className="qa"><h4>What equipment do I need?</h4><p>A full-frame camera or equivalent, fast primes, and a DJI or Autel drone for aerial work. List your kit in the form.</p></div>
+            <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes. You need Transport Canada Advanced RPAS certification, and we check it before sending you drone work.</p></div>
+            <div className="qa"><h4>Do I need insurance?</h4><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies. <em>(Draft — needs legal review.)</em></p></div>
+            <div className="qa"><h4>Am I an employee?</h4><p>No. You&apos;re an independent contractor with Bricks Group under Ontario law, in control of your equipment, methods and availability.</p></div>
           </div>
         </section>
 
         <section className="block rvl" id="apply">
           <div className="sec-head">
             <div>
-              <span className="over">Join the network</span>
-              <h2>Application — open now.</h2>
+              <span className="over">Apply</span>
+              <h2>Join the network.</h2>
             </div>
-            <p>Takes about 4 minutes. We review every application manually. Not a waitlist.</p>
+            <p>Takes about four minutes.</p>
           </div>
           <PhotographerForm />
         </section>

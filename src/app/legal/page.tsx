@@ -43,7 +43,7 @@ export default function LegalHubPage() {
             </li>
             <li>
               <a href="/legal/ic-agreement.txt">Independent Contractor Agreement v1.8</a>
-              {' '}— photographers on GO &amp; Dispatch. Effective 3 October 2026.
+              {' '}— photographers working through the Bricks app. Effective 3 October 2026.
             </li>
             <li>
               <Link href="/dpa">Data Processing Agreement</Link> — enterprise / brokerage controller–processor terms. Effective 27 August 2026.

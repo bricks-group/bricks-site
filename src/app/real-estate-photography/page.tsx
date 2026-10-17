@@ -52,23 +52,23 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'What is included in Bricks real estate photography?',
-    a: 'Every standard shoot includes HDR interiors and exteriors, licensed drone (Advanced RPAS), and a branded floor plan. Edited MLS-ready listing photos target 24–48 hours. Photos-only drops drone and floor plan; Showcase and Full suite add more.',
+    a: 'Every standard shoot includes HDR interiors and exteriors, licensed drone and a branded floor plan. We aim to deliver in 24–48 hours.',
   },
   {
     q: 'How much do listing photos cost in Canada?',
-    a: `HDR photography starts at $${PHOTO_RATE[0]} CAD by footprint (${PHOTO_RANGE}). Licensed drone is ${DRONE_RANGE}. Floor plan is included on every standard shoot. Travel: first 25 km from the assigned photographer’s base free, then $0.75/km — confirmed at assignment.`,
+    a: `HDR photography starts at $${PHOTO_RATE[0]} CAD, depending on home size. Floor plans are included. Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75/km.`,
   },
   {
     q: 'Do you shoot MLS photos Canada-wide?',
-    a: `Yes. ${COVERAGE_LINE} Coverage is confirmed at booking with travel quoted up front — we do not headline a single metro as the only market.`,
+    a: 'Yes. We confirm coverage when you book and quote travel up front.',
   },
   {
-    q: `Virtual tour vs ${VISIT_NAME.toLowerCase()}?`,
-    a: `${TOUR_NAME} is a path-confined walkthrough (${TOUR_RANGE} by footprint). ${VISIT_NAME} is a free-roam Gaussian splat — ${VISIT_PRICE_LABEL.toLowerCase()} (${FOOTPRINT_BANDS}), always a paid add-on, never packaged.`,
+    q: 'Virtual tour or virtual visit?',
+    a: 'A virtual tour follows a set path. A virtual visit is free-roam 3D, booked as an add-on.',
   },
   {
     q: 'How fast is delivery?',
-    a: 'Edited MLS-ready media targets 24–48 hours on standard shoots. Rush is a flat add-on aimed at faster than that window — targets, not guarantees.',
+    a: 'We aim to deliver edited, MLS-ready media in 24–48 hours. Rush delivery is faster, for a flat fee.',
   },
 ]
 
@@ -118,10 +118,10 @@ export default function RealEstatePhotographyPage() {
 
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Listing media · Canada</span>
+          <span className="badge">Listing media</span>
           <h1>Real estate photography &amp; listing photos, Canada-wide.</h1>
           <p className="sub">
-            MLS-ready HDR listing photos, licensed drone real estate photos, and a floor plan on every standard shoot — edited on a 24–48h target. Book online today.
+            HDR photos, licensed drone and a floor plan on every standard shoot.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
@@ -139,32 +139,29 @@ export default function RealEstatePhotographyPage() {
           <div className="sec-head">
             <div>
               <span className="over">What agents book</span>
-              <h2>Listing media that sells the space.</h2>
+              <h2>What&apos;s in every shoot.</h2>
             </div>
-            <p>
-              Bricks is built for Canadian real estate professionals who need consistent listing photos — not a one-off freelancer roulette. Same core set, Canada-wide.
-            </p>
           </div>
           <div className="incl">
             <div className="c rvl">
               <span className="ic">01</span>
               <h4>HDR listing photos</h4>
-              <p>Exposure-bracketed interiors and exteriors — the MLS photo standard agents expect on every listing.</p>
+              <p>Bracketed interiors and exteriors, edited for MLS.</p>
             </div>
             <div className="c rvl">
               <span className="ic">02</span>
               <h4>Licensed drone</h4>
-              <p>Advanced RPAS-certified aerial for context and curb appeal. Included on packages with drone, or à la carte.</p>
+              <p>Aerial photos by Advanced RPAS certified pilots.</p>
             </div>
             <div className="c rvl">
               <span className="ic">03</span>
               <h4>Floor plan included</h4>
-              <p>Branded 2D floor plan on every standard shoot — buyers understand the layout before the showing.</p>
+              <p>A branded 2D floor plan on every standard shoot.</p>
             </div>
             <div className="c rvl">
               <span className="ic">04</span>
-              <h4>24–48h target</h4>
-              <p>Edited, MLS-ready media typically within one to two business days. Rush targets faster when the listing date is tight.</p>
+              <h4>Fast delivery</h4>
+              <p>We aim to deliver in 24–48 hours. Rush is faster.</p>
             </div>
           </div>
         </section>
@@ -172,8 +169,8 @@ export default function RealEstatePhotographyPage() {
         <section className="block rvl" aria-label="Sample listing photos">
           <div className="sec-head">
             <div>
-              <span className="over">Proof</span>
-              <h2>Real estate photography samples.</h2>
+              <span className="over">Work</span>
+              <h2>Recent shoots.</h2>
             </div>
           </div>
           <div className="grid3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
@@ -184,40 +181,26 @@ export default function RealEstatePhotographyPage() {
             ))}
           </div>
           <p style={{ marginTop: 16, fontSize: 14, color: 'var(--inkMute)' }}>
-            More residential, multifamily, and commercial work lives on the <Link href="/gallery">gallery</Link> (gated until full marketing open). Photographers: <Link href="/photographers">apply to shoot for Bricks</Link>.
+            <Link href="/gallery">See more work →</Link>
           </p>
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">Pricing snapshot</span>
-              <h2>À la carte by footprint.</h2>
+              <span className="over">Pricing</span>
+              <h2>Priced by home size.</h2>
             </div>
           </div>
-          <div className="prose">
-            <ul>
-              <li>
-                <strong>HDR photography:</strong> {PHOTO_RANGE} CAD by footprint
-              </li>
-              <li>
-                <strong>Licensed drone:</strong> {DRONE_RANGE} CAD
-              </li>
-              <li>
-                <strong>Floor plan:</strong> included on every standard shoot
-              </li>
-              <li>
-                <strong>{TOUR_NAME}:</strong> path-confined add-on {TOUR_RANGE}
-              </li>
-              <li>
-                <strong>{VISIT_NAME}:</strong> {VISIT_PRICE_LABEL} ({FOOTPRINT_BANDS}) — {VISIT_PACKAGING}
-              </li>
-            </ul>
-            <p>
-              HDR + drone starting point is about <strong>${CORE_FROM}</strong> before travel and HST. Full menu and software plans sit on Pricing (gated until launch open); booking quotes live on{' '}
-              <Link href="/book">/book</Link>.
-            </p>
+          <div className="incl">
+            <div className="c rvl"><span className="ic">{PHOTO_RANGE}</span><h4>HDR photography</h4><p>Interiors and exteriors.</p></div>
+            <div className="c rvl"><span className="ic">{DRONE_RANGE}</span><h4>Licensed drone</h4><p>Aerial photos.</p></div>
+            <div className="c rvl"><span className="ic">Included</span><h4>Floor plan</h4><p>On every standard shoot.</p></div>
+            <div className="c rvl"><span className="ic">{TOUR_RANGE}</span><h4>{TOUR_NAME}</h4><p>Path walkthrough.</p></div>
           </div>
+          <p style={{ marginTop: 16, fontSize: 14, color: 'var(--inkMute)' }}>
+            CAD, before travel and HST. <Link href="/pricing">Full pricing →</Link>
+          </p>
         </section>
 
         <section className="block rvl">
@@ -232,21 +215,21 @@ export default function RealEstatePhotographyPage() {
               <div className="meta">
                 <span className="t">Pricing</span>
                 <h3>How much does real estate photography cost in Canada? (2026)</h3>
-                <p>Canada-wide cost overview for listing photos, drone, floor plans, and tours.</p>
+                <p>What listing photos, drone, floor plans and tours cost.</p>
               </div>
             </Link>
             <Link className="card np rvl" href="/blog/gta-real-estate-media-cost-2026">
               <div className="meta">
                 <span className="t">Regional</span>
                 <h3>GTA real estate media cost (2026)</h3>
-                <p>Regional cluster with market ranges for Greater Toronto Area agents.</p>
+                <p>Market ranges for Greater Toronto Area agents.</p>
               </div>
             </Link>
             <Link className="card np rvl" href="/blog/whats-included-listing-shoot">
               <div className="meta">
                 <span className="t">The shoot</span>
                 <h3>What&apos;s included in a listing photo shoot?</h3>
-                <p>HDR, drone, floor plan, 24–48h target — and what stays optional.</p>
+                <p>What comes standard and what&apos;s optional.</p>
               </div>
             </Link>
           </div>
@@ -272,16 +255,16 @@ export default function RealEstatePhotographyPage() {
         <section className="block rvl">
           <div className="book">
             <span className="over">Book</span>
-            <h2>Get MLS listing photos on a 24–48h target.</h2>
+            <h2>Book your listing photos.</h2>
             <p className="lead">
-              Pick services, get a tailored quote by footprint and travel, pay to lock an exact clock time. {COVERAGE_LINE}
+              Get a quote from the address and pick an exact time.
             </p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">
                 Book a shoot
               </Link>
-              <Link className="btn btn-sec" href="/photographers" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>
-                Photographers apply
+              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>
+                See pricing
               </Link>
             </div>
           </div>

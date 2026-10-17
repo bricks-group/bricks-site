@@ -1,0 +1,125 @@
+/* Homepage v11: Cursor-mapped structure on fluid tokens (visual-tokens.css). Checked at 360/390/430/768/1440. */
+.hero-home .wrap,.integ-strip-c .wrap,.hp-proof .wrap,.hp-price .wrap,.hp-guides .wrap,.hf ~ .svc-sec .wrap,.hp-wrap{max-width:1200px;padding-left:var(--gutter);padding-right:var(--gutter);box-sizing:border-box;}
+
+/* Hero */
+.hero-home{padding:clamp(36px, 3.333vw + 24px, 72px) 0 clamp(24px, 1.481vw + 18.67px, 40px) !important;}
+.hero-home h1{font-size:var(--vs-fs-display) !important;line-height:1.08 !important;letter-spacing:-.02em !important;max-width:18ch !important;font-weight:500;}
+.hero-home p.sub{font-size:var(--vs-fs-body) !important;color:var(--vs-fg-2) !important;max-width:44ch !important;margin-top:12px !important;line-height:1.45;}
+.hero-home .cta-row{margin-top:clamp(18px, .556vw + 16px, 24px);display:flex;flex-direction:row !important;flex-wrap:wrap;gap:10px !important;align-items:center !important;}
+.hero-home .cta-row .btn{width:auto !important;}
+.prod-hero .tray{width:min(calc(100% - (var(--gutter) * 2)), calc(1200px - (var(--gutter) * 2)));}
+
+/* Works-with strip */
+.integ-strip-c{padding:clamp(36px, 1.852vw + 29.33px, 56px) 0 0;}
+.integ-c-cap{font-size:var(--vs-fs-small);color:var(--vs-fg-3);text-align:center;margin:0 0 14px;}
+.integ-c-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--vs-gap);}
+.integ-c-soon{position:relative;}
+.integ-c-item.integ-c-soon .integ-img{opacity:.55;}
+.integ-c-soon-t{position:absolute;top:6px;right:8px;font-family:var(--vs-mono);font-size:11px;color:var(--vs-fg-3);}
+.integ-c-item{background:var(--vs-surface);height:clamp(52px, 1.852vw + 45.33px, 72px);display:flex;align-items:center;justify-content:center;padding:0 12px;min-width:0;}
+.integ-c-item .integ-img{height:calc(clamp(18px, .556vw + 16px, 24px) * var(--s,1));width:auto;max-width:100%;filter:grayscale(1);opacity:.78;}
+.integ-c-item .integ-wordmark{font-size:var(--vs-fs-small);font-weight:500;color:var(--vs-fg-2);letter-spacing:-.01em;text-align:center;line-height:1.2;}
+.integ-strip-c .integ-fine{font-size:12px;color:var(--vs-fg-3);text-align:center;margin:12px 0 0;}
+
+/* Product rows */
+.hf{margin:var(--vs-sec) auto 0;padding:0 var(--gutter);display:grid;gap:var(--vs-gap);max-width:1200px;box-sizing:border-box;}
+.hf-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);background:var(--vs-surface);padding:8px;gap:8px;align-items:stretch;}
+.hf-flip{grid-template-columns:minmax(0,2fr) minmax(0,1fr);}
+.hf-flip .hf-copy{order:2;}
+.hf-copy{padding:var(--vs-pad) calc(var(--vs-pad) * .8);display:flex;flex-direction:column;justify-content:center;min-width:0;}
+.hf-copy h2{font-size:var(--vs-fs-title) !important;font-weight:500;letter-spacing:-.01em !important;line-height:1.2 !important;margin:0;color:var(--vs-fg);max-width:18ch;}
+.hf-copy p{font-size:var(--vs-fs-body);line-height:1.45;color:var(--vs-fg-2);margin:6px 0 0;max-width:32ch;}
+.hf-link{display:inline-block;margin-top:clamp(12px, .556vw + 10px, 18px);font-size:var(--vs-fs-small);color:var(--vs-fg);text-decoration:none;border-bottom:1px solid var(--vs-rule-strong);padding-bottom:2px;align-self:flex-start;}
+.hf-link:hover{border-bottom-color:var(--vs-fg);}
+.hf-frame{position:relative;aspect-ratio:16/10;min-height:0 !important;height:auto !important;margin:0 !important;overflow:hidden;}
+.hf .tray-phone .phone-stage{top:40px;width:min(280px,46%);height:calc(100% - 40px);}
+.hf-photo picture,.hf-photo img{display:block;width:100%;height:100%;object-fit:cover;}
+
+/* Sections */
+.hf ~ .svc-sec{margin-top:0;padding-top:var(--vs-sec);padding-bottom:0;}
+.hf ~ .svc-sec .svc-head h2{font-size:var(--vs-fs-section);letter-spacing:-.02em;}
+.hp-proof{padding:var(--vs-sec) 0 0;text-align:center;}
+.hp-proof blockquote{margin:0 auto;max-width:720px;}
+.hp-proof p{font-size:var(--vs-fs-section);line-height:1.2;letter-spacing:-.02em;font-weight:500;color:var(--vs-fg);margin:0;}
+.hp-proof footer{margin-top:14px;font-size:var(--vs-fs-small);color:var(--vs-fg-3);display:flex;flex-wrap:wrap;gap:4px 8px;justify-content:center;}
+.hp-proof .nm{color:var(--vs-fg);}
+.hp-sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 clamp(14px, .556vw + 12px, 20px);}
+.hp-sec-head h2{font-size:var(--vs-fs-title) !important;font-weight:500;letter-spacing:-.01em !important;line-height:1.2 !important;margin:0;color:var(--vs-fg);}
+.hp-sec-head .hf-link{margin-top:0;flex:none;}
+
+/* Pricing teaser */
+.hp-price{padding:var(--vs-sec) 0 0;}
+.hp-pk{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--vs-gap);}
+.hp-pk a{display:flex;flex-direction:column;gap:4px;background:var(--vs-surface);padding:clamp(14px, .556vw + 12px, 20px);min-height:clamp(0px, 12.222vw - 44px, 132px);text-decoration:none;color:inherit;border-top:1px solid transparent;box-sizing:border-box;height:100%;}
+.hp-pk a:hover{background:var(--vs-surface-2);}
+.hp-pk .is-feat a{border-top-color:var(--vs-accent);}
+.hp-pk-n{font-size:var(--vs-fs-body);font-weight:500;color:var(--vs-fg);display:flex;justify-content:space-between;gap:8px;}
+.hp-pk-b{font-size:12px;font-weight:400;color:var(--vs-accent-ink);}
+.hp-pk-f{font-size:var(--vs-fs-small);color:var(--vs-fg-3);}
+.hp-num{font-family:var(--vs-mono);font-size:var(--vs-fs-small);color:var(--vs-fg);font-variant-numeric:tabular-nums;}
+.hp-pk-d{font-size:var(--vs-fs-small);color:var(--vs-fg-2);line-height:1.4;}
+.hp-note{font-size:var(--vs-fs-small);color:var(--vs-fg-3);margin:12px 0 0;}
+.hp-note .hp-num{font-size:13px;color:var(--vs-fg-2);}
+
+/* Guides */
+.hp-guides{padding:var(--vs-sec) 0 0;}
+.hp-gd{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--vs-gap);}
+.hp-gd a{display:flex;flex-direction:column;gap:8px;background:var(--vs-surface);padding:clamp(14px, .556vw + 12px, 20px);min-height:clamp(0px, 12.222vw - 44px, 132px);text-decoration:none;color:inherit;height:100%;box-sizing:border-box;}
+.hp-gd a:hover{background:var(--vs-surface-2);}
+.hp-gd-m{font-family:var(--vs-mono);font-size:12px;color:var(--vs-fg-3);font-variant-numeric:tabular-nums;}
+.hp-gd-t{font-size:var(--vs-fs-body);line-height:1.35;color:var(--vs-fg);font-weight:500;}
+
+/* FAQ */
+#faq.block{padding-top:var(--vs-sec);}
+#faq .qa summary{font-size:var(--vs-fs-body);}
+
+/* Final CTA */
+.hp-end{padding:calc(var(--vs-sec) * 1.3) var(--gutter) calc(var(--vs-sec) * 1.15);text-align:center;display:flex;flex-direction:column;align-items:center;gap:clamp(18px, .926vw + 14.67px, 28px);}
+.hp-end h2{font-size:var(--vs-fs-cta) !important;line-height:1.02 !important;letter-spacing:-.03em !important;font-weight:500;margin:0;color:var(--vs-fg);max-width:14ch;}
+.hp-end-alt{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px;font-size:var(--vs-fs-small);}
+.hp-end-alt a{color:var(--vs-fg-2);text-decoration:none;}
+.hp-end-alt a:hover{color:var(--vs-fg);}
+
+/* Tablet */
+@media (max-width:1000px){
+  .hf-row{grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);}
+  .hf-flip{grid-template-columns:minmax(0,1.6fr) minmax(0,.9fr);}
+  .hf-copy{padding:20px 16px;}
+  .integ-c-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .integ-c-soon{grid-column:1/-1;}
+  .hp-pk,.hp-gd{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+/* Rows stack: copy above frame on every row */
+@media (max-width:700px){
+  .hf-row,.hf-flip{grid-template-columns:1fr;padding:6px;gap:6px;}
+  .hf-flip .hf-copy{order:0;}
+  .hf-copy{padding:clamp(14px, 1.5vw + 8px, 24px) clamp(10px, 1.5vw + 4px, 18px) 6px;}
+  .hf-copy p{max-width:40ch;}
+  .hf-frame{aspect-ratio:16/10;}
+  /* Desk: readable crop that bleeds off the right/bottom edge (zoom set in OsDeskShot) */
+  .hf-frame.tray-crm .tray-stage-fill{position:absolute;inset:7% 0 0 5%;}
+  .hf-frame.tray-crm .tray-stage-fill .pwin{width:100%;height:100%;box-shadow:none;}
+  /* Phones: short tray, phone ~half the width, top of the screen only */
+  .hf .tray-phone{aspect-ratio:5/4;}
+  .hf .tray-phone .phone-stage{width:clamp(150px, 40%, 230px);top:24px;height:calc(100% - 24px);}
+}
+@media (max-width:700px){
+  .integ-c-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .integ-c-soon{grid-column:1/-1;}
+  .integ-c-item{padding:0 8px;}
+}
+@media (max-width:560px){
+  .hp-pk,.hp-gd{grid-template-columns:1fr;}
+  .hf-frame{aspect-ratio:4/3;}
+  .hf .tray-phone{aspect-ratio:1/1;}
+  .integ-c-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .integ-c-soon{grid-column:1/-1;}
+}
+
+/* v12: WebKit-safe frames + static screens. WebKit collapsed aspect-ratio grid items whose only
+   content is absolutely positioned (0×0). Give the frame an explicit width so aspect-ratio has a basis. */
+.hf-frame{width:100%;justify-self:stretch;align-self:stretch;}
+.hf-frame.tray-crm .tray-stage-fill:has(.scr-desk){position:absolute;inset:7% 0 0 5%;}
+/* v13: original painted tray shows around the desk on desktop too (bleeds right/bottom like the phones) */
+.hf-frame.tray-crm .tray-stage-fill{position:absolute;inset:6% 0 0 5%;display:flex;}
+.hf-frame.tray-crm .tray-stage-fill .pwin{width:100%;height:100%;max-width:none;box-shadow:none;}

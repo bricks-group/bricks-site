@@ -12,11 +12,11 @@ export const GO_URL = 'https://go.brxs.ca'
  */
 export const STATUS = {
   media: 'Media is live to book on this site and in Companion.',
-  os: 'OS is live in preview at app.brxs.ca.',
+  os: 'The Bricks app is live in preview at app.brxs.ca.',
   companion: 'Companion is live on the web.',
-  go: 'GO is live on the web.',
-  line: 'Media is live to book. OS is live in preview at app.brxs.ca. Companion and GO are live on the web.',
-  chrome: 'The system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
+  go: 'The Bricks app for photographers is live on the web.',
+  line: 'Media is live to book. The Bricks app is live in preview at app.brxs.ca. Companion and the photographer app are live on the web.',
+  chrome: 'The system for Canadian real estate. Media is live to book. The Bricks app is live in preview at app.brxs.ca.',
   stores: 'Not in the App Store or Google Play yet.',
 } as const
 
@@ -90,16 +90,16 @@ export const VISIT_BLURB = 'Free-roam 3D (Gaussian splat). Not a tour. Always a 
 export const VISIT_PACKAGING = 'Always a paid add-on — never included in any package.'
 
 export const WORK_PHOTOS = [
-  { src: '/media/work/01.jpg', alt: 'HDR listing photo — residential street exterior for Canadian MLS' },
-  { src: '/media/work/02.jpg', alt: 'Real estate photography — bright residential living interior' },
-  { src: '/media/work/03.jpg', alt: 'Listing photos — condo living room staged for MLS' },
-  { src: '/media/work/04.jpg', alt: 'MLS photos — open-concept residential interior HDR' },
-  { src: '/media/work/05.jpg', alt: 'Real estate photographer sample — kitchen and dining interior' },
-  { src: '/media/work/06.jpg', alt: 'Listing media — residential interior with natural light' },
-  { src: '/media/work/07.jpg', alt: 'HDR real estate photography — living room for listing' },
-  { src: '/media/work/08.jpg', alt: 'Listing photos — primary bedroom interior' },
-  { src: '/media/work/09.jpg', alt: 'Commercial listing media — retail interior photography' },
-  { src: '/media/work/10.jpg', alt: 'Drone-ready building exterior for real estate listing photos' },
-  { src: '/media/work/11.jpg', alt: 'Interior HDR listing photo with accurate colour' },
-  { src: '/media/work/12.jpg', alt: 'Canadian real estate photography — residential interior sample' },
+  { src: '/media/work/01.jpg', alt: 'Row of brick homes on a tree-lined street — listing exterior' },
+  { src: '/media/work/02.jpg', alt: 'Detached stone home exterior — listing photo' },
+  { src: '/media/work/03.jpg', alt: 'Condo bedroom with a window view — listing photo' },
+  { src: '/media/work/04.jpg', alt: 'Condo living room with a city view — listing photo' },
+  { src: '/media/work/05.jpg', alt: 'Condo towers — exterior listing photo' },
+  { src: '/media/work/06.jpg', alt: 'Drone view of a commercial park' },
+  { src: '/media/work/07.jpg', alt: 'Living room — HDR listing photo' },
+  { src: '/media/work/08.jpg', alt: 'Bedroom with artwork — listing photo' },
+  { src: '/media/work/09.jpg', alt: 'Condo lobby with seating — listing photo' },
+  { src: '/media/work/10.jpg', alt: 'Drone view of a new commercial development' },
+  { src: '/media/work/11.jpg', alt: 'Drone view of an active construction site' },
+  { src: '/media/work/12.jpg', alt: 'Commercial building exterior — listing photo' },
 ] as const

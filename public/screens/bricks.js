@@ -1919,7 +1919,7 @@ function BookFlowTime({ th, dark }) {
       <div style={{ marginTop:16, padding:14, border:`1px solid ${th.hair}`, borderRadius:2, background:th.surf2 }}>
         <Over color={th.ink3}>After you pay</Over>
         <div style={{ fontSize:13, color:th.ink2, marginTop:8, lineHeight:1.5 }}>
-          Time locks. GO notifies the photographer. Media returns to the listing file on the desk.
+          Time locks. Bricks notifies the photographer. Media returns to the listing file on the desk.
         </div>
       </div>
     </>

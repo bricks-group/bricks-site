@@ -5,16 +5,16 @@ import { legalDocCss } from '@/components/legalDocCss'
 export const metadata: Metadata = {
   title: 'Bricks — Delete your account',
   description:
-    'How to delete a Bricks GO or Bricks OS account, in the app or by email, and what Bricks Group deletes and keeps.',
+    'How to delete a Bricks account, in the app or by email, and what Bricks Group deletes and keeps.',
   alternates: { canonical: '/account-deletion' },
   openGraph: {
     title: 'Bricks — Delete your account',
-    description: 'How to delete a Bricks GO or Bricks OS account, and what we delete and keep.',
+    description: 'How to delete a Bricks account, and what we delete and keep.',
   },
   twitter: {
     card: 'summary',
     title: 'Bricks — Delete your account',
-    description: 'How to delete a Bricks GO or Bricks OS account, and what we delete and keep.',
+    description: 'How to delete a Bricks account, and what we delete and keep.',
   },
 }
 
@@ -26,7 +26,7 @@ export default function AccountDeletionPage() {
           <span className="badge">Legal</span>
           <h1>Delete your account</h1>
           <p className="sub">
-            For accounts used with Bricks GO (photographers and vendors) or Bricks OS (real estate offices), made by
+            For accounts in the Bricks apps (photographers and vendors, or real estate offices), made by
             Bricks Group, Ontario, Canada.
           </p>
           <div className="updated">Updated · 11 October 2026</div>
@@ -38,11 +38,11 @@ export default function AccountDeletionPage() {
           <h2>Delete it in the app</h2>
           <ul>
             <li>
-              <strong>Bricks GO:</strong> open the <strong>Me</strong> tab, tap <strong>Delete account</strong>, then
+              <strong>Photographer and vendor accounts:</strong> open the <strong>Me</strong> tab, tap <strong>Delete account</strong>, then
               confirm.
             </li>
             <li>
-              <strong>Bricks OS:</strong> open <strong>Account</strong>, tap <strong>Delete account</strong>, then
+              <strong>Real estate office accounts:</strong> open <strong>Account</strong>, tap <strong>Delete account</strong>, then
               confirm.
             </li>
           </ul>

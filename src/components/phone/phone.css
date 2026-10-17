@@ -1,0 +1,122 @@
+/* PhoneFrame: realistic modern iPhone, 19.5:9. Rounded on purpose (the one exception to the square aesthetic). */
+.pf-stage{position:absolute;left:50%;top:var(--pf-top,7%);width:var(--pf-w,min(300px,62%));transform:translateX(-50%);z-index:2;}
+.pf{position:relative;width:100%;aspect-ratio:9/19.5;box-sizing:border-box;padding:1.4%;border-radius:14.7% / 6.8%;background:#1D1B19;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07),0 0 0 .5px rgba(0,0,0,.4),0 30px 60px -30px rgba(20,17,14,.45);}
+.pf-screen{position:relative;width:100%;height:100%;border-radius:13.6% / 6.3%;overflow:hidden;background:#F7F5F0;isolation:isolate;transform:translateZ(0);}
+.pf-island{position:absolute;z-index:3;top:1.9%;left:50%;width:31%;height:4.2%;border-radius:999px;background:#0B0A09;transform:translateX(-50%);}
+.pf-btn{position:absolute;width:1.1%;min-width:2px;background:#2A2724;border-radius:1px;}
+.pf-btn-action{left:-.9%;top:16%;height:4.6%;}
+.pf-btn-volup{left:-.9%;top:24%;height:8.6%;}
+.pf-btn-voldn{left:-.9%;top:34.5%;height:8.6%;}
+.pf-btn-power{right:-.9%;top:27%;height:13.5%;}
+.pfs{position:absolute;inset:0;container-type:inline-size;}
+
+/* Screen content: sized in container units so it stays crisp at any phone width (design width 292). */
+.pfa{--u:calc(100cqw / 292);position:absolute;inset:0;padding:calc(var(--u) * 14) calc(var(--u) * 18) 0;font-family:var(--vs-sans);color:#14110E;font-size:calc(var(--u) * 13);line-height:1.3;}
+.pfs-mono{font-family:var(--vs-mono);font-variant-numeric:tabular-nums;letter-spacing:0;}
+.pfs-bar{display:flex;justify-content:space-between;align-items:center;height:calc(var(--u) * 20);padding:0 calc(var(--u) * 8);font-size:calc(var(--u) * 13);font-weight:600;}
+.pfs-sys{display:flex;gap:calc(var(--u) * 5);align-items:center;}
+.pfs-sys svg{height:calc(var(--u) * 10);width:auto;}
+.pfs-head{display:flex;flex-direction:column;gap:calc(var(--u) * 2);margin:calc(var(--u) * 16) 0 calc(var(--u) * 10);}
+.pfs-kicker{font-size:calc(var(--u) * 11);color:#6E6964;}
+.pfs-title{font-size:calc(var(--u) * 24);font-weight:500;letter-spacing:-.02em;}
+.pfs-lbl{display:block;font-size:calc(var(--u) * 11);color:#6E6964;margin-bottom:calc(var(--u) * 5);}
+.pfs-addr{display:block;font-size:calc(var(--u) * 14);font-weight:500;letter-spacing:-.01em;}
+.pfs-meta{display:block;font-size:calc(var(--u) * 11.5);color:#6E6964;margin-top:calc(var(--u) * 2);}
+.pfs-card{background:#fff;border:1px solid #E6E2DA;padding:calc(var(--u) * 10) calc(var(--u) * 12);}
+.pfs-sec{margin-top:calc(var(--u) * 10);}
+.pfs-pk{position:relative;list-style:none;margin:0;padding:0;border:1px solid #E6E2DA;background:#fff;}
+.pfs-pk li{display:flex;justify-content:space-between;align-items:center;height:calc(var(--u) * 36);padding:0 calc(var(--u) * 12);box-sizing:border-box;border-top:1px solid #EFECE6;}
+.pfs-pk li:first-child{border-top:none;}
+.pfs-pk-n{display:flex;flex-direction:column;font-weight:500;}
+.pfs-pk-n small{font-size:calc(var(--u) * 10.5);font-weight:400;color:#6E6964;}
+.pfs-pk-sel{position:absolute;left:-1px;right:-1px;top:-1px;height:calc(var(--u) * 36 + 2px);border:1.5px solid #14110E;box-sizing:border-box;transform:translateY(calc(var(--u) * 72));pointer-events:none;}
+.pfs-slots{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #E6E2DA;background:#fff;}
+.pfs-slots li{height:calc(var(--u) * 30);display:flex;align-items:center;justify-content:center;border-left:1px solid #EFECE6;font-size:calc(var(--u) * 12);}
+.pfs-slots li:first-child{border-left:none;}
+.pfs-slot-sel{position:absolute;top:-1px;bottom:-1px;left:-1px;width:calc(33.333% + 2px);border:1.5px solid #14110E;box-sizing:border-box;transform:translateX(100%);pointer-events:none;}
+.pfs-cta{position:relative;margin-top:calc(var(--u) * 10);height:calc(var(--u) * 38);}
+.pfs-cta-a,.pfs-cta-b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:calc(var(--u) * 6);font-weight:500;font-size:calc(var(--u) * 13.5);}
+.pfs-cta-a{background:#14110E;color:#F4F1EB;opacity:0;}
+.pfs-cta-b{background:#F4F1EB;color:#14110E;border:1.5px solid #14110E;box-sizing:border-box;}
+.pfs-cta-b .bx-icon{width:calc(var(--u) * 16);height:calc(var(--u) * 16);color:var(--vs-accent);}
+.pfs-states{list-style:none;margin:calc(var(--u) * 10) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #E6E2DA;}
+.pfs-states li{display:flex;flex-direction:column;gap:calc(var(--u) * 6);padding-top:calc(var(--u) * 8);font-size:calc(var(--u) * 10.5);color:#6E6964;}
+.pfs-states li:last-child{color:#14110E;}
+.pfs-states li i{display:block;width:calc(var(--u) * 7);height:calc(var(--u) * 7);border-radius:50%;background:#B9B3AA;position:relative;}
+.pfs-states li i::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--vs-accent);opacity:0;}
+.pfs-states li:last-child i::after{opacity:1;}
+
+/* Jobs */
+.pfs-jobs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:calc(var(--u) * 8);}
+.pfs-job{position:relative;background:#fff;border:1px solid #E6E2DA;padding:calc(var(--u) * 12);}
+.pfs-job-top{display:flex;justify-content:space-between;gap:calc(var(--u) * 8);align-items:baseline;}
+.pfs-job .pfs-addr{font-size:calc(var(--u) * 13);}
+.pfs-pay{font-size:calc(var(--u) * 13);font-weight:500;white-space:nowrap;}
+.pfs-job-0::before{content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:calc(var(--u) * 2.5);background:var(--vs-accent);}
+.pfs-job-state{position:relative;margin-top:calc(var(--u) * 10);height:calc(var(--u) * 36);}
+.pjs{position:absolute;inset:0 0 calc(var(--u) * 6) 0;display:flex;align-items:center;gap:calc(var(--u) * 6);font-size:calc(var(--u) * 12.5);font-weight:500;opacity:0;}
+.pjs .bx-icon{width:calc(var(--u) * 16);height:calc(var(--u) * 16);color:var(--vs-accent);}
+.pjs-new{justify-content:center;background:#14110E;color:#F4F1EB;}
+.pjs-del{opacity:1;}
+.pfs-prog{position:absolute;left:0;right:0;bottom:0;height:calc(var(--u) * 2.5);background:#EFECE6;overflow:hidden;}
+.pfs-prog b{position:absolute;inset:0;background:#14110E;transform-origin:left center;transform:scaleX(1);}
+
+/* Loop: 12s, transforms + opacity only. Plays when data-play=1, holds when p; never-seen/reduced-motion = static final state. */
+@keyframes pfIn0{0%,3%{opacity:0;transform:translateY(calc(var(--u) * 8))}7%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pfIn1{0%,8%{opacity:0;transform:translateY(calc(var(--u) * 8))}12%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pfIn2{0%,13%{opacity:0;transform:translateY(calc(var(--u) * 8))}17%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pfIn3{0%,18%{opacity:0;transform:translateY(calc(var(--u) * 8))}22%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pfIn4{0%,23%{opacity:0;transform:translateY(calc(var(--u) * 8))}27%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pfPk{0%,30%{opacity:0;transform:translateY(0)}32%,34%{opacity:1;transform:translateY(0)}38%,92%{opacity:1;transform:translateY(calc(var(--u) * 72))}96%,100%{opacity:0;transform:translateY(calc(var(--u) * 72))}}
+@keyframes pfSlot{0%,40%{opacity:0;transform:translateX(100%)}43%,92%{opacity:1;transform:translateX(100%)}96%,100%{opacity:0;transform:translateX(100%)}}
+@keyframes pfCtaA{0%,49%{opacity:1;transform:scale(1)}50.5%{opacity:1;transform:scale(.96)}51.2%,100%{opacity:0;transform:scale(1)}}
+@keyframes pfCtaB{0%,51.4%{opacity:0}53%,92%{opacity:1}96%,100%{opacity:0}}
+@keyframes pfDot0{0%,55%{opacity:0;transform:scale(.3)}57%{opacity:1;transform:scale(1.25)}58%,62%{opacity:1;transform:scale(1)}63%,100%{opacity:0;transform:scale(1)}}
+@keyframes pfLab0{0%,55%{opacity:.35}57%,92%{opacity:1}96%,100%{opacity:.35}}
+@keyframes pfDot1{0%,63%{opacity:0;transform:scale(.3)}65%{opacity:1;transform:scale(1.25)}66%,70%{opacity:1;transform:scale(1)}71%,100%{opacity:0;transform:scale(1)}}
+@keyframes pfLab1{0%,63%{opacity:.35}65%,92%{opacity:1}96%,100%{opacity:.35}}
+@keyframes pfDot2{0%,71%{opacity:0;transform:scale(.3)}73%{opacity:1;transform:scale(1.25)}74%,78%{opacity:1;transform:scale(1)}79%,100%{opacity:0;transform:scale(1)}}
+@keyframes pfLab2{0%,71%{opacity:.35}73%,92%{opacity:1}96%,100%{opacity:.35}}
+@keyframes pfDot3{0%,79%{opacity:0;transform:scale(.3)}81%{opacity:1;transform:scale(1.25)}82%,91%{opacity:1;transform:scale(1)}92%,100%{opacity:0;transform:scale(1)}}
+@keyframes pfLab3{0%,79%{opacity:.35}81%,92%{opacity:1}96%,100%{opacity:.35}}
+@keyframes pfJob0{0%,4%{opacity:0;transform:translateY(calc(var(--u) * -14))}8%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pfJob1{0%,12%{opacity:0;transform:translateY(calc(var(--u) * -14))}16%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pfJob2{0%,20%{opacity:0;transform:translateY(calc(var(--u) * -14))}24%,92%{opacity:1;transform:none}96%,100%{opacity:0;transform:none}}
+@keyframes pjsNew{0%,8%{opacity:0;transform:scale(1)}10%,34%{opacity:1;transform:scale(1)}35.5%{opacity:1;transform:scale(.96)}37%,100%{opacity:0;transform:scale(1)}}
+@keyframes pjsAcc{0%,37%{opacity:0}38.5%,48.5%{opacity:1}50%,100%{opacity:0}}
+@keyframes pjsNav{0%,50%{opacity:0}51.5%,60.5%{opacity:1}62%,100%{opacity:0}}
+@keyframes pjsUp{0%,62%{opacity:0}63.5%,78.5%{opacity:1}80%,100%{opacity:0}}
+@keyframes pjsDel{0%,80%{opacity:0}81.5%,92.5%{opacity:1}94%,100%{opacity:0}}
+@keyframes pfProg{0%,62%{opacity:0;transform:scaleX(0)}63%{opacity:1;transform:scaleX(0)}78%{opacity:1;transform:scaleX(1)}80%,100%{opacity:0;transform:scaleX(1)}}
+@keyframes pfAccent{0%,36%{opacity:0}38%,92%{opacity:1}96%,100%{opacity:0}}
+.pfa:is([data-play='1'],[data-play='p']) .pfa-in-0{animation:pfIn0 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfa-in-1{animation:pfIn1 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfa-in-2{animation:pfIn2 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfa-in-3{animation:pfIn3 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfa-in-4{animation:pfIn4 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-pk-sel{animation:pfPk 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-slot-sel{animation:pfSlot 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-cta-a{animation:pfCtaA 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-cta-b{animation:pfCtaB 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(1) i::after{animation:pfDot0 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(1){animation:pfLab0 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(2) i::after{animation:pfDot1 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(2){animation:pfLab1 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(3) i::after{animation:pfDot2 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(3){animation:pfLab2 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(4) i::after{animation:pfDot3 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li:nth-child(4){animation:pfLab3 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-job-0{animation:pfJob0 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-job-1{animation:pfJob1 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-job-2{animation:pfJob2 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pjs-new{animation:pjsNew 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pjs-acc{animation:pjsAcc 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pjs-nav{animation:pjsNav 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pjs-up{animation:pjsUp 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pjs-del{animation:pjsDel 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-prog b{animation:pfProg 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-job-0::before{animation:pfAccent 12s linear infinite both;}
+.pfa:is([data-play='1'],[data-play='p']) .pfs-states li{color:#14110E;}
+.pfa[data-play='p'] *,.pfa[data-play='p'] *::before,.pfa[data-play='p'] *::after{animation-play-state:paused !important;}
+@media (prefers-reduced-motion: reduce){.pfa *,.pfa *::before,.pfa *::after{animation:none !important;}}

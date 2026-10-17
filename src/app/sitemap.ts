@@ -7,6 +7,7 @@ const PUBLIC_NOW = [
   { path: '/book', changeFrequency: 'weekly' as const, priority: 1 },
   { path: '/photographers', changeFrequency: 'weekly' as const, priority: 0.9 },
   { path: '/real-estate-photography', changeFrequency: 'weekly' as const, priority: 0.95 },
+  { path: '/media', changeFrequency: 'weekly' as const, priority: 0.9 },
   { path: '/blog', changeFrequency: 'weekly' as const, priority: 0.85 },
   { path: '/blog/canada-real-estate-photography-cost-2026', changeFrequency: 'monthly' as const, priority: 0.8 },
   { path: '/blog/gta-real-estate-media-cost-2026', changeFrequency: 'monthly' as const, priority: 0.75 },
@@ -32,7 +33,7 @@ const GATED_READY = [
   { path: '/account-deletion', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/legal', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/dpa', changeFrequency: 'yearly' as const, priority: 0.3 },
-  { path: '/construction', changeFrequency: 'monthly' as const, priority: 0.45 },
+  { path: '/builders', changeFrequency: 'monthly' as const, priority: 0.6 },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

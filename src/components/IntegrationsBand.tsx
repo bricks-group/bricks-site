@@ -9,6 +9,7 @@
  */
 
 import type { CSSProperties } from 'react'
+import './integrations-open.css'
 
 /** scale: optical-size multiplier on the 30px logo height (uniform; never distorts). */
 type Logo = { src: string; w: number; h: number; scale?: number; alt?: string }
@@ -34,6 +35,9 @@ const LIVE: Tile[] = [
   { name: 'Google', what: 'Sign-in' },
 ]
 
+/** Commodity tools: listed further down / in the full band, never headlined in the homepage strip (Kam, 17 Oct). */
+const COMMODITY = new Set(['Google Calendar', 'Apple Calendar', 'Google'])
+
 const SOON: Tile[] = [
   { name: 'Docusign', what: 'Send from the deal', logo: { src: '/integrations/docusign.svg', w: 70, h: 15 } },
 ]
@@ -50,7 +54,7 @@ function Mark({ t, soon = false }: { t: Tile; soon?: boolean }) {
       width={w}
       height={h}
       alt={alt ?? `${t.name} logo`}
-      loading="lazy"
+      loading="eager"
       decoding="async"
       className={soon ? 'integ-img integ-img-s' : 'integ-img'}
       style={scale ? ({ '--s': scale } as CSSProperties) : undefined}
@@ -58,40 +62,56 @@ function Mark({ t, soon = false }: { t: Tile; soon?: boolean }) {
   )
 }
 
-export default function IntegrationsBand() {
+function Row({ hidden = false }: { hidden?: boolean }) {
   return (
-    <section className="integ-band rvl" id="integrations" aria-label="Integrations">
-      <div className="wrap">
-        <div className="section-head section-head-stack">
-          <span className="over">Integrations</span>
-          <h2>Works with the tools your brokerage already runs.</h2>
-          <p className="lede">Plug Bricks into your current stack today. Move to Bricks-native when you&rsquo;re ready.</p>
+    <ul className="integ-row" aria-hidden={hidden || undefined} aria-label={hidden ? undefined : 'Works with'}>
+      {LIVE.map((t) => (
+        <li key={t.name} className="integ-item"><Mark t={t} /></li>
+      ))}
+      {SOON.map((t) => (
+        <li key={t.name} className="integ-item integ-item-soon">
+          <Mark t={t} />
+          <span className="integ-soon-pill">Soon</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export default function IntegrationsBand({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <section className="integ-strip-c rvl" id="integrations" aria-label="Integrations">
+        <div className="wrap">
+          <p className="integ-c-cap">Works with your MLS® feed, CRM and payments.</p>
+          <ul className="integ-c-grid" aria-label="Works with">
+            {LIVE.filter((t) => !COMMODITY.has(t.name)).map((t) => (
+              <li key={t.name} className="integ-c-item" title={t.what}><Mark t={t} /></li>
+            ))}
+            {SOON.map((t) => (
+              <li key={t.name} className="integ-c-item integ-c-soon" title={t.what}><Mark t={t} /><span className="integ-c-soon-t">Soon</span></li>
+            ))}
+          </ul>
+          <p className="integ-fine">Logos are trademarks of their respective owners. No endorsement implied.</p>
         </div>
-
-        <ul className="integ-grid" aria-label="Works with now">
-          {LIVE.map((t) => (
-            <li key={t.name} className="integ-tile">
-              <div className="integ-plate"><Mark t={t} /></div>
-              <div className="integ-meta">
-                <span className="integ-what">{t.what}</span>
-                <span className="integ-tag">Live</span>
-              </div>
-            </li>
-          ))}
-          <li className="integ-tile integ-soon" aria-label="Coming soon">
-            <span className="integ-tag integ-tag-soon">Coming soon</span>
-            <ul className="integ-soon-list">
-              {SOON.map((t) => (
-                <li key={`${t.name}-${t.what}`}>
-                  <span className="integ-soon-mark"><Mark t={t} soon /></span>
-                  <span className="integ-what">{t.what}</span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        </ul>
-
-        <a className="learn-link integ-link" href="https://app.brxs.ca/login">Connect yours in Bricks OS →</a>
+      </section>
+    )
+  }
+  return (
+    <section className="integ-band integ-open rvl" id="integrations" aria-label="Integrations">
+      <div className="wrap">
+        <div className="integ-head">
+          <h2>Works with the tools you already use.</h2>
+          <a className="learn-link integ-link" href="https://app.brxs.ca/login">Connect yours in Bricks →</a>
+        </div>
+      </div>
+      <div className="integ-strip">
+        <div className="integ-track">
+          <Row />
+          <Row hidden />
+        </div>
+      </div>
+      <div className="wrap">
         <p className="integ-fine">Logos are trademarks of their respective owners. No endorsement implied.</p>
       </div>
     </section>

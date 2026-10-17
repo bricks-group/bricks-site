@@ -14,7 +14,7 @@ export default function Footer() {
             <span className="wordmark">bricks</span>
           </Link>
           <p className="foot-blurb">
-            {STATUS.chrome} {STATUS.stores}
+            The system for Canadian real estate.
           </p>
         </div>
         <div className="foot-col">
@@ -22,12 +22,14 @@ export default function Footer() {
           <div className="foot-links">
             <Link href="/platform">Platform</Link>
             <Link href="/pricing">Pricing</Link>
+            <Link href="/media">Media</Link>
             <Link href="/real-estate-photography">Listing photos</Link>
+            <Link href="/builders">Site Progress</Link>
             <Link href="/gallery">Work</Link>
             <Link href="/book">Book a shoot</Link>
             <Link href="/service-areas">Service areas</Link>
             <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>
-            <a href={GO_URL} rel="noopener noreferrer">GO</a>
+            <a href={GO_URL} rel="noopener noreferrer">Photographer app</a>
             <a href={OS_LOGIN}>Log in</a>
           </div>
         </div>
@@ -47,7 +49,7 @@ export default function Footer() {
           <div className="foot-links">
             <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy</Link>
-            <Link href="/legal">Legal index</Link>
+            <Link href="/legal">Legal</Link>
           </div>
         </div>
       </div>

@@ -3,7 +3,8 @@ import Link from 'next/link'
 import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
-import PhoneDevice from '@/components/PhoneDevice'
+import PhoneFrame from '@/components/phone/PhoneFrame'
+import PhoneVideo from '@/components/phone/PhoneVideo'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
 import { OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
@@ -11,16 +12,16 @@ import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'bricks platform — OS, Companion, GO',
-  description: 'The system for Canadian real estate. Property to close: listing, Companion, GO, media, MLS, transaction. Media is live to book. OS is live in preview at app.brxs.ca.',
+  title: 'bricks platform — web and mobile',
+  description: 'The system for Canadian real estate, from listing to close: Bricks on the web, Companion and the photographer app on mobile, plus media, MLS and transactions.',
   alternates: { canonical: '/platform' },
 }
 
 const roles = [
-  { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'Whole shop · per seat.' },
-  { href: '/agents#team', over: 'OS', title: 'Team', body: 'Shared pipeline.' },
-  { href: '/agents', over: 'OS · Companion', title: 'Agent', body: 'Listing file · Companion.' },
-  { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Fixed rate card · auto-assign.' },
+  { href: '/brokerage', over: 'Bricks', title: 'Brokerage', body: 'The whole office, priced per seat.' },
+  { href: '/agents#team', over: 'Bricks', title: 'Team', body: 'One shared pipeline.' },
+  { href: '/agents', over: 'Bricks + Companion', title: 'Agent', body: 'Your listings, and shoots booked from your phone.' },
+  { href: '/photographers', over: 'Bricks', title: 'Photographer', body: 'Jobs come to you, at a fixed rate.' },
 ]
 
 export default function PlatformPage() {
@@ -35,7 +36,7 @@ export default function PlatformPage() {
         <div className="wrap">
           <span className="badge">Platform</span>
           <h1>Property to close.</h1>
-          <p className="sub">{STATUS.os}</p>
+          <p className="sub">Deals, media, MLS and e-sign in one system, on the web and on your phone.</p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
             <Link className="btn btn-sec" href="/demo">Request a walkthrough</Link>
@@ -44,10 +45,11 @@ export default function PlatformPage() {
       </section>
 
       {/* Cursor-style: each surface gets its own live demo — desk (web) + phones (mobile). */}
-      <section className="prod-hero platform-os-stage" aria-label="OS — web desk">
+      <section className="prod-hero platform-os-stage" aria-label="Bricks — web desk">
         <div className="wrap platform-surf-head">
-          <span className="over">OS · Web</span>
-          <h2>OS.</h2>
+          <span className="over">Web</span>
+          <h2>Bricks.</h2>
+          <p>The desk for your listings and deals.</p>
         </div>
         <div className="tray tray-os">
           <div className="tray-stage">
@@ -55,57 +57,31 @@ export default function PlatformPage() {
           </div>
         </div>
         <div className="wrap platform-surf-cta">
-          <a className="btn btn-sec" href={OS_LOGIN}>Open OS</a>
+          <a className="btn btn-sec" href={OS_LOGIN}>Open Bricks</a>
         </div>
       </section>
 
       <section className="prod-row rvl" aria-label="Companion — mobile">
         <div className="prod-copy">
-          <span className="over">Companion · Mobile</span>
+          <span className="over">Mobile</span>
           <h2>Companion.</h2>
+          <p>Book shoots from your phone.</p>
           <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
         <div className="tray tray-book tray-phone">
-          <div className="phone-stage">
-            <PhoneDevice label="Companion">
-              <ProductWindow
-                variant="phone"
-                title="Companion"
-                src="/screens/book.html?lock=1"
-                nw={390}
-                nh={844}
-                fit="contain"
-                hideChrome
-                zoomAt={390}
-                lazy
-              />
-            </PhoneDevice>
-          </div>
+          <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" /></PhoneFrame>
         </div>
       </section>
 
-      <section className="prod-row prod-row-flip rvl" aria-label="GO — mobile">
+      <section className="prod-row prod-row-flip rvl" aria-label="Photographer app — mobile">
         <div className="tray tray-disp tray-phone">
-          <div className="phone-stage">
-            <PhoneDevice label="GO">
-              <ProductWindow
-                variant="phone"
-                title="GO"
-                src="/screens/disp.html?lock=1"
-                nw={390}
-                nh={844}
-                fit="contain"
-                hideChrome
-                zoomAt={390}
-                lazy
-              />
-            </PhoneDevice>
-          </div>
+          <PhoneFrame label="Screen recording of the real Bricks GO photographer app with sample data: today's shoots, job detail, week, payouts"><PhoneVideo name="go" tone="dark" bar="#0F0F0F" /></PhoneFrame>
         </div>
         <div className="prod-copy">
-          <span className="over">GO · Mobile</span>
-          <h2>GO.</h2>
-          <p className="surf-link"><a href={GO_URL} rel="noopener noreferrer">Open GO</a></p>
+          <span className="over">Mobile</span>
+          <h2>Bricks, for photographers.</h2>
+          <p>The field app for photographers.</p>
+          <p className="surf-link"><a href={GO_URL} rel="noopener noreferrer">Open the photographer app</a></p>
         </div>
       </section>
 
@@ -132,10 +108,10 @@ export default function PlatformPage() {
           <div className="sec-head">
             <div>
               <span className="over">Software</span>
-              <h2>Clay, Keystone, Marble, Diamond.</h2>
+              <h2>Plans for agents and brokerages.</h2>
             </div>
           </div>
-          <p className="sub-line">{SOFTWARE_BLURB} Individuals: Clay free, then $49 / $99 / $149 a month, or yearly with two months free. Brokerages buy seats yearly — full OS on every seat. Virtual visit is $249–$399 by footprint, never packaged.</p>
+          <p className="sub-line">{SOFTWARE_BLURB} Brokerages buy seats yearly.</p>
           <PlanCards style={{ marginTop: 22 }} />
           <div className="incl" style={{ marginTop: 1, borderTop: 'none' }}>
             {OFFICE_PLANS.map((p) => (
@@ -146,7 +122,7 @@ export default function PlatformPage() {
               </div>
             ))}
           </div>
-          <p className="note">{ADDONS_BLURB} {ADDONS.map((a) => `${a.name} ${a.price}`).join(' · ')}. <Link href="/pricing">Full pricing →</Link></p>
+          <p className="note">{ADDONS_BLURB} <Link href="/pricing">Full pricing →</Link></p>
         </section>
 
         <section className="block rvl">
@@ -162,8 +138,8 @@ export default function PlatformPage() {
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
             <span className="over">Ready when you are</span>
-            <h2>Book a shoot. Open the OS.</h2>
-            <p className="lead">Order media on this site or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to the <a href={OS_LOGIN}>OS</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
+            <h2>Book a shoot. Open Bricks.</h2>
+            <p className="lead">Book here or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to <a href={OS_LOGIN}>Bricks</a> or the <a href={GO_URL} rel="noopener noreferrer">photographer app</a>.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>
