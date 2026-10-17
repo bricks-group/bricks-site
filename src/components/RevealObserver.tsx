@@ -22,8 +22,14 @@ export default function RevealObserver() {
     const docEl = document.documentElement
     docEl.classList.add('reveal-ready')
 
-    const targets = Array.from(document.querySelectorAll<HTMLElement>('.rvl'))
-    if (!targets.length) return
+    // Long-form containers (blog bodies, legal copy) never take part in reveal.
+    const targets = Array.from(
+      document.querySelectorAll<HTMLElement>('.rvl:not(.prose):not(article)')
+    )
+    // reveal-ready lives on <html> and survives client-side navigation, so it
+    // must be removed on unmount or the next page's .rvl content stays hidden.
+    const cleanup = () => docEl.classList.remove('reveal-ready')
+    if (!targets.length) return cleanup
 
     const reduced =
       window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -32,13 +38,15 @@ export default function RevealObserver() {
 
     if (reduced || !('IntersectionObserver' in window)) {
       targets.forEach(reveal)
-      return
+      return cleanup
     }
 
     const revealIfInView = (el: HTMLElement) => {
       const r = el.getBoundingClientRect()
-      // Already anywhere in (or just above) the viewport → reveal now.
-      if (r.top < window.innerHeight * 0.85 && r.bottom > 0) reveal(el)
+      // Never hide content taller than the viewport; otherwise reveal anything
+      // already in (or just above) the viewport.
+      if (r.height > window.innerHeight * 0.9) reveal(el)
+      else if (r.top < window.innerHeight * 0.85 && r.bottom > 0) reveal(el)
     }
 
     const obs = new IntersectionObserver(
@@ -57,18 +65,21 @@ export default function RevealObserver() {
       if (!el.classList.contains('in')) obs.observe(el)
     })
 
-    // Failsafe: if an in/near-viewport element somehow didn't get revealed
-    // (missed IO callback), catch it after load. Off-screen elements are left
-    // hidden on purpose — they reveal on scroll.
-    const failsafe = window.setTimeout(() => {
-      document
-        .querySelectorAll<HTMLElement>('.rvl:not(.in)')
-        .forEach((el) => revealIfInView(el))
+    // Failsafe: in-view stragglers at 1.5s; everything at 4s, so a missed or
+    // broken IO callback (seen in WebKit) can never leave content invisible.
+    const nudge = window.setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('.rvl:not(.in)').forEach(revealIfInView)
     }, 1500)
+    const failsafe = window.setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('.rvl:not(.in)').forEach(reveal)
+      obs.disconnect()
+    }, 4000)
 
     return () => {
       obs.disconnect()
+      window.clearTimeout(nudge)
       window.clearTimeout(failsafe)
+      cleanup()
     }
   }, [])
 
