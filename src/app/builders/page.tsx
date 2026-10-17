@@ -68,8 +68,9 @@ export default function BuildersPage() {
             Drone progress visits and mapped captures on a fixed schedule. Book one visit, or put a site on a monthly plan.
           </p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="#quote">Request a site plan</Link>
-            <Link className="learn-link" href="#pricing">See pricing →</Link>
+            <Link className="btn btn-night" href="/book/site">Book a site visit</Link>
+            <Link className="learn-link" href="/book/site?plan=visual">Start a monthly plan →</Link>
+            <Link className="learn-link" href="#quote">Talk to us</Link>
           </div>
         </div>
       </section>
@@ -119,6 +120,11 @@ export default function BuildersPage() {
             ))}
           </div>
           <p className="note">{PLAN_NOTE}</p>
+          <div className="cta-row" style={{ marginTop: 18 }}>
+            <Link className="btn btn-night" href="/book/site">Book one visit</Link>
+            <Link className="btn btn-sec" href="/book/site?plan=visual">Start a plan</Link>
+            <Link className="learn-link" href="#quote">Multiple sites or survey-grade? Talk to us →</Link>
+          </div>
         </div>
       </section>
 
@@ -127,11 +133,10 @@ export default function BuildersPage() {
           <div className="cx-grid">
             <div>
               <div className="sec-head">
-                <div><span className="over">Start</span><h2>Tell us about the site.</h2></div>
+                <div><span className="over">Talk to us</span><h2>Several sites? Tell us about them.</h2></div>
               </div>
               <p className="cx-note">
-                Share the address, project phase, how often you need visits and any insurance minimum. We&apos;ll reply with a
-                site plan and a first flight date.
+                For portfolios, survey-grade work or anything custom. One site? <Link href="/book/site">Book it directly</Link>.
               </p>
             </div>
             <div>
