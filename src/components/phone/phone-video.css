@@ -1,0 +1,10 @@
+/* Real-screen recordings inside PhoneFrame (v15). 393x852 iPhone capture; the status bar is
+   drawn here (54/393 of the width) and the recording sits under it, clipped by the screen. */
+.pfv{position:absolute;inset:0;container-type:inline-size;background:var(--pfv-bar,#F4F1E8);}
+.pfv-bar{position:relative;z-index:2;height:13.7cqw;padding:0 7cqw 0 8.5cqw;display:flex;align-items:center;background:var(--pfv-bar,#F4F1E8);}
+.pfv-bar .pfs-bar{width:100%;height:auto;padding:0;font-size:4.3cqw;font-family:var(--vs-sans,system-ui);font-weight:600;}
+.pfv-bar .pfs-sys{display:flex;gap:1.6cqw;align-items:center;}
+.pfv-bar .pfs-sys svg{height:3cqw;width:auto;}
+.pfv-light .pfv-bar{color:#14110E;}
+.pfv-dark .pfv-bar{color:#F4F1E8;}
+.pfv-video{position:absolute;left:0;top:13.7cqw;width:100%;height:auto;aspect-ratio:600/1300;display:block;object-fit:cover;object-position:top;background:var(--pfv-bar,#F4F1E8);}

@@ -4,8 +4,7 @@ import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import PhoneFrame from '@/components/phone/PhoneFrame'
-import BookingFlow from '@/components/phone/BookingFlow'
-import JobsFlow from '@/components/phone/JobsFlow'
+import PhoneVideo from '@/components/phone/PhoneVideo'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
 import { OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
@@ -70,13 +69,13 @@ export default function PlatformPage() {
           <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
         <div className="tray tray-book tray-phone">
-          <PhoneFrame label="Bricks booking app, sample data: listing, package, time slot, then Booked"><BookingFlow /></PhoneFrame>
+          <PhoneFrame label="Screen recording of the real Bricks OS app at phone width in demo mode: desk, transactions, MLS listings"><PhoneVideo name="os" bar="#F3F0E7" /></PhoneFrame>
         </div>
       </section>
 
       <section className="prod-row prod-row-flip rvl" aria-label="Photographer app — mobile">
         <div className="tray tray-disp tray-phone">
-          <PhoneFrame label="Bricks photographer app, sample data: new jobs, one accepted, navigating, uploading, delivered"><JobsFlow /></PhoneFrame>
+          <PhoneFrame label="Screen recording of the real Bricks GO photographer app with sample data: today's shoots, job detail, week, payouts"><PhoneVideo name="go" tone="dark" bar="#0F0F0F" /></PhoneFrame>
         </div>
         <div className="prod-copy">
           <span className="over">Mobile</span>
