@@ -20,6 +20,49 @@ const SOURCE_OPTIONS: { value: string; label: string }[] = [
 ]
 const SOURCE_DETAIL_MAX = 80
 
+// City picker. In the GTA is worked out by Dispatch from the city (never asked).
+// Keep in sync with Dispatch backend/app/services/applicant_evidence.py.
+const GTA_CITIES = [
+  'Toronto', 'Etobicoke', 'North York', 'Scarborough', 'East York', 'York',
+  'Mississauga', 'Brampton', 'Caledon', 'Oakville', 'Burlington', 'Milton', 'Halton Hills',
+  'Vaughan', 'Markham', 'Richmond Hill', 'Aurora', 'Newmarket', 'King', 'Whitchurch-Stouffville',
+  'East Gwillimbury', 'Georgina', 'Pickering', 'Ajax', 'Whitby', 'Oshawa', 'Clarington', 'Uxbridge', 'Scugog', 'Brock',
+]
+const NEAR_CITIES = [
+  'Hamilton', 'Barrie', 'Guelph', 'Kitchener', 'Waterloo', 'Cambridge', 'St. Catharines', 'Niagara Falls',
+  'Orangeville', 'Peterborough', 'Innisfil', 'Bradford West Gwillimbury', 'Brantford', 'London', 'Kingston', 'Ottawa',
+]
+
+// Sample photos go straight to Bricks storage (signed upload), then /apply gets the paths.
+const MIN_SAMPLES = 8
+const MAX_SAMPLES = 15
+const SAMPLE_MAX_BYTES = 15 * 1024 * 1024
+const SAMPLE_MIN_BYTES = 40 * 1024
+const CERT_MAX_BYTES = 10 * 1024 * 1024
+const IMAGE_TYPES: Record<string, string> = {
+  jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', heic: 'image/heic', heif: 'image/heif',
+}
+function imageType(f: File): string {
+  if (f.type && Object.values(IMAGE_TYPES).includes(f.type)) return f.type
+  const ext = (f.name.split('.').pop() || '').toLowerCase()
+  return IMAGE_TYPES[ext] || ''
+}
+function fileKey(f: File) { return `${f.name}:${f.size}:${f.lastModified}` }
+
+const DAYS = [
+  { v: 'mon', l: 'Mon' }, { v: 'tue', l: 'Tue' }, { v: 'wed', l: 'Wed' }, { v: 'thu', l: 'Thu' }, { v: 'fri', l: 'Fri' },
+]
+const WINDOWS = [
+  { v: 'early_morning', l: 'Early morning', h: '6–9am' },
+  { v: 'daytime', l: 'Daytime', h: '9am–5pm' },
+  { v: 'evening', l: 'Evening', h: '5–9pm' },
+]
+const NOTICE = [
+  { v: '2', l: 'Same day (2h)' }, { v: '12', l: '12 hours' }, { v: '24', l: '24 hours' }, { v: '48', l: '2 days' }, { v: '72', l: '3 days' },
+]
+
+type Uploaded = { session: string; paths: Record<string, string> }
+
 export default function PhotographerForm() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -29,6 +72,80 @@ export default function PhotographerForm() {
   const [icText, setIcText] = useState('Loading agreement…')
   const [err, setErr] = useState('')
   const [resumeWarning, setResumeWarning] = useState('')
+  const [cityChoice, setCityChoice] = useState('')
+  const [rpas, setRpas] = useState('')
+  const [samples, setSamples] = useState<File[]>([])
+  const [previews, setPreviews] = useState<string[]>([])
+  const [certFile, setCertFile] = useState<File | null>(null)
+  const [progress, setProgress] = useState('')
+  const [uploaded, setUploaded] = useState<Uploaded | null>(null)
+  const today = new Date().toISOString().slice(0, 10)
+
+  useEffect(() => {
+    const urls = samples.map((f) => URL.createObjectURL(f))
+    setPreviews(urls)
+    return () => urls.forEach((u) => URL.revokeObjectURL(u))
+  }, [samples])
+
+  function addSamples(list: FileList | null) {
+    if (!list) return
+    setErr('')
+    const next = [...samples]
+    const problems: string[] = []
+    for (const f of Array.from(list)) {
+      if (next.some((x) => fileKey(x) === fileKey(f))) continue
+      if (!imageType(f)) { problems.push(`${f.name} isn't a JPEG, PNG, WebP or HEIC photo`); continue }
+      if (f.size > SAMPLE_MAX_BYTES) { problems.push(`${f.name} is over 15 MB`); continue }
+      if (f.size < SAMPLE_MIN_BYTES) { problems.push(`${f.name} is too small to review (upload the full-size export)`); continue }
+      if (next.length >= MAX_SAMPLES) { problems.push(`Only ${MAX_SAMPLES} photos allowed`); break }
+      next.push(f)
+    }
+    setSamples(next)
+    if (problems.length) setErr(problems.join('. ') + '.')
+  }
+
+  async function uploadEvidence(files: File[], cert: File | null): Promise<{ session: string; samplePaths: string[]; certPath: string | null }> {
+    // Re-use earlier uploads on a resubmit (same files, same session).
+    const all = cert ? [...files, cert] : files
+    if (uploaded && all.every((f) => uploaded.paths[fileKey(f)])) {
+      return {
+        session: uploaded.session,
+        samplePaths: files.map((f) => uploaded.paths[fileKey(f)]),
+        certPath: cert ? uploaded.paths[fileKey(cert)] : null,
+      }
+    }
+    setProgress('Preparing upload…')
+    const r = await fetch(DISPATCH_API + '/sample-uploads', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        files: all.map((f, i) => ({ name: f.name, type: imageType(f), size: f.size, kind: cert && i === all.length - 1 ? 'rpas_cert' : 'sample' })),
+      }),
+    })
+    const data = await r.json().catch(() => ({}))
+    if (!r.ok) throw new Error(data.detail || 'Photo upload is unavailable right now. Please try again.')
+    const uploads: { path: string; signed_url: string }[] = data.uploads || []
+    let done = 0
+    const paths: Record<string, string> = {}
+    const queue = all.map((f, i) => ({ f, u: uploads[i] }))
+    async function worker() {
+      while (queue.length) {
+        const item = queue.shift()
+        if (!item) return
+        const put = await fetch(item.u.signed_url, { method: 'PUT', headers: { 'Content-Type': imageType(item.f) }, body: item.f })
+        if (!put.ok) throw new Error(`${item.f.name} didn't upload. Please try again.`)
+        paths[fileKey(item.f)] = item.u.path
+        done += 1
+        setProgress(`Uploading photos ${done}/${all.length}…`)
+      }
+    }
+    await Promise.all([worker(), worker(), worker()])
+    setUploaded({ session: data.session, paths })
+    return {
+      session: data.session,
+      samplePaths: files.map((f) => paths[fileKey(f)]),
+      certPath: cert ? paths[fileKey(cert)] : null,
+    }
+  }
 
   const RESUME_MAX_BYTES = 8 * 1024 * 1024 // 8MB
   const RESUME_EXTS = ['.pdf', '.doc', '.docx']
@@ -79,16 +196,62 @@ export default function PhotographerForm() {
     const name = (fd.get('name') as string || '').trim()
     const email = (fd.get('email') as string || '').trim()
     const phone = (fd.get('phone') as string || '').trim()
-    const city = (fd.get('city') as string || '').trim()
-    const equipmentRaw = (fd.get('equipment') as string) || ''
+    const city = cityChoice === '__other' ? (fd.get('city_other') as string || '').replace(/\s+/g, ' ').trim() : cityChoice
     const portfolio1 = (fd.get('portfolio1') as string || '').trim()
+    const portfolio2 = (fd.get('portfolio2') as string || '').trim()
     const hstNumber = (fd.get('hst_number') as string || '').trim()
     const hstExemptChecked = (form.querySelector<HTMLInputElement>('#f_hst_exempt'))?.checked
     const accepted = (form.querySelector<HTMLInputElement>('#f_accept'))?.checked
-
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone || !city || !equipmentRaw.trim() || !portfolio1) {
-      setErr('Fill in all required fields marked *.'); return
+    const equipment = {
+      camera_body: (fd.get('camera_body') as string || '').trim(),
+      lenses: (fd.get('lenses') as string || '').trim(),
+      tripod: (fd.get('tripod') as string || '').trim(),
+      lighting: (fd.get('lighting') as string || '').trim(),
+      drone_model: (fd.get('drone_model') as string || '').trim(),
     }
+
+    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !phone) {
+      setErr('Fill in your name, email and phone.'); return
+    }
+    if (!city) { setErr('Pick your home city.'); return }
+    if (!equipment.camera_body || !equipment.lenses || !equipment.tripod) {
+      setErr('Tell us your camera body, lenses and tripod.'); return
+    }
+    if (samples.length < MIN_SAMPLES || samples.length > MAX_SAMPLES) {
+      setErr(`Upload ${MIN_SAMPLES}–${MAX_SAMPLES} sample real estate photos (you have ${samples.length}).`); return
+    }
+
+    const droneChecked = specialties.includes('drone')
+    const rpasLevel = droneChecked ? rpas : ''
+    const rpasNumber = (fd.get('rpas_certificate_number') as string || '').trim()
+    const droneClaimed = droneChecked && (rpasLevel === 'basic' || rpasLevel === 'advanced')
+    if (droneChecked && !rpasLevel) { setErr('Select your RPAS certification level for drone work.'); return }
+    if (droneClaimed && !rpasNumber) { setErr('Enter your RPAS pilot certificate number.'); return }
+    if (droneClaimed && !certFile) { setErr('Add a photo of your RPAS pilot certificate.'); return }
+
+    const weekdays = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="days"]:checked')).map((c) => c.value)
+    const weekends = fd.get('weekends') === 'yes'
+    const windows = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="windows"]:checked')).map((c) => c.value)
+    const availability = {
+      days_of_week: [...weekdays, ...(weekends ? ['sat', 'sun'] : [])],
+      weekends,
+      time_windows: windows,
+      earliest_start_date: (fd.get('earliest_start_date') as string || '').trim(),
+      shoots_per_week: parseInt((fd.get('shoots_per_week') as string) || '', 10),
+      max_shoots_per_day: parseInt((fd.get('max_shoots_per_day') as string) || '', 10),
+      notice_hours: parseInt((fd.get('notice_hours') as string) || '', 10),
+      has_car: fd.get('has_car') === 'yes' ? true : fd.get('has_car') === 'no' ? false : null,
+      has_licence: fd.get('has_licence') === 'yes' ? true : fd.get('has_licence') === 'no' ? false : null,
+    }
+    if (fd.get('weekends') == null) { setErr('Tell us whether you can shoot weekends.'); return }
+    if (!availability.days_of_week.length) { setErr('Pick the days you can shoot.'); return }
+    if (!windows.length) { setErr('Pick at least one time window.'); return }
+    if (!availability.earliest_start_date) { setErr('Pick your earliest start date.'); return }
+    if (!(availability.shoots_per_week >= 1)) { setErr('Tell us how many shoots a week you expect to take.'); return }
+    if (!(availability.max_shoots_per_day >= 1)) { setErr('Tell us your max shoots per day.'); return }
+    if (!(availability.notice_hours >= 1)) { setErr('Tell us how much notice you need for a booking.'); return }
+    if (availability.has_car === null || availability.has_licence === null) { setErr("Tell us whether you have a car and a driver's licence."); return }
+
     if (!hstNumber && !hstExemptChecked) {
       setErr('Enter your HST/GST number, or confirm the small-supplier exemption below.'); return
     }
@@ -97,15 +260,6 @@ export default function PhotographerForm() {
     if (!SOURCE_OPTIONS.some((o) => o.value === sourceVal)) { setErr('Tell us how you heard about Bricks.'); return }
     if (sourceVal === 'other' && !sourceDetailRaw) { setErr('Tell us where you heard about Bricks.'); return }
     const sourceDetail = sourceVal === 'other' || sourceVal.startsWith('referral_') ? (sourceDetailRaw || null) : null
-
-    if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
-
-    const droneChecked = specialties.includes('drone')
-    const rpasLevel = (fd.get('f_rpas') as string) || null
-    if (droneChecked && !rpasLevel) { setErr('Select your RPAS certification level for drone work.'); return }
-
-    const portfolio2 = (fd.get('portfolio2') as string || '').trim()
-    const equipmentList = equipmentRaw.split(/[\n,]+/).map((s) => s.trim()).filter(Boolean)
 
     const resumeFile = (fd.get('resume') as File) || null
     if (!resumeFile || resumeFile.size === 0) {
@@ -118,20 +272,24 @@ export default function PhotographerForm() {
     if (resumeFile.size > RESUME_MAX_BYTES) {
       setErr('Resume file is too large (8MB max).'); return
     }
+    if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
 
-    const payload = {
+    const basePayload = {
       name, email, phone, city,
       max_travel_km: parseInt((fd.get('max_travel_km') as string) || '50', 10),
       vendor_type: 'photographer',
       specialties,
-      portfolio_links: [portfolio1].concat(portfolio2 ? [portfolio2] : []),
-      equipment_list: equipmentList,
+      portfolio_links: [portfolio1, portfolio2].filter(Boolean),
+      equipment_list: [equipment.camera_body, equipment.lenses, equipment.tripod, equipment.lighting, droneChecked ? equipment.drone_model : '']
+        .filter(Boolean),
+      equipment: { ...equipment, drone_model: droneChecked ? equipment.drone_model : '' },
+      availability,
       hst_number: hstNumber || null,
       hst_exempt: !!hstExemptChecked,
       company_website: (fd.get('company_website') as string || '').trim(),
-      drone_certified: !!(droneChecked && rpasLevel && rpasLevel !== 'none'),
-      rpas_certificate_level: rpasLevel && rpasLevel !== 'none' ? rpasLevel : null,
-      rpas_certificate_number: (fd.get('rpas_certificate_number') as string || '').trim() || null,
+      drone_certified: droneClaimed,
+      rpas_certificate_level: droneClaimed ? rpasLevel : null,
+      rpas_certificate_number: droneClaimed ? rpasNumber : null,
       accepted_terms: true,
       ic_agreement_version: '1.8',
       preferred_regions: [] as string[],
@@ -140,12 +298,30 @@ export default function PhotographerForm() {
     }
 
     setSubmitting(true)
+    let ev
+    try {
+      ev = await uploadEvidence(samples, droneClaimed ? certFile : null)
+    } catch (upErr) {
+      setProgress('')
+      setErr((upErr as Error).message || 'Your photos didn\'t upload. Please try again.'); setSubmitting(false); return
+    }
+    const payload = {
+      ...basePayload,
+      sample_upload_session: ev.session,
+      sample_paths: ev.samplePaths,
+      rpas_cert_path: ev.certPath,
+    }
+    setProgress('Sending application…')
     try {
       const r = await fetch(DISPATCH_API + '/apply', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
       })
       const data = await r.json()
-      if (!r.ok) { setErr(data.detail || 'Something went wrong. Please try again.'); setSubmitting(false); return }
+      if (!r.ok) {
+        const detail = data.detail || 'Something went wrong. Please try again.'
+        if (/upload expired/i.test(detail)) setUploaded(null)
+        setErr(detail); setProgress(''); setSubmitting(false); return
+      }
 
       if (resumeFile && resumeFile.size > 0 && data.member_id) {
         try {
@@ -156,7 +332,7 @@ export default function PhotographerForm() {
       }
       setSubmitted(true)
     } catch {
-      setErr('Network error. Please check your connection and try again.'); setSubmitting(false)
+      setErr('Network error. Please check your connection and try again.'); setProgress(''); setSubmitting(false)
     }
   }
 
@@ -165,7 +341,7 @@ export default function PhotographerForm() {
       <div className="success-box aform">
         <div className="check">✓</div>
         <h3>Application received.</h3>
-        <p>We&apos;ll review your portfolio and be in touch within 3 business days. Check your email — including spam.</p>
+        <p>We&apos;ll review your photos and be in touch within 3 business days. Check your email — including spam.</p>
         {resumeWarning && <p style={{ color: 'var(--brickDeep)', marginTop: 10 }}>{resumeWarning}</p>}
       </div>
     )
@@ -185,7 +361,18 @@ export default function PhotographerForm() {
       </div>
       <div className="field"><label>Email <span className="req">*</span></label><input name="email" type="email" placeholder="jordan@example.com" required autoComplete="email" /></div>
       <div className="grid2">
-        <div className="field"><label>Home city <span className="req">*</span></label><input name="city" placeholder="Toronto, ON" required /></div>
+        <div className="field"><label htmlFor="f_city">Home city <span className="req">*</span></label>
+          <select id="f_city" name="city_choice" required value={cityChoice} onChange={(e) => setCityChoice(e.target.value)}>
+            <option value="" disabled>Choose your city</option>
+            <optgroup label="Greater Toronto Area">
+              {GTA_CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
+            </optgroup>
+            <optgroup label="Nearby Ontario">
+              {NEAR_CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
+            </optgroup>
+            <option value="__other">Somewhere else…</option>
+          </select>
+        </div>
         <div className="field"><label>Max travel radius</label>
           <select name="max_travel_km" defaultValue="50">
             <option value="25">25 km</option>
@@ -195,6 +382,12 @@ export default function PhotographerForm() {
           </select>
         </div>
       </div>
+      {cityChoice === '__other' && (
+        <div className="field"><label htmlFor="f_city_other">Your city <span className="req">*</span></label>
+          <input id="f_city_other" name="city_other" required maxLength={80} placeholder="City, province" />
+          <span className="hint-sm">Bookings are in the GTA for now. Tell us where you&apos;re based and we&apos;ll keep you on file.</span>
+        </div>
+      )}
 
       <div className="fsec">02 · What you shoot</div>
       <div className="field"><label>Specialties <span className="req">*</span> <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(select all that apply)</span></label>
@@ -221,33 +414,113 @@ export default function PhotographerForm() {
 
       {droneVisible && (
         <div>
-          <div className="field"><label>Transport Canada RPAS certification <span className="req">*</span></label>
+          <div className="field"><label>Transport Canada RPAS pilot certificate <span className="req">*</span></label>
             <div className="radio-row">
-              <label><input type="radio" name="f_rpas" value="none" /> Not certified</label>
-              <label><input type="radio" name="f_rpas" value="basic" /> Basic certificate</label>
-              <label><input type="radio" name="f_rpas" value="advanced" /> Advanced certificate</label>
+              {[{ v: 'none', l: 'Not certified' }, { v: 'basic', l: 'Basic' }, { v: 'advanced', l: 'Advanced' }].map((o) => (
+                <label key={o.v}><input type="radio" name="f_rpas" value={o.v} checked={rpas === o.v} onChange={() => setRpas(o.v)} /> {o.l}</label>
+              ))}
             </div>
-            <span className="hint-sm">Controlled airspace near Pearson / Billy Bishop requires Advanced RPAS. We verify with Transport Canada before routing drone jobs.</span>
+            <span className="hint-sm">Controlled airspace near Pearson / Billy Bishop needs Advanced. Your pilot certificate number starts with PC- (your drone&apos;s registration number starting with C- is different).</span>
           </div>
-          <div className="field"><label>RPAS certificate number</label><input name="rpas_certificate_number" placeholder="PC-XXXXXXXX" /></div>
+          {(rpas === 'basic' || rpas === 'advanced') && (
+            <div className="grid2">
+              <div className="field"><label htmlFor="f_rpas_no">Pilot certificate number <span className="req">*</span></label>
+                <input id="f_rpas_no" name="rpas_certificate_number" placeholder="PC-1234567890" required maxLength={40} />
+              </div>
+              <div className="field"><label htmlFor="f_rpas_cert">Certificate photo <span className="req">*</span></label>
+                <input id="f_rpas_cert" type="file" accept="image/jpeg,image/png,image/webp,image/heic,.heic,.heif"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0] || null
+                    if (f && (!imageType(f) || f.size > CERT_MAX_BYTES)) { setErr('Certificate photo must be a JPEG, PNG, WebP or HEIC under 10 MB.'); setCertFile(null); e.target.value = ''; return }
+                    setCertFile(f)
+                  }} />
+                <span className="hint-sm">A clear photo or screenshot of the certificate (Drone Management Portal is fine).</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       <div className="field"><label>Equipment <span className="req">*</span></label>
-        <textarea name="equipment" rows={3} placeholder="Camera body, lenses, drone model (if applicable), editing software…" required
-          style={{ width: '100%', fontFamily: 'inherit', fontSize: 15, color: 'var(--ink)', background: 'var(--paperDeep)', border: '1px solid var(--hairStrong)', borderRadius: 2, padding: '12px 14px', resize: 'vertical' }} />
-        <span className="hint-sm">List your primary kit. We&apos;re looking for full-frame or equivalent, fast primes, and ideally a DJI/Autel drone for aerial-capable applicants.</span>
+        <div className="grid2">
+          <div className="field sub"><label htmlFor="f_body">Camera body <span className="req">*</span></label><input id="f_body" name="camera_body" required maxLength={120} placeholder="Sony A7 IV" /></div>
+          <div className="field sub"><label htmlFor="f_lenses">Lenses <span className="req">*</span></label><input id="f_lenses" name="lenses" required maxLength={200} placeholder="16-35mm f/4, 24-70mm f/2.8" /></div>
+          <div className="field sub"><label htmlFor="f_tripod">Tripod <span className="req">*</span></label><input id="f_tripod" name="tripod" required maxLength={120} placeholder="Manfrotto 190" /></div>
+          <div className="field sub"><label htmlFor="f_light">Flash / lighting</label><input id="f_light" name="lighting" maxLength={160} placeholder="Godox V1, or none" /></div>
+          {droneVisible && <div className="field sub"><label htmlFor="f_drone">Drone model</label><input id="f_drone" name="drone_model" maxLength={120} placeholder="DJI Mini 4 Pro" /></div>}
+        </div>
+        <span className="hint-sm">Minimums for interiors: an interchangeable-lens camera (full-frame or APS-C), a lens that goes 16mm or wider on full frame (about 10–11mm on APS-C), and a tripod for bracketing.</span>
       </div>
 
       <div className="fsec">03 · Your work</div>
-      <div className="field"><label>Portfolio link 1 <span className="req">*</span></label><input name="portfolio1" type="url" placeholder="https://yourportfolio.com" required /></div>
-      <div className="field"><label>Portfolio link 2 <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label><input name="portfolio2" type="url" placeholder="https://instagram.com/yourhandle" /></div>
+      <div className="field"><label htmlFor="f_samples">Sample real estate photos <span className="req">*</span> <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>({MIN_SAMPLES}–{MAX_SAMPLES} photos)</span></label>
+        <input id="f_samples" type="file" multiple accept="image/jpeg,image/png,image/webp,image/heic,.heic,.heif"
+          onChange={(e) => { addSamples(e.target.files); e.target.value = '' }} />
+        <span className="hint-sm">Your own finished edits: interiors (kitchen, living, bedrooms, bathrooms) plus a front exterior. JPEG, PNG, WebP or HEIC, 15 MB each. We look at verticals, exposure, window views, colour and composition.</span>
+        <div className="sample-count" aria-live="polite">{samples.length} of {MIN_SAMPLES}–{MAX_SAMPLES} added</div>
+        {samples.length > 0 && (
+          <div className="sample-grid">
+            {samples.map((f, i) => (
+              <div key={fileKey(f)} className="sample-cell">
+                {previews[i] ? <img src={previews[i]} alt={f.name} /> : <div className="sample-ph">{f.name}</div>}
+                <button type="button" aria-label={`Remove ${f.name}`} onClick={() => setSamples(samples.filter((x) => fileKey(x) !== fileKey(f)))}>Remove</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="grid2">
+        <div className="field"><label>Portfolio link <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label><input name="portfolio1" type="url" placeholder="https://yourportfolio.com" /></div>
+        <div className="field"><label>Second link <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label><input name="portfolio2" type="url" placeholder="https://instagram.com/yourhandle" /></div>
+      </div>
       <div className="field"><label>Resume <span className="req">*</span></label>
         <input name="resume" type="file" accept=".pdf,.doc,.docx" required />
         <span className="hint-sm">PDF, DOC, or DOCX — 8MB max. Required.</span>
       </div>
 
-      <div className="fsec">04 · Business info</div>
+      <div className="fsec">04 · Availability</div>
+      <div className="field"><label>Weekdays you can shoot <span className="req">*</span></label>
+        <div className="chip-row">
+          {DAYS.map((d) => <label key={d.v} className="chip"><input type="checkbox" name="days" value={d.v} /> {d.l}</label>)}
+        </div>
+      </div>
+      <div className="field"><label>Weekends <span className="req">*</span></label>
+        <div className="radio-row">
+          <label><input type="radio" name="weekends" value="yes" /> Yes, Sat &amp; Sun</label>
+          <label><input type="radio" name="weekends" value="no" /> No weekends</label>
+        </div>
+      </div>
+      <div className="field"><label>Time windows <span className="req">*</span></label>
+        <div className="chip-row">
+          {WINDOWS.map((w) => <label key={w.v} className="chip"><input type="checkbox" name="windows" value={w.v} /> {w.l} <span className="chip-h">{w.h}</span></label>)}
+        </div>
+      </div>
+      <div className="grid2">
+        <div className="field"><label htmlFor="f_start">Earliest start date <span className="req">*</span></label><input id="f_start" name="earliest_start_date" type="date" min={today} required /></div>
+        <div className="field"><label htmlFor="f_notice">Notice you need for a booking <span className="req">*</span></label>
+          <select id="f_notice" name="notice_hours" defaultValue="" required>
+            <option value="" disabled>Choose one</option>
+            {NOTICE.map((n) => <option key={n.v} value={n.v}>{n.l}</option>)}
+          </select>
+        </div>
+        <div className="field"><label htmlFor="f_spw">Shoots per week you can take <span className="req">*</span></label><input id="f_spw" name="shoots_per_week" type="number" min={1} max={40} inputMode="numeric" placeholder="5" required /></div>
+        <div className="field"><label htmlFor="f_mpd">Max shoots per day <span className="req">*</span></label>
+          <select id="f_mpd" name="max_shoots_per_day" defaultValue="" required>
+            <option value="" disabled>Choose one</option>
+            {[1, 2, 3, 4, 5, 6].map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
+      </div>
+      <div className="grid2">
+        <div className="field"><label>Car for shoots <span className="req">*</span></label>
+          <div className="radio-row"><label><input type="radio" name="has_car" value="yes" /> Yes</label><label><input type="radio" name="has_car" value="no" /> No</label></div>
+        </div>
+        <div className="field"><label>Driver&apos;s licence <span className="req">*</span></label>
+          <div className="radio-row"><label><input type="radio" name="has_licence" value="yes" /> Yes</label><label><input type="radio" name="has_licence" value="no" /> No</label></div>
+        </div>
+      </div>
+
+      <div className="fsec">05 · Business info</div>
       <div className="field"><label>HST / GST number <span className="req">*</span></label>
         <input name="hst_number" placeholder="123456789 RT0001" disabled={hstExempt} required={!hstExempt} />
         <span className="hint-sm">Required once your revenue across all clients exceeds $30,000 CAD/year. We issue T4As for earnings ≥ $500/year.</span>
@@ -260,7 +533,7 @@ export default function PhotographerForm() {
         <span>I&apos;m not GST/HST registered — my revenue across all clients is under $30,000 CAD/year, so I&apos;m not required to register (CRA small-supplier exemption).</span>
       </label>
 
-      <div className="fsec">05 · How you found us</div>
+      <div className="fsec">06 · How you found us</div>
       <div className="field"><label htmlFor="f_source">How did you hear about Bricks? <span className="req">*</span></label>
         <select id="f_source" name="source" required value={source} onChange={(e) => setSource(e.target.value)}>
           <option value="" disabled>Choose one</option>
@@ -278,7 +551,7 @@ export default function PhotographerForm() {
         </div>
       )}
 
-      <div className="fsec">06 · Independent contractor agreement</div>
+      <div className="fsec">07 · Independent contractor agreement</div>
       <p className="hint-sm" style={{ margin: '0 0 4px' }}>Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
       <div className="ic-box">{icText}</div>
       <label className="ic-accept">
@@ -289,10 +562,10 @@ export default function PhotographerForm() {
       <div className="err">{err}</div>
       <div className="cta-row">
         <button type="submit" className="btn btn-brick" disabled={submitting}>
-          {submitting ? 'Submitting…' : 'Submit application →'}
+          {submitting ? (progress || 'Submitting…') : 'Submit application →'}
         </button>
       </div>
-      <p className="hint-sm">By submitting you confirm the information above is accurate. Bricks reviews all applications manually.</p>
+      <p className="hint-sm">By submitting you confirm the information above is accurate and the sample photos are your own work. Bricks checks your photos and kit automatically, and a person makes every decision.</p>
 
       <style>{`
         .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:32px;margin-top:4px;max-width:100%;min-width:0;box-sizing:border-box;}
@@ -306,7 +579,7 @@ export default function PhotographerForm() {
         .aform .check-item span{min-width:0;white-space:normal;overflow-wrap:break-word;word-break:normal;}
         .aform .radio-row{display:flex;gap:8px;flex-wrap:wrap;}
         .aform .radio-row label{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hairStrong);
-          border-radius:2px;font-size:13.5px;letter-spacing:0;text-transform:none;font-family:'General Sans',sans-serif;cursor:pointer;background:var(--paperDeep);}
+          border-radius:2px;font-size:13.5px;letter-spacing:0;text-transform:none;font-family:'General Sans',sans-serif;cursor:pointer;background:var(--paperDeep);white-space:nowrap;flex:none;}
         .aform .radio-row input{width:auto;max-width:none;}
         .aform .ic-box{border:1px solid var(--hairStrong);border-radius:2px;background:var(--paperDeep);padding:16px 18px;
           font-size:12.5px;color:var(--inkSoft);line-height:1.6;max-height:240px;overflow-y:auto;margin:8px 0 14px;white-space:pre-wrap;}
@@ -325,7 +598,22 @@ export default function PhotographerForm() {
         .aform .field input,.aform .field select{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paperDeep);color:var(--ink);
           border:1px solid var(--hairStrong);border-radius:2px;padding:11px 12px;outline:none;width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
         .aform .field input:focus,.aform .field select:focus{border-color:var(--brick);}
+        .aform .field .radio-row input,.aform .field .chip input,.aform .field .check-item input{width:auto;max-width:none;padding:0;}
         .aform .hint-sm{font-size:11.5px;color:var(--inkFaint);line-height:1.4;display:block;margin-top:4px;}
+        .aform .field.sub{margin-bottom:0;}
+        .aform .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
+        .aform .chip{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hairStrong);border-radius:2px;
+          font-family:'General Sans',sans-serif;font-size:13.5px;letter-spacing:0;text-transform:none;color:var(--ink);background:var(--paperDeep);cursor:pointer;}
+        .aform .chip input{width:auto;max-width:none;}
+        .aform .chip:has(input:checked),.aform .radio-row label:has(input:checked){border-color:var(--brick);}
+        .aform .chip-h{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10.5px;color:var(--inkFaint);}
+        .aform .sample-count{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkMute);}
+        .aform .sample-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:6px;}
+        .aform .sample-cell{position:relative;border:1px solid var(--hairStrong);border-radius:2px;overflow:hidden;background:var(--paperDeep);aspect-ratio:3/2;}
+        .aform .sample-cell img{width:100%;height:100%;object-fit:cover;display:block;}
+        .aform .sample-ph{font-size:10px;padding:6px;color:var(--inkMute);overflow-wrap:anywhere;}
+        .aform .sample-cell button{position:absolute;right:4px;bottom:4px;font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
+          text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;border-radius:2px;padding:3px 6px;cursor:pointer;}
         .aform .err{color:var(--brickDeep);font-size:12.5px;font-family:'Ioskeley Mono','JetBrains Mono',monospace;min-height:14px;}
         @media (max-width:680px){ .aform .grid2{grid-template-columns:1fr;} .aform .radio-row{flex-direction:column;} .aform{padding:22px;} }
       `}</style>
