@@ -95,6 +95,8 @@ html[data-bx-auth="in"] .drawer-links .nav-auth-in{display:block !important;}
   html[data-bx-auth="in"] .nav-links{justify-self:center;}
 }
 @media (min-width:900px) and (max-width:1179px){
+  html[data-bx-auth="in"] .nav{grid-template-columns:auto 1fr auto;}
+  html[data-bx-auth="in"] .nav-links{justify-self:center;gap:22px;}
   html[data-bx-auth="in"] .nav-actions .nav-login{padding:8px 6px;}
 }
 @media (min-width:900px) and (max-width:1079px){
