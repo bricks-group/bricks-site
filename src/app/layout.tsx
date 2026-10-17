@@ -9,6 +9,7 @@ import './globals.css'
 import './map-cutout.css'
 import './book/book-wizard.css'
 import './motion.css'
+import './visual-tokens.css'
 
 const gated = Boolean(process.env.WWW_SITE_GATE_PASSWORD?.trim())
 

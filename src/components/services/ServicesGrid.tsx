@@ -4,14 +4,15 @@ import { MARK_BRICKS, MARK_COLOR, MARK_VIEWBOX } from '@/lib/brandMark'
 import ServiceArt, { type ArtKind } from './ServiceArt'
 
 /** Homepage "Every part, one system." — every Bricks module, equal weight, square tiles. */
-type Tile = { t: string; d: string; href: string; art: ArtKind }
+type Tile = { t: string; d: string; href: string; img?: string; art?: ArtKind }
 
+/** Visual services show real photography (one grade, 1:1, fixed crop per service); software shows linework. */
 const TILES: Tile[] = [
   { t: 'Bricks', d: 'The desk for deals, CRM, e-sign and MLS® submission.', href: '/platform', art: 'os' },
-  { t: 'Media', d: 'HDR photos, drone, floor plans, reels and video.', href: '/media', art: 'media' },
-  { t: 'Virtual Visit', d: 'Free-roam 3D of the home.', href: '/media#visit', art: 'visit' },
-  { t: 'Site Progress', d: 'Maps, models and reports for builders.', href: '/builders', art: 'site' },
-  { t: 'Photographers', d: 'Independent pros, dispatched through Bricks.', href: '/photographers', art: 'pros' },
+  { t: 'Media', d: 'HDR photos, drone, floor plans, reels and video.', href: '/media', img: 'media' },
+  { t: 'Virtual Visit', d: 'Free-roam 3D of the home.', href: '/media#visit', img: 'visit' },
+  { t: 'Site Progress', d: 'Maps, models and reports for builders.', href: '/builders', img: 'site' },
+  { t: 'Photographers', d: 'Independent pros, dispatched through Bricks.', href: '/photographers', img: 'pros' },
   { t: 'Integrations', d: 'Your MLS® feed and calendar, connected.', href: '#integrations', art: 'integrations' },
 ]
 
@@ -33,7 +34,16 @@ export default function ServicesGrid() {
             <li key={x.t}>
               <Link className="svc-tile" href={x.href}>
                 <span className="svc-vis">
-                  <ServiceArt kind={x.art} />
+                  {x.img ? (
+                    <picture>
+                      <source type="image/avif" srcSet={`/media/services/${x.img}-480.avif 480w, /media/services/${x.img}-800.avif 800w`} sizes="(max-width:700px) 50vw, (max-width:1100px) 33vw, 340px" />
+                      <source type="image/webp" srcSet={`/media/services/${x.img}-480.webp 480w, /media/services/${x.img}-800.webp 800w`} sizes="(max-width:700px) 50vw, (max-width:1100px) 33vw, 340px" />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`/media/services/${x.img}-480.webp`} width={480} height={480} alt="" loading="lazy" decoding="async" />
+                    </picture>
+                  ) : (
+                    <ServiceArt kind={x.art!} />
+                  )}
                 </span>
                 <span className="svc-t">{x.t}<span className="svc-ar" aria-hidden="true">→</span></span>
                 <span className="svc-d">{x.d}</span>

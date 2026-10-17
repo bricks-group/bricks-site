@@ -15,15 +15,15 @@
   background-image:linear-gradient(rgba(255,255,255,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.28) 1px,transparent 1px);
   background-size:8.33% 12.5%;}
 .sl-map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
-.sl-area{fill:rgba(210,84,43,.16);stroke:var(--brick);stroke-width:.45;stroke-dasharray:1.6 1.1;vector-effect:non-scaling-stroke;}
+.sl-area{fill:none;stroke:#F4F1EB;stroke-width:1.5;stroke-linecap:square;stroke-dasharray:6 4;vector-effect:non-scaling-stroke;}
 .sl-dist,.sl-tick{stroke:#fff;stroke-width:1.5;vector-effect:non-scaling-stroke;}
 .sl-tag{position:absolute;font-size:11.5px;font-weight:500;color:var(--ink);background:rgba(244,241,235,.92);padding:3px 8px;border-radius:2px;white-space:nowrap;}
 .sl-tag-d{left:55%;top:1%;transform:translateX(-50%);}
-.sl-tag-a{left:55%;top:50%;transform:translate(-50%,-50%);color:var(--brickDeep);}
+.sl-tag-a{left:55%;top:50%;transform:translate(-50%,-50%);color:var(--ink);}
 .sl-ramp{position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:500;color:var(--ink);
   background:rgba(244,241,235,.92);padding:4px 10px 4px 6px;border-radius:2px;}
-.sl-ramp i{display:block;width:44px;height:6px;border-radius:3px;background:linear-gradient(90deg,#2b5c8a,#4fa36b,#e7c34a,#d2542b);}
-.sl-scan{position:absolute;left:0;right:0;top:0;height:2px;background:var(--brick);box-shadow:0 0 18px 4px rgba(210,84,43,.45);opacity:0;}
+.sl-ramp i{display:block;width:44px;height:6px;border-radius:0;background:linear-gradient(90deg,#24211E 0 20%,#4A4642 20% 40%,#7A756E 40% 60%,#B7B2AA 60% 80%,#E6E2DA 80% 100%);outline:1px solid rgba(20,17,14,.25);}
+.sl-scan{position:absolute;left:0;right:0;top:0;height:1px;background:#F4F1EB;opacity:0;}
 
 /* Model layer: plane tilts into 3D, mesh + point cloud on top */
 .sl-mesh{position:absolute;inset:0;opacity:0;transition:opacity .8s var(--slab-ease);

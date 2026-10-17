@@ -1,0 +1,59 @@
+/*
+ * Bricks visual system — tokens (first pass, 2026-10-17).
+ * Spec: /workspace/ship/visual-system/bricks-visual-tokens.md (copy kept in docs/visual-system.md).
+ * Industrial minimalism: black, off-white, graphite. ONE accent, reserved for state.
+ */
+:root{
+  /* Palette */
+  --vs-black:#14110E;      /* = --ink */
+  --vs-offwhite:#F4F1EB;   /* = --paper */
+  --vs-g-900:#24211E; --vs-g-800:#35322E; --vs-g-700:#4A4642; --vs-g-600:#615D57;
+  --vs-g-500:#7A756E; --vs-g-400:#97928A; --vs-g-300:#B7B2AA; --vs-g-200:#D6D2CA;
+  --vs-g-100:#E6E2DA; --vs-g-50:#EEEAE3;
+  --vs-accent:#D2542B;     /* state only: booked, in flight, delivered */
+  --vs-accent-ink:#A8401F; /* accent text on off-white (5.45:1) */
+
+  /* Semantic */
+  --vs-bg:var(--vs-offwhite); --vs-fg:var(--vs-black);
+  --vs-fg-2:var(--vs-g-700); --vs-fg-3:var(--vs-g-600);   /* g-500 is 4.05:1, too low for small text */
+  --vs-surface:var(--vs-g-50); --vs-surface-2:var(--vs-g-100);
+  --vs-rule:var(--vs-g-200); --vs-rule-strong:var(--vs-g-300);
+  --vs-state-live:var(--vs-accent); --vs-state-idle:var(--vs-g-400); --vs-state-hold:var(--vs-g-700);
+
+  /* Type */
+  --vs-sans:'General Sans',system-ui,sans-serif;          /* quiet grotesque: headings + copy */
+  --vs-mono:'JetBrains Mono',ui-monospace,monospace;       /* figures, IDs, timestamps, status only */
+  --vs-fs-display:clamp(34px,4.2vw,56px); --vs-fs-h2:clamp(24px,2.4vw,34px); --vs-fs-h3:18px;
+  --vs-fs-body:16px; --vs-fs-small:13.5px; --vs-fs-figure:13px; --vs-fs-micro:11px;
+  --vs-track-display:-.03em; --vs-track-h:-.02em;
+
+  /* Space: 4px base, 24px layout grid */
+  --vs-1:4px; --vs-2:8px; --vs-3:12px; --vs-4:16px; --vs-6:24px; --vs-8:32px; --vs-12:48px; --vs-16:64px; --vs-24:96px;
+  --vs-grid:24px;
+
+  /* Lines */
+  --vs-hair:1px solid var(--vs-rule);
+  --vs-hair-strong:1px solid var(--vs-rule-strong);
+  --vs-stroke:1.5px;       /* icons + technical drawings */
+  --vs-radius:0;           /* square edges; 2px max on inputs */
+
+  /* Surfaces for product windows (replaces the painted trays) */
+  --vs-tray:var(--vs-g-100);
+}
+html[data-theme="dark"]{
+  --vs-bg:#141210; --vs-fg:#F4F1EB; --vs-fg-2:#C9C4BB; --vs-fg-3:#8F8A82;
+  --vs-surface:#1C1A17; --vs-surface-2:#23201C; --vs-rule:#F4F1EB1F; --vs-rule-strong:#F4F1EB33;
+  --vs-tray:#1C1A17; --vs-accent-ink:#E07A55;
+}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){
+  --vs-bg:#141210; --vs-fg:#F4F1EB; --vs-fg-2:#C9C4BB; --vs-fg-3:#8F8A82;
+  --vs-surface:#1C1A17; --vs-surface-2:#23201C; --vs-rule:#F4F1EB1F; --vs-rule-strong:#F4F1EB33;
+  --vs-tray:#1C1A17; --vs-accent-ink:#E07A55;
+}}
+
+/* Utilities */
+.vs-fig{font-family:var(--vs-mono);font-size:var(--vs-fs-figure);font-variant-numeric:tabular-nums;letter-spacing:0;}
+.bx-icon{display:inline-block;flex:none;vertical-align:middle;color:currentColor;}
+
+/* Product windows sit on a flat graphite surface — no painted backdrops */
+.tray.tray-os,.tray.tray-crm,.tray.tray-tx,.tray.tray-book,.tray.tray-disp{background-image:none;background-color:var(--vs-tray);}
