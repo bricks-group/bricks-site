@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
-import { OS_LOGIN } from '@/lib/brand'
+import { OS_LOGIN, OS_URL } from '@/lib/brand'
+import { clearHintCookies, osLogoutUrl } from '@/lib/site-session'
 
 const links = [
   { href: '/gallery', label: 'Work' },
@@ -12,6 +13,21 @@ const links = [
   { href: '/photographers', label: 'Photographers' },
   { href: '/brokerage', label: 'Brokerage' },
 ]
+
+/**
+ * Log out of Bricks from www: drop the .brxs.ca signed-in hint here, then let
+ * app.brxs.ca sign out of Supabase (the session lives in its storage) and send
+ * the browser back to the www homepage.
+ */
+function logOut() {
+  try {
+    const secure = location.protocol === 'https:'
+    for (const c of clearHintCookies(location.hostname, secure)) document.cookie = c
+  } catch {
+    /* cookies blocked: app.brxs.ca/logout still clears it */
+  }
+  location.assign(osLogoutUrl(`${location.origin}/`))
+}
 
 export default function Nav() {
   const pathname = usePathname()
@@ -62,9 +78,16 @@ export default function Nav() {
             ))}
           </nav>
           <div className="nav-actions">
-            <a href={OS_LOGIN} className="nav-login">
+            {/* Signed-in state comes from <html data-bx-auth>, set before paint (see site-session.ts). */}
+            <a href={OS_LOGIN} className="nav-login nav-auth-out">
               Log in
             </a>
+            <a href={OS_URL} className="nav-login nav-auth-in nav-open">
+              Open Bricks
+            </a>
+            <button type="button" className="nav-login nav-auth-in nav-logout" onClick={logOut}>
+              Log out
+            </button>
             <Link
               href="/contact"
               className={`nav-sec${pathname === '/contact' ? ' active' : ''}`}
@@ -126,9 +149,15 @@ export default function Nav() {
           >
             Contact
           </Link>
-          <a href={OS_LOGIN} onClick={() => setOpen(false)}>
+          <a href={OS_LOGIN} className="nav-auth-out" onClick={() => setOpen(false)}>
             Log in
           </a>
+          <a href={OS_URL} className="nav-auth-in" onClick={() => setOpen(false)}>
+            Open Bricks
+          </a>
+          <button type="button" className="nav-auth-in drawer-logout" onClick={logOut}>
+            Log out
+          </button>
           <Link
             href="/book"
             className={`drawer-cta${pathname === '/book' ? ' active' : ''}`}

@@ -4,6 +4,7 @@ import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import { AUTH_HEAD_SCRIPT } from '@/lib/site-session'
 import './globals.css'
 import './map-cutout.css'
 import './book/book-wizard.css'
@@ -41,6 +42,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             __html: `(function(){try{var s=location.search||'';var h=location.hash||'';var blob=s+h;if(/access_token|refresh_token|[?&#]type=(signup|recovery|invite|magiclink|email)(?:&|$)|[?&#]code=/.test(blob)){location.replace('https://app.brxs.ca/auth/callback'+s+h);}}catch(e){}})();`,
           }}
         />
+        <script dangerouslySetInnerHTML={{ __html: AUTH_HEAD_SCRIPT }} />
+        <noscript>
+          <style>{'.nav-auth-out{visibility:visible !important}'}</style>
+        </noscript>
         <meta name="theme-color" content="#F4F1EB" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
         <link rel="preconnect" href="https://api.fontshare.com" />
