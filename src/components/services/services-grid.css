@@ -36,3 +36,25 @@ html.reveal-ready .svc-sec.rvl:not(.in) .svc-assemble rect{opacity:0;transform:t
   .svc-t{font-size:15px;}.svc-d{font-size:13px;}
 }
 @media (prefers-reduced-motion:reduce){.svc-assemble rect{transition:none !important;transform:none !important;opacity:1 !important;}.svc-assemble i,.svc-vis img,.svc-ar{transition:none !important;transform:none !important;opacity:.9 !important;}}
+
+/* Module covers (ServiceArt): one language for all six */
+.sa{position:absolute;inset:0;width:100%;height:100%;display:block;fill:none;stroke:var(--ink);stroke-width:.9;stroke-linecap:square;stroke-linejoin:miter;}
+.sa-grid path{stroke:var(--ink);stroke-opacity:.07;stroke-width:.35;}
+.sa .sa-hair{stroke-width:.45;stroke-opacity:.55;}
+.sa .sa-fill{fill:var(--paper);stroke:none;}
+.sa .sa-fillpath{fill:var(--paper);stroke:none;}
+.sa .sa-acc{stroke:var(--brick);stroke-width:1.1;}
+.sa .sa-accfill{fill:var(--brick);stroke:none;}
+.sa .sa-paperline{stroke:var(--paper);stroke-width:.8;}
+.sa-mark-brick rect,.sa-mark-paper rect{stroke:none;}
+.sa-mark-brick rect{fill:var(--brick);}
+.sa-mark-paper rect{fill:var(--paper);}
+.sa-mark-ink rect{fill:var(--paper);stroke:var(--ink);stroke-width:inherit;}
+.sa-flow{transition:stroke-dashoffset 1.2s var(--ease-out,cubic-bezier(.16,1,.3,1));}
+.sa-lift{transition:transform .6s var(--ease-out,cubic-bezier(.16,1,.3,1));transform-box:fill-box;}
+.sa-pk{transition:transform .8s var(--ease-out,cubic-bezier(.16,1,.3,1));transform-box:fill-box;}
+.svc-tile:hover .sa-flow,.svc-tile:focus-visible .sa-flow{stroke-dashoffset:-9;}
+.svc-tile:hover .sa-lift,.svc-tile:focus-visible .sa-lift{transform:translateY(-1.5px);}
+.svc-tile:hover .sa-pk1{transform:translateY(5px);}.svc-tile:hover .sa-pk2{transform:translateX(-5px);}
+.svc-tile:hover .sa-pk3{transform:translateY(-5px);}.svc-tile:hover .sa-pk4{transform:translateX(5px);}
+@media (prefers-reduced-motion:reduce){.sa-flow,.sa-lift,.sa-pk{transition:none !important;transform:none !important;}}
