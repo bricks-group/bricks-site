@@ -4,9 +4,11 @@ import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import MotionLayer from '@/components/MotionLayer'
 import './globals.css'
 import './map-cutout.css'
 import './book/book-wizard.css'
+import './motion.css'
 
 const gated = Boolean(process.env.WWW_SITE_GATE_PASSWORD?.trim())
 
@@ -57,6 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {bare ? null : <Nav />}
         {children}
         {bare ? null : <Footer />}
+        {bare ? null : <MotionLayer />}
         <Analytics />
         {bare ? null : <Script src="/assets/protect.js" strategy="afterInteractive" />}
       </body>
