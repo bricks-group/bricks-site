@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import Script from 'next/script'
 import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
 import StepsRail from '@/components/steps-rail/StepsRail'
-import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
+import MediaShowcase from '@/components/media-showcase/MediaShowcase'
 import IntegrationsBand from '@/components/IntegrationsBand'
 import AudienceCards from '@/components/AudienceCards'
 import './home-v3.css'
@@ -102,12 +101,6 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
 }
 
 
-const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
-  { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
-  { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
-  { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
-] as const
 
 const NEXT = [
   { t: 'Bricks OS', d: 'Deals, CRM, e-sign and MLS® submission, synced to your calendar.', href: '/platform' },
@@ -142,7 +135,6 @@ export default function Home() {
   return (
     <>
       <RevealObserver />
-      <Script src="/assets/ba.js" strategy="afterInteractive" />
 
       <script
         type="application/ld+json"
@@ -211,81 +203,9 @@ export default function Home() {
         </div>
       </section>
 
+      <MediaShowcase />
+
       <StepsRail />
-
-      <section className="work-sec rvl" aria-label="Selected work">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Work</span>
-            <h2>Real shoots.</h2>
-          </div>
-          <div className="work-row">
-            <figure>
-              <Image src="/media/work/01.jpg" alt="Detached home exterior" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Detached · exterior</figcaption>
-            </figure>
-            <figure>
-              <Image src="/media/work/03.jpg" alt="Interior living space" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Interior · living</figcaption>
-            </figure>
-            <figure>
-              <Image src="/media/work/05.jpg" alt="Licensed drone aerial" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Licensed drone · aerial</figcaption>
-            </figure>
-            <figure>
-              <Image src="/media/work/07.jpg" alt="Condo interior" fill sizes="(max-width:900px) 50vw, 25vw" />
-              <figcaption>Condo · interior</figcaption>
-            </figure>
-          </div>
-          <div className="work-more">
-            <Link href="/gallery">See more work →</Link>
-          </div>
-          <div className="film">
-            <span className="tag">Film</span>
-            <video className="film-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
-              <source src="https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4" type="video/mp4" />
-            </video>
-            <div className="film-in">
-              <div>
-                <div className="vt">One system for the whole business.</div>
-                <div className="vs">Desk, field and media in one place.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="edit-sec rvl" aria-label="After the shoot">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Delivery</span>
-            <h2>After the shoot.</h2>
-            <p className="sub" style={{ maxWidth: 520, marginTop: 8 }}>Balanced HDR on every shoot. Sky enhance only when you ask.</p>
-          </div>
-          <div className="edit-grid">
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[1].after} alt="HDR — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[1].before} alt="HDR — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-              </div>
-              <div className="edit-cap"><div className="t">HDR</div></div>
-            </div>
-            <div>
-              <div className="ba" data-ba role="slider" aria-valuemin={0} aria-valuemax={100} aria-valuenow={50} tabIndex={0}>
-                <Image className="ba-after" src={beforeAfter[0].after} alt="Sky enhance on request — after" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <Image className="ba-before" src={beforeAfter[0].before} alt="Sky enhance on request — before" fill sizes="(max-width:900px) 100vw, 50vw" />
-                <span className="lbl l">Before</span>
-                <span className="lbl r">After</span>
-                <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
-              </div>
-              <div className="edit-cap"><div className="t">Sky enhance, on request</div></div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="next-sec rvl" aria-label="What happens next">
         <div className="wrap">
@@ -307,14 +227,23 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="visit-sec rvl" id="visit" aria-label="Virtual Visit">
-        <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Virtual visit</span>
-            <h2>Free-roam 3D.</h2>
+      <section className="bld-band rvl" aria-label="Site Progress for builders">
+        <div className="wrap bld-inner">
+          <div className="bld-copy">
+            <h2>Site Progress for builders.</h2>
+            <p className="sub">Drone progress visits and mapped captures on a fixed schedule.</p>
+            <ul className="bld-list">
+              <li><b>Progress visits</b><span>Drone photos and video, dated by visit.</span></li>
+              <li><b>Mapped capture</b><span>Orthomosaic, 3D model and site map.</span></li>
+              <li><b>One site file</b><span>Every visit shared through one link.</span></li>
+            </ul>
+            <div className="cta-row">
+              <Link className="btn btn-night" href="/book/site">Book a site visit</Link>
+              <Link className="learn-link" href="/builders">See Site Progress →</Link>
+            </div>
           </div>
-          <div className="visit-stage">
-            <VirtualVisitEmbed />
+          <div className="bld-visual">
+            <Image src="/media/comm-aerial-1.jpg" alt="Aerial view of a commercial development" fill sizes="(max-width:900px) 100vw, 560px" />
           </div>
         </div>
       </section>
