@@ -10,6 +10,7 @@ import StepsRail from '@/components/steps-rail/StepsRail'
 import VirtualVisitEmbed from '@/components/VirtualVisitEmbed'
 import IntegrationsBand from '@/components/IntegrationsBand'
 import AudienceCards from '@/components/AudienceCards'
+import './home-v3.css'
 import {
   FOOTPRINT_BANDS,
   TOUR_RANGE,
@@ -107,6 +108,16 @@ const beforeAfter = [
   { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
   { before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png', label: 'Virtual staging before and after' },
 ] as const
+
+const NEXT = [
+  { t: 'Bricks OS', d: 'Deals, CRM, e-sign and MLS® submission, synced to your calendar.', href: '/platform' },
+  { t: 'Virtual Visit', d: 'Free-roam 3D of the home.', href: '#visit' },
+  { t: 'Floor plans', d: 'Included from Essentials up, or on their own.', href: '/pricing' },
+  { t: 'Reels and video', d: 'A cinematic reel for the listing.', href: '/pricing' },
+  { t: 'Drone', d: 'Licensed aerials of the property.', href: '/pricing' },
+  { t: 'Site Progress', d: 'Progress visits and mapped capture for builders.', href: '/builders' },
+] as const
+
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
   description: 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
@@ -161,11 +172,17 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system for Canadian real estate.</h1>
-          <p className="sub">Replace the patchwork.</p>
+          <p className="sub">Software for the deal. Media for the listing. Site progress for the build.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
+            <a className="btn btn-ghost" href="https://app.brxs.ca/login">Try Bricks OS free</a>
             <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
           </div>
+          <nav className="hp-pillars" aria-label="What Bricks does">
+            <Link href="/platform" className="hp-pillar"><span className="hp-pt">Bricks OS</span><span className="hp-pd">Deals, CRM and e-sign.</span></Link>
+            <Link href="/pricing" className="hp-pillar"><span className="hp-pt">Listing media</span><span className="hp-pd">Photos, drone, video and 3D.</span></Link>
+            <Link href="/builders" className="hp-pillar"><span className="hp-pt">Site Progress</span><span className="hp-pd">Drone visits for builders.</span></Link>
+          </nav>
         </div>
       </section>
 
@@ -270,7 +287,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="visit-sec rvl" aria-label="Virtual Visit">
+      <section className="next-sec rvl" aria-label="What happens next">
+        <div className="wrap">
+          <div className="next-head">
+            <h2>Then the rest of Bricks.</h2>
+            <p className="sub">Photos are the start. Here&apos;s what picks up from there.</p>
+          </div>
+          <ul className="next-grid">
+            {NEXT.map((n) => (
+              <li key={n.t}>
+                <Link className="next-card" href={n.href}>
+                  <span className="next-t">{n.t}</span>
+                  <span className="next-d">{n.d}</span>
+                  <span className="next-go" aria-hidden="true">→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="visit-sec rvl" id="visit" aria-label="Virtual Visit">
         <div className="wrap">
           <div className="section-head section-head-stack">
             <span className="over">Virtual visit</span>
@@ -357,6 +394,10 @@ export default function Home() {
         <div className="closer-simple-inner">
           <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
+          <div className="closer-alt">
+            <a href="https://app.brxs.ca/login">Try Bricks OS free →</a>
+            <Link href="/book/site">Book a site visit →</Link>
+          </div>
         </div>
       </section>
 

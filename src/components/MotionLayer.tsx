@@ -22,7 +22,7 @@ import { usePathname } from 'next/navigation'
 const STAGGER = [
   '.trust-tiles', '.trust-stats', '.work-row', '.edit-grid', '.incl', '.adds', '.faq',
   '.grid3', '.areas', '.work-grid', '.ba-grid', '.cx-grid', '.cx-list', '.contact-grid',
-  '.integ-grid', '.integ-soon-list', '.tbl tbody',
+  '.integ-grid', '.integ-soon-list', '.tbl tbody', '.next-grid',
 ].join(',')
 
 const RISE = [

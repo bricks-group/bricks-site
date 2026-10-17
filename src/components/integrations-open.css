@@ -1,0 +1,34 @@
+/* Integrations — open, borderless logo strip (Kam 2026-10-17: "less boarded and sectioned"). */
+.integ-band.integ-open{border-top:0;padding:72px 0 56px;}
+.integ-head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:36px;}
+.integ-head h2{font-weight:500;font-size:clamp(26px,3vw,34px);letter-spacing:-.8px;line-height:1.08;margin:0;color:var(--ink);}
+.integ-strip{overflow:hidden;position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);}
+.integ-track{display:flex;width:max-content;animation:integ-marquee 60s linear infinite;}
+.integ-strip:hover .integ-track{animation-play-state:paused;}
+.integ-row{list-style:none;display:flex;align-items:center;gap:72px;padding:0 36px;margin:0;}
+.integ-item{display:flex;align-items:center;gap:8px;height:44px;flex:none;
+  opacity:.5;filter:grayscale(1);transition:opacity .4s var(--ease-out,cubic-bezier(.16,1,.3,1)),filter .4s var(--ease-out,cubic-bezier(.16,1,.3,1));}
+.integ-item:hover{opacity:1;filter:none;}
+.integ-open .integ-img{max-height:calc(26px * var(--s,1));max-width:150px;}
+.integ-open .integ-wordmark{font-size:17px;color:var(--ink);white-space:nowrap;}
+.integ-soon-pill{font-size:11px;font-weight:500;color:var(--inkMute);border:1px solid var(--hair);border-radius:99px;padding:2px 8px;white-space:nowrap;}
+.integ-open .integ-fine{text-align:center;margin:28px 0 0;}
+@keyframes integ-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+[data-theme="dark"] .integ-open .integ-img{filter:grayscale(1) invert(1) brightness(1.3);}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .integ-open .integ-img{filter:grayscale(1) invert(1) brightness(1.3);}}
+@media (max-width:700px){
+  .integ-band.integ-open{padding:48px 0 40px;}
+  .integ-head{margin-bottom:26px;padding:0 4px;}
+  .integ-row{gap:44px;padding:0 22px;}
+  .integ-open .integ-img{max-height:calc(22px * var(--s,1));max-width:120px;}
+  .integ-open .integ-wordmark{font-size:15px;}
+  .integ-track{animation-duration:45s;}
+}
+@media (prefers-reduced-motion:reduce){
+  .integ-strip{-webkit-mask-image:none;mask-image:none;}
+  .integ-track{animation:none;width:auto;justify-content:center;}
+  .integ-track > .integ-row[aria-hidden]{display:none;}
+  .integ-row{flex-wrap:wrap;justify-content:center;gap:28px 48px;padding:0 var(--gutter,20px);}
+}

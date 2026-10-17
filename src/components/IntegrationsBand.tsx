@@ -9,6 +9,7 @@
  */
 
 import type { CSSProperties } from 'react'
+import './integrations-open.css'
 
 /** scale: optical-size multiplier on the 30px logo height (uniform; never distorts). */
 type Logo = { src: string; w: number; h: number; scale?: number; alt?: string }
@@ -50,7 +51,7 @@ function Mark({ t, soon = false }: { t: Tile; soon?: boolean }) {
       width={w}
       height={h}
       alt={alt ?? `${t.name} logo`}
-      loading="lazy"
+      loading="eager"
       decoding="async"
       className={soon ? 'integ-img integ-img-s' : 'integ-img'}
       style={scale ? ({ '--s': scale } as CSSProperties) : undefined}
@@ -58,35 +59,38 @@ function Mark({ t, soon = false }: { t: Tile; soon?: boolean }) {
   )
 }
 
+function Row({ hidden = false }: { hidden?: boolean }) {
+  return (
+    <ul className="integ-row" aria-hidden={hidden || undefined} aria-label={hidden ? undefined : 'Works with'}>
+      {LIVE.map((t) => (
+        <li key={t.name} className="integ-item"><Mark t={t} /></li>
+      ))}
+      {SOON.map((t) => (
+        <li key={t.name} className="integ-item integ-item-soon">
+          <Mark t={t} />
+          <span className="integ-soon-pill">Soon</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export default function IntegrationsBand() {
   return (
-    <section className="integ-band rvl" id="integrations" aria-label="Integrations">
+    <section className="integ-band integ-open rvl" id="integrations" aria-label="Integrations">
       <div className="wrap">
-        <div className="section-head section-head-stack">
-          <span className="over">Integrations</span>
+        <div className="integ-head">
           <h2>Works with the tools you already use.</h2>
-          <p className="lede">Keep your current setup. Bricks connects to it.</p>
+          <a className="learn-link integ-link" href="https://app.brxs.ca/login">Connect yours in Bricks OS →</a>
         </div>
-
-        <ul className="integ-grid" aria-label="Works with now">
-          {LIVE.map((t) => (
-            <li key={t.name} className="integ-tile">
-              <div className="integ-plate"><Mark t={t} /></div>
-            </li>
-          ))}
-          <li className="integ-tile integ-soon" aria-label="Coming soon">
-            <span className="integ-tag integ-tag-soon">Coming soon</span>
-            <ul className="integ-soon-list">
-              {SOON.map((t) => (
-                <li key={`${t.name}-${t.what}`}>
-                  <span className="integ-soon-mark"><Mark t={t} soon /></span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        </ul>
-
-        <a className="learn-link integ-link" href="https://app.brxs.ca/login">Connect yours in Bricks OS →</a>
+      </div>
+      <div className="integ-strip">
+        <div className="integ-track">
+          <Row />
+          <Row hidden />
+        </div>
+      </div>
+      <div className="wrap">
         <p className="integ-fine">Logos are trademarks of their respective owners. No endorsement implied.</p>
       </div>
     </section>
