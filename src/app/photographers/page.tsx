@@ -155,7 +155,7 @@ export default function PhotographersPage() {
           <div className="sec-head">
             <div>
               <span className="over">Tier 3</span>
-              <h2>Builder &amp; developer jobs pay the top of Tier A.</h2>
+              <h2>Builder &amp; developer jobs pay at the top of Tier 3.</h2>
             </div>
           </div>
           <p className="rate-lead">Construction site jobs go only to Tier 3 pilots with Advanced RPAS and verified drone liability insurance of at least $2M ($5M on some sites). Upload your certificate in GO.</p>

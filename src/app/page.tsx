@@ -169,8 +169,6 @@ export default function Home() {
         </div>
       </section>
 
-      <AudienceCards />
-
       <section className="prod-hero" aria-label="bricks desk">
         <div className="tray tray-os">
           <div className="tray-stage">
@@ -179,24 +177,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="trust-wall rvl" aria-label="Who bricks is for">
-        <div className="wrap">
-          <div className="trust-tiles">
-            <Link href="/brokerage" className="trust-tile">
-              <span className="trust-tile-k">Brokerage</span>
-            </Link>
-            <Link href="/agents#team" className="trust-tile">
-              <span className="trust-tile-k">Team</span>
-            </Link>
-            <Link href="/agents" className="trust-tile">
-              <span className="trust-tile-k">Agent</span>
-            </Link>
-            <Link href="/photographers" className="trust-tile">
-              <span className="trust-tile-k">Vendors</span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <AudienceCards />
 
       <section className="cap-band rvl" aria-label="The desk">
         <div className="cap-inner">

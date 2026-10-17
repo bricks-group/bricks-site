@@ -1,25 +1,31 @@
 import Link from 'next/link'
 import './audience-cards.css'
 
-/** Two audiences under the homepage hero: listing side (agents/brokerages) and site side (builders/developers). */
+/**
+ * Homepage audience router — ONE row of links that replaces both the old
+ * Brokerage/Team/Agent/Vendors tiles and the two builder/agent cards.
+ * `.trust-tiles` keeps the MotionLayer stagger on the buttons.
+ */
+const ROUTES = [
+  { href: '/agents', label: 'Agents' },
+  { href: '/agents#team', label: 'Teams' },
+  { href: '/brokerage', label: 'Brokerages' },
+  { href: '/builders', label: 'Builders & developers' },
+  { href: '/photographers', label: 'Photographers' },
+] as const
+
 export default function AudienceCards() {
   return (
     <section className="hxa rvl" aria-label="Who Bricks is for">
       <div className="wrap">
-        <div className="hxa-grid">
-          <Link href="/agents" className="hxa-card">
-            <span className="over">For agents &amp; brokerages</span>
-            <b>Listing media and the desk.</b>
-            <span className="hxa-v">Book a shoot, then run deals, media and MLS in OS.</span>
-            <span className="hxa-go">Learn more →</span>
-          </Link>
-          <Link href="/builders" className="hxa-card">
-            <span className="over">For builders &amp; developers</span>
-            <b>Site progress, on schedule.</b>
-            <span className="hxa-v">Drone progress visits and mapped captures by vetted, insured, certified pilots. From $375 per visit.</span>
-            <span className="hxa-go">Learn more →</span>
-          </Link>
-        </div>
+        <h2 className="hxa-h">Who it&apos;s for.</h2>
+        <nav className="hxa-row trust-tiles" aria-label="Choose your path">
+          {ROUTES.map((r) => (
+            <Link key={r.href} href={r.href} className="hxa-btn">
+              <span>{r.label}</span><span className="hxa-ar" aria-hidden="true">→</span>
+            </Link>
+          ))}
+        </nav>
       </div>
     </section>
   )

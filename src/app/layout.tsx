@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   description: gated
     ? 'bricks'
-    : 'The system for Canadian real estate. Media is live to book. OS is live in preview at app.brxs.ca.',
+    : 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
     type: 'website',
