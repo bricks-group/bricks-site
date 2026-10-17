@@ -48,7 +48,8 @@
 .bld-list span{font-size:14px;color:var(--inkSoft);text-align:right;}
 .bld-copy .cta-row{margin-top:26px;gap:20px;}
 .bld-visual{position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden;background:var(--paperDeep);}
-.bld-visual img{object-fit:cover;}
+.bld-visual picture,.bld-visual img{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.bld-visual img{object-fit:cover;object-position:50% 35%;}
 @media (max-width:900px){
   .bld-band{padding:56px 0;}
   .bld-inner{grid-template-columns:1fr;gap:28px;}

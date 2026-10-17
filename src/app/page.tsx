@@ -243,7 +243,12 @@ export default function Home() {
             </div>
           </div>
           <div className="bld-visual">
-            <Image src="/media/comm-aerial-1.jpg" alt="Aerial view of a commercial development" fill sizes="(max-width:900px) 100vw, 560px" />
+            <picture>
+              <source type="image/avif" srcSet="/media/site-progress/tower-cranes-640.avif 640w, /media/site-progress/tower-cranes-960.avif 960w, /media/site-progress/tower-cranes-1280.avif 1280w, /media/site-progress/tower-cranes-1600.avif 1600w" sizes="(max-width:900px) 100vw, 560px" />
+              <source type="image/webp" srcSet="/media/site-progress/tower-cranes-640.webp 640w, /media/site-progress/tower-cranes-960.webp 960w, /media/site-progress/tower-cranes-1280.webp 1280w, /media/site-progress/tower-cranes-1600.webp 1600w" sizes="(max-width:900px) 100vw, 560px" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/media/site-progress/tower-cranes-960.webp" width={960} height={640} alt="Drone view of a high-rise under construction, with tower cranes" loading="lazy" decoding="async" />
+            </picture>
           </div>
         </div>
       </section>
