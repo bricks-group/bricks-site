@@ -75,7 +75,22 @@ function Row({ hidden = false }: { hidden?: boolean }) {
   )
 }
 
-export default function IntegrationsBand() {
+export default function IntegrationsBand({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <section className="integ-strip-c rvl" id="integrations" aria-label="Integrations">
+        <div className="wrap">
+          <p className="integ-c-cap">Works with your MLS® feed, CRM, calendar and payments.</p>
+          <ul className="integ-c-grid" aria-label="Works with">
+            {[...LIVE, ...SOON].map((t) => (
+              <li key={t.name} className="integ-c-item" title={t.what}><Mark t={t} /></li>
+            ))}
+          </ul>
+          <p className="integ-fine">Logos are trademarks of their respective owners. No endorsement implied. Docusign coming soon.</p>
+        </div>
+      </section>
+    )
+  }
   return (
     <section className="integ-band integ-open rvl" id="integrations" aria-label="Integrations">
       <div className="wrap">

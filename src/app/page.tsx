@@ -5,10 +5,11 @@ import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
-import StepsRail from '@/components/steps-rail/StepsRail'
 import ServicesGrid from '@/components/services/ServicesGrid'
 import IntegrationsBand from '@/components/IntegrationsBand'
-import AudienceCards from '@/components/AudienceCards'
+import ProductWindow from '@/components/ProductWindow'
+import PhoneDevice from '@/components/PhoneDevice'
+import './home-v10.css'
 import './home-v3.css'
 import {
   FOOTPRINT_BANDS,
@@ -103,6 +104,15 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
 
 
 
+const GUIDES = [
+  { href: '/blog/canada-real-estate-photography-cost-2026', title: 'How much does real estate photography cost in Canada? (2026)', read: '8 min', date: '2026-09-12' },
+  { href: '/blog/3d-tour-vs-video-walkthrough', title: 'Virtual tour vs. video walkthrough: which sells faster?', read: '6 min', date: '2026-07-22' },
+  { href: '/blog/drone-photography-rules-ontario', title: 'Drone photography rules for real estate in Ontario', read: '8 min', date: '2026-07-22' },
+  { href: '/blog/whats-included-listing-shoot', title: "What's included in a professional listing photo shoot?", read: '5 min', date: '2026-07-22' },
+]
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const fmtDate = (d: string) => { const [y, m, day] = d.split('-'); return `${MONTHS[+m - 1]} ${+day}, ${y}` }
+
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
   description: 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
@@ -160,13 +170,7 @@ export default function Home() {
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
             <a className="btn btn-ghost" href="https://app.brxs.ca/login">Try Bricks free</a>
-            <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
           </div>
-          <nav className="hp-pillars" aria-label="What Bricks does">
-            <Link href="/platform" className="hp-pillar"><span className="hp-pt">Bricks</span><span className="hp-pd">Deals, CRM and e-sign.</span></Link>
-            <Link href="/pricing" className="hp-pillar"><span className="hp-pt">Listing media</span><span className="hp-pd">Photos, drone, video and 3D.</span></Link>
-            <Link href="/builders" className="hp-pillar"><span className="hp-pt">Site Progress</span><span className="hp-pd">Maps, models and reports.</span></Link>
-          </nav>
         </div>
       </section>
 
@@ -178,140 +182,129 @@ export default function Home() {
         </div>
       </section>
 
-      <AudienceCards />
+      <IntegrationsBand compact />
 
-      <section className="cap-band rvl" aria-label="The desk">
-        <div className="cap-inner">
-          <div className="cap-copy">
+      <div className="hf" aria-label="Inside Bricks">
+        <section className="hf-row rvl" aria-label="The desk">
+          <div className="hf-copy">
             <h2>The desk runs the deal.</h2>
-            <p className="cap-lede">Deals, media, MLS, and signatures on one screen — so the office stops living in spreadsheets and group chats.</p>
-            <Link className="learn-link" href="/platform">Explore the desk →</Link>
+            <p>Deals, CRM, e-sign and MLS® submission on one screen.</p>
+            <Link className="hf-link" href="/platform">Explore the desk →</Link>
           </div>
-          <div className="cap-stage tray tray-crm">
+          <div className="hf-frame tray tray-crm">
             <div className="tray-stage tray-stage-fill">
               <OsDeskShot />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <ServicesGrid />
-
-      <StepsRail />
-
-      <section className="bld-band rvl" aria-label="Site Progress for builders">
-        <div className="wrap bld-inner">
-          <div className="bld-copy">
-            <h2>Site Progress, inside Bricks.</h2>
-            <p className="sub">Photos, maps, models and reports on a fixed schedule.</p>
-            <ul className="bld-list">
-              <li><b>Maps</b><span>Orthomosaic, measurements and elevation.</span></li>
-              <li><b>Models</b><span>3D model and point cloud.</span></li>
-              <li><b>Reports</b><span>Progress over time, in one site file.</span></li>
-              <li><b>Photos and video</b><span>Dated by visit.</span></li>
-            </ul>
-            <div className="cta-row">
-              <Link className="btn btn-night" href="/book/site">Book a site visit</Link>
-              <Link className="learn-link" href="/builders">See Site Progress →</Link>
+        <section className="hf-row hf-flip rvl" aria-label="Media">
+          <div className="hf-copy">
+            <h2>Media, inside Bricks.</h2>
+            <p>Book photos, drone, video and 3D at an exact time. Delivery lands on the listing.</p>
+            <Link className="hf-link" href="/media">See the media →</Link>
+          </div>
+          <div className="hf-frame tray tray-book tray-phone">
+            <div className="phone-stage">
+              <PhoneDevice label="Bricks">
+                <ProductWindow variant="phone" title="Bricks" src="/screens/book.html?lock=1" nw={390} nh={844} fit="contain" hideChrome zoomAt={390} lazy />
+              </PhoneDevice>
             </div>
           </div>
-          <div className="bld-visual">
+        </section>
+
+        <section className="hf-row rvl" aria-label="Site Progress for builders">
+          <div className="hf-copy">
+            <h2>Site Progress, inside Bricks.</h2>
+            <p>Photos, maps, models and reports on a fixed schedule, in one site file.</p>
+            <Link className="hf-link" href="/builders">See Site Progress →</Link>
+          </div>
+          <div className="hf-frame hf-photo">
             <picture>
-              <source type="image/avif" srcSet="/media/site-progress/tower-cranes-640.avif 640w, /media/site-progress/tower-cranes-960.avif 960w, /media/site-progress/tower-cranes-1280.avif 1280w, /media/site-progress/tower-cranes-1600.avif 1600w" sizes="(max-width:900px) 100vw, 560px" />
-              <source type="image/webp" srcSet="/media/site-progress/tower-cranes-640.webp 640w, /media/site-progress/tower-cranes-960.webp 960w, /media/site-progress/tower-cranes-1280.webp 1280w, /media/site-progress/tower-cranes-1600.webp 1600w" sizes="(max-width:900px) 100vw, 560px" />
+              <source type="image/avif" srcSet="/media/site-progress/tower-cranes-960.avif 960w, /media/site-progress/tower-cranes-1280.avif 1280w, /media/site-progress/tower-cranes-1600.avif 1600w" sizes="(max-width:900px) 100vw, 780px" />
+              <source type="image/webp" srcSet="/media/site-progress/tower-cranes-960.webp 960w, /media/site-progress/tower-cranes-1280.webp 1280w, /media/site-progress/tower-cranes-1600.webp 1600w" sizes="(max-width:900px) 100vw, 780px" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/media/site-progress/tower-cranes-960.webp" width={960} height={640} alt="Drone view of a high-rise under construction, with tower cranes" loading="lazy" decoding="async" />
             </picture>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="proof-chapter rvl" aria-label="Proof">
+        <section className="hf-row hf-flip rvl" aria-label="Photographers">
+          <div className="hf-copy">
+            <h2>Photographers, dispatched through Bricks.</h2>
+            <p>Independent pros take the job, shoot and upload in the Bricks app.</p>
+            <Link className="hf-link" href="/photographers">For photographers →</Link>
+          </div>
+          <div className="hf-frame tray tray-disp tray-phone">
+            <div className="phone-stage">
+              <PhoneDevice label="Bricks">
+                <ProductWindow variant="phone" title="Bricks" src="/screens/disp.html?lock=1" nw={390} nh={844} fit="contain" hideChrome zoomAt={390} lazy />
+              </PhoneDevice>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <ServicesGrid />
+
+      <section className="hp-proof rvl" aria-label="Proof">
         <div className="wrap">
-          <blockquote className="proof-card proof-card-solo">
+          <blockquote>
             <p>“Three spreadsheets and a group text — now one screen.”</p>
-            <footer>
-              <span className="nm">Jordan Malcolm</span>
-              <span className="rl">Principal · 47-agent office</span>
-            </footer>
+            <footer><span className="nm">Jordan Malcolm</span><span className="rl">Principal, 47-agent office</span></footer>
           </blockquote>
-          <Link className="learn-link proof-chapter-link" href="/platform">Platform →</Link>
         </div>
       </section>
 
-      <section className="home-price-sec rvl" id="home-pricing" aria-label="Listing media pricing">
+      <section className="hp-price rvl" id="home-pricing" aria-label="Listing media pricing">
         <div className="wrap">
-          <div className="section-head section-head-stack">
-            <span className="over">Media</span>
+          <div className="hp-sec-head">
             <h2>Listing media packages.</h2>
+            <Link className="hf-link" href="/pricing">Full pricing →</Link>
           </div>
-          <div className="pkgs">
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Essentials</span></div>
-              <div className="pkg-amt">from {'$'}{CORE_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>HDR photos</li>
-                <li>Licensed drone</li>
-                <li>Floor plan</li>
-              </ul>
-              <Link className="btn btn-ghost" href="/book">Book Essentials</Link>
-            </div>
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Story</span></div>
-              <div className="pkg-amt">from {'$'}{STORY_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Essentials</li>
-                <li>Cinematic reel</li>
-              </ul>
-              <Link className="btn btn-ghost" href="/book">Book Story</Link>
-            </div>
-            <div className="pkg feat">
-              <div className="pkg-head"><span className="pkg-name">Showcase</span><span className="pkg-badge">Most booked</span></div>
-              <div className="pkg-amt">from {'$'}{SHOWCASE_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Story</li>
-                <li>{TOUR_NAME}</li>
-              </ul>
-              <Link className="btn btn-brick" href="/book">Book Showcase</Link>
-            </div>
-            <div className="pkg">
-              <div className="pkg-head"><span className="pkg-name">Full suite</span></div>
-              <div className="pkg-amt">from {'$'}{FULL_FROM}<small> / shoot</small></div>
-              <ul>
-                <li>Everything in Showcase</li>
-                <li>Twilight exterior</li>
-              </ul>
-              <Link className="btn btn-ghost" href="/book">Book Full suite</Link>
-            </div>
-          </div>
-          <Link className="lean-strip" href="/book">
-            <div>
-              <span className="pkg-name">Photos only</span>
-              <span className="lean-sub">HDR photos only</span>
-            </div>
-            <div className="lean-amt">from {'$'}{PHOTO_ONLY_FROM} →</div>
-          </Link>
-          <p className="rate-note">Prices are for smaller homes and scale with size. <Link href="/pricing" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>Full pricing →</Link></p>
+          <ul className="hp-pk">
+            {[
+              { n: 'Essentials', f: CORE_FROM, d: 'HDR photos, licensed drone, floor plan' },
+              { n: 'Story', f: STORY_FROM, d: 'Essentials plus a cinematic reel' },
+              { n: 'Showcase', f: SHOWCASE_FROM, d: `Story plus ${TOUR_NAME}`, feat: true },
+              { n: 'Full suite', f: FULL_FROM, d: 'Showcase plus a twilight exterior' },
+            ].map((k) => (
+              <li key={k.n} className={k.feat ? 'is-feat' : undefined}>
+                <Link href="/book">
+                  <span className="hp-pk-n">{k.n}{k.feat ? <span className="hp-pk-b">Most booked</span> : null}</span>
+                  <span className="hp-pk-f">from <span className="hp-num">${k.f}</span></span>
+                  <span className="hp-pk-d">{k.d}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="hp-note">Photos only from <span className="hp-num">${PHOTO_ONLY_FROM}</span>. Prices are for smaller homes and scale with size.</p>
         </div>
       </section>
 
-      <IntegrationsBand />
-
-      <section className="closer closer-simple rvl" id="book" aria-label="Book a shoot">
-        <div className="closer-simple-inner">
-          <h2>Ready when you are.</h2>
-          <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <div className="closer-alt">
-            <a href="https://app.brxs.ca/login">Try Bricks free →</a>
-            <Link href="/book/site">Book a site visit →</Link>
+      <section className="hp-guides rvl" aria-label="Guides">
+        <div className="wrap">
+          <div className="hp-sec-head">
+            <h2>Guides.</h2>
+            <Link className="hf-link" href="/blog">All guides →</Link>
           </div>
+          <ul className="hp-gd">
+            {GUIDES.map((g) => (
+              <li key={g.href}>
+                <Link href={g.href}>
+                  <span className="hp-gd-m"><time dateTime={g.date}>{fmtDate(g.date)}</time> · {g.read}</span>
+                  <span className="hp-gd-t">{g.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <div className="wrap">
+      <div className="wrap hp-wrap">
         <section className="block rvl" id="faq" aria-label="Frequently asked questions">
-          <div className="sec-head">
-            <div><span className="over">FAQ</span><h2>Common questions.</h2></div>
+          <div className="hp-sec-head">
+            <h2>Common questions.</h2>
           </div>
           <div className="faq faq-home">
             {faqs.slice(0, 4).map((f) => (
@@ -323,6 +316,15 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      <section className="hp-end rvl" id="book" aria-label="Book a shoot">
+        <h2>Ready when you are.</h2>
+        <Link className="btn btn-night btn-l" href="/book">Book a shoot</Link>
+        <div className="hp-end-alt">
+          <a href="https://app.brxs.ca/login">Try Bricks free →</a>
+          <Link href="/book/site">Book a site visit →</Link>
+        </div>
+      </section>
 
       <NewsletterPopup />
 
