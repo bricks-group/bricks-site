@@ -344,9 +344,6 @@ export default function Home() {
         .hero-home{padding:64px 36px 40px;border-bottom:none;}
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:420px;}
-        .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:0;transform:translateY(14px);animation:heroIn .7s cubic-bezier(.16,.8,.3,1) forwards;}
-        .hero-home h1{animation-delay:.06s;} .hero-home p.sub{animation-delay:.17s;} .hero-home .cta-row{animation-delay:.28s;}
-        @keyframes heroIn{to{opacity:1;transform:translateY(0);}}
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
         @media (max-width:680px){
           .hero-home{padding:36px var(--gutter) 24px;}
@@ -354,7 +351,6 @@ export default function Home() {
           .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:28ch;line-height:1.4;}
           .hero-home .cta-row{margin-top:22px;gap:14px;}
         }
-        @media (prefers-reduced-motion:reduce){ .hero-home h1,.hero-home p.sub,.hero-home .cta-row{opacity:1;transform:none;animation:none;}}
       `}</style>
 
     </>
