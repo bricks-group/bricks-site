@@ -225,7 +225,7 @@ export default function PricingPage() {
         <div className="closer-simple-inner">
           <h2>Ready when the listing is.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <p className="closer-proof">14,000+ properties shot · Canada-wide · 24–48h delivery</p>
+          <p className="closer-proof">Canada-wide · Exact clock-time booking · 24–48h target</p>
         </div>
       </section>
       </div>
