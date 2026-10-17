@@ -599,7 +599,7 @@ export default function BookingWizard() {
           <form onSubmit={(e) => e.preventDefault()}>
             <div className={`panel${step === 0 ? ' active' : ''}`}>
               <h2>What are we shooting?</h2>
-              <p className="hint">Tell us about the listing and who&apos;s booking. Start typing the address for suggestions.</p>
+              <p className="hint">Start typing the address.</p>
               <div className="grid2">
                 <div className="field"><label>Listing agent name <span className="req">*</span></label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Agent" /></div>
                 <div className="field"><label>Brokerage <span className="req">*</span></label><input value={brokerage} onChange={(e) => setBrokerage(e.target.value)} placeholder="e.g. Your brokerage" /></div>
@@ -706,7 +706,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 2 ? ' active' : ''}`}>
               <h2>When?</h2>
-              <p className="hint">Pick a date and a clock time. That time is locked when you pay and sent to the photographer.</p>
+              <p className="hint">Pick a date and an exact time.</p>
               <div className="field">
                 <label>Shoot date <span className="req">*</span></label>
 <BookCalendar
@@ -741,9 +741,7 @@ export default function BookingWizard() {
                 )}
                 {!date && <div className="slotmsg">Pick a date above to see clock times.</div>}
                 <p className="hint-sm" style={{ marginTop: 10 }}>
-                  {slotsLive
-                    ? `Canada — times are property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}. Booked times that day are hidden.`
-                    : `Canada — times are property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}. The time you pick is the time we send to the photographer.`}
+                  {`Property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}.${slotsLive ? ' Booked times are hidden.' : ''}`}
                 </p>
               </div>
               <div className="field"><label>Access notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Lockbox code, occupied, deadline…" /></div>
@@ -753,9 +751,9 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
-              <p className="hint">Confirm details, then pay to lock this exact clock time. Full amount (incl. HST) charged now via Stripe — not pay-on-delivery. Apple Pay, Google Pay, and Link show on the next screen when your device supports them — cards always stay.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media targets 24–48 hours after the shoot{rush ? ' — rush is on for this booking' : ''} (target, not a guarantee). Files land on your listing file, client share, and property microsite — not a WeTransfer chase.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>The photographer and travel on your quote are final before you pay. Travel is priced from the assigned photographer&apos;s location: first 25 km free, then $0.75/km.</p>
+              <p className="hint">Pay now to lock this time. Full amount, incl. HST, charged via Stripe.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media in 24–48 hours{rush ? ' (rush on)' : ''}. A target, not a guarantee.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Photographer and travel are final before you pay.</p>
               <div className="review">
                 {[
                   ['Agent', name.trim() || '—'], ['Brokerage', brokerage.trim() || '—'], ['Email', email.trim() || '—'], ['Phone', phone.trim() || '—'],
@@ -781,9 +779,8 @@ export default function BookingWizard() {
                 More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. Full schedule in the <Link href="/terms#refunds" style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
               </p>
               <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 10 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>Safari / iOS → Apple Pay. Chrome / Android → Google Pay. Link where Stripe offers it. Card always available.</p>
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
-              <p className="hint-sm" style={{ margin: '10px 0 0' }}>Have a team or brokerage launch code (TEAMLAUNCH / BRICKSLAUNCH)? Enter it on the Stripe checkout page.</p>
+              <p className="hint-sm" style={{ margin: '10px 0 0' }}>Have a launch code? Enter it at checkout.</p>
             </div>
           </form>
         )}
