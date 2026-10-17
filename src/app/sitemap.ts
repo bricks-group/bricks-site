@@ -32,7 +32,7 @@ const GATED_READY = [
   { path: '/account-deletion', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/legal', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/dpa', changeFrequency: 'yearly' as const, priority: 0.3 },
-  { path: '/construction', changeFrequency: 'monthly' as const, priority: 0.45 },
+  { path: '/builders', changeFrequency: 'monthly' as const, priority: 0.6 },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

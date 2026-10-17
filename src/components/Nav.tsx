@@ -9,6 +9,7 @@ import { OS_LOGIN } from '@/lib/brand'
 const links = [
   { href: '/gallery', label: 'Work' },
   { href: '/pricing', label: 'Pricing' },
+  { href: '/builders', label: 'For builders & developers' },
   { href: '/photographers', label: 'Photographers' },
   { href: '/brokerage', label: 'Brokerage' },
 ]
@@ -55,7 +56,7 @@ export default function Nav() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={pathname === l.href ? 'active' : ''}
+                className={pathname === l.href || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}
               >
                 {l.label}
               </Link>
@@ -112,7 +113,7 @@ export default function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className={pathname === l.href || (l.href === '/brokerage' && pathname === '/office') ? 'active' : ''}
+              className={pathname === l.href || (l.href === '/brokerage' && pathname === '/office') || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}
               onClick={() => setOpen(false)}
             >
               {l.label}

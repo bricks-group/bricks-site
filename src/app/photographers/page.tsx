@@ -147,9 +147,25 @@ export default function PhotographersPage() {
           <div className="adds">
             <div className="a rvl"><div className="nm">Tier 1 — Entry</div><p>Starting tier. Assigned by Bricks based on quality, reliability, volume, and compliance.</p></div>
             <div className="a rvl"><div className="nm">Tier 2 — Core</div><p>Assigned for consistent quality and reliability on the network.</p></div>
-            <div className="a rvl"><div className="nm">Tier 3 — Elite</div><p>Highest assigned tier for quality, volume, and compliance.</p></div>
+            <div className="a rvl"><div className="nm">Tier 3 — Elite</div><p>Highest assigned tier for quality, volume, and compliance. Requires verified drone liability insurance of at least $2M, and unlocks builder &amp; developer site jobs.</p></div>
           </div>
           <p className="note">Canada-wide recruiting. Payout is the published rate-card amount. Virtual visit is a client add-on at $249 / $299 / $349 / $399 — never packaged.</p>
+        </section>
+
+        <section className="block rvl" aria-label="Commercial site work">
+          <div className="sec-head">
+            <div>
+              <span className="over">Commercial site work · Tier 3</span>
+              <h2>Builder &amp; developer jobs pay more.</h2>
+            </div>
+          </div>
+          <p className="rate-lead">Construction progress visits and mapped captures for builders, developers, GCs and investors go only to Tier 3 pilots who hold Advanced RPAS and a certificate of insurance Bricks has verified: drone (aviation) liability of at least $2,000,000, unexpired on the flight date. Some sites require $5,000,000. Upload your certificate from GO Profile.</p>
+          <div className="adds">
+            <div className="a rvl"><div className="nm">Progress visit — $235</div><p>Drone stills + video of the site. Fixed per visit.</p></div>
+            <div className="a rvl"><div className="nm">Mapped capture — $945</div><p>Mapping flight for an orthomosaic and 3D model. Needs the mapping skill, which Bricks grants after a test mission.</p></div>
+            <div className="a rvl"><div className="nm">First mapped setup — +$410</div><p>Ground control on the first mapped flight of a site.</p></div>
+          </div>
+          <p className="note" data-legal-review="true">Draft — needs legal review before publishing. The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
         </section>
 
         <section className="block rvl">
@@ -163,6 +179,7 @@ export default function PhotographersPage() {
             <div className="qa"><h4>How long does review take?</h4><p>We review every application manually. Portfolio quality is the primary gate — sharp composition, accurate colour, consistent exposure across a full property set. Expect a response within 1–3 business days.</p></div>
             <div className="qa"><h4>What equipment do I need?</h4><p>Full-frame or equivalent, fast primes, and ideally a DJI/Autel drone if you&apos;re applying for aerial work. List your kit in the application.</p></div>
             <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes — controlled airspace near Pearson / Billy Bishop requires Transport Canada Advanced RPAS certification. We verify before routing any drone job.</p></div>
+            <div className="qa"><h4>Do I need insurance?</h4><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies. <em>(Draft — needs legal review.)</em></p></div>
             <div className="qa"><h4>Am I an employee?</h4><p>No — you&apos;re an independent contractor under Ontario law, contracting with Bricks Group. You control equipment, methods, and availability.</p></div>
           </div>
         </section>
