@@ -69,8 +69,9 @@ export default function BuildersPage() {
             one place. Book one visit, or put a site on a monthly plan.
           </p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="#quote">Request a site plan</Link>
-            <Link className="learn-link" href="#pricing">See pricing →</Link>
+            <Link className="btn btn-night" href="/book/site">Book a site visit</Link>
+            <Link className="learn-link" href="/book/site?plan=visual">Start a monthly plan →</Link>
+            <Link className="learn-link" href="#quote">Talk to us</Link>
           </div>
         </div>
       </section>
@@ -121,6 +122,11 @@ export default function BuildersPage() {
             ))}
           </div>
           <p className="note">{PLAN_NOTE}</p>
+          <div className="cta-row" style={{ marginTop: 18 }}>
+            <Link className="btn btn-night" href="/book/site">Book one visit</Link>
+            <Link className="btn btn-sec" href="/book/site?plan=visual">Start a plan</Link>
+            <Link className="learn-link" href="#quote">Multiple sites or survey-grade? Talk to us →</Link>
+          </div>
         </div>
       </section>
 
@@ -129,11 +135,12 @@ export default function BuildersPage() {
           <div className="cx-grid">
             <div>
               <div className="sec-head">
-                <div><span className="over">Start</span><h2>Tell us about the site.</h2></div>
+                <div><span className="over">Talk to us</span><h2>Several sites? Tell us about them.</h2></div>
               </div>
               <p className="cx-note">
-                Address, phase, how often you need it, and any insurance minimum in your contract. We reply with a site plan
-                and first flight date. Listing media for agents stays on <Link href="/book">/book</Link>.
+                For portfolios, survey-grade work or anything custom: address, phase, cadence and any insurance minimum in your
+                contract. We reply with a site plan and first flight date. One site? <Link href="/book/site">Book it directly</Link>.
+                Listing media for agents stays on <Link href="/book">/book</Link>.
               </p>
             </div>
             <div>
