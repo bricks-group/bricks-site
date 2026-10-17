@@ -3,6 +3,7 @@ import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import SiteRail from '@/components/builders/SiteRail'
 import ConstructionForm from '../construction/ConstructionForm'
+import SitePic from '@/components/builders/SitePic'
 import { PER_VISIT, PLANS, PLAN_NOTE, SITE_PRODUCT, fmt } from '@/lib/commercial'
 
 export const metadata: Metadata = {
@@ -47,12 +48,21 @@ const pageCss = `
   .bx-plan tr:last-child td{border-bottom:none;}
   .bx-plan td.p{text-align:right;color:var(--ink);font-weight:500;white-space:nowrap;}
   .bx-plan td.p small{font-weight:400;color:var(--inkMute);font-size:12px;margin-left:4px;}
+  .bx-hero-img{position:relative;margin-top:40px;aspect-ratio:16/9;border-radius:4px;overflow:hidden;background:var(--paperDeep);animation-name:bxImgIn !important;}
+  .bx-hero-img picture,.bx-hero-img img{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .bx-hero-img img{object-fit:cover;object-position:50% 0%;}
+  @keyframes bxImgIn{from{transform:translate3d(0,18px,0) scale(.985);}to{transform:none;}}
+  .bx-plan{overflow:hidden;}
+  .bx-plan-img{position:relative;aspect-ratio:16/7;background:var(--paperDeep);border-bottom:1px solid var(--hair);}
+  .bx-plan-img picture,.bx-plan-img img{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .bx-plan-img img{object-fit:cover;}
   .cx-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start;margin-top:8px;}
   .cx-note{margin-top:18px;font-size:13px;color:var(--inkMute);line-height:1.5;max-width:460px;}
   @media (max-width:900px){
     .bx-proof{grid-template-columns:1fr 1fr;}
     .bx-price,.bx-plans{grid-template-columns:1fr;}
     .cx-grid{grid-template-columns:1fr;gap:36px;}
+    .bx-hero-img{margin-top:28px;aspect-ratio:4/3;}
   }
 `
 
@@ -65,12 +75,15 @@ export default function BuildersPage() {
           <span className="badge">{SITE_PRODUCT}</span>
           <h1>See every site.<br />On schedule.</h1>
           <p className="sub">
-            Drone progress visits and mapped captures on a fixed schedule. Book one visit, or put a site on a monthly plan.
+            Photos, maps, models and reports on a fixed schedule. Book one visit, or put a site on a monthly plan.
           </p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book/site">Book a site visit</Link>
             <Link className="learn-link" href="/book/site?plan=visual">Start a monthly plan →</Link>
             <Link className="learn-link" href="#quote">Talk to us</Link>
+          </div>
+          <div className="bx-hero-img">
+            <SitePic name="tower-cranes" eager widths={[640, 960, 1280, 1600, 2000]} alt="Drone view of a high-rise under construction, with tower cranes" sizes="(max-width:900px) 100vw, 1100px" />
           </div>
         </div>
       </section>
@@ -105,6 +118,13 @@ export default function BuildersPage() {
           <div className="bx-plans">
             {PLANS.map((pl) => (
               <div key={pl.kind} className="bx-plan">
+                <div className="bx-plan-img">
+                  {pl.kind === 'Visual' ? (
+                    <SitePic name="podium-formwork" alt="Drone view of a podium in formwork on an active site" sizes="(max-width:900px) 100vw, 540px" />
+                  ) : (
+                    <SitePic name="excavation-topdown" alt="Top-down drone view of a site in its foundation stage" sizes="(max-width:900px) 100vw, 540px" />
+                  )}
+                </div>
                 <h3>{pl.kind} monitoring</h3>
                 <table>
                   <tbody>

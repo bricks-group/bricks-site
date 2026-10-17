@@ -13,6 +13,13 @@ html.reveal-ready .rvl{transition-duration:.7s,.8s;transition-property:opacity,t
 .hero:not(.hero-home) > .wrap > :nth-child(3){animation-delay:.12s;}
 .hero:not(.hero-home) > .wrap > :nth-child(4){animation-delay:.18s;}
 .hero:not(.hero-home) > .wrap > :nth-child(n+5){animation-delay:.24s;}
+/* Homepage hero: same entrance; the h1 (LCP) moves but never starts transparent */
+.hero-home > .wrap > :not(h1){animation:mIn .7s var(--ease-out) both;}
+.hero-home > .wrap > h1{animation:mRise .7s var(--ease-out) both;}
+.hero-home > .wrap > :nth-child(2){animation-delay:.06s;}
+.hero-home > .wrap > :nth-child(3){animation-delay:.12s;}
+.hero-home > .wrap > :nth-child(n+4){animation-delay:.18s;}
+@keyframes mRise{from{transform:translate3d(0,10px,0);}to{transform:none;}}
 @keyframes mIn{from{opacity:0;transform:translate3d(0,14px,0);}to{opacity:1;transform:none;}}
 
 /* Stagger groups */
@@ -41,7 +48,7 @@ html.reveal-ready .stg.in > *:not(.rvl){opacity:1;transform:none;}
 }
 
 @media (prefers-reduced-motion:reduce){
-  .hero:not(.hero-home) > .wrap > *{animation:none;}
+  .hero:not(.hero-home) > .wrap > *,.hero-home > .wrap > *{animation:none;}
   html.reveal-ready .stg > *:not(.rvl){opacity:1;transform:none;transition:none;}
   [data-msp]{transform:none !important;opacity:1 !important;}
   [data-msp] > *,[data-msp] figure img{transform:none !important;opacity:1 !important;}

@@ -15,17 +15,30 @@ const TABS = [
 ] as const
 type Tab = (typeof TABS)[number]['id']
 
+const PAIRS = [
+  { k: 'HDR', before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png' },
+  { k: 'Sky, on request', before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png' },
+  { k: 'Twilight', before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png' },
+  { k: 'Virtual staging', before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png' },
+] as const
+
 const FILM_SRC = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4'
 
 export default function MediaShowcase() {
   const [tab, setTab] = useState<Tab>('photos')
+  const [pair, setPair] = useState(0)
   const [seen, setSeen] = useState<Record<string, boolean>>({ photos: true })
   const pick = (id: Tab) => {
     setTab(id)
     setSeen((s) => (s[id] ? s : { ...s, [id]: true }))
   }
   useEffect(() => {
-    const sync = () => { if (window.location.hash === '#visit') pick('3d') }
+    const sync = () => {
+      const h = window.location.hash
+      if (h === '#visit') pick('3d')
+      else if (h === '#film') pick('film')
+      else if (h === '#before-after') pick('ba')
+    }
     sync()
     window.addEventListener('hashchange', sync)
     return () => window.removeEventListener('hashchange', sync)
@@ -40,14 +53,12 @@ export default function MediaShowcase() {
   const cap = TABS.find((t) => t.id === tab)?.cap
 
   return (
-    <section className="ms-sec rvl" id="media" aria-label="Listing media">
+    <section className="ms-sec ms-page rvl" id="media" aria-label="Listing media">
       <span id="visit" className="ms-anchor" aria-hidden="true" />
+      <span id="film" className="ms-anchor" aria-hidden="true" />
+      <span id="before-after" className="ms-anchor" aria-hidden="true" />
       <div className="wrap">
         <div className="ms-head">
-          <div>
-            <h2>Listing media.</h2>
-            <p className="sub">HDR photos, licensed drone, film and 3D. Booked online.</p>
-          </div>
           <div className="ms-tabs" role="tablist" aria-label="Media type">
             {TABS.map((t) => (
               <button
@@ -76,7 +87,7 @@ export default function MediaShowcase() {
               ref={baRef}
               className="ms-ba"
               role="slider"
-              aria-label="HDR before and after"
+              aria-label={`${PAIRS[pair].k} before and after`}
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={Math.round(pos)}
@@ -93,8 +104,8 @@ export default function MediaShowcase() {
             >
               {seen.ba ? (
                 <>
-                  <Image className="ms-ba-img" src="/media/proof/HDR After.png" alt="HDR — after" fill loading="eager" sizes="(max-width:900px) 100vw, 1100px" />
-                  <Image className="ms-ba-img" src="/media/proof/HDR Before.png" alt="HDR — before" fill loading="eager" sizes="(max-width:900px) 100vw, 1100px" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
+                  <Image className="ms-ba-img" src={PAIRS[pair].after} alt={`${PAIRS[pair].k} — after`} fill loading="eager" sizes="(max-width:900px) 100vw, 1100px" />
+                  <Image className="ms-ba-img" src={PAIRS[pair].before} alt={`${PAIRS[pair].k} — before`} fill loading="eager" sizes="(max-width:900px) 100vw, 1100px" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
                 </>
               ) : null}
               <span className="ms-lbl l">Before</span>
@@ -117,7 +128,15 @@ export default function MediaShowcase() {
         </div>
 
         <div className="ms-foot">
-          <p className="ms-cap" aria-live="polite">{cap}</p>
+          {tab === 'ba' ? (
+            <div className="ms-pairs" role="group" aria-label="Edit type">
+              {PAIRS.map((p, i) => (
+                <button key={p.k} type="button" className={i === pair ? 'ms-pair is-on' : 'ms-pair'} aria-pressed={i === pair} onClick={() => { setPair(i); setPos(50) }}>{p.k}</button>
+              ))}
+            </div>
+          ) : (
+            <p className="ms-cap" aria-live="polite">{cap}</p>
+          )}
           <Link className="learn-link" href="/gallery">See more work →</Link>
         </div>
       </div>

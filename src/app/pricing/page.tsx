@@ -246,7 +246,7 @@ export default function PricingPage() {
         @media (max-width:720px){
           .tbl thead{display:none;}
           .tbl, .tbl tbody, .tbl tr, .tbl th, .tbl td{display:block;width:100%;max-width:100%;box-sizing:border-box;text-align:left;}
-          .tbl tr{border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:var(--paper);margin:0 0 14px;}
+          .tbl tr{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);margin:0 0 14px;}
           .tbl th, .tbl td{padding:12px 16px;border-bottom:1px solid var(--hair);}
           .tbl td.pkg{border-bottom:1px solid var(--hair);font-size:15px;}
           .tbl td.num{display:flex;justify-content:space-between;align-items:center;text-align:right;font-size:15px;}

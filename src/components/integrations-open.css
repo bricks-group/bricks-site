@@ -13,7 +13,7 @@
 .integ-item:hover{opacity:1;filter:none;}
 .integ-open .integ-img{max-height:calc(26px * var(--s,1));max-width:150px;}
 .integ-open .integ-wordmark{font-size:17px;color:var(--ink);white-space:nowrap;}
-.integ-soon-pill{font-size:11px;font-weight:500;color:var(--inkMute);border:1px solid var(--hair);border-radius:99px;padding:2px 8px;white-space:nowrap;}
+.integ-soon-pill{font-size:11px;font-weight:500;color:var(--inkMute);border:1px solid var(--hair);border-radius:2px;padding:2px 8px;white-space:nowrap;}
 .integ-open .integ-fine{text-align:center;margin:28px 0 0;}
 @keyframes integ-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 [data-theme="dark"] .integ-open .integ-img{filter:grayscale(1) invert(1) brightness(1.3);}

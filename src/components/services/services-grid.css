@@ -1,0 +1,42 @@
+.svc-sec{padding:88px 0 72px;}
+.svc-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);}
+.svc-grid > li{background:var(--paper);min-width:0;}
+.svc-head{display:flex;flex-direction:column;justify-content:flex-end;padding:22px 20px;}
+.svc-head h2{font-weight:500;font-size:clamp(24px,2.3vw,30px);letter-spacing:-.8px;line-height:1.05;margin:0;color:var(--ink);}
+.svc-head p{font-size:14.5px;line-height:1.45;color:var(--inkSoft);margin:10px 0 0;}
+.svc-tile{display:flex;flex-direction:column;height:100%;padding:12px 12px 18px;text-decoration:none;color:inherit;box-sizing:border-box;
+  transition:background .35s var(--ease-out,cubic-bezier(.16,1,.3,1));}
+.svc-vis{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:var(--paperSoft);margin-bottom:14px;}
+.svc-vis picture,.svc-vis img{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.svc-vis img{object-fit:cover;transition:transform .9s var(--ease-out,cubic-bezier(.16,1,.3,1));}
+.svc-t{display:flex;justify-content:space-between;gap:8px;font-size:16px;font-weight:500;letter-spacing:-.02em;color:var(--ink);}
+.svc-ar{color:var(--brickDeep);transition:transform .35s var(--ease-out,cubic-bezier(.16,1,.3,1));}
+.svc-d{font-size:13.5px;line-height:1.4;color:var(--inkSoft);margin-top:4px;}
+.svc-tile:hover{background:var(--brickTint);}
+.svc-tile:hover .svc-vis img{transform:scale(1.04);}
+.svc-tile:hover .svc-ar{transform:translateX(3px);}
+.svc-art{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--ink);stroke-width:1.4;padding:14%;box-sizing:border-box;}
+.svc-art rect{fill:var(--paper);}
+.svc-art .svc-hub{fill:var(--brick);stroke:var(--brick);}
+.svc-art .svc-door{stroke:var(--brick);}
+
+/* Bricks assembling: nine square parts settle into one wall as the section enters */
+.svc-assemble{display:grid;grid-template-columns:repeat(3,22px);gap:4px;margin-bottom:auto;padding-bottom:28px;}
+.svc-assemble i{display:block;width:22px;height:14px;background:var(--brick);border-radius:1px;opacity:.9;}
+.svc-assemble i:nth-child(3n+2){background:var(--brickDeep);}
+.svc-assemble i:nth-child(4),.svc-assemble i:nth-child(6){width:22px;}
+html.reveal-ready .svc-sec.rvl:not(.in) .svc-assemble i{opacity:0;
+  transform:translate3d(calc((var(--i) - 4) * 9px),calc(((var(--i) * 7) - 28) * 1.6px),0) rotate(calc((var(--i) - 4) * 6deg));}
+.svc-assemble i{transition:transform .9s var(--ease-out,cubic-bezier(.16,1,.3,1)),opacity .6s var(--ease-out,cubic-bezier(.16,1,.3,1));
+  transition-delay:calc(var(--i) * 55ms + 120ms);}
+
+@media (max-width:1100px){.svc-grid{grid-template-columns:repeat(4,minmax(0,1fr));}.svc-head{grid-column:span 3;}}
+@media (max-width:700px){
+  .svc-sec{padding:56px 0 48px;}
+  .svc-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .svc-head{grid-column:1/-1;padding:20px 16px 18px;}
+  .svc-tile{padding:10px 10px 14px;}
+  .svc-t{font-size:15px;}.svc-d{font-size:13px;}
+}
+@media (prefers-reduced-motion:reduce){.svc-assemble i,.svc-vis img,.svc-ar{transition:none !important;transform:none !important;opacity:.9 !important;}}
+@media (max-width:700px){.svc-grid > li:last-child{grid-column:1/-1;}.svc-grid > li:last-child .svc-vis{aspect-ratio:2/1;}}

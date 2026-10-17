@@ -22,7 +22,9 @@ export default function Footer() {
           <div className="foot-links">
             <Link href="/platform">Platform</Link>
             <Link href="/pricing">Pricing</Link>
+            <Link href="/media">Media</Link>
             <Link href="/real-estate-photography">Listing photos</Link>
+            <Link href="/builders">Site Progress</Link>
             <Link href="/gallery">Work</Link>
             <Link href="/book">Book a shoot</Link>
             <Link href="/service-areas">Service areas</Link>

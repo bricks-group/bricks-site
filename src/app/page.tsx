@@ -6,7 +6,7 @@ import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
 import StepsRail from '@/components/steps-rail/StepsRail'
-import MediaShowcase from '@/components/media-showcase/MediaShowcase'
+import ServicesGrid from '@/components/services/ServicesGrid'
 import IntegrationsBand from '@/components/IntegrationsBand'
 import AudienceCards from '@/components/AudienceCards'
 import './home-v3.css'
@@ -102,14 +102,6 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
 
 
 
-const NEXT = [
-  { t: 'Bricks OS', d: 'Deals, CRM, e-sign and MLS® submission, synced to your calendar.', href: '/platform' },
-  { t: 'Virtual Visit', d: 'Free-roam 3D of the home.', href: '#visit' },
-  { t: 'Floor plans', d: 'Included from Essentials up, or on their own.', href: '/pricing' },
-  { t: 'Reels and video', d: 'A cinematic reel for the listing.', href: '/pricing' },
-  { t: 'Drone', d: 'Licensed aerials of the property.', href: '/pricing' },
-  { t: 'Site Progress', d: 'Progress visits and mapped capture for builders.', href: '/builders' },
-] as const
 
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
@@ -163,8 +155,8 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <h1>The system for Canadian real estate.</h1>
-          <p className="sub">Software for the deal. Media for the listing. Site progress for the build.</p>
+          <h1>The system that brings it all together.</h1>
+          <p className="sub">Software, media, 3D and site progress for Canadian real estate, working as one.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
             <a className="btn btn-ghost" href="https://app.brxs.ca/login">Try Bricks OS free</a>
@@ -173,7 +165,7 @@ export default function Home() {
           <nav className="hp-pillars" aria-label="What Bricks does">
             <Link href="/platform" className="hp-pillar"><span className="hp-pt">Bricks OS</span><span className="hp-pd">Deals, CRM and e-sign.</span></Link>
             <Link href="/pricing" className="hp-pillar"><span className="hp-pt">Listing media</span><span className="hp-pd">Photos, drone, video and 3D.</span></Link>
-            <Link href="/builders" className="hp-pillar"><span className="hp-pt">Site Progress</span><span className="hp-pd">Drone visits for builders.</span></Link>
+            <Link href="/builders" className="hp-pillar"><span className="hp-pt">Site Progress</span><span className="hp-pd">Maps, models and reports.</span></Link>
           </nav>
         </div>
       </section>
@@ -203,39 +195,20 @@ export default function Home() {
         </div>
       </section>
 
-      <MediaShowcase />
+      <ServicesGrid />
 
       <StepsRail />
-
-      <section className="next-sec rvl" aria-label="What happens next">
-        <div className="wrap">
-          <div className="next-head">
-            <h2>Then the rest of Bricks.</h2>
-            <p className="sub">Photos are the start. Here&apos;s what picks up from there.</p>
-          </div>
-          <ul className="next-grid">
-            {NEXT.map((n) => (
-              <li key={n.t}>
-                <Link className="next-card" href={n.href}>
-                  <span className="next-t">{n.t}</span>
-                  <span className="next-d">{n.d}</span>
-                  <span className="next-go" aria-hidden="true">→</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
 
       <section className="bld-band rvl" aria-label="Site Progress for builders">
         <div className="wrap bld-inner">
           <div className="bld-copy">
-            <h2>Site Progress for builders.</h2>
-            <p className="sub">Drone progress visits and mapped captures on a fixed schedule.</p>
+            <h2>Site Progress, inside Bricks.</h2>
+            <p className="sub">Photos, maps, models and reports on a fixed schedule.</p>
             <ul className="bld-list">
-              <li><b>Progress visits</b><span>Drone photos and video, dated by visit.</span></li>
-              <li><b>Mapped capture</b><span>Orthomosaic, 3D model and site map.</span></li>
-              <li><b>One site file</b><span>Every visit shared through one link.</span></li>
+              <li><b>Maps</b><span>Orthomosaic, measurements and elevation.</span></li>
+              <li><b>Models</b><span>3D model and point cloud.</span></li>
+              <li><b>Reports</b><span>Progress over time, in one site file.</span></li>
+              <li><b>Photos and video</b><span>Dated by visit.</span></li>
             </ul>
             <div className="cta-row">
               <Link className="btn btn-night" href="/book/site">Book a site visit</Link>

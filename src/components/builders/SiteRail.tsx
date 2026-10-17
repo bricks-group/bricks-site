@@ -4,27 +4,16 @@ import Link from 'next/link'
 import { useStepScroll } from '@/components/steps-rail/useStepScroll'
 import '@/components/steps-rail/steps-rail.css'
 import './site-rail.css'
+import SitePic from './SitePic'
 
 const STEPS = [
-  {
-    key: 'site', n: '01', label: 'Cadence',
-    title: 'Pick the site and how often.',
-    body: 'Visual or mapped, monthly to weekly. One plan per site.',
-    panel: ['Site', 'Capture type', 'Cadence', 'Insurance minimum on your contract'],
-  },
-  {
-    key: 'pilot', n: '02', label: 'Pilot',
-    title: 'Only qualified pilots fly it.',
-    body: 'We assign a vetted pilot with Advanced RPAS and verified drone insurance.',
-    panel: ['Vetted pilots only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
-  },
-  {
-    key: 'file', n: '03', label: 'Site file',
-    title: 'Every visit lands in one site file.',
-    body: 'Dated photos, video and maps in one link for owners, lenders and site teams.',
-    panel: ['Dated by visit', 'Photos and video', 'Orthomosaic + 3D (mapped)', 'One share link'],
-  },
+  { key: 'photo', n: '01', label: 'Photo', title: 'Photos and video, dated.', body: 'Stills and a flyover on every visit, filed by date.' },
+  { key: 'map', n: '02', label: 'Map', title: 'A map you can measure.', body: 'Orthomosaic with distance, area and elevation (DSM).' },
+  { key: 'model', n: '03', label: 'Model', title: 'A 3D model of the site.', body: 'Model and point cloud, compared visit to visit.' },
+  { key: 'report', n: '04', label: 'Report', title: 'A report in one site file.', body: 'Progress notes and every file in one link for owners, lenders and site teams.' },
 ] as const
+
+const REPORT = ['Photos and video', 'Orthomosaic', 'Elevation (DSM)', '3D model and point cloud', 'Compare to last visit', 'Progress notes'] as const
 
 /** Builders page: same scroll-driven brick rail as the homepage steps (shared hook + tokens). */
 export default function SiteRail() {
@@ -34,8 +23,8 @@ export default function SiteRail() {
 
   const head = (
     <div className="cap-copy slab-head">
-      <h2>Site progress in three steps.</h2>
-      <p className="cap-lede">The network behind our listing shoots, pointed at your sites.</p>
+      <h2>Every visit, in layers.</h2>
+      <p className="cap-lede">Photos, maps, models and reports. Standard with Site Progress.</p>
       <Link className="learn-link slab-b-link" href="#quote">Request a site plan →</Link>
     </div>
   )
@@ -67,17 +56,37 @@ export default function SiteRail() {
             </div>
           </div>
           <div className="cap-stage tray tray-book slab-b-stage">
-            <div className="site-panels">
-              {STEPS.map((s, i) => (
-                <div key={s.key} className={`site-panel ${state(i)}`}>
-                  <span className="site-panel-k">{s.n} · {s.label}</span>
-                  <ul>
-                    {s.panel.map((line) => (
-                      <li key={line}><span className="slab-brick" aria-hidden="true" />{line}</li>
-                    ))}
-                  </ul>
+            <div className="sl-stage" data-step={active}>
+              <div className="sl-card">
+                <div className="sl-plane">
+                  <SitePic name="excavation-topdown" className="sl-photo" alt="Top-down drone view of a site in its foundation stage" sizes="(max-width:900px) 92vw, 640px" />
+                  <div className="sl-map" aria-hidden="true">
+                    <svg viewBox="0 0 100 66.7" preserveAspectRatio="none">
+                      <polygon className="sl-area" points="33,9 77,9 77,68 33,68" />
+                      <line className="sl-dist" x1="33" y1="5" x2="77" y2="5" />
+                      <line className="sl-tick" x1="33" y1="3.4" x2="33" y2="6.6" />
+                      <line className="sl-tick" x1="77" y1="3.4" x2="77" y2="6.6" />
+                    </svg>
+                    <span className="sl-tag sl-tag-d">Distance</span>
+                    <span className="sl-tag sl-tag-a">Area</span>
+                    <span className="sl-ramp"><i />Elevation</span>
+                  </div>
+                  <div className="sl-mesh" aria-hidden="true" />
+                  <span className="sl-scan" aria-hidden="true" />
                 </div>
-              ))}
+                <span className="sl-chip" aria-hidden="true">
+                  {['Photos and video', 'Orthomosaic', '3D model', 'Site report'][active]}
+                </span>
+              </div>
+              <div className="sl-report" aria-label="Site report">
+                <div className="sl-report-h"><b>Site report</b><span>This visit</span></div>
+                <ul>
+                  {REPORT.map((r) => (
+                    <li key={r}><span className="slab-brick" aria-hidden="true" />{r}</li>
+                  ))}
+                </ul>
+                <div className="sl-report-f">One share link</div>
+              </div>
             </div>
           </div>
         </div>

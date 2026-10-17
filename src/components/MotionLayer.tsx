@@ -22,17 +22,16 @@ import { usePathname } from 'next/navigation'
 const STAGGER = [
   '.trust-tiles', '.trust-stats', '.work-row', '.edit-grid', '.incl', '.adds', '.faq',
   '.grid3', '.areas', '.work-grid', '.ba-grid', '.cx-grid', '.cx-list', '.contact-grid',
-  '.integ-grid', '.integ-soon-list', '.tbl tbody', '.next-grid',
+  '.integ-grid', '.integ-soon-list', '.tbl tbody', '.next-grid', '.svc-grid', '.mp-grid', '.bx-proof', '.bx-price', '.bx-plans',
+  '.aud-grid', '.creds', '.posts', '.reasons', '.bld-list', '.hp-pillars',
 ].join(',')
 
 const RISE = [
   '.cap-stage.tray-crm', '.prod-row .tray', '.film', '.visit-stage',
 ].join(',')
 
-const SECTIONS = [
-  'body > section:not(.hero):not(.prod-hero):not(.slab):not(.rvl)',
-  'body > .wrap > section:not(.rvl)',
-].join(',')
+// Every top-level content section on every page (legal pages, demo, blog included), not just body > section.
+const SECTIONS = 'section:not(.hero):not(.prod-hero):not(.slab):not(.rvl)'
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v))
 const easeOut = (x: number) => 1 - Math.pow(1 - x, 3)
@@ -52,7 +51,9 @@ export default function MotionLayer() {
     const skip = (el: Element) => !!el.closest('header, footer, .slab, [data-motion="off"]')
 
     // ── 1 + 2: reveal on enter ────────────────────────────────────────────────
-    const sections = Array.from(document.querySelectorAll<HTMLElement>(SECTIONS)).filter((el) => !skip(el))
+    const sections = Array.from(document.querySelectorAll<HTMLElement>(SECTIONS)).filter(
+      (el) => !skip(el) && !el.parentElement?.closest('section') && !el.closest('form, .flow, [role="dialog"]')
+    )
     const groups = Array.from(document.querySelectorAll<HTMLElement>(STAGGER)).filter(
       (el) => !skip(el) && !el.classList.contains('stg') && el.children.length > 1
     )

@@ -49,7 +49,7 @@
 .slotbtn .sub{display:block;margin-top:4px;font-size:11px;opacity:.85;font-weight:400;}
 .toggle{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:14px;color:var(--inkSoft);}
 .toggle input{width:16px;height:16px;accent-color:var(--brick);}
-.quote{background:var(--paper);border:1px solid var(--hairStrong);border-radius:12px;padding:0;margin-top:16px;overflow:hidden;
+.quote{background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;padding:0;margin-top:16px;overflow:hidden;
   box-shadow:0 1px 0 rgba(255,255,255,.45) inset, 0 16px 48px rgba(20,17,14,.08);}
 .quote .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
   padding:16px 22px;margin:0;border-bottom:1px solid var(--hair);background:var(--paperSoft);}
@@ -76,7 +76,7 @@
   text-transform:none;color:var(--ink);font-weight:500;margin-bottom:3px;}
 .qmsg{font-size:13px;color:var(--inkMute);padding:22px;line-height:1.55;}
 @media (prefers-reduced-motion: reduce){.qload .spin{animation:none;border-top-color:var(--brickSoft);}}
-.review{background:var(--paper);border:1px solid var(--hairStrong);border-radius:12px;padding:8px 22px 12px;}
+.review{background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;padding:8px 22px 12px;}
 .review .rrow{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--hair);font-size:14px;}
 .review .rrow:last-child{border-bottom:none;}
 .review .rk{color:var(--inkMute);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;}
@@ -88,7 +88,7 @@
 .btn-brick:disabled{opacity:0.5;cursor:not-allowed;}
 .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--hairStrong);}
 .err{color:var(--brickDeep);font-size:12.5px;font-family:'JetBrains Mono',monospace;margin-top:-8px;margin-bottom:12px;min-height:14px;}
-.done-box{background:var(--paper);border:1px solid var(--hairStrong);border-radius:12px;padding:36px 28px;text-align:center;}
+.done-box{background:var(--paper);border:1px solid var(--hairStrong);border-radius:2px;padding:36px 28px;text-align:center;}
 .done-box h2{color:var(--ink);margin-bottom:8px;}
 .done-box p{font-size:14px;color:var(--inkMute);}
 .faq-head{margin:0 0 22px;}

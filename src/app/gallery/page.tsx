@@ -186,7 +186,7 @@ export default function GalleryPage() {
       <style>{`
         .work-wrap{max-width:980px;}
         .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px;margin-top:8px;}
-        .work-card{border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:var(--paper);}
+        .work-card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);}
         .work-card .img{aspect-ratio:4/3;background:var(--paperDeep);overflow:hidden;}
         .work-card .img img{width:100%;height:100%;object-fit:cover;display:block;filter:none;}
         .work-card .meta{padding:16px 18px 18px;}
