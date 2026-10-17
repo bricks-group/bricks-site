@@ -27,7 +27,7 @@ The accent is the existing Bricks brick. It means state, so it never appears in 
 
 ## 2. Type
 
-- **Grotesque (headings + copy): General Sans** (already on the site, via cdnfonts). Display 34–56px, tracking −0.03em. Headings tracking −0.02em, weight 500. Body 16px/1.5.
+- **Grotesque (headings + copy): General Sans** (self-hosted from /public/fonts, Fontshare ITF FFL). Display 34–56px, tracking −0.03em. Headings tracking −0.02em, weight 500. Body 16px/1.5.
 - **Mono (figures only): JetBrains Mono** (already on the site, Google Fonts, OFL). Only for figures, IDs, timestamps, coordinates, status times and units. Use `font-variant-numeric: tabular-nums` (class `.vs-fig`). Size 12–13px.
 - **Editorial serif (optional, open choice):** none is licensed on the site yet. The free candidate is **Newsreader** (Google Fonts, OFL), for pull quotes and long-form editorial moments only. It isn't loaded in this pass.
 - **No mono eyebrows or spec lines in marketing copy** (Kam rejected lines like "EXACT CLOCK-TIME BOOKING · 24–48H TARGET"). Labels are sans, sentence case, graphite. No letter-spaced caps.

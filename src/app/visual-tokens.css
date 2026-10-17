@@ -23,9 +23,21 @@
   /* Type */
   --vs-sans:'General Sans',system-ui,sans-serif;          /* quiet grotesque: headings + copy */
   --vs-mono:'JetBrains Mono',ui-monospace,monospace;       /* figures, IDs, timestamps, status only */
-  --vs-fs-display:clamp(34px,4.2vw,56px); --vs-fs-h2:clamp(24px,2.4vw,34px); --vs-fs-h3:18px;
+  --vs-fs-h2:clamp(24px,2.4vw,34px); --vs-fs-h3:18px;
   --vs-fs-body:16px; --vs-fs-small:13.5px; --vs-fs-figure:13px; --vs-fs-micro:11px;
   --vs-track-display:-.03em; --vs-track-h:-.02em;
+
+  /* Fluid type: linear from 360px to 1440px viewport, clamped at both ends */
+  --vs-fs-display:clamp(28px, 1.296vw + 23.33px, 42px);   /* hero H1 28→42 */
+  --vs-fs-section:clamp(22px, 1.111vw + 18px, 34px);      /* section heads, proof quote 22→34 */
+  --vs-fs-title:clamp(20px, .185vw + 19.33px, 22px);      /* row and card titles 20→22 */
+  --vs-fs-body:clamp(15px, .093vw + 14.67px, 16px);       /* body 15→16 */
+  --vs-fs-small:clamp(13px, .093vw + 12.67px, 14px);      /* captions, links, meta 13→14 */
+  --vs-fs-cta:clamp(36px, 3.704vw + 22.67px, 76px);       /* final CTA 36→76 */
+  /* Fluid space */
+  --vs-sec:clamp(56px, 5.185vw + 37.33px, 112px);         /* gap between homepage sections */
+  --vs-pad:clamp(16px, 2.222vw + 8px, 40px);              /* panel padding */
+  --vs-gap:clamp(8px, .741vw + 5.33px, 16px);             /* gap between panels/cards */
 
   /* Space: 4px base, 24px layout grid */
   --vs-1:4px; --vs-2:8px; --vs-3:12px; --vs-4:16px; --vs-6:24px; --vs-8:32px; --vs-12:48px; --vs-16:64px; --vs-24:96px;
