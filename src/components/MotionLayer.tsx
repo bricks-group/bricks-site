@@ -45,14 +45,17 @@ export default function MotionLayer() {
     const vh = () => window.innerHeight
     const inView = (el: Element) => {
       const r = el.getBoundingClientRect()
-      return r.top < vh() * 0.88 && r.bottom > 0
+      // content taller than the viewport is never held hidden
+      return r.height > vh() * 0.9 || (r.top < vh() * 0.88 && r.bottom > 0)
     }
+    // long-form (blog bodies, legal copy) never takes part in reveal
+    const longForm = (el: Element) => el.matches('.prose, article') || !!el.querySelector('.prose, article')
     const below = (el: Element) => el.getBoundingClientRect().top > vh()
     const skip = (el: Element) => !!el.closest('header, footer, .slab, [data-motion="off"]')
 
     // ── 1 + 2: reveal on enter ────────────────────────────────────────────────
     const sections = Array.from(document.querySelectorAll<HTMLElement>(SECTIONS)).filter(
-      (el) => !skip(el) && !el.parentElement?.closest('section') && !el.closest('form, .flow, [role="dialog"]')
+      (el) => !skip(el) && !longForm(el) && !el.parentElement?.closest('section') && !el.closest('form, .flow, [role="dialog"]')
     )
     const groups = Array.from(document.querySelectorAll<HTMLElement>(STAGGER)).filter(
       (el) => !skip(el) && !el.classList.contains('stg') && el.children.length > 1
@@ -92,7 +95,7 @@ export default function MotionLayer() {
     // existing .rvl markup (pages with or without their own RevealObserver)
     const watchRvl = (root: ParentNode) => {
       root.querySelectorAll<HTMLElement>('.rvl:not(.in)').forEach((el) => {
-        if (skip(el)) return el.classList.add('in')
+        if (skip(el) || longForm(el)) return el.classList.add('in')
         if (inView(el)) el.classList.add('in')
         else io.observe(el)
       })
@@ -107,8 +110,11 @@ export default function MotionLayer() {
       })
     })
     mo.observe(document.body, { childList: true, subtree: true })
-    const failsafe = window.setTimeout(() => watchRvl(document), 1500)
-    timers.push(failsafe)
+    timers.push(window.setTimeout(() => watchRvl(document), 1500))
+    // hard failsafe: a missed IO callback can never leave content invisible
+    timers.push(window.setTimeout(() => {
+      document.querySelectorAll<HTMLElement>('.rvl:not(.in), .stg:not(.in)').forEach((el) => el.classList.add('in'))
+    }, 4000))
 
     groups.forEach((g) => {
       Array.from(g.children).forEach((c, i) => {
