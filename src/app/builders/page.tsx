@@ -8,7 +8,7 @@ import { PER_VISIT, PLANS, PLAN_NOTE, SITE_PRODUCT, fmt } from '@/lib/commercial
 export const metadata: Metadata = {
   title: 'Drone progress monitoring for builders & developers | Bricks',
   description:
-    'Scheduled drone progress visits and mapped captures for builders, developers, GCs and investors in Canada. Tier A pilots with Advanced RPAS and verified drone liability insurance. From $375 per visit or $300 per site per month.',
+    'Scheduled drone progress visits and mapped captures for builders, developers, GCs and investors in Canada. Vetted, insured, certified pilots: Advanced RPAS and verified drone liability insurance. From $375 per visit or $300 per site per month.',
   alternates: { canonical: '/builders' },
   openGraph: {
     title: 'Site Progress for builders & developers | Bricks',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 }
 
 const PROOF = [
-  { k: 'Top-tier pilots only', v: 'Sites go only to our highest pilot tier.' },
+  { k: 'Vetted, insured, certified pilots', v: 'Every pilot is vetted by Bricks before they fly a site.' },
   { k: 'Advanced RPAS', v: 'Certified by Transport Canada for controlled airspace and work near people.' },
   { k: 'Verified insurance', v: '$2M drone liability minimum, verified by us and valid on the flight date. $5M when your contract requires it.' },
   { k: 'One site file', v: 'Every visit dated and shared through one link.' },

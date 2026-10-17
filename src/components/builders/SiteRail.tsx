@@ -15,8 +15,8 @@ const STEPS = [
   {
     key: 'pilot', n: '02', label: 'Pilot',
     title: 'Only qualified pilots fly it.',
-    body: 'We assign a top-tier pilot with Advanced RPAS and verified drone insurance.',
-    panel: ['Top tier only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
+    body: 'We assign a vetted pilot with Advanced RPAS and verified drone insurance.',
+    panel: ['Vetted pilots only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
   },
   {
     key: 'file', n: '03', label: 'Site file',

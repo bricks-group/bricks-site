@@ -155,14 +155,14 @@ export default function PhotographersPage() {
           <div className="sec-head">
             <div>
               <span className="over">Tier 3</span>
-              <h2>Builder &amp; developer jobs pay more.</h2>
+              <h2>Builder &amp; developer jobs pay the top of Tier A.</h2>
             </div>
           </div>
           <p className="rate-lead">Construction site jobs go only to Tier 3 pilots with Advanced RPAS and verified drone liability insurance of at least $2M ($5M on some sites). Upload your certificate in GO.</p>
           <div className="adds">
-            <div className="a rvl"><div className="nm">Progress visit — $235</div><p>Drone photos and video of the site.</p></div>
-            <div className="a rvl"><div className="nm">Mapped capture — $945</div><p>A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.</p></div>
-            <div className="a rvl"><div className="nm">Mapping setup — +$410</div><p>Ground control for the first mapped flight on a site.</p></div>
+            <div className="a rvl"><div className="nm">Progress visit — $185</div><p>Drone photos and video of the site.</p></div>
+            <div className="a rvl"><div className="nm">Mapped capture — $735</div><p>A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.</p></div>
+            <div className="a rvl"><div className="nm">Mapping setup — +$315</div><p>Ground control for the first mapped flight on a site.</p></div>
           </div>
           <p className="note" data-legal-review="true">Draft — needs legal review before publishing. The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
         </section>
