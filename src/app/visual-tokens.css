@@ -49,7 +49,7 @@
   --vs-stroke:1.5px;       /* icons + technical drawings */
   --vs-radius:0;           /* square edges; 2px max on inputs */
 
-  /* Surfaces for product windows (replaces the painted trays) */
+  /* Fallback surface behind product windows (the original painted trays from globals.css sit on top) */
   --vs-tray:var(--vs-g-100);
 }
 html[data-theme="dark"]{
@@ -68,13 +68,7 @@ html[data-theme="dark"]{
 .bx-icon{display:inline-block;flex:none;vertical-align:middle;color:currentColor;}
 
 /* Product windows sit on a flat graphite surface — no painted backdrops */
-.tray.tray-os,.tray.tray-crm,.tray.tray-tx,.tray.tray-book,.tray.tray-disp{background-image:none;background-color:var(--vs-tray);}
 
-/* Product trays: Kam's real photography, softened (ship/visual-system/trays.py). Replaces the painted trays. */
-.tray.tray-os{background-image:image-set(url(/media/trays/desk-1600.avif) type("image/avif"),url(/media/trays/desk-1600.webp) type("image/webp"));}
-.tray.tray-crm{background-image:image-set(url(/media/trays/crm-1600.avif) type("image/avif"),url(/media/trays/crm-1600.webp) type("image/webp"));}
-.tray.tray-book{background-image:image-set(url(/media/trays/book-900.avif) type("image/avif"),url(/media/trays/book-900.webp) type("image/webp"));}
-.tray.tray-disp{background-image:image-set(url(/media/trays/disp-900.avif) type("image/avif"),url(/media/trays/disp-900.webp) type("image/webp"));}
 .tray{border-radius:0;}
 
 /* Static product-screen captures (ScreenStatic): theme-matched, always painted */

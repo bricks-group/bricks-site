@@ -16,7 +16,7 @@ Rhythm: section gap 112px desktop / 72px mobile; panels on --vs-surface; 8px gut
 │       estate, working as one.                                        │
 │   [Book a shoot]  [Try Bricks free]                                  │
 │ ┌──────────────────────────────────────────────────────────────────┐ │
-│ │ real photo tray (graded, softened)                               │ │
+│ │ original painted tray                                      │ │
 │ │   ┌─────────────── Bricks desk (live ProductStage) ───────────┐  │ │
 │ │   │  Overview / Deal windows, click-to-front                  │  │ │
 │ └──────────────────────────────────────────────────────────────────┘ │
@@ -27,12 +27,12 @@ Rhythm: section gap 112px desktop / 72px mobile; panels on --vs-surface; 8px gut
 ├──────────────────────────────────────────────────────────────────────┤
 │ 3 PRODUCT ROWS  (panel ≈ 1/3 copy, 2/3 frame, sides alternate)       │
 │ ┌────────────┬─────────────────────────────────────┐                 │
-│ │ The desk   │  photo tray + CRM desk frame        │  → /platform    │
+│ │ The desk   │  painted tray + CRM desk frame        │  → /platform    │
 │ │ runs the   │                                     │                 │
 │ │ deal.      │                                     │                 │
 │ └────────────┴─────────────────────────────────────┘                 │
 │ ┌─────────────────────────────────────┬────────────┐                 │
-│ │ photo tray + phone: booking app     │ Media,     │  → /media       │
+│ │ painted tray + phone: booking app     │ Media,     │  → /media       │
 │ │                                     │ inside     │                 │
 │ └─────────────────────────────────────┴────────────┘                 │
 │ ┌────────────┬─────────────────────────────────────┐                 │
@@ -40,7 +40,7 @@ Rhythm: section gap 112px desktop / 72px mobile; panels on --vs-surface; 8px gut
 │ │ Progress   │                                     │                 │
 │ └────────────┴─────────────────────────────────────┘                 │
 │ ┌─────────────────────────────────────┬────────────┐                 │
-│ │ photo tray + phone: photographer app│ Photo-     │  → /photographers│
+│ │ painted tray + phone: photographer app│ Photo-     │  → /photographers│
 │ │                                     │ graphers   │                 │
 │ └─────────────────────────────────────┴────────────┘                 │
 ├──────────────────────────────────────────────────────────────────────┤

@@ -34,7 +34,7 @@ function Os() {
 }
 
 function Integrations() {
-  const nodes: [IconName, number, number][] = [['mls', 108, 36], ['calendar', 180, 108], ['e-sign', 108, 180], ['crm', 36, 108]]
+  const nodes: [IconName, number, number][] = [['mls', 108, 36], ['deal', 180, 108], ['e-sign', 108, 180], ['crm', 36, 108]]
   return (
     <>
       {P('M120 72V96M120 144V168M72 120H96M144 120H168', 'la-1')}

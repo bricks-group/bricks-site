@@ -13,7 +13,7 @@ const TILES: Tile[] = [
   { t: 'Virtual Visit', d: 'Free-roam 3D of the home.', href: '/media#visit', img: 'visit' },
   { t: 'Site Progress', d: 'Maps, models and reports for builders.', href: '/builders', img: 'site' },
   { t: 'Photographers', d: 'Independent pros, dispatched through Bricks.', href: '/photographers', img: 'pros' },
-  { t: 'Integrations', d: 'Your MLS® feed and calendar, connected.', href: '#integrations', art: 'integrations' },
+  { t: 'Integrations', d: 'Your MLS® feed, CRM and payments, connected.', href: '#integrations', art: 'integrations' },
 ]
 
 export default function ServicesGrid() {

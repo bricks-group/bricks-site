@@ -109,12 +109,5 @@ The accent is the existing Bricks brick. It means state, so it never appears in 
    - (c) Move state to a new signal colour.
    This pass leaves CTAs unchanged.
 2. **Serif.** Add Newsreader (free) for editorial moments, or stay sans-only.
-3. **Painted trays.** The painterly backdrops behind product windows are replaced with flat `--vs-tray` graphite. Revert with one CSS rule if they should stay.
+3. **Painted trays: decided.** Kam (17 Oct): keep the original painted backgrounds behind product windows (`/media/paint/*.jpg`, rules in `globals.css`). `--vs-tray` is only the fallback colour. No photo or flat trays.
 4. **Photographers tile.** No photographer-at-work or gear photo was found in the repo or Drive, so it uses a drone-over-property frame. Supply a real on-shoot shot to replace it.
-
-
-## Product trays (v10, homepage restructure)
-- Product frames (desk windows, phones) sit on **trays of real photography**, not paintings or flat fills: one recipe for every tray (`trays.py`): the cover grade, a 30% lift toward off-white (#F4F1EB), a Gaussian blur of r=3 at 1600w, and a fixed 16:10 crop. AVIF and WebP at 900 and 1600.
-- Sources: desk = drone-cre-0439 (industrial waterfront), crm = res-living-1, book = res-ext-1 (brick house), disp = work/01 (street of brick homes).
-- Rows are tonal panels (`--vs-surface`), 8px inner gutter, square corners. Titles are 22px/500 and lines 16px in `--vs-fg-2`, with one underlined text link per row. No eyebrows.
-- The only large type is the hero H1 (30–42px) and the final CTA (44–76px).

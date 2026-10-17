@@ -12,7 +12,10 @@
 /* Works-with strip */
 .integ-strip-c{padding:clamp(36px, 1.852vw + 29.33px, 56px) 0 0;}
 .integ-c-cap{font-size:var(--vs-fs-small);color:var(--vs-fg-3);text-align:center;margin:0 0 14px;}
-.integ-c-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--vs-gap);}
+.integ-c-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--vs-gap);}
+.integ-c-soon{position:relative;}
+.integ-c-item.integ-c-soon .integ-img{opacity:.55;}
+.integ-c-soon-t{position:absolute;top:6px;right:8px;font-family:var(--vs-mono);font-size:11px;color:var(--vs-fg-3);}
 .integ-c-item{background:var(--vs-surface);height:clamp(52px, 1.852vw + 45.33px, 72px);display:flex;align-items:center;justify-content:center;padding:0 12px;min-width:0;}
 .integ-c-item .integ-img{height:calc(clamp(18px, .556vw + 16px, 24px) * var(--s,1));width:auto;max-width:100%;filter:grayscale(1);opacity:.78;}
 .integ-c-item .integ-wordmark{font-size:var(--vs-fs-small);font-weight:500;color:var(--vs-fg-2);letter-spacing:-.01em;text-align:center;line-height:1.2;}
@@ -82,7 +85,8 @@
   .hf-row{grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr);}
   .hf-flip{grid-template-columns:minmax(0,1.6fr) minmax(0,.9fr);}
   .hf-copy{padding:20px 16px;}
-  .integ-c-grid{grid-template-columns:repeat(5,minmax(0,1fr));}
+  .integ-c-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .integ-c-soon{grid-column:1/-1;}
   .hp-pk,.hp-gd{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
 /* Rows stack: copy above frame on every row */
@@ -101,6 +105,7 @@
 }
 @media (max-width:700px){
   .integ-c-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .integ-c-soon{grid-column:1/-1;}
   .integ-c-item{padding:0 8px;}
 }
 @media (max-width:560px){
@@ -108,9 +113,13 @@
   .hf-frame{aspect-ratio:4/3;}
   .hf .tray-phone{aspect-ratio:1/1;}
   .integ-c-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .integ-c-soon{grid-column:1/-1;}
 }
 
 /* v12: WebKit-safe frames + static screens. WebKit collapsed aspect-ratio grid items whose only
    content is absolutely positioned (0×0). Give the frame an explicit width so aspect-ratio has a basis. */
 .hf-frame{width:100%;justify-self:stretch;align-self:stretch;}
 .hf-frame.tray-crm .tray-stage-fill:has(.scr-desk){position:absolute;inset:7% 0 0 5%;}
+/* v13: original painted tray shows around the desk on desktop too (bleeds right/bottom like the phones) */
+.hf-frame.tray-crm .tray-stage-fill{position:absolute;inset:6% 0 0 5%;display:flex;}
+.hf-frame.tray-crm .tray-stage-fill .pwin{width:100%;height:100%;max-width:none;box-shadow:none;}
