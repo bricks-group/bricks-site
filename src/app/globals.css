@@ -89,9 +89,12 @@ html[data-bx-auth="in"] .nav-open{color:var(--ink);}
 html[data-bx-auth="in"] .drawer-links .nav-auth-in{display:block !important;}
 /* Signed in adds one item on the right: below 1180 the symmetric 1fr columns would overflow,
    so side columns go content-sized; under 1080 Contact steps out (still in the footer). */
-@media (min-width:900px) and (max-width:1179px){
+/* (this branch's longer primary links need content-sized side columns at every desktop width) */
+@media (min-width:900px){
   html[data-bx-auth="in"] .nav{grid-template-columns:auto 1fr auto;}
   html[data-bx-auth="in"] .nav-links{justify-self:center;}
+}
+@media (min-width:900px) and (max-width:1179px){
   html[data-bx-auth="in"] .nav-actions .nav-login{padding:8px 6px;}
 }
 @media (min-width:900px) and (max-width:1079px){
