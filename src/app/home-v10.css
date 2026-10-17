@@ -109,3 +109,8 @@
   .hf .tray-phone{aspect-ratio:1/1;}
   .integ-c-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
+
+/* v12: WebKit-safe frames + static screens. WebKit collapsed aspect-ratio grid items whose only
+   content is absolutely positioned (0×0). Give the frame an explicit width so aspect-ratio has a basis. */
+.hf-frame{width:100%;justify-self:stretch;align-self:stretch;}
+.hf-frame.tray-crm .tray-stage-fill:has(.scr-desk){position:absolute;inset:7% 0 0 5%;}

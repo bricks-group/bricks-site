@@ -7,8 +7,7 @@ import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
 import ServicesGrid from '@/components/services/ServicesGrid'
 import IntegrationsBand from '@/components/IntegrationsBand'
-import ProductWindow from '@/components/ProductWindow'
-import PhoneDevice from '@/components/PhoneDevice'
+import PhoneScreen from '@/components/PhoneScreen'
 import './home-v10.css'
 import './home-v3.css'
 import {
@@ -206,9 +205,7 @@ export default function Home() {
           </div>
           <div className="hf-frame tray tray-book tray-phone">
             <div className="phone-stage">
-              <PhoneDevice label="Bricks">
-                <ProductWindow variant="phone" title="Bricks" src="/screens/book.html?lock=1" nw={390} nh={844} fit="contain" hideChrome zoomAt={390} lazy />
-              </PhoneDevice>
+              <PhoneScreen name="book" alt="Bricks booking app: next shoot, Book a shoot button and your listings" />
             </div>
           </div>
         </section>
@@ -237,9 +234,7 @@ export default function Home() {
           </div>
           <div className="hf-frame tray tray-disp tray-phone">
             <div className="phone-stage">
-              <PhoneDevice label="Bricks">
-                <ProductWindow variant="phone" title="Bricks" src="/screens/disp.html?lock=1" nw={390} nh={844} fit="contain" hideChrome zoomAt={390} lazy />
-              </PhoneDevice>
+              <PhoneScreen name="disp" alt="Bricks photographer app: next job, navigate and pre-shoot checklist" />
             </div>
           </div>
         </section>

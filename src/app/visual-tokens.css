@@ -76,3 +76,12 @@ html[data-theme="dark"]{
 .tray.tray-book{background-image:image-set(url(/media/trays/book-900.avif) type("image/avif"),url(/media/trays/book-900.webp) type("image/webp"));}
 .tray.tray-disp{background-image:image-set(url(/media/trays/disp-900.avif) type("image/avif"),url(/media/trays/disp-900.webp) type("image/webp"));}
 .tray{border-radius:0;}
+
+/* Static product-screen captures (ScreenStatic): theme-matched, always painted */
+.scr-static{display:block;width:100%;height:100%;}
+.scr-static img{display:block;width:100%;height:100%;object-fit:cover;object-position:left top;}
+.scr-dark{display:none;}
+html[data-theme="dark"] .scr-dark{display:block;}
+html[data-theme="dark"] .scr-light{display:none;}
+.scr-desk{position:absolute;inset:0;overflow:hidden;background:var(--vs-surface);box-shadow:0 0 0 1px var(--vs-rule);}
+.scr-phone{position:absolute;inset:0;overflow:hidden;}

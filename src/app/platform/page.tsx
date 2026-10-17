@@ -3,7 +3,7 @@ import Link from 'next/link'
 import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
-import PhoneDevice from '@/components/PhoneDevice'
+import PhoneScreen from '@/components/PhoneScreen'
 import ProductStage from '@/components/ProductStage'
 import NewsletterInline from '../NewsletterInline'
 import { OFFICE_PLANS, SOFTWARE_BLURB, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
@@ -69,19 +69,7 @@ export default function PlatformPage() {
         </div>
         <div className="tray tray-book tray-phone">
           <div className="phone-stage">
-            <PhoneDevice label="Companion">
-              <ProductWindow
-                variant="phone"
-                title="Companion"
-                src="/screens/book.html?lock=1"
-                nw={390}
-                nh={844}
-                fit="contain"
-                hideChrome
-                zoomAt={390}
-                lazy
-              />
-            </PhoneDevice>
+            <PhoneScreen name="book" label="Companion" alt="Companion booking app: next shoot, Book a shoot button and your listings" />
           </div>
         </div>
       </section>
@@ -89,19 +77,7 @@ export default function PlatformPage() {
       <section className="prod-row prod-row-flip rvl" aria-label="Photographer app — mobile">
         <div className="tray tray-disp tray-phone">
           <div className="phone-stage">
-            <PhoneDevice label="Bricks">
-              <ProductWindow
-                variant="phone"
-                title="Bricks"
-                src="/screens/disp.html?lock=1"
-                nw={390}
-                nh={844}
-                fit="contain"
-                hideChrome
-                zoomAt={390}
-                lazy
-              />
-            </PhoneDevice>
+            <PhoneScreen name="disp" alt="Bricks photographer app: next job, navigate and pre-shoot checklist" />
           </div>
         </div>
         <div className="prod-copy">
