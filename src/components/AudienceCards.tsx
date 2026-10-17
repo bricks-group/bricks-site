@@ -10,14 +10,14 @@ export default function AudienceCards() {
           <Link href="/agents" className="hxa-card">
             <span className="over">For agents &amp; brokerages</span>
             <b>Listing media and the desk.</b>
-            <span className="hxa-v">Book a shoot at an exact time, then run deals, media and MLS on OS.</span>
-            <span className="hxa-go">Agents &amp; brokerages →</span>
+            <span className="hxa-v">Book a shoot, then run deals, media and MLS in OS.</span>
+            <span className="hxa-go">Learn more →</span>
           </Link>
           <Link href="/builders" className="hxa-card">
             <span className="over">For builders &amp; developers</span>
             <b>Site progress, on schedule.</b>
-            <span className="hxa-v">Drone progress visits and mapped captures by insured Tier A pilots. From $375 per visit.</span>
-            <span className="hxa-go">Site Progress →</span>
+            <span className="hxa-v">Drone progress visits and mapped captures, from $375 per visit.</span>
+            <span className="hxa-go">Learn more →</span>
           </Link>
         </div>
       </div>

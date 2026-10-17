@@ -37,7 +37,7 @@ export default function NewsletterInline() {
         type="email" value={email} onChange={(e) => setEmail(e.target.value)}
         placeholder="you@brokerage.com" aria-label="Email for product updates" required
       />
-      <button type="submit" className="btn btn-sec">Get launch updates</button>
+      <button type="submit" className="btn btn-sec">Get updates</button>
       <span className="nl-msg">{msg}</span>
     </form>
   )

@@ -14,7 +14,7 @@ export default function Footer() {
             <span className="wordmark">bricks</span>
           </Link>
           <p className="foot-blurb">
-            {STATUS.chrome} {STATUS.stores}
+            The system for Canadian real estate.
           </p>
         </div>
         <div className="foot-col">
@@ -47,7 +47,7 @@ export default function Footer() {
           <div className="foot-links">
             <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy</Link>
-            <Link href="/legal">Legal index</Link>
+            <Link href="/legal">Legal</Link>
           </div>
         </div>
       </div>

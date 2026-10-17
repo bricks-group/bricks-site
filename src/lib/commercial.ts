@@ -7,9 +7,9 @@
 export const SITE_PRODUCT = 'Site Progress'
 
 export const PER_VISIT = [
-  { key: 'visual', name: 'Progress visit', what: 'Drone stills + video of the site, dated and filed by project.', price: 375, unit: 'per visit' },
-  { key: 'mapped', name: 'Mapped capture', what: 'Orthomosaic, 3D model and a measurable site map.', price: 1499, unit: 'per capture' },
-  { key: 'setup', name: 'First mapped capture setup', what: 'Ground control on the first mapped flight of a site.', price: 650, unit: 'one time per site' },
+  { key: 'visual', name: 'Progress visit', what: 'Drone photos and video of the site, dated by visit.', price: 375, unit: 'per visit' },
+  { key: 'mapped', name: 'Mapped capture', what: 'An orthomosaic, a 3D model and a measurable site map.', price: 1499, unit: 'per capture' },
+  { key: 'setup', name: 'Mapping setup', what: 'Ground control for the first mapped flight on a site.', price: 650, unit: 'one time per site' },
 ] as const
 
 export const PLANS = [
@@ -26,6 +26,6 @@ export const PLANS = [
 ] as const
 
 export const PLAN_NOTE =
-  'Plans bill monthly per site, month to month. Mapped plans add the one-time $650 setup on the first capture. Survey-grade (RTK / check points) is quoted. CAD, plus HST.'
+  'Plans are billed monthly per site, month to month. Mapped plans add the one-time $650 setup. Survey-grade accuracy is quoted separately. CAD, plus HST.'
 
 export const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`

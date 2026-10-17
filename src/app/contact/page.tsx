@@ -43,8 +43,8 @@ export default function ContactPage() {
         <div className="wrap">
           <span className="badge">Contact</span>
           <h1>Let&apos;s shoot your next listing.</h1>
-          <p className="sub">Direct booking, one standard, MLS-ready media on a 24–48h target. {COVERAGE_LINE} Reach out and we&apos;ll confirm coverage and send pricing by footprint.</p>
-          <p className="sub product-hint">Need the OS or Companion, not a shoot? Say so in the note.</p>
+          <p className="sub">Tell us about the listing. We&apos;ll confirm coverage and send pricing.</p>
+          <p className="sub product-hint">Asking about the software? Say so in your note.</p>
         </div>
       </section>
 
@@ -55,11 +55,10 @@ export default function ContactPage() {
             <div className="c"><div className="l">Bookings</div><div className="v"><a href="mailto:booking@brxs.ca">booking@brxs.ca</a></div></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+13434534578">343-453-4578</a></div></div>
             <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>
-            <div className="c"><div className="l">Turnaround</div><div className="v">Edited · 24–48h target</div></div>
           </div>
 
           <div className="sec-head" style={{ marginTop: 8 }}>
-            <div><span className="over">Send a note</span><h2>Quick message.</h2></div>
+            <div><span className="over">Message</span><h2>Send us a note.</h2></div>
           </div>
           <ContactForm />
         </div>

@@ -22,10 +22,10 @@ export const metadata: Metadata = {
 }
 
 const PROOF = [
-  { k: 'Tier A pilots only', v: 'Commercial sites go only to the top tier of the Bricks network.' },
-  { k: 'Advanced RPAS', v: 'Transport Canada Advanced Operations, for controlled airspace and work near people.' },
-  { k: 'Verified drone liability', v: '$2M minimum, checked by Bricks and unexpired on the flight date. $5M when your contract (e.g. CCDC 41) requires it.' },
-  { k: 'One site file', v: 'Every visit dated and delivered to one share link, not a ZIP in email.' },
+  { k: 'Top-tier pilots only', v: 'Sites go only to our highest pilot tier.' },
+  { k: 'Advanced RPAS', v: 'Certified by Transport Canada for controlled airspace and work near people.' },
+  { k: 'Verified insurance', v: '$2M drone liability minimum, verified by us and valid on the flight date. $5M when your contract requires it.' },
+  { k: 'One site file', v: 'Every visit dated and shared through one link.' },
 ] as const
 
 const pageCss = `
@@ -62,11 +62,10 @@ export default function BuildersPage() {
       <RevealObserver />
       <section className="hero">
         <div className="wrap">
-          <span className="badge">{SITE_PRODUCT} · Builders · Developers · GCs · Investors</span>
+          <span className="badge">{SITE_PRODUCT}</span>
           <h1>See every site.<br />On schedule.</h1>
           <p className="sub">
-            Drone progress visits and mapped captures on a fixed cadence, flown by insured Tier A pilots and filed by date in
-            one place. Book one visit, or put a site on a monthly plan.
+            Drone progress visits and mapped captures on a fixed schedule. Book one visit, or put a site on a monthly plan.
           </p>
           <div className="cta-row">
             <Link className="btn btn-night" href="#quote">Request a site plan</Link>
@@ -91,7 +90,6 @@ export default function BuildersPage() {
         <div className="wrap">
           <div className="sec-head">
             <div><span className="over">Pricing</span><h2>Per visit, or per site each month.</h2></div>
-            <p>One-off captures are billed per visit. Recurring monitoring is a monthly plan per site.</p>
           </div>
           <div className="bx-price">
             {PER_VISIT.map((x) => (
@@ -132,8 +130,8 @@ export default function BuildersPage() {
                 <div><span className="over">Start</span><h2>Tell us about the site.</h2></div>
               </div>
               <p className="cx-note">
-                Address, phase, how often you need it, and any insurance minimum in your contract. We reply with a site plan
-                and first flight date. Listing media for agents stays on <Link href="/book">/book</Link>.
+                Share the address, project phase, how often you need visits and any insurance minimum. We&apos;ll reply with a
+                site plan and a first flight date.
               </p>
             </div>
             <div>

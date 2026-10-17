@@ -9,20 +9,20 @@ const STEPS = [
   {
     key: 'site', n: '01', label: 'Cadence',
     title: 'Pick the site and how often.',
-    body: 'Visual or mapped, monthly to weekly. One plan per site, billed monthly.',
+    body: 'Visual or mapped, monthly to weekly. One plan per site.',
     panel: ['Site', 'Capture type', 'Cadence', 'Insurance minimum on your contract'],
   },
   {
     key: 'pilot', n: '02', label: 'Pilot',
     title: 'Only qualified pilots fly it.',
-    body: 'Bricks assigns a Tier A pilot holding Advanced RPAS, with drone liability insurance we have verified, unexpired on the flight date.',
-    panel: ['Tier A only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
+    body: 'We assign a top-tier pilot with Advanced RPAS and verified drone insurance.',
+    panel: ['Top tier only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
   },
   {
     key: 'file', n: '03', label: 'Site file',
     title: 'Every visit lands in one site file.',
-    body: 'Dated stills, video and maps in a share link for owners, lenders and site teams. No ZIPs in email.',
-    panel: ['Dated by visit', 'Stills + video', 'Orthomosaic + 3D (mapped)', 'One share link'],
+    body: 'Dated photos, video and maps in one link for owners, lenders and site teams.',
+    panel: ['Dated by visit', 'Photos and video', 'Orthomosaic + 3D (mapped)', 'One share link'],
   },
 ] as const
 
@@ -35,7 +35,7 @@ export default function SiteRail() {
   const head = (
     <div className="cap-copy slab-head">
       <h2>Site progress in three steps.</h2>
-      <p className="cap-lede">The same dispatch that runs Bricks listing shoots, pointed at your sites.</p>
+      <p className="cap-lede">The network behind our listing shoots, pointed at your sites.</p>
       <Link className="learn-link slab-b-link" href="#quote">Request a site plan →</Link>
     </div>
   )
