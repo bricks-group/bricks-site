@@ -7,19 +7,19 @@ import './site-rail.css'
 
 const STEPS = [
   {
-    key: 'site', n: '01', label: 'Site + cadence',
+    key: 'site', n: '01', label: 'Cadence',
     title: 'Pick the site and how often.',
     body: 'Visual or mapped, monthly to weekly. One plan per site, billed monthly.',
     panel: ['Site', 'Capture type', 'Cadence', 'Insurance minimum on your contract'],
   },
   {
-    key: 'pilot', n: '02', label: 'Qualified pilot',
+    key: 'pilot', n: '02', label: 'Pilot',
     title: 'Only qualified pilots fly it.',
     body: 'Bricks assigns a Tier A pilot holding Advanced RPAS, with drone liability insurance we have verified, unexpired on the flight date.',
     panel: ['Tier A only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
   },
   {
-    key: 'file', n: '03', label: 'Dated site file',
+    key: 'file', n: '03', label: 'Site file',
     title: 'Every visit lands in one site file.',
     body: 'Dated stills, video and maps in a share link for owners, lenders and site teams. No ZIPs in email.',
     panel: ['Dated by visit', 'Stills + video', 'Orthomosaic + 3D (mapped)', 'One share link'],

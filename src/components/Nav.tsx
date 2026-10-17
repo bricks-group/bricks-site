@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
 import { OS_LOGIN } from '@/lib/brand'
+import './nav-builders.css'
 
 const links = [
   { href: '/gallery', label: 'Work' },
@@ -56,9 +57,12 @@ export default function Nav() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={pathname === l.href || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}
+                className={`${pathname === l.href || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}${l.href === '/builders' ? ' nav-nowrap' : ''}`}
+                aria-label={l.href === '/builders' ? l.label : undefined}
               >
-                {l.label}
+                {l.href === '/builders' ? (
+                  <><span className="nav-full">{l.label}</span><span className="nav-short">Builders</span></>
+                ) : l.label}
               </Link>
             ))}
           </nav>
