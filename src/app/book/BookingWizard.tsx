@@ -646,7 +646,7 @@ export default function BookingWizard() {
                   <option>Condo</option><option>Semi / Town</option><option>Detached</option>
                   <option>Multiplex</option><option>Commercial</option><option>Estate</option>
                 </select>
-                <span className="hint-sm">Optional — helps us size the shoot. We estimate from the footprint either way.</span>
+                <span className="hint-sm">Optional. Helps us size the shoot.</span>
               </div>
               <div className="err">{errs[0]}</div>
               <div className="nav-btns"><span></span><button type="button" className="btn btn-brick" onClick={() => goNext(0)}>Next →</button></div>
@@ -654,7 +654,7 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">Start with <strong>Essentials</strong>: HDR photos, licensed drone and a floor plan. Virtual visits and staging are add-ons. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>Full pricing</Link></p>
+              <p className="hint">Pick a package, then add extras. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>Full pricing</Link></p>
               <div className="choices">
                 {Object.keys(PKG_DEFS).map((k) => (
                   <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
