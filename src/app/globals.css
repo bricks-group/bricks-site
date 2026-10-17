@@ -512,8 +512,7 @@ html[data-theme="dark"] .pwin{background:var(--night);border-color:var(--hairStr
 .pwin-bar-raise{cursor:pointer;}
 /* Default off outside hero */
 .pwin-dots{display:none;}
-.pwin-bar .pwin-title{display:none;}
-/* Hero Mac title bar — Cursor/macOS: thin grey centered title, traffic lights left */
+/* Hero Mac title bar — bare bar, traffic lights left, no title text */
 .prod-hero .pwin-bar{
   position:relative;
   display:flex;align-items:center;
@@ -538,22 +537,10 @@ html[data-theme="dark"] .prod-hero .pwin-bar{
 .prod-hero .pwin-dots i:nth-child(1){background:#FF5F57;}
 .prod-hero .pwin-dots i:nth-child(2){background:#FFBD2E;}
 .prod-hero .pwin-dots i:nth-child(3){background:#28C840;}
-.prod-hero .pwin-bar .pwin-title{
-  position:absolute;left:0;right:0;top:0;bottom:0;
-  margin:0;padding:0;
-  display:flex !important;align-items:center;justify-content:center;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",system-ui,sans-serif;
-  /* macOS window title: regular weight, muted grey — not bold ink */
-  font-size:12px;font-weight:400;letter-spacing:0;
-  color:#6e6e73;line-height:1;
-  pointer-events:none;z-index:1;text-align:center;
-}
-html[data-theme="dark"] .prod-hero .pwin-bar .pwin-title{color:#a1a1a6;}
 @media (max-width:900px){
   .prod-hero .pwin-bar{height:28px;padding:0 10px;}
   .prod-hero .pwin-dots{gap:6px;}
   .prod-hero .pwin-dots i{width:9px;height:9px;}
-  .prod-hero .pwin-bar .pwin-title{font-size:11px;font-weight:400;}
 }
 .pwin-scale{width:100%;overflow:hidden;position:relative;}
 .pwin iframe{display:block;border:0;pointer-events:auto;filter:none;}
