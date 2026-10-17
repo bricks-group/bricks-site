@@ -15,8 +15,8 @@ const STEPS = [
   {
     key: 'pilot', n: '02', label: 'Pilot',
     title: 'Only qualified pilots fly it.',
-    body: 'Bricks assigns a Tier A pilot holding Advanced RPAS, with drone liability insurance we have verified, unexpired on the flight date.',
-    panel: ['Tier A only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
+    body: 'Bricks assigns a vetted pilot holding Advanced RPAS, covered by drone liability insurance we have verified, unexpired on the flight date.',
+    panel: ['Vetted pilots only', 'Advanced RPAS', 'Drone liability $2M+ verified', '$5M when your contract requires it'],
   },
   {
     key: 'file', n: '03', label: 'Site file',

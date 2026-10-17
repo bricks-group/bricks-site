@@ -8,7 +8,7 @@ import { PER_VISIT, PLANS, PLAN_NOTE, SITE_PRODUCT, fmt } from '@/lib/commercial
 export const metadata: Metadata = {
   title: 'Drone progress monitoring for builders & developers | Bricks',
   description:
-    'Scheduled drone progress visits and mapped captures for builders, developers, GCs and investors in Canada. Tier A pilots with Advanced RPAS and verified drone liability insurance. From $375 per visit or $300 per site per month.',
+    'Scheduled drone progress visits and mapped captures for builders, developers, GCs and investors in Canada. Vetted, insured, certified pilots: Advanced RPAS and verified drone liability insurance. From $375 per visit or $300 per site per month.',
   alternates: { canonical: '/builders' },
   openGraph: {
     title: 'Site Progress for builders & developers | Bricks',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 }
 
 const PROOF = [
-  { k: 'Tier A pilots only', v: 'Commercial sites go only to the top tier of the Bricks network.' },
+  { k: 'Vetted, insured, certified pilots', v: 'Commercial sites go only to pilots Bricks has vetted, with Advanced RPAS and verified drone liability insurance.' },
   { k: 'Advanced RPAS', v: 'Transport Canada Advanced Operations, for controlled airspace and work near people.' },
   { k: 'Verified drone liability', v: '$2M minimum, checked by Bricks and unexpired on the flight date. $5M when your contract (e.g. CCDC 41) requires it.' },
   { k: 'One site file', v: 'Every visit dated and delivered to one share link, not a ZIP in email.' },
@@ -65,7 +65,7 @@ export default function BuildersPage() {
           <span className="badge">{SITE_PRODUCT} · Builders · Developers · GCs · Investors</span>
           <h1>See every site.<br />On schedule.</h1>
           <p className="sub">
-            Drone progress visits and mapped captures on a fixed cadence, flown by insured Tier A pilots and filed by date in
+            Drone progress visits and mapped captures on a fixed cadence, flown by vetted, insured, certified pilots and filed by date in
             one place. Book one visit, or put a site on a monthly plan.
           </p>
           <div className="cta-row">

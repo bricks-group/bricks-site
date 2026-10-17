@@ -156,14 +156,14 @@ export default function PhotographersPage() {
           <div className="sec-head">
             <div>
               <span className="over">Commercial site work · Tier 3</span>
-              <h2>Builder &amp; developer jobs pay more.</h2>
+              <h2>Builder &amp; developer jobs pay the top of Tier A.</h2>
             </div>
           </div>
           <p className="rate-lead">Construction progress visits and mapped captures for builders, developers, GCs and investors go only to Tier 3 pilots who hold Advanced RPAS and a certificate of insurance Bricks has verified: drone (aviation) liability of at least $2,000,000, unexpired on the flight date. Some sites require $5,000,000. Upload your certificate from GO Profile.</p>
           <div className="adds">
-            <div className="a rvl"><div className="nm">Progress visit — $235</div><p>Drone stills + video of the site. Fixed per visit.</p></div>
-            <div className="a rvl"><div className="nm">Mapped capture — $945</div><p>Mapping flight for an orthomosaic and 3D model. Needs the mapping skill, which Bricks grants after a test mission.</p></div>
-            <div className="a rvl"><div className="nm">First mapped setup — +$410</div><p>Ground control on the first mapped flight of a site.</p></div>
+            <div className="a rvl"><div className="nm">Progress visit — $185</div><p>Drone stills + video of the site. Fixed per visit.</p></div>
+            <div className="a rvl"><div className="nm">Mapped capture — $735</div><p>Mapping flight for an orthomosaic and 3D model. Needs the mapping skill, which Bricks grants after a test mission.</p></div>
+            <div className="a rvl"><div className="nm">First mapped setup — +$315</div><p>Ground control on the first mapped flight of a site.</p></div>
           </div>
           <p className="note" data-legal-review="true">Draft — needs legal review before publishing. The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
         </section>

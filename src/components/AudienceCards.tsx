@@ -16,7 +16,7 @@ export default function AudienceCards() {
           <Link href="/builders" className="hxa-card">
             <span className="over">For builders &amp; developers</span>
             <b>Site progress, on schedule.</b>
-            <span className="hxa-v">Drone progress visits and mapped captures by insured Tier A pilots. From $375 per visit.</span>
+            <span className="hxa-v">Drone progress visits and mapped captures by vetted, insured, certified pilots. From $375 per visit.</span>
             <span className="hxa-go">Site Progress →</span>
           </Link>
         </div>
