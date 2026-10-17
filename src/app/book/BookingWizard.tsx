@@ -227,7 +227,7 @@ export default function BookingWizard() {
           const agent = (j as { agent_user_id?: string | null }).agent_user_id
           setDoneMsg(
             agent
-              ? 'Payment confirmed. Your shoot is on Bricks GO — and the listing is in OS at app.brxs.ca.'
+              ? 'Payment confirmed. Your shoot is on Bricks GO — and the listing is in Bricks at app.brxs.ca.'
               : 'Payment confirmed. Your shoot is on Bricks GO',
           )
           return

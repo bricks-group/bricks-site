@@ -39,7 +39,7 @@ export default function BlogPostLayout({
               <Image src="/media/raphael-merchant-640.jpg" alt="Raphael Merchant, founder of Bricks — Canadian real estate photography" loading="lazy" width={56} height={56} />
               <div className="ac-bio">
                 <div className="ac-name">Bricks</div>
-                <div className="ac-role">Canadian real estate media · OS</div>
+                <div className="ac-role">Canadian real estate media · software</div>
                 <p>Before Bricks, Raphael shot 14,000+ properties at CoStar. Same standard, every shoot. <span className="ac-more">About Bricks →</span></p>
               </div>
             </Link>

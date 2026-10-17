@@ -81,7 +81,7 @@ export default function IntegrationsBand() {
       <div className="wrap">
         <div className="integ-head">
           <h2>Works with the tools you already use.</h2>
-          <a className="learn-link integ-link" href="https://app.brxs.ca/login">Connect yours in Bricks OS →</a>
+          <a className="learn-link integ-link" href="https://app.brxs.ca/login">Connect yours in Bricks →</a>
         </div>
       </div>
       <div className="integ-strip">

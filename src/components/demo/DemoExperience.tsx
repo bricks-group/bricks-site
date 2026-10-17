@@ -39,7 +39,7 @@ export default function DemoExperience() {
               Book a shoot
             </Link>
             <a className="btn btn-sec" href={OS_LOGIN}>
-              Open OS
+              Open Bricks
             </a>
             <Link className="btn btn-sec" href="/platform">
               Platform

@@ -159,11 +159,11 @@ export default function Home() {
           <p className="sub">Software, media, 3D and site progress for Canadian real estate, working as one.</p>
           <div className="cta-row">
             <Link className="btn btn-night" href="/book">Book a shoot</Link>
-            <a className="btn btn-ghost" href="https://app.brxs.ca/login">Try Bricks OS free</a>
+            <a className="btn btn-ghost" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="learn-link" href="/demo">Request a walkthrough →</Link>
           </div>
           <nav className="hp-pillars" aria-label="What Bricks does">
-            <Link href="/platform" className="hp-pillar"><span className="hp-pt">Bricks OS</span><span className="hp-pd">Deals, CRM and e-sign.</span></Link>
+            <Link href="/platform" className="hp-pillar"><span className="hp-pt">Bricks</span><span className="hp-pd">Deals, CRM and e-sign.</span></Link>
             <Link href="/pricing" className="hp-pillar"><span className="hp-pt">Listing media</span><span className="hp-pd">Photos, drone, video and 3D.</span></Link>
             <Link href="/builders" className="hp-pillar"><span className="hp-pt">Site Progress</span><span className="hp-pd">Maps, models and reports.</span></Link>
           </nav>
@@ -302,7 +302,7 @@ export default function Home() {
           <h2>Ready when you are.</h2>
           <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
           <div className="closer-alt">
-            <a href="https://app.brxs.ca/login">Try Bricks OS free →</a>
+            <a href="https://app.brxs.ca/login">Try Bricks free →</a>
             <Link href="/book/site">Book a site visit →</Link>
           </div>
         </div>

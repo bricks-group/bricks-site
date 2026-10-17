@@ -32,10 +32,10 @@ export default function BrokeragePage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="OS preview">
+      <section className="prod-row rvl" aria-label="Bricks preview">
         <div className="prod-copy">
           <span className="over">What you see</span>
-          <h2>One OS. Brokerage-sized.</h2>
+          <h2>One system. Brokerage-sized.</h2>
           <p>Agents, deals and media together, inside each listing. Teams and solo agents get a smaller view of the same product.</p>
         </div>
         <div className="tray tray-crm tray-bleed-end">
@@ -68,14 +68,14 @@ export default function BrokeragePage() {
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">In the OS</span>
+              <span className="over">In Bricks</span>
               <h2>What’s inside.</h2>
             </div>
           </div>
           <div className="faq">
             <div className="qa"><h4>Roster</h4><p>Your agents, their seats, and who can book media.</p></div>
             <div className="qa"><h4>Pipeline</h4><p>Every deal and listing in one view.</p></div>
-            <div className="qa"><h4>Media on the listing</h4><p>Shoots attach to the listing. Book from OS or Companion.</p></div>
+            <div className="qa"><h4>Media on the listing</h4><p>Shoots attach to the listing. Book from Bricks or Companion.</p></div>
             <div className="qa"><h4>Trust accounting</h4><p>For brokerages only. Not included in agent or team plans.</p></div>
           </div>
         </section>
@@ -83,7 +83,7 @@ export default function BrokeragePage() {
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
             <span className="over">Brokerage</span>
-            <h2>See the shop in one OS.</h2>
+            <h2>See the whole shop in Bricks.</h2>
             <p className="lead">Book a shoot today, or talk to us about seats.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>

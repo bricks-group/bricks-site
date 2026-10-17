@@ -22,7 +22,7 @@ const PARTS = [
   { t: 'Virtual Visit', d: 'Free-roam 3D, booked as an add-on.' },
   { t: 'Twilight', d: 'The exterior at blue hour.' },
   { t: 'Virtual staging', d: 'Furnished rooms, per photo.' },
-  { t: 'One listing file', d: 'Media lands in the listing file in Bricks OS.' },
+  { t: 'One listing file', d: 'Media lands in the listing file in Bricks.' },
 ] as const
 
 export default function MediaPage() {

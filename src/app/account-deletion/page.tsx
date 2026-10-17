@@ -5,16 +5,16 @@ import { legalDocCss } from '@/components/legalDocCss'
 export const metadata: Metadata = {
   title: 'Bricks — Delete your account',
   description:
-    'How to delete a Bricks GO or Bricks OS account, in the app or by email, and what Bricks Group deletes and keeps.',
+    'How to delete a Bricks or Bricks GO account, in the app or by email, and what Bricks Group deletes and keeps.',
   alternates: { canonical: '/account-deletion' },
   openGraph: {
     title: 'Bricks — Delete your account',
-    description: 'How to delete a Bricks GO or Bricks OS account, and what we delete and keep.',
+    description: 'How to delete a Bricks or Bricks GO account, and what we delete and keep.',
   },
   twitter: {
     card: 'summary',
     title: 'Bricks — Delete your account',
-    description: 'How to delete a Bricks GO or Bricks OS account, and what we delete and keep.',
+    description: 'How to delete a Bricks or Bricks GO account, and what we delete and keep.',
   },
 }
 
@@ -26,7 +26,7 @@ export default function AccountDeletionPage() {
           <span className="badge">Legal</span>
           <h1>Delete your account</h1>
           <p className="sub">
-            For accounts used with Bricks GO (photographers and vendors) or Bricks OS (real estate offices), made by
+            For accounts used with Bricks GO (photographers and vendors) or Bricks (real estate offices), made by
             Bricks Group, Ontario, Canada.
           </p>
           <div className="updated">Updated · 11 October 2026</div>
@@ -42,7 +42,7 @@ export default function AccountDeletionPage() {
               confirm.
             </li>
             <li>
-              <strong>Bricks OS:</strong> open <strong>Account</strong>, tap <strong>Delete account</strong>, then
+              <strong>Bricks:</strong> open <strong>Account</strong>, tap <strong>Delete account</strong>, then
               confirm.
             </li>
           </ul>

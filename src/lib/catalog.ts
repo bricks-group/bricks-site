@@ -80,7 +80,7 @@ export const OFFICE_PLANS = [
 ] as const
 
 export const OFFICE_INCLUDES =
-  'Every seat gets the full OS, plus trust accounting. Agents don’t pay separately.'
+  'Every seat gets all of Bricks, plus trust accounting. Agents don’t pay separately.'
 
 /** Plan matrix: same rows, same order on every card. `from` = first plan that includes it. */
 export const PLAN_ORDER = ['clay', 'keystone', 'marble', 'diamond'] as const

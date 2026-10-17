@@ -68,7 +68,7 @@ export const ORGANIZATION_SCHEMA = {
   logo: LOGO_SCHEMA,
   image: { '@id': LOGO_ID },
   description:
-    'Bricks is a Canadian real estate media and software company based in Mississauga, Ontario. Agents book HDR listing photography, licensed drone, and floor plans online at brxs.ca; the Bricks OS is live in preview at app.brxs.ca.',
+    'Bricks is a Canadian real estate media and software company based in Mississauga, Ontario. Agents book HDR listing photography, licensed drone, and floor plans online at brxs.ca; the Bricks app is live in preview at app.brxs.ca.',
   slogan: 'The system for Canadian real estate.',
   foundingDate: FOUNDING_YEAR,
   address: {
@@ -124,13 +124,13 @@ export const ORG_REF = {
 /* constants the visible pages render (pricing.ts / catalog.ts).       */
 /* ------------------------------------------------------------------ */
 
-/** Bricks OS for brokerages: one Offer per seat tier (CAD per seat per year). */
+/** Bricks (the web app) for brokerages: one Offer per seat tier (CAD per seat per year). */
 export function osSoftwareApplicationSchema(pageUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     '@id': 'https://www.brxs.ca/#bricks-os',
-    name: 'Bricks OS',
+    name: 'Bricks',
     applicationCategory: 'BusinessApplication',
     // Web only: the site states the apps are not in the App Store or Google Play yet.
     operatingSystem: 'Web',

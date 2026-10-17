@@ -11,15 +11,15 @@ import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'bricks platform — OS, Companion, GO',
-  description: 'The system for Canadian real estate, from listing to close: OS on the web, Companion and GO on mobile, plus media, MLS and transactions.',
+  title: 'bricks platform — web, Companion, GO',
+  description: 'The system for Canadian real estate, from listing to close: Bricks on the web, Companion and GO on mobile, plus media, MLS and transactions.',
   alternates: { canonical: '/platform' },
 }
 
 const roles = [
-  { href: '/brokerage', over: 'OS', title: 'Brokerage', body: 'The whole office, priced per seat.' },
-  { href: '/agents#team', over: 'OS', title: 'Team', body: 'One shared pipeline.' },
-  { href: '/agents', over: 'OS + Companion', title: 'Agent', body: 'Your listings, and shoots booked from your phone.' },
+  { href: '/brokerage', over: 'Bricks', title: 'Brokerage', body: 'The whole office, priced per seat.' },
+  { href: '/agents#team', over: 'Bricks', title: 'Team', body: 'One shared pipeline.' },
+  { href: '/agents', over: 'Bricks + Companion', title: 'Agent', body: 'Your listings, and shoots booked from your phone.' },
   { href: '/photographers', over: 'GO', title: 'Photographer', body: 'Jobs come to you, at a fixed rate.' },
 ]
 
@@ -44,10 +44,10 @@ export default function PlatformPage() {
       </section>
 
       {/* Cursor-style: each surface gets its own live demo — desk (web) + phones (mobile). */}
-      <section className="prod-hero platform-os-stage" aria-label="OS — web desk">
+      <section className="prod-hero platform-os-stage" aria-label="Bricks — web desk">
         <div className="wrap platform-surf-head">
           <span className="over">Web</span>
-          <h2>OS.</h2>
+          <h2>Bricks.</h2>
           <p>The desk for your listings and deals.</p>
         </div>
         <div className="tray tray-os">
@@ -56,7 +56,7 @@ export default function PlatformPage() {
           </div>
         </div>
         <div className="wrap platform-surf-cta">
-          <a className="btn btn-sec" href={OS_LOGIN}>Open OS</a>
+          <a className="btn btn-sec" href={OS_LOGIN}>Open Bricks</a>
         </div>
       </section>
 
@@ -165,8 +165,8 @@ export default function PlatformPage() {
         <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
           <div className="book">
             <span className="over">Ready when you are</span>
-            <h2>Book a shoot. Open the OS.</h2>
-            <p className="lead">Book here or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to <a href={OS_LOGIN}>OS</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
+            <h2>Book a shoot. Open Bricks.</h2>
+            <p className="lead">Book here or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to <a href={OS_LOGIN}>Bricks</a> or <a href={GO_URL} rel="noopener noreferrer">GO</a>.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
               <Link className="btn btn-sec" href="/contact">Contact</Link>
