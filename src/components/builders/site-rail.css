@@ -81,3 +81,6 @@
   .sl-report li{opacity:1;transform:none;}
   .sl-scan{display:none;}
 }
+
+/* Builders band sits in the page column (980 + --gutter-lg) like every other block on /builders */
+.site-rail .cap-inner{max-width:980px;padding-left:var(--gutter-lg);padding-right:var(--gutter-lg);}

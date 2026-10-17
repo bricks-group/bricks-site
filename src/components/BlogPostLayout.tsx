@@ -20,7 +20,7 @@ export default function BlogPostLayout({
           <article className="prose">
             {children}
 
-            <p style={{ marginTop: 28 }}><Link href="/book" className="btn btn-brick">Book a listing shoot →</Link></p>
+            <p style={{ marginTop: 32 }}><Link href="/book" className="btn btn-brick">Book a listing shoot →</Link></p>
 
             <div className="related" style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--hair)' }}>
               <p className="over" style={{ marginBottom: 12 }}>Keep reading</p>
@@ -34,7 +34,7 @@ export default function BlogPostLayout({
               </ul>
             </div>
 
-            <p style={{ marginTop: 18, fontSize: 13, color: 'var(--inkMute)' }}>Written by <strong>Raphael Merchant</strong>, founder of Bricks. Figures that cite regional market research are labelled as such; Bricks rates are starting points and tailored per booking.</p>
+            <p style={{ marginTop: 16, fontSize: 13, color: 'var(--inkMute)' }}>Written by <strong>Raphael Merchant</strong>, founder of Bricks. Figures that cite regional market research are labelled as such; Bricks rates are starting points and tailored per booking.</p>
             <Link className="author-card" href="/about">
               <Image src="/media/raphael-merchant-640.jpg" alt="Raphael Merchant, founder of Bricks — Canadian real estate photography" loading="lazy" width={56} height={56} />
               <div className="ac-bio">

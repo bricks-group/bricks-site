@@ -173,7 +173,7 @@ export default function PricingPage() {
               <p>Showcase, plus a twilight exterior.</p>
             </div>
           </div>
-          <p className="tbl-cap" style={{ marginTop: 18 }}>Just need photos? HDR only, {`from $${PHOTO_ONLY_FROM}`}. <Link href="/book" style={{ color: 'var(--brickDeep)' }}>Book a shoot →</Link></p>
+          <p className="tbl-cap" style={{ marginTop: 16, paddingBottom: 0 }}>Just need photos? HDR only, {`from $${PHOTO_ONLY_FROM}`}. <Link href="/book" style={{ color: 'var(--brickDeep)' }}>Book a shoot →</Link></p>
         </section>
 
         <section className="block rvl rates" aria-label="À la carte rates">
@@ -232,8 +232,8 @@ export default function PricingPage() {
         .trust{text-align:center;padding:8px 0 28px;}
         .rates{overflow-x:clip;}
         .tbl{width:100%;max-width:100%;border-collapse:collapse;}
-        .tbl-cap{text-align:left;font-size:15px;line-height:1.5;color:var(--inkSoft);max-width:560px;padding:0 0 18px;margin-top:-8px;}
-        .tbl th,.tbl td{padding:16px 22px;text-align:right;border-bottom:1px solid var(--hair);}
+        .tbl-cap{text-align:left;font-size:15px;line-height:1.5;color:var(--inkSoft);max-width:560px;padding:0 0 24px;margin-top:calc(var(--head-gap) * -1 + 16px);}
+        .tbl th,.tbl td{padding:16px var(--card-pad);text-align:right;border-bottom:1px solid var(--hair);}
         .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
           text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperSoft);}
         .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);font-size:15px;}
@@ -242,12 +242,12 @@ export default function PricingPage() {
         .tbl td.num.flat-val{text-align:center;}
         .tbl tr.flat td{background:var(--paperDeep);}
         .tbl tr:last-child td{border-bottom:none;}
-        .price-foot{max-width:680px;margin:28px auto 0;text-align:center;}
+        .price-foot{max-width:680px;margin:32px auto 0;text-align:center;}
         @media (max-width:720px){
           .tbl thead{display:none;}
           .tbl, .tbl tbody, .tbl tr, .tbl th, .tbl td{display:block;width:100%;max-width:100%;box-sizing:border-box;text-align:left;}
-          .tbl tr{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);margin:0 0 14px;}
-          .tbl th, .tbl td{padding:12px 16px;border-bottom:1px solid var(--hair);}
+          .tbl tr{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);margin:0 0 var(--gap);}
+          .tbl th, .tbl td{padding:12px var(--card-pad);border-bottom:1px solid var(--hair);}
           .tbl td.pkg{border-bottom:1px solid var(--hair);font-size:15px;}
           .tbl td.num{display:flex;justify-content:space-between;align-items:center;text-align:right;font-size:15px;}
           .tbl td.num::before{content:attr(data-band);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);}

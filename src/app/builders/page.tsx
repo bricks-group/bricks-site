@@ -30,25 +30,25 @@ const PROOF = [
 ] as const
 
 const pageCss = `
-  .bx-proof{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;margin-top:8px;}
-  .bx-proof div{background:var(--paper);padding:20px 20px 22px;display:flex;flex-direction:column;gap:8px;}
+  .bx-proof{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
+  .bx-proof div{background:var(--paper);padding:var(--card-pad);display:flex;flex-direction:column;gap:8px;}
   .bx-proof b{font-weight:500;font-size:15px;color:var(--ink);letter-spacing:-.02em;}
   .bx-proof span{font-size:13px;color:var(--inkMute);line-height:1.5;}
-  .bx-price{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:8px;}
-  .bx-card{border:1px solid var(--hair);border-radius:2px;padding:20px;background:var(--paper);display:flex;flex-direction:column;gap:8px;}
+  .bx-price{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--gap);}
+  .bx-card{border:1px solid var(--hair);border-radius:2px;padding:var(--card-pad);background:var(--paper);display:flex;flex-direction:column;gap:8px;}
   .bx-card .nm{font-weight:500;font-size:16px;color:var(--ink);}
   .bx-card .pr{font-weight:500;font-size:28px;letter-spacing:-.6px;color:var(--ink);}
   .bx-card .un{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);}
   .bx-card p{font-size:13.5px;color:var(--inkSoft);line-height:1.5;margin:0;}
-  .bx-plans{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  .bx-plans{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);margin-top:var(--gap);}
   .bx-plan{border:1px solid var(--hair);border-radius:2px;background:var(--paper);}
-  .bx-plan h3{font-weight:500;font-size:16px;margin:0;padding:16px 20px;border-bottom:1px solid var(--hair);color:var(--ink);}
+  .bx-plan h3{font-weight:500;font-size:16px;margin:0;padding:16px var(--card-pad);border-bottom:1px solid var(--hair);color:var(--ink);}
   .bx-plan table{width:100%;border-collapse:collapse;font-size:14px;}
-  .bx-plan td{padding:12px 20px;border-bottom:1px solid var(--hair);color:var(--inkSoft);}
+  .bx-plan td{padding:12px var(--card-pad);border-bottom:1px solid var(--hair);color:var(--inkSoft);}
   .bx-plan tr:last-child td{border-bottom:none;}
   .bx-plan td.p{text-align:right;color:var(--ink);font-weight:500;white-space:nowrap;}
   .bx-plan td.p small{font-weight:400;color:var(--inkMute);font-size:12px;margin-left:4px;}
-  .bx-hero-img{position:relative;margin-top:40px;aspect-ratio:16/9;border-radius:4px;overflow:hidden;background:var(--paperDeep);animation-name:bxImgIn !important;}
+  .bx-hero-img{position:relative;margin-top:48px;aspect-ratio:16/9;border-radius:2px;overflow:hidden;background:var(--paperDeep);animation-name:bxImgIn !important;}
   .bx-hero-img picture,.bx-hero-img img{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .bx-hero-img img{object-fit:cover;object-position:50% 0%;}
   @keyframes bxImgIn{from{transform:translate3d(0,18px,0) scale(.985);}to{transform:none;}}
@@ -56,13 +56,13 @@ const pageCss = `
   .bx-plan-img{position:relative;aspect-ratio:16/7;background:var(--paperDeep);border-bottom:1px solid var(--hair);}
   .bx-plan-img picture,.bx-plan-img img{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .bx-plan-img img{object-fit:cover;}
-  .cx-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start;margin-top:8px;}
-  .cx-note{margin-top:18px;font-size:13px;color:var(--inkMute);line-height:1.5;max-width:460px;}
+  .cx-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start;}
+  .cx-note{margin-top:16px;font-size:13px;color:var(--inkMute);line-height:1.5;max-width:460px;}
   @media (max-width:900px){
     .bx-proof{grid-template-columns:1fr 1fr;}
     .bx-price,.bx-plans{grid-template-columns:1fr;}
-    .cx-grid{grid-template-columns:1fr;gap:36px;}
-    .bx-hero-img{margin-top:28px;aspect-ratio:4/3;}
+    .cx-grid{grid-template-columns:1fr;gap:32px;}
+    .bx-hero-img{margin-top:32px;aspect-ratio:4/3;}
   }
 `
 
@@ -140,7 +140,7 @@ export default function BuildersPage() {
             ))}
           </div>
           <p className="note">{PLAN_NOTE}</p>
-          <div className="cta-row" style={{ marginTop: 18 }}>
+          <div className="cta-row">
             <Link className="btn btn-night" href="/book/site">Book one visit</Link>
             <Link className="btn btn-sec" href="/book/site?plan=visual">Start a plan</Link>
             <Link className="learn-link" href="#quote">Multiple sites or survey-grade? Talk to us →</Link>

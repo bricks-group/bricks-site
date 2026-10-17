@@ -48,7 +48,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="block" style={{paddingBottom: 32}}>
+      <section className="block">
         <div className="wrap">
           <div className="contact-grid">
             <div className="c"><div className="l">General</div><div className="v"><a href="mailto:help@brxs.ca">help@brxs.ca</a></div></div>
@@ -57,7 +57,7 @@ export default function ContactPage() {
             <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>
           </div>
 
-          <div className="sec-head" style={{ marginTop: 8 }}>
+          <div className="sec-head">
             <div><span className="over">Message</span><h2>Send us a note.</h2></div>
           </div>
           <ContactForm />
@@ -65,10 +65,10 @@ export default function ContactPage() {
       </section>
 
       <style>{`
-        .product-hint{margin-top:14px;font-size:14px;color:var(--inkMute);max-width:520px;}
+        .product-hint{margin-top:16px;font-size:14px;color:var(--inkMute);max-width:520px;}
         .contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
-          border:1px solid var(--hair);border-radius:2px;margin:28px 0 34px;}
-        .contact-grid .c{background:var(--paper);padding:22px 24px;}
+          border:1px solid var(--hair);border-radius:2px;margin:0 0 var(--sec-half);}
+        .contact-grid .c{background:var(--paper);padding:var(--card-pad);}
         .contact-grid .c .l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
           text-transform:uppercase;color:var(--inkMute);}
         .contact-grid .c .v{font-weight:500;font-size:17px;color:var(--ink);margin-top:8px;line-height:1.35;}

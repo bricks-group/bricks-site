@@ -568,41 +568,41 @@ export default function PhotographerForm() {
       <p className="hint-sm">By submitting you confirm the information above is accurate and the sample photos are your own work. Bricks checks your photos and kit automatically, and a person makes every decision.</p>
 
       <style>{`
-        .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:32px;margin-top:4px;max-width:100%;min-width:0;box-sizing:border-box;}
+        .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:var(--card-pad-lg);margin-top:0;max-width:100%;min-width:0;box-sizing:border-box;}
         .aform .fsec{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-          color:var(--brickDeep);margin:26px 0 14px;padding-top:22px;border-top:1px solid var(--hair);}
+          color:var(--brickDeep);margin:24px 0 16px;padding-top:24px;border-top:1px solid var(--hair);}
         .aform .fsec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
         .aform .check-col{display:grid;gap:8px;min-width:0;max-width:100%;}
-        .aform .check-item{display:grid;grid-template-columns:auto 1fr;align-items:start;gap:10px;padding:11px 13px;border:1px solid var(--hairStrong);
+        .aform .check-item{display:grid;grid-template-columns:auto 1fr;align-items:start;gap:8px;padding:12px;border:1px solid var(--hairStrong);
           border-radius:2px;cursor:pointer;background:var(--paperDeep);font-family:'General Sans',sans-serif;font-size:14px;letter-spacing:0;text-transform:none;color:var(--ink);min-width:0;max-width:100%;box-sizing:border-box;}
         .aform .check-item input{width:auto;max-width:none;margin-top:3px;flex:none;}
         .aform .check-item span{min-width:0;white-space:normal;overflow-wrap:break-word;word-break:normal;}
         .aform .radio-row{display:flex;gap:8px;flex-wrap:wrap;}
-        .aform .radio-row label{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hairStrong);
+        .aform .radio-row label{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--hairStrong);
           border-radius:2px;font-size:13.5px;letter-spacing:0;text-transform:none;font-family:'General Sans',sans-serif;cursor:pointer;background:var(--paperDeep);white-space:nowrap;flex:none;}
         .aform .radio-row input{width:auto;max-width:none;}
-        .aform .ic-box{border:1px solid var(--hairStrong);border-radius:2px;background:var(--paperDeep);padding:16px 18px;
-          font-size:12.5px;color:var(--inkSoft);line-height:1.6;max-height:240px;overflow-y:auto;margin:8px 0 14px;white-space:pre-wrap;}
-        .aform .ic-accept{display:flex;align-items:flex-start;gap:10px;padding:14px;border:1px solid var(--hairStrong);
+        .aform .ic-box{border:1px solid var(--hairStrong);border-radius:2px;background:var(--paperDeep);padding:16px;
+          font-size:12.5px;color:var(--inkSoft);line-height:1.6;max-height:240px;overflow-y:auto;margin:8px 0 16px;white-space:pre-wrap;}
+        .aform .ic-accept{display:flex;align-items:flex-start;gap:8px;padding:16px;border:1px solid var(--hairStrong);
           border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:13.5px;line-height:1.5;margin-bottom:16px;}
         .aform .ic-accept input{margin-top:3px;flex:none;}
         .aform .ic-accept span{min-width:0;flex:1;overflow-wrap:anywhere;white-space:normal;}
-        .success-box{text-align:center;padding:64px 28px;}
+        .success-box{text-align:center;padding:64px 32px;}
         .success-box .check{font-size:38px;margin-bottom:14px;color:var(--brickDeep);}
         .success-box h3{font-weight:500;font-size:24px;letter-spacing:-.5px;margin:0 0 10px;color:var(--ink);}
         .success-box p{color:var(--inkMute);font-size:14.5px;line-height:1.6;max-width:400px;margin:0 auto;}
-        .aform .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0;max-width:100%;}
+        .aform .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-width:0;max-width:100%;}
         .aform .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;min-width:0;max-width:100%;}
         .aform .field > label{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--inkMute);}
         .aform .field .req{color:var(--brickDeep);}
         .aform .field input,.aform .field select{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paperDeep);color:var(--ink);
-          border:1px solid var(--hairStrong);border-radius:2px;padding:11px 12px;outline:none;width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
+          border:1px solid var(--hairStrong);border-radius:2px;padding:12px;outline:none;width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
         .aform .field input:focus,.aform .field select:focus{border-color:var(--brick);}
         .aform .field .radio-row input,.aform .field .chip input,.aform .field .check-item input{width:auto;max-width:none;padding:0;}
         .aform .hint-sm{font-size:11.5px;color:var(--inkFaint);line-height:1.4;display:block;margin-top:4px;}
         .aform .field.sub{margin-bottom:0;}
         .aform .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
-        .aform .chip{display:flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid var(--hairStrong);border-radius:2px;
+        .aform .chip{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--hairStrong);border-radius:2px;
           font-family:'General Sans',sans-serif;font-size:13.5px;letter-spacing:0;text-transform:none;color:var(--ink);background:var(--paperDeep);cursor:pointer;}
         .aform .chip input{width:auto;max-width:none;}
         .aform .chip:has(input:checked),.aform .radio-row label:has(input:checked){border-color:var(--brick);}
@@ -615,7 +615,7 @@ export default function PhotographerForm() {
         .aform .sample-cell button{position:absolute;right:4px;bottom:4px;font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
           text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;border-radius:2px;padding:3px 6px;cursor:pointer;}
         .aform .err{color:var(--brickDeep);font-size:12.5px;font-family:'Ioskeley Mono','JetBrains Mono',monospace;min-height:14px;}
-        @media (max-width:680px){ .aform .grid2{grid-template-columns:1fr;} .aform .radio-row{flex-direction:column;} .aform{padding:22px;} }
+        @media (max-width:680px){ .aform .grid2{grid-template-columns:1fr;} .aform .radio-row{flex-direction:column;} }
       `}</style>
     </form>
   )

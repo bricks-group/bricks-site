@@ -1,7 +1,7 @@
-.ms-sec{padding:80px 0 72px;}
-.ms-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px;flex-wrap:wrap;}
+.ms-sec{padding:var(--sec) 0 var(--sec-half);}
+.ms-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:var(--head-gap);flex-wrap:wrap;}
 .ms-head h2{font-weight:500;font-size:clamp(30px,3.6vw,44px);letter-spacing:-1.2px;line-height:1.04;margin:0;color:var(--ink);}
-.ms-head .sub{font-size:17px;color:var(--inkSoft);margin:10px 0 0;max-width:520px;}
+.ms-head .sub{font-size:17px;color:var(--inkSoft);margin:8px 0 0;max-width:520px;}
 .ms-tabs{display:inline-flex;gap:0;border-bottom:1px solid var(--hair);}
 .ms-tab{appearance:none;border:0;background:transparent;color:var(--inkSoft);font:inherit;font-size:14px;font-weight:500;letter-spacing:-.01em;
   padding:12px 18px;border-radius:0;cursor:pointer;white-space:nowrap;box-shadow:inset 0 -2px 0 transparent;
@@ -16,12 +16,11 @@
 .ms-panel > img{object-fit:cover;}
 .ms-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0E0B09;}
 .ms-panel .visit-embed{position:absolute;inset:0;}
-.ms-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:14px;flex-wrap:wrap;}
+.ms-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;flex-wrap:wrap;}
 .ms-cap{margin:0;font-size:14px;color:var(--inkSoft);}
 @keyframes ms-in{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}
 @media (max-width:700px){
-  .ms-sec{padding:56px 0 48px;}
-  .ms-head{margin-bottom:16px;gap:16px;}
+  .ms-head{gap:16px;}
   .ms-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;box-sizing:border-box;}
   .ms-tab{padding:11px 2px;font-size:13px;}
   .ms-stage{aspect-ratio:4/3;}
@@ -35,7 +34,7 @@
 .ms-lbl.l{left:12px;}.ms-lbl.r{right:12px;}
 .ms-ba:focus-visible{outline:2px solid var(--brick);outline-offset:-2px;}
 
-.ms-sec.ms-page{padding:8px 0 72px;}
+.ms-sec.ms-page{padding:0 0 var(--sec-half);}
 .ms-pairs{display:flex;flex-wrap:wrap;gap:6px;}
 .ms-pair{appearance:none;font:inherit;font-size:13px;font-weight:500;color:var(--inkSoft);background:transparent;border:1px solid var(--hairStrong);
   border-radius:2px;padding:7px 12px;cursor:pointer;transition:background .3s,color .3s,border-color .3s;}

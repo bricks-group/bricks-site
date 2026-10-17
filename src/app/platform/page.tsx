@@ -112,7 +112,7 @@ export default function PlatformPage() {
             </div>
           </div>
           <p className="sub-line">{SOFTWARE_BLURB} Brokerages buy seats yearly.</p>
-          <PlanCards style={{ marginTop: 22 }} />
+          <PlanCards style={{ marginTop: 24 }} />
           <div className="incl" style={{ marginTop: 1, borderTop: 'none' }}>
             {OFFICE_PLANS.map((p) => (
               <div key={p.id} className="c rvl">
@@ -135,8 +135,8 @@ export default function PlatformPage() {
           <NewsletterInline />
         </section>
 
-        <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
-          <div className="book">
+        <section className="block rvl" style={{ borderTop: 'none', paddingTop: 0 }}>
+          <div className="book" style={{ marginTop: 0 }}>
             <span className="over">Ready when you are</span>
             <h2>Book a shoot. Open Bricks.</h2>
             <p className="lead">Book here or in <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>. Sign in to <a href={OS_LOGIN}>Bricks</a> or the <a href={GO_URL} rel="noopener noreferrer">photographer app</a>.</p>
@@ -149,33 +149,28 @@ export default function PlatformPage() {
       </div>
 
       <style>{`
-        .platform-os-stage{margin:0 0 16px;}
-        .platform-os-stage .prod-hero{margin-top:0;}
-        /* Title + CTA share the same side gutter as the stage — never flush to the viewport */
-        .platform-os-stage > .wrap{
-          max-width:none;width:100%;box-sizing:border-box;
-          padding-left:20px;padding-right:20px;
-        }
-        .platform-surf-head{padding:16px 0 52px;max-width:640px;}
-        .platform-surf-head h2{font-weight:500;font-size:28px;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin-top:6px;}
-        .platform-surf-head p{font-size:15px;color:var(--inkSoft);margin-top:8px;line-height:1.45;}
-        .platform-surf-cta{padding:10px 0 4px;}
-        .platform-os-stage .tray{margin-left:20px;margin-right:20px;}
-        .prod-copy .surf-link{margin:14px 0 0;font-size:13.5px;}
+        /* One column for the whole page: hero, desk stage, phone rows and blocks share the 1200 container
+           (they were 980 / full-bleed / 20px-flush, so every band started at a different left edge). */
+        .wrap{max-width:var(--container);padding-left:var(--gutter);padding-right:var(--gutter);}
+        .platform-os-stage{margin:0;}
+        .platform-surf-head{padding:var(--sec-half) var(--gutter) var(--head-gap);}
+        .platform-surf-head h2{font-weight:500;font-size:28px;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin-top:8px;}
+        .platform-surf-head p{font-size:15px;color:var(--inkSoft);margin-top:8px;line-height:1.45;max-width:640px;}
+        .platform-surf-cta{padding:var(--gap) var(--gutter) 0;}
+        .platform-os-stage .tray{width:min(calc(100% - var(--gutter) * 2), calc(var(--container) - var(--gutter) * 2));margin:0 auto;}
+        .prod-row-flip{margin-bottom:var(--sec-half);}
+        .prod-copy .surf-link{margin:16px 0 0;font-size:13.5px;}
         .prod-copy .surf-link a,.book .lead a{color:var(--brickDeep);text-decoration:none;}
         .prod-copy .surf-link a:hover,.book .lead a:hover{text-decoration:underline;}
-        .sub-line{font-size:15px;color:var(--inkSoft);line-height:1.5;max-width:640px;margin-top:-12px;}
+        .sub-line{font-size:15px;color:var(--inkSoft);line-height:1.5;max-width:640px;margin-top:calc(var(--head-gap) * -1 + 16px);}
         .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .aud-card{background:var(--paper);padding:22px 24px;text-decoration:none;color:inherit;display:block;}
+        .aud-card{background:var(--paper);padding:var(--card-pad);text-decoration:none;color:inherit;display:block;}
         .aud-card:hover{background:var(--paperSoft);}
         .aud-card h3{font-weight:500;font-size:18px;letter-spacing:-0.4px;color:var(--ink);margin:8px 0 6px;}
         .aud-card p{font-size:13.5px;color:var(--inkMute);line-height:1.45;margin:0;}
         .note a{color:var(--brickDeep);text-decoration:none;}
         @media (max-width:680px){
           .aud-grid{grid-template-columns:1fr;}
-          .platform-os-stage > .wrap{padding-left:20px;padding-right:20px;}
-          .platform-os-stage .tray{margin-left:20px;margin-right:20px;}
-          .platform-surf-head{padding:12px 0 40px;}
         }
       `}</style>
     </>

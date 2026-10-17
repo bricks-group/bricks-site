@@ -199,9 +199,9 @@ export default function PhotographersPage() {
         .sec-head{min-width:0;}
         .sec-head > div{min-width:0;max-width:100%;}
         .sec-head h2{white-space:normal;overflow:visible;overflow-wrap:break-word;}
-        .rate-lead{font-size:15px;color:var(--inkSoft);line-height:1.6;max-width:640px;margin:0 0 22px;}
+        .rate-lead{font-size:15px;color:var(--inkSoft);line-height:1.6;max-width:640px;margin:0 0 24px;}
         .adds{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .adds .a{background:var(--paper);padding:26px 24px;}
+        .adds .a{background:var(--paper);padding:var(--card-pad);}
         .adds .a .nm{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:8px;}
         .adds .a p{font-size:12.5px;color:var(--inkMute);line-height:1.45;}
         @media (max-width:720px){

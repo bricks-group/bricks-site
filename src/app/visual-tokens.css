@@ -34,10 +34,18 @@
   --vs-fs-body:clamp(15px, .093vw + 14.67px, 16px);       /* body 15→16 */
   --vs-fs-small:clamp(13px, .093vw + 12.67px, 14px);      /* captions, links, meta 13→14 */
   --vs-fs-cta:clamp(36px, 3.704vw + 22.67px, 76px);       /* final CTA 36→76 */
-  /* Fluid space */
-  --vs-sec:clamp(56px, 5.185vw + 37.33px, 112px);         /* gap between homepage sections */
-  --vs-pad:clamp(16px, 2.222vw + 8px, 40px);              /* panel padding */
-  --vs-gap:clamp(8px, .741vw + 5.33px, 16px);             /* gap between panels/cards */
+  /* Layout space — stepped on the 4/8 scale (2026-10-17 spacing pass). One section rhythm per breakpoint:
+     content-to-content gap between sections = --sec. Sections with a hairline split it (--sec-half each side). */
+  --sec:96px; --sec-half:48px;        /* desktop + tablet; phone values below */
+  --hero-top:64px;                    /* top of every page hero (home + inner pages) */
+  --head-gap:32px;                    /* section head (eyebrow + h2) to its content */
+  --card-pad:24px;                    /* one card padding for tiles, FAQ rows, info cards */
+  --card-pad-lg:32px;                 /* large panels: CTA bands, forms */
+  --gap:16px;                         /* one gutter between cards in a grid */
+  --container:1200px;                 /* header, footer, home, platform */
+  --vs-sec:var(--sec);
+  --vs-pad:var(--card-pad-lg);
+  --vs-gap:var(--gap);
 
   /* Space: 4px base, 24px layout grid */
   --vs-1:4px; --vs-2:8px; --vs-3:12px; --vs-4:16px; --vs-6:24px; --vs-8:32px; --vs-12:48px; --vs-16:64px; --vs-24:96px;
@@ -51,6 +59,9 @@
 
   /* Fallback surface behind product windows (the original painted trays from globals.css sit on top) */
   --vs-tray:var(--vs-g-100);
+}
+@media (max-width:680px){
+  :root{--sec:64px; --sec-half:32px; --hero-top:48px; --head-gap:24px; --card-pad:20px; --card-pad-lg:24px; --gap:12px;}
 }
 html[data-theme="dark"]{
   --vs-bg:#141210; --vs-fg:#F4F1EB; --vs-fg-2:#C9C4BB; --vs-fg-3:#8F8A82;

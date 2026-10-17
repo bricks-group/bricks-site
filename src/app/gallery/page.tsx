@@ -164,8 +164,8 @@ export default function GalleryPage() {
           <Grid images={industrial} />
         </section>
 
-        <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
-          <div className="book">
+        <section className="block rvl" style={{ borderTop: 'none', paddingTop: 0 }}>
+          <div className="book" style={{ marginTop: 0 }}>
             <span className="over">Book a shoot</span>
             <h2>Ready when the listing is.</h2>
             <p className="lead">Book online and get a quote from the address.</p>
@@ -179,15 +179,15 @@ export default function GalleryPage() {
 
       <style>{`
         .work-wrap{max-width:980px;}
-        .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px;margin-top:8px;}
+        .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);}
         .work-card{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);}
         .work-card .img{aspect-ratio:4/3;background:var(--paperDeep);overflow:hidden;}
         .work-card .img img{width:100%;height:100%;object-fit:cover;display:block;filter:none;}
-        .work-card .meta{padding:16px 18px 18px;}
+        .work-card .meta{padding:16px;}
         .work-card .meta .t{font-weight:500;font-size:15px;color:var(--ink);letter-spacing:-0.2px;}
         .work-card .meta .d{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);margin-top:6px;letter-spacing:.06em;}
-        .ba-hint{margin:0 0 4px;font-size:15px;color:var(--inkMute);}
-        .ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px;}
+        .ba-hint{margin:0 0 var(--gap);font-size:15px;color:var(--inkMute);}
+        .ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);}
         .ba{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--paperDeep);
           border:1px solid var(--hairStrong);border-radius:2px;cursor:ew-resize;user-select:none;-webkit-user-select:none;touch-action:pan-y;}
         .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none;filter:none;}
@@ -206,7 +206,7 @@ export default function GalleryPage() {
         .ba-tag-before{left:12px;}
         .ba-tag-after{right:12px;}
         @media (max-width:820px){
-          .work-grid{grid-template-columns:1fr;gap:28px;}
+          .work-grid{grid-template-columns:1fr;}
         }
         @media (max-width:720px){
           .ba-grid{grid-template-columns:1fr;}

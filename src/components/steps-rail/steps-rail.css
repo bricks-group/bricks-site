@@ -65,7 +65,7 @@
 
 /* ── Mobile ────────────────────────────────────────────────────────────────── */
 @media (max-width:900px){
-  .slab-head-m{display:block;padding-top:40px;}
+  .slab-head-m{display:block;padding-top:var(--sec-half);}
   .slab-head-d{display:none;}
   .slab .cap-copy.slab-head{margin-bottom:8px;}
   .slab-b-top{display:block;}
@@ -83,7 +83,7 @@
 
 /* ── Reduced motion: no pinning, no scrubbing — everything visible at once ── */
 @media (prefers-reduced-motion:reduce){
-  .slab-pinned{height:auto;padding:40px 0 12px;}
+  .slab-pinned{height:auto;padding:var(--sec-half) 0;}
   .slab-pin{position:static;height:auto;display:block;}
   .slab-head-m{padding-top:0;}
   .slab *,.slab *::before,.slab *::after{transition:none !important;animation:none !important;}

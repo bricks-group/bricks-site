@@ -665,12 +665,12 @@ export default function BookingWizard() {
               </div>
               {!floorPlanOnly && (
                 <>
-                  <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Or build à la carte:</p>
+                  <p className="hint-sm" style={{ margin: '-4px 0 16px' }}>Or build à la carte:</p>
                   <label className="toggle"><input type="checkbox" checked={reel} onChange={(e) => setReel(e.target.checked)} /> Cinematic reel (+{REEL_RANGE}, by footprint)</label>
                   <label className="toggle"><input type="checkbox" checked={tour} onChange={(e) => setTour(e.target.checked)} /> {TOUR_NAME} (+{TOUR_RANGE}, by footprint) — {TOUR_BLURB}</label>
                   <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL}) — {VISIT_BLURB} {VISIT_PACKAGING}</label>
                   {visit && (
-                    <div className="field" style={{ margin: '4px 0 14px' }}>
+                    <div className="field" style={{ margin: '4px 0 16px' }}>
                       <label>Sqft (sets the footprint band)</label>
                       <input type="number" min={1} value={sqftInput} onChange={(e) => setSqftInput(e.target.value)} placeholder={quote?.sqft ? String(quote.sqft) : 'e.g. 2200'} />
                       <span className="hint-sm">{FOOTPRINT_BANDS}.</span>
@@ -682,12 +682,12 @@ export default function BookingWizard() {
               {floorPlanOnly && (
                 <>
                   <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL}) — {VISIT_PACKAGING}</label>
-                  <p className="hint-sm" style={{ margin: '-4px 0 14px' }}>Floor plan only — no HDR, no drone. Visit and staging below are optional. Rush is +${RUSH_FLAT}.</p>
+                  <p className="hint-sm" style={{ margin: '-4px 0 16px' }}>Floor plan only — no HDR, no drone. Visit and staging below are optional. Rush is +${RUSH_FLAT}.</p>
                 </>
               )}
               <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging ({STAGING_PRICE_LABEL})</label>
               {staging && (
-                <div className="field" style={{ margin: '4px 0 14px' }}>
+                <div className="field" style={{ margin: '4px 0 16px' }}>
                   <label>Photos to stage</label>
                   <input type="number" min={1} value={stagingImages} onChange={(e) => setStagingImages(Math.max(1, parseInt(e.target.value || '1', 10) || 1))} />
                   <span className="hint-sm">{STAGING_PER_IMAGE} CAD per photo, before tax. Not included in any package.</span>
@@ -740,7 +740,7 @@ export default function BookingWizard() {
                   <div className="slotmsg">{slotsHint || 'No remaining shoot hours that day — pick another date.'}</div>
                 )}
                 {!date && <div className="slotmsg">Pick a date above to see clock times.</div>}
-                <p className="hint-sm" style={{ marginTop: 10 }}>
+                <p className="hint-sm" style={{ marginTop: 12 }}>
                   {`Property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}.${slotsLive ? ' Booked times are hidden.' : ''}`}
                 </p>
               </div>
@@ -772,15 +772,15 @@ export default function BookingWizard() {
                   <div key={k} className="rrow"><span className="rk">{k}</span><span className="rv">{esc(v)}</span></div>
                 ))}
               </div>
-              {quote && <div className="quote" style={{ marginTop: 14 }}><QuoteBlock q={quote} editable={false} /></div>}
+              {quote && <div className="quote" style={{ marginTop: 16 }}><QuoteBlock q={quote} editable={false} /></div>}
               <div className="err">{errs[3]}</div>
-              <p style={{ fontSize: 12.5, color: 'var(--inkSoft)', marginTop: 10, lineHeight: 1.45, padding: '10px 12px', border: '1px solid var(--hairStrong)', borderRadius: 2, background: 'var(--bgRaised, transparent)' }}>
+              <p style={{ fontSize: 12.5, color: 'var(--inkSoft)', marginTop: 12, lineHeight: 1.45, padding: '12px 16px', border: '1px solid var(--hairStrong)', borderRadius: 2, background: 'var(--bgRaised, transparent)' }}>
                 <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Cancellation / no-show:</strong>{' '}
                 More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. Full schedule in the <Link href="/terms#refunds" style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
               </p>
-              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 10 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
+              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
-              <p className="hint-sm" style={{ margin: '10px 0 0' }}>Have a launch code? Enter it at checkout.</p>
+              <p className="hint-sm" style={{ margin: '12px 0 0' }}>Have a launch code? Enter it at checkout.</p>
             </div>
           </form>
         )}
@@ -792,19 +792,19 @@ export default function BookingWizard() {
               <h2>{doneTitle}</h2>
               <p>{doneMsg}</p>
               {scheduleCtaVisible && (
-                <div style={{ display: 'block', marginTop: 18, padding: 18, border: '1px solid var(--hairStrong)', borderRadius: 2 }}>
-                  <h3 style={{ margin: '0 0 6px', fontSize: 17, fontWeight: 500, color: 'var(--ink)' }}>Shoot booked ✓</h3>
-                  <p style={{ margin: '0 0 14px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and sent to the photographer. A confirmation email is on its way.</p>
+                <div style={{ display: 'block', marginTop: 16, padding: 'var(--card-pad)', border: '1px solid var(--hairStrong)', borderRadius: 2 }}>
+                  <h3 style={{ margin: '0 0 8px', fontSize: 17, fontWeight: 500, color: 'var(--ink)' }}>Shoot booked ✓</h3>
+                  <p style={{ margin: '0 0 16px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and sent to the photographer. A confirmation email is on its way.</p>
                 </div>
               )}
-              <p style={{ marginTop: 14 }}><Link href="/" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>← Back to overview</Link></p>
+              <p style={{ marginTop: 16 }}><Link href="/" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>← Back to overview</Link></p>
             </div>
           </div>
         )}
       </div>
 
       <div className="wrap">
-        <section className="faq-wrap rvl" style={{ padding: '12px 0 40px' }}>
+        <section className="faq-wrap rvl" style={{ padding: 'var(--sec-half) 0', borderTop: '1px solid var(--hair)' }}>
           <div className="faq-head">
             <h2>Before you book.</h2>
             <p>Add-ons, scheduling, and what happens if plans change.</p>
