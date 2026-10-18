@@ -246,9 +246,9 @@ export default function BookingWizard() {
     setHandoffLoading(true)
     fetch('/api/book/handoff?t=' + encodeURIComponent(q.token), { cache: 'no-store' })
       .then((r) => r.json().catch(() => ({})))
-      .then((j: { ok?: boolean; handoff?: unknown }) => {
+      .then((j: { ok?: boolean; error?: string; handoff?: unknown }) => {
         if (j && j.ok) { apply(readHandoff(j.handoff)); return }
-        setHandoffNote('That link from Bricks has expired. Check the details below.')
+        setHandoffNote(j && j.error === 'expired' ? 'That link from Bricks has expired. Check the details below.' : 'Couldn’t load your listing. Check the details below.')
         apply(q)
       })
       .catch(() => { setHandoffNote('Couldn’t load your listing. Check the details below.'); apply(q) })

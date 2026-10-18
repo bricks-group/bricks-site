@@ -22,7 +22,10 @@ export async function GET(req: NextRequest) {
       cache: 'no-store',
       signal: AbortSignal.timeout(12000),
     })
-    if (!r.ok) return NextResponse.json({ ok: false, error: r.status === 410 ? 'expired' : 'unavailable' }, { status: r.status === 410 ? 410 : 502, headers })
+    // An expired link is an expected outcome, not an error: answer 200 so the
+    // browser console stays clean and the wizard falls back to the form.
+    if (r.status === 410) return NextResponse.json({ ok: false, error: 'expired' }, { headers })
+    if (!r.ok) return NextResponse.json({ ok: false, error: 'unavailable' }, { status: 502, headers })
     const j = await r.json()
     return NextResponse.json({ ok: true, handoff: j }, { headers })
   } catch {
