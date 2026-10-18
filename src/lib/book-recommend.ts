@@ -17,10 +17,13 @@
  * Then the tapped gap raises it to at least what covers that gap:
  *  video -> Story, drone/photos -> Essentials, visit -> Virtual Visit on,
  *  staging -> virtual staging on.
+ * Weak photos (Bricks' per-photo quality check: phone-captured, low
+ * resolution, blurry/dark/crooked, too few, or none) -> at least Essentials,
+ * and the reason line names the photo problem.
  * Vacant (a real signal from the listing) turns on virtual staging:
  * beds + 2 rooms (living, dining), 3 to 8, or 5 when beds are unknown.
  */
-import type { Focus, ListingDetails } from './book-prefill'
+import type { Focus, ListingDetails, PhotoReason } from './book-prefill'
 
 export type PkgKey = 'floorPlanOnly' | 'photosOnly' | 'essentials' | 'story' | 'showcase' | 'suite'
 
@@ -68,7 +71,16 @@ function sizePhrase(d: ListingDetails): string {
   return /^[aeiou]/.test(noun) ? `an ${noun}` : `a ${noun}`
 }
 
-export function recommendPackage(input: { details?: ListingDetails; focus?: Focus; gaps?: Focus[] }): Recommendation {
+/** Short clause naming the photo problem, for the reason line. */
+export const PHOTO_CLAUSE: Record<PhotoReason, string> = {
+  none: 'no photos on file yet',
+  few: 'too few photos on file',
+  phone: 'most photos on file are from a phone',
+  low_res: 'most photos on file are low resolution',
+  defects: 'several photos on file are blurry or dark',
+}
+
+export function recommendPackage(input: { details?: ListingDetails; focus?: Focus; gaps?: Focus[]; photoReason?: PhotoReason }): Recommendation {
   const d = input.details || {}
   const focus = input.focus
   const gaps = input.gaps || []
@@ -114,6 +126,17 @@ export function recommendPackage(input: { details?: ListingDetails; focus?: Focu
       reason = 'Recommended: adds the reel this listing is missing'
     }
     if (focus === 'drone' || focus === 'photos') pkg = atLeast(pkg, 'essentials')
+    const pr = input.photoReason && gaps.includes('photos') ? input.photoReason : undefined
+    if (pr) {
+      const before = pkg
+      pkg = atLeast(pkg, 'essentials')
+      const clause = PHOTO_CLAUSE[pr]
+      if (pkg !== before || reason.startsWith('Recommended: photos, drone')) {
+        reason = `Recommended: ${clause}`
+      } else if (!reason.includes('reel')) {
+        reason = `${reason} · ${clause.charAt(0).toUpperCase()}${clause.slice(1)}`
+      }
+    }
   }
   if (focus === 'visit') visit = true
 

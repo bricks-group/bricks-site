@@ -9,7 +9,9 @@
  *  - Plain params (the earlier Book a shoot link, and the fallback when the
  *    token can't be minted): ?address=&name=&email=&phone=&brokerage= plus
  *    non-personal listing details ?type=&sqft=&beds=&baths=&price=&lot=
- *    &vacant=&focus=&gaps=&step=packages.
+ *    &vacant=&focus=&gaps=&photo=&step=packages. photo= is why the listing's
+ *    photos fall short (none|few|phone|low_res|defects), from Bricks' per-photo
+ *    quality check.
  *
  * Values are trimmed, single-spaced, length-capped, and dropped when they
  * don't look right. The booking still needs a quote, a time and payment, so
@@ -28,6 +30,8 @@ export type ListingDetails = {
 
 export const FOCUSES = ['photos', 'visit', 'video', 'floorplan', 'drone', 'staging'] as const
 export type Focus = (typeof FOCUSES)[number]
+export const PHOTO_REASONS = ['none', 'few', 'phone', 'low_res', 'defects'] as const
+export type PhotoReason = (typeof PHOTO_REASONS)[number]
 
 export type BookPrefill = {
   address?: string
@@ -38,6 +42,8 @@ export type BookPrefill = {
   details?: ListingDetails
   focus?: Focus
   gaps?: Focus[]
+  /** Why the listing's photos fall short (only with a photos gap). */
+  photoReason?: PhotoReason
   /** Land on the package step (contact + address already known). */
   packages?: boolean
   /** Signed handoff token from Bricks. */
@@ -100,6 +106,12 @@ function details(src: Record<string, unknown>): ListingDetails | undefined {
   return Object.keys(d).length ? d : undefined
 }
 
+function asPhotoReason(v: unknown, gaps?: Focus[]): PhotoReason | undefined {
+  const s = String(v ?? '').trim().toLowerCase()
+  if (!gaps || !gaps.includes('photos')) return undefined
+  return (PHOTO_REASONS as readonly string[]).includes(s) ? (s as PhotoReason) : undefined
+}
+
 function gapsOf(v: unknown): Focus[] | undefined {
   const list = Array.isArray(v) ? v : String(v ?? '').split(',')
   const out = list.map(asFocus).filter((x): x is Focus => !!x)
@@ -121,6 +133,7 @@ export function readBookPrefill(search: string): BookPrefill {
   const d = details(src); if (d) out.details = d
   const f = asFocus(q.get('focus')); if (f) out.focus = f
   const g = gapsOf(q.get('gaps')); if (g) out.gaps = g
+  const pr = asPhotoReason(q.get('photo'), g); if (pr) out.photoReason = pr
   if (q.get('step') === 'packages') out.packages = true
   return out
 }
@@ -138,6 +151,7 @@ export function readHandoff(j: unknown): BookPrefill {
   if (d) out.details = d
   const f = asFocus(r.focus); if (f) out.focus = f
   const g = gapsOf(r.gaps); if (g) out.gaps = g
+  const pr = asPhotoReason(r.photo_reason, g); if (pr) out.photoReason = pr
   return out
 }
 

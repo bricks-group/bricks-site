@@ -222,7 +222,7 @@ export default function BookingWizard() {
       if (opt) setPropertyType((v) => v || opt)
       if (p.details?.sqft) setSqftInput((v) => v || String(p.details!.sqft))
       if (p.details || p.focus || p.gaps) {
-        const r = recommendPackage({ details: p.details, focus: p.focus, gaps: p.gaps })
+        const r = recommendPackage({ details: p.details, focus: p.focus, gaps: p.gaps, photoReason: p.photoReason })
         applyPackage(r.pkg)
         setVisit(r.visit)
         setStaging(r.staging)

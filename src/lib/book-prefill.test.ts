@@ -72,3 +72,10 @@ test('type option mapping never picks Estate', () => {
   assert.equal(bookTypeOption({ typeClass: 'land' }), '')
   assert.equal(bookTypeOption(undefined), '')
 })
+
+test('photo reason rides only with a photos gap and only known values', () => {
+  assert.equal(readBookPrefill('?gaps=photos,visit&photo=phone').photoReason, 'phone')
+  assert.equal(readBookPrefill('?gaps=visit&photo=phone').photoReason, undefined)
+  assert.equal(readBookPrefill('?gaps=photos&photo=nonsense').photoReason, undefined)
+  assert.equal(readHandoff({ gaps: ['photos'], photo_reason: 'low_res' }).photoReason, 'low_res')
+})

@@ -81,3 +81,21 @@ test('vacant turns on staging sized by bedrooms', () => {
   assert.equal(recommendPackage({ focus: 'staging' }).stagingImages, 5)
   assert.equal(recommendPackage({ details: { vacant: false } }).staging, false)
 })
+
+test('weak photos: at least Essentials and the reason names the photo problem', () => {
+  const condo = { typeClass: 'condo' as const, propertyType: 'Condo Apt', sqft: 850, beds: 2 }
+  const r = recommendPackage({ details: condo, gaps: ['photos'], photoReason: 'phone' })
+  assert.equal(r.pkg, 'essentials')
+  assert.equal(r.reason, 'Recommended for an 850 sq ft 2-bed condo · Most photos on file are from a phone')
+  const unknown = recommendPackage({ gaps: ['photos', 'visit'], photoReason: 'defects' })
+  assert.equal(unknown.pkg, 'essentials')
+  assert.equal(unknown.reason, 'Recommended: several photos on file are blurry or dark')
+  const lux = recommendPackage({ details: { typeClass: 'house', price: 3_100_000 }, gaps: ['photos'], photoReason: 'low_res' })
+  assert.equal(lux.pkg, 'suite')
+  assert.equal(lux.reason, 'Recommended for a $3.1M listing · Most photos on file are low resolution')
+})
+
+test('photo reason is ignored without a photos gap', () => {
+  const r = recommendPackage({ details: { typeClass: 'condo', sqft: 850 }, gaps: ['visit'], photoReason: 'phone' })
+  assert.ok(!/phone/.test(r.reason))
+})
