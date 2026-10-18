@@ -9,7 +9,8 @@ import Link from 'next/link'
 import { track } from '@vercel/analytics'
 import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
-import { readBookPrefill } from '@/lib/book-prefill'
+import { type BookPrefill, bookTypeOption, canSkipToPackages, readBookPrefill, readHandoff } from '@/lib/book-prefill'
+import { type Recommendation, compactMoney, recommendPackage } from '@/lib/book-recommend'
 const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 type AddrSuggestion = {
@@ -200,16 +201,88 @@ export default function BookingWizard() {
   const [doneMsg, setDoneMsg] = useState('Redirecting to secure checkout…')
   const [scheduleCtaVisible, setScheduleCtaVisible] = useState(false)
 
-  // Book a shoot from a listing or the desk in Bricks arrives prefilled
-  // (address + the agent's own details) so the shoot lands back on that listing.
+  // Book media from a listing in Bricks: a signed handoff (?h=) or plain params
+  // fill the address, property details and the agent's own contact, preselect
+  // the recommended package and open on the package step. Back still edits all.
+  const [listing, setListing] = useState<BookPrefill | null>(null)
+  const [rec, setRec] = useState<Recommendation | null>(null)
+  const [handoffLoading, setHandoffLoading] = useState(false)
+  const [handoffNote, setHandoffNote] = useState('')
+  const [pendingQuote, setPendingQuote] = useState(false)
+
   useEffect(() => {
-    const p = readBookPrefill(window.location.search)
-    if (p.name) setName((v) => v || p.name!)
-    if (p.brokerage) setBrokerage((v) => v || p.brokerage!)
-    if (p.email) setEmail((v) => v || p.email!)
-    if (p.phone) setPhone((v) => v || p.phone!)
-    if (p.address) setAddr((v) => v || p.address!)
+    const q = readBookPrefill(window.location.search)
+    const apply = (p: BookPrefill) => {
+      if (p.name) setName((v) => v || p.name!)
+      if (p.brokerage) setBrokerage((v) => v || p.brokerage!)
+      if (p.email) setEmail((v) => v || p.email!)
+      if (p.phone) setPhone((v) => v || p.phone!)
+      if (p.address) setAddr((v) => v || p.address!)
+      const opt = bookTypeOption(p.details)
+      if (opt) setPropertyType((v) => v || opt)
+      if (p.details?.sqft) setSqftInput((v) => v || String(p.details!.sqft))
+      if (p.details || p.focus || p.gaps) {
+        const r = recommendPackage({ details: p.details, focus: p.focus, gaps: p.gaps })
+        applyPackage(r.pkg)
+        setVisit(r.visit)
+        setStaging(r.staging)
+        if (r.staging) setStagingImages(r.stagingImages)
+        setRec(r)
+        setListing(p)
+      }
+      if (canSkipToPackages(p)) {
+        setStep(1)
+        setPendingQuote(true)
+        evt('booking_listing_handoff', { focus: p.focus || 'none', pkg: p.details || p.focus ? 'recommended' : 'none' })
+      }
+    }
+    if (!q.token) { apply(q); return }
+    // Keep the token out of history and bookmarks once it has been read.
+    try {
+      const u = new URL(window.location.href)
+      u.searchParams.delete('h')
+      window.history.replaceState(window.history.state, '', u.pathname + u.search + u.hash)
+    } catch {}
+    setHandoffLoading(true)
+    fetch('/api/book/handoff?t=' + encodeURIComponent(q.token), { cache: 'no-store' })
+      .then((r) => r.json().catch(() => ({})))
+      .then((j: { ok?: boolean; handoff?: unknown }) => {
+        if (j && j.ok) { apply(readHandoff(j.handoff)); return }
+        setHandoffNote('That link from Bricks has expired. Check the details below.')
+        apply(q)
+      })
+      .catch(() => { setHandoffNote('Couldn’t load your listing. Check the details below.'); apply(q) })
+      .finally(() => setHandoffLoading(false))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (!pendingQuote) return
+    setPendingQuote(false)
+    fetchQuote()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingQuote])
+
+  /** Address edited away from the listing: its size and recommendation no longer apply. */
+  function onAddrEdited(v: string) {
+    if (!listing?.address || v === listing.address) return
+    if (listing.details?.sqft && sqftInput === String(listing.details.sqft)) setSqftInput('')
+    setListing(null)
+    setRec(null)
+  }
+
+  function listingLine(p: BookPrefill): string {
+    const d = p.details || {}
+    const parts: string[] = []
+    if (p.address) parts.push(p.address.split(',')[0])
+    if (d.propertyType) parts.push(d.propertyType)
+    if (d.sqft) parts.push(`${d.sqft.toLocaleString('en-US')} sq ft`)
+    if (d.beds) parts.push(`${d.beds} bd`)
+    if (d.baths) parts.push(`${d.baths} ba`)
+    if (d.lotAcres && d.lotAcres >= 0.25) parts.push(`${Math.round(d.lotAcres * 10) / 10} ac`)
+    if (d.price) parts.push(compactMoney(d.price))
+    return parts.join(' · ')
+  }
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('paid') !== '1') return
@@ -607,11 +680,16 @@ export default function BookingWizard() {
           ))}
         </div>
 
-        {step !== 'done' && (
+        {handoffLoading && (
+          <div className="panel active"><BricksLoader variant="cycle" size={22} label="Opening your listing" /></div>
+        )}
+
+        {step !== 'done' && !handoffLoading && (
           <form onSubmit={(e) => e.preventDefault()}>
             <div className={`panel${step === 0 ? ' active' : ''}`}>
               <h2>What are we shooting?</h2>
               <p className="hint">Start typing the address.</p>
+              {handoffNote && <p className="hint-sm" role="status" style={{ margin: '-12px 0 20px' }}>{handoffNote}</p>}
               <div className="grid2">
                 <div className="field"><label>Listing agent name <span className="req">*</span></label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Agent" /></div>
                 <div className="field"><label>Brokerage <span className="req">*</span></label><input value={brokerage} onChange={(e) => setBrokerage(e.target.value)} placeholder="e.g. Your brokerage" /></div>
@@ -622,7 +700,7 @@ export default function BookingWizard() {
               </div>
               <div className="field" ref={addrFieldRef}>
                 <label>Property address <span className="req">*</span></label>
-                <input ref={addrInputRef} value={addr} onChange={(e) => { setAddr(e.target.value); clearPickedPin() }} placeholder="123 Main St, Mississauga" autoComplete="off" />
+                <input ref={addrInputRef} value={addr} onChange={(e) => { setAddr(e.target.value); clearPickedPin(); onAddrEdited(e.target.value) }} placeholder="123 Main St, Mississauga" autoComplete="off" />
                 {showSuggest && suggestions.length > 0 && (
                   <div className="suggest" ref={suggestBoxRef} role="listbox">
                     {suggestions.map((o) => (
@@ -666,11 +744,34 @@ export default function BookingWizard() {
 
             <div className={`panel${step === 1 ? ' active' : ''}`}>
               <h2>What do you need shot?</h2>
-              <p className="hint">Pick a package, then add extras. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>Full pricing</Link></p>
-              <div className="choices">
+              {rec ? (
+                <p className="hint">We’ve picked a package for this listing. Choose any other. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>Full pricing</Link></p>
+              ) : (
+                <p className="hint">Pick a package, then add extras. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>Full pricing</Link></p>
+              )}
+              {listing && (
+                <div className="lst" data-testid="book-listing">
+                  <div className="lst-body">
+                    <div className="lst-k">From your listing</div>
+                    <div className="lst-v">{listingLine(listing)}</div>
+                  </div>
+                  <button type="button" className="lst-edit" onClick={() => goPrev(1)}>Edit</button>
+                </div>
+              )}
+              {rec && <p className="rec-why" data-testid="book-rec-reason">{rec.reason}{rec.visit ? ` · ${VISIT_NAME} added` : ''}{rec.staging ? ' · Virtual staging added' : ''}</p>}
+              <div className="choices" role="radiogroup" aria-label="Package">
                 {Object.keys(PKG_DEFS).map((k) => (
-                  <div key={k} className={`choice${pkg === k ? ' sel' : ''}`} onClick={() => applyPackage(k)}>
-                    <div className="t">{PKG_LABEL[k]}</div>
+                  <div
+                    key={k}
+                    role="radio"
+                    aria-checked={pkg === k}
+                    tabIndex={0}
+                    className={`choice${pkg === k ? ' sel' : ''}`}
+                    data-pkg={k}
+                    onClick={() => applyPackage(k)}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); applyPackage(k) } }}
+                  >
+                    <div className="t">{PKG_LABEL[k]}{rec?.pkg === k && <span className="rec-tag">Recommended</span>}</div>
                     <div className="x">{PKG_DESC[k]}</div>
                   </div>
                 ))}
