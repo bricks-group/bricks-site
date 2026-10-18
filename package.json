@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "compile:os": "node scripts/compile-os.js",
-    "test": "npx --yes tsx --test src/lib/schedule.test.ts src/lib/demo-invite.test.ts src/lib/cutout-weather.test.ts src/middleware.test.ts src/lib/site-session.test.ts src/lib/coverage-gta-travel.test.ts src/lib/visit-staging-pricing.test.ts",
+    "test": "npx --yes tsx --test src/lib/schedule.test.ts src/lib/demo-invite.test.ts src/lib/cutout-weather.test.ts src/middleware.test.ts src/lib/site-session.test.ts src/lib/coverage-gta-travel.test.ts src/lib/visit-staging-pricing.test.ts src/lib/book-prefill.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "repository": {

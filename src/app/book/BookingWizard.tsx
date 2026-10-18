@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { track } from '@vercel/analytics'
 import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
+import { readBookPrefill } from '@/lib/book-prefill'
 const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 type AddrSuggestion = {
@@ -198,6 +199,17 @@ export default function BookingWizard() {
   const [doneTitle, setDoneTitle] = useState('Payment started.')
   const [doneMsg, setDoneMsg] = useState('Redirecting to secure checkout…')
   const [scheduleCtaVisible, setScheduleCtaVisible] = useState(false)
+
+  // Book a shoot from a listing or the desk in Bricks arrives prefilled
+  // (address + the agent's own details) so the shoot lands back on that listing.
+  useEffect(() => {
+    const p = readBookPrefill(window.location.search)
+    if (p.name) setName((v) => v || p.name!)
+    if (p.brokerage) setBrokerage((v) => v || p.brokerage!)
+    if (p.email) setEmail((v) => v || p.email!)
+    if (p.phone) setPhone((v) => v || p.phone!)
+    if (p.address) setAddr((v) => v || p.address!)
+  }, [])
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('paid') !== '1') return
