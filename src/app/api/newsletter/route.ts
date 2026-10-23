@@ -47,6 +47,7 @@ async function sendLocal(email: string): Promise<{ emailed: boolean; mail_blocke
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: 'Bricks <noreply@brxs.ca>',
+        reply_to: 'support@brxs.ca',
         to: [email],
         subject: "You're on the Bricks list",
         html: welcomeHtml(),
@@ -65,6 +66,7 @@ async function sendLocal(email: string): Promise<{ emailed: boolean; mail_blocke
       },
       body: JSON.stringify({
         From: 'Bricks <noreply@brxs.ca>',
+        ReplyTo: 'support@brxs.ca',
         To: email,
         Subject: "You're on the Bricks list",
         HtmlBody: welcomeHtml(),
