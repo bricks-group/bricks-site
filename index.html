@@ -28,7 +28,7 @@
   "description": "Bricks is the operating system for real estate: From Capture to Close. Real estate listing media -- HDR photography, licensed drone, floor plans, twilight photography, and 3D virtual tours -- live now in the Greater Toronto Area, serving agents and sales reps at Canada's leading brokerages and REITs. The booking, dispatch, and office software platform is in development.",
   "url": "https://www.brxs.ca/",
   "telephone": "+1-343-453-4578",
-  "email": "booking@brxs.ca",
+  "email": "hello@brxs.ca",
   "image": "https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG",
   "priceRange": "$$ (à la carte from $149; HDR + drone + floor plan from ~$248)",
   "areaServed": [
@@ -60,7 +60,7 @@
     {
       "@type": "Question",
       "name": "How do I book a shoot?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Use the booking form (it emails us pre-filled) or write booking@brxs.ca. We confirm the slot and send the one-pager with exact pricing by footprint." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Use the booking form (it emails us pre-filled) or write hello@brxs.ca. We confirm the slot and send the one-pager with exact pricing by footprint." }
     },
     {
       "@type": "Question",
@@ -464,7 +464,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
     </div>
     <div class="faq">
       <div class="qa"><h4>Is the platform live?</h4><p>No — the media service is live in the GTA today; the Booking app, Dispatch network, and Bricks OS are in development. You can book media now via the form above or email.</p></div>
-      <div class="qa"><h4>How do I book a shoot?</h4><p>Use the booking form (it emails us pre-filled) or write booking@brxs.ca. We confirm the slot and send the one-pager with exact pricing by footprint.</p></div>
+      <div class="qa"><h4>How do I book a shoot?</h4><p>Use the booking form (it emails us pre-filled) or write hello@brxs.ca. We confirm the slot and send the one-pager with exact pricing by footprint.</p></div>
       <div class="qa"><h4>What's included?</h4><p>HDR photo, licensed drone, and a floor plan every shoot. Cinematic reel and 3D virtual tour are optional add-ons (+$199–349 and +$149–299). Build your shoot à la carte on the <a href="pricing.html" style="color:var(--brickDeep);">pricing page</a>.</p></div>
       <div class="qa"><h4>Where do you shoot?</h4><p>The Greater Toronto Area. Outside GTA, ask — we'll tell you if it's covered.</p></div>
       <div class="qa"><h4>When do I get my media?</h4><p>Photos edited and MLS-ready in 24 hours. Other media in 24–48 hours.</p></div>
@@ -495,7 +495,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
         <h2>Media is live. The operating system is next.</h2>
       </div>
     </div>
-    <p style="font-size:14px;color:var(--inkMute);max-width:660px;">Today Bricks runs the shoot end to end in the GTA &mdash; booking, capture, and delivery handled direct. We're building the software around it: a self-serve Booking app, a Dispatch network for photographers, and Bricks OS for allocations, reporting, and one invoice. <a href="mailto:booking@brxs.ca" style="color:var(--brickDeep);">Get launch updates &rarr;</a></p>
+    <p style="font-size:14px;color:var(--inkMute);max-width:660px;">Today Bricks runs the shoot end to end in the GTA &mdash; booking, capture, and delivery handled direct. We're building the software around it: a self-serve Booking app, a Dispatch network for photographers, and Bricks OS for allocations, reporting, and one invoice. <a href="mailto:hello@brxs.ca" style="color:var(--brickDeep);">Get launch updates &rarr;</a></p>
   </section>
 </div>
 
@@ -510,7 +510,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       <span class="wordmark" style="font-size:15px;">bricks</span>
     </div>
     <div style="display:flex;gap:18px;align-items:center;">
-      <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
+      <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
       <span class="mono" style="font-size:11px;color:var(--inkMute);">343-453-4578</span>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
@@ -537,7 +537,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       body: JSON.stringify({ email: email, source: 'bricks-prelaunch' }) })
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
       .then(function(res){
-        if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
+        if(!res.ok){ msg.textContent='Could not subscribe — try hello@brxs.ca'; return; }
         msg.textContent='✓ You are on the list.';
         document.getElementById('nlEmail').value='';
       })
@@ -556,7 +556,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       body: JSON.stringify({ email: email, source: 'popup' }) })
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
       .then(function(res){
-        if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
+        if(!res.ok){ msg.textContent='Could not subscribe — try hello@brxs.ca'; return; }
         msg.textContent='✓ You are on the list.';
         document.getElementById('nlPopEmail').value='';
         try{ localStorage.setItem('nl_seen','1'); }catch(e){}
@@ -593,7 +593,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       +'Property: '+addr+'\nType: '+type+'\nPreferred date: '+date+'\n'
       +'Package: '+pkg+'\nTour: '+tour+'\n'+(notes?'Notes: '+notes+'\n':'')
       +'\n— sent from the bricks landing page';
-    window.location.href='mailto:booking@brxs.ca?subject='
+    window.location.href='mailto:hello@brxs.ca?subject='
       +encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   }
 
@@ -608,7 +608,7 @@ section.block{padding:52px 0;border-top:1px solid var(--hair);}
       body: JSON.stringify({ email: email, source: 'popup' }) })
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok!==false, j:j}; }); })
       .then(function(res){
-        if(!res.ok){ msg.textContent='Could not subscribe — try booking@brxs.ca'; return; }
+        if(!res.ok){ msg.textContent='Could not subscribe — try hello@brxs.ca'; return; }
         msg.textContent='You are on the list.';
         document.getElementById('nlPopEmail').value='';
         try{ sessionStorage.setItem('nl_seen','1'); }catch(e){}
