@@ -65,7 +65,7 @@ export default function TermsPage() {
       <div className="legal-body">
         <section className="block" id="refunds">
           <h2>5. Reschedule, cancellation, refunds</h2>
-          <p>Contact <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know.</p>
+          <p>Contact <a href="mailto:support@brxs.ca">support@brxs.ca</a> as soon as you know.</p>
           <p>Reschedule more than 24 hours before the shoot window: free.</p>
           <p>Reschedule inside 24 hours: we will try; if we cannot, section 5 cancellation rules apply.</p>
           <p>Your cancellation (or no-access / no-show on your side):</p>
@@ -83,7 +83,7 @@ export default function TermsPage() {
         <section className="block">
           <h3>6. Intellectual property</h3>
           <p>Bricks owns copyright in the deliverables (assigned from the photographer). When your booking is paid in full, Bricks grants you a perpetual, non-exclusive licence to use those deliverables for real estate marketing of that property: MLS, web, social, print, brokerage materials, and sharing with the seller for that listing. You may not sell the files as stock, or use them to market a different property.</p>
-          <p>Bricks and the photographer may use deliverables in portfolio and Bricks marketing unless you email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> before the shoot asking that the property be kept unpublished by us.</p>
+          <p>Bricks and the photographer may use deliverables in portfolio and Bricks marketing unless you email <a href="mailto:support@brxs.ca">support@brxs.ca</a> before the shoot asking that the property be kept unpublished by us.</p>
           <p>You keep ownership of listing copy, branding, and materials you upload. You grant Bricks a limited licence to use the address and listing details to perform the booking.</p>
 
           <h3>7. No property-sale warranty</h3>
@@ -100,7 +100,7 @@ export default function TermsPage() {
       <div className="legal-body">
         <section className="block" id="privacy">
           <h2>10. Privacy</h2>
-          <p>We collect the name, brokerage, email, phone, property address, and shoot details you submit, plus payment metadata from Stripe. We use it to quote, charge, schedule, shoot, deliver, and support the booking, and for records we must keep (including tax). We share what is needed with Stripe, our database host (Supabase), and the assigned photographer. We do not sell your information. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> to access, correct, or delete what we hold, subject to records we must keep. Marketing email is only if you opted in, with unsubscribe, under CASL. Full detail is at <Link href="/privacy">brxs.ca/privacy</Link>.</p>
+          <p>We collect the name, brokerage, email, phone, property address, and shoot details you submit, plus payment metadata from Stripe. We use it to quote, charge, schedule, shoot, deliver, and support the booking, and for records we must keep (including tax). We share what is needed with Stripe, our database host (Supabase), and the assigned photographer. We do not sell your information. Email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a> to access, correct, or delete what we hold, subject to records we must keep. Marketing email is only if you opted in, with unsubscribe, under CASL. Full detail is at <Link href="/privacy">brxs.ca/privacy</Link>.</p>
         </section>
       </div>
 
@@ -110,14 +110,14 @@ export default function TermsPage() {
           <p>We may update these terms. The version in effect when you pay applies to that booking. Material changes will be posted on this page.</p>
 
           <h3>12. Law</h3>
-          <p>Ontario law and applicable Canadian federal law govern. Ontario courts have exclusive jurisdiction. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> with disputes; we will try to resolve in 30 days.</p>
+          <p>Ontario law and applicable Canadian federal law govern. Ontario courts have exclusive jurisdiction. Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> with disputes; we will try to resolve in 30 days.</p>
         </section>
       </div>
 
       <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions?</h2>
-          <p>Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
+          <p>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
           <p>Bricks Group · Ontario, Canada</p>
         </section>
       </div>
