@@ -1,8 +1,8 @@
 # Bricks
 
-> Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, with optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Book a shoot in 24–48h. Brand: Bricks / Bricks Group. Serving Canada.
+> Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, with optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Photos delivered in 24 hours; other media in 24–48h. Brand: Bricks / Bricks Group. Serving Canada.
 
-Bricks is a real estate media company operated by Bricks Group in Canada. Agents and brokerages book listing photo/video/drone shoots online; Bricks delivers edited media within 24–48 hours. Coverage is Canada-wide; exact serviceability is confirmed at booking (do not treat legacy GTA city lists as the brand geography).
+Bricks is a real estate media company operated by Bricks Group in Canada. Agents and brokerages book listing photo/video/drone shoots online; Bricks delivers edited photos within 24 hours and other media within 24–48 hours. Coverage is Canada-wide; exact serviceability is confirmed at booking (do not treat legacy GTA city lists as the brand geography).
 
 Two spatial products, never collapsed: **virtual tour** is a path-confined walkthrough; **virtual visit** is a Gaussian splat (SuperSplat), free-roam, never called a tour, always a paid add-on, never packaged.
 
