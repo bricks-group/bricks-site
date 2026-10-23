@@ -55,7 +55,7 @@ export default function AccountDeletionPage() {
         <section className="block" id="by-email">
           <h2>Delete it without the app</h2>
           <p>
-            Email <a href="mailto:help@brxs.ca?subject=Delete%20my%20Bricks%20account">help@brxs.ca</a> from the email
+            Email <a href="mailto:privacy@brxs.ca?subject=Delete%20my%20Bricks%20account">privacy@brxs.ca</a> from the email
             address on your account, with the subject <strong>&ldquo;Delete my Bricks account&rdquo;</strong>. We may
             ask you to confirm that you own the account before we delete anything.
           </p>
@@ -95,7 +95,7 @@ export default function AccountDeletionPage() {
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions</h2>
           <p>
-            <a href="mailto:help@brxs.ca">help@brxs.ca</a> · <span className="mono">343-453-4578</span> ·{' '}
+            <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span> ·{' '}
             <Link href="/privacy">Privacy Policy</Link>
           </p>
           <p>Bricks Group · Ontario, Canada</p>
