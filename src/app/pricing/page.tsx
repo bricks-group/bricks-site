@@ -49,7 +49,7 @@ const rows = [
   { name: VISIT_NAME, inc: 'Free-roam 3D', vals: bandCells(VISIT_RATE) },
   { name: 'Twilight exterior', inc: 'Shot at blue hour', vals: bandCells(TWILIGHT_RATE) },
   { name: 'Virtual staging', inc: 'Per photo', flat: STAGING_PRICE_LABEL },
-  { name: 'Rush delivery', inc: 'Faster than standard 24–48h delivery', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
+  { name: 'Rush delivery', inc: 'Faster than standard delivery (photos 24h · other media 24–48h)', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
 ]
 
 export default function PricingPage() {
