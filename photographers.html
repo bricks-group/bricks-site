@@ -274,7 +274,7 @@
       <span class="wordmark" style="font-size:15px;">bricks</span>
     </div>
     <div style="display:flex;gap:18px;align-items:center;">
-      <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
+      <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
       <span class="mono" style="font-size:11px;color:var(--inkMute);">343-453-4578</span>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
@@ -293,7 +293,7 @@
   fetch('/legal/ic-agreement.txt')
     .then(function(r){ return r.ok ? r.text() : Promise.reject(); })
     .then(function(t){ document.getElementById('icBox').textContent = t; })
-    .catch(function(){ document.getElementById('icBox').textContent = 'Could not load agreement. Please email booking@brxs.ca for the full text.'; });
+    .catch(function(){ document.getElementById('icBox').textContent = 'Could not load agreement. Please email support@brxs.ca for the full text.'; });
 
   document.getElementById('f_spec_drone').addEventListener('change', function(e){
     document.getElementById('droneBlock').style.display = e.target.checked ? 'block' : 'none';
