@@ -80,7 +80,7 @@ const faqs = [
   {
     id: 'help',
     q: 'How do I get help?',
-    a: 'Email help@brxs.ca or use the contact form. For a shoot, book online or email booking@brxs.ca.',
+    a: 'Email hello@brxs.ca or use the contact form. For a shoot, book online or email support@brxs.ca.',
   },
 ] as const
 
@@ -95,7 +95,7 @@ function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
     case 'photographers':
       return <>Photographers are independent contractors paid a fixed amount per job. Jobs arrive in the Bricks app. <Link href="/photographers">Apply</Link>.</>
     case 'help':
-      return <>Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> or use the <Link href="/contact">contact form</Link>. For a shoot, <Link href="/book">book online</Link> or email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>.</>
+      return <>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> or use the <Link href="/contact">contact form</Link>. For a shoot, <Link href="/book">book online</Link> or email <a href="mailto:support@brxs.ca">support@brxs.ca</a>.</>
     default:
       return <>{a}</>
   }
