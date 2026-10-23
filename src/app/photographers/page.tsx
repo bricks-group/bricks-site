@@ -164,7 +164,7 @@ export default function PhotographersPage() {
             <div className="a rvl"><div className="nm">Mapped capture — $735</div><p>A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.</p></div>
             <div className="a rvl"><div className="nm">Mapping setup — +$315</div><p>Ground control for the first mapped flight on a site.</p></div>
           </div>
-          <p className="note" data-legal-review="true">Draft — needs legal review before publishing. The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
+          <p className="note">The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
         </section>
 
         <section className="block rvl">
@@ -178,7 +178,7 @@ export default function PhotographersPage() {
             <div className="qa"><h4>How long does review take?</h4><p>We review every application by hand, mostly on portfolio quality. Expect a reply within 1–3 business days.</p></div>
             <div className="qa"><h4>What equipment do I need?</h4><p>A full-frame camera or equivalent, fast primes, and a DJI or Autel drone for aerial work. List your kit in the form.</p></div>
             <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes. You need Transport Canada Advanced RPAS certification, and we check it before sending you drone work.</p></div>
-            <div className="qa"><h4>Do I need insurance?</h4><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies. <em>(Draft — needs legal review.)</em></p></div>
+            <div className="qa"><h4>Do I need insurance?</h4><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies.</p></div>
             <div className="qa"><h4>Am I an employee?</h4><p>No. You&apos;re an independent contractor with Bricks Group under Ontario law, in control of your equipment, methods and availability.</p></div>
           </div>
         </section>
