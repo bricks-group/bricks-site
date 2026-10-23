@@ -188,7 +188,7 @@ export default function Home() {
         <section className="hf-row rvl" aria-label="The desk">
           <div className="hf-copy">
             <h2>The desk runs the deal.</h2>
-            <p>Deals, CRM, e-sign and MLS® submission on one screen.</p>
+            <p>Deals, CRM, e-sign and MLS® prep on one screen.</p>
             <Link className="hf-link" href="/platform">Explore the desk →</Link>
           </div>
           <div className="hf-frame tray tray-crm">
