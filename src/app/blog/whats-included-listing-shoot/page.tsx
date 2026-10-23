@@ -6,17 +6,17 @@ import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: "What's included in a professional listing photo shoot? | Bricks",
-  description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h target — plus the add-ons you can stack.',
+  description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, photos in 24h and other media on a 24–48h target — plus the add-ons you can stack.',
   alternates: { canonical: '/blog/whats-included-listing-shoot' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'article',
     title: "What's included in a professional listing photo shoot?",
-    description: 'The core set every Bricks standard shoot ships: HDR, licensed drone, floor plan, 24–48h target — plus add-ons.',
+    description: 'The core set every Bricks standard shoot ships: HDR, licensed drone, floor plan, photos in 24h, other media on a 24–48h target — plus add-ons.',
   },
   twitter: {
     title: "What's included in a pro listing shoot?",
-    description: 'HDR, licensed drone, floor plan, and 24–48h target — plus the add-ons.',
+    description: 'HDR, licensed drone, floor plan, photos in 24h and other media on a 24–48h target — plus the add-ons.',
   },
 }
 
@@ -30,7 +30,7 @@ export default function Post() {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: "What's included in a professional listing photo shoot?",
-            description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, and 24–48h target — plus the add-ons you can stack.',
+            description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, photos in 24h and other media on a 24–48h target — plus the add-ons you can stack.',
             author: { '@type': 'Person', name: 'Raphael Merchant' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
@@ -54,7 +54,7 @@ export default function Post() {
         <p>Aerial exteriors and approach shots, flown under a Transport Canada <strong>Advanced RPAS certificate</strong> with the right airspace clearance. This is the &quot;wow&quot; frame for most homes and is included, not extra.</p>
         <h3>Floor plan</h3>
         <p>A clean, dimensioned floor plan — included on every standard shoot. Buyers reference it constantly; portals surface it prominently.</p>
-        <h3>24–48 hour target</h3>
+        <h3>24-hour photo delivery</h3>
         <p>Edited, MLS-ready files delivered to your inbox within two business days, with a gallery link for download.</p>
 
         <h2>Add-ons you can stack</h2>
@@ -63,7 +63,7 @@ export default function Post() {
           <li><strong>{TOUR_NAME}</strong> (+{TOUR_RANGE}) — {TOUR_BLURB} MLS-ready. À la carte add-on; included in Showcase and Full suite.</li>
           <li><strong>{VISIT_NAME}</strong> ({VISIT_PRICE_LABEL}) — {VISIT_BLURB} Same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). {VISIT_PACKAGING}</li>
           <li><strong>Twilight photography</strong> (+{TWILIGHT_RANGE}) — blue-hour exteriors with lit windows. Best for premium listings.</li>
-          <li><strong>Rush delivery</strong> (+${RUSH_FLAT}) — faster than the standard 24–48h window.</li>
+          <li><strong>Rush delivery</strong> (+${RUSH_FLAT}) — faster than the standard window (photos 24h · other media 24–48h).</li>
         </ul>
 
         <h2>How a shoot actually runs</h2>
@@ -71,7 +71,7 @@ export default function Post() {
           <li><strong>Book:</strong> pick your services and a date; we confirm the slot and quote travel up front.</li>
           <li><strong>Shoot:</strong> on-site typically 60–90 minutes depending on footprint.</li>
           <li><strong>Edit:</strong> HDR blend, drone straighten/colour-match, floor plan drafted.</li>
-          <li><strong>Deliver:</strong> gallery + download on a 24–48h target.</li>
+          <li><strong>Deliver:</strong> gallery + download — photos in 24h, other media on a 24–48h target.</li>
         </ol>
 
         <h2>What you don&apos;t pay for</h2>
