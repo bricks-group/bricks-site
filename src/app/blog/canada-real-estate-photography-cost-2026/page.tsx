@@ -156,7 +156,7 @@ export default function Post() {
         </p>
         <h3>4. Turnaround</h3>
         <p>
-          Honest standard delivery for edited MLS listing photos is <strong>24–48 hours</strong>. Same-day rush is usually a flat add-on. Treat &quot;guaranteed next morning&quot; claims carefully unless the ops SLA is published and proven.
+          Honest standard delivery for edited MLS listing photos is <strong>24 hours</strong> at Bricks; 24–48 hours is common elsewhere in the market. Same-day rush is usually a flat add-on. Treat &quot;guaranteed next morning&quot; claims carefully unless the ops SLA is published and proven.
         </p>
         <h3>5. Compliance for aerial</h3>
         <p>
