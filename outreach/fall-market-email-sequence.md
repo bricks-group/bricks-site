@@ -32,7 +32,7 @@ late October — and shoot capacity across the GTA gets tight fast once everyone
 for the same six weeks.
 
 Bricks runs one standard on every shoot: HDR photo, licensed drone, and a floor plan, edited and
-MLS-ready in 24–48 hours. No pricing changes for fall — the only thing that changes is how early
+MLS-ready photos in 24 hours. No pricing changes for fall — the only thing that changes is how early
 you should book to hold your date.
 
 Reserve a slot: https://brxs.ca/book.html
