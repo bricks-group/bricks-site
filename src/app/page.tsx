@@ -40,7 +40,7 @@ const faqs = [
   {
     id: 'included',
     q: "What's included in a standard shoot?",
-    a: `Essentials, from $${CORE_FROM}, includes HDR photos, licensed drone and a floor plan. We aim to deliver MLS-ready media in 24–48 hours.`,
+    a: `Essentials, from $${CORE_FROM}, includes HDR photos, licensed drone and a floor plan. We aim to deliver MLS-ready photos in 24 hours, and other media in 24–48 hours.`,
   },
   {
     id: 'booking',
@@ -87,7 +87,7 @@ const faqs = [
 function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
   switch (id) {
     case 'included':
-      return <>HDR photos, licensed drone and a floor plan. We aim to deliver in 24–48 hours. <Link href="/pricing">See pricing</Link>.</>
+      return <>HDR photos, licensed drone and a floor plan. We aim to deliver photos in 24 hours. <Link href="/pricing">See pricing</Link>.</>
     case 'booking':
       return <>Enter the address, pick your services and choose an exact time. Paying locks it in. <Link href="/book">Book a shoot</Link>.</>
     case 'plans':
