@@ -47,7 +47,7 @@ export default function TermsPage() {
           <p>After payment, the date and clock time you booked are held on our systems and sent to the photographer (not via a third-party calendar). If that time cannot be honoured on our side, we will reschedule or refund per section 5.</p>
 
           <h3>4. Delivery</h3>
-          <p>Edited media is typically delivered within 24–48 hours of the shoot. Times are targets, not guarantees. Weather, airspace, site access, equipment failure, or third-party processing can delay. Drone may be skipped if Transport Canada, NAV CANADA, weather, or the site makes it unsafe or unlawful; the rest of the paid ground package is still delivered, and we will refund the drone add-on if it was separately charged and could not be shot.</p>
+          <p>Photos are typically delivered within 24 hours of the shoot; other media within 24–48 hours. Times are targets, not guarantees. Weather, airspace, site access, equipment failure, or third-party processing can delay. Drone may be skipped if Transport Canada, NAV CANADA, weather, or the site makes it unsafe or unlawful; the rest of the paid ground package is still delivered, and we will refund the drone add-on if it was separately charged and could not be shot.</p>
           <p>Deliverables are licensed as in section 6. Download and keep copies. We are not a long-term archive once your files have been delivered.</p>
         </section>
       </div>
