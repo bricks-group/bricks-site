@@ -53,9 +53,8 @@ export default function TermsPage() {
       </div>
 
       <div className="legal-body">
-        <section className="block" id="site-progress" data-legal-review="true">
+        <section className="block" id="site-progress">
           <h2>Site Progress (builders &amp; developers)</h2>
-          <p><strong>Draft — needs legal review before publishing.</strong></p>
           <p>One-off progress visits and mapped captures are billed per visit at the price shown when you order. Monitoring plans are billed monthly in advance per site, month to month, through Stripe; cancel any time from billing, effective at the end of the paid month. Mapped plans include a one-time setup charge on the first capture. Prices are CAD plus HST.</p>
           <p>Commercial site work is assigned only to vetted pilots holding a Transport Canada Advanced Operations certificate and drone liability insurance (their own or Bricks&apos; company policy) verified by Bricks: at least $2,000,000 per occurrence, or the higher minimum you set on the order (for example $5,000,000 under CCDC 41). On request, Bricks provides the certificate of insurance covering the flight before it happens.</p>
           <p>Flights depend on weather, airspace (including NAV CANADA authorization), and site access and safety rules. A visit that cannot be flown safely is rescheduled within the same billing month where possible.</p>
@@ -115,10 +114,25 @@ export default function TermsPage() {
       </div>
 
       <div className="legal-body">
+        <section className="block" id="plans">
+          <h2>13. Software plans (Bricks OS subscriptions)</h2>
+          <p>Sections 1 to 12 cover media bookings and Site Progress work. This section covers Bricks OS software subscriptions sold on <Link href="/pricing">brxs.ca/pricing</Link>: the solo plans Clay (free), Keystone ($49/month), Marble ($99/month), and Diamond ($149/month), and office seats billed per seat per year (from $300 to $708 per seat per year, by office size). Annual solo plans are billed once a year at ten months&apos; price for twelve months of access. Prices are in CAD and exclude HST, which is added at checkout.</p>
+          <h3>Billing and renewal</h3>
+          <p>Paid plans are charged through Stripe at the start of each billing cycle and renew automatically at the then-current price until cancelled. Any price change is posted on the pricing page before it takes effect at your next renewal.</p>
+          <h3>Cancellation</h3>
+          <p>You can cancel at any time through the Stripe billing portal (in the app, under Billing) or by emailing <a href="mailto:support@brxs.ca">support@brxs.ca</a>. Cancellation takes effect at the end of the current billing cycle; you keep access until then and the plan does not renew.</p>
+          <h3>Refunds</h3>
+          <p>Subscription fees are not refundable for a billing cycle that has already started, except where the law requires it. If we discontinue a plan, or cancel your subscription without cause partway through a paid cycle, we will refund the unused portion of that cycle. Media bookings are refunded under section 5, not this section.</p>
+          <h3>Free plan</h3>
+          <p>Clay is free. We may change or withdraw the free plan on reasonable notice posted on this page.</p>
+        </section>
+      </div>
+
+      <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions?</h2>
           <p>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
-          <p>Bricks Group · Ontario, Canada</p>
+          <p>Bricks Group · Mississauga, Ontario, Canada</p>
         </section>
       </div>
 
