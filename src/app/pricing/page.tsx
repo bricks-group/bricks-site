@@ -102,6 +102,7 @@ export default function PricingPage() {
           </div>
           <p className="tbl-cap">{SOFTWARE_BLURB}</p>
           <PlanCards />
+          <p className="note">Plans and office seats are subscriptions billed under the <Link href="/terms#plans">software plan terms</Link> in our Terms of Service — billing cycle, automatic renewal, cancellation through the Stripe billing portal, and the refund rule are set out there.</p>
         </section>
 
         <section className="block rvl" aria-label="AI add-ons">
