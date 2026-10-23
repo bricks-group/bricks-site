@@ -8,7 +8,7 @@ Key facts (source of truth for every asset in this folder):
 - Core shoot = HDR photo + licensed drone + floor plan. **From $248 (Small) → $458 (XL)** by footprint.
 - Photo alone: $149→$299 · Drone alone: $99→$159 · Floor plan: included on every shoot.
 - Add-ons: cinematic reel $199–349 · 3D tour $149–299 · twilight $150–200 · rush +$75 flat.
-- Delivery: 24–48h. Travel: first 25 km from the assigned photographer’s base free, then $0.75/km (confirmed at assignment). HST 13% extra.
+- Delivery: photos in 24h; other media in 24–48h. Travel: first 25 km from the assigned photographer’s base free, then $0.75/km (confirmed at assignment). HST 13% extra.
 - Booking app in development — "self-serve Booking app will show your live total." Frame as
   "book direct," not "subscribe / member discount / credits." Those claims belong to bricks-site,
   not this prelaunch site.
@@ -34,7 +34,7 @@ Bricks is the operating system for real estate — From Capture to Close.
 One platform, one standard, predictable media across your whole book.
 
 Core shoot — HDR photo, licensed drone, floor plan — from $248, priced by footprint.
-Add a cinematic reel, 3D tour, or twilight à la carte. Delivered in 24–48h.
+Add a cinematic reel, 3D tour, or twilight à la carte. Photos delivered in 24h.
 
 The first subscription real-estate media operating system. GTA agents: your next listing is one booking away.
 👉 brxs.ca
@@ -45,7 +45,7 @@ The first subscription real-estate media operating system. GTA agents: your next
 A photographer shoots one listing. Bricks runs media across your whole book.
 
 When a team lists 10+ homes a month, quality swings per vendor. Bricks is one standard —
-photo, drone, floor plan the same every time, booked in one place, 24–48h turn.
+photo, drone, floor plan the same every time, booked in one place, photos back in 24h.
 
 Core shoot from $248 (Small) → $458 (XL). Reel / 3D / twilight only on the listings that need them.
 Live in the GTA → brxs.ca
@@ -77,7 +77,7 @@ Book direct → brxs.ca
 ## REEL / SHORTS CAPTION (LinkedIn + Instagram + TikTok)
 Your photographer shoots it. Bricks runs the whole thing around it. 🎥
 
-Book → capture → deliver, on one operating system. MLS-ready in 24–48h, priced by footprint.
+Book → capture → deliver, on one operating system. MLS-ready photos in 24h, priced by footprint.
 Live in the GTA, core shoot from $248 → brxs.ca
 
 #realtor #realestatephotography #GTA
@@ -90,7 +90,7 @@ Live in the GTA, core shoot from $248 → brxs.ca
 Book → capture → deliver → close, one standard every time. Core shoot from $248. brxs.ca
 
 2/ Every photographer shoots a listing. Bricks runs media across your *whole book* —
-consistent quality, booked in one place, 24–48h. Photo + drone + floor plan from $248. brxs.ca
+consistent quality, booked in one place, photos in 24h. Photo + drone + floor plan from $248. brxs.ca
 
 3/ For the $5M listing: add a cinematic reel ($199–349), 3D tour ($149–299), or twilight
 ($150–200) to any shoot. À la carte, no padded package. brxs.ca #GTA
@@ -102,7 +102,7 @@ Bricks is live in the GTA 🧱 — the operating system for real estate media.
 
 One platform for booking, capture, and delivery: HDR photo, licensed drone, and a floor plan
 on every shoot, from $248 by footprint. Add a cinematic reel, 3D tour, or twilight à la carte,
-MLS-ready in 24–48h.
+MLS-ready photos in 24h.
 
 Your photographer shoots it. Bricks runs the whole thing around it. Book your next listing:
 brxs.ca
