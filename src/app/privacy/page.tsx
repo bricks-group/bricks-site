@@ -3,11 +3,11 @@ import { legalDocCss } from '@/components/legalDocCss'
 
 export const metadata: Metadata = {
   title: 'Bricks — Privacy Policy',
-  description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca and the Bricks apps, under PIPEDA. Privacy contact: help@brxs.ca.',
+  description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca and the Bricks apps, under PIPEDA. Privacy contact: privacy@brxs.ca.',
   alternates: { canonical: '/privacy' },
   openGraph: {
     title: 'Bricks — Privacy Policy',
-    description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca. Privacy contact: help@brxs.ca.',
+    description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca. Privacy contact: privacy@brxs.ca.',
   },
   twitter: {
     card: 'summary',
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
       <div className="legal-body">
         <section className="block">
           <h2>BRICKS PRIVACY POLICY</h2>
-          <p>Effective: August 27, 2026<br />Last updated: October 11, 2026<br />Organization: Bricks Group<br />Privacy contact: <a href="mailto:help@brxs.ca">help@brxs.ca</a></p>
+          <p>Effective: August 27, 2026<br />Last updated: October 11, 2026<br />Organization: Bricks Group<br />Privacy contact: <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></p>
           <p>This policy explains how Bricks Group collects, uses, and discloses personal information for brxs.ca, the Bricks apps, and related booking and photographer-apply flows, under PIPEDA and applicable Ontario privacy rules.</p>
 
           <h3>1. What we collect</h3>
@@ -54,7 +54,7 @@ export default function PrivacyPage() {
           </ul>
           <p>The apps do not include advertising or analytics SDKs, and we do not track you across other companies&rsquo; apps or websites.</p>
           <p>Service providers for the apps: Supabase (sign-in, database, file storage; Canada), Expo (push notification delivery; United States), Apple and Google (push delivery, and sign-in if you choose it), Stripe (photographer payouts), and Mapbox (map tiles in a Bricks listing file; receives your IP address and the map area you view).</p>
-          <p>Deleting your account: in the Bricks app, photographers go to Me &gt; Delete account; real estate offices go to Account &gt; Delete account. You can also email <a href="mailto:help@brxs.ca">help@brxs.ca</a>. What we delete and keep is listed at <a href="/account-deletion">brxs.ca/account-deletion</a>.</p>
+          <p>Deleting your account: in the Bricks app, photographers go to Me &gt; Delete account; real estate offices go to Account &gt; Delete account. You can also email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a>. What we delete and keep is listed at <a href="/account-deletion">brxs.ca/account-deletion</a>.</p>
 
           <h3>2. Why</h3>
           <ul>
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
           <p>Booking and payment records: generally 7 years. Delivered media: until delivered plus a limited operational window. Photographer applications: while we evaluate or engage you, then as required for records. Marketing consent records: as required by CASL. App push tokens: until you delete the account or the token stops working. On-device saved data: until you sign out. Deletion on request unless we must keep a record.</p>
 
           <h3>6. Your rights</h3>
-          <p>Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> to access, correct, or withdraw consent (subject to legal and booking obligations). You can also delete your account in the Bricks app (see 1A and <a href="/account-deletion">brxs.ca/account-deletion</a>). Aim to respond within 30 days. Complaint: Office of the Privacy Commissioner of Canada (<a href="https://www.priv.gc.ca" rel="noopener noreferrer">priv.gc.ca</a>).</p>
+          <p>Email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a> to access, correct, or withdraw consent (subject to legal and booking obligations). You can also delete your account in the Bricks app (see 1A and <a href="/account-deletion">brxs.ca/account-deletion</a>). Aim to respond within 30 days. Complaint: Office of the Privacy Commissioner of Canada (<a href="https://www.priv.gc.ca" rel="noopener noreferrer">priv.gc.ca</a>).</p>
 
           <h3>7. CASL</h3>
           <p>Commercial electronic messages only with CASL consent. Unsubscribe on marketing. Transactional booking/application messages as needed to perform the service.</p>
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
       <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Contact</h2>
-          <p><a href="mailto:help@brxs.ca">help@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
+          <p><a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
           <p>Bricks Group · Ontario, Canada</p>
         </section>
       </div>
