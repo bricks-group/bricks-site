@@ -29,7 +29,7 @@ const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0]
 export const metadata: Metadata = {
   title: 'Real Estate Photography & Listing Photos Canada | Bricks',
   description:
-    'Professional real estate photography and MLS listing photos across Canada. HDR stills, licensed drone, floor plan included on standard shoots, 24–48h target. Book listing media online.',
+    'Professional real estate photography and MLS listing photos across Canada. HDR stills, licensed drone, floor plan included on standard shoots, photos in 24h and other media on a 24–48h target. Book listing media online.',
   alternates: { canonical: '/real-estate-photography' },
   robots: { index: true, follow: true },
   openGraph: {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'What is included in Bricks real estate photography?',
-    a: 'Every standard shoot includes HDR interiors and exteriors, licensed drone and a branded floor plan. We aim to deliver in 24–48 hours.',
+    a: 'Every standard shoot includes HDR interiors and exteriors, licensed drone and a branded floor plan. We aim to deliver photos in 24 hours.',
   },
   {
     q: 'How much do listing photos cost in Canada?',
@@ -68,7 +68,7 @@ const faqs = [
   },
   {
     q: 'How fast is delivery?',
-    a: 'We aim to deliver edited, MLS-ready media in 24–48 hours. Rush delivery is faster, for a flat fee.',
+    a: 'We aim to deliver edited, MLS-ready photos in 24 hours, and other media in 24–48 hours. Rush delivery is faster, for a flat fee.',
   },
 ]
 
@@ -87,7 +87,7 @@ export default function RealEstatePhotographyPage() {
             name: 'Real estate photography & listing photos',
             serviceType: 'Real estate photography',
             description:
-              'Professional real estate photography and MLS listing photos for Canadian agents — HDR, licensed drone, floor plan, 24–48h target.',
+              'Professional real estate photography and MLS listing photos for Canadian agents — HDR, licensed drone, floor plan, photos in 24h, other media on a 24–48h target.',
             provider: ORG_REF,
             areaServed: AREA_SERVED_SCHEMA,
             offers: {
@@ -161,7 +161,7 @@ export default function RealEstatePhotographyPage() {
             <div className="c rvl">
               <span className="ic">04</span>
               <h4>Fast delivery</h4>
-              <p>We aim to deliver in 24–48 hours. Rush is faster.</p>
+              <p>We aim to deliver photos in 24 hours. Rush is faster.</p>
             </div>
           </div>
         </section>
