@@ -865,7 +865,7 @@ export default function BookingWizard() {
             <div className={`panel${step === 3 ? ' active' : ''}`}>
               <h2>Review &amp; pay.</h2>
               <p className="hint">Pay now to lock this time. Full amount, incl. HST, charged via Stripe.</p>
-              <p className="hint-sm" style={{ marginTop: 8 }}>Edited media in 24–48 hours{rush ? ' (rush on)' : ''}. A target, not a guarantee.</p>
+              <p className="hint-sm" style={{ marginTop: 8 }}>Photos in 24 hours. Other media in 24–48 hours{rush ? ' (rush on)' : ''}. A target, not a guarantee.</p>
               <p className="hint-sm" style={{ marginTop: 8 }}>Photographer and travel are final before you pay.</p>
               <div className="review">
                 {[
@@ -927,7 +927,7 @@ export default function BookingWizard() {
             <div className="qa"><h4>Are the photos MLS-safe?</h4><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
             <div className="qa"><h4>How does travel work?</h4><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and it&apos;s on your quote before you pay.</p></div>
             <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>No. It&apos;s an add-on, {VISIT_PRICE_LABEL.toLowerCase()}. Pick it in Step 2.</p></div>
-            <div className="qa"><h4>How fast is delivery?</h4><p>We aim to deliver edited media 24–48 hours after the shoot. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
+            <div className="qa"><h4>How fast is delivery?</h4><p>We aim to deliver photos 24 hours after the shoot, and other media in 24–48 hours. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photos at blue hour, with the windows lit and colour still in the sky. Add it to any shoot in Step 2.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
