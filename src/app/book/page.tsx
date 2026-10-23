@@ -92,7 +92,7 @@ export default function BookPage() {
                 name: 'How fast is delivery?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'We aim to deliver edited, MLS-ready media in 24–48 hours. Rush delivery is faster.',
+                  text: 'We aim to deliver edited, MLS-ready photos in 24 hours, and other media in 24–48 hours. Rush delivery is faster.',
                 },
               },
             ],
