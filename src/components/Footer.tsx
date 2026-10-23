@@ -55,7 +55,7 @@ export default function Footer() {
       </div>
       <div className="foot-meta">
         <span>© {LEGAL_NAME} · Canada</span>
-        <a href="mailto:help@brxs.ca">help@brxs.ca</a>
+        <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
         <span className="mono">343-453-4578</span>
         <a href="https://share.google/7ttYfc6W7JRwlqA9U" target="_blank" rel="noopener noreferrer">Find us on Google</a>
         {SOCIAL_PROFILES.map((p) => (
