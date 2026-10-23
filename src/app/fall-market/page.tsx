@@ -7,18 +7,18 @@ import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/bra
 export const metadata: Metadata = {
   title: 'Fall Market Listing Photos & Real Estate Photography | Bricks',
   description:
-    'Book fall listing photos early. Bricks delivers HDR real estate photography, licensed drone, floor plans, plus optional virtual tour and virtual visit on a 24–48h target — reserve before the rush.',
+    'Book fall listing photos early. Bricks delivers HDR real estate photography, licensed drone, floor plans, plus optional virtual tour and virtual visit — photos in 24h, other media on a 24–48h target — reserve before the rush.',
   alternates: { canonical: '/fall-market' },
   openGraph: {
     title: 'Fall Market Listing Photos | Bricks',
-    description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans, 24–48h MLS target.',
+    description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans — photos in 24h, other media 24–48h, MLS-ready.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
     url: 'https://www.brxs.ca/fall-market',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Fall Market Listing Photos | Bricks',
-    description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans, 24–48h target.',
+    description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans — photos in 24h, other media on a 24–48h target.',
     images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
   },
 }
@@ -28,7 +28,7 @@ const faqs = [
   { q: 'How far out should I book?', a: 'As soon as you have a listing date in mind. September and early October fill fastest.' },
   { q: "What's included?", a: 'HDR photos, licensed drone and a floor plan on every standard shoot. Reels, virtual tours and virtual visits are add-ons.' },
   { q: 'Where do you shoot?', a: 'Across Canada. Ask and we’ll confirm your area.' },
-  { q: 'When do I get my media?', a: 'We aim to deliver edited, MLS-ready media in 24–48 hours, fall included.' },
+  { q: 'When do I get my media?', a: 'We aim to deliver edited, MLS-ready photos in 24 hours, other media in 24–48 hours, fall included.' },
 ]
 
 export default function FallMarket() {
@@ -79,7 +79,7 @@ export default function FallMarket() {
             <div className="c"><span className="ic">01</span><h4>HDR photography</h4><p>Interiors and exteriors, edited for MLS.</p></div>
             <div className="c"><span className="ic">02</span><h4>Licensed drone</h4><p>Aerial photos of the lot, roofline and surroundings.</p></div>
             <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
-            <div className="c"><span className="ic">04</span><h4>Fast delivery</h4><p>We aim to deliver in 24–48 hours, in one branded portal.</p></div>
+            <div className="c"><span className="ic">04</span><h4>Fast delivery</h4><p>We aim to deliver photos in 24 hours, in one branded portal.</p></div>
           </div>
           <p className="note">Twilight exteriors and cinematic reels help in shorter fall daylight. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>See pricing →</Link></p>
         </section>
