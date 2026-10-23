@@ -1701,3 +1701,6 @@ body:has(.closer:last-of-type) > footer{margin-top:0;}
 /* The section head owns the head→content gap; a CTA band that opens a block adds no extra margin */
 .sec-head + .grid3,.sec-head + .incl,.sec-head + .faq{margin-top:0;}
 .book:first-child{margin-top:0;}
+
+/* Visible keyboard focus (legal-checklist item 15, 2026-10-23) */
+:focus-visible{outline:2px solid var(--brickDeep);outline-offset:2px;}
