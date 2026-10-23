@@ -43,8 +43,8 @@ Deno.serve(async (req: Request) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${resendApiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: 'Bricks Group <booking@brxs.ca>',
-        to: ['booking@brxs.ca'],
+        from: 'Bricks Group <hello@brxs.ca>',
+        to: ['hello@brxs.ca'],
         reply_to: [email],
         subject: `Bricks — message from ${name}`,
         text: `${name} (${email})\n\n${message}\n\n— sent from the Bricks contact page`,
