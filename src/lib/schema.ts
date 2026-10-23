@@ -188,7 +188,7 @@ export const MEDIA_OFFERS = {
   visit: band(VISIT_NAME, VISIT_RATE, `${VISIT_BLURB} ${VISIT_PACKAGING}`),
   twilight: band('Twilight exterior', TWILIGHT_RATE, 'Add-on, priced by footprint.'),
   staging: fixed('Virtual staging', STAGING_PER_IMAGE, 'Per photo, before tax. Not included in any package.', 'photo'),
-  rush: fixed('Rush delivery', RUSH_FLAT, 'Flat fee, faster than the standard 24–48h target.'),
+  rush: fixed('Rush delivery', RUSH_FLAT, 'Flat fee, faster than the standard target (photos 24h · other media 24–48h).'),
 } as const
 
 export type MediaOfferId = keyof typeof MEDIA_OFFERS
