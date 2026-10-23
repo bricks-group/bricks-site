@@ -99,7 +99,7 @@ export default function AboutPage() {
           <div className="book">
             <span className="over">Work with Bricks</span>
             <h2>Book a listing shoot.</h2>
-            <p className="lead">One standard, every time. Pick your services à la carte and get MLS-ready media on a 24–48h target.</p>
+            <p className="lead">One standard, every time. Pick your services à la carte and get MLS-ready photos in 24 hours and other media on a 24–48h target.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">Book listing media</Link>
               <Link className="btn btn-sec" href="/platform" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>See the platform</Link>
