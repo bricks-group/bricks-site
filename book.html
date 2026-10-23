@@ -32,7 +32,7 @@
     {
       "@type": "Question",
       "name": "Can I reschedule after booking?",
-      "acceptedAnswer": { "@type": "Answer", "text": "More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email booking@brxs.ca." }
+      "acceptedAnswer": { "@type": "Answer", "text": "More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email support@brxs.ca." }
     },
     {
       "@type": "Question",
@@ -323,7 +323,7 @@
     <div class="faq">
       <div class="qa"><h4>What's included with twilight?</h4><p>Exterior photography shot during blue hour — windows lit, sky still holding color. It's an optional add-on (+$150–200 by footprint) on any shoot; pick it in Step 2.</p></div>
       <div class="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to your empty or dated interior photos in post — no physical staging, no movers. It's priced per image staged at <b>$35 / image</b>; tell us how many rooms to stage in the access notes and we'll confirm the count before delivery.</p></div>
-      <div class="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <a href="terms.html#refunds">cancellation policy</a>.</p></div>
+      <div class="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:support@brxs.ca">support@brxs.ca</a> as soon as you know — see the <a href="terms.html#refunds">cancellation policy</a>.</p></div>
       <div class="qa"><h4>What if I need to cancel?</h4><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. Full schedule in the <a href="terms.html#refunds">Terms</a>.</p></div>
       <div class="qa"><h4>How do refunds work?</h4><p>Back to your original payment method via Stripe, typically within 5–10 business days.</p></div>
     </div>
@@ -334,7 +334,7 @@
   <div class="foot">
     <span class="dev">© Bricks Group. Bricks — GTA real estate media. Booking platform in development; media service live today.</span>
     <div style="display:flex;gap:18px;align-items:center;">
-      <a href="mailto:booking@brxs.ca">booking@brxs.ca</a>
+      <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="blog.html">Resources</a>
@@ -398,7 +398,7 @@
     if(q.length < 4){ sugBox.style.display='none'; return; }
     debounce = setTimeout(function(){
       fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(q)+'&format=json&limit=5&addressdetails=0&countrycodes=ca&viewbox=-95.2,56.9,-74.3,41.6&bounded=1&dedupe=1', {
-        headers:{'User-Agent':'BricksPreLaunch/1.0 (booking@brxs.ca)'}
+        headers:{'User-Agent':'BricksPreLaunch/1.0 (hello@brxs.ca)'}
       }).then(function(r){ return r.json(); }).then(function(j){
         if(!Array.isArray(j) || !j.length){ sugBox.style.display='none'; return; }
         // Hard filter: pre-launch is Ontario/GTA only — drop anything not in Canada.
@@ -502,7 +502,7 @@
     fetch(CAL_SLOTS_URL + '?date=' + encodeURIComponent(date) + geoQS, { headers: { apikey: ANON } })
       .then(function(r){ return r.json(); })
       .then(function(j){
-        if(!j.ok){ box.innerHTML = '<div class="slotmsg">Couldn\'t load times for this date — try another, or email <b>booking@brxs.ca</b>.</div>'; return; }
+        if(!j.ok){ box.innerHTML = '<div class="slotmsg">Couldn\'t load times for this date — try another, or email <b>support@brxs.ca</b>.</div>'; return; }
         if(!j.slots || !j.slots.length){ box.innerHTML = '<div class="slotmsg">No open times that day — try another date.</div>'; return; }
         box.innerHTML = '<div class="slotgrid">' + j.slots.map(function(s, i){
           var t = new Date(s.start);
@@ -603,7 +603,7 @@
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok&&j.ok, j:j}; }); })
       .then(function(res){
         document.getElementById('err1').textContent='';
-        if(!res.ok){ box.innerHTML = '<div class="qmsg">We couldn\'t auto-price this address. Enter the square footage below and hit <b>Re-quote</b>, or email <b>booking@brxs.ca</b>.</div><div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" /><button onclick="requote()">Re-quote</button></div>'; return; }
+        if(!res.ok){ box.innerHTML = '<div class="qmsg">We couldn\'t auto-price this address. Enter the square footage below and hit <b>Re-quote</b>, or email <b>support@brxs.ca</b>.</div><div class="sqft-edit"><input id="sqftInput" type="number" placeholder="sqft" /><button onclick="requote()">Re-quote</button></div>'; return; }
         data.quote = res.j.quote;
         renderQuote(box, res.j.quote, true);
       })
