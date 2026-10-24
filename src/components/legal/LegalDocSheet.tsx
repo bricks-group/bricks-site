@@ -24,8 +24,8 @@ export default function LegalDocSheet({ doc, base = '', read, onRead, onClose }:
   const titleId = useId()
   const panelRef = useRef<HTMLDivElement>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
-  const [state, setState] = useState<{ status: 'loading' | 'ready' | 'error'; data?: LoadedLegalDoc }>({ status: 'loading' })
-  const [atEnd, setAtEnd] = useState(false)
+  const [state, setState] = useState<{ status: 'loading' | 'ready' | 'error'; data?: LoadedLegalDoc; doc?: LegalDocKey }>({ status: 'loading' })
+  const [endDoc, setEndDoc] = useState<LegalDocKey | null>(null)
   const [attempt, setAttempt] = useState(0)
   const open = doc !== null
   const meta = doc ? LEGAL_DOCS[doc] : null
@@ -33,23 +33,22 @@ export default function LegalDocSheet({ doc, base = '', read, onRead, onClose }:
   useEffect(() => {
     if (!doc) return
     let live = true
-    setState({ status: 'loading' })
-    setAtEnd(false)
+    setState({ status: 'loading', doc })
     loadLegalDoc(doc, base).then(
-      (data) => { if (live) setState({ status: 'ready', data }) },
-      () => { if (live) setState({ status: 'error' }) },
+      (data) => { if (live) setState({ status: 'ready', data, doc }) },
+      () => { if (live) setState({ status: 'error', doc }) },
     )
     return () => { live = false }
   }, [doc, base, attempt])
 
   const check = useCallback(() => {
     const box = bodyRef.current
-    if (!box || !doc || state.status !== 'ready') return
+    if (!box || !doc || state.status !== 'ready' || state.doc !== doc) return
     if (isScrolledToEnd(box)) {
-      setAtEnd(true)
+      setEndDoc(doc)
       if (!read) onRead(doc)
     }
-  }, [doc, read, onRead, state.status])
+  }, [doc, read, onRead, state.status, state.doc])
 
   // Short documents that do not overflow count as read straight away; re-check on resize.
   useEffect(() => {
@@ -91,7 +90,9 @@ export default function LegalDocSheet({ doc, base = '', read, onRead, onClose }:
   }
 
   if (!open || !meta) return null
-  const done = atEnd || read
+  // Ignore state left over from the previous document until this one has loaded.
+  const view: typeof state = state.doc === doc ? state : { status: 'loading' }
+  const done = endDoc === doc || read
   const fullUrl = (base.replace(/\/$/, '') || '') + meta.path
 
   return createPortal(
@@ -101,16 +102,16 @@ export default function LegalDocSheet({ doc, base = '', read, onRead, onClose }:
         <header className="ldoc-head">
           <div className="ldoc-headtxt">
             <h2 id={titleId}>{meta.title}</h2>
-            {state.data?.updated ? <p className="ldoc-updated">{state.data.updated.replace(/\s*·\s*/g, ' · ')}</p> : null}
+            {view.data?.updated ? <p className="ldoc-updated">{view.data.updated.replace(/\s*·\s*/g, ' · ')}</p> : null}
           </div>
           <button type="button" className="ldoc-x" onClick={onClose} aria-label="Close">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
         </header>
         <div ref={bodyRef} className="ldoc-body" tabIndex={0} onScroll={check} aria-label={`${meta.title} text`} data-testid="legal-sheet-body">
-          {state.status === 'ready' && state.data ? (
-            <div className="ldoc-content" dangerouslySetInnerHTML={{ __html: state.data.html }} />
-          ) : state.status === 'error' ? (
+          {view.status === 'ready' && view.data ? (
+            <div className="ldoc-content" dangerouslySetInnerHTML={{ __html: view.data.html }} />
+          ) : view.status === 'error' ? (
             <div className="ldoc-msg" role="alert">
               <p>This document didn&apos;t load.</p>
               <p>
