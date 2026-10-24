@@ -32,7 +32,7 @@ export default function AgentsPage() {
       </section>
 
       <section className="cm-sec" aria-label="Inside the desk">
-        <Head title={AGENT_LAUNCH_LIVE ? 'From listing to closing.' : 'Signed, and on the record.'} lede={AGENT_LAUNCH_LIVE ? 'Launch the listing, run the deal and sign it, from one desk.' : 'E-sign that keeps proof of every step, on Keystone and up.'} />
+        <Head title={AGENT_LAUNCH_LIVE ? 'From listing to closing.' : 'Signed, and on the record.'} lede={AGENT_LAUNCH_LIVE ? 'Launch kit on every plan, e-sign on Keystone, deal room on Marble.' : 'E-sign that keeps proof of every step, on Keystone and up.'} />
         <FeatureList items={AGENT_LAUNCH_LIVE ? [...LAUNCH, ESIGN] : [ESIGN]} label="Agent features" sheet="A" />
       </section>
 

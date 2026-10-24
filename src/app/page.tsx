@@ -149,7 +149,7 @@ export default function Home() {
           <section className="hf-row hf-flip rvl" aria-label="Listing launch and deal room">
             <div className="hf-copy">
               <h2>From listing to closing.</h2>
-              <p>A launch kit for every listing, and a private deal room for each lawyer, broker and inspector on the deal.</p>
+              <p>A launch kit for every listing. On Marble and brokerage seats, a private deal room for each lawyer, broker and inspector on the deal.</p>
               <Link className="hf-link" href="/agents">For agents</Link>
               <span className="hf-fine">Shown with sample data</span>
             </div>
@@ -167,7 +167,7 @@ export default function Home() {
             { title: 'Builders and developers', detail: 'Progress reports, 3D compare and site visits for every project.', href: '/builders' },
             { title: 'Investors and lenders', detail: 'Monthly updates with dated, mapped evidence before each draw.', href: '/builders' },
             { title: 'Brokerages', detail: 'Every seat on one system, with trust accounting.', href: '/brokerage' },
-            { title: 'Agents and teams', detail: AGENT_LAUNCH_LIVE ? 'Deals, e-sign, a launch kit for every listing and a deal room for every closing.' : 'Deals, CRM and e-sign, with media on the listing.', href: '/agents' },
+            { title: 'Agents and teams', detail: AGENT_LAUNCH_LIVE ? 'Deals, e-sign and a launch kit for every listing. A deal room for every closing on Marble.' : 'Deals, CRM and e-sign, with media on the listing.', href: '/agents' },
           ]}
         />
       </section>
@@ -199,7 +199,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Close title="Start with the software." href="https://app.brxs.ca/login" label="Try Bricks free" external />
+      <Close title="Start with the software." href="https://app.brxs.ca/login" label="Try Bricks free" external primary={false} />
 
       <style>{`
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}

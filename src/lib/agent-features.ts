@@ -17,7 +17,7 @@ export const ESIGN: FeatureItem = {
 export const LAUNCH: readonly FeatureItem[] = [
   {
     title: 'A launch kit for every listing.',
-    body: 'Made from the listing’s details and delivered photos. Download each piece, then share or submit it yourself. Bricks never posts or submits for you.',
+    body: 'Made from the listing’s details and delivered photos. Download each piece, then share or submit it yourself. Bricks never posts or submits for you. On every plan, free Clay included.',
     points: [
       'Feature sheet: a one-page PDF with a QR code to the listing site',
       'Social pack: feed, story and link crops, with captions',
@@ -28,7 +28,7 @@ export const LAUNCH: readonly FeatureItem[] = [
   },
   {
     title: 'A deal room for everyone on the deal.',
-    body: 'Give each lawyer, mortgage broker, inspector or appraiser a private link that shows only their dates, conditions and documents.',
+    body: 'Give each lawyer, mortgage broker, inspector or appraiser a private link that shows only their dates, conditions and documents. On Marble and up, and on every brokerage seat.',
     points: [
       'They can send documents back and say a condition is met; you decide what it means for the deal',
       'Their deadlines in their own calendar, with optional reminder emails 48 hours before',

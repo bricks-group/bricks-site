@@ -77,7 +77,7 @@ export default function BrokeragePage() {
         />
       </section>
 
-      <Close title="Give your agents a reason to stay." href="/contact" label="Talk to us" />
+      <Close title="Give your agents a reason to stay." href="/contact" label="Talk to us" primary={false} />
       <style>{`
         .lede-soft{font-size:15px;color:var(--inkSoft);max-width:560px;margin:-8px 0 22px;line-height:1.5;}
       `}</style>

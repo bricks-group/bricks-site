@@ -88,11 +88,11 @@ export const PLAN_ORDER = ['clay', 'keystone', 'marble', 'diamond'] as const
 export const PLAN_FEATURES: readonly { label: string; from: (typeof PLAN_ORDER)[number]; note?: string; addon?: string }[] = [
   { label: 'Book media at rack rate', from: 'clay' },
   { label: 'Listing file, transactions, and BYO MLS', from: 'clay' },
-  ...(AGENT_LAUNCH_LIVE ? [{ label: 'Listing launch kit', from: 'clay' as const, note: 'Feature sheet, social pack and MLS package' }] : []),
+  ...(AGENT_LAUNCH_LIVE ? [{ label: 'Listing launch kit', from: 'clay' as const, note: 'Feature sheet, social pack and MLS package, on every plan' }] : []),
   { label: 'CRM', from: 'keystone' },
   { label: 'E-sign and shareable links', from: 'keystone', note: 'Fields on the PDF, SHA-256 fingerprints and an audit trail' },
   { label: 'Forms', from: 'marble' },
-  ...(AGENT_LAUNCH_LIVE ? [{ label: 'Deal room', from: 'marble' as const, note: 'Private links for lawyers, brokers and inspectors' }] : []),
+  ...(AGENT_LAUNCH_LIVE ? [{ label: 'Deal room', from: 'marble' as const, note: 'Private links for lawyers, brokers and inspectors. Included on every brokerage seat' }] : []),
   { label: 'AI Listing Copy', from: 'diamond', addon: '$19 / mo' },
   { label: 'AI CMA', from: 'diamond', addon: '$25 / mo' },
   { label: 'AI Document Drafter', from: 'diamond', addon: '$19 / mo' },
