@@ -24,15 +24,12 @@ type Tile = {
 }
 
 const LIVE: Tile[] = [
-  { name: 'Follow Up Boss', what: 'Two-way contacts & deals' },
+  { name: 'Follow Up Boss', what: 'Contact sync' },
   { name: 'kvCORE / BoldTrail', what: 'Contact sync' },
   { name: 'PropTx', what: 'PropTx · TRREB MLS® feed via RESO Web API', logo: { src: '/integrations/proptx-symbol.svg', w: 102, h: 92, scale: 1.4, alt: 'PropTx logo symbol' } },
   { name: 'Bridge Interactive', what: 'Cornerstone & ITSO MLS® feeds', logo: { src: '/integrations/bridge-interactive.png', w: 263, h: 80, scale: 0.8 } },
   { name: 'Repliers', what: 'MLS® feed', logo: { src: '/integrations/repliers.png', w: 401, h: 101 } },
-  { name: 'Google Calendar', what: 'Calendar sync' },
-  { name: 'Apple Calendar', what: 'iCloud + private ICS feed' },
   { name: 'Stripe', what: 'Payments', logo: { src: '/integrations/stripe.svg', w: 360, h: 150, scale: 1.15 } },
-  { name: 'Google', what: 'Sign-in' },
 ]
 
 /** Commodity tools: listed further down / in the full band, never headlined in the homepage strip (Kam, 17 Oct). */

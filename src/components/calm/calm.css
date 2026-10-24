@@ -71,3 +71,12 @@ a.cm-row:hover .cm-arrow{color:var(--vs-fg);}
 html[data-theme="dark"] .ci-row{--ci-filter:brightness(0) invert(1);--ci-op:.6;}
 @media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-row{--ci-filter:brightness(0) invert(1);--ci-op:.6;}}
 @media (max-width:680px){.ci-row{--ci-h:18px;column-gap:28px;row-gap:18px;}.ci-word{font-size:13px;}}
+/* Own-colour official files (Stripe slate on light, white on dark): no filter, no opacity change. */
+.ci-own img{filter:none;opacity:1;}
+.ci-own .ci-word.ci-on-dark{display:none;}
+.ci-own .ci-on-dark{display:none;}
+html[data-theme="dark"] .ci-own .ci-on-light{display:none;}
+html[data-theme="dark"] .ci-own .ci-on-dark{display:block;}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-own .ci-on-light{display:none;}html:not([data-theme="light"]) .ci-own .ci-on-dark{display:block;}}
+html[data-theme="dark"] .ci-own .ci-word.ci-on-dark{display:inline;}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-own .ci-word.ci-on-dark{display:inline;}}

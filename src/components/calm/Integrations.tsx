@@ -6,20 +6,34 @@ import { Head, Rows } from './Calm'
 /** One small monochrome mark: official logo rendered as a single grey tone, or a plain text wordmark. */
 function Mark({ t }: { t: Integration }) {
   if (!t.logo) return <span className="ci-word">{t.name}</span>
-  const { src, w, h, scale, alt } = t.logo
+  const { src, srcDark, own, w, h, scale, alt } = t.logo
+  const style = scale ? ({ '--s': scale } as CSSProperties) : undefined
+  if (own) {
+    // Official files in their own colours. CSS shows the one that matches the theme; with no official dark file, the name as text.
+    return (
+      <span className="ci-mark ci-own">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="ci-on-light" src={src} width={w} height={h} alt={alt ?? `${t.name} logo`} loading="lazy" decoding="async" style={style} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {srcDark
+          ? <img className="ci-on-dark" src={srcDark} width={w} height={h} alt="" aria-hidden="true" loading="lazy" decoding="async" style={style} />
+          : <span className="ci-word ci-on-dark" aria-hidden="true">{t.name}</span>}
+      </span>
+    )
+  }
   return (
     <span className="ci-mark">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} width={w} height={h} alt={t.symbolOnly ? '' : (alt ?? `${t.name} logo`)} loading="lazy" decoding="async"
-        style={scale ? ({ '--s': scale } as CSSProperties) : undefined} />
+        style={style} />
       {t.symbolOnly ? <span className="ci-word">{t.name}</span> : null}
     </span>
   )
 }
 
-/** Homepage: quiet heading, one row of grey marks (live only, no commodity tools), one quiet link. */
+/** Homepage: quiet heading, one row of marks (live only), one quiet link. */
 export function IntegrationsRow({ href = '/platform#integrations' }: { href?: string }) {
-  const items = LIVE_INTEGRATIONS.filter((t) => !t.commodity)
+  const items = LIVE_INTEGRATIONS
   return (
     <section className="cm-sec ci-sec rvl" id="integrations" aria-label="Integrations">
       <Head title="Works with the tools you already use." link={{ href, label: 'See all integrations' }} />
@@ -40,7 +54,7 @@ export function IntegrationsList() {
     <section className="cm-sec rvl" id="integrations" aria-label="Integrations">
       <Head title="Works with the tools you already use." />
       <ul className="ci-row ci-row-list" aria-hidden="true">
-        {LIVE_INTEGRATIONS.filter((t) => !t.commodity).map((t) => (
+        {LIVE_INTEGRATIONS.map((t) => (
           <li key={t.name}><Mark t={t} /></li>
         ))}
       </ul>
