@@ -60,23 +60,16 @@ a.cm-row:hover .cm-arrow{color:var(--vs-fg);}
 @media (max-width:680px){.cm-photo{aspect-ratio:4/3;}}
 .cm-sec .faq-home{max-width:880px;}
 
-/* Integrations: one row of small single-tone marks. No colour, no plates, no cards. Wraps on small screens. */
-.ci-row{--ci-h:22px;--ci-filter:brightness(0);--ci-op:.55;list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;column-gap:clamp(28px,4vw,56px);row-gap:20px;max-width:100%;}
+/* Integrations: one row of small marks in ONE uniform grey (Kam, 2026-10-24). Logos become silhouettes
+   (brightness(0) = black, then the shared opacity); text names use the same black/white at the same opacity,
+   so logo and text greys match exactly. No plates, no cards. Wraps on small screens. */
+.ci-row{--ci-h:20px;--ci-ink:#000;--ci-filter:brightness(0);--ci-op:.5;list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;column-gap:clamp(28px,4vw,56px);row-gap:20px;max-width:100%;}
 .ci-row li{display:flex;align-items:center;min-width:0;}
 .ci-mark{display:inline-flex;align-items:center;gap:8px;}
 .ci-mark img{display:block;height:calc(var(--ci-h) * var(--s,1));width:auto;max-width:100%;filter:var(--ci-filter);opacity:var(--ci-op);}
-.ci-word{font-size:14px;font-weight:500;letter-spacing:-.01em;color:var(--vs-fg);opacity:var(--ci-op);white-space:nowrap;line-height:1;}
+.ci-word{font-size:16px;font-weight:600;letter-spacing:-.015em;color:var(--ci-ink);opacity:var(--ci-op);white-space:nowrap;line-height:1;}
 .ci-row-list{margin:0 0 28px;}
 .ci-fine{margin-top:24px;}
-html[data-theme="dark"] .ci-row{--ci-filter:brightness(0) invert(1);--ci-op:.6;}
-@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-row{--ci-filter:brightness(0) invert(1);--ci-op:.6;}}
-@media (max-width:680px){.ci-row{--ci-h:18px;column-gap:28px;row-gap:18px;}.ci-word{font-size:13px;}}
-/* Own-colour official files (Stripe slate on light, white on dark): no filter, no opacity change. */
-.ci-own img{filter:none;opacity:1;}
-.ci-own .ci-word.ci-on-dark{display:none;}
-.ci-own .ci-on-dark{display:none;}
-html[data-theme="dark"] .ci-own .ci-on-light{display:none;}
-html[data-theme="dark"] .ci-own .ci-on-dark{display:block;}
-@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-own .ci-on-light{display:none;}html:not([data-theme="light"]) .ci-own .ci-on-dark{display:block;}}
-html[data-theme="dark"] .ci-own .ci-word.ci-on-dark{display:inline;}
-@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-own .ci-word.ci-on-dark{display:inline;}}
+html[data-theme="dark"] .ci-row{--ci-ink:#fff;--ci-filter:brightness(0) invert(1);--ci-op:.62;}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-row{--ci-ink:#fff;--ci-filter:brightness(0) invert(1);--ci-op:.62;}}
+@media (max-width:680px){.ci-row{--ci-h:17px;column-gap:26px;row-gap:18px;}.ci-word{font-size:14px;}}
