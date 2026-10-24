@@ -12,6 +12,7 @@ import './home-v3.css'
 import { CORE_FROM } from '@/lib/pricing'
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
+import ConstructionPic from '@/components/builders/ConstructionPic'
 
 const faqs = [
   {
@@ -137,12 +138,7 @@ export default function Home() {
             <Link className="hf-link" href="/book/site">Book a site visit</Link>
           </div>
           <div className="hf-frame hf-photo">
-            <picture>
-              <source type="image/avif" srcSet="/media/site-progress/tower-cranes-960.avif 960w, /media/site-progress/tower-cranes-1280.avif 1280w, /media/site-progress/tower-cranes-1600.avif 1600w" sizes="(max-width:900px) 100vw, 780px" />
-              <source type="image/webp" srcSet="/media/site-progress/tower-cranes-960.webp 960w, /media/site-progress/tower-cranes-1280.webp 1280w, /media/site-progress/tower-cranes-1600.webp 1600w" sizes="(max-width:900px) 100vw, 780px" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/media/site-progress/tower-cranes-960.webp" width={960} height={640} alt="Drone view of a high-rise under construction, with tower cranes" loading="lazy" decoding="async" />
-            </picture>
+            <ConstructionPic name="crew-deck" alt="A construction crew in hard hats standing on a concrete deck beside a grid of reinforcing steel" sizes="(max-width:900px) 100vw, 780px" />
           </div>
         </section>
       </div>

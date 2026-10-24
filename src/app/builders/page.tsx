@@ -4,6 +4,7 @@ import RevealObserver from '@/components/RevealObserver'
 import SiteRail from '@/components/builders/SiteRail'
 import ConstructionForm from '../construction/ConstructionForm'
 import SitePic from '@/components/builders/SitePic'
+import ConstructionPic from '@/components/builders/ConstructionPic'
 import { PER_VISIT, PLANS, PLAN_NOTE, fmt } from '@/lib/commercial'
 import { Head, Rows, Stats } from '@/components/calm/Calm'
 
@@ -58,12 +59,19 @@ const pageCss = `
   .bx-plan-img picture,.bx-plan-img img{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .bx-plan-img img{object-fit:cover;}
   .cx-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start;}
+  .bx-photo{position:relative;margin-top:var(--gap,32px);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
+  .bx-photo picture,.bx-photo img{display:block;width:100%;height:100%;}
+  .bx-photo img{object-fit:cover;}
+  .bx-photo-wide{aspect-ratio:16/9;}
+  .bx-photo-tall{aspect-ratio:4/5;max-width:440px;}
   .cx-note{margin-top:16px;font-size:13px;color:var(--inkMute);line-height:1.5;max-width:460px;}
   @media (max-width:900px){
     .bx-proof{grid-template-columns:1fr 1fr;}
     .bx-price,.bx-plans{grid-template-columns:1fr;}
     .cx-grid{grid-template-columns:1fr;gap:32px;}
     .bx-hero-img{margin-top:32px;aspect-ratio:4/3;}
+    .bx-photo-wide{aspect-ratio:4/3;}
+    .bx-photo-tall{display:none;}
   }
 `
 
@@ -90,6 +98,9 @@ export default function BuildersPage() {
       <section className="cm-sec rvl" aria-label="Why Bricks for Site Progress">
         <Head title="Flown by people you can put on site." />
         <Rows items={PROOF.map((x) => ({ title: x.k, detail: x.v }))} />
+        <div className="bx-photo bx-photo-wide">
+          <ConstructionPic name="quarry-aerial" alt="Aerial view of excavators and a bulldozer working in an open earthworks pit" sizes="(max-width:900px) 100vw, 1100px" />
+        </div>
       </section>
 
       <SiteRail />
@@ -126,6 +137,9 @@ export default function BuildersPage() {
         <div className="cx-grid">
           <div>
             <Head title="Several sites? Tell us about them." lede="For portfolios, survey-grade work or anything custom." />
+            <div className="bx-photo bx-photo-tall">
+              <ConstructionPic name="frame-building" alt="A concrete-frame apartment building under construction against a blue sky" sizes="(max-width:900px) 100vw, 560px" />
+            </div>
           </div>
           <div>
             <ConstructionForm />
