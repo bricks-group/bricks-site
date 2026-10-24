@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, FOOTPRINT_BANDS, CORE_FROM } from '@/lib/pricing'
+import { packageLines } from '@/lib/quote-lines'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { BookCalendar } from './BookCalendar'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
@@ -639,18 +640,9 @@ export default function BookingWizard() {
         <div className="qhead"><div className="qhead-l">Your tailored quote</div><div className="qhead-t">${q.total.toFixed(2)} <span>CAD · incl. HST</span></div></div>
         <div className="qmeta">{q.sqft ? q.sqft.toLocaleString() + ' sqft' : 'sqft n/a'} · {q.footprint_label}{q.gta_major ? ' · GTA major — $0 travel' : q.travel_pending ? ' · assigning photographer…' : (q.distance_km != null ? ' · ' + q.distance_km + ' km from photographer base' : '')}{q.sqft_source ? ' · ' + q.sqft_source : ''}</div>
         <div className="qlines">
-          {q.floor_plan_only ? (
-            <div className="qrow"><span className="qk">Floor plan only</span><span className="qv">${(q.floor_plan_only_rate ?? q.base_rate ?? FLOOR_PLAN_ONLY_RATE).toFixed(2)}</span></div>
-          ) : (
-            <>
-              <div className="qrow"><span className="qk">HDR photography</span><span className="qv">${q.photo_rate.toFixed(2)}</span></div>
-              {q.drone_included !== false ? (
-                <div className="qrow"><span className="qk">Licensed drone</span><span className="qv">${q.drone_rate.toFixed(2)}</span></div>
-              ) : (
-                <div className="qrow"><span className="qk">Licensed drone <em>not included — Photos only</em></span><span className="qv">$0.00</span></div>
-              )}
-            </>
-          )}
+          {packageLines(q, FLOOR_PLAN_ONLY_RATE).map((l) => (
+            <div key={l.key} className="qrow"><span className="qk">{l.label}{l.note && l.note !== 'included' ? <> <em>{l.note}</em></> : null}</span><span className="qv">{l.note === 'included' ? 'Included' : `$${l.amount.toFixed(2)}`}</span></div>
+          ))}
           <div className="qrow"><span className="qk">Travel {q.gta_major ? <em>GTA major market — no travel fee</em> : q.travel_pending ? <em>confirming photographer — checkout blocked until assigned</em> : <>({q.distance_km} km from assigned photographer) <em>{q.travel_km_billable > 0 ? `$${q.travel_per_km}/km after 25 km free` : 'first 25 km free'}</em></>}</span><span className="qv">${q.travel_fee.toFixed(2)}</span></div>
           {q.addons.map((a) => (
             <div key={a.label} className="qrow"><span className="qk">{a.label}</span><span className="qv">${a.amount.toFixed(2)}</span></div>
@@ -883,7 +875,7 @@ export default function BookingWizard() {
                   ['Property', addr.trim() || '—'], ['Type', propertyType || '—'],
                   ['Package', pkg ? PKG_LABEL[pkg] : (floorPlanOnly ? 'Floor plan only' : 'Custom (à la carte)')],
                   ['Licensed drone', floorPlanOnly ? 'No — floor plan only' : (drone ? 'Yes' : 'No — Photos only')],
-                  ['Floor plan', floorPlanOnly || drone ? 'Yes' : 'No — Photos only'],
+                  ['Floor plan', floorPlanOnly ? 'Floor plan only' : drone ? 'Included' : 'No — Photos only'],
                   ['Cinematic reel', floorPlanOnly ? 'No' : (reel ? 'Yes' : 'No')],
                   [TOUR_NAME, floorPlanOnly ? 'No' : (tour ? 'Yes' : 'No')],
                   [VISIT_NAME, visit ? `Yes — ${VISIT_PRICE_LABEL}` : 'No'],
