@@ -589,48 +589,39 @@
   }
 
   // Pill/badge
+  // Calm status: colour only for states that need attention; routine states are plain text.
+  const PILL_ATTENTION = /overdue|needs|review needed|failed|action|pending|partially signed|countered|awaiting|missing|late|expired|declined/i;
   function Pill({
     children,
     tone = 'neutral',
     dark = false
   }) {
     const th = useTheme(dark);
-    const map = {
-      brick: {
-        bg: dark ? '#F4D9CC22' : T.brickTint,
-        fg: dark ? T.brickSoft : T.brickDeep
-      },
-      ok: {
-        bg: dark ? '#E6ECDD22' : T.okTint,
-        fg: dark ? '#B8CC9E' : T.ok
-      },
-      warn: {
-        bg: dark ? '#F6E8D122' : T.warnTint,
-        fg: dark ? '#E6B477' : T.warn
-      },
-      neutral: {
-        bg: th.surf2,
-        fg: th.ink2
-      },
-      ink: {
-        bg: th.ink,
-        fg: th.bg
-      }
-    };
-    const c = map[tone];
+    const label = typeof children === 'string' ? children : String(children);
+    const attn = PILL_ATTENTION.test(label);
+    const fg = attn ? dark ? '#E6B477' : T.warn : th.ink2;
     return /*#__PURE__*/React.createElement("span", {
       style: {
-        padding: '5px 9px',
-        background: c.bg,
-        color: c.fg,
-        fontFamily: F.mono,
-        fontSize: 10,
-        letterSpacing: '0.14em',
-        textTransform: 'uppercase',
-        borderRadius: 2,
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 6,
+        color: fg,
+        fontFamily: F.display,
+        fontSize: 12,
+        fontWeight: attn ? 500 : 400,
+        letterSpacing: 0,
         whiteSpace: 'nowrap'
       }
-    }, children);
+    }, attn && /*#__PURE__*/React.createElement("span", {
+      "aria-hidden": "true",
+      style: {
+        width: 6,
+        height: 6,
+        borderRadius: 999,
+        background: fg,
+        flex: 'none'
+      }
+    }), children);
   }
 
   // Button
@@ -4866,7 +4857,7 @@
         marginTop: 22
       }
     }, /*#__PURE__*/React.createElement(Btn, {
-      variant: "accent",
+      variant: "primary",
       full: true,
       icon: "plus"
     }, "Book a shoot")), /*#__PURE__*/React.createElement("div", {

@@ -4,7 +4,8 @@ import RevealObserver from '@/components/RevealObserver'
 import SiteRail from '@/components/builders/SiteRail'
 import ConstructionForm from '../construction/ConstructionForm'
 import SitePic from '@/components/builders/SitePic'
-import { PER_VISIT, PLANS, PLAN_NOTE, SITE_PRODUCT, fmt } from '@/lib/commercial'
+import { PER_VISIT, PLANS, PLAN_NOTE, fmt } from '@/lib/commercial'
+import { Head, Rows, Stats } from '@/components/calm/Calm'
 
 export const metadata: Metadata = {
   title: 'Drone progress monitoring for builders & developers | Bricks',
@@ -26,7 +27,7 @@ const PROOF = [
   { k: 'Vetted, insured, certified pilots', v: 'Every pilot is vetted by Bricks before they fly a site.' },
   { k: 'Advanced RPAS', v: 'Certified by Transport Canada for controlled airspace and work near people.' },
   { k: 'Verified insurance', v: '$2M drone liability minimum, verified by us and valid on the flight date. $5M when your contract requires it.' },
-  { k: 'One site file', v: 'Every visit dated and shared through one link.' },
+  { k: 'One site file', v: 'Every visit dated, compared and shared through one link.' },
 ] as const
 
 const pageCss = `
@@ -70,17 +71,15 @@ export default function BuildersPage() {
   return (
     <>
       <RevealObserver />
+
       <section className="hero">
         <div className="wrap">
-          <span className="badge">{SITE_PRODUCT}</span>
           <h1>See every site.<br />On schedule.</h1>
           <p className="sub">
-            Photos, maps, models and reports on a fixed schedule. Book one visit, or put a site on a monthly plan.
+            Maps, 3D models, documents and reports for builders, developers and investors. Every visit compared over time in one site file.
           </p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="/book/site">Book a site visit</Link>
-            <Link className="learn-link" href="/book/site?plan=visual">Start a monthly plan →</Link>
-            <Link className="learn-link" href="#quote">Talk to us</Link>
+            <Link className="btn btn-night btn-primary" href="/book/site">Book a site visit</Link>
           </div>
           <div className="bx-hero-img">
             <SitePic name="tower-cranes" eager widths={[640, 960, 1280, 1600, 2000]} alt="Drone view of a high-rise under construction, with tower cranes" sizes="(max-width:900px) 100vw, 1100px" />
@@ -88,83 +87,52 @@ export default function BuildersPage() {
         </div>
       </section>
 
-      <section className="block rvl" aria-label="Why Bricks for site progress">
-        <div className="wrap">
-          <div className="bx-proof">
-            {PROOF.map((x) => (
-              <div key={x.k}><b>{x.k}</b><span>{x.v}</span></div>
-            ))}
-          </div>
-        </div>
+      <section className="cm-sec rvl" aria-label="Why Bricks for Site Progress">
+        <Head title="Flown by people you can put on site." />
+        <Rows items={PROOF.map((x) => ({ title: x.k, detail: x.v }))} />
       </section>
 
       <SiteRail />
 
-      <section className="block rvl" id="pricing" aria-label="Pricing">
-        <div className="wrap">
-          <div className="sec-head">
-            <div><span className="over">Pricing</span><h2>Per visit, or per site each month.</h2></div>
+      <section className="cm-sec rvl" id="pricing" aria-label="Pricing">
+        <Head title="Per visit, or per site each month." lede="Book one visit, or put a site on a monthly plan." />
+        <Stats
+          label="Site Progress prices"
+          items={[
+            { fig: fmt(PER_VISIT[0].price), label: 'Progress visit' },
+            { fig: fmt(PER_VISIT[1].price), label: 'Mapped capture' },
+            { fig: fmt(PLANS[0].rows[0].price), label: 'Monthly plan, per site' },
+          ]}
+        />
+        <details className="cm-more">
+          <summary>All visit and plan prices</summary>
+          <Rows
+            items={[
+              ...PER_VISIT.map((x) => ({ title: x.name, detail: x.what, value: `${fmt(x.price)} ${x.unit}` })),
+              ...PLANS.flatMap((pl) =>
+                pl.rows.map((r) => ({
+                  title: `${pl.kind}, ${r.cadence.toLowerCase()}`,
+                  detail: `${r.visits} visit${r.visits === 1 ? '' : 's'} a month`,
+                  value: `${fmt(r.price)} / site / mo`,
+                })),
+              ),
+            ]}
+          />
+        </details>
+        <p className="cm-note">{PLAN_NOTE}</p>
+      </section>
+
+      <section className="cm-sec rvl" id="quote" aria-label="Several sites">
+        <div className="cx-grid">
+          <div>
+            <Head title="Several sites? Tell us about them." lede="For portfolios, survey-grade work or anything custom." />
           </div>
-          <div className="bx-price">
-            {PER_VISIT.map((x) => (
-              <div key={x.key} className="bx-card">
-                <span className="nm">{x.name}</span>
-                <span className="pr">{fmt(x.price)}</span>
-                <span className="un">{x.unit}</span>
-                <p>{x.what}</p>
-              </div>
-            ))}
-          </div>
-          <div className="bx-plans">
-            {PLANS.map((pl) => (
-              <div key={pl.kind} className="bx-plan">
-                <div className="bx-plan-img">
-                  {pl.kind === 'Visual' ? (
-                    <SitePic name="podium-formwork" alt="Drone view of a podium in formwork on an active site" sizes="(max-width:900px) 100vw, 540px" />
-                  ) : (
-                    <SitePic name="excavation-topdown" alt="Top-down drone view of a site in its foundation stage" sizes="(max-width:900px) 100vw, 540px" />
-                  )}
-                </div>
-                <h3>{pl.kind} monitoring</h3>
-                <table>
-                  <tbody>
-                    {pl.rows.map((r) => (
-                      <tr key={r.cadence}>
-                        <td>{r.cadence} · {r.visits} visit{r.visits === 1 ? '' : 's'}/mo</td>
-                        <td className="p">{fmt(r.price)}<small>/ site / mo</small></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ))}
-          </div>
-          <p className="note">{PLAN_NOTE}</p>
-          <div className="cta-row">
-            <Link className="btn btn-night" href="/book/site">Book one visit</Link>
-            <Link className="btn btn-sec" href="/book/site?plan=visual">Start a plan</Link>
-            <Link className="learn-link" href="#quote">Multiple sites or survey-grade? Talk to us →</Link>
+          <div>
+            <ConstructionForm />
           </div>
         </div>
       </section>
 
-      <section className="block rvl" id="quote">
-        <div className="wrap">
-          <div className="cx-grid">
-            <div>
-              <div className="sec-head">
-                <div><span className="over">Talk to us</span><h2>Several sites? Tell us about them.</h2></div>
-              </div>
-              <p className="cx-note">
-                For portfolios, survey-grade work or anything custom. One site? <Link href="/book/site">Book it directly</Link>.
-              </p>
-            </div>
-            <div>
-              <ConstructionForm />
-            </div>
-          </div>
-        </div>
-      </section>
       <style>{pageCss}</style>
     </>
   )

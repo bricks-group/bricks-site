@@ -3,6 +3,8 @@ import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import MediaShowcase from '@/components/media-showcase/MediaShowcase'
 import './media-page.css'
+import { Head, Rows, Close } from '@/components/calm/Calm'
+import { CORE_FROM } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Listing media — photos, drone, floor plans, film and 3D | Bricks',
@@ -31,35 +33,23 @@ export default function MediaPage() {
       <RevealObserver />
       <section className="hero">
         <div className="wrap">
-          <h1>Media, inside Bricks.</h1>
-          <p className="sub">HDR photos, licensed drone, floor plans, film and 3D. Booked online, priced by home size.</p>
+          <h1>Listing media, booked inside Bricks.</h1>
+          <p className="sub">Photos, drone, floor plans, film and 3D at an exact time. Delivery lands on the listing.</p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="/book">Book a shoot</Link>
-            <Link className="learn-link" href="/pricing">See pricing →</Link>
+            <Link className="btn btn-night btn-primary" href="/book">Book media</Link>
           </div>
         </div>
       </section>
 
       <MediaShowcase />
 
-      <section className="block rvl" aria-label="What's included">
-        <div className="wrap">
-          <div className="sec-head"><div><h2>Every part of the listing.</h2></div></div>
-          <ul className="mp-grid">
-            {PARTS.map((p) => (
-              <li key={p.t}><b>{p.t}</b><span>{p.d}</span></li>
-            ))}
-          </ul>
-        </div>
+      <section className="cm-sec rvl" aria-label="What's included">
+        <Head title="Every part of the listing." link={{ href: '/pricing', label: 'See pricing' }} />
+        <Rows items={PARTS.map((p) => ({ title: p.t, detail: p.d }))} />
+        <p className="cm-note">Essentials, from ${CORE_FROM}, covers HDR photos, licensed drone and a floor plan. Prices scale with home size.</p>
       </section>
 
-      <section className="closer closer-simple rvl" aria-label="Book a shoot">
-        <div className="closer-simple-inner">
-          <h2>Ready when the listing is.</h2>
-          <Link className="btn btn-night btn-l" href="/book">Book a shoot →</Link>
-          <div className="closer-alt"><Link href="/gallery">See more work →</Link><Link href="/pricing">See pricing →</Link></div>
-        </div>
-      </section>
+      <Close title="Ready when the listing is." href="/book" label="Book media" />
     </>
   )
 }

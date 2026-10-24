@@ -1,0 +1,36 @@
+/*
+ * Calm UI standard (approved Oct 23) — concept/marketing-calm.
+ * Loaded last. Sentence case everywhere, mono only for figures/dates/IDs,
+ * colour only for attention, no badge bubbles.
+ */
+
+/* Footer: plain sentence-case column labels and theme switch. */
+.foot-col h4{font-family:var(--vs-sans);font-size:13px;letter-spacing:0;text-transform:none;color:var(--vs-fg-3);font-weight:500;}
+.theme-switch button{font-family:var(--vs-sans);font-size:12.5px;letter-spacing:0;text-transform:none;}
+
+/* Small labels that were uppercase mono chips: sentence case, quiet. Figures keep mono, without tracking. */
+.incl .c .ic{font-family:var(--vs-mono);letter-spacing:0;text-transform:none;font-size:13px;color:var(--vs-fg);background:none;padding:0;}
+.tbl th{font-family:var(--vs-sans)!important;letter-spacing:0!important;text-transform:none!important;font-size:13px!important;background:none!important;color:var(--vs-fg-3)!important;}
+.grid3 .card .meta .t,.bx-guide-head span,.trust-cap,.closer-proof,.closer-meta .row .l,.pkg-badge,.pkg-foot,.integ-tag{font-family:var(--vs-sans);letter-spacing:0;text-transform:none;background:none;}
+
+/* Plan cards: no recommended badge or ring, no coloured squares. */
+.incl.plans .rec-tag{display:none;}
+.incl.plans .c.rec{box-shadow:none;}
+.incl.plans .c li::before{width:8px;height:1.5px;top:1.05em;border:none;border-radius:0;background:var(--vs-rule-strong);}
+.incl.plans .c li.st-new::before,.incl.plans .c li.st-inherited::before{background:var(--vs-fg);border:none;}
+
+/* Colour only for attention: primary actions are ink, links are ink. */
+.learn-link{color:var(--vs-fg);border-bottom:1px solid var(--vs-rule-strong);padding-bottom:2px;}
+.learn-link:hover{text-decoration:none;border-bottom-color:var(--vs-fg);}
+
+/* No step numbering. */
+.slab-n,.step-n{display:none!important;}
+
+/* FAQ toggles and footer meta: graphite, sans; the phone number stays mono. */
+.faq-home summary::after{color:var(--vs-fg-3)!important;}
+.foot-meta{font-family:var(--vs-sans);letter-spacing:0;text-transform:none;}
+.foot-meta a:hover{color:var(--vs-fg);}
+
+/* One brick-orange primary action per page (hero, plus the closer when it is the same action). */
+.btn.btn-primary{background:var(--brick)!important;color:#fff!important;border-color:var(--brick)!important;}
+.btn.btn-primary:hover{filter:brightness(.92);}

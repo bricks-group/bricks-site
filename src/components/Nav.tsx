@@ -9,11 +9,11 @@ import { clearHintCookies, osLogoutUrl } from '@/lib/site-session'
 import './nav-builders.css'
 
 const links = [
-  { href: '/gallery', label: 'Work' },
+  { href: '/platform', label: 'Software' },
+  { href: '/builders', label: 'Builders & developers' },
+  { href: '/media', label: 'Media' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/builders', label: 'For builders & developers' },
-  { href: '/photographers', label: 'Photographers' },
-  { href: '/brokerage', label: 'Brokerage' },
+  { href: '/gallery', label: 'Work' },
 ]
 
 /**
@@ -99,12 +99,6 @@ export default function Nav() {
             >
               Contact
             </Link>
-            <Link
-              href="/book"
-              className={`nav-cta${pathname === '/book' ? ' active' : ''}`}
-            >
-              Book a shoot
-            </Link>
             <button
               className={`nav-burger${open ? ' open' : ''}`}
               aria-label="Menu"
@@ -163,13 +157,6 @@ export default function Nav() {
           <button type="button" className="nav-auth-in drawer-logout" onClick={logOut}>
             Log out
           </button>
-          <Link
-            href="/book"
-            className={`drawer-cta${pathname === '/book' ? ' active' : ''}`}
-            onClick={() => setOpen(false)}
-          >
-            Book a shoot
-          </Link>
         </nav>
       </div>
     </>

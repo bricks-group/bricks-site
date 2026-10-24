@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useStepScroll } from '@/components/steps-rail/useStepScroll'
 import '@/components/steps-rail/steps-rail.css'
 import './site-rail.css'
@@ -24,8 +23,7 @@ export default function SiteRail() {
   const head = (
     <div className="cap-copy slab-head">
       <h2>Every visit, in layers.</h2>
-      <p className="cap-lede">Photos, maps, models and reports. Standard with Site Progress.</p>
-      <Link className="learn-link slab-b-link" href="#quote">Request a site plan →</Link>
+      <p className="cap-lede">Photos, maps, models and reports, compared over time.</p>
     </div>
   )
 
@@ -43,7 +41,7 @@ export default function SiteRail() {
                   {STEPS.map((s, i) => (
                     <li key={s.key} className={state(i)} aria-current={i === active ? 'step' : undefined}>
                       <span className="slab-brick" aria-hidden="true" />
-                      <span className="slab-b-k"><span className="slab-n">{s.n}</span>{s.label}</span>
+                      <span className="slab-b-k">{s.label}</span>
                     </li>
                   ))}
                 </ol>
