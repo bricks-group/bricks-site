@@ -1,5 +1,5 @@
 /**
- * "One system instead of a stack of subscriptions" on /pricing.
+ * "One system, not a stack of subscriptions" on /pricing.
  * Public list prices read from each vendor's own pricing page on 2026-10-24.
  * Sources, method and like-for-like notes: public/pricing/SAVINGS_SOURCES.md (savings.test.ts keeps them in step).
  * Never add a tool whose price is not public.

@@ -52,7 +52,7 @@ function Totals({ items }: { items: readonly { fig: string; label: string }[] })
   )
 }
 
-/** "One system instead of a stack of subscriptions": pick a role, see only the tools that role would replace. */
+/** "One system, not a stack of subscriptions": pick a role, see only the tools that role would replace. */
 export default function Savings() {
   const [role, setRole] = useState<Role>('agent')
   const [plan, setPlan] = useState<SavingsPlan>('marble')

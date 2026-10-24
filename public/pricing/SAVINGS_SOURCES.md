@@ -1,6 +1,6 @@
 # Savings comparison: sources
 
-Used by the "One system instead of a stack of subscriptions" section on https://www.brxs.ca/pricing.
+Used by the "One system, not a stack of subscriptions" section on https://www.brxs.ca/pricing.
 Data lives in `src/lib/savings.ts`; `src/lib/savings.test.ts` checks that every price below matches it.
 
 ## Method
