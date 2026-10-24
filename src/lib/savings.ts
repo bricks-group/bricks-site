@@ -24,38 +24,35 @@ export type Tool = {
   covers: readonly string[]
 }
 
+/**
+ * The market-leading tool agents actually use for each job a Bricks plan includes (Kam, 2026-10-24).
+ * Each job counted once: dotloop Premium covers transactions, e-sign and document templates, so Marble's
+ * forms are not counted again. The cheapest-tool comparison lives only in SAVINGS_SOURCES.md (appendix).
+ */
 export const TOOLS: readonly Tool[] = [
   {
     id: 'crm',
-    job: 'CRM and transactions',
-    tool: 'Wise Agent CRM',
-    usdMonthly: 49,
-    url: 'https://wiseagent.com/pricing/',
-    covers: ['Contacts, tasks and activity', 'Deal file: documents, checklist, conditions, deadlines and commission'],
+    job: 'CRM',
+    tool: 'Follow Up Boss Grow',
+    usdMonthly: 69,
+    url: 'https://www.followupboss.com/pricing',
+    covers: ['Contacts, tasks and activity'],
   },
   {
-    id: 'esign',
-    job: 'E-sign',
-    tool: 'Dropbox Sign Essentials',
-    usdMonthly: 15,
-    url: 'https://sign.dropbox.com/products/dropbox-sign/pricing',
-    covers: ['E-sign with a signing checklist and shareable links'],
+    id: 'txn-esign',
+    job: 'Transactions and e-sign',
+    tool: 'dotloop Premium',
+    usdMonthly: 34.99,
+    url: 'https://www.dotloop.com/products/plans-pricing/',
+    covers: ['Deal file: documents, checklist, conditions, deadlines and commission', 'E-sign with a signing checklist and shareable links'],
   },
   {
-    id: 'forms',
-    job: 'Online forms with PDF',
-    tool: 'Jotform Bronze',
-    usdMonthly: 39,
-    url: 'https://www.jotform.com/pricing/',
-    covers: ['Forms: your templates, prefilled from the listing, saved as PDF'],
-  },
-  {
-    id: 'ai-copy',
-    job: 'AI listing copy',
-    tool: 'ListingAI Essential',
-    usdMonthly: 19,
-    url: 'https://www.listingai.co/pricing',
-    covers: ['AI listing copy'],
+    id: 'ai',
+    job: 'AI listing copy and document drafting',
+    tool: 'ChatGPT Plus',
+    usdMonthly: 20,
+    url: 'https://chatgpt.com/pricing/',
+    covers: ['AI listing copy', 'AI document drafter'],
   },
 ]
 

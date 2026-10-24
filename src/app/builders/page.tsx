@@ -6,6 +6,9 @@ import ConstructionForm from '../construction/ConstructionForm'
 import SitePic from '@/components/builders/SitePic'
 import { PER_VISIT, PLANS, PLAN_NOTE, fmt } from '@/lib/commercial'
 import { Head, Rows, Stats } from '@/components/calm/Calm'
+import BuilderEdge from '@/components/BuilderEdge'
+import AppShot from '@/components/AppShot'
+import { BUILDER_EDGE_LEDE, BUILDER_EDGE_TITLE } from '@/lib/builder-edge'
 
 export const metadata: Metadata = {
   title: 'Drone progress monitoring for builders & developers | Bricks',
@@ -58,6 +61,7 @@ const pageCss = `
   .bx-plan-img picture,.bx-plan-img img{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .bx-plan-img img{object-fit:cover;}
   .cx-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start;}
+  .bx-shots{margin-top:28px;}
   .cx-note{margin-top:16px;font-size:13px;color:var(--inkMute);line-height:1.5;max-width:460px;}
   @media (max-width:900px){
     .bx-proof{grid-template-columns:1fr 1fr;}
@@ -90,6 +94,22 @@ export default function BuildersPage() {
       <section className="cm-sec rvl" aria-label="Why Bricks for Site Progress">
         <Head title="Flown by people you can put on site." />
         <Rows items={PROOF.map((x) => ({ title: x.k, detail: x.v }))} />
+      </section>
+
+      <section className="cm-sec rvl" id="vs-local" aria-label="More than a local vendor">
+        <Head title={BUILDER_EDGE_TITLE} lede={BUILDER_EDGE_LEDE} />
+        <BuilderEdge />
+      </section>
+
+      <section className="cm-sec rvl" id="portal" aria-label="The site portal">
+        <Head title="What your team sees." lede="Real screens from the Bricks portal, shown with sample projects." />
+        <AppShot name="builder-overview" alt="Bricks builder overview with sample projects: a list of sites, upcoming visits and the latest deliveries" caption="Every site in one place, with upcoming visits and the latest deliveries." />
+        <div className="appshot-grid bx-shots">
+          <AppShot name="builder-timeline" sizes="(max-width:760px) 100vw, 540px" alt="Site visit timeline for a sample project: dated visits with orthomosaic, 3D model, photos and site report" caption="Each visit is filed by date, with maps, 3D models, photos and a site report." />
+          <AppShot name="builder-report" sizes="(max-width:760px) 100vw, 540px" alt="Sample site report showing the visit date, phase, days since the last visit, a progress note and a photo" caption="A site report for each visit, with a progress note. Print it or save it as a PDF." />
+          <AppShot name="builder-sharelinks" sizes="(max-width:760px) 100vw, 540px" alt="Stakeholder links panel for a sample project: live links for a lender and a general contractor, and one turned off" caption="Read-only links for your lender or GC. They expire, and you can turn one off anytime." />
+          <AppShot name="builder-share" sizes="(max-width:760px) 100vw, 540px" alt="The read-only shared timeline a lender sees for a sample project, with the link's expiry date" caption="What your lender sees: the same dated visits, read-only." />
+        </div>
       </section>
 
       <SiteRail />

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
+import AppShot from '@/components/AppShot'
 import { SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, STATUS } from '@/lib/brand'
 
@@ -35,6 +36,14 @@ export default function AgentsPage() {
           <div className="tray-stage">
             <ProductWindow variant="phone" title="Companion" src="/screens/book.html?lock=1" nw={390} nh={844} lazy />
           </div>
+        </div>
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Media and CRM on your phone">
+        <Head title="Delivered to the listing. Your contacts beside it." lede="Real Bricks screens on a phone, shown with sample listings and contacts." />
+        <div className="appshot-phones">
+          <AppShot name="agent-media" alt="A sample listing in Bricks on a phone: delivered photos, download all, and links to copy client media or open the listing site" caption="Media lands on the listing. Download it all, or share the client link." />
+          <AppShot name="agent-crm" alt="Bricks contacts on a phone with sample buyers and sellers, their stage and last activity" caption="Contacts, pipeline, tasks and activity in the same app." />
         </div>
       </section>
 

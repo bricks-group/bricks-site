@@ -3,6 +3,7 @@ import RevealObserver from '@/components/RevealObserver'
 import PhoneFrame from '@/components/phone/PhoneFrame'
 import PhoneVideo from '@/components/phone/PhoneVideo'
 import ProductStage from '@/components/ProductStage'
+import AppShot from '@/components/AppShot'
 import { OFFICE_SEAT_PRICE_PER_YEAR, SOFTWARE_BLURB } from '@/lib/catalog'
 import { IntegrationsList } from '@/components/calm/Integrations'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
@@ -43,6 +44,14 @@ export default function PlatformPage() {
           <div className="tray-stage">
             <ProductStage />
           </div>
+        </div>
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Real screens">
+        <Head title="Real screens." lede="Two views from the product, shown with sample data." />
+        <div className="appshot-grid">
+          <AppShot name="builder-timeline" sizes="(max-width:760px) 100vw, 560px" alt="Site visit timeline for a sample building project, with dated visits, maps, 3D models, photos and site reports" caption="Builders: every site visit filed by date." />
+          <AppShot name="brokerage-overview" sizes="(max-width:760px) 100vw, 560px" alt="Brokerage overview for a sample brokerage, with pipeline, shoots, top performers and trust reconciliation" caption="Brokerages: the whole office at a glance." />
         </div>
       </section>
 

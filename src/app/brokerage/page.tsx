@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Head, Rows, Close } from '@/components/calm/Calm'
 import RevealObserver from '@/components/RevealObserver'
-import ProductWindow from '@/components/ProductWindow'
+import AppShot from '@/components/AppShot'
 import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
 import { BROKERAGE_PITCH, BROKERAGE_PILLARS } from '@/lib/brokerage-pitch'
 import { STATUS } from '@/lib/brand'
@@ -32,16 +32,9 @@ export default function BrokeragePage() {
         </div>
       </section>
 
-      <section className="prod-row rvl" aria-label="Bricks preview">
-        <div className="prod-copy">
-          <h2>One system. Brokerage-sized.</h2>
-          <p>Agents, deals and media together, inside each listing. Teams and solo agents get a smaller view of the same product.</p>
-        </div>
-        <div className="tray tray-crm tray-bleed-end">
-          <div className="tray-stage">
-            <ProductWindow title="bricks" src="/screens/os.html?screen=overview&lock=1" nw={1440} nh={920} lazy />
-          </div>
-        </div>
+      <section className="cm-sec rvl" aria-label="Bricks preview">
+        <Head title="One system. Brokerage-sized." lede="Agents, deals and media together, inside each listing. Teams and solo agents get a smaller view of the same product." />
+        <AppShot name="brokerage-overview" alt="Bricks brokerage overview for a sample brokerage: pipeline by stage, today's shoots, top performers and trust reconciliation" caption="The office at a glance: pipeline, today's shoots, top performers and trust reconciliation. Sample brokerage." />
       </section>
 
       <section className="cm-sec rvl" aria-label="Why brokerages choose Bricks">
@@ -65,10 +58,14 @@ export default function BrokeragePage() {
             { title: 'Trust accounting', detail: 'For brokerages only. Not in agent or team plans.' },
           ]}
         />
+        <div className="br-shot">
+          <AppShot name="brokerage-transactions" alt="Transactions list for a sample brokerage: open deals with price, closing date and status" caption="Every deal, deadline and closing in one list. Sample data." />
+        </div>
       </section>
 
       <Close title="Set up seats for your brokerage." href="/contact" label="Talk to us" />
       <style>{`
+        .br-shot{margin-top:28px;}
         .lede-soft{font-size:15px;color:var(--inkSoft);max-width:560px;margin:-8px 0 22px;line-height:1.5;}
       `}</style>
     </>

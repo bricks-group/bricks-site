@@ -208,6 +208,7 @@ export default function PricingPage() {
         .sv-detail[open] summary::after{content:'–';}
         .sv-rows .cm-row-d a{color:inherit;text-decoration-color:var(--vs-fg-3);text-underline-offset:2px;}
         .sv-foot{margin-top:24px;}
+        .sv-shot{margin-top:24px;max-width:760px;}
         .pr-sub{font-size:var(--vs-fs-body,17px);font-weight:500;color:var(--vs-fg);margin:40px 0 4px;}
         .pr-sublede{font-size:var(--vs-fs-small,14px);color:var(--vs-fg-2);margin:0 0 12px;}
         @media (max-width:420px){.sv-switch button{padding:8px 12px;}}
