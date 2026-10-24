@@ -356,7 +356,7 @@ export default function PhotographerForm() {
         <label>Company website (leave blank)</label>
         <input type="text" name="company_website" tabIndex={-1} autoComplete="off" />
       </div>
-      <div className="fsec">01 · About you</div>
+      <div className="fsec">About you</div>
       <div className="grid2">
         <div className="field"><label>Full name <span className="req">*</span></label><input name="name" placeholder="Jordan Chen" required autoComplete="name" /></div>
         <div className="field"><label>Phone <span className="req">*</span></label><input name="phone" type="tel" placeholder="+1 (416) 555-0100" required autoComplete="tel" /></div>
@@ -391,7 +391,7 @@ export default function PhotographerForm() {
         </div>
       )}
 
-      <div className="fsec">02 · What you shoot</div>
+      <div className="fsec">What you shoot</div>
       <div className="field"><label>Specialties <span className="req">*</span> <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(select all that apply)</span></label>
         <div className="check-col">
           {[
@@ -454,7 +454,7 @@ export default function PhotographerForm() {
         <span className="hint-sm">Minimums for interiors: an interchangeable-lens camera (full-frame or APS-C), a lens that goes 16mm or wider on full frame (about 10–11mm on APS-C), and a tripod for bracketing.</span>
       </div>
 
-      <div className="fsec">03 · Your work</div>
+      <div className="fsec">Your work</div>
       <div className="field"><label htmlFor="f_samples">Sample real estate photos <span className="req">*</span> <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>({MIN_SAMPLES}–{MAX_SAMPLES} photos)</span></label>
         <input id="f_samples" type="file" multiple accept="image/jpeg,image/png,image/webp,image/heic,.heic,.heif"
           onChange={(e) => { addSamples(e.target.files); e.target.value = '' }} />
@@ -480,7 +480,7 @@ export default function PhotographerForm() {
         <span className="hint-sm">PDF, DOC, or DOCX — 8MB max. Required.</span>
       </div>
 
-      <div className="fsec">04 · Availability</div>
+      <div className="fsec">Availability</div>
       <div className="field"><label>Weekdays you can shoot <span className="req">*</span></label>
         <div className="chip-row">
           {DAYS.map((d) => <label key={d.v} className="chip"><input type="checkbox" name="days" value={d.v} /> {d.l}</label>)}
@@ -522,7 +522,7 @@ export default function PhotographerForm() {
         </div>
       </div>
 
-      <div className="fsec">05 · Business info</div>
+      <div className="fsec">Business info</div>
       <div className="field"><label>HST / GST number <span className="req">*</span></label>
         <input name="hst_number" placeholder="123456789 RT0001" disabled={hstExempt} required={!hstExempt} />
         <span className="hint-sm">Required once your revenue across all clients exceeds $30,000 CAD/year. We issue T4As for earnings ≥ $500/year.</span>
@@ -535,7 +535,7 @@ export default function PhotographerForm() {
         <span>I&apos;m not GST/HST registered — my revenue across all clients is under $30,000 CAD/year, so I&apos;m not required to register (CRA small-supplier exemption).</span>
       </label>
 
-      <div className="fsec">06 · How you found us</div>
+      <div className="fsec">How you found us</div>
       <div className="field"><label htmlFor="f_source">How did you hear about Bricks? <span className="req">*</span></label>
         <select id="f_source" name="source" required value={source} onChange={(e) => setSource(e.target.value)}>
           <option value="" disabled>Choose one</option>
@@ -553,7 +553,7 @@ export default function PhotographerForm() {
         </div>
       )}
 
-      <div className="fsec">07 · Independent contractor agreement</div>
+      <div className="fsec">Independent contractor agreement</div>
       <p className="hint-sm" style={{ margin: '0 0 4px' }}>Open and read both documents before accepting. The agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
       <LegalDocRows docs={APPLY_DOCS} read={legal.read} onOpen={legal.setOpen} />
       <label className={`ic-accept${legal.done ? '' : ' is-locked'}`} onClick={() => { if (!legal.done) setShowWhy(true) }}>
@@ -581,8 +581,8 @@ export default function PhotographerForm() {
 
       <style>{`
         .aform{background:var(--paper);border:1px solid var(--hair);border-radius:2px;padding:var(--card-pad-lg);margin-top:0;max-width:100%;min-width:0;box-sizing:border-box;}
-        .aform .fsec{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-          color:var(--brickDeep);margin:24px 0 16px;padding-top:24px;border-top:1px solid var(--hair);}
+        .aform .fsec{font-family:'General Sans',sans-serif;font-size:16px;font-weight:500;letter-spacing:-0.2px;text-transform:none;
+          color:var(--ink);margin:24px 0 16px;padding-top:24px;border-top:1px solid var(--hair);}
         .aform .fsec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
         .aform .check-col{display:grid;gap:8px;min-width:0;max-width:100%;}
         .aform .check-item{display:grid;grid-template-columns:auto 1fr;align-items:start;gap:8px;padding:12px;border:1px solid var(--hairStrong);
@@ -606,7 +606,7 @@ export default function PhotographerForm() {
         .success-box p{color:var(--inkMute);font-size:14.5px;line-height:1.6;max-width:400px;margin:0 auto;}
         .aform .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-width:0;max-width:100%;}
         .aform .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;min-width:0;max-width:100%;}
-        .aform .field > label{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--inkMute);}
+        .aform .field > label{font-family:'General Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--inkMute);}
         .aform .field .req{color:var(--brickDeep);}
         .aform .field input,.aform .field select{font-family:'General Sans',sans-serif;font-size:14px;background:var(--paperDeep);color:var(--ink);
           border:1px solid var(--hairStrong);border-radius:2px;padding:12px;outline:none;width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
@@ -620,13 +620,13 @@ export default function PhotographerForm() {
         .aform .chip input{width:auto;max-width:none;}
         .aform .chip:has(input:checked),.aform .radio-row label:has(input:checked){border-color:var(--brick);}
         .aform .chip-h{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10.5px;color:var(--inkFaint);}
-        .aform .sample-count{font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkMute);}
+        .aform .sample-count{font-family:'General Sans',sans-serif;font-size:12.5px;letter-spacing:0;text-transform:none;color:var(--inkMute);}
         .aform .sample-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:6px;}
         .aform .sample-cell{position:relative;border:1px solid var(--hairStrong);border-radius:2px;overflow:hidden;background:var(--paperDeep);aspect-ratio:3/2;}
         .aform .sample-cell img{width:100%;height:100%;object-fit:cover;display:block;}
         .aform .sample-ph{font-size:10px;padding:6px;color:var(--inkMute);overflow-wrap:anywhere;}
-        .aform .sample-cell button{position:absolute;right:4px;bottom:4px;font-family:'Ioskeley Mono','JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
-          text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;border-radius:2px;padding:3px 6px;cursor:pointer;}
+        .aform .sample-cell button{position:absolute;right:4px;bottom:4px;font-family:'General Sans',sans-serif;font-size:11px;letter-spacing:0;
+          text-transform:none;background:var(--ink);color:var(--paper);border:none;border-radius:2px;padding:3px 6px;cursor:pointer;}
         .aform .err{color:var(--brickDeep);font-size:12.5px;font-family:'Ioskeley Mono','JetBrains Mono',monospace;min-height:14px;}
         @media (max-width:680px){ .aform .grid2{grid-template-columns:1fr;} .aform .radio-row{flex-direction:column;} }
       `}</style>

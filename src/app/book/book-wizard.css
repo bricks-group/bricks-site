@@ -120,7 +120,7 @@
 .bcal-day.off{color:var(--inkFaint);cursor:not-allowed;opacity:.55;}
 .bcal-day.full{text-decoration:line-through;text-decoration-color:var(--inkFaint);}
 .bcal-legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--hair);
-  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--inkMute);}
+  font-family:'General Sans',sans-serif;font-size:12px;letter-spacing:0;text-transform:none;color:var(--inkMute);}
 .bcal-legend .dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:-1px;border:1px solid var(--hairStrong);}
 .bcal-legend .dot.open{background:var(--paper);}
 .bcal-legend .dot.full{background:var(--paperDeep);}

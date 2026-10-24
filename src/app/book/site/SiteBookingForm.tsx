@@ -31,8 +31,8 @@ const css = `
   .sb{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:start;margin-top:12px;}
   .sb form{display:grid;gap:18px;}
   .sb fieldset{border:1px solid var(--hair);border-radius:2px;padding:18px 18px 20px;margin:0;display:grid;gap:14px;background:var(--paper);}
-  .sb legend{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);padding:0 6px;}
-  .sb label.f{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);display:block;margin-bottom:6px;}
+  .sb legend{font-family:'General Sans',sans-serif;font-size:15px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink);padding:0 6px;}
+  .sb label.f{font-family:'General Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--inkMute);display:block;margin-bottom:6px;}
   .sb input[type=text],.sb input[type=email],.sb input[type=tel],.sb input[type=date],.sb select,.sb textarea{width:100%;font-family:'General Sans',sans-serif;font-size:15px;color:var(--ink);background:var(--paperDeep);border:1px solid var(--hairStrong);border-radius:2px;padding:11px 13px;outline:none;}
   .sb input:focus,.sb select:focus,.sb textarea:focus{border-color:var(--brick);}
   .sb textarea{resize:vertical;min-height:84px;}
