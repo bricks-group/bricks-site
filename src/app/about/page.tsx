@@ -60,7 +60,7 @@ export default function AboutPage() {
         <Rows
           items={[
             { title: 'Software', detail: 'Deals, CRM, e-sign and site files in one system.', href: '/platform' },
-            { title: 'Site Progress', detail: 'Maps, models and reports for every site, compared over time.', href: '/builders' },
+            { title: 'Site Progress', detail: 'Dated drone visits, maps and models for each site, compared over time.', href: '/builders' },
             { title: 'Listing media', detail: 'Photos, drone, video and 3D, delivered to the listing.', href: '/media' },
           ]}
         />

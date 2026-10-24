@@ -32,7 +32,7 @@ const faqs = [
   {
     id: 'coverage',
     q: 'Where do you work?',
-    a: 'Across Canada. Travel is priced from the assigned crew’s location and shown before you pay.',
+    a: 'Our base is Ontario’s Golden Horseshoe. Elsewhere in Canada, enter the address and we confirm coverage and travel before you pay.',
   },
 ] as const
 
@@ -133,7 +133,7 @@ export default function Home() {
         <section className="hf-row rvl" aria-label="Site Progress">
           <div className="hf-copy">
             <h2>Site Progress, on schedule.</h2>
-            <p>Maps, 3D models, documents and reports for every visit, compared over time in one site file.</p>
+            <p>Dated photos and video on every visit, with maps and 3D models on mapped captures. Compared over time in one site file.</p>
             <Link className="hf-link" href="/book/site">Book a site visit</Link>
           </div>
           <div className="hf-frame hf-photo">

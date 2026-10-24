@@ -9,7 +9,7 @@ import { osSoftwareApplicationSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'bricks for brokerages — the system for the whole shop',
-  description: 'The system for the brokerage: roster, pipeline, listings and trust accounting. Priced per seat, billed yearly.',
+  description: 'The system for the brokerage: roster, pipeline, listings and trust accounting. Priced per seat, yearly or monthly.',
   alternates: { canonical: '/brokerage' },
 }
 
@@ -44,8 +44,9 @@ export default function BrokeragePage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Seats">
-        <Head title="Per seat, billed yearly." lede={OFFICE_INCLUDES} link={{ href: '/pricing', label: 'See pricing' }} />
-        <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: p.price }))} />
+        <Head title="Per seat, yearly or monthly." lede={OFFICE_INCLUDES} link={{ href: '/pricing', label: 'See pricing' }} />
+        <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: `$${p.seatPricePerYear} / yr or $${p.seatPricePerMonth} / mo` }))} />
+        <p className="cm-note">Per seat. Yearly, or monthly at 25% more with no lock-in.</p>
       </section>
 
       <section className="cm-sec rvl" aria-label="What's inside">

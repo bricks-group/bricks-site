@@ -76,7 +76,7 @@ export default function BuildersPage() {
         <div className="wrap">
           <h1>See every site.<br />On schedule.</h1>
           <p className="sub">
-            Maps, 3D models, documents and reports for builders, developers and investors. Every visit compared over time in one site file.
+            Dated drone photos and video on every visit, with maps and 3D models on mapped captures. For builders, developers and investors, compared over time in one site file.
           </p>
           <div className="cta-row">
             <Link className="btn btn-night btn-primary" href="/book/site">Book a site visit</Link>

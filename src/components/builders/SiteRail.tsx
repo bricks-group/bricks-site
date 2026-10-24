@@ -8,7 +8,7 @@ import SitePic from './SitePic'
 const STEPS = [
   { key: 'photo', n: '01', label: 'Photo', title: 'Photos and video, dated.', body: 'Stills and a flyover on every visit, filed by date.' },
   { key: 'map', n: '02', label: 'Map', title: 'A map you can measure.', body: 'Orthomosaic with distance, area and elevation (DSM).' },
-  { key: 'model', n: '03', label: 'Model', title: 'A 3D model of the site.', body: 'Model and point cloud, compared visit to visit.' },
+  { key: 'model', n: '03', label: 'Model', title: 'A 3D model of the site.', body: 'Model and point cloud from each mapped capture, opened in the browser.' },
   { key: 'report', n: '04', label: 'Report', title: 'A report in one site file.', body: 'Progress notes and every file in one link for owners, lenders and site teams.' },
 ] as const
 
@@ -23,7 +23,7 @@ export default function SiteRail() {
   const head = (
     <div className="cap-copy slab-head">
       <h2>Every visit, in layers.</h2>
-      <p className="cap-lede">Photos, maps, models and reports, compared over time.</p>
+      <p className="cap-lede">Photos on every visit. Maps and models on mapped captures.</p>
     </div>
   )
 

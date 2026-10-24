@@ -1,65 +1,57 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
-import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
-import { OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB, SOFTWARE_PLANS, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
+import PlanGrid from './PlanGrid'
+import { CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
+import { OFFICE_PLANS, OFFICE_INCLUDES, ADDONS, SOFTWARE_PRICES, OFFICE_SEAT_PRICE_PER_YEAR } from '@/lib/catalog'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
-import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
-import {
-  COVERAGE_LINE,
-  STATUS,
-  TOUR_NAME,
-  TOUR_SHORT,
-  VISIT_NAME,
-  VISIT_SHORT,
-} from '@/lib/brand'
+import { Head, Rows, Close } from '@/components/calm/Calm'
 import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
 
+const SIGNUP = 'https://app.brxs.ca/login'
+const PLAN_FROM = SOFTWARE_PRICES.keystone.monthly
+const SEAT_FROM = OFFICE_SEAT_PRICE_PER_YEAR.franchise
+
 export const metadata: Metadata = {
-  title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
+  title: 'Pricing: Software Plans, Brokerage Seats and Listing Media | Bricks',
   description:
-    'Listing media from $248 for HDR photos, licensed drone and a floor plan, priced by home size. Software plans from free, plus brokerage seats. CAD.',
+    `Bricks is free to start. Paid plans from $${PLAN_FROM} a month, or yearly with two months free. Brokerage seats from $${SEAT_FROM} a year. Listing media from $${CORE_FROM} and site visits from ${fmt(PER_VISIT[0].price)}, booked inside. CAD.`,
   alternates: { canonical: '/pricing' },
   openGraph: {
-    title: 'Real Estate Photography Pricing & Plans | Bricks',
-    description: 'Listing media from $248 for HDR photos, licensed drone and a floor plan. Software plans from free.',
+    title: 'Pricing | Bricks',
+    description: `Free to start. Paid plans from $${PLAN_FROM} a month. Brokerage seats, listing media and site visits, priced plainly.`,
     url: 'https://www.brxs.ca/pricing',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Real Estate Photography Pricing | Bricks',
-    description: 'À la carte listing photo rates and software plans for Canadian real estate.',
+    title: 'Pricing | Bricks',
+    description: `Free to start. Paid plans from $${PLAN_FROM} a month. Media and site visits booked inside.`,
   },
 }
 
-const BANDS = ['Small', 'Mid', 'Large', 'XL'] as const
+/** Media offers whose "from" prices this page renders. */
+const PRICING_PAGE_OFFERS: readonly MediaOfferId[] = ['photos_only', 'essentials', 'story', 'showcase', 'suite']
 
-/** Offers whose prices this page renders (packages + priced rows of the à la carte table). */
-const PRICING_PAGE_OFFERS: readonly MediaOfferId[] = [
-  'photos_only', 'essentials', 'story', 'showcase', 'suite', 'floor_plan_only',
-  'drone', 'reel', 'tour', 'visit', 'twilight', 'staging', 'rush',
-]
+const ADDON_LINE = ADDONS.map((a) => `${a.name.replace(/^AI /, '').replace('Document Drafter', 'document drafter').replace('Listing Copy', 'listing copy')} ${a.price.replace(' / mo', '')}`).join(', ')
 
-const rows = [
-  { name: 'HDR photography', inc: 'Interiors and exteriors', vals: bandCells(PHOTO_RATE) },
-  { name: 'Licensed drone', inc: 'Advanced RPAS certified', vals: bandCells(DRONE_RATE) },
-  { name: 'Floor plan', inc: 'Branded 2D', flat: 'Included on every standard shoot' },
-  { name: 'Floor plan only', inc: 'No photos or drone', flat: `$${FLOOR_PLAN_ONLY_RATE} flat` },
-  { name: 'Cinematic reel', inc: '30–45 seconds', vals: bandCells(REEL_RATE) },
-  { name: TOUR_NAME, inc: 'Path walkthrough', vals: bandCells(TOUR_RATE) },
-  { name: VISIT_NAME, inc: 'Free-roam 3D', vals: bandCells(VISIT_RATE) },
-  { name: 'Twilight exterior', inc: 'Shot at blue hour', vals: bandCells(TWILIGHT_RATE) },
-  { name: 'Virtual staging', inc: 'Per photo', flat: STAGING_PRICE_LABEL },
-  { name: 'Rush delivery', inc: 'Faster than standard delivery (photos 24h · other media 24–48h)', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
-]
-
-const PLAN_LINE: Record<string, string> = {
-  clay: 'Listing file, transactions and your MLS. No card.',
-  keystone: 'Adds CRM and e-sign.',
-  marble: 'Adds forms.',
-  diamond: 'Adds the AI suite.',
-}
+const FAQ = [
+  {
+    q: 'Do plans include media?',
+    a: 'No. Listing media and site visits are priced per job on every plan, including Clay. You see the full price before you pay.',
+  },
+  {
+    q: 'Can I change or cancel my plan?',
+    a: 'Yes, from Billing in the app. Cancelling stops the next charge, and you keep access until the end of the period you paid for.',
+  },
+  {
+    q: 'What if I cancel a shoot?',
+    a: 'More than 24 hours before the shoot window, you get a full refund. Inside 24 hours, or on a no-show, there is no refund. There are no other fees.',
+  },
+  {
+    q: 'Where do you work?',
+    a: 'Our base is Ontario’s Golden Horseshoe. Elsewhere in Canada, enter the address and we confirm coverage and travel before you pay.',
+  },
+] as const
 
 export default function PricingPage() {
   return (
@@ -79,16 +71,7 @@ export default function PricingPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
-            mainEntity: [
-              { '@type': 'Question', name: "What's in Essentials?", acceptedAnswer: { '@type': 'Answer', text: `HDR photos, licensed drone and a floor plan in one shoot, from $${CORE_FROM}.` } },
-              { '@type': 'Question', name: 'Are the photos MLS-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.' } },
-              { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75/km. It’s often free in the GTA, and you see it before you pay.' } },
-              { '@type': 'Question', name: 'How is home size measured?', acceptedAnswer: { '@type': 'Answer', text: 'By finished area and complexity. Not sure? Choose "advise me" when you book and we\'ll size it from the address.' } },
-              { '@type': 'Question', name: 'Virtual tour or virtual visit?', acceptedAnswer: { '@type': 'Answer', text: `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).` } },
-              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture and décor added to photos of empty or dated rooms. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.` } },
-              { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: 'Across Canada. Ask and we’ll confirm your area and quote any travel.' } },
-              { '@type': 'Question', name: 'Can I add AI without upgrading?', acceptedAnswer: { '@type': 'Answer', text: ADDONS_BLURB } },
-            ],
+            mainEntity: FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
           }),
         }}
       />
@@ -96,137 +79,82 @@ export default function PricingPage() {
       <section className="hero">
         <div className="wrap">
           <h1>Pricing.</h1>
-          <p className="sub">Start free on the software. Book media and site visits inside it when you need them.</p>
+          <p className="sub">Start free on Bricks. Upgrade when it pays. Media and site visits are booked inside, priced per job.</p>
+          <div className="pr-cta">
+            <a className="btn btn-night btn-primary" href={SIGNUP}>Try Bricks free</a>
+          </div>
         </div>
       </section>
 
-      <section className="cm-sec pr-first" aria-label="Starting prices">
-        <Stats
-          label="Starting prices"
-          items={[
-            { fig: 'Free', label: 'Software, to start' },
-            { fig: `$${CORE_FROM}`, label: 'Listing media, from' },
-            { fig: fmt(PER_VISIT[0].price), label: 'Site visit, from' },
-          ]}
-        />
-      </section>
-
-      <section className="cm-sec rvl" aria-label="Software plans">
-        <Head title="Software plans." lede={SOFTWARE_BLURB} />
-        <Rows items={SOFTWARE_PLANS.map((p) => ({ title: p.name, detail: PLAN_LINE[p.id], value: p.price }))} />
-        <details className="cm-more">
-          <summary>Compare every feature</summary>
-          <PlanCards />
-        </details>
-        <p className="cm-note">Plans and office seats are billed under the <Link href="/terms#plans">software plan terms</Link>: billing cycle, renewal, cancellation and refunds.</p>
-      </section>
-
-      <section className="cm-sec rvl" aria-label="AI add-ons">
-        <Head title="AI, without upgrading." lede={ADDONS_BLURB} />
-        <Rows items={ADDONS.map((a) => ({ title: a.name, value: a.price }))} />
+      <section className="cm-sec pr-first" aria-label="Software plans">
+        <Head title="Software plans." lede="Clay is free, with no card: your listing file, transactions and MLS." />
+        <PlanGrid signup={SIGNUP} />
+        <p className="cm-note">
+          On Keystone or Marble, add AI by the month: {ADDON_LINE}. Teams share one plan and aren’t charged per agent. Prices in CAD, plus HST. Billing, renewal and refunds follow the <Link href="/terms#plans">software plan terms</Link>.
+        </p>
       </section>
 
       <section className="cm-sec rvl" aria-label="Brokerage seats">
         <Head title="Brokerages, per seat." lede={OFFICE_INCLUDES} link={{ href: '/brokerage', label: 'For brokerages' }} />
-        <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: p.price }))} />
-      </section>
-
-      <section className="cm-sec rvl" aria-label="Site Progress">
-        <Head title="Site Progress." lede="Per visit, or per site each month." link={{ href: '/builders', label: 'For builders' }} />
-        <Rows
-          items={[
-            { title: PER_VISIT[0].name, detail: PER_VISIT[0].what, value: `${fmt(PER_VISIT[0].price)} ${PER_VISIT[0].unit}` },
-            { title: PER_VISIT[1].name, detail: PER_VISIT[1].what, value: `${fmt(PER_VISIT[1].price)} ${PER_VISIT[1].unit}` },
-            { title: 'Monthly plans', detail: 'Visual or mapped, monthly to weekly.', value: `from ${fmt(PLANS[0].rows[0].price)} / site / mo` },
-          ]}
-        />
+        <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: `$${p.seatPricePerYear} / yr or $${p.seatPricePerMonth} / mo` }))} />
+        <p className="cm-note">Per seat. Yearly, or monthly at 25% more with no lock-in.</p>
       </section>
 
       <section className="cm-sec rvl" aria-label="Listing media">
-        <Head title="Listing media." lede="Prices are for smaller homes and scale with size." />
+        <Head title="Listing media." lede="Booked inside Bricks. Prices start with smaller homes and scale with size." link={{ href: '/book', label: 'Book media' }} />
         <Rows
           items={[
-            { title: 'Essentials', detail: 'HDR photos, licensed drone and a floor plan.', value: `from $${CORE_FROM}` },
-            { title: 'Story', detail: 'Essentials, plus a cinematic reel.', value: `from $${STORY_FROM}` },
-            { title: 'Showcase', detail: 'Story, plus a virtual tour.', value: `from $${SHOWCASE_FROM}` },
-            { title: 'Full suite', detail: 'Showcase, plus a twilight exterior.', value: `from $${FULL_FROM}` },
+            { title: 'Photos only', detail: 'HDR photos.', value: `from $${PHOTO_ONLY_FROM}`, href: '/book' },
+            { title: 'Essentials', detail: 'HDR photos, licensed drone and a floor plan.', value: `from $${CORE_FROM}`, href: '/book' },
+            { title: 'Story', detail: 'Essentials, plus a cinematic reel.', value: `from $${STORY_FROM}`, href: '/book' },
+            { title: 'Showcase', detail: 'Story, plus a virtual tour.', value: `from $${SHOWCASE_FROM}`, href: '/book' },
+            { title: 'Full suite', detail: 'Showcase, plus a twilight exterior.', value: `from $${FULL_FROM}`, href: '/book' },
           ]}
         />
-        <p className="cm-note">Just need photos? HDR only, from ${PHOTO_ONLY_FROM}.</p>
-
-        <details className="cm-more rates">
-          <summary>Every rate, by home size</summary>
-          <table className="tbl">
-            <thead>
-              <tr><th style={{ textAlign: 'left' }}>Service</th><th>Small</th><th>Mid</th><th>Large</th><th>XL</th></tr>
-            </thead>
-            <tbody>
-              {rows.map((r) => (
-                <tr key={r.name} className={r.row}>
-                  <td className="pkg">{r.name}<span className="inc">{r.inc}</span></td>
-                  {r.flat ? (
-                    <td className="num flat-val" colSpan={4} data-flat="1">{r.flat}</td>
-                  ) : (
-                    r.vals!.map((v, i) => <td key={i} className="num" data-band={BANDS[i]}>{v}</td>)
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="cm-note">Small: up to 1,200 sq ft. Mid: 1,200–2,500. Large: 2,500–4,000. XL: 4,000+. Travel is priced from the assigned photographer’s location: first 25 km free, then $0.75/km. Prices in CAD, before HST.</p>
-        </details>
+        <p className="cm-note">Travel: the first 25 km from the photographer are free, then $0.75/km, shown before you pay.</p>
       </section>
 
-        <section className="cm-sec rvl" aria-label="Questions">
-          <Head title="Before you book." />
-          <div className="faq">
-            <div className="qa"><h4>What&apos;s in Essentials?</h4><p>HDR photos, licensed drone and a floor plan in one shoot.</p></div>
-            <div className="qa"><h4>Are the photos MLS-safe?</h4><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
-            <div className="qa"><h4>How does travel work?</h4><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and you see it before you pay.</p></div>
-            <div className="qa"><h4>How is home size measured?</h4><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
-            <div className="qa"><h4>Virtual tour or virtual visit?</h4><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. Priced per photo and not part of any package.</p></div>
-            <div className="qa"><h4>Where do you shoot?</h4><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
-            <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>
-            <div className="qa"><h4>Brokerage or individual plan?</h4><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, and every seat gets all of Bricks plus trust accounting.</p></div>
-          </div>
-        </section>
+      <section className="cm-sec rvl" aria-label="Site Progress">
+        <Head title="Site Progress." lede="Scheduled drone visits for builders, per visit or per site each month." link={{ href: '/book/site', label: 'Book a site visit' }} />
+        <Rows
+          items={[
+            { title: PER_VISIT[0].name, detail: 'Dated drone photos and video.', value: fmt(PER_VISIT[0].price), href: '/book/site' },
+            { title: PER_VISIT[1].name, detail: 'Orthomosaic and 3D model.', value: fmt(PER_VISIT[1].price), href: '/book/site' },
+            { title: 'Monthly plans', detail: 'Visual or mapped, monthly to weekly.', value: `from ${fmt(PLANS[0].rows[0].price)} / site / mo`, href: '/builders' },
+          ]}
+        />
+      </section>
 
+      <section className="cm-sec rvl" aria-label="Questions">
+        <Head title="Questions." />
+        <div className="faq">
+          {FAQ.map((f) => (
+            <div className="qa" key={f.q}><h4>{f.q}</h4><p>{f.a}</p></div>
+          ))}
+        </div>
+      </section>
 
-      <Close title="Start free. Book when you need to." href="https://app.brxs.ca/login" label="Try Bricks free" external />
+      <Close title="Start free. Upgrade when it pays." href={SIGNUP} label="Try Bricks free" external primary={false} />
 
       <style>{`
-        .trust{text-align:center;padding:8px 0 28px;}
-        .rates{overflow-x:clip;}
-        .tbl{width:100%;max-width:100%;border-collapse:collapse;}
-        /* calm */ .pr-first{padding-top:8px;} .rates .tbl{margin-top:8px;} .tbl td.num{font-size:13px!important;} .tbl tr.flat td{background:none!important;}
-        .tbl-cap{text-align:left;font-size:15px;line-height:1.5;color:var(--inkSoft);max-width:560px;padding:0 0 24px;margin-top:calc(var(--head-gap) * -1 + 16px);}
-        .tbl th,.tbl td{padding:16px var(--card-pad);text-align:right;border-bottom:1px solid var(--hair);}
-        .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
-          text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperSoft);}
-        .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);font-size:15px;}
-        .tbl td.pkg .inc{display:block;font-size:13px;color:var(--inkMute);font-weight:400;margin-top:3px;}
-        .tbl td.num{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--inkSoft);}
-        .tbl td.num.flat-val{text-align:center;}
-        .tbl tr.flat td{background:var(--paperDeep);}
-        .tbl tr:last-child td{border-bottom:none;}
-        .price-foot{max-width:680px;margin:32px auto 0;text-align:center;}
-        @media (max-width:720px){
-          .tbl thead{display:none;}
-          .tbl, .tbl tbody, .tbl tr, .tbl th, .tbl td{display:block;width:100%;max-width:100%;box-sizing:border-box;text-align:left;}
-          .tbl tr{border:1px solid var(--hair);border-radius:2px;overflow:hidden;background:var(--paper);margin:0 0 var(--gap);}
-          .tbl th, .tbl td{padding:12px var(--card-pad);border-bottom:1px solid var(--hair);}
-          .tbl td.pkg{border-bottom:1px solid var(--hair);font-size:15px;}
-          .tbl td.num{display:flex;justify-content:space-between;align-items:center;text-align:right;font-size:15px;}
-          .tbl td.num::before{content:attr(data-band);font-family:var(--vs-sans);font-size:13px;color:var(--inkMute);}
-          .tbl td.num[colspan]::before,
-          .tbl td.num.flat-val::before{content:none;}
-          .tbl td.num[colspan],
-          .tbl td.num.flat-val{display:block;text-align:left;}
-          .tbl tr:last-child td, .tbl td:last-child{border-bottom:none;}
-        }
+        .pr-cta{margin-top:28px;}
+        .pr-first{padding-top:24px;}
+        .pg-switch{display:inline-flex;border:1px solid var(--vs-rule-strong,#d6d3cd);border-radius:999px;padding:3px;margin:0 0 24px;}
+        .pg-switch button{border:0;background:transparent;font:inherit;font-size:var(--vs-fs-small,14px);color:var(--vs-fg);padding:8px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;}
+        .pg-switch button.on{background:var(--vs-fg);color:var(--vs-bg,#fff);}
+        .pg-cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+        .pg-card{border:var(--vs-hair,1px solid #e5e2dc);padding:24px;display:flex;flex-direction:column;min-width:0;}
+        .pg-card h3{font-size:var(--vs-fs-body,17px);font-weight:500;margin:0 0 12px;color:var(--vs-fg);}
+        .pg-price{margin:0;display:flex;align-items:baseline;gap:6px;}
+        .pg-fig{font-family:var(--vs-mono);font-size:clamp(28px,2vw + 16px,38px);letter-spacing:-.02em;color:var(--vs-fg);font-variant-numeric:tabular-nums;}
+        .pg-per{font-size:var(--vs-fs-small,14px);color:var(--vs-fg-3);}
+        .pg-alt{font-size:var(--vs-fs-small,14px);color:var(--vs-fg-3);margin:6px 0 20px;}
+        .pg-base{font-size:var(--vs-fs-small,14px);color:var(--vs-fg-2);margin:0 0 8px;}
+        .pg-adds{list-style:none;margin:0 0 24px;padding:0;flex:1;}
+        .pg-adds li{font-size:var(--vs-fs-small,14px);color:var(--vs-fg);padding:6px 0;border-top:var(--vs-hair,1px solid #e5e2dc);}
+        .pg-cta{align-self:flex-start;background:transparent!important;color:var(--vs-fg)!important;border:1px solid var(--vs-fg)!important;}
+        @media (max-width:860px){.pg-cards{grid-template-columns:1fr;}}
       `}</style>
     </>
   )
 }
-

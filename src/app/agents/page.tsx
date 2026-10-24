@@ -51,7 +51,7 @@ export default function AgentsPage() {
         <Rows
           items={[
             { title: 'Individual', detail: 'Start free. Paid plans add CRM, e-sign, forms and AI. Media is booked separately.' },
-            { title: 'Team', detail: 'The same desk with a shared pipeline for your team. Billed yearly.' },
+            { title: 'Team', detail: 'The same desk with a shared pipeline. One plan for the team, not charged per agent.' },
             { title: 'Brokerage', detail: 'Seats for the whole shop, with trust accounting.', href: '/brokerage' },
           ]}
         />

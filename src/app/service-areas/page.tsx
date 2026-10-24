@@ -49,7 +49,7 @@ export default function ServiceAreasPage() {
           <span className="badge">Service areas</span>
           <h1>Where we shoot.</h1>
           <p className="sub">
-            We shoot across Canada. We confirm your area and quote travel before you pay.
+            Our base is Ontario’s Golden Horseshoe. Elsewhere in Canada, we confirm your area and quote travel before you pay.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
@@ -67,7 +67,7 @@ export default function ServiceAreasPage() {
           <CoverageMap token={mapToken} />
         ) : (
           <div className="cov-map-missing">
-            <p>We shoot across Canada. Enter an address to confirm coverage and travel.</p>
+            <p>Based in Ontario’s Golden Horseshoe. Elsewhere in Canada, enter an address to confirm coverage and travel.</p>
             <Link className="btn btn-brick" href="/book">Book a shoot</Link>
           </div>
         )}
