@@ -52,7 +52,10 @@ test('AI add-on prices match the app', () => {
 
 test('pricing page renders seat and plan prices from the catalog, not hard-coded', () => {
   const page = readFileSync(new URL('../app/pricing/page.tsx', import.meta.url), 'utf8')
-  const grid = readFileSync(new URL('../app/pricing/PlanGrid.tsx', import.meta.url), 'utf8')
+  const grid =
+    readFileSync(new URL('../app/pricing/PlanGrid.tsx', import.meta.url), 'utf8') +
+    readFileSync(new URL('../app/pricing/CompareFeatures.tsx', import.meta.url), 'utf8') +
+    readFileSync(new URL('../app/pricing/Savings.tsx', import.meta.url), 'utf8')
   assert.match(page, /seatPricePerYear/)
   assert.match(page, /seatPricePerMonth/)
   assert.match(grid, /SOFTWARE_PRICES/)

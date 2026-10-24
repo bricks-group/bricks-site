@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import PlanGrid from './PlanGrid'
+import CompareFeatures from './CompareFeatures'
+import Savings from './Savings'
 import { CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { OFFICE_PLANS, OFFICE_INCLUDES, ADDONS, SOFTWARE_PRICES, OFFICE_SEAT_PRICE_PER_YEAR } from '@/lib/catalog'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
@@ -92,6 +94,12 @@ export default function PricingPage() {
         <p className="cm-note">
           On Keystone or Marble, add AI by the month: {ADDON_LINE}. Teams share one plan and aren’t charged per agent. Prices in CAD, plus HST. Billing, renewal and refunds follow the <Link href="/terms#plans">software plan terms</Link>.
         </p>
+        <CompareFeatures />
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Savings" id="savings">
+        <Head title="One system, not a stack of subscriptions." lede="Pick who you are. We show only the tools Bricks would replace for you, at each tool’s public list price." />
+        <Savings />
       </section>
 
       <section className="cm-sec rvl" aria-label="Brokerage seats">
@@ -154,6 +162,38 @@ export default function PricingPage() {
         .pg-adds li{font-size:var(--vs-fs-small,14px);color:var(--vs-fg);padding:6px 0;border-top:var(--vs-hair,1px solid #e5e2dc);}
         .pg-cta{align-self:flex-start;background:transparent!important;color:var(--vs-fg)!important;border:1px solid var(--vs-fg)!important;}
         @media (max-width:860px){.pg-cards{grid-template-columns:1fr;}}
+        .cf{margin-top:32px;border-top:var(--vs-hair,1px solid #e5e2dc);border-bottom:var(--vs-hair,1px solid #e5e2dc);}
+        .cf summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;font-size:var(--vs-fs-body,17px);font-weight:500;color:var(--vs-fg);}
+        .cf summary::-webkit-details-marker{display:none;}
+        .cf summary::after{content:'+';font-family:var(--vs-mono);color:var(--vs-fg-3);margin-left:auto;}
+        .cf[open] summary::after{content:'–';}
+        .cf-hint{font-size:var(--vs-fs-small,14px);font-weight:400;color:var(--vs-fg-3);}
+        .cf-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+        .cf-table{width:100%;border-collapse:collapse;font-size:var(--vs-fs-small,14px);margin:0 0 8px;}
+        .cf-table thead th{position:sticky;top:64px;background:var(--vs-bg,#fff);z-index:1;font-weight:500;color:var(--vs-fg);text-align:center;padding:12px 8px;border-bottom:1px solid var(--vs-rule-strong,#d6d3cd);}
+        .cf-table th[scope=row]{text-align:left;font-weight:400;color:var(--vs-fg);padding:11px 16px 11px 0;width:38%;}
+        .cf-table td{text-align:center;padding:11px 8px;color:var(--vs-fg);}
+        .cf-table tbody tr+tr th,.cf-table tbody tr+tr td{border-top:var(--vs-hair,1px solid #e5e2dc);}
+        .cf-group th{text-align:left;font-weight:400;color:var(--vs-fg-3);padding:28px 0 8px;}
+        .cf-no{color:var(--vs-fg-3);}
+        .cf-txt{color:var(--vs-fg-2);font-size:13px;}
+        .cf-mobile{display:none;}
+        .cf-pick{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:var(--vs-fs-small,14px);color:var(--vs-fg-3);padding:4px 0 8px;}
+        .cf-pick select{font:inherit;font-size:var(--vs-fs-body,16px);color:var(--vs-fg);background:transparent;border:1px solid var(--vs-rule-strong,#d6d3cd);border-radius:8px;padding:8px 12px;}
+        .cf-mgroup h4{font-size:var(--vs-fs-small,14px);font-weight:400;color:var(--vs-fg-3);margin:24px 0 4px;}
+        .cf-mgroup ul{list-style:none;margin:0;padding:0;}
+        .cf-mgroup li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;border-top:var(--vs-hair,1px solid #e5e2dc);font-size:var(--vs-fs-small,14px);color:var(--vs-fg);}
+        .cf-mgroup li > :last-child{flex:none;text-align:right;}
+        .cf > .cm-note{margin-bottom:20px;}
+        @media (max-width:720px){.cf-table{display:none;}.cf-mobile{display:block;}.cf-hint{display:none;}}
+        .sv-switch{display:flex;flex-wrap:wrap;width:fit-content;max-width:100%;margin:0 0 16px;}
+        .sv-switch + .sv-switch{margin-bottom:24px;}
+        .sv-rows .cm-row-d a{color:var(--vs-fg);}
+        .sv-totals{margin-top:24px;}
+        .sv-lede{font-size:var(--vs-fs-body,17px);color:var(--vs-fg-2);line-height:1.5;margin:8px 0 16px;max-width:62ch;}
+        .sv-lede a{color:var(--vs-fg);}
+        .sv-foot{margin-top:24px;}
+        @media (max-width:420px){.sv-switch button{padding:8px 12px;}}
       `}</style>
     </>
   )
