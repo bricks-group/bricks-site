@@ -5,6 +5,9 @@ import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import { SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
 import { COMPANION_URL, STATUS } from '@/lib/brand'
+import { FeatureList } from '@/components/features/Feature'
+import { ESIGN, LAUNCH } from '@/lib/agent-features'
+import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 
 export const metadata: Metadata = {
   title: 'bricks for agents and teams — listing file plus Companion',
@@ -19,11 +22,18 @@ export default function AgentsPage() {
       <section className="hero">
         <div className="wrap">
           <h1>Your listings, and the media behind them.</h1>
-          <p className="sub">Run your pipeline and deals in Bricks. Book listing media from the listing itself.</p>
+          <p className="sub">{AGENT_LAUNCH_LIVE
+            ? 'Run your pipeline and deals in Bricks, launch every listing from one page and keep everyone on the deal up to date. Book listing media from the listing itself.'
+            : 'Run your pipeline and deals in Bricks. Book listing media from the listing itself.'}</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login" rel="noopener noreferrer">Try Bricks free</a>
           </div>
         </div>
+      </section>
+
+      <section className="cm-sec" aria-label="Inside the desk">
+        <Head title={AGENT_LAUNCH_LIVE ? 'From listing to closing.' : 'Signed, and on the record.'} lede={AGENT_LAUNCH_LIVE ? 'Launch the listing, run the deal and sign it, from one desk.' : 'E-sign that keeps proof of every step, on Keystone and up.'} />
+        <FeatureList items={AGENT_LAUNCH_LIVE ? [...LAUNCH, ESIGN] : [ESIGN]} label="Agent features" sheet="A" />
       </section>
 
       <section className="prod-row rvl" aria-label="Companion">

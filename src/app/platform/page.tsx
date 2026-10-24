@@ -61,7 +61,7 @@ export default function PlatformPage() {
         <Head title="Who it’s for." />
         <Rows
           items={[
-            { title: 'Builders and developers', detail: 'Site files and progress visits for every project.', href: '/builders' },
+            { title: 'Builders and developers', detail: 'Progress reports, investor updates and 3D compare for every project.', href: '/builders' },
             { title: 'Brokerages', detail: 'The whole office, priced per seat.', href: '/brokerage' },
             { title: 'Teams', detail: 'One shared pipeline.', href: '/agents#team' },
             { title: 'Agents', detail: 'Your listings, with media booked from your phone.', href: '/agents' },

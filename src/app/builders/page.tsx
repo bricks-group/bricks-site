@@ -7,22 +7,55 @@ import SitePic from '@/components/builders/SitePic'
 import ConstructionPic from '@/components/builders/ConstructionPic'
 import { PER_VISIT, PLANS, PLAN_NOTE, fmt } from '@/lib/commercial'
 import { Head, Rows, Stats } from '@/components/calm/Calm'
+import { FeatureList, type FeatureItem } from '@/components/features/Feature'
 
 export const metadata: Metadata = {
-  title: 'Drone progress monitoring for builders & developers | Bricks',
+  title: 'Site progress software and drone visits for builders & developers | Bricks',
   description:
-    'Scheduled drone progress visits and mapped captures for builders, developers, GCs and investors in Canada. Vetted, insured, certified pilots: Advanced RPAS and verified drone liability insurance. From $375 per visit or $300 per site per month.',
+    'Progress reports, investor updates, 3D compare and your own capture imports for builders, developers, GCs and investors in Canada, with scheduled drone visits by vetted, insured, certified pilots. From $375 per visit or $300 per site per month.',
   alternates: { canonical: '/builders' },
   openGraph: {
     title: 'Site Progress for builders & developers | Bricks',
-    description: 'Drone progress visits and mapped captures on a fixed cadence. Billed per visit or monthly per site.',
+    description: 'Progress reports, investor updates and 3D compare from every dated site visit, ours or your own.',
   },
   twitter: {
     card: 'summary',
     title: 'Site Progress for builders & developers | Bricks',
-    description: 'Drone progress visits and mapped captures, billed per visit or monthly per site.',
+    description: 'Progress reports, investor updates and 3D compare from every dated site visit.',
   },
 }
+
+/** Builder hub: live on app.brxs.ca. Report upgrades still in progress are deliberately not listed. */
+const HUB: readonly FeatureItem[] = [
+  {
+    title: 'Progress reports.',
+    body: 'Pick a date range and Bricks drafts the report from your dated visits: a visit-by-visit timeline, before and after, your % complete, milestones and the evidence behind them.',
+    points: ['Download it as a PDF', 'Share a read-only link that expires in 30 days, or up to a year', 'Turn a link off at any time'],
+    shot: 'progress-report',
+    alt: 'A Bricks progress report with sample data: project title block, date range, a site photo, and a read-only link set to expire in 30 days',
+  },
+  {
+    title: 'Investor updates.',
+    body: 'A monthly update on the same engine. Each one starts from the last, so what changed is already written. Add your schedule, budget, next steps and risks.',
+    points: ['Schedule and budget figures stay marked as yours', 'Same PDF and expiring link as a progress report'],
+    shot: 'investor-update',
+    alt: 'The schedule and budget section of a Bricks investor update with sample data: change since the last update, target and forecast dates, budget, next steps and risks',
+  },
+  {
+    title: 'Your own captures.',
+    body: 'Upload or link maps, point clouds and models from another flight. Each import becomes a dated visit on the project timeline.',
+    points: ['GeoTIFF, LAS, LAZ, E57, PLY, OBJ, GLB, photos, video or PDF, up to 5 GB a file', 'Marked as imported, so reports never say Bricks captured it'],
+    shot: 'capture-import',
+    alt: 'The Bricks form for adding your own captures with sample files: an orthomosaic GeoTIFF, a LAS point cloud and an OBJ model, plus a field to paste links',
+  },
+  {
+    title: '3D compare.',
+    body: 'Put two dates side by side, or show only what changed. Bricks measures fill, cut and the area changed between two point clouds.',
+    points: ['Measured on a 0.5 m grid; changes under 10 cm are left out', 'An estimate for tracking progress, not a survey'],
+    shot: 'compare-3d',
+    alt: 'Bricks comparing two point clouds of a sample site a month apart, with raised areas in orange and fill, cut and area changed measured below',
+  },
+]
 
 const PROOF = [
   { k: 'Vetted, insured, certified pilots', v: 'Every pilot is vetted by Bricks before they fly a site.' },
@@ -84,15 +117,21 @@ export default function BuildersPage() {
         <div className="wrap">
           <h1>See every site.<br />On schedule.</h1>
           <p className="sub">
-            Maps, 3D models, documents and reports for builders, developers and investors. Every visit compared over time in one site file.
+            Progress reports, investor updates and 3D compare for builders, developers and investors. Built from every dated site visit, ours or your own.
           </p>
           <div className="cta-row">
             <Link className="btn btn-night btn-primary" href="/book/site">Book a site visit</Link>
+            <a className="btn btn-sec" href="#hub">See the builder hub</a>
           </div>
           <div className="bx-hero-img">
             <SitePic name="tower-cranes" eager widths={[640, 960, 1280, 1600, 2000]} alt="Drone view of a high-rise under construction, with tower cranes" sizes="(max-width:900px) 100vw, 1100px" />
           </div>
         </div>
+      </section>
+
+      <section className="cm-sec" id="hub" aria-label="The builder hub">
+        <Head title="The builder hub." lede="Everything your sites produce, ready for your team, your lenders and your investors." />
+        <FeatureList items={HUB} label="Builder hub features" sheet="B" />
       </section>
 
       <section className="cm-sec rvl" aria-label="Why Bricks for Site Progress">

@@ -12,13 +12,14 @@ import './home-v3.css'
 import { CORE_FROM } from '@/lib/pricing'
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
-import ConstructionPic from '@/components/builders/ConstructionPic'
+import { FeaturePic } from '@/components/features/FeatureShot'
+import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 
 const faqs = [
   {
     id: 'what',
     q: 'What is Bricks?',
-    a: 'Software for Canadian real estate. Deals, CRM, e-sign and site files in one place, with listing media and Site Progress booked inside it.',
+    a: 'Software for Canadian real estate. Progress reports and site files for builders, and deals, CRM and e-sign for realtors, with listing media and Site Progress booked inside it.',
   },
   {
     id: 'who',
@@ -107,7 +108,19 @@ export default function Home() {
       </section>
 
       <div className="hf" aria-label="Inside Bricks">
-        <section className="hf-row rvl" aria-label="The software">
+        <section className="hf-row rvl" aria-label="Site Progress">
+          <div className="hf-copy">
+            <h2>Site Progress, reported.</h2>
+            <p>Progress reports and investor updates from every dated visit, as a PDF or a link that expires. 3D compare measures cut and fill.</p>
+            <Link className="hf-link" href="/builders">See the builder hub</Link>
+            <span className="hf-fine">Shown with sample data</span>
+          </div>
+          <div className="hf-frame hf-photo hf-shot">
+            <FeaturePic name="progress-report" alt="A Bricks progress report with sample data, shared as a read-only link that expires in 30 days" sizes="(max-width:900px) 100vw, 780px" />
+          </div>
+        </section>
+
+        <section className="hf-row hf-flip rvl" aria-label="The software">
           <div className="hf-copy">
             <h2>One desk for every deal.</h2>
             <p>Deals, CRM, e-sign and MLS® prep on one screen.</p>
@@ -120,7 +133,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="hf-row hf-flip rvl" aria-label="Listing media">
+        <section className="hf-row rvl" aria-label="Listing media">
           <div className="hf-copy">
             <h2>Listing media, booked inside.</h2>
             <p>Photos, drone, video and 3D at an exact time. Delivery lands on the listing.</p>
@@ -131,26 +144,30 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="hf-row rvl" aria-label="Site Progress">
-          <div className="hf-copy">
-            <h2>Site Progress, on schedule.</h2>
-            <p>Maps, 3D models, documents and reports for every visit, compared over time in one site file.</p>
-            <Link className="hf-link" href="/book/site">Book a site visit</Link>
-          </div>
-          <div className="hf-frame hf-photo">
-            <ConstructionPic name="crew-deck" alt="A construction crew in hard hats standing on a concrete deck beside a grid of reinforcing steel" sizes="(max-width:900px) 100vw, 780px" />
-          </div>
-        </section>
+
+        {AGENT_LAUNCH_LIVE ? (
+          <section className="hf-row hf-flip rvl" aria-label="Listing launch and deal room">
+            <div className="hf-copy">
+              <h2>From listing to closing.</h2>
+              <p>A launch kit for every listing, and a private deal room for each lawyer, broker and inspector on the deal.</p>
+              <Link className="hf-link" href="/agents">For agents</Link>
+              <span className="hf-fine">Shown with sample data</span>
+            </div>
+            <div className="hf-frame hf-photo hf-shot">
+              <FeaturePic name="deal-room" alt="A Bricks deal room page for a buyer's lawyer, with sample data: conditions, key dates and documents for one deal" sizes="(max-width:900px) 100vw, 780px" />
+            </div>
+          </section>
+        ) : null}
       </div>
 
       <section className="cm-sec rvl" aria-label="Who it is for">
         <Head title="Built for the whole project." lede="From the first site visit to the last listing." />
         <Rows
           items={[
-            { title: 'Builders and developers', detail: 'Site files, progress visits and reports for every project.', href: '/builders' },
-            { title: 'Investors and lenders', detail: 'Dated, mapped evidence of progress before each draw.', href: '/builders' },
+            { title: 'Builders and developers', detail: 'Progress reports, 3D compare and site visits for every project.', href: '/builders' },
+            { title: 'Investors and lenders', detail: 'Monthly updates with dated, mapped evidence before each draw.', href: '/builders' },
             { title: 'Brokerages', detail: 'Every seat on one system, with trust accounting.', href: '/brokerage' },
-            { title: 'Agents and teams', detail: 'Deals, CRM and e-sign, with media on the listing.', href: '/agents' },
+            { title: 'Agents and teams', detail: AGENT_LAUNCH_LIVE ? 'Deals, e-sign, a launch kit for every listing and a deal room for every closing.' : 'Deals, CRM and e-sign, with media on the listing.', href: '/agents' },
           ]}
         />
       </section>
@@ -189,6 +206,11 @@ export default function Home() {
         .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:460px;line-height:1.45;}
         .hero-home .cta-row{align-items:center;}
+        .hf-shot{background:var(--paperDeep);}
+        .hf-fine{display:block;margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkMute);}
+        .hf-shot picture{position:absolute;inset:24px 24px 0 24px;width:auto;height:auto;}
+        .hf-shot img{object-fit:cover;object-position:50% 0;border:1px solid var(--hairStrong);border-bottom:none;}
+        @media (max-width:680px){.hf-shot picture{inset:14px 14px 0 14px;}}
         @media (max-width:680px){
           .hero-home{padding:36px var(--gutter) 24px;}
           .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:20ch;}
