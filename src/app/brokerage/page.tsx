@@ -4,6 +4,7 @@ import { Head, Rows, Close } from '@/components/calm/Calm'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
+import { BROKERAGE_PITCH, BROKERAGE_PILLARS } from '@/lib/brokerage-pitch'
 import { STATUS } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 
@@ -41,6 +42,11 @@ export default function BrokeragePage() {
             <ProductWindow title="bricks" src="/screens/os.html?screen=overview&lock=1" nw={1440} nh={920} lazy />
           </div>
         </div>
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Why brokerages choose Bricks">
+        <Head title={BROKERAGE_PITCH.title} lede={BROKERAGE_PITCH.lede} />
+        <Rows items={BROKERAGE_PILLARS} />
       </section>
 
       <section className="cm-sec rvl" aria-label="Seats">

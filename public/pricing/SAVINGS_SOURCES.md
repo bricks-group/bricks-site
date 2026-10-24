@@ -32,6 +32,27 @@ Data lives in `src/lib/savings.ts`; `src/lib/savings.test.ts` checks that every 
 
 Clay is free, so it is not compared.
 
+## Builders: one site, one mapped visit a month (CAD, no conversion)
+
+Bricks Site Progress is a done-for-you service (pilot, flight, processing and one site file), so it is compared against the services a builder books today, not DIY drone software.
+
+| Job | Service | List price (CAD) | Source | Checked |
+| --- | --- | --- | --- | --- |
+| Drone mapping, with a progress report and share link | Buildmode Aerial Mapping, Progress Documentation (orthomosaic, elevation models, point cloud, PDF report, interactive map link) | $950 a recurring capture; $1,600 first capture with ground control | https://buildmodeaerial.ca/pricing | 2026-10-24 |
+| Progress photos and video | Video Drone, Construction Monitoring (15 pictures, 1.5-minute edited video, up to 1 hour on site) | $325 a shoot | https://www.videodrone.ca/construction/ | 2026-10-24 |
+
+| | Separate services | Bricks mapped, monthly |
+| --- | --- | --- |
+| Per month | $1,275 ($950 + $325) | $1,200 |
+| One-time setup | $650 (Buildmode's first capture is $1,600, i.e. $650 over the $950 recurring rate) | $650 |
+| Difference | | Bricks ~$75 a month less, about $900 a year |
+
+Builder like-for-like notes:
+- Buildmode's starting prices cover sites up to 20 ha within 45 km of London, Ontario; bigger sites and longer trips are quoted. Video Drone is in Toronto. Travel is not counted on either side.
+- Bricks mapped captures include dated drone photos and video, an orthomosaic, a 3D model and a measurable map, filed in one site file. Survey-grade accuracy is quoted separately on both sides.
+- Not counted: a platform to store and share progress media (OpenSpace quotes on request), and the time spent assembling lender and investor reports (no credible published figure; one vendor claims about 3 hours a month).
+- The result is a small saving. The bigger difference is one vendor, one portal and dated evidence for every draw.
+
 ## Like-for-like notes
 
 - E-sign: Bricks e-sign uses a signing checklist and shareable links. Placing fields on the PDF is coming soon, so Dropbox Sign does more here today.
@@ -46,7 +67,13 @@ Clay is free, so it is not compared.
 | dotloop Premium | $34.99 / mo (USD), $28.67 billed yearly. https://www.dotloop.com/agents/ | Transaction management already counted in Wise Agent; e-sign counted at a lower price |
 | DocuSign eSignature Personal | $11 / mo billed yearly (USD), 5 envelopes a month. https://www.docusign.com/products-and-pricing | Price shown is for yearly billing only; month-to-month basis used throughout |
 | Cloud CMA | Not shown on the vendor's page | No public price |
-| DroneDeploy Flight & Analysis | $4,188 / yr (USD), software only. https://www.dronedeploy.com/pricing | Not like for like: Bricks Site Progress includes the flight; DroneDeploy is software you fly yourself. Shown to builders as context only (~$488 CAD a month at the rate above), never as a saving |
+| DroneDeploy Flight & Analysis | $4,188 / yr (USD), software only. https://www.dronedeploy.com/pricing | Not a competitor: DIY software you fly yourself. Bricks Site Progress is a done-for-you service, so builders are compared against services (above) |
+| OpenSpace (progress-photo platform) | Not public: "Ready for a quote? Fill out our short form". https://www.openspace.ai/pricing/ | No public price |
+| Ctrl single-flight missions | $1,950 recon, $2,950 full mission with orthomosaic, $4,500 survey grade (CAD). https://goctrl.ca/raas/single-flight | A lower-priced recurring mapping service (Buildmode) covers the same job |
+| Progress Scan GTA | $400 a recurring visit, +$300 3D model (CAD), "typical GTA-area ranges". https://progressscangta.com/ | Posted as typical ranges; deliverables per visit less specific than Buildmode's |
+| Grace Multimedia construction monitoring | From $349 a site visit (CAD). https://getgrace.ca/commercial-drone-services | Video Drone lists the same job lower |
+| Island Drone Services 3D mapping | $799 for 10 acres (CAD, BC). https://islanddrone.ca/pricing/ | Vancouver Island only; not a GTA or Ontario option |
+| JunoDrone progress monitoring | "$600 to $900 (depending on site size)" in a worked example; also says a site manager spends "3 hours per month" on photos and write-ups. https://junodrone.ca/progress-monitoring | An example, not a price list. The report time is a vendor claim, so it is not counted |
 | Matterport and other tour hosting | Not checked | Virtual Visit is quoted per job, not part of a plan |
-| Lofty, kvCORE / BoldTrail, SkySlope, Lone Wolf Transact, OpenSpace | Not checked | Left out; the cheaper tools above already cover these jobs, or there is no Bricks plan equivalent |
+| Lofty, kvCORE / BoldTrail, SkySlope, Lone Wolf Transact | Not checked | Left out; the cheaper tools above already cover these jobs, or there is no Bricks plan equivalent |
 | Property websites | Not counted | Bricks listing sites come with each shoot, not with a plan |

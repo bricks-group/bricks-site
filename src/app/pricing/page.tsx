@@ -8,6 +8,7 @@ import { CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from
 import { OFFICE_PLANS, OFFICE_INCLUDES, ADDONS, SOFTWARE_PRICES, OFFICE_SEAT_PRICE_PER_YEAR } from '@/lib/catalog'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { Head, Rows, Close } from '@/components/calm/Calm'
+import { BROKERAGE_PITCH, BROKERAGE_PILLARS } from '@/lib/brokerage-pitch'
 import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
 
 const SIGNUP = 'https://app.brxs.ca/login'
@@ -103,7 +104,10 @@ export default function PricingPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Brokerage seats">
-        <Head title="Brokerages, per seat." lede={OFFICE_INCLUDES} link={{ href: '/brokerage', label: 'For brokerages' }} />
+        <Head title={BROKERAGE_PITCH.title} lede={BROKERAGE_PITCH.lede} link={{ href: '/brokerage', label: 'For brokerages' }} />
+        <Rows label="Why brokerages choose Bricks" items={BROKERAGE_PILLARS} />
+        <h3 className="pr-sub">Per seat</h3>
+        <p className="pr-sublede">{OFFICE_INCLUDES}</p>
         <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: `$${p.seatPricePerYear} / yr or $${p.seatPricePerMonth} / mo` }))} />
         <p className="cm-note">Per seat. Yearly, or monthly at 25% more with no lock-in.</p>
       </section>
@@ -187,12 +191,25 @@ export default function PricingPage() {
         .cf > .cm-note{margin-bottom:20px;}
         @media (max-width:720px){.cf-table{display:none;}.cf-mobile{display:block;}.cf-hint{display:none;}}
         .sv-switch{display:flex;flex-wrap:wrap;width:fit-content;max-width:100%;margin:0 0 16px;}
-        .sv-switch + .sv-switch{margin-bottom:24px;}
-        .sv-rows .cm-row-d a{color:var(--vs-fg);}
-        .sv-totals{margin-top:24px;}
-        .sv-lede{font-size:var(--vs-fs-body,17px);color:var(--vs-fg-2);line-height:1.5;margin:8px 0 16px;max-width:62ch;}
-        .sv-lede a{color:var(--vs-fg);}
+        .sv-lead{border-top:var(--vs-hair,1px solid #e5e2dc);padding:28px 0 8px;margin-top:8px;}
+        .sv-fig{margin:0;font-size:clamp(30px,3vw + 14px,48px);line-height:1.1;letter-spacing:-.02em;font-weight:500;color:var(--vs-fg);font-variant-numeric:tabular-nums;}
+        .sv-figsub{margin:10px 0 24px;font-size:var(--vs-fs-body,17px);color:var(--vs-fg-2);line-height:1.5;max-width:60ch;}
+        .sv-bars{margin:0;display:grid;gap:14px;max-width:720px;}
+        .sv-bars dt{font-size:var(--vs-fs-small,14px);color:var(--vs-fg-3);margin:0 0 6px;}
+        .sv-bars dd{margin:0;display:flex;align-items:center;gap:12px;}
+        .sv-bar{display:block;height:10px;border-radius:2px;flex:none;max-width:calc(100% - 84px);}
+        .sv-bar-them{background:var(--vs-fg-3);opacity:.45;}
+        .sv-bar-us{background:var(--vs-fg);}
+        .sv-amt{font-family:var(--vs-mono);font-size:var(--vs-fs-small,14px);color:var(--vs-fg);font-variant-numeric:tabular-nums;white-space:nowrap;}
+        .sv-detail{margin-top:28px;border-top:var(--vs-hair,1px solid #e5e2dc);}
+        .sv-detail summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;padding:16px 0;font-size:var(--vs-fs-body,17px);font-weight:500;color:var(--vs-fg);}
+        .sv-detail summary::-webkit-details-marker{display:none;}
+        .sv-detail summary::after{content:'+';font-family:var(--vs-mono);color:var(--vs-fg-3);}
+        .sv-detail[open] summary::after{content:'–';}
+        .sv-rows .cm-row-d a{color:inherit;text-decoration-color:var(--vs-fg-3);text-underline-offset:2px;}
         .sv-foot{margin-top:24px;}
+        .pr-sub{font-size:var(--vs-fs-body,17px);font-weight:500;color:var(--vs-fg);margin:40px 0 4px;}
+        .pr-sublede{font-size:var(--vs-fs-small,14px);color:var(--vs-fg-2);margin:0 0 12px;}
         @media (max-width:420px){.sv-switch button{padding:8px 12px;}}
       `}</style>
     </>

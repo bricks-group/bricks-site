@@ -75,14 +75,42 @@ export function stackFor(plan: SavingsPlan): Stack {
 }
 
 /**
- * Checked but not counted: Site Progress includes the flight; this is software you fly yourself.
- * Shown to builders as context only, never as a saving.
+ * Builders: what a site team buys today for one mapped visit a month on one site, from two vendors.
+ * CAD list prices from each firm's own pricing page (no FX). Bricks Site Progress is a done-for-you
+ * service, so we compare against services, not DIY drone software.
  */
-export const DRONE_SOFTWARE = {
-  tool: 'DroneDeploy Flight & Analysis',
-  usdYearly: 4188,
-  url: 'https://www.dronedeploy.com/pricing',
-} as const
+export type SiteTool = { id: string; job: string; tool: string; cadPerVisit: number; unit: string; url: string; covers: string }
+export const SITE_TOOLS: readonly SiteTool[] = [
+  {
+    id: 'mapping',
+    job: 'Drone mapping, with a progress report and share link',
+    tool: 'Buildmode Aerial Mapping',
+    cadPerVisit: 950,
+    unit: 'a recurring capture',
+    url: 'https://buildmodeaerial.ca/pricing',
+    covers: 'Orthomosaic, elevation model, point cloud, PDF report, share link',
+  },
+  {
+    id: 'progress-media',
+    job: 'Progress photos and video',
+    tool: 'Video Drone',
+    cadPerVisit: 325,
+    unit: 'a shoot',
+    url: 'https://www.videodrone.ca/construction/',
+    covers: '15 photos and a 1.5-minute edited video',
+  },
+]
+/** Buildmode's first capture carries ground control: $1,600 vs $950 after. */
+export const SITE_FIRST_CAPTURE = 1600
+
+export type SiteStack = { tools: { tool: SiteTool; cad: number }[]; separate: number; bricks: number; keep: number; setupBricks: number; setupSeparate: number }
+
+export function builderStack(mappedMonthly: number, mappedSetup: number): SiteStack {
+  const tools = SITE_TOOLS.map((tool) => ({ tool, cad: tool.cadPerVisit }))
+  const separate = tools.reduce((s, t) => s + t.cad, 0)
+  const mapping = SITE_TOOLS.find((t) => t.id === 'mapping')!
+  return { tools, separate, bricks: mappedMonthly, keep: separate - mappedMonthly, setupBricks: mappedSetup, setupSeparate: SITE_FIRST_CAPTURE - mapping.cadPerVisit }
+}
 
 export const ROLES = [
   { id: 'agent', label: 'Agent' },
