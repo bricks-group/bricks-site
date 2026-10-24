@@ -7,7 +7,16 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    // The sign-up pop-ups in the other Bricks apps read these public documents
+    // cross-origin, so the text has one source. Public pages, no credentials.
+    const legalCors = [
+      { key: 'Access-Control-Allow-Origin', value: '*' },
+      { key: 'Access-Control-Allow-Methods', value: 'GET, HEAD, OPTIONS' },
+    ]
     return [
+      { source: '/terms', headers: legalCors },
+      { source: '/privacy', headers: legalCors },
+      { source: '/legal/ic-agreement.txt', headers: legalCors },
       {
         source: '/.well-known/apple-developer-merchantid-domain-association',
         headers: [

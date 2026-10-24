@@ -6,6 +6,8 @@ import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from 
 import { BookCalendar } from './BookCalendar'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
+import LegalDocSheet from '@/components/legal/LegalDocSheet'
+import type { LegalDocKey } from '@/lib/legal-docs'
 import { track } from '@vercel/analytics'
 import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
@@ -160,6 +162,14 @@ function evt(name: string, props?: TrackProps) {
 export default function BookingWizard() {
   const [step, setStep] = useState<number | 'done'>(0)
   const [errs, setErrs] = useState<Record<number, string>>({})
+  const [legalOpen, setLegalOpen] = useState<LegalDocKey | null>(null)
+  const [legalRead, setLegalRead] = useState<Partial<Record<LegalDocKey, boolean>>>({})
+  // Plain clicks open the document in a pop-up; modified clicks still open the page.
+  const openLegal = (k: LegalDocKey) => (e: React.MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+    e.preventDefault()
+    setLegalOpen(k)
+  }
   const [name, setName] = useState('')
   const [brokerage, setBrokerage] = useState('')
   const [email, setEmail] = useState('')
@@ -889,9 +899,10 @@ export default function BookingWizard() {
               <div className="err">{errs[3]}</div>
               <p style={{ fontSize: 12.5, color: 'var(--inkSoft)', marginTop: 12, lineHeight: 1.45, padding: '12px 16px', border: '1px solid var(--hairStrong)', borderRadius: 2, background: 'var(--bgRaised, transparent)' }}>
                 <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Cancellation / no-show:</strong>{' '}
-                More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. Full schedule in the <Link href="/terms#refunds" style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
+                More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. Full schedule in the <Link href="/terms#refunds" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
               </p>
-              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
+              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" onClick={openLegal('privacy')} style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
+              <LegalDocSheet doc={legalOpen} read={legalOpen ? !!legalRead[legalOpen] : false} onRead={(k) => setLegalRead((r) => ({ ...r, [k]: true }))} onClose={() => setLegalOpen(null)} />
               <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
               <p className="hint-sm" style={{ margin: '12px 0 0' }}>Have a launch code? Enter it at checkout.</p>
             </div>

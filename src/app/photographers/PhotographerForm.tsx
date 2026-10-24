@@ -1,6 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { LegalDocRows, LegalDocSheet, useLegalReads } from '@/components/legal/LegalDocRows'
+import { lockedReason, type LegalDocKey } from '@/lib/legal-docs'
+
+// The applicant must open and scroll through both before the agreement checkbox unlocks.
+const APPLY_DOCS: readonly LegalDocKey[] = ['ic', 'privacy']
 
 const DISPATCH_API = 'https://dispatch-api.brxs.ca/api/onboarding'
 
@@ -69,7 +74,10 @@ export default function PhotographerForm() {
   const [droneVisible, setDroneVisible] = useState(false)
   const [hstExempt, setHstExempt] = useState(false)
   const [source, setSource] = useState('')
-  const [icText, setIcText] = useState('Loading agreement…')
+  const legal = useLegalReads(APPLY_DOCS)
+  const [accept, setAccept] = useState(false)
+  const [showWhy, setShowWhy] = useState(false)
+  const acceptMsg = showWhy ? lockedReason(APPLY_DOCS, legal.read) : ''
   const [err, setErr] = useState('')
   const [resumeWarning, setResumeWarning] = useState('')
   const [cityChoice, setCityChoice] = useState('')
@@ -175,13 +183,6 @@ export default function PhotographerForm() {
     if (!r.ok) throw new Error('resume upload failed')
   }
 
-  useEffect(() => {
-    fetch('/legal/ic-agreement.txt')
-      .then((r) => (r.ok ? r.text() : Promise.reject()))
-      .then((t) => setIcText(t))
-      .catch(() => setIcText('Could not load agreement. Please email booking@brxs.ca for the full text.'))
-  }, [])
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setErr('')
@@ -201,7 +202,7 @@ export default function PhotographerForm() {
     const portfolio2 = (fd.get('portfolio2') as string || '').trim()
     const hstNumber = (fd.get('hst_number') as string || '').trim()
     const hstExemptChecked = (form.querySelector<HTMLInputElement>('#f_hst_exempt'))?.checked
-    const accepted = (form.querySelector<HTMLInputElement>('#f_accept'))?.checked
+    const accepted = legal.done && accept
     const equipment = {
       camera_body: (fd.get('camera_body') as string || '').trim(),
       lenses: (fd.get('lenses') as string || '').trim(),
@@ -272,6 +273,7 @@ export default function PhotographerForm() {
     if (resumeFile.size > RESUME_MAX_BYTES) {
       setErr('Resume file is too large (8MB max).'); return
     }
+    if (!legal.done) { setShowWhy(true); setErr('Read both documents and accept the agreement before submitting.'); return }
     if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
 
     const basePayload = {
@@ -552,12 +554,22 @@ export default function PhotographerForm() {
       )}
 
       <div className="fsec">07 · Independent contractor agreement</div>
-      <p className="hint-sm" style={{ margin: '0 0 4px' }}>Read the Bricks IC Agreement below before accepting. This agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
-      <div className="ic-box">{icText}</div>
-      <label className="ic-accept">
-        <input type="checkbox" id="f_accept" required />
+      <p className="hint-sm" style={{ margin: '0 0 4px' }}>Open and read both documents before accepting. The agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
+      <LegalDocRows docs={APPLY_DOCS} read={legal.read} onOpen={legal.setOpen} />
+      <label className={`ic-accept${legal.done ? '' : ' is-locked'}`} onClick={() => { if (!legal.done) setShowWhy(true) }}>
+        <input
+          type="checkbox"
+          id="f_accept"
+          checked={legal.done && accept}
+          aria-disabled={!legal.done}
+          aria-describedby={acceptMsg ? 'f_accept_why' : undefined}
+          onChange={(e) => { if (!legal.done) { setShowWhy(true); return } setAccept(e.target.checked) }}
+          data-testid="apply-accept-checkbox"
+        />
         <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.9</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes and equipment; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
+      {acceptMsg ? <p id="f_accept_why" className="ic-why" role="status">{acceptMsg}</p> : null}
+      <LegalDocSheet doc={legal.open} read={legal.open ? !!legal.read[legal.open] : false} onRead={legal.markRead} onClose={() => legal.setOpen(null)} />
 
       <div className="err">{err}</div>
       <div className="cta-row">
@@ -581,11 +593,12 @@ export default function PhotographerForm() {
         .aform .radio-row label{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--hairStrong);
           border-radius:2px;font-size:13.5px;letter-spacing:0;text-transform:none;font-family:'General Sans',sans-serif;cursor:pointer;background:var(--paperDeep);white-space:nowrap;flex:none;}
         .aform .radio-row input{width:auto;max-width:none;}
-        .aform .ic-box{border:1px solid var(--hairStrong);border-radius:2px;background:var(--paperDeep);padding:16px;
-          font-size:12.5px;color:var(--inkSoft);line-height:1.6;max-height:240px;overflow-y:auto;margin:8px 0 16px;white-space:pre-wrap;}
         .aform .ic-accept{display:flex;align-items:flex-start;gap:8px;padding:16px;border:1px solid var(--hairStrong);
           border-radius:2px;cursor:pointer;background:var(--paperDeep);font-size:13.5px;line-height:1.5;margin-bottom:16px;}
-        .aform .ic-accept input{margin-top:3px;flex:none;}
+        .aform .ic-accept input{margin-top:3px;flex:none;accent-color:var(--ink);}
+        .aform .ic-accept.is-locked{cursor:not-allowed;color:var(--inkMute);}
+        .aform .ic-accept.is-locked input{opacity:.4;cursor:not-allowed;}
+        .aform .ic-why{margin:-8px 0 16px;font-size:13px;color:var(--inkSoft);}
         .aform .ic-accept span{min-width:0;flex:1;overflow-wrap:anywhere;white-space:normal;}
         .success-box{text-align:center;padding:64px 32px;}
         .success-box .check{font-size:38px;margin-bottom:14px;color:var(--brickDeep);}
