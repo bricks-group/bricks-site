@@ -79,7 +79,7 @@ export default function BuildersPage() {
             Maps, 3D models, documents and reports for builders, developers and investors. Every visit compared over time in one site file.
           </p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="/book/site">Book a site visit</Link>
+            <Link className="btn btn-night btn-primary" href="/book/site">Book a site visit</Link>
           </div>
           <div className="bx-hero-img">
             <SitePic name="tower-cranes" eager widths={[640, 960, 1280, 1600, 2000]} alt="Drone view of a high-rise under construction, with tower cranes" sizes="(max-width:900px) 100vw, 1100px" />

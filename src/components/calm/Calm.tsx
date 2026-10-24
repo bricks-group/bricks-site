@@ -73,12 +73,13 @@ export function Head({ title, lede, link }: { title: string; lede?: string; link
   )
 }
 
-/** Closing band: one heading, one action. */
-export function Close({ title, href, label, external }: { title: string; href: string; label: string; external?: boolean }) {
+/** Closing band: one heading, one action. Orange when it repeats the page's primary action; pass primary={false} otherwise. */
+export function Close({ title, href, label, external, primary = true }: { title: string; href: string; label: string; external?: boolean; primary?: boolean }) {
+  const cls = primary ? 'btn btn-night btn-primary' : 'btn btn-night'
   return (
     <section className="cm-close" aria-label={label}>
       <h2>{title}</h2>
-      {external ? <a className="btn btn-night" href={href}>{label}</a> : <Link className="btn btn-night" href={href}>{label}</Link>}
+      {external ? <a className={cls} href={href}>{label}</a> : <Link className={cls} href={href}>{label}</Link>}
     </section>
   )
 }

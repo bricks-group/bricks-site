@@ -90,7 +90,7 @@ export default function Home() {
           <h1>The system that brings it all together.</h1>
           <p className="sub">Software for builders, developers, investors and realtors. Listing media and Site Progress are booked inside it.</p>
           <div className="cta-row">
-            <a className="btn btn-night" href="https://app.brxs.ca/login">Try Bricks free</a>
+            <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="cm-link" href="/pricing">See pricing</Link>
           </div>
         </div>

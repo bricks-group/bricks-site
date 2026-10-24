@@ -26,7 +26,7 @@ export default function BrokeragePage() {
           <h1>The system for the whole shop.</h1>
           <p className="sub">Roster, pipeline, listings and trust accounting in one system.</p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="/contact">Talk to us</Link>
+            <Link className="btn btn-night btn-primary" href="/contact">Talk to us</Link>
           </div>
         </div>
       </section>

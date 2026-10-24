@@ -36,7 +36,7 @@ export default function MediaPage() {
           <h1>Listing media, booked inside Bricks.</h1>
           <p className="sub">Photos, drone, floor plans, film and 3D at an exact time. Delivery lands on the listing.</p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="/book">Book media</Link>
+            <Link className="btn btn-night btn-primary" href="/book">Book media</Link>
           </div>
         </div>
       </section>

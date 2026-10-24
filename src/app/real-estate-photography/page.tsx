@@ -122,7 +122,7 @@ export default function RealEstatePhotographyPage() {
           <h1>Real estate photography, Canada-wide.</h1>
           <p className="sub">HDR photos, licensed drone and a floor plan on every standard shoot, delivered to the listing in Bricks.</p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="/book">Book media</Link>
+            <Link className="btn btn-night btn-primary" href="/book">Book media</Link>
           </div>
         </div>
       </section>

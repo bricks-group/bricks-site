@@ -113,7 +113,7 @@ export default function PhotographersPage() {
           <h1>Real estate photographer jobs across Canada.</h1>
           <p className="sub">Shoot listings for a fixed rate per job. Jobs come to you in the Bricks app, and you&apos;re paid automatically.</p>
           <div className="cta-row">
-            <a className="btn btn-night" href="#apply">Apply in 4 minutes</a>
+            <a className="btn btn-night btn-primary" href="#apply">Apply in 4 minutes</a>
           </div>
         </div>
       </section>

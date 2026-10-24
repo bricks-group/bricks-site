@@ -28,7 +28,7 @@ export default function PlatformPage() {
           <h1>One system, from site to sale.</h1>
           <p className="sub">Deals, CRM, e-sign, MLS® prep and site files, on the web and on your phone. Media and Site Progress are booked inside.</p>
           <div className="cta-row">
-            <a className="btn btn-night" href={OS_LOGIN}>Try Bricks free</a>
+            <a className="btn btn-night btn-primary" href={OS_LOGIN}>Try Bricks free</a>
           </div>
         </div>
       </section>

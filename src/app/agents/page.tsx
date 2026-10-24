@@ -21,7 +21,7 @@ export default function AgentsPage() {
           <h1>Your listings, and the media behind them.</h1>
           <p className="sub">Run your pipeline and deals in Bricks. Book listing media from the listing itself.</p>
           <div className="cta-row">
-            <a className="btn btn-night" href="https://app.brxs.ca/login" rel="noopener noreferrer">Try Bricks free</a>
+            <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login" rel="noopener noreferrer">Try Bricks free</a>
           </div>
         </div>
       </section>
@@ -57,7 +57,7 @@ export default function AgentsPage() {
         />
       </section>
 
-      <Close title="Book the shoot from the listing." href="/book" label="Book media" />
+      <Close title="Book the shoot from the listing." href="/book" label="Book media" primary={false} />
       <style>{`
         .incl.two{grid-template-columns:1fr 1fr;}
         @media (max-width:680px){.incl.two{grid-template-columns:1fr;}}

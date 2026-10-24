@@ -20,7 +20,6 @@
 .incl.plans .c li.st-new::before,.incl.plans .c li.st-inherited::before{background:var(--vs-fg);border:none;}
 
 /* Colour only for attention: primary actions are ink, links are ink. */
-.btn-brick{background:var(--vs-fg)!important;color:var(--vs-bg)!important;border-color:var(--vs-fg)!important;}
 .learn-link{color:var(--vs-fg);border-bottom:1px solid var(--vs-rule-strong);padding-bottom:2px;}
 .learn-link:hover{text-decoration:none;border-bottom-color:var(--vs-fg);}
 
@@ -31,3 +30,7 @@
 .faq-home summary::after{color:var(--vs-fg-3)!important;}
 .foot-meta{font-family:var(--vs-sans);letter-spacing:0;text-transform:none;}
 .foot-meta a:hover{color:var(--vs-fg);}
+
+/* One brick-orange primary action per page (hero, plus the closer when it is the same action). */
+.btn.btn-primary{background:var(--brick)!important;color:#fff!important;border-color:var(--brick)!important;}
+.btn.btn-primary:hover{filter:brightness(.92);}
