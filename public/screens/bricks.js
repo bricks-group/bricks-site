@@ -1685,7 +1685,7 @@ function BookHome({ dark=false }) {
         </div>
 
         <div style={{ marginTop:22 }}>
-          <Btn variant="accent" full icon="plus">Book a shoot</Btn>
+          <Btn variant="primary" full icon="plus">Book a shoot</Btn>
         </div>
 
         <div style={{ marginTop:28 }}>

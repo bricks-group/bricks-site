@@ -4857,7 +4857,7 @@
         marginTop: 22
       }
     }, /*#__PURE__*/React.createElement(Btn, {
-      variant: "accent",
+      variant: "primary",
       full: true,
       icon: "plus"
     }, "Book a shoot")), /*#__PURE__*/React.createElement("div", {
