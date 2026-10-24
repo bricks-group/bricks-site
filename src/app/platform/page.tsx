@@ -4,6 +4,7 @@ import PhoneFrame from '@/components/phone/PhoneFrame'
 import PhoneVideo from '@/components/phone/PhoneVideo'
 import ProductStage from '@/components/ProductStage'
 import { OFFICE_SEAT_PRICE_PER_YEAR, SOFTWARE_BLURB } from '@/lib/catalog'
+import { IntegrationsList } from '@/components/calm/Integrations'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import { COMPANION_URL, OS_LOGIN } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
@@ -68,6 +69,8 @@ export default function PlatformPage() {
           ]}
         />
       </section>
+
+      <IntegrationsList />
 
       <section className="cm-sec rvl" aria-label="Plans">
         <Head title="Start free. Upgrade when it pays." link={{ href: '/pricing', label: 'See pricing' }} />

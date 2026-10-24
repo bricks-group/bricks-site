@@ -6,6 +6,7 @@ import OsDeskShot from '@/components/OsDeskShot'
 import PhoneFrame from '@/components/phone/PhoneFrame'
 import PhoneVideo from '@/components/phone/PhoneVideo'
 import { Stats, Rows, Head, Close } from '@/components/calm/Calm'
+import { IntegrationsRow } from '@/components/calm/Integrations'
 import './home-v10.css'
 import './home-v3.css'
 import { CORE_FROM } from '@/lib/pricing'
@@ -158,6 +159,8 @@ export default function Home() {
         />
       </section>
 
+      <IntegrationsRow />
+
       <section className="cm-sec rvl" aria-label="Pricing">
         <Head title="Start free. Book when you need to." link={{ href: '/pricing', label: 'See pricing' }} />
         <Stats
@@ -168,7 +171,7 @@ export default function Home() {
             { fig: fmt(PER_VISIT[0].price), label: 'Site visit, from' },
           ]}
         />
-        <p className="cm-note">Works with Follow Up Boss, kvCORE, PropTx, Stripe, Docusign and your calendar. Prices in CAD, before tax.</p>
+        <p className="cm-note">Prices in CAD, before tax.</p>
       </section>
 
       <section className="cm-sec rvl" id="faq" aria-label="Frequently asked questions">
