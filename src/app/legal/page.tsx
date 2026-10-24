@@ -42,7 +42,7 @@ export default function LegalHubPage() {
               <Link href="/privacy">Privacy Policy</Link> — how we handle personal information. Effective 27 August 2026.
             </li>
             <li>
-              <a href="/legal/ic-agreement.txt">Independent Contractor Agreement v1.8</a>
+              <a href="/legal/ic-agreement.txt">Independent Contractor Agreement v1.9</a>
               {' '}— photographers working through the Bricks app. Effective 3 October 2026.
             </li>
             <li>

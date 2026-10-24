@@ -291,7 +291,7 @@ export default function PhotographerForm() {
       rpas_certificate_level: droneClaimed ? rpasLevel : null,
       rpas_certificate_number: droneClaimed ? rpasNumber : null,
       accepted_terms: true,
-      ic_agreement_version: '1.8',
+      ic_agreement_version: '1.9',
       preferred_regions: [] as string[],
       source: sourceVal,
       source_detail: sourceDetail,
@@ -556,7 +556,7 @@ export default function PhotographerForm() {
       <div className="ic-box">{icText}</div>
       <label className="ic-accept">
         <input type="checkbox" id="f_accept" required />
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.8</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes and equipment; and that Transport Canada drone regulations are my sole responsibility.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.9</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes and equipment; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
 
       <div className="err">{err}</div>
