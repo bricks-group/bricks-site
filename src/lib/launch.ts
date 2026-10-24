@@ -9,7 +9,7 @@
  * NEXT_PUBLIC_WWW_AGENT_LAUNCH_PREVIEW=1 (vercel deploy --build-env ...). Production
  * never sets that variable.
  */
-const PUBLISHED = false
+const PUBLISHED = true
 
 export const AGENT_LAUNCH_LIVE: boolean =
   PUBLISHED || process.env.NEXT_PUBLIC_WWW_AGENT_LAUNCH_PREVIEW === '1'
