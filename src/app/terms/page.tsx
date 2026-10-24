@@ -115,8 +115,8 @@ export default function TermsPage() {
 
       <div className="legal-body">
         <section className="block" id="plans">
-          <h2>13. Software plans (Bricks OS subscriptions)</h2>
-          <p>Sections 1 to 12 cover media bookings and Site Progress work. This section covers Bricks OS software subscriptions sold on <Link href="/pricing">brxs.ca/pricing</Link>: the solo plans Clay (free), Keystone ($49/month), Marble ($99/month), and Diamond ($149/month), and office seats billed per seat per year (from $300 to $708 per seat per year, by office size). Annual solo plans are billed once a year at ten months&apos; price for twelve months of access. Prices are in CAD and exclude HST, which is added at checkout.</p>
+          <h2>13. Software plans (Bricks subscriptions)</h2>
+          <p>Sections 1 to 12 cover media bookings and Site Progress work. This section covers Bricks software subscriptions sold on <Link href="/pricing">brxs.ca/pricing</Link>: the solo plans Clay (free), Keystone ($49/month), Marble ($99/month), and Diamond ($149/month), and office seats billed per seat per year (from $300 to $708 per seat per year, by office size). Annual solo plans are billed once a year at ten months&apos; price for twelve months of access. Prices are in CAD and exclude HST, which is added at checkout.</p>
           <h3>Billing and renewal</h3>
           <p>Paid plans are charged through Stripe at the start of each billing cycle and renew automatically at the then-current price until cancelled. Any price change is posted on the pricing page before it takes effect at your next renewal.</p>
           <h3>Cancellation</h3>

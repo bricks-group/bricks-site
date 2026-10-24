@@ -75,7 +75,7 @@ export default function PlatformPage() {
 
       <section className="prod-row prod-row-flip rvl" aria-label="Photographer app — mobile">
         <div className="tray tray-disp tray-phone">
-          <PhoneFrame label="Screen recording of the real Bricks GO photographer app with sample data: today's shoots, job detail, week, payouts"><PhoneVideo name="go" tone="dark" bar="#0F0F0F" /></PhoneFrame>
+          <PhoneFrame label="Screen recording of the real Bricks photographer app with sample data: today's shoots, job detail, week, payouts"><PhoneVideo name="go" tone="dark" bar="#0F0F0F" /></PhoneFrame>
         </div>
         <div className="prod-copy">
           <span className="over">Mobile</span>

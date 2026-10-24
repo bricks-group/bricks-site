@@ -232,7 +232,7 @@ export default function Home() {
             <Link className="hf-link" href="/photographers">For photographers →</Link>
           </div>
           <div className="hf-frame tray tray-disp tray-phone">
-            <PhoneFrame label="Screen recording of the real Bricks GO photographer app with sample data: today's shoots, job detail, week, payouts"><PhoneVideo name="go" tone="dark" bar="#0F0F0F" /></PhoneFrame>
+            <PhoneFrame label="Screen recording of the real Bricks photographer app with sample data: today's shoots, job detail, week, payouts"><PhoneVideo name="go" tone="dark" bar="#0F0F0F" /></PhoneFrame>
           </div>
         </section>
       </div>
