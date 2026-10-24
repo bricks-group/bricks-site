@@ -1,117 +1,39 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
-import NewsletterPopup from './NewsletterPopup'
 import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
-import ServicesGrid from '@/components/services/ServicesGrid'
-import IntegrationsBand from '@/components/IntegrationsBand'
 import PhoneFrame from '@/components/phone/PhoneFrame'
 import PhoneVideo from '@/components/phone/PhoneVideo'
+import { Stats, Rows, Head, Close } from '@/components/calm/Calm'
 import './home-v10.css'
 import './home-v3.css'
-import {
-  FOOTPRINT_BANDS,
-  TOUR_RANGE,
-  VISIT_PRICE_LABEL,
-  CORE_FROM,
-  STORY_FROM,
-  SHOWCASE_FROM,
-  FULL_FROM,
-  PHOTO_ONLY_FROM,
-} from '@/lib/pricing'
-import {
-  COVERAGE_LINE,
-  GO_URL,
-  STATUS,
-  TOUR_NAME,
-  VISIT_NAME,
-  VISIT_PACKAGING,
-} from '@/lib/brand'
+import { CORE_FROM } from '@/lib/pricing'
+import { PER_VISIT, fmt } from '@/lib/commercial'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 
 const faqs = [
   {
     id: 'what',
     q: 'What is Bricks?',
-    a: 'The system for Canadian real estate: listing media, deals, e-sign and CRM in one place. Agents book shoots in Companion; photographers work in the Bricks app.',
+    a: 'Software for Canadian real estate. Deals, CRM, e-sign and site files in one place, with listing media and Site Progress booked inside it.',
   },
   {
-    id: 'included',
-    q: "What's included in a standard shoot?",
-    a: `Essentials, from $${CORE_FROM}, includes HDR photos, licensed drone and a floor plan. We aim to deliver MLS-ready photos in 24 hours, and other media in 24–48 hours.`,
+    id: 'who',
+    q: 'Who is it for?',
+    a: 'Builders, developers and investors running projects, and the brokerages, teams and agents selling them.',
   },
   {
     id: 'booking',
-    q: 'How does booking work?',
-    a: 'Enter the address, pick your services and see the full quote, including travel. Paying locks in an exact time. Cancel more than 24 hours before the shoot for a full refund.',
+    q: 'How do I book media or a site visit?',
+    a: 'From inside Bricks, or online. Enter the address, pick what you need and see the full price before you pay.',
   },
   {
     id: 'coverage',
-    q: 'Where do you cover?',
-    a: 'Across Canada. Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75/km. You see it before you pay.',
-  },
-  {
-    id: 'mls-safe',
-    q: 'Are the photos MLS-safe?',
-    a: 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.',
-  },
-  {
-    id: 'drone',
-    q: 'Do you fly drone / RPAS?',
-    a: 'Yes. Our pilots hold Advanced RPAS certification. Drone is included in Essentials and up, or can be added on its own.',
-  },
-  {
-    id: 'tour-visit',
-    q: 'Virtual tour or virtual visit?',
-    a: 'A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.',
-  },
-  {
-    id: 'plans',
-    q: 'What about software plans?',
-    a: 'Clay is free. Keystone, Marble and Diamond add more. Media is always booked separately.',
-  },
-  {
-    id: 'photographers',
-    q: 'How do photographers work with Bricks?',
-    a: 'Photographers are independent contractors paid a fixed amount per job. Jobs arrive in the Bricks app.',
-  },
-  {
-    id: 'help',
-    q: 'How do I get help?',
-    a: 'Email hello@brxs.ca or use the contact form. For a shoot, book online or email support@brxs.ca.',
+    q: 'Where do you work?',
+    a: 'Across Canada. Travel is priced from the assigned crew’s location and shown before you pay.',
   },
 ] as const
-
-function FaqAnswer({ id, a }: { id: (typeof faqs)[number]['id']; a: string }) {
-  switch (id) {
-    case 'included':
-      return <>HDR photos, licensed drone and a floor plan. We aim to deliver photos in 24 hours. <Link href="/pricing">See pricing</Link>.</>
-    case 'booking':
-      return <>Enter the address, pick your services and choose an exact time. Paying locks it in. <Link href="/book">Book a shoot</Link>.</>
-    case 'plans':
-      return <>Clay is free. Keystone, Marble and Diamond add more. Media is always booked separately. <Link href="/pricing">See pricing</Link>.</>
-    case 'photographers':
-      return <>Photographers are independent contractors paid a fixed amount per job. Jobs arrive in the Bricks app. <Link href="/photographers">Apply</Link>.</>
-    case 'help':
-      return <>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> or use the <Link href="/contact">contact form</Link>. For a shoot, <Link href="/book">book online</Link> or email <a href="mailto:support@brxs.ca">support@brxs.ca</a>.</>
-    default:
-      return <>{a}</>
-  }
-}
-
-
-
-
-const GUIDES = [
-  { href: '/blog/canada-real-estate-photography-cost-2026', title: 'How much does real estate photography cost in Canada? (2026)', read: '8 min', date: '2026-09-12' },
-  { href: '/blog/3d-tour-vs-video-walkthrough', title: 'Virtual tour vs. video walkthrough: which sells faster?', read: '6 min', date: '2026-07-22' },
-  { href: '/blog/drone-photography-rules-ontario', title: 'Drone photography rules for real estate in Ontario', read: '8 min', date: '2026-07-22' },
-  { href: '/blog/whats-included-listing-shoot', title: "What's included in a professional listing photo shoot?", read: '5 min', date: '2026-07-22' },
-]
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const fmtDate = (d: string) => { const [y, m, day] = d.split('-'); return `${MONTHS[+m - 1]} ${+day}, ${y}` }
 
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
@@ -166,15 +88,15 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system that brings it all together.</h1>
-          <p className="sub">Software, media, 3D and site progress for Canadian real estate, working as one.</p>
+          <p className="sub">Software for builders, developers, investors and realtors. Listing media and Site Progress are booked inside it.</p>
           <div className="cta-row">
-            <Link className="btn btn-night" href="/book">Book a shoot</Link>
-            <a className="btn btn-ghost" href="https://app.brxs.ca/login">Try Bricks free</a>
+            <a className="btn btn-night" href="https://app.brxs.ca/login">Try Bricks free</a>
+            <Link className="cm-link" href="/pricing">See pricing</Link>
           </div>
         </div>
       </section>
 
-      <section className="prod-hero" aria-label="bricks desk">
+      <section className="prod-hero" aria-label="Bricks desk">
         <div className="tray tray-os">
           <div className="tray-stage">
             <ProductStage />
@@ -182,14 +104,12 @@ export default function Home() {
         </div>
       </section>
 
-      <IntegrationsBand compact />
-
       <div className="hf" aria-label="Inside Bricks">
-        <section className="hf-row rvl" aria-label="The desk">
+        <section className="hf-row rvl" aria-label="The software">
           <div className="hf-copy">
-            <h2>The desk runs the deal.</h2>
+            <h2>One desk for every deal.</h2>
             <p>Deals, CRM, e-sign and MLS® prep on one screen.</p>
-            <Link className="hf-link" href="/platform">Explore the desk →</Link>
+            <Link className="hf-link" href="/platform">See the software</Link>
           </div>
           <div className="hf-frame tray tray-crm">
             <div className="tray-stage tray-stage-fill">
@@ -198,22 +118,22 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="hf-row hf-flip rvl" aria-label="Media">
+        <section className="hf-row hf-flip rvl" aria-label="Listing media">
           <div className="hf-copy">
-            <h2>Media, inside Bricks.</h2>
-            <p>Book photos, drone, video and 3D at an exact time. Delivery lands on the listing.</p>
-            <Link className="hf-link" href="/media">See the media →</Link>
+            <h2>Listing media, booked inside.</h2>
+            <p>Photos, drone, video and 3D at an exact time. Delivery lands on the listing.</p>
+            <Link className="hf-link" href="/book">Book media</Link>
           </div>
           <div className="hf-frame tray tray-book tray-phone">
             <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" /></PhoneFrame>
           </div>
         </section>
 
-        <section className="hf-row rvl" aria-label="Site Progress for builders">
+        <section className="hf-row rvl" aria-label="Site Progress">
           <div className="hf-copy">
-            <h2>Site Progress, inside Bricks.</h2>
-            <p>Photos, maps, models and reports on a fixed schedule, in one site file.</p>
-            <Link className="hf-link" href="/builders">See Site Progress →</Link>
+            <h2>Site Progress, on schedule.</h2>
+            <p>Maps, 3D models, documents and reports for every visit, compared over time in one site file.</p>
+            <Link className="hf-link" href="/book/site">Book a site visit</Link>
           </div>
           <div className="hf-frame hf-photo">
             <picture>
@@ -224,131 +144,59 @@ export default function Home() {
             </picture>
           </div>
         </section>
-
-        <section className="hf-row hf-flip rvl" aria-label="Photographers">
-          <div className="hf-copy">
-            <h2>Photographers, dispatched through Bricks.</h2>
-            <p>Independent pros take the job, shoot and upload in the Bricks app.</p>
-            <Link className="hf-link" href="/photographers">For photographers →</Link>
-          </div>
-          <div className="hf-frame tray tray-disp tray-phone">
-            <PhoneFrame label="Screen recording of the real Bricks photographer app with sample data: today's shoots, job detail, week, payouts"><PhoneVideo name="go" tone="dark" bar="#0F0F0F" /></PhoneFrame>
-          </div>
-        </section>
       </div>
 
-      <ServicesGrid />
+      <section className="cm-sec rvl" aria-label="Who it is for">
+        <Head title="Built for the whole project." lede="From the first site visit to the last listing." />
+        <Rows
+          items={[
+            { title: 'Builders and developers', detail: 'Site files, progress visits and reports for every project.', href: '/builders' },
+            { title: 'Investors and lenders', detail: 'Dated, mapped evidence of progress before each draw.', href: '/builders' },
+            { title: 'Brokerages', detail: 'Every seat on one system, with trust accounting.', href: '/brokerage' },
+            { title: 'Agents and teams', detail: 'Deals, CRM and e-sign, with media on the listing.', href: '/agents' },
+          ]}
+        />
+      </section>
 
-      <section className="hp-proof rvl" aria-label="Proof">
-        <div className="wrap">
-          <blockquote>
-            <p>“Three spreadsheets and a group text — now one screen.”</p>
-            <footer><span className="nm">Jordan Malcolm</span><span className="rl">Principal, 47-agent office</span></footer>
-          </blockquote>
+      <section className="cm-sec rvl" aria-label="Pricing">
+        <Head title="Start free. Book when you need to." link={{ href: '/pricing', label: 'See pricing' }} />
+        <Stats
+          label="Starting prices"
+          items={[
+            { fig: 'Free', label: 'Software, to start' },
+            { fig: `$${CORE_FROM}`, label: 'Listing media, from' },
+            { fig: fmt(PER_VISIT[0].price), label: 'Site visit, from' },
+          ]}
+        />
+        <p className="cm-note">Works with Follow Up Boss, kvCORE, PropTx, Stripe, Docusign and your calendar. Prices in CAD, before tax.</p>
+      </section>
+
+      <section className="cm-sec rvl" id="faq" aria-label="Frequently asked questions">
+        <Head title="Common questions." />
+        <div className="faq faq-home">
+          {faqs.map((f) => (
+            <details key={f.id} className="qa">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
         </div>
       </section>
 
-      <section className="hp-price rvl" id="home-pricing" aria-label="Listing media pricing">
-        <div className="wrap">
-          <div className="hp-sec-head">
-            <h2>Listing media packages.</h2>
-            <Link className="hf-link" href="/pricing">Full pricing →</Link>
-          </div>
-          <ul className="hp-pk">
-            {[
-              { n: 'Essentials', f: CORE_FROM, d: 'HDR photos, licensed drone, floor plan' },
-              { n: 'Story', f: STORY_FROM, d: 'Essentials plus a cinematic reel' },
-              { n: 'Showcase', f: SHOWCASE_FROM, d: `Story plus ${TOUR_NAME}`, feat: true },
-              { n: 'Full suite', f: FULL_FROM, d: 'Showcase plus a twilight exterior' },
-            ].map((k) => (
-              <li key={k.n} className={k.feat ? 'is-feat' : undefined}>
-                <Link href="/book">
-                  <span className="hp-pk-n">{k.n}{k.feat ? <span className="hp-pk-b">Most booked</span> : null}</span>
-                  <span className="hp-pk-f">from <span className="hp-num">${k.f}</span></span>
-                  <span className="hp-pk-d">{k.d}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <p className="hp-note">Photos only from <span className="hp-num">${PHOTO_ONLY_FROM}</span>. Prices are for smaller homes and scale with size.</p>
-        </div>
-      </section>
-
-      <section className="hp-guides rvl" aria-label="Guides">
-        <div className="wrap">
-          <div className="hp-sec-head">
-            <h2>Guides.</h2>
-            <Link className="hf-link" href="/blog">All guides →</Link>
-          </div>
-          <ul className="hp-gd">
-            {GUIDES.map((g) => (
-              <li key={g.href}>
-                <Link href={g.href}>
-                  <span className="hp-gd-m"><time dateTime={g.date}>{fmtDate(g.date)}</time> · {g.read}</span>
-                  <span className="hp-gd-t">{g.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <div className="wrap hp-wrap">
-        <section className="block rvl" id="faq" aria-label="Frequently asked questions">
-          <div className="hp-sec-head">
-            <h2>Common questions.</h2>
-          </div>
-          <div className="faq faq-home">
-            {faqs.slice(0, 4).map((f) => (
-              <details key={f.id} className="qa">
-                <summary>{f.q}</summary>
-                <p><FaqAnswer id={f.id} a={f.a} /></p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <section className="hp-end rvl" id="book" aria-label="Book a shoot">
-        <h2>Ready when you are.</h2>
-        <Link className="btn btn-night btn-l" href="/book">Book a shoot</Link>
-        <div className="hp-end-alt">
-          <a href="https://app.brxs.ca/login">Try Bricks free →</a>
-          <Link href="/book/site">Book a site visit →</Link>
-        </div>
-      </section>
-
-      <NewsletterPopup />
+      <Close title="Start with the software." href="https://app.brxs.ca/login" label="Try Bricks free" external />
 
       <style>{`
-        .trust{text-align:center;padding:36px 0 20px;}
-        .proof-cap{font-family:'General Sans',system-ui,sans-serif;font-size:28px;font-weight:500;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin:0 auto;text-align:center;}
-        .aud-sec{padding:0 0 28px;}
-        .aud-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
-        .aud-card{background:var(--paper);padding:20px 18px;text-decoration:none;color:inherit;display:block;}
-        .aud-card:hover{background:var(--paperSoft);}
-        .aud-card h3{font-weight:500;font-size:17px;letter-spacing:-0.3px;color:var(--ink);margin:8px 0 4px;}
-        .aud-card p{font-size:12.5px;color:var(--inkMute);margin:0;line-height:1.35;}
-        @media (max-width:800px){.aud-grid{grid-template-columns:1fr 1fr;}}
-        @media (max-width:480px){.aud-grid{grid-template-columns:1fr;}}
-        .prod-mini{margin-top:12px;font-size:13px;color:var(--inkMute);}
-        .prod-mini a{color:var(--brickDeep);text-decoration:none;}
-        .prod-mini a:hover{text-decoration:underline;text-underline-offset:2px;}
-        .faq .qa p a{color:var(--brickDeep);text-decoration:none;}
-        .hero-home{padding:64px 36px 40px;border-bottom:none;}
-        .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
-        .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:420px;}
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
+        .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
+        .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:460px;line-height:1.45;}
+        .hero-home .cta-row{align-items:center;}
         @media (max-width:680px){
           .hero-home{padding:36px var(--gutter) 24px;}
           .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:20ch;}
-          .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:28ch;line-height:1.4;}
-          .hero-home .cta-row{margin-top:22px;gap:14px;}
+          .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:32ch;line-height:1.4;}
+          .hero-home .cta-row{margin-top:22px;gap:20px;}
         }
       `}</style>
-
     </>
   )
 }
-
-

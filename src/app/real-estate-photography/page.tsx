@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Head, Rows, Close } from '@/components/calm/Calm'
 import Image from 'next/image'
 import RevealObserver from '@/components/RevealObserver'
 import {
@@ -118,158 +119,79 @@ export default function RealEstatePhotographyPage() {
 
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Listing media</span>
-          <h1>Real estate photography &amp; listing photos, Canada-wide.</h1>
-          <p className="sub">
-            HDR photos, licensed drone and a floor plan on every standard shoot.
-          </p>
+          <h1>Real estate photography, Canada-wide.</h1>
+          <p className="sub">HDR photos, licensed drone and a floor plan on every standard shoot, delivered to the listing in Bricks.</p>
           <div className="cta-row">
-            <Link className="btn btn-brick" href="/book">
-              Book listing photos
-            </Link>
-            <Link className="btn btn-sec" href="/blog/canada-real-estate-photography-cost-2026">
-              Canada cost guide
-            </Link>
+            <Link className="btn btn-night" href="/book">Book media</Link>
           </div>
         </div>
       </section>
 
-      <div className="wrap">
-        <section className="block rvl">
-          <div className="sec-head">
-            <div>
-              <span className="over">What agents book</span>
-              <h2>What&apos;s in every shoot.</h2>
-            </div>
-          </div>
-          <div className="incl">
-            <div className="c rvl">
-              <span className="ic">01</span>
-              <h4>HDR listing photos</h4>
-              <p>Bracketed interiors and exteriors, edited for MLS.</p>
-            </div>
-            <div className="c rvl">
-              <span className="ic">02</span>
-              <h4>Licensed drone</h4>
-              <p>Aerial photos by Advanced RPAS certified pilots.</p>
-            </div>
-            <div className="c rvl">
-              <span className="ic">03</span>
-              <h4>Floor plan included</h4>
-              <p>A branded 2D floor plan on every standard shoot.</p>
-            </div>
-            <div className="c rvl">
-              <span className="ic">04</span>
-              <h4>Fast delivery</h4>
-              <p>We aim to deliver photos in 24 hours. Rush is faster.</p>
-            </div>
-          </div>
-        </section>
+      <section className="cm-sec rvl" aria-label="What's in every shoot">
+        <Head title="What’s in every shoot." />
+        <Rows
+          items={[
+            { title: 'HDR listing photos', detail: 'Bracketed interiors and exteriors, edited for MLS.' },
+            { title: 'Licensed drone', detail: 'Aerial photos by Advanced RPAS certified pilots.' },
+            { title: 'Floor plan', detail: 'A branded 2D floor plan on every standard shoot.' },
+            { title: 'Fast delivery', detail: 'We aim to deliver photos in 24 hours. Rush is faster.' },
+          ]}
+        />
+      </section>
 
-        <section className="block rvl" aria-label="Sample listing photos">
-          <div className="sec-head">
-            <div>
-              <span className="over">Work</span>
-              <h2>Recent shoots.</h2>
+      <section className="cm-sec rvl" aria-label="Sample listing photos">
+        <div className="rep-grid">
+          {samples.map((p) => (
+            <div key={p.src} className="rvl">
+              <Image src={p.src} alt={p.alt} width={640} height={480} loading="lazy" />
             </div>
-          </div>
-          <div className="grid3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-            {samples.map((p) => (
-              <div key={p.src} className="rvl" style={{ borderRadius: 2, overflow: 'hidden', border: '1px solid var(--hair)' }}>
-                <Image src={p.src} alt={p.alt} width={640} height={480} loading="lazy" style={{ width: '100%', height: 'auto', display: 'block' }} />
-              </div>
-            ))}
-          </div>
-          <p style={{ marginTop: 16, fontSize: 14, color: 'var(--inkMute)' }}>
-            <Link href="/gallery">See more work →</Link>
-          </p>
-        </section>
+          ))}
+        </div>
+        <p className="cm-note"><Link href="/gallery">See more work</Link></p>
+      </section>
 
-        <section className="block rvl">
-          <div className="sec-head">
-            <div>
-              <span className="over">Pricing</span>
-              <h2>Priced by home size.</h2>
-            </div>
-          </div>
-          <div className="incl">
-            <div className="c rvl"><span className="ic">{PHOTO_RANGE}</span><h4>HDR photography</h4><p>Interiors and exteriors.</p></div>
-            <div className="c rvl"><span className="ic">{DRONE_RANGE}</span><h4>Licensed drone</h4><p>Aerial photos.</p></div>
-            <div className="c rvl"><span className="ic">Included</span><h4>Floor plan</h4><p>On every standard shoot.</p></div>
-            <div className="c rvl"><span className="ic">{TOUR_RANGE}</span><h4>{TOUR_NAME}</h4><p>Path walkthrough.</p></div>
-          </div>
-          <p style={{ marginTop: 16, fontSize: 14, color: 'var(--inkMute)' }}>
-            CAD, before travel and HST. <Link href="/pricing">Full pricing →</Link>
-          </p>
-        </section>
+      <section className="cm-sec rvl" aria-label="Pricing">
+        <Head title="Priced by home size." link={{ href: '/pricing', label: 'See pricing' }} />
+        <Rows
+          items={[
+            { title: 'HDR photography', detail: 'Interiors and exteriors.', value: PHOTO_RANGE },
+            { title: 'Licensed drone', detail: 'Aerial photos.', value: DRONE_RANGE },
+            { title: TOUR_NAME, detail: 'Path walkthrough.', value: TOUR_RANGE },
+          ]}
+        />
+        <p className="cm-note">Floor plan included on every standard shoot. CAD, before travel and HST.</p>
+      </section>
 
-        <section className="block rvl">
-          <div className="sec-head">
-            <div>
-              <span className="over">Guides</span>
-              <h2>Read before you book.</h2>
-            </div>
-          </div>
-          <div className="grid3">
-            <Link className="card np rvl" href="/blog/canada-real-estate-photography-cost-2026">
-              <div className="meta">
-                <span className="t">Pricing</span>
-                <h3>How much does real estate photography cost in Canada? (2026)</h3>
-                <p>What listing photos, drone, floor plans and tours cost.</p>
-              </div>
-            </Link>
-            <Link className="card np rvl" href="/blog/gta-real-estate-media-cost-2026">
-              <div className="meta">
-                <span className="t">Regional</span>
-                <h3>GTA real estate media cost (2026)</h3>
-                <p>Market ranges for Greater Toronto Area agents.</p>
-              </div>
-            </Link>
-            <Link className="card np rvl" href="/blog/whats-included-listing-shoot">
-              <div className="meta">
-                <span className="t">The shoot</span>
-                <h3>What&apos;s included in a listing photo shoot?</h3>
-                <p>What comes standard and what&apos;s optional.</p>
-              </div>
-            </Link>
-          </div>
-        </section>
+      <section className="cm-sec rvl" aria-label="Guides">
+        <Head title="Read before you book." link={{ href: '/blog', label: 'All guides' }} />
+        <Rows
+          items={[
+            { title: 'How much does real estate photography cost in Canada? (2026)', href: '/blog/canada-real-estate-photography-cost-2026' },
+            { title: 'GTA real estate media cost (2026)', href: '/blog/gta-real-estate-media-cost-2026' },
+            { title: 'What’s included in a listing photo shoot?', href: '/blog/whats-included-listing-shoot' },
+          ]}
+        />
+      </section>
 
-        <section className="block rvl">
-          <div className="sec-head">
-            <div>
-              <span className="over">FAQ</span>
-              <h2>Listing photos, answered.</h2>
+      <section className="cm-sec rvl" aria-label="Questions">
+        <Head title="Listing photos, answered." />
+        <div className="faq">
+          {faqs.map((f) => (
+            <div className="qa" key={f.q}>
+              <h4>{f.q}</h4>
+              <p>{f.a}</p>
             </div>
-          </div>
-          <div className="faq">
-            {faqs.map((f) => (
-              <div className="qa" key={f.q}>
-                <h4>{f.q}</h4>
-                <p>{f.a}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        <section className="block rvl">
-          <div className="book">
-            <span className="over">Book</span>
-            <h2>Book your listing photos.</h2>
-            <p className="lead">
-              Get a quote from the address and pick an exact time.
-            </p>
-            <div className="cta-row">
-              <Link className="btn btn-brick" href="/book">
-                Book a shoot
-              </Link>
-              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>
-                See pricing
-              </Link>
-            </div>
-          </div>
-        </section>
-      </div>
+      <Close title="Book your listing photos." href="/book" label="Book media" />
+
+      <style>{`
+        .rep-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);}
+        .rep-grid img{width:100%;height:auto;display:block;}
+        @media (max-width:680px){.rep-grid{grid-template-columns:1fr 1fr;gap:8px;}}
+      `}</style>
     </>
   )
 }

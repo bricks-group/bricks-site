@@ -4,6 +4,7 @@ import RevealObserver from '@/components/RevealObserver'
 import PhotographerForm from './PhotographerForm'
 import { COVERAGE_LINE, GO_URL, STATUS } from '@/lib/brand'
 import { ORG_ID } from '@/lib/schema'
+import { Rows } from '@/components/calm/Calm'
 
 const OG =
   'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
@@ -109,12 +110,10 @@ export default function PhotographersPage() {
 
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Photographers</span>
           <h1>Real estate photographer jobs across Canada.</h1>
           <p className="sub">Shoot listings for a fixed rate per job. Jobs come to you in the Bricks app, and you&apos;re paid automatically.</p>
           <div className="cta-row">
-            <a className="btn btn-brick" href="#apply">Apply in 4 minutes →</a>
-            <a className="btn btn-sec" href={GO_URL} rel="noopener noreferrer">Open the Bricks app</a>
+            <a className="btn btn-night" href="#apply">Apply in 4 minutes</a>
           </div>
         </div>
       </section>
@@ -123,54 +122,56 @@ export default function PhotographersPage() {
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">How it works</span>
               <h2>Jobs come to you.</h2>
             </div>
           </div>
-          <div className="incl">
-            <div className="c rvl"><span className="ic">01</span><h4>No bidding</h4><p>Paid bookings are sent to you in the Bricks app based on specialty, tier and distance.</p></div>
-            <div className="c rvl"><span className="ic">02</span><h4>You set availability</h4><p>Accept or decline any job. Declining is never a breach of contract.</p></div>
-            <div className="c rvl"><span className="ic">03</span><h4>Automatic payouts</h4><p>Paid for every completed job. No invoices, no chasing clients.</p></div>
-            <div className="c rvl"><span className="ic">04</span><h4>No-show protection</h4><p>If you can&apos;t get in or the client doesn&apos;t show, report it in the app and get the standard trip fee.</p></div>
-          </div>
+          <Rows
+            items={[
+              { title: 'No bidding', detail: 'Paid bookings are sent to you in the Bricks app based on specialty, tier and distance.' },
+              { title: 'You set availability', detail: 'Accept or decline any job. Declining is never a breach of contract.' },
+              { title: 'Automatic payouts', detail: 'Paid for every completed job. No invoices, no chasing clients.' },
+              { title: 'No-show protection', detail: 'If you can’t get in or the client doesn’t show, report it in the app and get the standard trip fee.' },
+            ]}
+          />
         </section>
 
         <section className="block rvl" id="payouts" aria-label="Vendor rate card">
           <div className="sec-head">
             <div>
-              <span className="over">Pay</span>
               <h2>Fixed pay per job.</h2>
             </div>
           </div>
           <p className="rate-lead">You earn a set dollar amount per job, not a percentage of what the client pays. Full rates are in the contractor agreement.</p>
-          <div className="adds">
-            <div className="a rvl"><div className="nm">Tier 1 — Entry</div><p>The starting tier.</p></div>
-            <div className="a rvl"><div className="nm">Tier 2 — Core</div><p>For consistent quality and reliability.</p></div>
-            <div className="a rvl"><div className="nm">Tier 3 — Elite</div><p>Our highest tier, for top quality, volume and compliance. Needs $2M+ verified drone insurance and unlocks builder site jobs.</p></div>
-          </div>
+          <Rows
+            items={[
+              { title: 'Tier 1, Entry', detail: 'The starting tier.' },
+              { title: 'Tier 2, Core', detail: 'For consistent quality and reliability.' },
+              { title: 'Tier 3, Elite', detail: 'Our highest tier, for top quality, volume and compliance. Needs $2M+ verified drone insurance and unlocks builder site jobs.' },
+            ]}
+          />
           <p className="note">Tiers are set by Bricks based on quality, reliability, volume and compliance.</p>
         </section>
 
         <section className="block rvl" aria-label="Commercial site work">
           <div className="sec-head">
             <div>
-              <span className="over">Tier 3</span>
-              <h2>Builder &amp; developer jobs pay at the top of Tier 3.</h2>
+              <h2>Builder and developer jobs pay at the top of Tier 3.</h2>
             </div>
           </div>
           <p className="rate-lead">Construction site jobs go only to Tier 3 pilots with Advanced RPAS and verified drone liability insurance of at least $2M ($5M on some sites). Upload your certificate in the Bricks app.</p>
-          <div className="adds">
-            <div className="a rvl"><div className="nm">Progress visit — $185</div><p>Drone photos and video of the site.</p></div>
-            <div className="a rvl"><div className="nm">Mapped capture — $735</div><p>A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.</p></div>
-            <div className="a rvl"><div className="nm">Mapping setup — +$315</div><p>Ground control for the first mapped flight on a site.</p></div>
-          </div>
+          <Rows
+            items={[
+              { title: 'Progress visit', detail: 'Drone photos and video of the site.', value: '$185' },
+              { title: 'Mapped capture', detail: 'A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.', value: '$735' },
+              { title: 'Mapping setup', detail: 'Ground control for the first mapped flight on a site.', value: '+$315' },
+            ]}
+          />
           <p className="note">The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
         </section>
 
         <section className="block rvl">
           <div className="sec-head">
             <div>
-              <span className="over">Before you apply</span>
               <h2>What to expect.</h2>
             </div>
           </div>
@@ -186,7 +187,6 @@ export default function PhotographersPage() {
         <section className="block rvl" id="apply">
           <div className="sec-head">
             <div>
-              <span className="over">Apply</span>
               <h2>Join the network.</h2>
             </div>
             <p>Takes about four minutes.</p>

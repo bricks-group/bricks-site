@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import PlanCards from '@/components/PlanCards'
+import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import { SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
@@ -18,21 +18,18 @@ export default function AgentsPage() {
       <RevealObserver />
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Agents and teams</span>
-          <h1>Your listings, and the shoots behind them.</h1>
-          <p className="sub">Bricks keeps your pipeline and deals. Companion books the media.</p>
+          <h1>Your listings, and the media behind them.</h1>
+          <p className="sub">Run your pipeline and deals in Bricks. Book listing media from the listing itself.</p>
           <div className="cta-row">
-            <Link className="btn btn-brick" href="/book">Book a shoot</Link>
-            <Link className="btn btn-sec" href="/pricing">Plans</Link>
+            <a className="btn btn-night" href="https://app.brxs.ca/login" rel="noopener noreferrer">Try Bricks free</a>
           </div>
         </div>
       </section>
 
       <section className="prod-row rvl" aria-label="Companion">
         <div className="prod-copy">
-          <span className="over">Companion</span>
           <h2>Order media from the listing.</h2>
-          <p>Enter the address, pick services and choose an exact time. We assign the photographer. <a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
+          <p>Enter the address, pick services and choose an exact time. We assign the photographer.</p>
         </div>
         <div className="tray tray-book tray-phone">
           <div className="tray-stage">
@@ -41,51 +38,26 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      <div className="wrap">
-        <section className="block rvl" id="team">
-          <div className="sec-head">
-            <div>
-              <span className="over">Two ways in</span>
-              <h2>Individual or team.</h2>
-            </div>
-          </div>
-          <div className="incl two">
-            <div className="c rvl">
-              <span className="ic">Agent</span>
-              <h4>Individual</h4>
-              <p>Start free on Clay. Paid plans add CRM, e-sign, forms and AI. Media is booked separately.</p>
-            </div>
-            <div className="c rvl">
-              <span className="ic">Team</span>
-              <h4>Team</h4>
-              <p>The same Bricks desk with a shared pipeline for your team. Billed yearly.</p>
-            </div>
-          </div>
-        </section>
+      <section className="cm-sec rvl" id="team" aria-label="Plans">
+        <Head title="Individual or team." lede={`${SOFTWARE_BLURB} ${ADDONS_BLURB}`} link={{ href: '/pricing', label: 'Compare plans' }} />
+        <Stats
+          label="Software plans"
+          items={[
+            { fig: 'Free', label: 'Clay, to start' },
+            { fig: '$49', label: 'Keystone, per month' },
+            { fig: '$99', label: 'Marble, per month' },
+          ]}
+        />
+        <Rows
+          items={[
+            { title: 'Individual', detail: 'Start free. Paid plans add CRM, e-sign, forms and AI. Media is booked separately.' },
+            { title: 'Team', detail: 'The same desk with a shared pipeline for your team. Billed yearly.' },
+            { title: 'Brokerage', detail: 'Seats for the whole shop, with trust accounting.', href: '/brokerage' },
+          ]}
+        />
+      </section>
 
-        <section className="block rvl">
-          <div className="sec-head">
-            <div>
-              <span className="over">Software</span>
-              <h2>Software plans.</h2>
-            </div>
-          </div>
-          <PlanCards />
-          <p className="note">{SOFTWARE_BLURB} {ADDONS_BLURB}</p>
-        </section>
-
-        <section className="block rvl" style={{ borderTop: 'none', paddingTop: 8 }}>
-          <div className="book">
-            <span className="over">Ready</span>
-            <h2>Book the shoot. Open Bricks.</h2>
-            <p className="lead">Book from Companion or right here.</p>
-            <div className="cta-row">
-              <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
-              <Link className="btn btn-sec" href="/brokerage">For brokerages</Link>
-            </div>
-          </div>
-        </section>
-      </div>
+      <Close title="Book the shoot from the listing." href="/book" label="Book media" />
       <style>{`
         .incl.two{grid-template-columns:1fr 1fr;}
         @media (max-width:680px){.incl.two{grid-template-columns:1fr;}}

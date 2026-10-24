@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Close } from '@/components/calm/Calm'
 import Script from 'next/script'
 import RevealObserver from '@/components/RevealObserver'
 
@@ -100,18 +100,14 @@ export default function GalleryPage() {
 
       <section className="hero">
         <div className="wrap">
-          <span className="badge">Selected work</span>
           <h1>Real shoots, not stock.</h1>
-          <p className="sub">Residential, multifamily, commercial, and industrial — the same standard every listing gets.</p>
+          <p className="sub">Homes, multifamily, commercial and industrial, shot to one standard.</p>
         </div>
       </section>
 
       <div className="wrap work-wrap">
-        <section className="block rvl">
-          <div className="sec-head">
-            <div><span className="over">Examples</span><h2>Before and after.</h2></div>
-          </div>
-                    <p className="ba-hint">Drag to compare.</p>
+        <section className="block rvl" aria-label="Before and after">
+          <p className="ba-hint">Drag to compare.</p>
           <div className="ba-grid">
             {beforeAfter.map((p) => {
               const name = p.label.replace(/ before and after$/i, '')
@@ -136,46 +132,12 @@ export default function GalleryPage() {
           </div>
         </section>
 
-        <section className="block rvl">
-          <div className="sec-head">
-            <div><span className="over">Residential</span><h2>Homes, inside and out.</h2></div>
-          </div>
-          <Grid images={residential} />
-        </section>
-
-        <section className="block rvl">
-          <div className="sec-head">
-            <div><span className="over">Multifamily</span><h2>Lobbies, amenities and units.</h2></div>
-          </div>
-          <Grid images={multifamily} />
-        </section>
-
-        <section className="block rvl">
-          <div className="sec-head">
-            <div><span className="over">Commercial</span><h2>Commercial sites from above.</h2></div>
-          </div>
-          <Grid images={commercial} />
-        </section>
-
-        <section className="block rvl">
-          <div className="sec-head">
-            <div><span className="over">Industrial</span><h2>Docks, facades and sites.</h2></div>
-          </div>
-          <Grid images={industrial} />
-        </section>
-
-        <section className="block rvl" style={{ borderTop: 'none', paddingTop: 0 }}>
-          <div className="book" style={{ marginTop: 0 }}>
-            <span className="over">Book a shoot</span>
-            <h2>Ready when the listing is.</h2>
-            <p className="lead">Book online and get a quote from the address.</p>
-            <div className="cta-row">
-              <Link className="btn btn-brick" href="/book">Book a shoot →</Link>
-              <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>Pricing</Link>
-            </div>
-          </div>
+        <section className="block rvl" aria-label="Work">
+          <Grid images={[...residential, ...multifamily, ...commercial, ...industrial]} />
         </section>
       </div>
+
+      <Close title="Ready when the listing is." href="/book" label="Book media" />
 
       <style>{`
         .work-wrap{max-width:980px;}
