@@ -29,7 +29,7 @@ export default function Post() {
             '@type': 'BlogPosting',
             headline: 'Drone photography rules for real estate listings in Ontario',
             description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant aerial shoot looks like.',
-            author: { '@type': 'Person', name: 'Raphael Merchant', jobTitle: 'Advanced RPAS certificate holder (Transport Canada)', knowsAbout: ['Aerial photography', 'Transport Canada RPAS regulations'] },
+            author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },

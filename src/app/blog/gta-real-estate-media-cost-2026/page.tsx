@@ -31,7 +31,7 @@ export default function Post() {
             '@type': 'BlogPosting',
             headline: 'How much does real estate photography cost in the GTA? (2026 pricing guide)',
             description: 'What GTA agents pay for HDR photography, drone, floor plans, virtual tours and video, with real market ranges.',
-            author: { '@type': 'Person', name: 'Raphael Merchant' },
+            author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },

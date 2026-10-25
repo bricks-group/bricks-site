@@ -31,7 +31,7 @@ export default function Post() {
             '@type': 'BlogPosting',
             headline: 'Virtual tour vs. video walkthrough: which sells listings faster?',
             description: 'When a path-confined virtual tour beats a cinematic video walkthrough — and when the reverse is true. Virtual visit is a separate product.',
-            author: { '@type': 'Person', name: 'Raphael Merchant' },
+            author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },

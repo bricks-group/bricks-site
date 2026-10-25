@@ -136,3 +136,12 @@ test('approved client plan and seat prices (2026-10-25) match the app; one-off r
   assert.match(llms, /\$79 per agent a month or \$790 a year/)
   assert.doesNotMatch(llms, /\$145|\$295/)
 })
+
+test('blog posts and the blog layout carry no founder name or founder stats', () => {
+  const { readdirSync } = require('node:fs') as typeof import('node:fs')
+  const posts = readdirSync(join(root, 'src/app/blog'), { withFileTypes: true })
+    .filter((d) => d.isDirectory()).map((d) => `src/app/blog/${d.name}/page.tsx`)
+  for (const p of ['src/components/BlogPostLayout.tsx', 'src/app/blog/page.tsx', ...posts]) {
+    assert.doesNotMatch(read(p), /Raphael|Merchant|CoStar|14,000|founder|down the street/i, p)
+  }
+})

@@ -54,7 +54,7 @@ export default function Post() {
             headline: 'How much does real estate photography cost in Canada? (2026)',
             description:
               'Canada-wide guide to real estate photography and listing media costs for HDR photos, drone, floor plans, and virtual tours.',
-            author: { '@type': 'Person', name: 'Raphael Merchant' },
+            author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
             datePublished: '2026-09-12',
             dateModified: '2026-09-12',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },

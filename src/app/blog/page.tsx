@@ -86,7 +86,7 @@ export default function BlogPage() {
               '@type': 'BlogPosting',
               headline: p.title,
               url: `https://www.brxs.ca${p.href}`,
-              author: { '@type': 'Person', name: 'Raphael Merchant' },
+              author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
               datePublished: p.date,
             })),
           }),
@@ -98,7 +98,7 @@ export default function BlogPage() {
           <span className="badge">Resources</span>
           <h1>Real estate photography &amp; listing media, explained.</h1>
           <p className="sub">
-            Practical guides for Canadian agents — listing photo costs, MLS media, drone rules, and what a shoot includes. By Raphael Merchant.
+            Practical guides for Canadian agents — listing photo costs, MLS media, drone rules, and what a shoot includes.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
@@ -126,7 +126,7 @@ export default function BlogPage() {
                   <span className="t">{p.tag}</span>
                   <h3>{p.title}</h3>
                   <p>{p.desc}</p>
-                  <div className="d">Raphael Merchant · {p.read}</div>
+                  <div className="d">{p.read}</div>
                 </div>
               </Link>
             ))}

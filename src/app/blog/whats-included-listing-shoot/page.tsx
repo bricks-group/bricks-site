@@ -31,7 +31,7 @@ export default function Post() {
             '@type': 'BlogPosting',
             headline: "What's included in a professional listing photo shoot?",
             description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, photos in 24h and other media on a 24–48h target — plus the add-ons you can stack.',
-            author: { '@type': 'Person', name: 'Raphael Merchant' },
+            author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
             datePublished: '2026-07-22',
             dateModified: '2026-07-22',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },

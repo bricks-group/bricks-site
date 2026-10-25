@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import type { ReactNode } from 'react'
 
 export default function BlogPostLayout({
@@ -34,13 +33,12 @@ export default function BlogPostLayout({
               </ul>
             </div>
 
-            <p style={{ marginTop: 16, fontSize: 13, color: 'var(--inkMute)' }}>Written by <strong>Raphael Merchant</strong>, founder of Bricks. Figures that cite regional market research are labelled as such; Bricks rates are starting points and tailored per booking.</p>
+            <p style={{ marginTop: 16, fontSize: 13, color: 'var(--inkMute)' }}>Written by the Bricks team. Figures that cite regional market research are labelled as such; Bricks rates are starting points and tailored per booking.</p>
             <Link className="author-card" href="/about">
-              <Image src="/media/raphael-merchant-640.jpg" alt="Raphael Merchant, founder of Bricks — Canadian real estate photography" loading="lazy" width={56} height={56} />
               <div className="ac-bio">
                 <div className="ac-name">Bricks</div>
                 <div className="ac-role">Canadian real estate media · software</div>
-                <p>Before Bricks, Raphael shot 14,000+ properties at CoStar. Same standard, every shoot. <span className="ac-more">About Bricks →</span></p>
+                <p>Listing media, booking and the tools agents run their business on. <span className="ac-more">About Bricks →</span></p>
               </div>
             </Link>
           </article>
