@@ -41,6 +41,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // booking.brxs.ca is the old booking address; send every path to the booking page.
+      { source: '/:path*', has: [{ type: 'host', value: 'booking.brxs.ca' }], destination: 'https://www.brxs.ca/book', permanent: false },
       { source: '/index.html', destination: '/', permanent: true },
       { source: '/about.html', destination: '/about', permanent: true },
       { source: '/contact.html', destination: '/contact', permanent: true },
