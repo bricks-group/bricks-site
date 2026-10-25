@@ -85,7 +85,7 @@ export default function PlatformPage() {
         <p className="cm-note">{SOFTWARE_BLURB}</p>
       </section>
 
-      <Close title="Start with the software." href={OS_LOGIN} label="Try Bricks free" external primary={false} />
+      <Close title="Start with the software." href={OS_LOGIN} label="Try Bricks free" external />
 
       <style>{`
         /* One column for the whole page: hero, desk stage, phone rows and blocks share the 1200 container

@@ -79,7 +79,7 @@ export default function BrokeragePage() {
         />
       </section>
 
-      <Close title="Give your agents a reason to stay." href={signupUrl('brokerage')} label="Set up your brokerage" external primary={false} />
+      <Close title="Give your agents a reason to stay." href={signupUrl('brokerage')} label="Set up your brokerage" external />
       <style>{`
         .lede-soft{font-size:15px;color:var(--inkSoft);max-width:560px;margin:-8px 0 22px;line-height:1.5;}
       `}</style>

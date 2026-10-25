@@ -199,7 +199,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Close title="Start with the software." href="https://app.brxs.ca/login" label="Try Bricks free" external primary={false} />
+      <Close title="Start with the software." href="https://app.brxs.ca/login" label="Try Bricks free" external />
 
       <style>{`
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}

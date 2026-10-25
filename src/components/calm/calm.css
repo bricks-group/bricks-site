@@ -73,3 +73,15 @@ a.cm-row:hover .cm-arrow{color:var(--vs-fg);}
 html[data-theme="dark"] .ci-row{--ci-ink:#fff;--ci-filter:brightness(0) invert(1);--ci-op:.62;}
 @media (prefers-color-scheme:dark){html:not([data-theme="light"]) .ci-row{--ci-ink:#fff;--ci-filter:brightness(0) invert(1);--ci-op:.62;}}
 @media (max-width:680px){.ci-row{--ci-h:17px;column-gap:26px;row-gap:18px;}.ci-word{font-size:14px;}}
+
+/* Closing band button (Close). Orange primary when it repeats the hero action, otherwise outlined.
+   Both must read in light, prefers-color-scheme dark and the data-theme toggle: --night equals the dark
+   page colour, so the old filled night button vanished in dark mode. */
+.cm-close .btn{min-height:44px;transition:background-color .15s ease,color .15s ease,border-color .15s ease;}
+.cm-close .btn.btn-primary{background:#D2542B!important;color:#fff!important;border:1px solid #D2542B!important;}
+.cm-close .btn.btn-primary:hover{background:#B8461F!important;border-color:#B8461F!important;filter:none;}
+.cm-close .btn.btn-primary:active{background:#A8401F!important;border-color:#A8401F!important;}
+.cm-close .btn:not(.btn-primary){background:transparent;color:var(--ink);border:1px solid var(--ink);filter:none;}
+.cm-close .btn:not(.btn-primary):hover{background:var(--ink);color:var(--paper);}
+.cm-close .btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+.cm-close .btn.btn-primary:focus-visible{box-shadow:0 0 0 1px var(--paper) inset;}
