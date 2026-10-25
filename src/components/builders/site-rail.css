@@ -12,7 +12,8 @@
 
 /* Map layer: grid + measurement lines + elevation ramp, revealed top → bottom */
 .sl-map{position:absolute;inset:0;clip-path:inset(0 0 100% 0);transition:clip-path 1s var(--slab-ease);
-  background-image:linear-gradient(rgba(255,255,255,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.28) 1px,transparent 1px);
+  /* Grid as an SVG line cell (flat lines, no gradients) */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' preserveAspectRatio='none'%3E%3Cpath d='M0 0H10M0 0V10' fill='none' stroke='rgba(255,255,255,.28)' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
   background-size:8.33% 12.5%;}
 .sl-map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
 .sl-area{fill:none;stroke:#F4F1EB;stroke-width:1.5;stroke-linecap:square;stroke-dasharray:6 4;vector-effect:non-scaling-stroke;}
@@ -22,14 +23,15 @@
 .sl-tag-a{left:55%;top:50%;transform:translate(-50%,-50%);color:var(--ink);}
 .sl-ramp{position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:500;color:var(--ink);
   background:rgba(244,241,235,.92);padding:4px 10px 4px 6px;border-radius:2px;}
-.sl-ramp i{display:block;width:44px;height:6px;border-radius:0;background:linear-gradient(90deg,#24211E 0 20%,#4A4642 20% 40%,#7A756E 40% 60%,#B7B2AA 60% 80%,#E6E2DA 80% 100%);outline:1px solid rgba(20,17,14,.25);}
+.sl-ramp i{display:block;width:44px;height:6px;border-radius:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 1' preserveAspectRatio='none'%3E%3Cpath fill='%2324211E' d='M0 0h1v1H0z'/%3E%3Cpath fill='%234A4642' d='M1 0h1v1H1z'/%3E%3Cpath fill='%237A756E' d='M2 0h1v1H2z'/%3E%3Cpath fill='%23B7B2AA' d='M3 0h1v1H3z'/%3E%3Cpath fill='%23E6E2DA' d='M4 0h1v1H4z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;outline:1px solid rgba(20,17,14,.25);}
 .sl-scan{position:absolute;left:0;right:0;top:0;height:1px;background:#F4F1EB;opacity:0;}
 
 /* Model layer: plane tilts into 3D, mesh + point cloud on top */
 .sl-mesh{position:absolute;inset:0;opacity:0;transition:opacity .8s var(--slab-ease);
-  background-image:radial-gradient(rgba(255,255,255,.75) .9px,transparent 1.3px),
-    linear-gradient(rgba(255,255,255,.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.4) 1px,transparent 1px);
-  background-size:9px 9px,4.17% 6.25%,4.17% 6.25%;mix-blend-mode:screen;}
+  /* Point cloud dots + mesh lines as SVG cells (flat, no gradients) */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9'%3E%3Ccircle cx='4.5' cy='4.5' r='.9' fill='rgba(255,255,255,.75)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' preserveAspectRatio='none'%3E%3Cpath d='M0 0H10M0 0V10' fill='none' stroke='rgba(255,255,255,.4)' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  background-size:9px 9px,4.17% 6.25%;mix-blend-mode:screen;}
 
 .sl-chip{position:absolute;right:12px;top:12px;font-size:12px;font-weight:500;color:#fff;background:rgba(20,17,14,.62);
   padding:4px 10px;border-radius:2px;z-index:3;}
