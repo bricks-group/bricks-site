@@ -122,3 +122,17 @@ test('property request form posts to the public request route, shows no prices, 
   assert.doesNotMatch(s, /\$\d/)
   assert.ok(SERVICES_FOR.commercial.some((x) => x.key === 'site_progress' && /mapping|maps/.test(x.detail) && /models/.test(x.detail) && /reports/.test(x.detail) && /comparisons/.test(x.detail)))
 })
+
+test('approved client plan and seat prices (2026-10-25) match the app; one-off reports stay request-only', () => {
+  const pm = read('src/app/property-managers/page.tsx')
+  assert.match(pm, /\$1,325, \$2,990 or \$5,875 a month/)
+  assert.match(pm, /Condition reports and turnovers, by request/)
+  assert.doesNotMatch(pm, /\$145|\$295/, 'condition report / turnover prices are never shown')
+  assert.match(read('src/app/commercial/page.tsx'), /\$1,590 a month/)
+  assert.match(read('src/app/investors/page.tsx'), /\$195 per property a month billed \$585 a quarter, or \$450 a month/)
+  assert.match(read('src/app/teams/page.tsx'), /\$79 per agent a month, or \$790 a year/)
+  const llms = read('public/llms.txt')
+  assert.match(llms, /turnover visits are request-only/)
+  assert.match(llms, /\$79 per agent a month or \$790 a year/)
+  assert.doesNotMatch(llms, /\$145|\$295/)
+})

@@ -108,6 +108,7 @@ export default function InvestorsPage() {
           ]}
         />
         <p className="cm-note">{PLAN_NOTE}</p>
+        <p className="cm-note">Portfolio watch for properties you hold: a dated aerial and roof check compared with the last visit, $195 per property a month billed $585 a quarter, or $450 a month for a monthly visit. CAD plus tax, in your investor account. Acquisition captures are by <Link href="/book/property?for=investor">request</Link>.</p>
       </section>
 
       <Close title="Need a site captured first?" href="/book/site" label="Book a site visit" primary={false} />
