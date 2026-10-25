@@ -85,7 +85,7 @@ const HUB: readonly FeatureItem[] = [
   {
     title: '3D compare.',
     body: 'Put two dates side by side, or show only what changed. Bricks measures fill, cut and the area changed between two point clouds.',
-    points: ['Measured on a 0.5 m grid; changes under 10 cm are left out', 'An estimate for tracking progress, not a survey'],
+    points: ['Measured on a 0.5 m grid, coarser on very large sites; changes under 10 cm are left out', 'An estimate for tracking progress, not a survey'],
     shot: 'compare-3d',
     alt: 'Bricks comparing two point clouds of a sample site a month apart, with raised areas in orange and fill, cut and area changed measured below',
   },

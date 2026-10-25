@@ -5,7 +5,7 @@
  */
 const SHOTS = {
   'progress-report': { w: 960, h: 790, widths: [640, 960] },
-  'report-measure': { w: 960, h: 640, widths: [640, 960] },
+  'report-measure': { w: 960, h: 592, widths: [640, 960] },
   'report-issues': { w: 960, h: 460, widths: [640, 960] },
   'report-evidence': { w: 960, h: 420, widths: [640, 960] },
   'investor-update': { w: 980, h: 766, widths: [640, 980] },
