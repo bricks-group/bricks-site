@@ -5,6 +5,11 @@ import { useSearchParams } from 'next/navigation'
 import { track } from '@vercel/analytics'
 import BricksLoader from '@/components/BricksLoader'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
+import { signupUrl } from '@/lib/brand'
+
+/** Booking email kept across the Stripe redirect so the success state can offer the matching builder account. */
+const EMAIL_KEY = 'bricks-site-booking-email'
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type TrackProps = Record<string, string | number | boolean | null | undefined>
 function evt(name: string, props?: TrackProps) {
@@ -50,6 +55,10 @@ const css = `
   .sb aside .tot{border-top:1px solid var(--hair);padding-top:10px;font-weight:500;color:var(--ink);font-size:16px;}
   .sb .msg{font-size:13.5px;color:var(--brickDeep);min-height:18px;}
   .sb .ok{border:1px solid var(--hair);background:var(--paper);padding:22px;border-radius:2px;}
+  .sb .claim{margin-top:20px;padding-top:20px;border-top:1px solid var(--hair);display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+  .sb .claim h3{margin:0;font-size:16px;font-weight:500;color:var(--ink);}
+  .sb .claim p{margin:0;}
+  .sb .claim .btn{min-height:44px;}
   @media (max-width:900px){.sb{grid-template-columns:1fr;}.sb aside{position:static;}.sb .two{grid-template-columns:1fr;}}
 `
 
@@ -65,6 +74,7 @@ export default function SiteBookingForm() {
   const [msg, setMsg] = useState('')
   const [busy, setBusy] = useState(false)
   const [paid, setPaid] = useState<'checking' | 'ok' | 'fail' | null>(null)
+  const [bookedEmail, setBookedEmail] = useState('')
 
   useEffect(() => {
     const sid = params.get('session_id') || ''
@@ -74,6 +84,10 @@ export default function SiteBookingForm() {
       .then((r) => r.json().then((j) => ({ r, j })))
       .then(({ r, j }) => { setPaid(r.ok && j?.ok ? 'ok' : 'fail'); if (r.ok) evt('site_booking_paid', { commercial: true }) })
       .catch(() => setPaid('fail'))
+    try {
+      const e = (sessionStorage.getItem(EMAIL_KEY) || '').trim()
+      if (EMAIL_RE.test(e) && e.length <= 254) setBookedEmail(e)
+    } catch { /* storage blocked: the link still opens sign-up */ }
   }, [params])
 
   const quote = useMemo(() => {
@@ -114,6 +128,7 @@ export default function SiteBookingForm() {
       const r = await fetch('/api/book/commercial-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string }
       if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email booking@brxs.ca.'); return }
+      try { sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || '')) } catch { /* best-effort */ }
       evt('site_booking_checkout', { mode, service: String(payload.service_key || payload.plan_key) })
       window.location.href = j.url
     } catch {
@@ -131,6 +146,11 @@ export default function SiteBookingForm() {
           {paid === 'ok' && (<>
             <h2 style={{ margin: '0 0 8px' }}>Booked. Thank you.</h2>
             <p className="hint" style={{ fontSize: 15 }}>We&apos;re assigning a pilot who meets your insurance minimum and will confirm the flight with your site contact. Questions: booking@brxs.ca.</p>
+            <div className="claim">
+              <h3>See this visit in your builder hub.</h3>
+              <p className="hint">Create your builder account{bookedEmail ? <> with <b>{bookedEmail}</b></> : ' with the email you booked with'}. Visits booked with that email show up in your hub, with the reports built from them.</p>
+              <a className="btn btn-sec" href={signupUrl('builder', bookedEmail || undefined)}>Create or open your builder account</a>
+            </div>
           </>)}
           {paid === 'fail' && <p>We could not confirm the payment yet. If you were charged, your booking is safe; email booking@brxs.ca and we will confirm it.</p>}
         </div>

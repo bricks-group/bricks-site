@@ -165,7 +165,7 @@ export default function Home() {
         <Rows
           items={[
             { title: 'Builders and developers', detail: 'Progress reports, 3D compare and site visits for every project.', href: '/builders' },
-            { title: 'Investors and lenders', detail: 'Monthly updates with dated, mapped evidence before each draw.', href: '/builders' },
+            { title: 'Investors and lenders', detail: 'Monthly updates with dated, mapped evidence before each draw.', href: '/investors' },
             { title: 'Brokerages', detail: 'Every seat on one system, with trust accounting.', href: '/brokerage' },
             { title: 'Agents and teams', detail: AGENT_LAUNCH_LIVE ? 'Deals, e-sign and a launch kit for every listing. A deal room for every closing on Marble.' : 'Deals, CRM and e-sign, with media on the listing.', href: '/agents' },
           ]}

@@ -141,6 +141,9 @@ export default function Nav() {
             </Link>
           ))}
           <Link href="/agents" className={pathname === '/agents' ? 'active' : ''} onClick={() => setOpen(false)}>Agents</Link>
+          <Link href="/investors" className={pathname === '/investors' ? 'active' : ''} onClick={() => setOpen(false)}>Investors and REITs</Link>
+          <Link href="/commercial" className={pathname === '/commercial' ? 'active' : ''} onClick={() => setOpen(false)}>Commercial</Link>
+          <Link href="/property-managers" className={pathname === '/property-managers' ? 'active' : ''} onClick={() => setOpen(false)}>Property managers</Link>
           <Link
             href="/contact"
             className={pathname === '/contact' ? 'active' : ''}

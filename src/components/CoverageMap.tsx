@@ -232,7 +232,10 @@ function labelEl(hub: CoverageHub) {
   el.type = 'button'
   el.className = `cov-label${hub.status === 'base' ? ' is-base' : ''}${hub.status === 'confirm' ? ' is-soft' : ''}`
   el.setAttribute('aria-label', hub.name)
-  el.textContent = hub.name
+  // The button is a 44px tap target; the visible pill is the span inside it.
+  const pill = document.createElement('span')
+  pill.textContent = hub.name
+  el.appendChild(pill)
   return el
 }
 
