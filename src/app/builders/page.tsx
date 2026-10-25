@@ -13,7 +13,7 @@ import { HUB } from '@/lib/site-progress-features'
 export const metadata: Metadata = {
   title: 'Site progress software and drone visits for builders & developers | Bricks',
   description:
-    'Progress reports, investor updates, 3D compare and your own capture imports for builders, developers, GCs and investors in Canada, with scheduled drone visits by vetted, insured, certified pilots. From $375 per visit or $300 per site per month.',
+    'Progress reports, investor updates, 3D compare and your own capture imports for builders, developers, GCs and investors in Canada, with scheduled drone visits by vetted, insured, certified pilots. One vendor, one portal, dated evidence for every draw.',
   alternates: { canonical: '/builders' },
   openGraph: {
     title: 'Site Progress for builders & developers | Bricks',
@@ -114,7 +114,7 @@ export default function BuildersPage() {
       <SiteRail />
 
       <section className="cm-sec rvl" id="pricing" aria-label="Pricing">
-        <Head title="Per visit, or per site each month." lede="Book one visit, or put a site on a monthly plan." />
+        <Head title="One vendor. One portal. Dated evidence for every draw." lede="Book one visit, or put a site on a monthly plan. Every visit lands in your Bricks portal, dated for the next draw." />
         <Stats
           label="Site Progress prices"
           items={[

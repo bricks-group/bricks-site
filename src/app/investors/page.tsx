@@ -95,7 +95,7 @@ export default function InvestorsPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Pricing">
-        <Head title="Per visit, or per site each month." link={{ href: '/builders#pricing', label: 'All prices' }} />
+        <Head title="One vendor. One portal. Dated evidence for every draw." lede="Per visit, or per site each month." link={{ href: '/builders#pricing', label: 'All prices' }} />
         <Stats
           label="Site Progress prices"
           items={[

@@ -132,7 +132,7 @@ export default function PricingPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Site Progress">
-        <Head title="Site Progress." lede="Per visit, or per site each month." link={{ href: '/builders', label: 'For builders' }} />
+        <Head title="Site Progress." lede="One vendor, one portal, dated evidence for every draw. Per visit, or per site each month." link={{ href: '/builders', label: 'For builders' }} />
         <Rows
           items={[
             { title: PER_VISIT[0].name, detail: PER_VISIT[0].what, value: `${fmt(PER_VISIT[0].price)} ${PER_VISIT[0].unit}` },
