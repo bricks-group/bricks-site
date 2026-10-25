@@ -13,12 +13,14 @@ export default function DemoInviteMintPage() {
   const [emailed, setEmailed] = useState<boolean | null>(null)
   const [exp, setExp] = useState<number | null>(null)
   const [copied, setCopied] = useState(false)
+  const [simulated, setSimulated] = useState(false)
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     setError('')
     setUrl('')
     setEmailed(null)
+    setSimulated(false)
     setExp(null)
     setCopied(false)
     setPending(true)
@@ -41,13 +43,15 @@ export default function DemoInviteMintPage() {
         exp?: number
         error?: string
         mail_error?: string
+        simulated?: boolean
       }
       if (!res.ok || !data.ok || !data.url) {
         setError(data.error || 'Could not mint invite.')
         return
       }
       setUrl(data.url)
-      setEmailed(Boolean(data.emailed))
+      setEmailed(data.simulated ? false : Boolean(data.emailed))
+      setSimulated(Boolean(data.simulated))
       setExp(typeof data.exp === 'number' ? data.exp : null)
       if (send && !data.emailed && data.mail_error) {
         setError(`Link ready — email did not send (${data.mail_error}). Copy the link.`)
@@ -153,7 +157,7 @@ export default function DemoInviteMintPage() {
                 onChange={(e) => setSend(e.target.checked)}
                 style={{ width: 16, height: 16 }}
               />
-              Email invite
+              Simulate email (nothing is sent)
             </label>
             <div className="cta-row">
               <button type="submit" className="btn btn-brick" disabled={pending}>
@@ -180,7 +184,7 @@ export default function DemoInviteMintPage() {
                 }}
               >
                 Unlock link
-                {emailed === true ? ' · emailed' : emailed === false ? ' · not emailed' : ''}
+                {simulated ? ' · email simulated, copy and share the link' : emailed === true ? ' · emailed' : emailed === false ? ' · not emailed' : ''}
                 {expLabel ? ` · expires ${expLabel}` : ''}
               </p>
               <div

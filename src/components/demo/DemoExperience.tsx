@@ -1,62 +1,42 @@
-'use client'
-
-import { useCallback, useState } from 'react'
 import Link from 'next/link'
-import ProductWindow from '@/components/ProductWindow'
-import BrixtonGuide from './BrixtonGuide'
-import { DEMO_STEPS } from './demoSteps'
-import { OS_LOGIN } from '@/lib/brand'
+import { DEMO_APP_URL } from '@/lib/brand'
+import { DEMO_PERSONAS, demoLink } from '@/lib/demo-personas'
 
+/** Pick a persona and open the interactive demo build. Mock data only; nothing saves. */
 export default function DemoExperience() {
-  const [i, setI] = useState(0)
-  const step = DEMO_STEPS[i]
-  const closing = step.id === 'close'
-
-  const jump = useCallback((n: number) => {
-    setI(Math.max(0, Math.min(DEMO_STEPS.length - 1, n)))
-  }, [])
-
   return (
-    <div className="demo-shell">
-      <div className="demo-main">
-        <div className={`demo-stage tray ${step.kind === 'phone' ? 'tray-phone demo-stage-phone' : 'tray-os demo-stage-desk'} ${step.surface === 'companion' ? 'tray-book' : ''} ${step.surface === 'go' ? 'tray-disp' : ''}`}>
-          <div className="tray-stage">
-            <ProductWindow
-              key={step.src}
-              variant={step.kind === 'phone' ? 'phone' : 'os'}
-              title={step.title}
-              src={step.src}
-              nw={step.nw}
-              nh={step.nh}
-              fit={step.kind === 'phone' ? 'contain' : 'width'}
-            />
-          </div>
+    <section className="block block-flush">
+      <div className="wrap">
+        <ul className="demo-personas" data-testid="demo-personas">
+          {DEMO_PERSONAS.map((p) => (
+            <li key={p.key}>
+              <a className="demo-persona" href={demoLink(DEMO_APP_URL, p.key)} data-persona={p.key}>
+                <span className="demo-persona-label">{p.label}</span>
+                <span className="demo-persona-who">{p.who}</span>
+                <span className="demo-persona-line">{p.line}</span>
+                <span className="demo-persona-go">Open demo →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="sub" style={{ marginTop: 24 }}>
+          Sample data throughout. Clicks work, nothing is saved and no one is contacted.
+        </p>
+        <div className="cta-row" style={{ marginTop: 24 }}>
+          <Link className="btn btn-brick" href="/book">Book a shoot</Link>
+          <Link className="btn btn-sec" href="/pricing">Pricing</Link>
         </div>
-
-        {closing ? (
-          <div className="demo-close-cta">
-            <Link className="btn btn-brick" href="/book">
-              Book a shoot
-            </Link>
-            <a className="btn btn-sec" href={OS_LOGIN}>
-              Open Bricks
-            </a>
-            <Link className="btn btn-sec" href="/platform">
-              Platform
-            </Link>
-          </div>
-        ) : null}
       </div>
-
-      <BrixtonGuide
-        step={step}
-        stepIndex={i}
-        stepCount={DEMO_STEPS.length}
-        onPrev={() => jump(i - 1)}
-        onNext={() => jump(i + 1)}
-        onJump={jump}
-        closing={closing}
-      />
-    </div>
+      <style>{`
+        .demo-personas{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);}
+        .demo-personas li{background:var(--paper, #F4F1EA);}
+        .demo-persona{display:flex;flex-direction:column;gap:6px;padding:20px;min-height:44px;height:100%;color:var(--ink);text-decoration:none;}
+        .demo-persona:hover,.demo-persona:focus-visible{background:var(--hair);}
+        .demo-persona-label{font-size:17px;font-weight:500;}
+        .demo-persona-who{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkMute);}
+        .demo-persona-line{font-size:14px;line-height:1.5;color:var(--inkSoft, var(--inkMute));flex:1;}
+        .demo-persona-go{font-size:13px;text-decoration:underline;text-underline-offset:3px;margin-top:8px;}
+      `}</style>
+    </section>
   )
 }

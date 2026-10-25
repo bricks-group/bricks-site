@@ -7,7 +7,7 @@ import { DEMO_ACCESS_COOKIE, verifyDemoInvite } from '@/lib/demo-invite'
 export const metadata: Metadata = {
   title: 'Request a Bricks walkthrough',
   description:
-    'Request a guided walkthrough of Bricks, Companion, and the photographer app. We schedule a short session with your team — no public interactive demo.',
+    'Explore Bricks with sample data as a brokerage, team, agent, builder, property manager or photographer, or request a walkthrough with your team.',
   alternates: { canonical: '/demo' },
   robots: { index: false, follow: false },
 }
@@ -25,10 +25,10 @@ export default async function DemoPage({ searchParams }: Props) {
     return (
       <main className="demo-page">
         <div className="demo-page-head wrap">
-          <span className="badge">Invited walkthrough</span>
-          <h1>Bricks walkthrough.</h1>
+          <span className="badge">Demo</span>
+          <h1>Explore Bricks.</h1>
           <p className="sub">
-            Short tour of the Bricks desk, Companion, and the photographer app. Use the guide on the right — no account needed.
+            Pick who you are and open Bricks with sample data. No account needed.
           </p>
         </div>
         <DemoExperience />
@@ -45,7 +45,7 @@ export default async function DemoPage({ searchParams }: Props) {
         <span className="badge">Walkthrough</span>
         <h1>Request a walkthrough.</h1>
         <p className="sub">
-          Short, scheduled intro to the Bricks desk, Companion, and the photographer app. Tell us who you are and we&apos;ll set a time.
+          A short, scheduled walkthrough of Bricks for your team. Tell us who you are and we&apos;ll set a time.
         </p>
         {expired ? (
           <p className="sub" style={{ color: 'var(--brickDeep)', marginTop: 16 }} role="status">

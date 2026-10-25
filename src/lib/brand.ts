@@ -5,6 +5,8 @@ export const OS_URL = 'https://app.brxs.ca'
 export const OS_LOGIN = `${OS_URL}/login`
 export const COMPANION_URL = 'https://companion.brxs.ca'
 export const GO_URL = 'https://go.brxs.ca'
+/** Interactive demo build (mock data, nothing saves). Override per deploy with NEXT_PUBLIC_DEMO_APP_URL. */
+export const DEMO_APP_URL = (process.env.NEXT_PUBLIC_DEMO_APP_URL || 'https://demo.brxs.ca').trim().replace(/\/$/, '')
 
 /**
  * Locked product truth. Do not invent softer/harder versions.

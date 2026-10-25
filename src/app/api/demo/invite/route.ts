@@ -7,7 +7,6 @@ import {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const GATE_COOKIE = 'bricks_www_gate'
-const RESEND_API_KEY = process.env.RESEND_API_KEY || ''
 
 function json(data: Record<string, unknown>, status = 200) {
   return NextResponse.json(data, { status })
@@ -67,7 +66,7 @@ function inviteHtml(name: string | undefined, unlockUrl: string, days: number): 
   const hello = name ? `Hello ${escapeHtml(name)},` : 'Hello,'
   return `<div style="font-family:system-ui,sans-serif;max-width:520px;color:#14110E">
 <p style="font-size:16px;line-height:1.5">${hello}</p>
-<p style="color:#555;line-height:1.6">You're invited to a short Bricks walkthrough: the Bricks desk, Companion and the photographer app. No account needed; open the link below.</p>
+<p style="color:#555;line-height:1.6">You're invited to explore Bricks with sample data. No account needed; open the link below.</p>
 <p style="margin:24px 0"><a href="${escapeAttr(unlockUrl)}" style="display:inline-block;padding:12px 20px;background:#D2542B;color:#fff;text-decoration:none;border-radius:2px;font-weight:500">Open walkthrough</a></p>
 <p style="color:#555;font-size:13px;line-height:1.5">Or paste this URL:<br/><a href="${escapeAttr(unlockUrl)}" style="color:#D2542B;word-break:break-all">${escapeHtml(unlockUrl)}</a></p>
 <p style="color:#999;font-size:12px;margin-top:28px">This invite expires in ${days} day${days === 1 ? '' : 's'}. Questions: help@brxs.ca</p>
@@ -84,28 +83,6 @@ function escapeHtml(s: string): string {
 
 function escapeAttr(s: string): string {
   return escapeHtml(s).replace(/'/g, '&#39;')
-}
-
-async function sendInviteEmail(
-  to: string,
-  name: string | undefined,
-  unlockUrl: string,
-  days: number,
-): Promise<{ emailed: boolean; error?: string }> {
-  if (!RESEND_API_KEY) return { emailed: false, error: 'RESEND_API_KEY' }
-  const r = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: 'Bricks <noreply@brxs.ca>',
-      to: [to],
-      subject: 'Your Bricks walkthrough',
-      html: inviteHtml(name, unlockUrl, days),
-    }),
-  })
-  if (r.ok) return { emailed: true }
-  const detail = await r.text().catch(() => '')
-  return { emailed: false, error: `RESEND_${r.status}:${detail.slice(0, 120)}` }
 }
 
 export async function POST(req: NextRequest) {
@@ -142,20 +119,15 @@ export async function POST(req: NextRequest) {
   const origin = siteOrigin(req)
   const url = `${origin}/demo/unlock?t=${encodeURIComponent(minted.token)}`
 
-  let emailed = false
-  let mail_error: string | undefined
-  if (send) {
-    const mail = await sendInviteEmail(email, name, url, days)
-    emailed = mail.emailed
-    mail_error = mail.error
-  }
-
+  // Invites are simulated: no email leaves this route. The link is returned to copy and share by hand,
+  // with the email body that would have gone out, for preview.
   return json({
     ok: true,
     url,
-    emailed,
+    emailed: false,
+    simulated: send,
     exp: minted.exp,
     days,
-    ...(mail_error && !emailed ? { mail_error } : {}),
+    ...(send ? { preview: { to: email, subject: 'Your Bricks walkthrough', html: inviteHtml(name, url, days) } } : {}),
   })
 }

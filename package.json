@@ -2,13 +2,13 @@
   "name": "bricks-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Bricks www (www.brxs.ca) — marketing, book, photographers, platform. Production site. GitHub bricks-group/bricks-site; Vercel project bricks-site (formerly bricks-prelaunch). Old separate bricks-site repo was deleted; this IS production www.",
+  "description": "Bricks www (www.brxs.ca) \u2014 marketing, book, photographers, platform. Production site. GitHub bricks-group/bricks-site; Vercel project bricks-site (formerly bricks-prelaunch). Old separate bricks-site repo was deleted; this IS production www.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "compile:os": "node scripts/compile-os.js",
-    "test": "npx --yes tsx --test src/lib/schedule.test.ts src/lib/demo-invite.test.ts src/lib/cutout-weather.test.ts src/middleware.test.ts src/lib/site-session.test.ts src/lib/coverage-gta-travel.test.ts src/lib/visit-staging-pricing.test.ts src/lib/book-prefill.test.ts src/lib/book-recommend.test.ts src/lib/form-labels-calm.test.ts src/lib/quote-lines.test.ts src/lib/launch-audit.test.ts src/lib/clientele-pages.test.ts",
+    "test": "npx --yes tsx --test src/lib/schedule.test.ts src/lib/demo-invite.test.ts src/lib/cutout-weather.test.ts src/middleware.test.ts src/lib/site-session.test.ts src/lib/coverage-gta-travel.test.ts src/lib/visit-staging-pricing.test.ts src/lib/book-prefill.test.ts src/lib/book-recommend.test.ts src/lib/form-labels-calm.test.ts src/lib/quote-lines.test.ts src/lib/launch-audit.test.ts src/lib/clientele-pages.test.ts src/lib/demo-personas.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
