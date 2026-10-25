@@ -202,8 +202,8 @@ export default function PricingPage() {
         /* calm */ .pr-first{padding-top:8px;} .rates .tbl{margin-top:8px;} .tbl td.num{font-size:13px!important;} .tbl tr.flat td{background:none!important;}
         .tbl-cap{text-align:left;font-size:15px;line-height:1.5;color:var(--inkSoft);max-width:560px;padding:0 0 24px;margin-top:calc(var(--head-gap) * -1 + 16px);}
         .tbl th,.tbl td{padding:16px var(--card-pad);text-align:right;border-bottom:1px solid var(--hair);}
-        .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
-          text-transform:uppercase;color:var(--inkMute);font-weight:500;background:var(--paperSoft);}
+        .tbl th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0;
+          text-transform:none;color:var(--inkMute);font-weight:500;background:var(--paperSoft);}
         .tbl td.pkg{text-align:left;font-weight:500;color:var(--ink);font-size:15px;}
         .tbl td.pkg .inc{display:block;font-size:13px;color:var(--inkMute);font-weight:400;margin-top:3px;}
         .tbl td.num{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--inkSoft);}

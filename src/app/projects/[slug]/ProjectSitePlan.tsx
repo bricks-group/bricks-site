@@ -42,10 +42,10 @@ const pageCss = `
   .ps-pin.selected{outline:2px solid var(--brick);outline-offset:2px;}
   .ps-panel{border:1px solid var(--hair);border-radius:4px;padding:20px;min-height:160px;}
   .ps-panel h3{font-weight:500;font-size:18px;color:var(--ink);margin:0 0 4px;}
-  .ps-panel .kind{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkMute);}
+  .ps-panel .kind{font-size:11px;letter-spacing:0;text-transform:none;color:var(--inkMute);}
   .ps-panel .row{display:flex;justify-content:space-between;font-size:13px;color:var(--inkSoft);margin-top:6px;}
   .ps-panel .status-pill{display:inline-block;padding:2px 8px;border-radius:2px;font-size:11px;font-weight:600;
-    text-transform:uppercase;color:#fff;margin-top:8px;}
+    text-transform:none;color:#fff;margin-top:8px;}
   .ps-empty{font-size:13px;color:var(--inkMute);}
   .ps-list{margin-top:24px;}
   .ps-list h4{font-size:13px;font-weight:600;color:var(--ink);margin:0 0 8px;}

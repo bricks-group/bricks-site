@@ -4,8 +4,8 @@
 .cm-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:0 0 var(--head-gap,32px);}
 .cm-head h2{font-size:var(--vs-fs-section);font-weight:500;letter-spacing:-.02em;line-height:1.12;color:var(--vs-fg);margin:0;max-width:22ch;}
 .cm-head p{font-size:var(--vs-fs-body);color:var(--vs-fg-2);line-height:1.45;margin:10px 0 0;max-width:46ch;}
-.cm-link{flex:none;font-size:var(--vs-fs-small);color:var(--vs-fg);text-decoration:none;border-bottom:1px solid var(--vs-rule-strong);padding-bottom:2px;}
-.cm-link:hover{border-bottom-color:var(--vs-fg);}
+.cm-link{flex:none;display:inline-flex;align-items:center;min-height:44px;font-size:var(--vs-fs-small);color:var(--vs-fg);text-decoration:underline;text-decoration-color:var(--vs-rule-strong);text-decoration-thickness:1px;text-underline-offset:5px;}
+.cm-link:hover{text-decoration-color:var(--vs-fg);}
 
 /* Stats: at most three, plain. */
 .cm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0;border-top:var(--vs-hair);}

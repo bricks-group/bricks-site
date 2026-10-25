@@ -615,7 +615,7 @@ export default function PhotographerForm() {
         .aform .hint-sm{font-size:11.5px;color:var(--inkFaint);line-height:1.4;display:block;margin-top:4px;}
         .aform .field.sub{margin-bottom:0;}
         .aform .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
-        .aform .chip{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--hairStrong);border-radius:2px;
+        .aform .chip{display:flex;align-items:center;gap:8px;padding:0 12px;min-height:44px;box-sizing:border-box;border:1px solid var(--hairStrong);border-radius:2px;
           font-family:'General Sans',sans-serif;font-size:13.5px;letter-spacing:0;text-transform:none;color:var(--ink);background:var(--paperDeep);cursor:pointer;}
         .aform .chip input{width:auto;max-width:none;}
         .aform .chip:has(input:checked),.aform .radio-row label:has(input:checked){border-color:var(--brick);}
