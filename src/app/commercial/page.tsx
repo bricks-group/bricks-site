@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
-import { SystemBand, Photo } from '@/components/clientele/Clientele'
+import { SystemBand, Photo, HeroPlate, PlateImg } from '@/components/clientele/Clientele'
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
 
@@ -35,6 +35,9 @@ export default function CommercialPage() {
             <a className="btn btn-night btn-primary" href={signupUrl('solo')}>Create a free account</a>
             <Link className="btn btn-sec" href="/book">Book media</Link>
           </div>
+          <HeroPlate sheet="C-00" title="Industrial building exterior, HDR listing photo" note="From our gallery">
+            <PlateImg src="/media/cre-harvester-exterior.jpg" alt="Exterior of an industrial building photographed for a listing" />
+          </HeroPlate>
         </div>
       </section>
 

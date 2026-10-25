@@ -1,3 +1,4 @@
+import type React from 'react'
 import './clientele.css'
 
 /**
@@ -60,4 +61,28 @@ export function Photo({ src, alt, note, ratio = 'wide' }: { src: string; alt: st
       {note ? <figcaption>{note}</figcaption> : null}
     </figure>
   )
+}
+
+/**
+ * Hero plate: the page's lead photo set like a drawing sheet. A hairline frame with
+ * corner ticks, and a title block under it (sheet number, what it shows, where it's from).
+ * No overlay text on the photo itself.
+ */
+export function HeroPlate({ sheet, title, note, children }: { sheet: string; title: string; note: string; children: React.ReactNode }) {
+  return (
+    <figure className="cl-plate">
+      <div className="cl-plate-frame">{children}</div>
+      <figcaption className="cl-plate-block">
+        <span className="cl-plate-no">{sheet}</span>
+        <span className="cl-plate-title">{title}</span>
+        <span className="cl-plate-note">{note}</span>
+      </figcaption>
+    </figure>
+  )
+}
+
+/** Eager hero image for a HeroPlate (plain jpg from public/media). */
+export function PlateImg({ src, alt }: { src: string; alt: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt} width={1600} height={1066} loading="eager" fetchPriority="high" decoding="async" />
 }
