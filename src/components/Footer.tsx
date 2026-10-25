@@ -33,10 +33,19 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-col">
+          <h4>Who it&apos;s for</h4>
+          <div className="foot-links">
+            <Link href="/agents">Agents</Link>
+            <Link href="/brokerage">Brokerage</Link>
+            <Link href="/builders">Builders</Link>
+            <Link href="/investors">Investors and REITs</Link>
+            <Link href="/commercial">Commercial</Link>
+            <Link href="/property-managers">Property managers</Link>
+          </div>
+        </div>
+        <div className="foot-col">
           <h4>Company</h4>
           <div className="foot-links">
-            <Link href="/brokerage">Brokerage</Link>
-            <Link href="/agents">Agents</Link>
             <Link href="/photographers">Photographers</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>

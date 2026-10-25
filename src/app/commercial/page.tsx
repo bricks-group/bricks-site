@@ -1,0 +1,100 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import RevealObserver from '@/components/RevealObserver'
+import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
+import { SystemBand, Photo } from '@/components/clientele/Clientele'
+import { PER_VISIT, fmt } from '@/lib/commercial'
+import { signupUrl } from '@/lib/brand'
+
+export const metadata: Metadata = {
+  title: 'Commercial real estate media, Virtual Visit and site mapping | Bricks',
+  description:
+    'HDR photos, licensed drone, floor plans, Virtual Visit free-roam 3D and mapped site captures for commercial and industrial property in Canada, booked online and delivered into Bricks.',
+  alternates: { canonical: '/commercial' },
+  openGraph: {
+    title: 'Commercial property, shown properly | Bricks',
+    description: 'Listing media, Virtual Visit and mapped site captures in one system.',
+  },
+}
+
+const MAPPED = PER_VISIT.find((x) => x.key === 'mapped')!
+const SETUP = PER_VISIT.find((x) => x.key === 'setup')!
+const VISUAL = PER_VISIT.find((x) => x.key === 'visual')!
+
+export default function CommercialPage() {
+  return (
+    <>
+      <RevealObserver />
+      <section className="hero">
+        <div className="wrap">
+          <h1>Commercial property, shown properly.</h1>
+          <p className="sub">
+            Bricks is the system that brings it all together: listing media, Virtual Visit and mapped site captures, booked online and delivered into one listing file.
+          </p>
+          <div className="cta-row">
+            <a className="btn btn-night btn-primary" href={signupUrl('solo')}>Create a free account</a>
+            <Link className="btn btn-sec" href="/book">Book media</Link>
+          </div>
+        </div>
+      </section>
+
+      <SystemBand
+        title="One system, from shoot to listing."
+        label="The system"
+        lede="Book by address, pick an exact time and we assign the photographer. The media lands on the listing in Bricks."
+        tiles={[
+          { icon: 'camera', title: 'Listing photos', body: 'HDR photos of offices, retail, industrial and multi-unit property. Photos in 24 hours.' },
+          { icon: 'map', title: 'Licensed drone', body: 'Aerials of the building, the lot and the access, flown by certified pilots.' },
+          { icon: 'plan', title: 'Floor plans', body: 'Measured floor plans for leasing and sale listings.' },
+          { icon: 'visit', title: 'Virtual Visit', body: 'Free-roam 3D of the space, so tenants and buyers can walk it from anywhere. A paid add-on.' },
+          { icon: 'compare', title: 'Mapped capture', body: 'An orthomosaic, a 3D model and a measurable site map of the property.' },
+          { icon: 'report', title: 'One listing file', body: 'Every delivery filed to the listing in Bricks.' },
+        ]}
+      />
+
+      <section className="cm-sec rvl" aria-label="Sample work">
+        <Head title="Built for big footprints." lede="Docks, yards, rooftops and the site around them." link={{ href: '/gallery', label: 'See more work' }} />
+        <div className="cl-pair">
+          <Photo src="/media/drone-cre-2241.jpg" alt="Drone photo of an industrial park" note="From our gallery" ratio="square" />
+          <Photo src="/media/cre-harvester-dock.jpg" alt="Loading dock exterior of a commercial building" note="From our gallery" ratio="square" />
+        </div>
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Virtual Visit">
+        <Head title="Virtual Visit, for the first walkthrough." lede="A free-roam 3D capture of the space. It is not a path tour: people move anywhere they like." />
+        <Rows
+          items={[
+            { title: 'Booked as an add-on', detail: 'Add it to any media booking for the property.' },
+            { title: 'Walk a sample', detail: 'Try a Virtual Visit on the media page.', href: '/media#visit' },
+          ]}
+        />
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Mapping">
+        <Head title="Mapping the whole site." lede="Measured maps and a 3D model of the property, booked like any other visit." link={{ href: '/book/site', label: 'Book a site visit' }} />
+        <Stats
+          label="Mapping prices"
+          items={[
+            { fig: fmt(MAPPED.price), label: `${MAPPED.name}, ${MAPPED.unit}` },
+            { fig: fmt(SETUP.price), label: `${SETUP.name}, ${SETUP.unit}` },
+            { fig: fmt(VISUAL.price), label: `${VISUAL.name}, ${VISUAL.unit}` },
+          ]}
+        />
+        <p className="cm-note">CAD, plus HST. Survey-grade accuracy is quoted separately. Maps and models are visual documentation, not a survey.</p>
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Accounts">
+        <Head title="Which account to open." />
+        <Rows
+          items={[
+            { title: 'Commercial brokers and agents', detail: 'Start free as an individual. Team and brokerage plans are on the pricing page.', href: signupUrl('solo'), external: true },
+            { title: 'Owners and developers mapping a site', detail: 'A builder account keeps every visit, map and report for the property.', href: signupUrl('builder'), external: true },
+            { title: 'Leasing teams with many units', detail: 'A leasing account tracks units and their status by building.', href: signupUrl('reit_leasing'), external: true },
+          ]}
+        />
+      </section>
+
+      <Close title="See the work first." href="/gallery" label="See commercial work" primary={false} />
+    </>
+  )
+}

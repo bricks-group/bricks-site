@@ -103,3 +103,16 @@ export const WORK_PHOTOS = [
   { src: '/media/work/11.jpg', alt: 'Drone view of an active construction site' },
   { src: '/media/work/12.jpg', alt: 'Commercial building exterior — listing photo' },
 ] as const
+
+/** Sign-up account types the app's onboarding understands (app.brxs.ca signupIntent.js). */
+export type SignupType = 'solo' | 'team' | 'brokerage' | 'builder' | 'reit_leasing'
+
+/**
+ * Create-account link with the account type highlighted in onboarding.
+ * The person still confirms the type there; nothing is assumed.
+ */
+export function signupUrl(type: SignupType, email?: string): string {
+  const q = new URLSearchParams({ mode: 'register', type })
+  if (email) q.set('email', email)
+  return `${OS_LOGIN}?${q.toString()}`
+}
