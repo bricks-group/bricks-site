@@ -93,6 +93,7 @@ export default function CommercialPage() {
             { title: 'Commercial brokers and agents', detail: 'Start free as an individual. Team and brokerage plans are on the pricing page.', href: signupUrl('solo'), external: true },
             { title: 'Owners and developers mapping a site', detail: 'A builder account keeps every visit, map and report for the property.', href: signupUrl('builder'), external: true },
             { title: 'Landlords and leasing teams', detail: 'A commercial account keeps each property’s spaces, leasing sets and status.', href: signupUrl('commercial'), external: true },
+            { title: 'Leasing desk plan', detail: '$1,590 a month, CAD plus tax: two leasing sets a month for spaces up to 7,500 sq ft, and hosted Virtual Visits for every space.', href: signupUrl('commercial'), external: true },
           ]}
         />
       </section>
