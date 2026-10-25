@@ -30,3 +30,14 @@ test('Close renders a single button', () => {
   const body = s.slice(s.indexOf('export function Close'))
   assert.equal((body.slice(0, body.indexOf('\n}')).match(/className=\{cls\}/g) || []).length, 2, 'one link, internal or external')
 })
+
+test('construction quote form submit is the orange primary', () => {
+  assert.match(read('src/app/construction/ConstructionForm.tsx'), /type="submit" className="btn btn-night btn-primary"/)
+})
+
+test('no non-primary night-filled button is left on the site', () => {
+  const { execSync } = require('node:child_process')
+  const hits = execSync(`grep -rhoE 'className="[^"]*btn-night[^"]*"' ${join(root, 'src')} || true`).toString().trim().split('\n').filter(Boolean)
+  for (const h of hits) assert.match(h, /btn-primary/, h)
+  assert.match(read('src/app/calm-global.css'), /\.btn-night:not\(\.btn-primary\)\{background:var\(--ink\);color:var\(--paper\);\}/)
+})

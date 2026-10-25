@@ -34,3 +34,10 @@
 /* One brick-orange primary action per page (hero, plus the closer when it is the same action). */
 .btn.btn-primary{background:var(--brick)!important;color:#fff!important;border-color:var(--brick)!important;}
 .btn.btn-primary:hover{filter:brightness(.92);}
+
+/* Night-filled buttons (#141210) vanish on the dark page. Orange primaries keep white on #D2542B in every theme;
+   any non-primary night button follows the theme ink instead. Focus ring follows the theme too. */
+.btn.btn-primary:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+.btn.btn-primary:disabled{opacity:.75;cursor:progress;}
+.btn-night:not(.btn-primary){background:var(--ink);color:var(--paper);}
+.btn-night:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}

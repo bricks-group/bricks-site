@@ -93,7 +93,7 @@ export default function ConstructionForm() {
         <textarea id="cxNotes" name="notes" placeholder="Sites, visual or mapped, cadence, insurance minimum, timeline" required />
       </div>
       <div className="cta-row">
-        <button type="submit" className="btn btn-night" disabled={submitting}>{submitting && <BricksLoader variant="cycle" size={16} color="currentColor" style={{ marginRight: 8 }} />}{submitting ? 'Sending…' : 'Request a quote'}</button>
+        <button type="submit" className="btn btn-night btn-primary" disabled={submitting}>{submitting && <BricksLoader variant="cycle" size={16} color="currentColor" style={{ marginRight: 8 }} />}{submitting ? 'Sending…' : 'Request a quote'}</button>
         <a className="btn btn-sec" href="/book">Or book listing media →</a>
       </div>
       <div className="nlmsg">{msg}</div>
