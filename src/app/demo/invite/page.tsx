@@ -174,7 +174,7 @@ export default function DemoInviteMintPage() {
                   fontFamily: "'JetBrains Mono', monospace",
                   fontSize: 10,
                   letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
+                  textTransform: 'none',
                   color: 'var(--inkMute)',
                   marginBottom: 8,
                 }}
@@ -215,8 +215,8 @@ export default function DemoInviteMintPage() {
 
           <style>{`
             .cform{display:grid;gap:14px;max-width:540px;margin-top:6px;}
-            .cform label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
-              text-transform:uppercase;color:var(--inkMute);display:block;margin-bottom:6px;}
+            .cform label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0;
+              text-transform:none;color:var(--inkMute);display:block;margin-bottom:6px;}
             .cform input[type=email],.cform input[type=text]{width:100%;font-family:'General Sans',sans-serif;font-size:15px;
               color:var(--ink);background:var(--paperDeep);border:1px solid var(--hairStrong);
               border-radius:2px;padding:12px 14px;outline:none;}

@@ -68,7 +68,7 @@ function GateForm() {
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: 10.5,
               letterSpacing: '0.16em',
-              textTransform: 'uppercase',
+              textTransform: 'none',
               color: 'var(--inkMute)',
             }}
           >

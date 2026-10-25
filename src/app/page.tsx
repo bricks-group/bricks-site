@@ -207,7 +207,7 @@ export default function Home() {
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:460px;line-height:1.45;}
         .hero-home .cta-row{align-items:center;}
         .hf-shot{background:var(--paperDeep);}
-        .hf-fine{display:block;margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkMute);}
+        .hf-fine{display:block;margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:0;text-transform:none;color:var(--inkMute);}
         .hf-shot picture{position:absolute;inset:24px 24px 0 24px;width:auto;height:auto;}
         .hf-shot img{object-fit:cover;object-position:50% 0;border:1px solid var(--hairStrong);border-bottom:none;}
         @media (max-width:680px){.hf-shot picture{inset:14px 14px 0 14px;}}

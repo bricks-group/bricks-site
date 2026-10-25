@@ -117,12 +117,12 @@ export default function FallMarket() {
         .reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;}
         .reasons .r{background:var(--paper);padding:24px;}
-        .reasons .r .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
-          text-transform:uppercase;color:var(--brickDeep);display:block;margin-bottom:8px;}
+        .reasons .r .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0;
+          text-transform:none;color:var(--brickDeep);display:block;margin-bottom:8px;}
         .reasons .r h4{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:6px;}
         .reasons .r p{font-size:13px;color:var(--inkMute);line-height:1.5;}
         .deadline{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brickSoft);
-          letter-spacing:.06em;text-transform:uppercase;margin-top:16px;}
+          letter-spacing:0;text-transform:none;margin-top:16px;}
         @media (max-width:680px){.reasons{grid-template-columns:1fr;}}
       `}</style>
     </>

@@ -162,7 +162,7 @@ export default function GalleryPage() {
           display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;
           font-family:'JetBrains Mono',monospace;box-shadow:none;}
         .ba-tag{position:absolute;bottom:12px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;
-          letter-spacing:.14em;text-transform:uppercase;padding:6px 10px;border-radius:2px;pointer-events:none;z-index:3;
+          letter-spacing:0;text-transform:none;padding:6px 10px;border-radius:2px;pointer-events:none;z-index:3;
           color:#F4F1EB;background:rgba(14,11,9,.55);border:1px solid rgba(244,241,235,.22);
           backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 2px rgba(0,0,0,.18);}
         .ba-tag-before{left:12px;}

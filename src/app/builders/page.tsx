@@ -107,7 +107,7 @@ const pageCss = `
   .bx-card{border:1px solid var(--hair);border-radius:2px;padding:var(--card-pad);background:var(--paper);display:flex;flex-direction:column;gap:8px;}
   .bx-card .nm{font-weight:500;font-size:16px;color:var(--ink);}
   .bx-card .pr{font-weight:500;font-size:28px;letter-spacing:-.6px;color:var(--ink);}
-  .bx-card .un{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--inkMute);}
+  .bx-card .un{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0;text-transform:none;color:var(--inkMute);}
   .bx-card p{font-size:13.5px;color:var(--inkSoft);line-height:1.5;margin:0;}
   .bx-plans{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);margin-top:var(--gap);}
   .bx-plan{border:1px solid var(--hair);border-radius:2px;background:var(--paper);}

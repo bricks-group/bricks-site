@@ -38,7 +38,7 @@ export default function TermsPage() {
 
           <h3>1. Authority and access</h3>
           <p>You represent that you are at least 18 and that you have lawful authority to book media of the property (as owner, listing agent, or with the owner&apos;s authorization). You will arrange access for the shoot window: occupants, pets, lockbox, and any condo or site rules. You will tell us about occupied rooms, children, or access limits in the booking notes. You are responsible for occupant consent. We do not photograph occupants or children as a deliverable.</p>
-          <p>If you lack authority, or access is refused on the day, we may treat it as a client cancellation under section 5 and/or a trip-fee situation for the photographer.</p>
+          <p>If you lack authority, or access is refused on the day, we may treat it as a client cancellation inside 24 hours under section 5 (no refund). There is no callout fee on top.</p>
 
           <h3>2. Booking and payment</h3>
           <p>You pay the quoted amount in full, including HST, at checkout via Stripe to lock the slot. The quote shown at pay is the contract price for the selected package and add-ons. Prices are CAD. We do not store full card numbers.</p>
@@ -70,8 +70,8 @@ export default function TermsPage() {
           <p>Your cancellation (or no-access / no-show on your side):</p>
           <ul>
             <li>More than 24 hours before the shoot window: full refund to the original payment method.</li>
-            
             <li>Inside 24 hours, or no-show / no access: no refund.</li>
+            <li>There is no callout fee on any cancellation.</li>
           </ul>
           <p>If we cancel, fail to attend, or cannot complete the shoot for reasons on our side (including weather that makes a safe shoot impossible and no reschedule you accept): full refund or a free reshoot, your choice.</p>
           <p>Refunds via Stripe typically show in 5–10 business days. Nothing in this section limits rights you have that cannot be waived under Ontario&apos;s Consumer Protection Act, 2002, if that Act applies to you.</p>

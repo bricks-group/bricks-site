@@ -69,10 +69,10 @@ export default function ContactPage() {
         .contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;margin:0 0 var(--sec-half);}
         .contact-grid .c{background:var(--paper);padding:var(--card-pad);}
-        .contact-grid .c .l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
-          text-transform:uppercase;color:var(--inkMute);}
+        .contact-grid .c .l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0;
+          text-transform:none;color:var(--inkMute);}
         .contact-grid .c .v{font-weight:500;font-size:17px;color:var(--ink);margin-top:8px;line-height:1.35;}
-        .contact-grid .c .v a{color:var(--brickDeep);text-decoration:none;}
+        .contact-grid .c .v a{display:inline-flex;align-items:center;min-height:44px;color:var(--brickDeep);text-decoration:none;}
         .contact-grid .c .v a:hover{text-decoration:underline;text-underline-offset:2px;}
         @media (max-width:680px){ .contact-grid{grid-template-columns:1fr;} }
       `}</style>

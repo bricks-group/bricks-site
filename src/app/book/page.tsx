@@ -76,7 +76,7 @@ export default function BookPage() {
                 name: 'What if I need to cancel?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice.',
+                  text: 'More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee.',
                 },
               },
               {
