@@ -27,7 +27,7 @@ export default function PropertyManagersPage() {
             Bricks is the system that brings it all together: unit photos, floor plans and Virtual Visit for leasing, with your buildings and units in one account.
           </p>
           <div className="cta-row">
-            <a className="btn btn-night btn-primary" href={signupUrl('reit_leasing')}>Create a leasing account</a>
+            <a className="btn btn-night btn-primary" href={signupUrl('property_manager')}>Create a property manager account</a>
             <Link className="btn btn-sec" href="/book">Book unit media</Link>
           </div>
           <HeroPlate sheet="P-00" title="Condo rooftop amenity, listing photo" note="From our gallery">
@@ -63,7 +63,8 @@ export default function PropertyManagersPage() {
         <Rows
           items={[
             { title: 'One or two units', detail: 'Book media online. You don’t need an account to book.', href: '/book' },
-            { title: 'Buildings with many units', detail: 'A leasing account keeps units and their status by building.', href: signupUrl('reit_leasing'), external: true },
+            { title: 'Condition reports and turnovers', detail: 'Dated move-in and move-out reports, and a turnover visit that relists the unit. We confirm the price first.', href: '/book/property?for=property_manager' },
+            { title: 'Buildings with many units', detail: 'A property manager account keeps units, reports and leasing status by building.', href: signupUrl('property_manager'), external: true },
             { title: 'Leasing agents', detail: 'Start free as an individual and book media from the listing.', href: signupUrl('solo'), external: true },
           ]}
         />

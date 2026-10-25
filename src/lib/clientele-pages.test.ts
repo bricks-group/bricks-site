@@ -25,12 +25,14 @@ for (const p of PAGES) {
     assert.match(s, /Bricks is the system that brings it all together/)
     assert.equal((s.match(/btn-primary/g) || []).length, 1, 'exactly one orange button')
     assert.match(s, /primary=\{false\}/, 'closing band stays outlined')
-    assert.match(s, /signupUrl\('(builder|reit_leasing|solo)'\)/)
+    assert.match(s, /signupUrl\('(investor|commercial|property_manager|builder|reit_leasing|solo)'\)/)
   })
   test(`${p}: no internal names, founder, gradients or made-up features`, () => {
     const s = read(p)
     assert.doesNotMatch(s, /Bricks OS|\bGO\b|Raphael|Merchant|gradient/)
-    assert.doesNotMatch(s, /turnover|condition report|move-in|move-out|certif(ied|y) (cost|completion)/i)
+    assert.doesNotMatch(s, /certif(ied|y) (cost|completion)/i)
+    // Condition reports and turnovers are request-only (price unapproved): only via /book/property.
+    if (/turnover|condition report/i.test(s)) assert.match(s, /\/book\/property\?for=/)
     assert.doesNotMatch(s, /text-transform:\s*uppercase/)
   })
 }
@@ -40,7 +42,7 @@ test('new pages are in the sitemap, llms.txt, footer and drawer', () => {
   const llms = read('public/llms.txt')
   const footer = read('src/components/Footer.tsx')
   const nav = read('src/components/Nav.tsx')
-  for (const path of ['/investors', '/commercial', '/property-managers']) {
+  for (const path of ['/investors', '/commercial', '/property-managers', '/teams', '/reits']) {
     assert.ok(sitemap.includes(`'${path}'`), `sitemap ${path}`)
     assert.ok(llms.includes(`https://www.brxs.ca${path}`), `llms ${path}`)
     assert.ok(footer.includes(`href="${path}"`), `footer ${path}`)
@@ -77,4 +79,46 @@ test('image captions match provenance: only own photos say "our", stock says "Re
 test('/builders layers story has no CSS gradients', () => {
   const css = read('src/components/builders/site-rail.css').replace(/\/\*[\s\S]*?\*\//g, '')
   assert.doesNotMatch(css, /gradient\(/)
+})
+
+test('each property page signs up as its own account type', () => {
+  assert.match(read('src/app/investors/page.tsx'), /signupUrl\('investor'\)/)
+  assert.match(read('src/app/commercial/page.tsx'), /signupUrl\('commercial'\)/)
+  assert.match(read('src/app/property-managers/page.tsx'), /signupUrl\('property_manager'\)/)
+  assert.match(read('src/app/reits/page.tsx'), /signupUrl\('reit_leasing'\)/)
+})
+
+test('agents, teams and brokerage pages sign up, not just log in', () => {
+  for (const p of ['src/app/agents/page.tsx', 'src/app/pricing/page.tsx']) {
+    assert.doesNotMatch(read(p), /href="https:\/\/app\.brxs\.ca\/login"/, `${p} links to plain login`)
+  }
+  assert.match(read('src/app/teams/page.tsx'), /signupUrl\('team'\)/)
+  assert.match(read('src/app/teams/page.tsx'), /Up to 6 agents/)
+  assert.match(read('src/app/brokerage/page.tsx'), /signupUrl\('brokerage'\)/)
+  for (const p of ['src/app/teams/page.tsx', 'src/app/reits/page.tsx', 'src/app/brokerage/page.tsx', 'src/app/agents/page.tsx']) {
+    const s = read(p)
+    assert.equal((s.match(/btn-primary/g) || []).length, 1, `${p}: exactly one orange button`)
+    assert.doesNotMatch(s, /Bricks OS|\bGO\b|Raphael|Merchant|gradient|down the street/)
+  }
+})
+
+test('brokerage monthly seat rate is the yearly rate plus 25%', async () => {
+  const { OFFICE_SEAT_PRICE_PER_MONTH, OFFICE_SEAT_PRICE_PER_YEAR } = await import('./catalog')
+  for (const k of Object.keys(OFFICE_SEAT_PRICE_PER_YEAR) as (keyof typeof OFFICE_SEAT_PRICE_PER_YEAR)[]) {
+    const yearlyPerMonth = OFFICE_SEAT_PRICE_PER_YEAR[k] / 12
+    assert.ok(Math.abs(OFFICE_SEAT_PRICE_PER_MONTH[k] - yearlyPerMonth * 1.25) <= 0.5, k)
+  }
+})
+
+test('property request form posts to the public request route, shows no prices, covers every client type', async () => {
+  const { SERVICES_FOR, isPropertyClient } = await import('./clientServices')
+  for (const k of ['property_manager', 'commercial', 'investor', 'reit_leasing']) {
+    assert.ok(isPropertyClient(k))
+    assert.ok(SERVICES_FOR[k as keyof typeof SERVICES_FOR].length > 0)
+  }
+  assert.ok(!isPropertyClient('builder'))
+  const s = read('src/app/book/property/PropertyRequestForm.tsx') + read('src/lib/clientServices.ts')
+  assert.match(s, /fetch\('\/api\/book\/property-request'/)
+  assert.doesNotMatch(s, /\$\d/)
+  assert.ok(SERVICES_FOR.commercial.some((x) => x.key === 'site_progress' && /mapping|maps/.test(x.detail) && /models/.test(x.detail) && /reports/.test(x.detail) && /comparisons/.test(x.detail)))
 })

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
-import { OFFICE_PLANS, OFFICE_INCLUDES, SOFTWARE_BLURB, SOFTWARE_PLANS, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
+import { OFFICE_PLANS, OFFICE_INCLUDES, OFFICE_MONTHLY_NOTE, SOFTWARE_BLURB, SOFTWARE_PLANS, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import {
@@ -13,6 +13,7 @@ import {
   TOUR_SHORT,
   VISIT_NAME,
   VISIT_SHORT,
+  signupUrl,
 } from '@/lib/brand'
 import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
 
@@ -129,6 +130,7 @@ export default function PricingPage() {
       <section className="cm-sec rvl" aria-label="Brokerage seats">
         <Head title="Brokerages, per seat." lede={OFFICE_INCLUDES} link={{ href: '/brokerage', label: 'For brokerages' }} />
         <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: p.price }))} />
+        <p className="cm-note">{OFFICE_MONTHLY_NOTE} Up to 6 agents fit on one <Link href="/teams">team plan</Link>.</p>
       </section>
 
       <section className="cm-sec rvl" aria-label="Site Progress">
@@ -188,12 +190,12 @@ export default function PricingPage() {
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. Priced per photo and not part of any package.</p></div>
             <div className="qa"><h4>Where do you shoot?</h4><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
             <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>
-            <div className="qa"><h4>Brokerage or individual plan?</h4><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, and every seat gets all of Bricks plus trust accounting.</p></div>
+            <div className="qa"><h4>Brokerage or individual plan?</h4><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, or monthly at 25% more, and every seat gets all of Bricks plus trust accounting.</p></div>
           </div>
         </section>
 
 
-      <Close title="Start free. Book when you need to." href="https://app.brxs.ca/login" label="Try Bricks free" external />
+      <Close title="Start free. Book when you need to." href={signupUrl('solo')} label="Try Bricks free" external />
 
       <style>{`
         .trust{text-align:center;padding:8px 0 28px;}

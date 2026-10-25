@@ -105,7 +105,9 @@ export const WORK_PHOTOS = [
 ] as const
 
 /** Sign-up account types the app's onboarding understands (app.brxs.ca signupIntent.js). */
-export type SignupType = 'solo' | 'team' | 'brokerage' | 'builder' | 'reit_leasing'
+export type SignupType =
+  | 'solo' | 'team' | 'brokerage'
+  | 'builder' | 'reit_leasing' | 'investor' | 'commercial' | 'property_manager'
 
 /**
  * Create-account link with the account type highlighted in onboarding.

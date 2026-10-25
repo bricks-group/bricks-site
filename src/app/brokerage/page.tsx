@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { Head, Rows, Close } from '@/components/calm/Calm'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
-import { OFFICE_PLANS, OFFICE_INCLUDES } from '@/lib/catalog'
-import { STATUS } from '@/lib/brand'
+import { OFFICE_PLANS, OFFICE_INCLUDES, OFFICE_MONTHLY_NOTE, OFFICE_SEAT_PRICE_PER_MONTH } from '@/lib/catalog'
+import { STATUS, signupUrl } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 import { FeatureList } from '@/components/features/Feature'
 import { ESIGN, LAUNCH } from '@/lib/agent-features'
@@ -31,7 +31,8 @@ export default function BrokeragePage() {
             ? 'Every seat gets deals, e-sign, a launch kit for each listing and a deal room for each closing. The office gets roster, pipeline and trust accounting.'
             : 'Every seat gets deals, e-sign and listing media in one desk. The office gets roster, pipeline and trust accounting.'}</p>
           <div className="cta-row">
-            <Link className="btn btn-night btn-primary" href="/contact">Talk to us</Link>
+            <a className="btn btn-night btn-primary" href={signupUrl('brokerage')}>Set up your brokerage</a>
+            <Link className="btn btn-sec" href="/contact">Talk to us</Link>
           </div>
         </div>
       </section>
@@ -55,7 +56,8 @@ export default function BrokeragePage() {
 
       <section className="cm-sec rvl" aria-label="Seats">
         <Head title="Per seat, billed yearly." lede={OFFICE_INCLUDES} link={{ href: '/pricing', label: 'See pricing' }} />
-        <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: p.price }))} />
+        <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: `${p.seats} · or $${OFFICE_SEAT_PRICE_PER_MONTH[p.id]} / seat / mo, month to month`, value: p.price }))} />
+        <p className="cm-note">{OFFICE_MONTHLY_NOTE} Fewer than 5 agents? See <Link href="/teams">team plans</Link>.</p>
       </section>
 
       <section className="cm-sec rvl" aria-label="What's inside">
@@ -77,7 +79,7 @@ export default function BrokeragePage() {
         />
       </section>
 
-      <Close title="Give your agents a reason to stay." href="/contact" label="Talk to us" primary={false} />
+      <Close title="Give your agents a reason to stay." href={signupUrl('brokerage')} label="Set up your brokerage" external primary={false} />
       <style>{`
         .lede-soft{font-size:15px;color:var(--inkSoft);max-width:560px;margin:-8px 0 22px;line-height:1.5;}
       `}</style>

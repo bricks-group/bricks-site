@@ -32,8 +32,8 @@ export default function CommercialPage() {
             Bricks is the system that brings it all together: listing media, Virtual Visit and mapped site captures, booked online and delivered into one listing file.
           </p>
           <div className="cta-row">
-            <a className="btn btn-night btn-primary" href={signupUrl('solo')}>Create a free account</a>
-            <Link className="btn btn-sec" href="/book">Book media</Link>
+            <a className="btn btn-night btn-primary" href={signupUrl('commercial')}>Create a commercial account</a>
+            <Link className="btn btn-sec" href="/book/property?for=commercial">Request a leasing set</Link>
           </div>
           <HeroPlate sheet="C-00" title="Industrial building exterior, HDR listing photo" note="From our gallery">
             <PlateImg src="/media/cre-harvester-exterior.jpg" alt="Exterior of an industrial building photographed for a listing" />
@@ -92,7 +92,7 @@ export default function CommercialPage() {
           items={[
             { title: 'Commercial brokers and agents', detail: 'Start free as an individual. Team and brokerage plans are on the pricing page.', href: signupUrl('solo'), external: true },
             { title: 'Owners and developers mapping a site', detail: 'A builder account keeps every visit, map and report for the property.', href: signupUrl('builder'), external: true },
-            { title: 'Leasing teams with many units', detail: 'A leasing account tracks units and their status by building.', href: signupUrl('reit_leasing'), external: true },
+            { title: 'Landlords and leasing teams', detail: 'A commercial account keeps each property’s spaces, leasing sets and status.', href: signupUrl('commercial'), external: true },
           ]}
         />
       </section>
