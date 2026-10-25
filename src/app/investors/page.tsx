@@ -71,11 +71,13 @@ export default function InvestorsPage() {
             { title: 'Clear scope', detail: 'Reports are visual documentation of site conditions, not a cost, quantity or completion certification.' },
           ]}
         />
-        <div className="cl-photo cl-photo-wide">
+        {/* Licensed stock (public/IMAGE_CREDITS.md): never captioned as Bricks or client work. */}
+        <figure className="cl-photo cl-photo-wide">
           <div className="cl-photo-frame">
             <ConstructionPic name="two-workers-rebar" alt="Two workers in hi-vis among reinforcing steel on a concrete deck" sizes="(max-width:900px) 100vw, 1100px" />
           </div>
-        </div>
+          <figcaption>Representative image</figcaption>
+        </figure>
       </section>
 
       <section className="cm-sec rvl" id="reit" aria-label="REITs and leasing">

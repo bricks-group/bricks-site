@@ -60,3 +60,21 @@ test('/service-areas map labels are 44px tap targets', () => {
   assert.match(rule, /min-height:44px/)
   assert.match(rule, /min-width:44px/)
 })
+
+test('image captions match provenance: only own photos say "our", stock says "Representative image"', () => {
+  const gallery = read('src/app/gallery/page.tsx')
+  for (const p of PAGES) {
+    const s = read(p)
+    // "From our gallery" only on images that really are in Bricks' own /gallery.
+    for (const m of s.matchAll(/src="([^"]+)"[^>]*note="From our gallery"/g)) assert.ok(gallery.includes(m[1]), `${p}: ${m[1]} is not in /gallery`)
+    for (const m of s.matchAll(/note="From our gallery">\s*<PlateImg src="([^"]+)"/g)) assert.ok(gallery.includes(m[1]), `${p}: ${m[1]} is not in /gallery`)
+    // Licensed stock (IMAGE_CREDITS.md) is always labelled as representative.
+    const stock = (s.match(/<ConstructionPic /g) || []).length
+    assert.equal((s.match(/Representative image/g) || []).length >= stock, true, `${p}: stock photo without "Representative image"`)
+  }
+})
+
+test('/builders layers story has no CSS gradients', () => {
+  const css = read('src/components/builders/site-rail.css').replace(/\/\*[\s\S]*?\*\//g, '')
+  assert.doesNotMatch(css, /gradient\(/)
+})
