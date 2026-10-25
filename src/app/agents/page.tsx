@@ -4,7 +4,7 @@ import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import RevealObserver from '@/components/RevealObserver'
 import ProductWindow from '@/components/ProductWindow'
 import { SOFTWARE_BLURB, ADDONS_BLURB } from '@/lib/catalog'
-import { COMPANION_URL, STATUS } from '@/lib/brand'
+import { COMPANION_URL, STATUS, signupUrl } from '@/lib/brand'
 import { FeatureList } from '@/components/features/Feature'
 import { ESIGN, LAUNCH } from '@/lib/agent-features'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
@@ -26,7 +26,7 @@ export default function AgentsPage() {
             ? 'Run your pipeline and deals in Bricks, launch every listing from one page and keep everyone on the deal up to date. Book listing media from the listing itself.'
             : 'Run your pipeline and deals in Bricks. Book listing media from the listing itself.'}</p>
           <div className="cta-row">
-            <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login" rel="noopener noreferrer">Try Bricks free</a>
+            <a className="btn btn-night btn-primary" href={signupUrl('solo')} rel="noopener noreferrer">Try Bricks free</a>
           </div>
         </div>
       </section>
@@ -60,8 +60,8 @@ export default function AgentsPage() {
         />
         <Rows
           items={[
-            { title: 'Individual', detail: 'Start free. Paid plans add CRM, e-sign, forms and AI. Media is booked separately.' },
-            { title: 'Team', detail: 'The same desk with a shared pipeline for your team. Billed yearly.' },
+            { title: 'Individual', detail: 'Start free. Paid plans add CRM, e-sign, forms and AI. Media is booked separately.', href: signupUrl('solo'), external: true },
+            { title: 'Team', detail: 'Up to 6 agents on one plan, with a shared pipeline. Billed yearly.', href: '/teams' },
             { title: 'Brokerage', detail: 'Seats for the whole shop, with trust accounting.', href: '/brokerage' },
           ]}
         />

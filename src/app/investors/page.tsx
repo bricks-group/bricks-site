@@ -34,8 +34,8 @@ export default function InvestorsPage() {
             Bricks is the system that brings it all together: dated site visits, progress reports and investor updates for every project you fund or own.
           </p>
           <div className="cta-row">
-            <a className="btn btn-night btn-primary" href={signupUrl('builder')}>Create a builder account</a>
-            <Link className="btn btn-sec" href="/book/site">Book a site visit</Link>
+            <a className="btn btn-night btn-primary" href={signupUrl('investor')}>Create an investor account</a>
+            <Link className="btn btn-sec" href="/book/property?for=investor">Request an acquisition capture</Link>
           </div>
           <HeroPlate sheet="I-00" title="Podium at formwork stage, drone still" note="From our photo library">
             <SitePic name="podium-formwork" eager alt="Drone still of a concrete podium at formwork stage" sizes="(max-width:900px) 100vw, 1100px" />
@@ -92,7 +92,8 @@ export default function InvestorsPage() {
         />
         <p className="cl-note">Your team updates unit status in Bricks. It doesn’t sync with a leasing or property management system yet.</p>
         <div className="cl-actions">
-          <a className="btn btn-sec" href={signupUrl('reit_leasing')}>Create a leasing account</a>
+          <a className="btn btn-sec" href={signupUrl('reit_leasing')}>Create a REIT account</a>
+          <Link className="btn btn-sec" href="/reits">Bricks for REITs</Link>
         </div>
       </section>
 

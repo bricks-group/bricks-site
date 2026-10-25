@@ -80,6 +80,11 @@ export const OFFICE_PLANS = [
   { id: 'franchise', name: 'Franchise', seats: '200+ seats', seatPricePerYear: OFFICE_SEAT_PRICE_PER_YEAR.franchise, price: seatPerYear(OFFICE_SEAT_PRICE_PER_YEAR.franchise) },
 ] as const
 
+/** Month-to-month seat rate: the yearly rate +25%, no lock-in. Mirrors backend BROKERAGE_MONTHLY_SEAT_CENTS. */
+export const OFFICE_SEAT_PRICE_PER_MONTH = { boutique: 74, growth: 56, enterprise: 44, franchise: 31 } as const
+export const OFFICE_MONTHLY_NOTE =
+  'Prefer monthly? Pay month to month at the yearly rate plus 25%, with no lock-in.'
+
 export const OFFICE_INCLUDES =
   'Every seat gets all of Bricks, plus trust accounting. Agents don’t pay separately.'
 
