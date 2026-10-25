@@ -4,7 +4,8 @@ import RevealObserver from '@/components/RevealObserver'
 import ConstructionPic from '@/components/builders/ConstructionPic'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import { FeatureList } from '@/components/features/Feature'
-import { SystemBand } from '@/components/clientele/Clientele'
+import SitePic from '@/components/builders/SitePic'
+import { SystemBand, HeroPlate } from '@/components/clientele/Clientele'
 import { hubItems } from '@/lib/site-progress-features'
 import { PER_VISIT, PLANS, PLAN_NOTE, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
@@ -36,6 +37,9 @@ export default function InvestorsPage() {
             <a className="btn btn-night btn-primary" href={signupUrl('builder')}>Create a builder account</a>
             <Link className="btn btn-sec" href="/book/site">Book a site visit</Link>
           </div>
+          <HeroPlate sheet="I-00" title="Podium at formwork stage, drone still" note="From our photo library">
+            <SitePic name="podium-formwork" eager alt="Drone still of a concrete podium at formwork stage" sizes="(max-width:900px) 100vw, 1100px" />
+          </HeroPlate>
         </div>
       </section>
 

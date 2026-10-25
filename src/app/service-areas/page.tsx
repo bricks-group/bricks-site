@@ -68,7 +68,7 @@ export default function ServiceAreasPage() {
         ) : (
           <div className="cov-map-missing">
             <p>We shoot across Canada. Enter an address to confirm coverage and travel.</p>
-            <Link className="btn btn-brick" href="/book">Book a shoot</Link>
+            <Link className="btn btn-sec" href="/book">Book a shoot</Link>
           </div>
         )}
       </section>
@@ -119,7 +119,7 @@ export default function ServiceAreasPage() {
             <h2>Ready when you are.</h2>
             <p className="lead">Pick your services and see travel on the quote before you pay.</p>
             <div className="cta-row">
-              <Link className="btn btn-brick" href="/book">
+              <Link className="btn btn-sec" href="/book" style={{ color: 'var(--moon)', borderColor: 'var(--moon)' }}>
                 Book a shoot
               </Link>
               <Link className="btn btn-sec" href="/pricing" style={{ color: 'var(--moon)', borderColor: 'var(--moonMute)' }}>

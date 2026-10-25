@@ -23,3 +23,19 @@
   .cl-tiles li{padding:18px 16px;}
   .cl-pair{grid-template-columns:1fr;}
 }
+/* Hero plate: photo set as a drawing sheet with a title block. */
+.cl-plate{margin:48px 0 0;max-width:1100px;}
+.cl-plate-frame{position:relative;aspect-ratio:16/9;border:var(--vs-hair);border-radius:2px;overflow:hidden;background:var(--paperDeep);}
+.cl-plate-frame picture,.cl-plate-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.cl-plate-block{display:grid;grid-template-columns:72px minmax(0,1fr) auto;border:var(--vs-hair);border-top:0;font-size:var(--vs-fs-small);line-height:1.4;}
+.cl-plate-block>span{padding:10px 14px;min-width:0;}
+.cl-plate-block>span+span{border-left:var(--vs-hair);}
+.cl-plate-no{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:var(--inkMute);display:flex;align-items:center;}
+.cl-plate-title{color:var(--vs-fg);}
+.cl-plate-note{color:var(--vs-fg-3);white-space:nowrap;}
+@media (max-width:560px){
+  .cl-plate{margin-top:32px;}
+  .cl-plate-frame{aspect-ratio:4/3;}
+  .cl-plate-block{grid-template-columns:56px minmax(0,1fr);}
+  .cl-plate-note{grid-column:1/-1;border-left:0 !important;border-top:var(--vs-hair);white-space:normal;}
+}

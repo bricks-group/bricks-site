@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { Head, Rows, Close } from '@/components/calm/Calm'
-import { SystemBand, Photo } from '@/components/clientele/Clientele'
+import { SystemBand, Photo, HeroPlate, PlateImg } from '@/components/clientele/Clientele'
 import { signupUrl } from '@/lib/brand'
 
 export const metadata: Metadata = {
@@ -30,6 +30,9 @@ export default function PropertyManagersPage() {
             <a className="btn btn-night btn-primary" href={signupUrl('reit_leasing')}>Create a leasing account</a>
             <Link className="btn btn-sec" href="/book">Book unit media</Link>
           </div>
+          <HeroPlate sheet="P-00" title="Condo rooftop amenity, listing photo" note="From our gallery">
+            <PlateImg src="/media/mf-20george-rooftop.jpg" alt="Rooftop amenity space of a condo building" />
+          </HeroPlate>
         </div>
       </section>
 
