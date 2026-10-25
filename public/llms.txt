@@ -16,7 +16,7 @@ Every Bricks app is called **Bricks** for customers and photographers (the photo
 - [Gallery](https://www.brxs.ca/gallery): Sample listing photography from Bricks.
 - [Service areas](https://www.brxs.ca/service-areas): Canada-wide coverage framing; detail cities are operational, not brand.
 - [Photographers](https://www.brxs.ca/photographers): Independent contractor network — apply to shoot for Bricks (IC v1.9).
-- [Builders](https://www.brxs.ca/builders): Site Progress for builders, developers and investors — the builder hub (progress reports as PDF or expiring read-only links, monthly investor updates, importing your own GeoTIFF/LAS/OBJ captures as dated visits, 3D compare with fill, cut and area changed) plus scheduled drone visits.
+- [Builders](https://www.brxs.ca/builders): Site Progress for builders, developers and investors — the builder hub (progress reports as PDF or expiring read-only links, monthly investor updates, importing your own GeoTIFF/LAS/OBJ captures as dated visits, 3D compare with fill, cut and area changed). Reports include measurements with method and scale source, progress by line item in the builder's own figures, scale bars and photo pins on true maps, an issues log, changes since the last report, weather per visit (NASA POWER), capture details, revisions with a change log and SHA-256 checksums in the evidence index. Reports are visual documentation, not a cost, quantity or completion certification. Plus scheduled drone visits.
 - [About](https://www.brxs.ca/about): Company background.
 - [Contact](https://www.brxs.ca/contact): Get in touch.
 - [Terms](https://www.brxs.ca/terms): Client booking terms and cancellation schedule.

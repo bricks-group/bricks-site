@@ -9,7 +9,7 @@ const STEPS = [
   { key: 'photo', n: '01', label: 'Photo', title: 'Photos and video, dated.', body: 'Stills and a flyover on every visit, filed by date.' },
   { key: 'map', n: '02', label: 'Map', title: 'A map you can measure.', body: 'Orthomosaic with distance, area and elevation (DSM).' },
   { key: 'model', n: '03', label: 'Model', title: 'A 3D model of the site.', body: 'Model and point cloud, compared visit to visit.' },
-  { key: 'report', n: '04', label: 'Report', title: 'A report in one site file.', body: 'A progress report as a PDF or an expiring link, with every file in one place for owners, lenders and site teams.' },
+  { key: 'report', n: '04', label: 'Report', title: 'A report in one site file.', body: 'A progress report as a PDF or an expiring link: measured on true maps, with an issues log, weather for each visit and a checksum for every file.' },
 ] as const
 
 const REPORT = ['Photos and video', 'Orthomosaic', 'Elevation (DSM)', '3D model and point cloud', 'Compare to last visit', 'Progress report'] as const

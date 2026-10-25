@@ -4,7 +4,10 @@
  * Always caption as sample data; never present the demo projects, deals or people as clients.
  */
 const SHOTS = {
-  'progress-report': { w: 980, h: 836, widths: [640, 980] },
+  'progress-report': { w: 960, h: 790, widths: [640, 960] },
+  'report-measure': { w: 960, h: 640, widths: [640, 960] },
+  'report-issues': { w: 960, h: 460, widths: [640, 960] },
+  'report-evidence': { w: 960, h: 420, widths: [640, 960] },
   'investor-update': { w: 980, h: 766, widths: [640, 980] },
   'compare-3d': { w: 790, h: 804, widths: [640, 790] },
   'capture-import': { w: 670, h: 566, widths: [640, 670] },

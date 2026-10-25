@@ -111,12 +111,12 @@ export default function Home() {
         <section className="hf-row rvl" aria-label="Site Progress">
           <div className="hf-copy">
             <h2>Site Progress, reported.</h2>
-            <p>Progress reports and investor updates from every dated visit, as a PDF or a link that expires. 3D compare measures cut and fill.</p>
+            <p>Progress reports measured on true maps, with an issues log, weather for each visit and a checksum for every file. As a PDF or a link that expires.</p>
             <Link className="hf-link" href="/builders">See the builder hub</Link>
             <span className="hf-fine">Shown with sample data</span>
           </div>
           <div className="hf-frame hf-photo hf-shot">
-            <FeaturePic name="progress-report" alt="A Bricks progress report with sample data, shared as a read-only link that expires in 30 days" sizes="(max-width:900px) 100vw, 780px" />
+            <FeaturePic name="progress-report" alt="The top of a Bricks progress report with sample data: an orthomosaic with a scale bar and photo location pins" sizes="(max-width:900px) 100vw, 780px" />
           </div>
         </section>
 

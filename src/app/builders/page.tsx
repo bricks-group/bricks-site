@@ -25,14 +25,48 @@ export const metadata: Metadata = {
   },
 }
 
-/** Builder hub: live on app.brxs.ca. Report upgrades still in progress are deliberately not listed. */
+/** Builder hub: live on app.brxs.ca. Reports are visual documentation; never call them certified or lender-certified. */
 const HUB: readonly FeatureItem[] = [
   {
     title: 'Progress reports.',
-    body: 'Pick a date range and Bricks drafts the report from your dated visits: a visit-by-visit timeline, before and after, your % complete, milestones and the evidence behind them.',
-    points: ['Download it as a PDF', 'Share a read-only link that expires in 30 days, or up to a year', 'Turn a link off at any time'],
+    body: 'Pick a date range and Bricks drafts the report from your dated visits: true maps, before and after, milestones and what changed since the last report. Each edit is saved as a new revision, with a change log.',
+    points: [
+      'Download it as a PDF, or share a read-only link that expires',
+      'Scale bars and photo location pins on every true map',
+      'A scope line on every report: visual documentation of site conditions, not a cost, quantity or completion certification',
+    ],
     shot: 'progress-report',
-    alt: 'A Bricks progress report with sample data: project title block, date range, a site photo, and a read-only link set to expire in 30 days',
+    alt: 'The top of a Bricks progress report with sample data: project, date range and an orthomosaic with a scale bar and two photo location pins',
+  },
+  {
+    title: 'Measured, with the method shown.',
+    body: 'Cut, fill, net volume and area changed between two point clouds, plus the areas and distances you save on the maps.',
+    points: [
+      'Every measurement names its method and where its scale comes from',
+      'Volumes are an estimate for tracking progress, not a survey',
+    ],
+    shot: 'report-measure',
+    alt: 'The measurements section of a Bricks progress report with sample data: fill, cut, net and area changed, the method and scale, and two measurements saved on the maps',
+  },
+  {
+    title: 'Progress by line, and an issues log.',
+    body: 'Each line item carries your % complete and the evidence that shows it, marked as your own figures. Issues are logged with a location and a photo, and stay open until you close them.',
+    points: [
+      'Line items weighted by value and marked as your figures',
+      'Opened and closed dates on every issue',
+    ],
+    shot: 'report-issues',
+    alt: 'The issues log of a Bricks progress report with sample data: two open issues and one closed, each with a location, a photo and dates',
+  },
+  {
+    title: 'Evidence you can check.',
+    body: 'Lenders and quantity surveyors get dated, measured evidence they can check. Every file in the evidence index carries a SHA-256 checksum.',
+    points: [
+      'Weather for each visit from NASA POWER, modelled for the site',
+      'Capture details for each visit: aircraft, height, ground sample distance, and pilot certificate and ground control where recorded',
+    ],
+    shot: 'report-evidence',
+    alt: 'The evidence index of a Bricks progress report with sample data: dated orthomosaics, point clouds and stills, each with a SHA-256 checksum, file name and size',
   },
   {
     title: 'Investor updates.',
@@ -130,7 +164,7 @@ export default function BuildersPage() {
       </section>
 
       <section className="cm-sec" id="hub" aria-label="The builder hub">
-        <Head title="The builder hub." lede="Everything your sites produce, ready for your team, your lenders and your investors." />
+        <Head title="The builder hub." lede="Dated, measured evidence from every visit, for your team, your lenders and your quantity surveyor." />
         <FeatureList items={HUB} label="Builder hub features" sheet="B" />
       </section>
 
