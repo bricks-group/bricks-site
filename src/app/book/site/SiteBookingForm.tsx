@@ -127,12 +127,12 @@ export default function SiteBookingForm() {
     try {
       const r = await fetch('/api/book/commercial-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string }
-      if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email booking@brxs.ca.'); return }
+      if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email help@brxs.ca.'); return }
       try { sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || '')) } catch { /* best-effort */ }
       evt('site_booking_checkout', { mode, service: String(payload.service_key || payload.plan_key) })
       window.location.href = j.url
     } catch {
-      setMsg('Network error. Please email booking@brxs.ca.')
+      setMsg('Network error. Please email help@brxs.ca.')
     } finally {
       setBusy(false)
     }
@@ -145,14 +145,14 @@ export default function SiteBookingForm() {
           {paid === 'checking' && <p><BricksLoader variant="cycle" size={16} color="currentColor" style={{ marginRight: 8 }} />Confirming your payment…</p>}
           {paid === 'ok' && (<>
             <h2 style={{ margin: '0 0 8px' }}>Booked. Thank you.</h2>
-            <p className="hint" style={{ fontSize: 15 }}>We&apos;re assigning a pilot who meets your insurance minimum and will confirm the flight with your site contact. Questions: booking@brxs.ca.</p>
+            <p className="hint" style={{ fontSize: 15 }}>We&apos;re assigning a pilot who meets your insurance minimum and will confirm the flight with your site contact. Questions: help@brxs.ca.</p>
             <div className="claim">
               <h3>See this visit in your builder hub.</h3>
               <p className="hint">Create your builder account{bookedEmail ? <> with <b>{bookedEmail}</b></> : ' with the email you booked with'}. Visits booked with that email show up in your hub, with the reports built from them.</p>
               <a className="btn btn-sec" href={signupUrl('builder', bookedEmail || undefined)}>Create or open your builder account</a>
             </div>
           </>)}
-          {paid === 'fail' && <p>We could not confirm the payment yet. If you were charged, your booking is safe; email booking@brxs.ca and we will confirm it.</p>}
+          {paid === 'fail' && <p>We could not confirm the payment yet. If you were charged, your booking is safe; email help@brxs.ca and we will confirm it.</p>}
         </div>
         <style>{css}</style>
       </div>
@@ -188,7 +188,7 @@ export default function SiteBookingForm() {
                 <button key={c.key} type="button" aria-pressed={cadence === c.key} onClick={() => setCadence(c.key)}>{c.label}</button>
               ))}
             </div>
-            <p className="hint">Billed monthly per site, month to month. To change or cancel, email booking@brxs.ca.</p>
+            <p className="hint">Billed monthly per site, month to month. To change or cancel, email help@brxs.ca.</p>
           </fieldset>
         )}
 

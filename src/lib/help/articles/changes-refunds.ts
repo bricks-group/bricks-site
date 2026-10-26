@@ -14,7 +14,7 @@ export const CHANGES_REFUNDS: Article[] = [
         ['Inside 24 hours', `We'll try. If we can't, the cancellation rules apply.`],
       ]),
       ol(
-        `Email [support@brxs.ca](mailto:support@brxs.ca) as soon as you know.`,
+        `Email [help@brxs.ca](mailto:help@brxs.ca) as soon as you know.`,
         `Include the property address, the booked date and two or three times that work.`,
         `We confirm the new time by email once a photographer is set.`,
       ),
@@ -35,7 +35,7 @@ export const CHANGES_REFUNDS: Article[] = [
         ['No-show, or the photographer can’t get in', 'No refund'],
       ]),
       ol(
-        `Email [support@brxs.ca](mailto:support@brxs.ca) with the property address and booked date.`,
+        `Email [help@brxs.ca](mailto:help@brxs.ca) with the property address and booked date.`,
         `We confirm the cancellation and, if it qualifies, start the refund.`,
       ),
       p(`There's no callout fee. Rescheduling instead? See [Reschedule a shoot](/help/changes-refunds/reschedule-a-shoot).`),
@@ -54,7 +54,7 @@ export const CHANGES_REFUNDS: Article[] = [
         `Tell occupants the date and time.`,
         `Check building rules for amenities and drone ahead of time.`,
       ),
-      p(`Running late or locked out on the day? Email [support@brxs.ca](mailto:support@brxs.ca) or call [343-453-4578](tel:+13434534578) right away.`),
+      p(`Running late or locked out on the day? Email [help@brxs.ca](mailto:help@brxs.ca) or call [343-453-4578](tel:+13434534578) right away.`),
     ],
     related: ['prepare-for-a-shoot', 'cancel-a-shoot'],
   },
@@ -88,7 +88,7 @@ export const CHANGES_REFUNDS: Article[] = [
     summary: `Refunds go back to your original payment method, usually within 5–10 business days.`,
     body: [
       p(`Refunds go back to the card or wallet you paid with, usually within 5–10 business days of approval. The exact timing depends on your bank.`),
-      p(`If it's been longer, email [support@brxs.ca](mailto:support@brxs.ca) with the address and the date you paid.`),
+      p(`If it's been longer, email [help@brxs.ca](mailto:help@brxs.ca) with the address and the date you paid.`),
       note(`Nothing in our terms limits your rights under Ontario's Consumer Protection Act, 2002, where it applies.`),
     ],
     related: ['cancel-a-shoot', 'subscription-refunds'],
@@ -98,7 +98,7 @@ export const CHANGES_REFUNDS: Article[] = [
     title: `Raise a concern about a shoot`,
     summary: `Email us first. We aim to resolve it within 30 days.`,
     body: [
-      p(`If something isn't right with a shoot or delivery, email [support@brxs.ca](mailto:support@brxs.ca) with the address and what's wrong. For anything we can't sort out there, write to [hello@brxs.ca](mailto:hello@brxs.ca). We aim to resolve concerns within 30 days.`),
+      p(`If something isn't right with a shoot or delivery, email [help@brxs.ca](mailto:help@brxs.ca) with the address and what's wrong. We aim to resolve concerns within 30 days.`),
       p(`Our [terms](/terms) are governed by the laws of Ontario and Canada.`),
     ],
     related: ['contact-us', 'if-bricks-cancels'],

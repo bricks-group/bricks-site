@@ -329,7 +329,7 @@ export default function PhotographerForm() {
         try {
           await uploadResume(data.member_id, data.application_token || '', resumeFile)
         } catch {
-          setResumeWarning('Application received, but your resume didn’t upload — email it to booking@brxs.ca if you’d like it reviewed.')
+          setResumeWarning('Application received, but your resume didn’t upload — email it to help@brxs.ca if you’d like it reviewed.')
         }
       }
       setSubmitted(true)

@@ -85,11 +85,11 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
       const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string }
       // Not configured on this deploy (no key, or the API has no checkout yet): fall back to the request form.
       if (r.status === 503 || r.status === 404 || r.status === 405) { onRequest(); return }
-      if (!r.ok || !j.url) { setMsg(j.error || 'Checkout failed. Email booking@brxs.ca.'); return }
+      if (!r.ok || !j.url) { setMsg(j.error || 'Checkout failed. Email help@brxs.ca.'); return }
       try { track('property_checkout', { kind, service: f.service_key }) } catch { /* best-effort */ }
       window.location.assign(j.url)
     } catch {
-      setMsg('Network error. Please email booking@brxs.ca.')
+      setMsg('Network error. Please email help@brxs.ca.')
     } finally {
       setBusy(false)
     }

@@ -15,7 +15,7 @@ const clip = (v: unknown, n: number) => (typeof v === 'string' ? v.trim().slice(
 export async function POST(req: NextRequest) {
   const url = getSupabasePublicUrl()
   const key = getSupabaseAnonKey()
-  if (!process.env.RESEND_API_KEY && (!url || !key)) return NextResponse.json({ ok: false, error: 'Requests are unavailable right now. Email booking@brxs.ca.' }, { status: 503 })
+  if (!process.env.RESEND_API_KEY && (!url || !key)) return NextResponse.json({ ok: false, error: 'Requests are unavailable right now. Email help@brxs.ca.' }, { status: 503 })
 
   let b: Record<string, unknown>
   try { b = await req.json() } catch { return NextResponse.json({ ok: false, error: 'Invalid request.' }, { status: 400 }) }
@@ -44,6 +44,6 @@ export async function POST(req: NextRequest) {
   ].filter(Boolean).join('\n')
 
   const sent = await sendContactMessage({ name, email, message }, { sourceLabel: 'the Bricks /book/property request form', supabaseUrl: url, supabaseKey: key })
-  if (!sent.ok) return NextResponse.json({ ok: false, error: 'Could not send. Email booking@brxs.ca.' }, { status: sent.status })
+  if (!sent.ok) return NextResponse.json({ ok: false, error: 'Could not send. Email help@brxs.ca.' }, { status: sent.status })
   return NextResponse.json({ ok: true })
 }

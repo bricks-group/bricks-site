@@ -57,14 +57,14 @@ export default function ConstructionForm() {
       })
       const data = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (!r.ok || !data.ok) {
-        setMsg(data.error || 'Could not send. Email us at booking@brxs.ca.')
+        setMsg(data.error || 'Could not send. Email us at help@brxs.ca.')
       } else {
         evt('construction_lead_submitted')
         setMsg('✓ Request received — a human replies within one business day.')
         f.reset()
       }
     } catch {
-      setMsg('Network error. Please email booking@brxs.ca directly.')
+      setMsg('Network error. Please email help@brxs.ca directly.')
     } finally {
       setSubmitting(false)
     }

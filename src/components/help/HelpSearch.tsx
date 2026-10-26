@@ -69,7 +69,7 @@ export default function HelpSearch({ syncUrl = false, compact = false }: { syncU
       </form>
       {!compact ? (
         <div id={`${id}-results`} className="hc-results" aria-live="polite">
-          {showing && failed ? <p className="hc-results-empty">Search didn&rsquo;t load. Browse the collections below, or email support@brxs.ca.</p> : null}
+          {showing && failed ? <p className="hc-results-empty">Search didn&rsquo;t load. Browse the collections below, or email help@brxs.ca.</p> : null}
           {showing && !failed && !docs ? <p className="hc-results-empty">Searching…</p> : null}
           {showing && docs ? (
             hits.length ? (

@@ -5,7 +5,7 @@ import { ORG_REF } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Contact Bricks | Canadian real estate media',
-  description: 'Contact Bricks for Canadian listing media — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Email hello@brxs.ca or call 343-453-4578. For listing shoots use support@brxs.ca.',
+  description: 'Contact Bricks for Canadian listing media — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Email help@brxs.ca or call 343-453-4578.',
   alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Contact Bricks | Canadian real estate media',
@@ -31,7 +31,7 @@ export default function ContactPage() {
             url: 'https://www.brxs.ca/contact',
             mainEntity: {
               ...ORG_REF,
-              email: 'hello@brxs.ca',
+              email: 'help@brxs.ca',
               telephone: '+1-343-453-4578',
               areaServed: AREA_SERVED_SCHEMA,
             },
@@ -51,8 +51,7 @@ export default function ContactPage() {
       <section className="block">
         <div className="wrap">
           <div className="contact-grid">
-            <div className="c"><div className="l">General</div><div className="v"><a href="mailto:hello@brxs.ca">hello@brxs.ca</a></div></div>
-            <div className="c"><div className="l">Bookings</div><div className="v"><a href="mailto:support@brxs.ca">support@brxs.ca</a></div></div>
+            <div className="c"><div className="l">Email</div><div className="v"><a href="mailto:help@brxs.ca">help@brxs.ca</a></div></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+13434534578">343-453-4578</a></div></div>
             <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>
           </div>

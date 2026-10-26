@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: 'Expected JSON object' }, { status: 400 })
   }
   const key = (process.env.INTERNAL_API_KEY || process.env.BRICKS_INTERNAL_API_KEY || '').trim()
-  if (!key) return NextResponse.json({ ok: false, error: 'Booking is not configured. Email booking@brxs.ca.' }, { status: 503 })
+  if (!key) return NextResponse.json({ ok: false, error: 'Booking is not configured. Email help@brxs.ca.' }, { status: 503 })
   const payload: Record<string, unknown> = {}
   for (const f of FIELDS) if (f in body) payload[f] = body[f]
   try {
@@ -40,6 +40,6 @@ export async function POST(req: Request) {
     }
     return NextResponse.json(j)
   } catch {
-    return NextResponse.json({ ok: false, error: 'Checkout is unreachable right now. Email booking@brxs.ca.' }, { status: 502 })
+    return NextResponse.json({ ok: false, error: 'Checkout is unreachable right now. Email help@brxs.ca.' }, { status: 502 })
   }
 }

@@ -21,9 +21,9 @@ export default function Feedback({ path }: { path: string }) {
       })
       const d = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (r.ok && d.ok) setState('done')
-      else { setErr(d.error || 'Could not send. Email hello@brxs.ca.'); setState('error') }
+      else { setErr(d.error || 'Could not send. Email help@brxs.ca.'); setState('error') }
     } catch {
-      setErr('Could not send. Email hello@brxs.ca.')
+      setErr('Could not send. Email help@brxs.ca.')
       setState('error')
     }
   }

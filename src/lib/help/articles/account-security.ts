@@ -126,7 +126,7 @@ export const ACCOUNT_SECURITY: Article[] = [
         `Use a password you don't use anywhere else, or sign in with Google.`,
         `Sign out on shared computers. **Sign out** is at the bottom of the sidebar.`,
       ),
-      p(`Think someone else got into your account? [Reset your password](/help/getting-started/reset-your-password) and email [support@brxs.ca](mailto:support@brxs.ca).`),
+      p(`Think someone else got into your account? [Reset your password](/help/getting-started/reset-your-password) and email [help@brxs.ca](mailto:help@brxs.ca).`),
     ],
     related: ['sign-in-options', 'reset-your-password'],
   },

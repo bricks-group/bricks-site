@@ -33,14 +33,14 @@ export default function ContactForm() {
       })
       const data = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (!r.ok || !data.ok) {
-        setMsg(data.error || 'Could not send. Email us at hello@brxs.ca.')
+        setMsg(data.error || 'Could not send. Email us at help@brxs.ca.')
       } else {
         evt('contact_submitted')
         setMsg('✓ Message sent — we’ll get back to you soon.')
         f.reset()
       }
     } catch {
-      setMsg('Network error. Please email hello@brxs.ca directly.')
+      setMsg('Network error. Please email help@brxs.ca directly.')
     } finally {
       setSubmitting(false)
     }

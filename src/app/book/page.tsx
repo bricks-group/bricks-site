@@ -68,7 +68,7 @@ export default function BookPage() {
                 name: 'Can I reschedule after booking?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email booking@brxs.ca.',
+                  text: 'More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email help@brxs.ca.',
                 },
               },
               {

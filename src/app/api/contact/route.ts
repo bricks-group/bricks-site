@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   const SUPABASE_ANON_KEY = getSupabaseAnonKey()
   if (!process.env.RESEND_API_KEY && (!SUPABASE_URL || !SUPABASE_ANON_KEY)) {
     return NextResponse.json(
-      { ok: false, error: 'Contact form temporarily unavailable. Please email hello@brxs.ca.' },
+      { ok: false, error: 'Contact form temporarily unavailable. Please email help@brxs.ca.' },
       { status: 503 },
     )
   }
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
   })
   if (!sent.ok) {
     return NextResponse.json(
-      { ok: false, error: sent.status === 502 ? 'Could not send message. Please email hello@brxs.ca directly.' : sent.error },
+      { ok: false, error: sent.status === 502 ? 'Could not send message. Please email help@brxs.ca directly.' : sent.error },
       { status: sent.status },
     )
   }

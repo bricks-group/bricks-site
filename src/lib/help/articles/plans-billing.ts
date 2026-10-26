@@ -30,7 +30,7 @@ export const PLANS_BILLING: Article[] = [
     body: [
       table(['Plan', 'Monthly', 'Yearly'], SOFTWARE_PLANS.filter((x) => x.id !== 'clay').map((x) => [x.name, x.price, x.yearly.split(' · ')[0]])),
       p(`Both renew automatically until you cancel. If a price changes, the new price is posted before your next renewal.`),
-      p(`To change how you're billed, email [support@brxs.ca](mailto:support@brxs.ca).`),
+      p(`To change how you're billed, email [help@brxs.ca](mailto:help@brxs.ca).`),
     ],
     related: ['plans-overview', 'cancel-your-plan'],
   },
@@ -76,7 +76,7 @@ export const PLANS_BILLING: Article[] = [
         `Choose **Manage billing** to open the Stripe billing portal.`,
         `Cancel your subscription there.`,
       ),
-      p(`You can also email [support@brxs.ca](mailto:support@brxs.ca). Cancellation takes effect at the end of the current billing cycle, and you keep access until then.`),
+      p(`You can also email [help@brxs.ca](mailto:help@brxs.ca). Cancellation takes effect at the end of the current billing cycle, and you keep access until then.`),
       p(`Cancelling a plan doesn't delete your account.`),
       note(`Want to delete your account instead? See [Delete your account](/help/account-security/delete-your-account).`),
     ],

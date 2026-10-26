@@ -73,7 +73,7 @@ export async function POST(req: Request) {
       {
         ok: false,
         error:
-          'Confirming a photographer for this address — travel outside GTA major markets is finalized from their base before checkout. Try again in a moment, or email booking@brxs.ca.',
+          'Confirming a photographer for this address — travel outside GTA major markets is finalized from their base before checkout. Try again in a moment, or email help@brxs.ca.',
       },
       { status: 409 },
     )

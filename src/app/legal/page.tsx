@@ -54,9 +54,7 @@ export default function LegalHubPage() {
         <section className="block" id="contact">
           <h2>Contact</h2>
           <p>
-            General: <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
-            <br />
-            Bookings: <a href="mailto:support@brxs.ca">support@brxs.ca</a>
+            Email: <a href="mailto:help@brxs.ca">help@brxs.ca</a>
             <br />
             Bricks Group · Ontario, Canada
           </p>

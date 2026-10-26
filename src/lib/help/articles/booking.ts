@@ -215,7 +215,7 @@ export const BOOKING: Article[] = [
       h(`You can't`),
       ul(`Sell the files as stock.`, `Use them to market a different property.`),
       h(`Keeping a property out of our portfolio`),
-      p(`Bricks and the photographer may use the media in portfolio and Bricks marketing. To keep a property unpublished by us, email [support@brxs.ca](mailto:support@brxs.ca) **before the shoot**.`),
+      p(`Bricks and the photographer may use the media in portfolio and Bricks marketing. To keep a property unpublished by us, email [help@brxs.ca](mailto:help@brxs.ca) **before the shoot**.`),
     ],
     related: ['what-you-get'],
   },

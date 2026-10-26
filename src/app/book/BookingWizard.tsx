@@ -448,7 +448,7 @@ export default function BookingWizard() {
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
       .then((res) => {
         setQuoteLoading(false)
-        if (!res.ok) { evt('quote_failed'); setQuote(null); setQuoteError("We couldn't auto-price this address. Enter the square footage above and hit Re-quote, or email booking@brxs.ca."); return }
+        if (!res.ok) { evt('quote_failed'); setQuote(null); setQuoteError("We couldn't auto-price this address. Enter the square footage above and hit Re-quote, or email help@brxs.ca."); return }
         setQuote(res.j.quote)
         evt('quote_viewed', { footprint: res.j.quote.footprint_label, total: res.j.quote.total, sqft_source: res.j.quote.sqft_source ?? 'unknown' })
       })
@@ -572,7 +572,7 @@ export default function BookingWizard() {
   function pay() {
     if (!quote) { setErrs((e) => ({ ...e, 3: 'Quote missing — go back to step 2.' })); return }
     if (quote.travel_pending || (!quote.gta_major && !quote.assignee_id)) {
-      setErrs((e) => ({ ...e, 3: 'A photographer must be assigned and the final fee shown before payment. Re-quote or email booking@brxs.ca.' }))
+      setErrs((e) => ({ ...e, 3: 'A photographer must be assigned and the final fee shown before payment. Re-quote or email help@brxs.ca.' }))
       return
     }
     if (!selectedSlot) { setErrs((e) => ({ ...e, 3: 'Pick a clock time on the When step.' })); return }
@@ -933,7 +933,7 @@ export default function BookingWizard() {
             <div className="qa"><h4>How fast is delivery?</h4><p>We aim to deliver photos 24 hours after the shoot, and other media in 24–48 hours. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photos at blue hour, with the windows lit and colour still in the sky. Add it to any shoot in Step 2.</p></div>
             <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>
-            <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:booking@brxs.ca">booking@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
+            <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
             <div className="qa"><h4>What if I need to cancel?</h4><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
             <div className="qa"><h4>How do refunds work?</h4><p>Refunds go back to your original payment method, typically within 5–10 business days.</p></div>
             <div className="qa"><h4>Can I pay with Apple Pay or Google Pay?</h4><p>Yes, plus cards. Apple Pay works in Safari and on iOS, Google Pay in Chrome and on Android. We don&apos;t take PayPal, Klarna, Afterpay or Interac.</p></div>

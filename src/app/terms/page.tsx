@@ -64,7 +64,7 @@ export default function TermsPage() {
       <div className="legal-body">
         <section className="block" id="refunds">
           <h2>5. Reschedule, cancellation, refunds</h2>
-          <p>Contact <a href="mailto:support@brxs.ca">support@brxs.ca</a> as soon as you know.</p>
+          <p>Contact <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know.</p>
           <p>Reschedule more than 24 hours before the shoot window: free.</p>
           <p>Reschedule inside 24 hours: we will try; if we cannot, section 5 cancellation rules apply.</p>
           <p>Your cancellation (or no-access / no-show on your side):</p>
@@ -82,7 +82,7 @@ export default function TermsPage() {
         <section className="block">
           <h3>6. Intellectual property</h3>
           <p>Bricks owns copyright in the deliverables (assigned from the photographer). When your booking is paid in full, Bricks grants you a perpetual, non-exclusive licence to use those deliverables for real estate marketing of that property: MLS, web, social, print, brokerage materials, and sharing with the seller for that listing. You may not sell the files as stock, or use them to market a different property.</p>
-          <p>Bricks and the photographer may use deliverables in portfolio and Bricks marketing unless you email <a href="mailto:support@brxs.ca">support@brxs.ca</a> before the shoot asking that the property be kept unpublished by us.</p>
+          <p>Bricks and the photographer may use deliverables in portfolio and Bricks marketing unless you email <a href="mailto:help@brxs.ca">help@brxs.ca</a> before the shoot asking that the property be kept unpublished by us.</p>
           <p>You keep ownership of listing copy, branding, and materials you upload. You grant Bricks a limited licence to use the address and listing details to perform the booking.</p>
 
           <h3>7. No property-sale warranty</h3>
@@ -109,7 +109,7 @@ export default function TermsPage() {
           <p>We may update these terms. The version in effect when you pay applies to that booking. Material changes will be posted on this page.</p>
 
           <h3>12. Law</h3>
-          <p>Ontario law and applicable Canadian federal law govern. Ontario courts have exclusive jurisdiction. Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> with disputes; we will try to resolve in 30 days.</p>
+          <p>Ontario law and applicable Canadian federal law govern. Ontario courts have exclusive jurisdiction. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> with disputes; we will try to resolve in 30 days.</p>
         </section>
       </div>
 
@@ -120,7 +120,7 @@ export default function TermsPage() {
           <h3>Billing and renewal</h3>
           <p>Paid plans are charged through Stripe at the start of each billing cycle and renew automatically at the then-current price until cancelled. Any price change is posted on the pricing page before it takes effect at your next renewal.</p>
           <h3>Cancellation</h3>
-          <p>You can cancel at any time through the Stripe billing portal (in the app, under Billing) or by emailing <a href="mailto:support@brxs.ca">support@brxs.ca</a>. Cancellation takes effect at the end of the current billing cycle; you keep access until then and the plan does not renew.</p>
+          <p>You can cancel at any time through the Stripe billing portal (in the app, under Billing) or by emailing <a href="mailto:help@brxs.ca">help@brxs.ca</a>. Cancellation takes effect at the end of the current billing cycle; you keep access until then and the plan does not renew.</p>
           <h3>Refunds</h3>
           <p>Subscription fees are not refundable for a billing cycle that has already started, except where the law requires it. If we discontinue a plan, or cancel your subscription without cause partway through a paid cycle, we will refund the unused portion of that cycle. Media bookings are refunded under section 5, not this section.</p>
           <h3>Free plan</h3>
@@ -131,7 +131,7 @@ export default function TermsPage() {
       <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions?</h2>
-          <p>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
+          <p>Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
           <p>Bricks Group · Mississauga, Ontario, Canada</p>
         </section>
       </div>

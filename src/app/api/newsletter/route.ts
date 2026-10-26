@@ -37,7 +37,7 @@ function welcomeHtml() {
 <p style="color:#555;line-height:1.6">Media is live to book. The Bricks app is live in preview at app.brxs.ca. Companion and the photographer app are live on the web.</p>
 <p style="margin:24px 0 8px"><a href="https://www.brxs.ca/platform" style="display:inline-block;padding:12px 20px;background:#D2542B;color:#fff;text-decoration:none;border-radius:2px;font-weight:500">See the platform</a></p>
 <p style="color:#555;line-height:1.6">Rates are the published catalog on <a href="https://www.brxs.ca/pricing" style="color:#D2542B">Pricing</a>. Book a shoot anytime at <a href="https://www.brxs.ca/book" style="color:#D2542B">www.brxs.ca/book</a>.</p>
-<p style="margin-top:32px;font-size:12px;color:#999">You're tagged as a founder subscriber for launch updates. Unsubscribe: reply to this email or write hello@brxs.ca.</p>`
+<p style="margin-top:32px;font-size:12px;color:#999">You're tagged as a founder subscriber for launch updates. Unsubscribe: reply to this email or write help@brxs.ca.</p>`
 }
 
 async function sendLocal(email: string): Promise<{ emailed: boolean; mail_blocked: string | null; mail_error?: string }> {
@@ -47,7 +47,7 @@ async function sendLocal(email: string): Promise<{ emailed: boolean; mail_blocke
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: 'Bricks <noreply@brxs.ca>',
-        reply_to: 'support@brxs.ca',
+        reply_to: 'help@brxs.ca',
         to: [email],
         subject: "You're on the Bricks list",
         html: welcomeHtml(),
@@ -66,7 +66,7 @@ async function sendLocal(email: string): Promise<{ emailed: boolean; mail_blocke
       },
       body: JSON.stringify({
         From: 'Bricks <noreply@brxs.ca>',
-        ReplyTo: 'support@brxs.ca',
+        ReplyTo: 'help@brxs.ca',
         To: email,
         Subject: "You're on the Bricks list",
         HtmlBody: welcomeHtml(),
