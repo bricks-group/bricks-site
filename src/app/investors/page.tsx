@@ -35,7 +35,7 @@ export default function InvestorsPage() {
           </p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={signupUrl('investor')}>Create an investor account</a>
-            <Link className="btn btn-sec" href="/book/property?for=investor">Request an acquisition capture</Link>
+            <Link className="btn btn-sec" href="/book/property?for=investor">Book an acquisition capture</Link>
           </div>
           <HeroPlate sheet="I-00" title="Podium at formwork stage, drone still" note="From our photo library">
             <SitePic name="podium-formwork" eager alt="Drone still of a concrete podium at formwork stage" sizes="(max-width:900px) 100vw, 1100px" />
@@ -108,7 +108,7 @@ export default function InvestorsPage() {
           ]}
         />
         <p className="cm-note">{PLAN_NOTE}</p>
-        <p className="cm-note">Portfolio watch for properties you hold: a dated aerial and roof check compared with the last visit, $195 per property a month billed $585 a quarter, or $450 a month for a monthly visit. CAD plus tax, in your investor account. Acquisition captures are by <Link href="/book/property?for=investor">request</Link>.</p>
+        <p className="cm-note">Portfolio watch for properties you hold: a dated aerial and roof check compared with the last visit, $195 per property a month billed $585 a quarter, or $450 a month for a monthly visit. CAD plus tax, in your investor account. Acquisition captures are $1,250, or $2,250 mapped, <Link href="/book/property?for=investor">booked online</Link>. Your account compares the baseline with the latest visit and builds an insurance claim pack from the records either side of a date of loss.</p>
       </section>
 
       <Close title="Need a site captured first?" href="/book/site" label="Book a site visit" primary={false} />

@@ -63,9 +63,9 @@ export default function PropertyManagersPage() {
         <Rows
           items={[
             { title: 'One or two units', detail: 'Book media online. You don’t need an account to book.', href: '/book' },
-            { title: 'Condition reports and turnovers, by request', detail: 'Dated move-in and move-out reports, and a turnover visit that relists the unit. Send a request and we confirm the price for the property first.', href: '/book/property?for=property_manager' },
+            { title: 'Condition reports and turnovers, booked online', detail: 'A dated move-in or move-out condition report for $145, or a turnover for $295 that adds new listing photos and a floor plan in the same visit. CAD plus HST.', href: '/book/property?for=property_manager&service=pm_turnover' },
             { title: 'Monthly rentals plans', detail: 'Rentals 5, 12 or 25 for that many turnovers a month: $1,325, $2,990 or $5,875 a month, CAD plus tax. Chosen in your property manager account.', href: signupUrl('property_manager'), external: true },
-            { title: 'Buildings with many units', detail: 'A property manager account keeps units, reports and leasing status by building.', href: signupUrl('property_manager'), external: true },
+            { title: 'Buildings with many units', detail: 'A property manager account shows every unit’s turnover and next step, compares each condition report room by room with the last one, and prints an owner report for any period.', href: signupUrl('property_manager'), external: true },
             { title: 'Leasing agents', detail: 'Start free as an individual and book media from the listing.', href: signupUrl('solo'), external: true },
           ]}
         />

@@ -1,8 +1,8 @@
 /**
  * Services each property client type can request, by key. Mirrors the app's
- * per-type catalog (Bricks backend common/client_catalog.py). Prices for these
- * are proposals awaiting approval, so this site shows none: a request goes to
- * us and we confirm the price for the property before anything is booked.
+ * per-type catalog (Bricks backend common/client_catalog.py). This list feeds
+ * the request form (plans, quotes, several properties). One-off visits with
+ * prices and checkout live in ./propertyCheckout.ts.
  */
 export type PropertyClient = 'property_manager' | 'commercial' | 'investor' | 'reit_leasing'
 

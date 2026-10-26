@@ -31,7 +31,7 @@ for (const p of PAGES) {
     const s = read(p)
     assert.doesNotMatch(s, /Bricks OS|\bGO\b|Raphael|Merchant|gradient/)
     assert.doesNotMatch(s, /certif(ied|y) (cost|completion)/i)
-    // Condition reports and turnovers are request-only (price unapproved): only via /book/property.
+    // Condition reports and turnovers are booked through /book/property.
     if (/turnover|condition report/i.test(s)) assert.match(s, /\/book\/property\?for=/)
     assert.doesNotMatch(s, /text-transform:\s*uppercase/)
   })
@@ -123,18 +123,24 @@ test('property request form posts to the public request route, shows no prices, 
   assert.ok(SERVICES_FOR.commercial.some((x) => x.key === 'site_progress' && /mapping|maps/.test(x.detail) && /models/.test(x.detail) && /reports/.test(x.detail) && /comparisons/.test(x.detail)))
 })
 
-test('approved client plan and seat prices (2026-10-25) match the app; one-off reports stay request-only', () => {
+test('approved client prices (2026-10-25) match the app; one-off visits are booked and paid online', () => {
   const pm = read('src/app/property-managers/page.tsx')
   assert.match(pm, /\$1,325, \$2,990 or \$5,875 a month/)
-  assert.match(pm, /Condition reports and turnovers, by request/)
-  assert.doesNotMatch(pm, /\$145|\$295/, 'condition report / turnover prices are never shown')
+  assert.match(pm, /Condition reports and turnovers, booked online/)
+  assert.match(pm, /\$145.*\$295/)
+  assert.match(read('src/app/commercial/page.tsx'), /\$595 up to 2,500 sq ft, \$895 up to 7,500 sq ft, \$1,450 up to 20,000 sq ft\. Aerial sets \$349/)
+  assert.match(read('src/app/investors/page.tsx'), /\$1,250, or \$2,250 mapped/)
+  assert.match(read('src/app/reits/page.tsx'), /10% off, and 15% off at 25/)
+  for (const p of ['property-managers', 'commercial', 'investors', 'reits']) {
+    assert.doesNotMatch(read(`src/app/${p}/page.tsx`), /by request|confirm the price/, p)
+  }
   assert.match(read('src/app/commercial/page.tsx'), /\$1,590 a month/)
   assert.match(read('src/app/investors/page.tsx'), /\$195 per property a month billed \$585 a quarter, or \$450 a month/)
   assert.match(read('src/app/teams/page.tsx'), /\$79 per agent a month, or \$790 a year/)
   const llms = read('public/llms.txt')
-  assert.match(llms, /turnover visits are request-only/)
+  assert.match(llms, /booked and paid online at \/book\/property/)
   assert.match(llms, /\$79 per agent a month or \$790 a year/)
-  assert.doesNotMatch(llms, /\$145|\$295/)
+  assert.doesNotMatch(llms, /request-only|priced per property on request/)
 })
 
 test('blog posts and the blog layout carry no founder name or founder stats', () => {

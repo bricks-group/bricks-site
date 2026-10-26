@@ -28,7 +28,7 @@ export default function ReitsPage() {
           </p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={signupUrl('reit_leasing')}>Create a REIT account</a>
-            <Link className="btn btn-sec" href="/book/property?for=reit_leasing">Request a visit</Link>
+            <Link className="btn btn-sec" href="/book/property?for=reit_leasing">Book a visit</Link>
           </div>
         </div>
       </section>
@@ -48,7 +48,7 @@ export default function ReitsPage() {
       />
 
       <section className="cm-sec rvl" aria-label="How pricing works">
-        <Head title="Priced by the property." lede="Building something? Site progress prices are on the builders page. For leasing media and reports, we confirm the price for each property before anything is booked." link={{ href: '/builders#pricing', label: 'Site progress prices' }} />
+        <Head title="Priced by the property." lede="Every visit is priced and booked online. With 10 or more properties in your account, every visit booked from it is 10% off, and 15% off at 25. Site progress prices are on the builders page." link={{ href: '/builders#pricing', label: 'Site progress prices' }} />
         <Rows
           items={[
             { title: 'Residential buildings', detail: 'Listing sets, condition reports and turnovers by unit.', href: '/property-managers' },
@@ -59,7 +59,7 @@ export default function ReitsPage() {
         <p className="cl-note">Your team updates unit status in Bricks. It doesn’t sync with a property management system yet.</p>
       </section>
 
-      <Close title="Tell us about the portfolio." href="/book/property?for=reit_leasing" label="Request a visit" primary={false} />
+      <Close title="Book the first visit." href="/book/property?for=reit_leasing" label="Book a visit" primary={false} />
     </>
   )
 }
