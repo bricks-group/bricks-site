@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAnonKey, getSupabasePublicUrl } from '@/lib/supabase-public'
+import { sendContactMessage } from '@/lib/contact-mail'
 
 export async function POST(req: NextRequest) {
   const SUPABASE_URL = getSupabasePublicUrl()
   const SUPABASE_ANON_KEY = getSupabaseAnonKey()
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  if (!process.env.RESEND_API_KEY && (!SUPABASE_URL || !SUPABASE_ANON_KEY)) {
     return NextResponse.json(
       { ok: false, error: 'Contact form temporarily unavailable. Please email hello@brxs.ca.' },
       { status: 503 },
@@ -26,28 +27,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: 'Fill in name, a valid email, and a message.' }, { status: 400 })
   }
 
-  try {
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/contact-message`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-      },
-      body: JSON.stringify({ name, email, message }),
-    })
-    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
-    if (!res.ok || !data.ok) {
-      return NextResponse.json(
-        { ok: false, error: data.error || 'Could not send message.' },
-        { status: res.ok ? 502 : res.status },
-      )
-    }
-    return NextResponse.json({ ok: true })
-  } catch {
+  const sent = await sendContactMessage({ name, email, message }, {
+    sourceLabel: 'the Bricks contact page', supabaseUrl: SUPABASE_URL, supabaseKey: SUPABASE_ANON_KEY,
+  })
+  if (!sent.ok) {
     return NextResponse.json(
-      { ok: false, error: 'Could not send message. Please email hello@brxs.ca directly.' },
-      { status: 502 },
+      { ok: false, error: sent.status === 502 ? 'Could not send message. Please email hello@brxs.ca directly.' : sent.error },
+      { status: sent.status },
     )
   }
+  return NextResponse.json({ ok: true })
 }

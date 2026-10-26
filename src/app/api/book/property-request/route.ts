@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAnonKey, getSupabasePublicUrl } from '@/lib/supabase-public'
+import { sendContactMessage } from '@/lib/contact-mail'
 import { CLIENT_LABEL, SERVICES_FOR, isPropertyClient } from '@/lib/clientServices'
 
 /**
@@ -14,7 +15,7 @@ const clip = (v: unknown, n: number) => (typeof v === 'string' ? v.trim().slice(
 export async function POST(req: NextRequest) {
   const url = getSupabasePublicUrl()
   const key = getSupabaseAnonKey()
-  if (!url || !key) return NextResponse.json({ ok: false, error: 'Requests are unavailable right now. Email booking@brxs.ca.' }, { status: 503 })
+  if (!process.env.RESEND_API_KEY && (!url || !key)) return NextResponse.json({ ok: false, error: 'Requests are unavailable right now. Email booking@brxs.ca.' }, { status: 503 })
 
   let b: Record<string, unknown>
   try { b = await req.json() } catch { return NextResponse.json({ ok: false, error: 'Invalid request.' }, { status: 400 }) }
@@ -42,16 +43,7 @@ export async function POST(req: NextRequest) {
     clip(b.notes, 2000) && `Notes: ${clip(b.notes, 2000)}`,
   ].filter(Boolean).join('\n')
 
-  try {
-    const r = await fetch(`${url}/functions/v1/contact-message`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', apikey: key, Authorization: `Bearer ${key}` },
-      body: JSON.stringify({ name, email, message }),
-    })
-    const d = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
-    if (!r.ok || !d.ok) return NextResponse.json({ ok: false, error: d.error || 'Could not send. Email booking@brxs.ca.' }, { status: 502 })
-    return NextResponse.json({ ok: true })
-  } catch {
-    return NextResponse.json({ ok: false, error: 'Could not send. Email booking@brxs.ca.' }, { status: 502 })
-  }
+  const sent = await sendContactMessage({ name, email, message }, { sourceLabel: 'the Bricks /book/property request form', supabaseUrl: url, supabaseKey: key })
+  if (!sent.ok) return NextResponse.json({ ok: false, error: 'Could not send. Email booking@brxs.ca.' }, { status: sent.status })
+  return NextResponse.json({ ok: true })
 }
