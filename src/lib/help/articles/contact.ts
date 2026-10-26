@@ -5,12 +5,13 @@ export const CONTACT: Article[] = [
   {
     slug: 'contact-us',
     title: `Contact Bricks`,
-    summary: `Email, phone and the contact form.`,
+    summary: `Email, phone and the contact form. Who to write to for what.`,
     popular: true,
     body: [
       table(['For', 'Contact'], [
-        ['Bookings, changes, refunds, the software and everything else', '[help@brxs.ca](mailto:help@brxs.ca)'],
-        ['Privacy and account deletion', '[privacy@brxs.ca](mailto:privacy@brxs.ca)'],
+        ['Support', '[help@brxs.ca](mailto:help@brxs.ca)'],
+        ['General enquiries', '[hello@brxs.ca](mailto:hello@brxs.ca)'],
+        ['Privacy', '[privacy@brxs.ca](mailto:privacy@brxs.ca)'],
         ['Phone', '[343-453-4578](tel:+13434534578)'],
       ]),
       p(`Or use the [contact form](/contact). Tell us the property address, the shoot type and your preferred date, or anything else we should know.`),
@@ -36,7 +37,7 @@ export const CONTACT: Article[] = [
     summary: `Missing an answer or found a mistake? Tell us.`,
     body: [
       p(`Use **Was this helpful?** at the bottom of any article. Your note goes straight to the Bricks team.`),
-      p(`Or email [help@brxs.ca](mailto:help@brxs.ca) with the page and what's missing.`),
+      p(`Or email [hello@brxs.ca](mailto:hello@brxs.ca) with the page and what's missing.`),
     ],
     related: ['contact-us'],
   },

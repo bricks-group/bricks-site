@@ -98,7 +98,7 @@ export const CHANGES_REFUNDS: Article[] = [
     title: `Raise a concern about a shoot`,
     summary: `Email us first. We aim to resolve it within 30 days.`,
     body: [
-      p(`If something isn't right with a shoot or delivery, email [help@brxs.ca](mailto:help@brxs.ca) with the address and what's wrong. We aim to resolve concerns within 30 days.`),
+      p(`If something isn't right with a shoot or delivery, email [help@brxs.ca](mailto:help@brxs.ca) with the address and what's wrong. For anything we can't sort out there, write to [hello@brxs.ca](mailto:hello@brxs.ca). We aim to resolve concerns within 30 days.`),
       p(`Our [terms](/terms) are governed by the laws of Ontario and Canada.`),
     ],
     related: ['contact-us', 'if-bricks-cancels'],

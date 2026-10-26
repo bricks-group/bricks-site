@@ -18,7 +18,8 @@ export function ContactBand() {
       <div>
         <h2 id="hc-contact-t">Still need help?</h2>
         <p>
-          Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> about a booking or anything else. Or call <a href="tel:+13434534578">343-453-4578</a>.
+          Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> about a booking, or{' '}
+          <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> about anything else. Or call <a href="tel:+13434534578">343-453-4578</a>.
         </p>
       </div>
       <Link href="/contact" className="btn btn-brick">Contact us</Link>

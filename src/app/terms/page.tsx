@@ -109,7 +109,7 @@ export default function TermsPage() {
           <p>We may update these terms. The version in effect when you pay applies to that booking. Material changes will be posted on this page.</p>
 
           <h3>12. Law</h3>
-          <p>Ontario law and applicable Canadian federal law govern. Ontario courts have exclusive jurisdiction. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> with disputes; we will try to resolve in 30 days.</p>
+          <p>Ontario law and applicable Canadian federal law govern. Ontario courts have exclusive jurisdiction. Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> with disputes; we will try to resolve in 30 days.</p>
         </section>
       </div>
 
@@ -131,7 +131,7 @@ export default function TermsPage() {
       <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions?</h2>
-          <p>Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
+          <p>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
           <p>Bricks Group · Mississauga, Ontario, Canada</p>
         </section>
       </div>

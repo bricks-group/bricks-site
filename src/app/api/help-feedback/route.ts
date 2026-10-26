@@ -16,13 +16,13 @@ export async function POST(req: NextRequest) {
   const SUPABASE_URL = getSupabasePublicUrl()
   const SUPABASE_ANON_KEY = getSupabaseAnonKey()
   if (!process.env.RESEND_API_KEY && (!SUPABASE_URL || !SUPABASE_ANON_KEY)) {
-    return NextResponse.json({ ok: false, error: 'Feedback is unavailable right now. Email help@brxs.ca.' }, { status: 503 })
+    return NextResponse.json({ ok: false, error: 'Feedback is unavailable right now. Email hello@brxs.ca.' }, { status: 503 })
   }
   const sent = await sendContactMessage(feedbackMessage(parsed.value), {
     sourceLabel: 'the Bricks help centre', supabaseUrl: SUPABASE_URL, supabaseKey: SUPABASE_ANON_KEY,
   })
   if (!sent.ok) {
-    return NextResponse.json({ ok: false, error: 'Could not send. Email help@brxs.ca.' }, { status: sent.status })
+    return NextResponse.json({ ok: false, error: 'Could not send. Email hello@brxs.ca.' }, { status: sent.status })
   }
   return NextResponse.json({ ok: true })
 }

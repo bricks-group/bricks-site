@@ -92,7 +92,7 @@ export const ORGANIZATION_SCHEMA = {
     {
       '@type': 'ContactPoint',
       contactType: 'sales',
-      email: 'help@brxs.ca',
+      email: 'hello@brxs.ca',
       areaServed: 'CA',
       availableLanguage: ['en'],
     },
