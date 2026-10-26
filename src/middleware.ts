@@ -46,6 +46,9 @@ export function isPublicPath(pathname: string): boolean {
   // product itself -- a buyer needs the link to work without opening the
   // gate, same reasoning as /book and /photographers above.
   if (pathname === '/projects' || pathname.startsWith('/projects/')) return true
+  // Help centre: support answers must be reachable while marketing stays gated.
+  if (pathname === '/help' || pathname.startsWith('/help/')) return true
+  if (pathname === '/api/help-feedback') return true
   return false
 }
 

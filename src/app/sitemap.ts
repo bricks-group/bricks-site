@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { ARTICLES, COLLECTIONS, articleHref, collectionHref } from '@/lib/help'
 
 const BASE = 'https://www.brxs.ca'
 
@@ -44,10 +45,16 @@ const GATED_READY = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
-  return [...PUBLIC_NOW, ...GATED_READY].map((r) => ({
+  const pages = [...PUBLIC_NOW, ...GATED_READY].map((r) => ({
     url: `${BASE}${r.path}`,
     lastModified: now,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }))
+  const help = [
+    { url: `${BASE}/help`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
+    ...COLLECTIONS.map((c) => ({ url: `${BASE}${collectionHref(c.slug)}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 })),
+    ...ARTICLES.map((a) => ({ url: `${BASE}${articleHref(a)}`, lastModified: new Date(`${a.updated}T12:00:00-04:00`), changeFrequency: 'monthly' as const, priority: 0.5 })),
+  ]
+  return [...pages, ...help]
 }

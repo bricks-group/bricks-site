@@ -51,6 +51,7 @@ export default function Footer() {
             <Link href="/photographers">Photographers</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
+            <Link href="/help">Help centre</Link>
             <Link href="/blog">Blog</Link>
           </div>
         </div>

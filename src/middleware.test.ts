@@ -15,6 +15,14 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/supersplat-viewer/index.html'), true)
   })
 
+  it('opens the help centre and its feedback API while marketing stays gated', () => {
+    assert.equal(isPublicPath('/help'), true)
+    assert.equal(isPublicPath('/help/booking/book-a-shoot'), true)
+    assert.equal(isPublicPath('/help/search-index.json'), true)
+    assert.equal(isPublicPath('/api/help-feedback'), true)
+    assert.equal(isPublicPath('/helpdesk'), false)
+  })
+
   it('opens book + booking APIs while marketing stays gated', () => {
     assert.equal(isPublicPath('/book'), true)
     assert.equal(isPublicPath('/book/'), true)
