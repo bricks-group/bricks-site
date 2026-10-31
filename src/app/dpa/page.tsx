@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
+import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Data Processing Agreement — Bricks',
@@ -154,7 +155,7 @@ export default function DpaPage() {
               <tr><td>Twilio Inc.</td><td>SMS notifications</td><td>United States</td></tr>
               <tr><td>Fotello</td><td>AI photo enhancement (property images only, no personal data)</td><td>United States</td></tr>
               <tr><td>Autoenhance.ai</td><td>AI photo enhancement fallback (property images only)</td><td>United Kingdom</td></tr>
-              <tr><td>Bricks (owned)</td><td>Virtual staging — owned pipeline, $35 per photo at checkout; no third-party furniture vendor</td><td>Canada</td></tr>
+              {VIRTUAL_STAGING_ENABLED && <tr><td>Bricks (owned)</td><td>Virtual staging — owned pipeline on Bricks&apos; own GPU, $35 per photo at checkout; no third-party furniture vendor</td><td>Canada</td></tr>}
             </tbody>
           </table>
         </section>

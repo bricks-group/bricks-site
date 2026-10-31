@@ -14,6 +14,7 @@ import {
   REEL_RATE,
   RUSH_FLAT,
   STAGING_PER_IMAGE,
+  VIRTUAL_STAGING_ENABLED,
   TOUR_RATE,
   TWILIGHT_RATE,
   VISIT_RATE,
@@ -206,7 +207,7 @@ export function mediaServiceSchema(opts: { url: string; name?: string; offers: r
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Bricks listing media (CAD, pre-tax)',
-      itemListElement: opts.offers.map((id) => MEDIA_OFFERS[id]),
+      itemListElement: opts.offers.filter((id) => VIRTUAL_STAGING_ENABLED || id !== 'staging').map((id) => MEDIA_OFFERS[id]),
     },
   }
 }

@@ -4,7 +4,7 @@ import RevealObserver from '@/components/RevealObserver'
 import MediaShowcase from '@/components/media-showcase/MediaShowcase'
 import './media-page.css'
 import { Head, Rows, Close } from '@/components/calm/Calm'
-import { CORE_FROM } from '@/lib/pricing'
+import { CORE_FROM, VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Listing media — photos, drone, floor plans, film and 3D | Bricks',
@@ -23,7 +23,7 @@ const PARTS = [
   { t: 'Cinematic reel', d: 'A short film for the listing.' },
   { t: 'Virtual Visit', d: 'Free-roam 3D, booked as an add-on.' },
   { t: 'Twilight', d: 'The exterior at blue hour.' },
-  { t: 'Virtual staging', d: 'Furnished rooms, per photo.' },
+  ...(VIRTUAL_STAGING_ENABLED ? [{ t: 'Virtual staging', d: 'Furnished rooms, per photo.' }] : []),
   { t: 'One listing file', d: 'Media lands in the listing file in Bricks.' },
 ] as const
 

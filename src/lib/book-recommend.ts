@@ -24,6 +24,7 @@
  * beds + 2 rooms (living, dining), 3 to 8, or 5 when beds are unknown.
  */
 import type { Focus, ListingDetails, PhotoReason } from './book-prefill'
+import { VIRTUAL_STAGING_ENABLED } from './pricing'
 
 export type PkgKey = 'floorPlanOnly' | 'photosOnly' | 'essentials' | 'story' | 'showcase' | 'suite'
 
@@ -140,7 +141,8 @@ export function recommendPackage(input: { details?: ListingDetails; focus?: Focu
   }
   if (focus === 'visit') visit = true
 
-  const staging = focus === 'staging' || d.vacant === true
+  // Off sale while VIRTUAL_STAGING_ENABLED is false: never preselect it.
+  const staging = VIRTUAL_STAGING_ENABLED && (focus === 'staging' || d.vacant === true)
   const rooms = d.beds !== undefined ? Math.min(8, Math.max(3, Math.round(d.beds) + 2)) : 5
 
   return { pkg, visit, staging, stagingImages: staging ? rooms : 1, reason }

@@ -1,6 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { compactMoney, recommendPackage } from './book-recommend'
+import { VIRTUAL_STAGING_ENABLED, stripVirtualStaging } from './pricing'
 
 test('compact money', () => {
   assert.equal(compactMoney(2_640_000), '$2.64M')
@@ -71,7 +72,14 @@ test('tapped floor plan with photos covered -> Floor plan only; with a photo gap
   assert.equal(recommendPackage({ details: { typeClass: 'condo' }, focus: 'floorplan', gaps: ['photos', 'floorplan'] }).pkg, 'essentials')
 })
 
-test('vacant turns on staging sized by bedrooms', () => {
+test('virtual staging off sale: never preselected, and quote/checkout bodies drop it', () => {
+  if (VIRTUAL_STAGING_ENABLED) return
+  assert.equal(recommendPackage({ details: { typeClass: 'condo', beds: 2, vacant: true } }).staging, false)
+  assert.equal(recommendPackage({ focus: 'staging' }).staging, false)
+  assert.deepEqual(stripVirtualStaging({ staging_addon: true, staging_images: 4, reel_addon: true }), { staging_addon: false, staging_images: 0, reel_addon: true })
+})
+
+test('vacant turns on staging sized by bedrooms', { skip: !VIRTUAL_STAGING_ENABLED && 'virtual staging off sale' }, () => {
   assert.deepEqual(
     (({ staging, stagingImages }) => ({ staging, stagingImages }))(recommendPackage({ details: { typeClass: 'condo', beds: 2, vacant: true } })),
     { staging: true, stagingImages: 4 },

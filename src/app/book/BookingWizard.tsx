@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, FOOTPRINT_BANDS, CORE_FROM } from '@/lib/pricing'
+import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, VISIT_PRICE_LABEL, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, VIRTUAL_STAGING_ENABLED, FOOTPRINT_BANDS, CORE_FROM } from '@/lib/pricing'
 import { packageLines } from '@/lib/quote-lines'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { BookCalendar } from './BookCalendar'
@@ -236,8 +236,8 @@ export default function BookingWizard() {
         const r = recommendPackage({ details: p.details, focus: p.focus, gaps: p.gaps, photoReason: p.photoReason })
         applyPackage(r.pkg)
         setVisit(r.visit)
-        setStaging(r.staging)
-        if (r.staging) setStagingImages(r.stagingImages)
+        setStaging(VIRTUAL_STAGING_ENABLED && r.staging)
+        if (VIRTUAL_STAGING_ENABLED && r.staging) setStagingImages(r.stagingImages)
         setRec(r)
         setListing(p)
       }
@@ -436,8 +436,8 @@ export default function BookingWizard() {
       twilight_addon: floorPlanOnly ? false : twilight,
       rush_addon: rush,
       visit_addon: visit,
-      staging_addon: staging,
-      staging_images: staging ? Math.max(1, stagingImages || 1) : 0,
+      staging_addon: VIRTUAL_STAGING_ENABLED && staging,
+      staging_images: VIRTUAL_STAGING_ENABLED && staging ? Math.max(1, stagingImages || 1) : 0,
       floor_plan_only: floorPlanOnly,
       package_id: packageIdForCheckout(),
     }
@@ -617,8 +617,8 @@ export default function BookingWizard() {
       tour_addon: floorPlanOnly ? false : tour,
       twilight_addon: floorPlanOnly ? false : twilight,
       rush_addon: rush,
-      staging_addon: staging,
-      staging_images: staging ? Math.max(1, stagingImages || 1) : 0,
+      staging_addon: VIRTUAL_STAGING_ENABLED && staging,
+      staging_images: VIRTUAL_STAGING_ENABLED && staging ? Math.max(1, stagingImages || 1) : 0,
       visit_addon: visit,
       notes: combinedNotes || null,
     }
@@ -797,11 +797,11 @@ export default function BookingWizard() {
               {floorPlanOnly && (
                 <>
                   <label className="toggle"><input type="checkbox" checked={visit} onChange={(e) => setVisit(e.target.checked)} /> {VISIT_NAME} ({VISIT_PRICE_LABEL}) — {VISIT_PACKAGING}</label>
-                  <p className="hint-sm" style={{ margin: '-4px 0 16px' }}>Floor plan only — no HDR, no drone. Visit and staging below are optional. Rush is +${RUSH_FLAT}.</p>
+                  <p className="hint-sm" style={{ margin: '-4px 0 16px' }}>Floor plan only — no HDR, no drone. {VIRTUAL_STAGING_ENABLED ? 'Visit and staging below are optional.' : 'Visit is optional.'} Rush is +${RUSH_FLAT}.</p>
                 </>
               )}
-              <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging ({STAGING_PRICE_LABEL})</label>
-              {staging && (
+              {VIRTUAL_STAGING_ENABLED && <label className="toggle"><input type="checkbox" checked={staging} onChange={(e) => setStaging(e.target.checked)} /> Virtual staging ({STAGING_PRICE_LABEL})</label>}
+              {VIRTUAL_STAGING_ENABLED && staging && (
                 <div className="field" style={{ margin: '4px 0 16px' }}>
                   <label>Photos to stage</label>
                   <input type="number" min={1} value={stagingImages} onChange={(e) => setStagingImages(Math.max(1, parseInt(e.target.value || '1', 10) || 1))} />
@@ -880,7 +880,7 @@ export default function BookingWizard() {
                   [TOUR_NAME, floorPlanOnly ? 'No' : (tour ? 'Yes' : 'No')],
                   [VISIT_NAME, visit ? `Yes — ${VISIT_PRICE_LABEL}` : 'No'],
                   ['Twilight', floorPlanOnly ? 'No' : (twilight ? 'Yes' : 'No')],
-                  ['Virtual staging', staging ? `Yes — ${Math.max(1, stagingImages || 1)} × ${STAGING_PRICE_LABEL}` : 'No'],
+                  ...(VIRTUAL_STAGING_ENABLED ? [['Virtual staging', staging ? `Yes — ${Math.max(1, stagingImages || 1)} × ${STAGING_PRICE_LABEL}` : 'No']] : []),
                   ['Rush delivery', rush ? 'Yes' : 'No'],
                   ['Shoot time', selectedSlot ? formatBookedWhen(selectedSlot.start, propertyTz) : '—'], ['Notes', notes.trim() || '—'],
                 ].map(([k, v]) => (
@@ -932,7 +932,7 @@ export default function BookingWizard() {
             <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>No. It&apos;s an add-on, {VISIT_PRICE_LABEL.toLowerCase()}. Pick it in Step 2.</p></div>
             <div className="qa"><h4>How fast is delivery?</h4><p>We aim to deliver photos 24 hours after the shoot, and other media in 24–48 hours. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
             <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photos at blue hour, with the windows lit and colour still in the sky. Add it to any shoot in Step 2.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>
+            {VIRTUAL_STAGING_ENABLED && <div className="qa"><h4>What is virtual staging?</h4><p>Furniture added to photos of vacant rooms, marked as virtually staged. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>}
             <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
             <div className="qa"><h4>What if I need to cancel?</h4><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
             <div className="qa"><h4>How do refunds work?</h4><p>Refunds go back to your original payment method, typically within 5–10 business days.</p></div>

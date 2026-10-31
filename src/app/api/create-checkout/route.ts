@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
+import { stripVirtualStaging } from '@/lib/pricing'
 import { resolvePropertyTimezone, localYmd } from '@/lib/schedule'
 
 export const runtime = 'nodejs'
@@ -103,6 +104,8 @@ export async function POST(req: Request) {
     return bad('Invalid JSON')
   }
   if (!body || typeof body !== 'object') return bad('Expected JSON object')
+  // Virtual staging is off sale (VIRTUAL_STAGING_ENABLED in lib/pricing): never price or charge it.
+  body = stripVirtualStaging(body)
 
   const preferredDate = (body.preferred_date || '').toString().trim()
   const preferredWindow = (body.preferred_window || '').toString().trim().toLowerCase()

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import BookingWizard from './BookingWizard'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
-import { TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
+import { TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 import { mediaServiceSchema } from '@/lib/schema'
 
 const OG =
@@ -105,7 +105,7 @@ export default function BookPage() {
             url: 'https://www.brxs.ca/book',
             name: 'Book Bricks listing photos',
             // Only what the booking form visibly prices.
-            offers: ['essentials', 'floor_plan_only', 'reel', 'tour', 'visit', 'twilight', 'staging', 'rush'],
+            offers: ['essentials', 'floor_plan_only', 'reel', 'tour', 'visit', 'twilight', ...(VIRTUAL_STAGING_ENABLED ? (['staging'] as const) : []), 'rush'],
           })) }}
       />
       <section className="hero">

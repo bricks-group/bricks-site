@@ -1,5 +1,6 @@
 import type { Article } from '../types'
 import { p, h, ul, ol, note, flow, qa } from '../blocks'
+import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 
 /**
  * Home services sold as quote requests (phase 1). No prices: every job is quoted by a person.
@@ -50,7 +51,7 @@ export const HOME_SERVICES: Article[] = [
       ),
       h(`What you get back`),
       p(`A written quote first, then install photos of each staged room. Install, photo visit and removal dates are kept with the property in your Bricks account.`),
-      note(`Virtual staging is different. It adds furniture to photos and is a photo add-on. See [Add-ons](/help/booking/add-ons).`),
+      ...(VIRTUAL_STAGING_ENABLED ? [note(`Virtual staging is different. It adds furniture to photos and is a photo add-on. See [Add-ons](/help/booking/add-ons).`)] : []),
     ],
     related: ['how-quote-requests-work', 'cleaning-and-turnovers'],
   },

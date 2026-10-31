@@ -1,7 +1,7 @@
 import type { Article } from '../types'
 import { p, h, ul, ol, note, table, qa } from '../blocks'
 import {
-  PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, STAGING_PER_IMAGE,
+  PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, STAGING_PER_IMAGE, VIRTUAL_STAGING_ENABLED,
   FLOOR_PLAN_ONLY_RATE, bandCells, PHOTO_ONLY_FROM, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM,
 } from '@/lib/pricing'
 
@@ -42,7 +42,9 @@ export const BOOKING: Article[] = [
         [`Full suite`, `Showcase plus twilight exteriors.`, `$${FULL_FROM}`],
         [`Floor plan only`, `A floor plan. No photos or drone.`, `$${FLOOR_PLAN_ONLY_RATE} flat`],
       ]),
-      p(`Virtual Visit and virtual staging are never part of a package. Add them on their own. See [Add-ons](/help/booking/add-ons).`),
+      p(VIRTUAL_STAGING_ENABLED
+        ? `Virtual Visit and virtual staging are never part of a package. Add them on their own. See [Add-ons](/help/booking/add-ons).`
+        : `Virtual Visit is never part of a package. Add it on its own. See [Add-ons](/help/booking/add-ons).`),
       p(`Full rates for every band are on [Pricing](/pricing).`),
     ],
     related: ['how-pricing-works', 'add-ons', 'virtual-tour-or-virtual-visit'],
@@ -66,7 +68,7 @@ export const BOOKING: Article[] = [
         row('HDR photography', PHOTO_RATE), row('Licensed drone', DRONE_RATE), row('Cinematic reel', REEL_RATE),
         row('Virtual tour', TOUR_RATE), row('Virtual Visit', VISIT_RATE), row('Twilight exterior', TWILIGHT_RATE),
       ]),
-      p(`Flat prices: floor plan only $${FLOOR_PLAN_ONLY_RATE}, virtual staging $${STAGING_PER_IMAGE} a photo, rush delivery +$${RUSH_FLAT}. All prices are CAD, before HST. Travel may apply. See [Travel fees](/help/booking/travel-fees).`),
+      p(`Flat prices: floor plan only $${FLOOR_PLAN_ONLY_RATE}, ${VIRTUAL_STAGING_ENABLED ? `virtual staging $${STAGING_PER_IMAGE} a photo, ` : ''}rush delivery +$${RUSH_FLAT}. All prices are CAD, before HST. Travel may apply. See [Travel fees](/help/booking/travel-fees).`),
       note(`If you don't enter square footage, Bricks estimates it from the building footprint and tells you so. Confirm the number for an exact quote. The final invoice reflects the actual scope.`),
     ],
     related: ['packages-explained', 'travel-fees', 'add-ons'],
@@ -74,7 +76,7 @@ export const BOOKING: Article[] = [
   {
     slug: 'add-ons',
     title: `Add-ons you can book`,
-    summary: `Drone, reel, virtual tour, Virtual Visit, twilight, staging and rush delivery.`,
+    summary: VIRTUAL_STAGING_ENABLED ? `Drone, reel, virtual tour, Virtual Visit, twilight, staging and rush delivery.` : `Drone, reel, virtual tour, Virtual Visit, twilight and rush delivery.`,
     body: [
       p(`Add extras to any package in step 2 of booking, or build the shoot à la carte.`),
       table(['Add-on', 'What it is', 'Price'], [
@@ -83,7 +85,7 @@ export const BOOKING: Article[] = [
         [`Virtual tour`, `A path walkthrough. Viewers follow a set path.`, bandCells(TOUR_RATE).join(' / ')],
         [`Virtual Visit`, `Free-roam 3D. Viewers move anywhere in the home.`, bandCells(VISIT_RATE).join(' / ')],
         [`Twilight exterior`, `Exteriors shot for real at blue hour, windows lit.`, bandCells(TWILIGHT_RATE).join(' / ')],
-        [`Virtual staging`, `Furniture and décor added to photos of empty or dated rooms.`, `$${STAGING_PER_IMAGE} a photo`],
+        ...(VIRTUAL_STAGING_ENABLED ? [[`Virtual staging`, `Furniture added to photos of vacant rooms, marked as virtually staged.`, `$${STAGING_PER_IMAGE} a photo`]] : []),
         [`Rush delivery`, `Faster than standard delivery.`, `+$${RUSH_FLAT} flat`],
       ]),
       p(`Banded prices are Small / Mid / Large / XL, CAD before HST.`),

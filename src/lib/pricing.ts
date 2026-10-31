@@ -22,6 +22,19 @@ export const TWILIGHT_RATE = [150, 170, 185, 200] as const;
 export const TOUR_RATE = [149, 199, 249, 299] as const;
 export const RUSH_FLAT = 75;
 export const STAGING_PER_IMAGE = 35;
+/**
+ * Virtual staging is off sale until in-house staging (on Bricks' own GPU)
+ * passes its pilot. While false: no booking toggle, no price row, no
+ * marketing copy, and checkout/quote ignore staging_addon. The rates above
+ * stay so turning it back on is this one line.
+ */
+export const VIRTUAL_STAGING_ENABLED = false;
+
+/** Server guard: drop any staging request from a quote/checkout body while staging is off sale. */
+export function stripVirtualStaging<T extends Record<string, unknown>>(body: T): T {
+  if (VIRTUAL_STAGING_ENABLED || !body || typeof body !== 'object') return body
+  return { ...body, staging_addon: false, staging_images: 0 }
+}
 /** Standalone floor-plan capture (no HDR / no drone). Flat CAD pre-tax. */
 export const FLOOR_PLAN_ONLY_RATE = 99;
 

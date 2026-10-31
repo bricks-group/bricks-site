@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import PlanCards from '@/components/PlanCards'
 import RevealObserver from '@/components/RevealObserver'
-import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
+import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, VIRTUAL_STAGING_ENABLED, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { OFFICE_PLANS, OFFICE_INCLUDES, OFFICE_MONTHLY_NOTE, SOFTWARE_BLURB, SOFTWARE_PLANS, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { ONE_OFFS, ONE_OFFS_FOR, money } from '@/lib/propertyCheckout'
@@ -43,7 +43,7 @@ const fromFor = (kind: keyof typeof ONE_OFFS_FOR) => money(Math.min(...ONE_OFFS_
 /** Offers whose prices this page renders (packages + priced rows of the à la carte table). */
 const PRICING_PAGE_OFFERS: readonly MediaOfferId[] = [
   'photos_only', 'essentials', 'story', 'showcase', 'suite', 'floor_plan_only',
-  'drone', 'reel', 'tour', 'visit', 'twilight', 'staging', 'rush',
+  'drone', 'reel', 'tour', 'visit', 'twilight', ...(VIRTUAL_STAGING_ENABLED ? (['staging'] as const) : []), 'rush',
 ]
 
 const rows = [
@@ -55,7 +55,7 @@ const rows = [
   { name: TOUR_NAME, inc: 'Path walkthrough', vals: bandCells(TOUR_RATE) },
   { name: VISIT_NAME, inc: 'Free-roam 3D', vals: bandCells(VISIT_RATE) },
   { name: 'Twilight exterior', inc: 'Shot at blue hour', vals: bandCells(TWILIGHT_RATE) },
-  { name: 'Virtual staging', inc: 'Per photo', flat: STAGING_PRICE_LABEL },
+  ...(VIRTUAL_STAGING_ENABLED ? [{ name: 'Virtual staging', inc: 'Per photo', flat: STAGING_PRICE_LABEL }] : []),
   { name: 'Rush delivery', inc: 'Faster than standard delivery (photos 24h · other media 24–48h)', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
 ]
 
@@ -90,7 +90,7 @@ export default function PricingPage() {
               { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75/km. It’s often free in the GTA, and you see it before you pay.' } },
               { '@type': 'Question', name: 'How is home size measured?', acceptedAnswer: { '@type': 'Answer', text: 'By finished area and complexity. Not sure? Choose "advise me" when you book and we\'ll size it from the address.' } },
               { '@type': 'Question', name: 'Virtual tour or virtual visit?', acceptedAnswer: { '@type': 'Answer', text: `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).` } },
-              { '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture and décor added to photos of empty or dated rooms. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.` } },
+              ...(VIRTUAL_STAGING_ENABLED ? [{ '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture added to photos of vacant rooms, marked as virtually staged. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.` } }] : []),
               { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: 'Across Canada. Ask and we’ll confirm your area and quote any travel.' } },
               { '@type': 'Question', name: 'Can I add AI without upgrading?', acceptedAnswer: { '@type': 'Answer', text: ADDONS_BLURB } },
             ],
@@ -203,7 +203,7 @@ export default function PricingPage() {
             <div className="qa"><h4>How does travel work?</h4><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and you see it before you pay.</p></div>
             <div className="qa"><h4>How is home size measured?</h4><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
             <div className="qa"><h4>Virtual tour or virtual visit?</h4><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
-            <div className="qa"><h4>What is virtual staging?</h4><p>Furniture and décor added to photos of empty or dated rooms. Priced per photo and not part of any package.</p></div>
+            {VIRTUAL_STAGING_ENABLED && <div className="qa"><h4>What is virtual staging?</h4><p>Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.</p></div>}
             <div className="qa"><h4>Where do you shoot?</h4><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
             <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>
             <div className="qa"><h4>Brokerage or individual plan?</h4><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, or monthly at 25% more, and every seat gets all of Bricks plus trust accounting.</p></div>

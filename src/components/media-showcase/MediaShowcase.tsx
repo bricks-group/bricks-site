@@ -19,7 +19,6 @@ const PAIRS = [
   { k: 'HDR', before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png' },
   { k: 'Sky, on request', before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png' },
   { k: 'Twilight', before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png' },
-  { k: 'Virtual staging', before: '/media/proof/Staging Before.png', after: '/media/proof/Staging After.png' },
 ] as const
 
 const FILM_SRC = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4'

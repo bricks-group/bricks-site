@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { buildQuote } from '@/lib/quote-engine'
+import { stripVirtualStaging } from '@/lib/pricing'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -38,6 +39,9 @@ export async function POST(req: Request) {
   if (!body || typeof body !== 'object') {
     return NextResponse.json({ ok: false, error: 'Expected JSON object' }, { status: 400 })
   }
+
+  // Virtual staging is off sale (VIRTUAL_STAGING_ENABLED in lib/pricing): never quote it.
+  body = stripVirtualStaging(body)
 
   // Prefer OS assign-first quote (near-instant allocate + final travel / GTA $0).
   try {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
+import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 
 export const metadata: Metadata = {
   title: 'Bricks — Terms of Service',
@@ -33,7 +34,7 @@ export default function TermsPage() {
         <section className="block" id="terms">
           <h2>BRICKS TERMS OF SERVICE (client / booking)</h2>
           <p>Effective: August 27, 2026<br />Contracting party: Bricks Group (&quot;Bricks&quot;)<br />Governing law: Ontario, Canada</p>
-          <p>These terms cover listing-media bookings made through brxs.ca (photography, drone, floor plans, video, virtual tours, twilight, and related add-ons) in the areas Bricks serves. Virtual visit is a paid add-on at $249 / $299 / $349 / $399 by footprint. Virtual staging is $35 per photo. Both are charged in online checkout and are not included in any package. By paying for a booking you agree to these terms, the cancellation policy, and the <Link href="/privacy">privacy policy</Link>.</p>
+          <p>These terms cover listing-media bookings made through brxs.ca (photography, drone, floor plans, video, virtual tours, twilight, and related add-ons) in the areas Bricks serves. Virtual visit is a paid add-on at $249 / $299 / $349 / $399 by footprint. It is charged in online checkout and is not included in any package.{VIRTUAL_STAGING_ENABLED ? ' Virtual staging is $35 per photo, charged in online checkout and not included in any package.' : ''} By paying for a booking you agree to these terms, the cancellation policy, and the <Link href="/privacy">privacy policy</Link>.</p>
           <p>Bricks Group is the party you are contracting with for the media package you buy. Photographers who shoot for Bricks are independent contractors of Bricks, not your employees and not a separate party to your booking. Bricks remains responsible to you for delivery of the package, subject to these terms.</p>
 
           <h3>1. Authority and access</h3>

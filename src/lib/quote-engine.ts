@@ -12,6 +12,7 @@ import {
   VISIT_RATE,
   RUSH_FLAT,
   STAGING_PER_IMAGE,
+  VIRTUAL_STAGING_ENABLED,
   FLOOR_PLAN_ONLY_RATE,
   BAND_LABELS,
   LEGACY_COMPANION_PACKAGE_IDS,
@@ -205,7 +206,8 @@ export async function buildQuote(body: Record<string, unknown>): Promise<BuildQu
   }
 
   // Virtual staging is $35/photo. Visit is the footprint-band add-on. Neither is packaged.
-  const stagingRequested = body.staging_addon === true || body.staging_addon === 'true'
+  // Off sale while VIRTUAL_STAGING_ENABLED is false (lib/pricing): requests are ignored, never priced.
+  const stagingRequested = VIRTUAL_STAGING_ENABLED && (body.staging_addon === true || body.staging_addon === 'true')
   let stagingImages = parseInt(String(body.staging_images ?? '0'), 10)
   if (!Number.isFinite(stagingImages) || stagingImages < 0) stagingImages = 0
   if (stagingRequested && stagingImages < 1) stagingImages = 1

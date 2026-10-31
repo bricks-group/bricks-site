@@ -1,3 +1,4 @@
+import { VIRTUAL_STAGING_ENABLED } from './pricing'
 /**
  * Home services Bricks books through quote requests (phase 1 of vendor trades).
  * No public prices or payouts: every request is quoted by a person first.
@@ -56,7 +57,7 @@ export const TRADES: readonly Trade[] = [
       { title: 'Dates kept with the listing', detail: 'Install, photo visit and removal dates, kept with the property in your Bricks account.' },
       { title: 'Install photos', detail: 'Photos of each staged room once the install is done.' },
     ],
-    rules: ['Virtual staging is a separate photo add-on, not part of this service.'],
+    rules: VIRTUAL_STAGING_ENABLED ? ['Virtual staging is a separate photo add-on, not part of this service.'] : [],
     scopes: ['Consult and plan', 'Vacant home', 'Occupied home', 'Model suite', 'Not sure yet'],
     apply: {
       role: 'Stagers',
