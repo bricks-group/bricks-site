@@ -38,6 +38,9 @@ export const ONE_OFFS_FOR: Record<PropertyClient, string[]> = {
 export const money = (cents: number) =>
   `$${(cents / 100).toLocaleString('en-CA', { minimumFractionDigits: cents % 100 ? 2 : 0, maximumFractionDigits: cents % 100 ? 2 : 0 })}`
 
+/** Lowest one-off visit price for a property client type, from the same table /book/property charges. */
+export const fromPriceFor = (kind: PropertyClient) => money(Math.min(...ONE_OFFS_FOR[kind].map((k) => ONE_OFFS[k].cents)))
+
 export function tierForSqft(sqft: string | number | undefined): string | null {
   const n = Number(String(sqft ?? '').replace(/,/g, ''))
   if (!n || n <= 0) return null

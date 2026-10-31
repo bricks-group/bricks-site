@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { signupUrl } from './brand'
 import { hubItems, HUB } from './site-progress-features'
+import { fromPriceFor, ONE_OFFS, ONE_OFFS_FOR } from './propertyCheckout'
 
 const root = join(__dirname, '..', '..')
 const read = (p: string) => readFileSync(join(root, p), 'utf8')
@@ -180,7 +181,7 @@ test('pricing lists property-account visit prices from the checkout table, and b
   for (const href of ['/property-managers', '/commercial', '/investors', '/reits']) {
     assert.ok(pricing.includes(`href: '${href}'`), `pricing links ${href}`)
   }
-  assert.match(pricing, /ONE_OFFS_FOR\[kind\]/, 'from-prices come from the /book/property table, not typed figures')
+  assert.match(pricing, /fromPriceFor/, 'from-prices come from the /book/property table, not typed figures')
   assert.match(read('src/app/builders/page.tsx'), /signupUrl\('builder'\)/)
 })
 
@@ -192,4 +193,16 @@ test('teams page prices the team as the lead plan, monthly or yearly; reits page
   const reits = read('src/app/reits/page.tsx')
   assert.match(reits, /ONE_OFFS_FOR\.reit_leasing/, 'REIT prices come from the /book/property table')
   assert.match(reits, /aria-label="Visit prices"/)
+})
+
+test('home page shows property-account starting prices from the checkout table', () => {
+  const home = read('src/app/page.tsx')
+  for (const kind of ['property_manager', 'commercial', 'investor'] as const) {
+    assert.ok(home.includes(`fromPriceFor('${kind}')`), `home shows ${kind} from-price`)
+    const min = Math.min(...ONE_OFFS_FOR[kind].map((k) => ONE_OFFS[k].cents))
+    assert.equal(fromPriceFor(kind).replace(/[$,]/g, ''), String(min / 100))
+  }
+  for (const href of ['/property-managers', '/commercial', '/investors', '/reits']) {
+    assert.ok(home.includes(`href="${href}"`), `home links ${href}`)
+  }
 })

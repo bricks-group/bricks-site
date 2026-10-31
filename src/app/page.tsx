@@ -11,6 +11,7 @@ import './home-v10.css'
 import './home-v3.css'
 import { CORE_FROM } from '@/lib/pricing'
 import { PER_VISIT, fmt } from '@/lib/commercial'
+import { fromPriceFor } from '@/lib/propertyCheckout'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 import { FeaturePic } from '@/components/features/FeatureShot'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
@@ -187,7 +188,12 @@ export default function Home() {
             { fig: fmt(PER_VISIT[0].price), label: 'Site visit, from' },
           ]}
         />
-        <p className="cm-note">Prices in CAD, before tax.</p>
+        <p className="cm-note">
+          Property accounts: <Link href="/property-managers">property managers</Link> from {fromPriceFor('property_manager')},{' '}
+          <Link href="/commercial">commercial</Link> from {fromPriceFor('commercial')},{' '}
+          <Link href="/investors">investors</Link> from {fromPriceFor('investor')}, and <Link href="/reits">REITs</Link> save 10% to 15%.
+          Prices in CAD, before tax.
+        </p>
       </section>
 
       <section className="cm-sec rvl" id="faq" aria-label="Frequently asked questions">

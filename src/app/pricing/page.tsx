@@ -5,7 +5,7 @@ import RevealObserver from '@/components/RevealObserver'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, VIRTUAL_STAGING_ENABLED, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { OFFICE_PLANS, OFFICE_INCLUDES, OFFICE_MONTHLY_NOTE, SOFTWARE_BLURB, SOFTWARE_PLANS, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
-import { ONE_OFFS, ONE_OFFS_FOR, money } from '@/lib/propertyCheckout'
+import { fromPriceFor } from '@/lib/propertyCheckout'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import {
   COVERAGE_LINE,
@@ -37,8 +37,7 @@ export const metadata: Metadata = {
 
 const BANDS = ['Small', 'Mid', 'Large', 'XL'] as const
 
-/** Lowest one-off visit price for a property client type, from the same table /book/property charges. */
-const fromFor = (kind: keyof typeof ONE_OFFS_FOR) => money(Math.min(...ONE_OFFS_FOR[kind].map((k) => ONE_OFFS[k].cents)))
+const fromFor = fromPriceFor
 
 /** Offers whose prices this page renders (packages + priced rows of the à la carte table). */
 const PRICING_PAGE_OFFERS: readonly MediaOfferId[] = [
