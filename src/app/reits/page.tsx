@@ -4,6 +4,12 @@ import RevealObserver from '@/components/RevealObserver'
 import { Head, Rows, Close } from '@/components/calm/Calm'
 import { SystemBand } from '@/components/clientele/Clientele'
 import { signupUrl } from '@/lib/brand'
+import { ONE_OFFS, ONE_OFFS_FOR, money } from '@/lib/propertyCheckout'
+
+/** REIT visit prices, from the same table /book/property charges (server recomputes). */
+const SCOPE: Record<string, string> = { unit: 'per unit', space: 'per space', building: 'per building', property: 'per property' }
+const REIT_VISITS = ONE_OFFS_FOR.reit_leasing.map((k) => ONE_OFFS[k])
+const off = (cents: number, pct: number) => money(Math.round((cents * (100 - pct)) / 100))
 
 export const metadata: Metadata = {
   title: 'Bricks for REITs | Leasing media, condition reports and site progress',
@@ -55,6 +61,17 @@ export default function ReitsPage() {
             { title: 'Office, retail and industrial', detail: 'Leasing sets priced by size, and aerial sets.', href: '/commercial' },
             { title: 'Acquisitions and watch', detail: 'A dated baseline when you buy, then a check every quarter.', href: '/investors' },
           ]}
+        />
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Visit prices">
+        <Head title="Visit prices." lede="CAD, before HST. The second figure is the price at 10 or more properties, the third at 25 or more." />
+        <Rows
+          items={REIT_VISITS.map((v) => ({
+            title: v.name,
+            detail: `${v.what} ${SCOPE[v.scope]}. ${off(v.cents, 10)} at 10+, ${off(v.cents, 15)} at 25+.`,
+            value: money(v.cents),
+          }))}
         />
         <p className="cl-note">Your team updates unit status in Bricks. It doesn’t sync with a property management system yet.</p>
       </section>

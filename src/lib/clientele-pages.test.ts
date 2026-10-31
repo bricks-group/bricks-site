@@ -183,3 +183,13 @@ test('pricing lists property-account visit prices from the checkout table, and b
   assert.match(pricing, /ONE_OFFS_FOR\[kind\]/, 'from-prices come from the /book/property table, not typed figures')
   assert.match(read('src/app/builders/page.tsx'), /signupUrl\('builder'\)/)
 })
+
+test('teams page prices the team as the lead plan, monthly or yearly; reits page lists visit prices from the checkout table', () => {
+  const teams = read('src/app/teams/page.tsx')
+  assert.doesNotMatch(teams, /billed yearly\.'/, 'teams page must not say team plans are yearly only')
+  assert.match(teams, /SOFTWARE_PLANS\.filter/, 'team prices come from the plan catalog, not typed figures')
+  assert.match(teams, /aria-label="Team plan prices"/)
+  const reits = read('src/app/reits/page.tsx')
+  assert.match(reits, /ONE_OFFS_FOR\.reit_leasing/, 'REIT prices come from the /book/property table')
+  assert.match(reits, /aria-label="Visit prices"/)
+})

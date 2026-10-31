@@ -6,11 +6,15 @@ import { FeatureList } from '@/components/features/Feature'
 import { ESIGN, LAUNCH } from '@/lib/agent-features'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import { signupUrl } from '@/lib/brand'
+import { SOFTWARE_PLANS } from '@/lib/catalog'
+
+/** Team plan base price is the lead's paid plan (OS common/team_seats.py TEAM_PLAN_MONTHLY_CENTS). */
+const TEAM_PLANS = SOFTWARE_PLANS.filter((p) => p.id !== 'clay')
 
 export const metadata: Metadata = {
   title: 'Bricks for real estate teams | Up to 6 agents on one plan',
   description:
-    'One plan for a team of up to 6 agents: a shared pipeline, listing files, e-sign and listing media booked from the listing. Billed yearly, CAD.',
+    'One plan for a team of up to 6 agents: a shared pipeline, listing files, e-sign and listing media booked from the listing. Priced as the lead’s plan, monthly or yearly, CAD.',
   alternates: { canonical: '/teams' },
   openGraph: {
     title: 'One desk for the whole team | Bricks',
@@ -44,12 +48,17 @@ export default function TeamsPage() {
         <Head title="How team plans work." link={{ href: '/pricing', label: 'See pricing' }} />
         <Rows
           items={[
-            { title: 'Up to 6 agents', detail: 'The lead and up to five agents share one plan, billed yearly.' },
+            { title: 'Up to 6 agents', detail: 'The lead and up to five agents share the lead’s plan. Pay monthly, or yearly and get two months free.' },
             { title: 'Shared pipeline', detail: 'Every deal and listing in one view, with who owns each one.' },
             { title: 'Invite by email', detail: 'Agents join from an invite and keep their own logins.' },
             { title: 'More than 6 agents', detail: 'Add a seat for $79 per agent a month, or $790 a year, CAD plus tax. From about 17 agents, brokerage seats can cost less.', href: '/brokerage' },
           ]}
         />
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Team plan prices">
+        <Head title="One price for up to 6 agents." lede="The team pays the lead’s plan price, not a price per agent. CAD, before HST." link={{ href: '/pricing', label: 'What each plan includes' }} />
+        <Rows items={TEAM_PLANS.map((p) => ({ title: p.name, detail: p.yearly, value: p.price }))} />
       </section>
 
       <section className="cm-sec rvl" aria-label="Which plan">

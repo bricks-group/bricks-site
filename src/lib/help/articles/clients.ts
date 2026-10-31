@@ -94,11 +94,12 @@ export const TEAMS: Article[] = [
   {
     slug: 'team-plan',
     title: `How team plans work`,
-    summary: `Up to 6 agents on one plan, billed yearly, with a shared pipeline.`,
+    summary: `Up to 6 agents on the lead's plan, monthly or yearly, with a shared pipeline.`,
     popular: true,
     body: [
       ul(
-        `**Up to 6 agents.** The lead and up to five agents share one plan, billed yearly.`,
+        `**Up to 6 agents.** The lead and up to five agents share the lead's plan: Keystone, Marble or Diamond. The team pays that plan's price, not a price per agent.`,
+        `**Monthly or yearly.** Pay monthly, or yearly and get two months free. See [Monthly or yearly billing](/help/plans-billing/monthly-or-yearly).`,
         `**Shared pipeline.** Every deal and listing in one view, with who owns each one. The lead sees every deal and listing.`,
         `**Invite by email.** Agents join from an invite and keep their own logins.`,
         `**Every agent gets the whole desk:** deals, listing files and e-sign, with media booked from the listing.`,
@@ -155,7 +156,7 @@ export const TEAMS: Article[] = [
     body: [
       table(['', 'Team plan', 'Brokerage seats'], [
         ['Size', 'Up to 6 agents, plus added seats', 'From 5 seats'],
-        ['Billing', 'One plan, billed yearly', 'Per seat, yearly or monthly'],
+        ['Billing', 'The lead\'s plan, monthly or yearly', 'Per seat, yearly or monthly'],
         ['Trust accounting', 'No', 'Yes'],
       ]),
       p(`From about 17 agents, brokerage seats can cost less than a team plan with added seats. See [Brokerage seat pricing](/help/brokerages/brokerage-seat-pricing).`),
