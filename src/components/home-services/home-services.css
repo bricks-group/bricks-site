@@ -1,0 +1,29 @@
+/* Home services (staging, cleaning, inspections, measurement, repairs). Drawing-set look: hairlines, 1.5px line icons, no fills or gradients. */
+/* Orange buttons on these pages carry dark labels (#14110E) in both themes. */
+.hs .btn.btn-primary,.hs-home .btn.btn-primary{color:#14110E!important;}
+.hs .hero .eyebrow{font-size:13px;color:var(--inkMute);margin:0 0 12px;}
+.hs-ico{color:var(--vs-fg,var(--ink));display:block;flex:none;}
+.hs-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:var(--vs-hair,1px solid var(--hair));border-left:var(--vs-hair,1px solid var(--hair));}
+.hs-grid>li{border-right:var(--vs-hair,1px solid var(--hair));border-bottom:var(--vs-hair,1px solid var(--hair));min-width:0;}
+.hs-grid .hs-card{display:flex;flex-direction:column;gap:10px;padding:24px;height:100%;color:inherit;text-decoration:none;}
+.hs-grid a.hs-card:hover h3{color:var(--brickDeep);}
+.hs-grid h3{font-size:var(--vs-fs-body,16px);font-weight:500;color:var(--vs-fg,var(--ink));margin:6px 0 0;letter-spacing:-.01em;}
+.hs-grid p{font-size:var(--vs-fs-small,14px);color:var(--vs-fg-2,var(--inkSoft));line-height:1.5;margin:0;}
+.hs-grid .hs-more{margin-top:auto;padding-top:8px;font-size:13px;color:var(--inkMute);display:inline-flex;gap:6px;align-items:center;}
+.hs-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;}
+.hs-cols .hs-wide{grid-column:span 2;}
+.hs-cols h3{font-size:15px;font-weight:500;color:var(--ink);margin:0 0 12px;}
+.hs-list{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--hair);}
+.hs-list li{padding:12px 0;border-bottom:1px solid var(--hair);font-size:14px;line-height:1.5;color:var(--inkSoft);}
+.hs-list li b{display:block;font-weight:500;color:var(--ink);}
+.hs-rules{margin:24px 0 0;padding:16px 18px;border:1px solid var(--hairStrong);border-radius:2px;display:grid;gap:6px;max-width:72ch;}
+.hs-rules p{margin:0;font-size:14px;line-height:1.5;color:var(--inkSoft);}
+.hs-rules p b{color:var(--ink);font-weight:500;}
+.hs-quote{scroll-margin-top:96px;}
+.hs-home .hs-grid{grid-template-columns:repeat(5,minmax(0,1fr));}
+.hs-home .hs-grid .hs-card{padding:20px;}
+.hs-home .cm-link{white-space:nowrap;}
+@media (max-width:1000px){.hs-home .hs-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:900px){.hs-grid{grid-template-columns:1fr 1fr;}.hs-cols{grid-template-columns:1fr;gap:28px;}.hs-cols .hs-wide{grid-column:auto;}}
+@media (max-width:560px){.hs-grid,.hs-home .hs-grid{grid-template-columns:1fr;}.hs-grid .hs-card{padding:18px 16px;}}
+.hs-note{margin-top:16px;font-size:var(--vs-fs-small,14px);color:var(--vs-fg-3,var(--inkMute));line-height:1.5;max-width:64ch;}

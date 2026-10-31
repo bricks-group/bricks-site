@@ -27,6 +27,10 @@ export function isPublicPath(pathname: string): boolean {
   // Canada-wide contractor apply must work while marketing stays gated.
   // Form loads /legal/ic-agreement.txt; apply POST goes to dispatch-api (other host).
   if (pathname === '/photographers' || pathname.startsWith('/photographers/')) return true
+  // Vendor apply hub for every trade (same reasoning as /photographers).
+  if (pathname === '/work-with-bricks' || pathname.startsWith('/work-with-bricks/')) return true
+  // Home services quote requests work like /book: a client can ask for a quote while marketing stays gated.
+  if (['/services', '/staging', '/cleaning', '/inspections', '/measurement', '/repairs'].some((x) => pathname === x || pathname.startsWith(`${x}/`))) return true
   // /book pay step links Terms + Privacy; keep legal surface public while marketing stays gated.
   if (pathname === '/terms' || pathname.startsWith('/terms/')) return true
   if (pathname === '/privacy' || pathname.startsWith('/privacy/')) return true

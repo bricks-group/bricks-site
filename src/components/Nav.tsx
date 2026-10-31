@@ -153,6 +153,7 @@ export default function Nav() {
           <Link href="/reits" className={pathname === '/reits' ? 'active' : ''} onClick={() => setOpen(false)}>REITs</Link>
           <Link href="/commercial" className={pathname === '/commercial' ? 'active' : ''} onClick={() => setOpen(false)}>Commercial</Link>
           <Link href="/property-managers" className={pathname === '/property-managers' ? 'active' : ''} onClick={() => setOpen(false)}>Property managers</Link>
+          <Link href="/services" className={pathname === '/services' ? 'active' : ''} onClick={() => setOpen(false)}>Home services</Link>
           <Link href="/help" className={pathname.startsWith('/help') ? 'active' : ''} onClick={() => setOpen(false)}>Help</Link>
           <Link
             href="/contact"

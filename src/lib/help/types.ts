@@ -23,7 +23,7 @@ export type Block =
 export type CollectionSlug =
   | 'getting-started' | 'booking' | 'changes-refunds' | 'plans-billing'
   | 'agents' | 'teams' | 'brokerages' | 'builders' | 'property-managers' | 'commercial' | 'investors' | 'reits'
-  | 'integrations' | 'account-security' | 'photographers' | 'troubleshooting' | 'contact'
+  | 'home-services' | 'integrations' | 'account-security' | 'photographers' | 'troubleshooting' | 'contact'
 
 export type Collection = {
   slug: CollectionSlug

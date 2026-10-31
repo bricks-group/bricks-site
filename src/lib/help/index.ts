@@ -8,6 +8,7 @@ import { AGENTS, TEAMS, BROKERAGES, BUILDERS, PROPERTY_MANAGERS, COMMERCIAL, INV
 import { INTEGRATIONS } from './articles/integrations'
 import { ACCOUNT_SECURITY } from './articles/account-security'
 import { PHOTOGRAPHERS } from './articles/photographers'
+import { HOME_SERVICES, TRADE_VENDORS } from './articles/home-services'
 import { TROUBLESHOOTING } from './articles/troubleshooting'
 import { CONTACT } from './articles/contact'
 
@@ -30,9 +31,10 @@ const BY_COLLECTION: Record<CollectionSlug, Article[]> = {
   commercial: COMMERCIAL,
   investors: INVESTORS,
   reits: REITS,
+  'home-services': HOME_SERVICES,
   integrations: INTEGRATIONS,
   'account-security': ACCOUNT_SECURITY,
-  photographers: PHOTOGRAPHERS,
+  photographers: [...PHOTOGRAPHERS, ...TRADE_VENDORS],
   troubleshooting: TROUBLESHOOTING,
   contact: CONTACT,
 }

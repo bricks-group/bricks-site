@@ -1,0 +1,130 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { TRADES, TRADE_SLUGS, cleanQuoteRequest, quoteConfirmation, quoteInboxMessage } from './services.ts'
+import { QUOTE_INBOX, confirmationPayload, resendPayload, sendClientConfirmation } from './contact-mail.ts'
+import { articleBySlug } from './help/index.ts'
+import { isPublicPath } from '../middleware.ts'
+
+const read = (p: string) => readFileSync(new URL(p, import.meta.url), 'utf8')
+const PAGES = ['/services', ...TRADE_SLUGS.map((s) => `/${s}`)]
+const APPLY = ['/work-with-bricks', ...TRADE_SLUGS.map((s) => `/work-with-bricks/${s}`)]
+
+/** "survey" is allowed only as "legal survey", "legal land survey" or "Ontario Land Surveyor". */
+function strayingSurvey(text: string): boolean {
+  const cleaned = text.replace(/Ontario Land Surveyors?/g, '').replace(/legal (land )?surveys?/gi, '')
+  return /survey/i.test(cleaned)
+}
+
+describe('home services pages', () => {
+  it('lists every page in the sitemap, llms.txt and footer, and the hub in the nav drawer', () => {
+    const sitemap = read('../app/sitemap.ts')
+    const llms = read('../../public/llms.txt')
+    const footer = read('../components/Footer.tsx')
+    for (const p of [...PAGES, ...APPLY]) assert.ok(sitemap.includes(`path: '${p}'`), `sitemap misses ${p}`)
+    for (const p of [...PAGES, '/work-with-bricks']) {
+      assert.ok(llms.includes(`https://www.brxs.ca${p})`), `llms.txt misses ${p}`)
+      assert.ok(footer.includes(`href="${p}"`), `footer misses ${p}`)
+    }
+    assert.ok(read('../components/Nav.tsx').includes('href="/services"'))
+  })
+
+  it('keeps the pages and apply hub public while marketing is gated', () => {
+    for (const p of [...PAGES, ...APPLY, '/api/book/service-request']) assert.equal(isPublicPath(p), true, p)
+  })
+
+  it('has one orange primary button per page: the form submit', () => {
+    const trade = read('../components/home-services/TradePage.tsx')
+    const form = read('../components/home-services/ServiceQuoteForm.tsx')
+    const hub = read('../app/services/page.tsx')
+    const band = read('../components/home-services/HomeServicesBand.tsx')
+    const apply = read('../app/work-with-bricks/[trade]/page.tsx') + read('../app/work-with-bricks/TradeApplyForm.tsx')
+    const count = (s: string) => (s.match(/btn-primary/g) || []).length
+    assert.equal(count(trade), 0)
+    assert.equal(count(hub), 0)
+    assert.equal(count(band), 0)
+    assert.equal(count(read('../app/work-with-bricks/page.tsx')), 0)
+    assert.equal(count(form), 1)
+    assert.equal(count(apply), 1)
+    // Dark labels on orange, scoped to these pages.
+    assert.match(read('../components/home-services/home-services.css'), /\.hs \.btn\.btn-primary[^{]*\{color:#14110E!important;\}/)
+  })
+
+  it('never calls a measurement a survey, and refers legal surveys out', () => {
+    const m = TRADES.find((t) => t.slug === 'measurement')!
+    assert.ok(m.rules.some((r) => r.includes('Ontario Land Surveyor')))
+    assert.ok(!strayingSurvey(read('./services.ts')))
+    for (const slug of ['measurement-and-floor-area', 'how-quote-requests-work']) {
+      assert.ok(!strayingSurvey(JSON.stringify(articleBySlug(slug)!.body)), slug)
+    }
+    assert.ok(!strayingSurvey(read('../app/services/page.tsx')))
+  })
+
+  it('states the repairs exclusion and that inspections are Ontario only', () => {
+    const r = TRADES.find((t) => t.slug === 'repairs')!
+    assert.ok(r.rules.some((x) => /electrical, plumbing or gas/.test(x)))
+    const i = TRADES.find((t) => t.slug === 'inspections')!
+    assert.ok(i.rules.some((x) => /Ontario only/.test(x)))
+    assert.ok(r.apply.cgl && i.apply.cgl && r.apply.wsibOptional)
+    for (const t of TRADES.filter((x) => !['repairs', 'inspections'].includes(x.slug))) assert.equal(t.apply.cgl, false, t.slug)
+  })
+
+  it('keeps brand rules in customer copy', () => {
+    const all = read('./services.ts') + read('./help/articles/home-services.ts') + read('../app/services/page.tsx')
+    assert.ok(!/down the street/i.test(all))
+    assert.ok(!/Bricks OS|Vendor OS|\bGO\b/.test(all))
+    assert.ok(!/raphael|merchant|\bkam\b/i.test(all))
+    assert.ok(!/\$\d[\d,]*(?!M)/.test(read('./services.ts')), 'no public prices on home services')
+  })
+})
+
+describe('quote requests', () => {
+  const base = { trade: 'cleaning', clientType: 'property_manager', name: 'Pat Lee', email: 'pat@example.com', address: '1 King St W, Toronto' }
+
+  it('validates the trade, client type, contact and address', () => {
+    assert.equal(cleanQuoteRequest({ ...base, trade: 'survey' }).ok, false)
+    assert.equal(cleanQuoteRequest({ ...base, clientType: 'nope' }).ok, false)
+    assert.equal(cleanQuoteRequest({ ...base, email: 'bad' }).ok, false)
+    assert.equal(cleanQuoteRequest({ ...base, address: ' ' }).ok, false)
+    const ok = cleanQuoteRequest({ ...base, scope: 'not a real scope', details: 'x'.repeat(5000) })
+    assert.ok(ok.ok)
+    if (ok.ok) {
+      assert.equal(ok.q.scope, '')
+      assert.equal(ok.q.details.length, 2000)
+    }
+  })
+
+  it('sends a Bricks-only confirmation that books nothing', () => {
+    const r = cleanQuoteRequest({ ...base, trade: 'repairs' })
+    assert.ok(r.ok)
+    if (!r.ok) return
+    const c = quoteConfirmation(r.q)
+    assert.match(c.subject, /repairs request/i)
+    assert.match(c.text, /Nothing is booked or charged until you approve a quote/)
+    assert.match(c.text, /electrical, plumbing or gas/)
+    assert.ok(!c.text.includes('[handyman]'), 'no internal vendor type in client copy')
+    assert.ok(quoteInboxMessage(r.q).includes('[handyman]'))
+    const p = confirmationPayload({ to: 'pat@example.com', name: 'Pat', ...c })
+    assert.equal(p.from, 'Bricks <hello@brxs.ca>')
+    assert.deepEqual(p.reply_to, ['help@brxs.ca'])
+  })
+
+  it('skips the confirmation for smoke tests and without a key, and never throws', async () => {
+    const c = { to: 'a@b.co', name: 'A', subject: 's', text: 't' }
+    assert.deepEqual(await sendClientConfirmation(c, { smoke: true, env: { RESEND_API_KEY: 'k' } }), { sent: false, reason: 'smoke' })
+    assert.deepEqual(await sendClientConfirmation(c, { env: {} }), { sent: false, reason: 'no-key' })
+    const boom = (async () => { throw new Error('down') }) as unknown as typeof fetch
+    assert.deepEqual(await sendClientConfirmation(c, { env: { RESEND_API_KEY: 'k' }, fetchImpl: boom }), { sent: false, reason: 'exception' })
+    const ok = (async () => new Response('{}', { status: 200 })) as unknown as typeof fetch
+    assert.deepEqual(await sendClientConfirmation(c, { env: { RESEND_API_KEY: 'k' }, fetchImpl: ok }), { sent: true })
+  })
+})
+
+describe('quote request inbox', () => {
+  it('sends quote requests to help@brxs.ca through Resend', () => {
+    assert.equal(QUOTE_INBOX, 'help@brxs.ca')
+    const p = resendPayload({ name: 'A', email: 'a@example.com', message: 'x' }, 'test', 'Subject', QUOTE_INBOX)
+    assert.deepEqual(p.to, ['help@brxs.ca'])
+    assert.match(read('../app/api/book/service-request/route.ts'), /inbox: QUOTE_INBOX/)
+  })
+})

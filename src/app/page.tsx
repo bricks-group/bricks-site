@@ -14,6 +14,7 @@ import { PER_VISIT, fmt } from '@/lib/commercial'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 import { FeaturePic } from '@/components/features/FeatureShot'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
+import HomeServicesBand from '@/components/home-services/HomeServicesBand'
 
 const faqs = [
   {
@@ -173,6 +174,8 @@ export default function Home() {
       </section>
 
       <IntegrationsRow />
+
+      <HomeServicesBand />
 
       <section className="cm-sec rvl" aria-label="Pricing">
         <Head title="Start free. Book when you need to." link={{ href: '/pricing', label: 'See pricing' }} />

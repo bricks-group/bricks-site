@@ -46,8 +46,20 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-col">
+          <h4>Home services</h4>
+          <div className="foot-links">
+            <Link href="/services">All services</Link>
+            <Link href="/staging">Staging</Link>
+            <Link href="/cleaning">Cleaning</Link>
+            <Link href="/inspections">Inspections</Link>
+            <Link href="/measurement">Measurement</Link>
+            <Link href="/repairs">Repairs</Link>
+          </div>
+        </div>
+        <div className="foot-col">
           <h4>Company</h4>
           <div className="foot-links">
+            <Link href="/work-with-bricks">Work with Bricks</Link>
             <Link href="/photographers">Photographers</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>

@@ -256,7 +256,8 @@ section.block.block-flush{border-top:none;}
 footer{border-top:1px solid var(--hair);margin-top:var(--sec-half);}
 /* Footer shares the header container (1200 + --gutter) so logo, nav and footer columns line up */
 .foot-inner{max-width:var(--container);margin:0 auto;padding:48px var(--gutter) 32px;display:grid;
-  grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:32px 24px;}
+  grid-template-columns:1.5fr 1fr 1fr 1fr 1fr 1fr;gap:32px 24px;}
+@media (max-width:1100px) and (min-width:681px){.foot-inner{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .foot-inner .brand svg{height:18px;width:18px;display:block;}
 .foot-inner .wordmark{font-size:15px;}
 .foot-blurb{font-size:13.5px;color:var(--inkMute);margin-top:12px;max-width:280px;line-height:1.5;}
