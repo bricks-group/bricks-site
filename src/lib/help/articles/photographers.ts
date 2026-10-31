@@ -177,11 +177,19 @@ export const PHOTOGRAPHERS: Article[] = [
   },
   {
     slug: 'if-you-cant-get-in',
-    title: `If you can't get in`,
-    summary: `Report a no-show in the app so Bricks can review it.`,
+    title: `If the client doesn't show`,
+    summary: `If the client doesn't show, you're paid half the job's payout.`,
     body: [
-      p(`If you can't get into the home or the client doesn't show, open the job and choose **Report no-show**. Add a note about what happened, then **Confirm no-show**.`),
-      p(`Bricks reviews every no-show report. There's no no-show fee.`),
+      p(`If the client doesn't show, you're paid half the job's payout. HST is added as usual if you're registered.`),
+      p(`Before you report a no-show:`),
+      ol(
+        `Wait 20 minutes on site.`,
+        `Check in on the job in the app.`,
+        `Take a photo of the property.`,
+        `Try to call the client.`,
+      ),
+      p(`Then open the job, choose **Report no-show**, add a note about what happened and tap **Confirm no-show**.`),
+      p(`Bricks reviews the report within 2 business days. Once it's approved, the half payout is sent like any other payout. If you disagree with the decision, you can appeal within 7 days by emailing help@brxs.ca.`),
     ],
     related: ['on-the-day', 'payouts'],
   },

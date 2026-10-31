@@ -130,7 +130,7 @@ export default function PhotographersPage() {
               { title: 'No bidding', detail: 'Paid bookings are sent to you in the Bricks app based on specialty, tier and distance.' },
               { title: 'You set availability', detail: 'Accept or decline any job. Declining is never a breach of contract.' },
               { title: 'Automatic payouts', detail: 'Paid for every completed job. No invoices, no chasing clients.' },
-              { title: 'If you can’t get in', detail: 'If you can’t get in or the client doesn’t show, report it in the app and Bricks will review it.' },
+              { title: 'If the client doesn’t show', detail: 'If the client doesn’t show, you’re paid half the job’s payout. Wait 20 minutes on site, check in through the app, take a photo and try to call the client, then report it. Bricks reviews it within 2 business days, and you can appeal within 7 days at help@brxs.ca.' },
             ]}
           />
         </section>

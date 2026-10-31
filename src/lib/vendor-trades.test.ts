@@ -160,4 +160,13 @@ describe('no photographer no-show fee', () => {
     assert.ok(!/trip fee|no-show fee (is|will be) (added|paid)/i.test(all))
     assert.ok(!/\$60 (trip|no-show)/i.test(all))
   })
+
+  it('says a client no-show pays half the job payout, with the report rules', () => {
+    const vendorCopy = read('./help/articles/photographers.ts') + read('../app/photographers/page.tsx')
+    assert.ok(/If the client doesn.t show, you.re paid half the job.s payout\./.test(vendorCopy))
+    assert.ok(/20 minutes on site/.test(vendorCopy))
+    assert.ok(/2 business days/.test(vendorCopy))
+    assert.ok(/help@brxs\.ca/.test(vendorCopy))
+    assert.ok(!/down the street/i.test(vendorCopy))
+  })
 })
