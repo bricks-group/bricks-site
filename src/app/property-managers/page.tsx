@@ -28,7 +28,7 @@ export default function PropertyManagersPage() {
           </p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={signupUrl('property_manager')}>Create a property manager account</a>
-            <Link className="btn btn-sec" href="/book">Book unit media</Link>
+            <Link className="btn btn-sec" href="/book/property?for=property_manager&service=pm_listing_set">Book unit media</Link>
           </div>
           <HeroPlate sheet="P-00" title="Condo rooftop amenity, listing photo" note="From our gallery">
             <PlateImg src="/media/mf-20george-rooftop.jpg" alt="Rooftop amenity space of a condo building" />

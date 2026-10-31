@@ -164,3 +164,12 @@ test('plan copy: rentals are turnovers, watch is per property, site plans never 
   assert.match(pay, /not paid again on top/)
   assert.doesNotMatch(pay + svc + site, /down the street/i)
 })
+
+test('property pages book through the property checkout, not the agent listing flow', () => {
+  const pm = read('src/app/property-managers/page.tsx')
+  assert.doesNotMatch(pm, /href="\/book"/)
+  assert.match(pm, /href="\/book\/property\?for=property_manager/)
+  for (const p of ['src/app/commercial/page.tsx', 'src/app/investors/page.tsx', 'src/app/reits/page.tsx']) {
+    assert.doesNotMatch(read(p), /href="\/book"/, `${p} sends clients to the agent /book flow`)
+  }
+})
