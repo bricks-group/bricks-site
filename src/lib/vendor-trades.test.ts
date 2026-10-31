@@ -153,3 +153,11 @@ describe('quote request inbox', () => {
     assert.match(read('../app/api/book/service-request/route.ts'), /inbox: QUOTE_INBOX/)
   })
 })
+
+describe('no photographer no-show fee', () => {
+  it('has no trip fee in photographer copy or the IC text', () => {
+    const all = read('./help/articles/photographers.ts') + read('../app/photographers/page.tsx') + read('../../public/legal/ic-agreement.txt')
+    assert.ok(!/trip fee|no-show fee (is|will be) (added|paid)/i.test(all))
+    assert.ok(!/\$60 (trip|no-show)/i.test(all))
+  })
+})

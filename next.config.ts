@@ -46,6 +46,7 @@ const nextConfig: NextConfig = {
       // Home services share one page; the old per-trade addresses land on their section.
       ...['staging', 'cleaning', 'inspections', 'measurement', 'repairs'].map((t) => ({ source: `/${t}`, destination: `/services#${t}`, permanent: true })),
       { source: '/index.html', destination: '/', permanent: true },
+      { source: '/help/photographers/no-show-trip-fee', destination: '/help/photographers/if-you-cant-get-in', permanent: true },
       { source: '/support', destination: '/help', permanent: true },
       { source: '/faq', destination: '/help', permanent: true },
       { source: '/faqs', destination: '/help', permanent: true },

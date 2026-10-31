@@ -117,7 +117,7 @@ export const PHOTOGRAPHERS: Article[] = [
         `Bricks issues a T4A for earnings of $500 or more in a year.`,
       ),
     ],
-    related: ['tiers-and-pay', 'no-show-trip-fee'],
+    related: ['tiers-and-pay', 'if-you-cant-get-in'],
   },
   {
     slug: 'set-your-availability',
@@ -173,15 +173,15 @@ export const PHOTOGRAPHERS: Article[] = [
       ),
       p(`The app sends the homeowner a prep guide before the shoot.`),
     ],
-    related: ['taking-jobs', 'no-show-trip-fee', 'upload-and-naming'],
+    related: ['taking-jobs', 'if-you-cant-get-in', 'upload-and-naming'],
   },
   {
-    slug: 'no-show-trip-fee',
+    slug: 'if-you-cant-get-in',
     title: `If you can't get in`,
-    summary: `Report a no-show in the app. A $60 trip fee is added if the claim is approved.`,
+    summary: `Report a no-show in the app so Bricks can review it.`,
     body: [
       p(`If you can't get into the home or the client doesn't show, open the job and choose **Report no-show**. Add a note about what happened, then **Confirm no-show**.`),
-      p(`A $60 trip fee is added to your next payout if the claim is approved.`),
+      p(`Bricks reviews every no-show report. There's no no-show fee.`),
     ],
     related: ['on-the-day', 'payouts'],
   },

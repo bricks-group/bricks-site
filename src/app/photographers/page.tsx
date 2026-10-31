@@ -130,7 +130,7 @@ export default function PhotographersPage() {
               { title: 'No bidding', detail: 'Paid bookings are sent to you in the Bricks app based on specialty, tier and distance.' },
               { title: 'You set availability', detail: 'Accept or decline any job. Declining is never a breach of contract.' },
               { title: 'Automatic payouts', detail: 'Paid for every completed job. No invoices, no chasing clients.' },
-              { title: 'No-show protection', detail: 'If you can’t get in or the client doesn’t show, report it in the app and get the standard trip fee.' },
+              { title: 'If you can’t get in', detail: 'If you can’t get in or the client doesn’t show, report it in the app and Bricks will review it.' },
             ]}
           />
         </section>
