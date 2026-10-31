@@ -62,7 +62,7 @@ export default function WorkWithBricksPage() {
             </li>
           ))}
         </ul>
-        <p className="hs-note">Inspectors and repair vendors need a certificate of insurance showing at least $2M commercial general liability. Stagers, cleaning crews and measurers don&apos;t need one to apply.</p>
+        <p className="hs-note">$2M commercial general liability insurance is required for repair and inspection vendors. Stagers, cleaning crews and measurers don&apos;t need a certificate to apply.</p>
       </section>
     </div>
   )

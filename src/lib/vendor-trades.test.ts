@@ -89,6 +89,18 @@ describe('home services pages', () => {
     assert.ok(!/raphael|merchant|\bkam\b/i.test(all))
     assert.ok(!/\$\d[\d,]*(?!M)/.test(read('./services.ts')), 'no public prices on home services')
   })
+
+  it('follows the legal review: no trip fee, no background checks, no IC clause, $2M worded as a vendor requirement', () => {
+    const all = read('./services.ts') + read('./help/articles/home-services.ts') + read('../app/services/page.tsx')
+      + read('../app/work-with-bricks/page.tsx') + read('../app/work-with-bricks/TradeApplyForm.tsx') + read('../../public/llms.txt')
+    assert.ok(!/trip fee|callout fee|\$60/i.test(read('./services.ts') + read('./help/articles/home-services.ts') + read('../app/services/page.tsx')))
+    assert.ok(!/background check/i.test(all))
+    assert.ok(!/\bIC\b[^.\n]{0,40}(clause|schedule|v2)/i.test(all))
+    assert.ok(!/(carries|vendors carry|inspectors carry) at least \$2M/.test(all), 'word $2M as required for repair and inspection vendors')
+    for (const f of ['./services.ts', '../app/work-with-bricks/page.tsx', '../app/work-with-bricks/TradeApplyForm.tsx']) {
+      assert.match(read(f), /required for repair and inspection vendors/)
+    }
+  })
 })
 
 describe('quote requests', () => {

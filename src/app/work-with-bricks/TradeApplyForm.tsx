@@ -271,7 +271,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
       {needsCgl ? (
         <>
           <div className="fsec">Insurance</div>
-          <p className="hint-sm" style={{ margin: '0 0 12px' }}>{trade.apply.role} need at least $2M commercial general liability insurance. A person checks the certificate before you take jobs.</p>
+          <p className="hint-sm" style={{ margin: '0 0 12px' }}>$2M commercial general liability insurance is required for repair and inspection vendors. A person checks the certificate before you take jobs.</p>
           <div className="grid2">
             <div className="field"><label htmlFor="t_insurer">Insurer <span className="req">*</span></label><input id="t_insurer" name="insurer" required /></div>
             <div className="field"><label htmlFor="t_policy">Policy number</label><input id="t_policy" name="policy_number" /></div>

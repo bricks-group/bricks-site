@@ -126,14 +126,14 @@ export const TRADES: readonly Trade[] = [
     receive: [
       { title: 'A written quote', detail: 'Inspection type, timing and report format, before anything is booked.' },
       { title: 'A written report with photos', detail: 'Findings by system and area, kept with the property in your Bricks account.' },
-      { title: 'An insured inspector', detail: 'Every inspector carries at least $2M commercial general liability insurance.' },
+      { title: 'An insured inspector', detail: '$2M commercial general liability insurance is required for repair and inspection vendors.' },
     ],
     rules: ['Inspections are available in Ontario only.'],
     scopes: ['Pre-listing', 'Pre-purchase', 'Condo', 'New-build or pre-delivery', 'Building condition assessment', 'Not sure yet'],
     apply: {
       role: 'Home and building inspectors',
       lede: 'Inspectors working in Ontario who write their own reports.',
-      needs: ['A certificate of insurance showing at least $2M commercial general liability', 'Your professional designation or membership, if any', 'A sample report (shared later, with client details removed)'],
+      needs: ['A certificate of insurance showing $2M commercial general liability (required for repair and inspection vendors)', 'Your professional designation or membership, if any', 'A sample report (shared later, with client details removed)'],
       cgl: true,
       wsibOptional: false,
     },
@@ -201,7 +201,7 @@ export const TRADES: readonly Trade[] = [
     receive: [
       { title: 'A written estimate first', detail: 'Each item, with time and materials, approved by you before work starts.' },
       { title: 'Before and after photos', detail: 'For each item, kept with the property in your Bricks account.' },
-      { title: 'An insured repair vendor', detail: 'Every repair vendor carries at least $2M commercial general liability insurance.' },
+      { title: 'An insured repair vendor', detail: '$2M commercial general liability insurance is required for repair and inspection vendors.' },
     ],
     rules: [
       'Repairs don’t include electrical, plumbing or gas work. Hire a licensed electrician, plumber or gas contractor for those.',
@@ -211,7 +211,7 @@ export const TRADES: readonly Trade[] = [
     apply: {
       role: 'Handyman and repair vendors',
       lede: 'Handymen and small repair companies who work through lists cleanly and photograph their work.',
-      needs: ['A certificate of insurance showing at least $2M commercial general liability', 'WSIB clearance if you have workers (optional)', 'Your tools and vehicle'],
+      needs: ['A certificate of insurance showing $2M commercial general liability (required for repair and inspection vendors)', 'WSIB clearance if you have workers (optional)', 'Your tools and vehicle'],
       cgl: true,
       wsibOptional: true,
     },
