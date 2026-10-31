@@ -64,7 +64,7 @@ export default function PhotographersPage() {
               value: {
                 '@type': 'QuantitativeValue',
                 minValue: 55.15,
-                maxValue: 578.90,
+                maxValue: 192.35,
                 unitText: 'PACKAGE PAYOUT',
               },
             },
