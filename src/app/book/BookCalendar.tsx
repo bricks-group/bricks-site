@@ -29,23 +29,33 @@ export function BookCalendar({
   tz,
   area,
   maxMonthsAhead = 3,
+  min,
+  max,
+  checkAvailability = true,
 }: {
   value: string
   onChange: (ymd: string) => void
   tz: string
   area?: string
   maxMonthsAhead?: number
+  /** First / last selectable day (YYYY-MM-DD). Defaults: today / end of the last month shown. */
+  min?: string
+  max?: string
+  /** Read photographer availability (/api/book/days). Off for plan visits: the server checks the date. */
+  checkAvailability?: boolean
 }) {
   const today = localYmd(new Date(), tz)
-  const [month, setMonth] = useState((value || today).slice(0, 7))
+  const first = min && min > today ? min : today
+  const [month, setMonth] = useState((value || first).slice(0, 7))
   const [days, setDays] = useState<Record<string, DayInfo>>({})
   const [live, setLive] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(checkAvailability)
 
-  const minMonth = today.slice(0, 7)
-  const maxMonth = addMonths(minMonth, maxMonthsAhead - 1)
+  const minMonth = first.slice(0, 7)
+  const maxMonth = max ? max.slice(0, 7) : addMonths(today.slice(0, 7), maxMonthsAhead - 1)
 
   useEffect(() => {
+    if (!checkAvailability) return
     let alive = true
     setLoading(true)
     const qs = new URLSearchParams({ start: today, days: String(maxMonthsAhead * 31), tz })
@@ -64,7 +74,7 @@ export function BookCalendar({
     return () => {
       alive = false
     }
-  }, [today, tz, area, maxMonthsAhead])
+  }, [today, tz, area, maxMonthsAhead, checkAvailability])
 
   const cells = useMemo(() => {
     const first = ymdToUtc(month + '-01')
@@ -80,7 +90,7 @@ export function BookCalendar({
   }, [month])
 
   function state(ymd: string): 'past' | 'full' | 'open' {
-    if (ymd < today) return 'past'
+    if (ymd < first || (max && ymd > max)) return 'past'
     const info = days[ymd]
     if (live && info && !info.available) return info.reason === 'past' || ymd === today ? 'past' : 'full'
     return 'open'
@@ -121,11 +131,13 @@ export function BookCalendar({
           )
         })}
       </div>
-      <div className="bcal-legend">
-        <span><i className="dot open" /> Open</span>
-        <span><i className="dot full" /> Fully booked</span>
-        <span className="bcal-src">{loading ? 'Checking photographer calendars…' : live ? 'Live from photographer calendars' : 'Times confirmed on the next step'}</span>
-      </div>
+      {checkAvailability ? (
+        <div className="bcal-legend">
+          <span><i className="dot open" /> Open</span>
+          <span><i className="dot full" /> Fully booked</span>
+          <span className="bcal-src">{loading ? 'Checking photographer calendars…' : live ? 'Live from photographer calendars' : 'Times confirmed on the next step'}</span>
+        </div>
+      ) : null}
     </div>
   )
 }

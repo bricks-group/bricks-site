@@ -53,6 +53,9 @@ export function isPublicPath(pathname: string): boolean {
   // Help centre: support answers must be reachable while marketing stays gated.
   if (pathname === '/help' || pathname.startsWith('/help/')) return true
   if (pathname === '/api/help-feedback') return true
+  // Plan visit one-tap link from client emails (token-signed; no account).
+  if (pathname === '/visit' || pathname.startsWith('/visit/')) return true
+  if (pathname.startsWith('/api/visit/')) return true
   return false
 }
 

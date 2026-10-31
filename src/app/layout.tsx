@@ -36,7 +36,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get('x-bricks-pathname') || ''
-  const bare = pathname === '/gate'
+  // /gate and the plan visit one-tap page use their own focused chrome.
+  const bare = pathname === '/gate' || pathname === '/visit' || pathname.startsWith('/visit/')
 
   return (
     <html lang="en" suppressHydrationWarning>

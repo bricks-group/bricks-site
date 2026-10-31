@@ -23,6 +23,13 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/helpdesk'), false)
   })
 
+  it('opens the plan visit one-tap page and its proxy while marketing stays gated', () => {
+    assert.equal(isPublicPath('/visit/confirm'), true)
+    assert.equal(isPublicPath('/api/visit/confirm'), true)
+    assert.equal(isPublicPath('/api/visit/decline'), true)
+    assert.equal(isPublicPath('/visits'), false)
+  })
+
   it('opens book + booking APIs while marketing stays gated', () => {
     assert.equal(isPublicPath('/book'), true)
     assert.equal(isPublicPath('/book/'), true)
