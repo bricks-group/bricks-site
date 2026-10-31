@@ -7,7 +7,7 @@ import { articleBySlug } from './help/index.ts'
 import { isPublicPath } from '../middleware.ts'
 
 const read = (p: string) => readFileSync(new URL(p, import.meta.url), 'utf8')
-const PAGES = ['/services', ...TRADE_SLUGS.map((s) => `/${s}`)]
+const PAGES = ['/services']
 const APPLY = ['/work-with-bricks', ...TRADE_SLUGS.map((s) => `/work-with-bricks/${s}`)]
 
 /** "survey" is allowed only as "legal survey", "legal land survey" or "Ontario Land Surveyor". */
@@ -22,11 +22,24 @@ describe('home services pages', () => {
     const llms = read('../../public/llms.txt')
     const footer = read('../components/Footer.tsx')
     for (const p of [...PAGES, ...APPLY]) assert.ok(sitemap.includes(`path: '${p}'`), `sitemap misses ${p}`)
-    for (const p of [...PAGES, '/work-with-bricks']) {
+    for (const p of [...PAGES, '/work-with-bricks', ...TRADE_SLUGS.map((s) => `/services#${s}`)]) {
       assert.ok(llms.includes(`https://www.brxs.ca${p})`), `llms.txt misses ${p}`)
       assert.ok(footer.includes(`href="${p}"`), `footer misses ${p}`)
     }
+    for (const s of TRADE_SLUGS) assert.ok(!sitemap.includes(`path: '/${s}'`), `sitemap still lists /${s}`)
     assert.ok(read('../components/Nav.tsx').includes('href="/services"'))
+  })
+
+  it('puts every trade on the one /services page and redirects the old trade pages to their section', () => {
+    const hub = read('../app/services/page.tsx')
+    assert.match(hub, /TRADES\.map\(\(t\) => <TradeSection/)
+    assert.match(hub, /id=\{`quote-\$\{t\.slug\}`\}/)
+    assert.match(read('../components/home-services/TradePage.tsx'), /id=\{trade\.slug\}/)
+    const cfg = read('../../next.config.ts')
+    assert.match(cfg, /\['staging', 'cleaning', 'inspections', 'measurement', 'repairs'\]\.map\(\(t\) => \(\{ source: `\/\$\{t\}`, destination: `\/services#\$\{t\}`, permanent: true \}\)\)/)
+    assert.deepEqual([...TRADE_SLUGS].sort(), ['cleaning', 'inspections', 'measurement', 'repairs', 'staging'])
+    for (const s of TRADE_SLUGS) assert.throws(() => read(`../app/${s}/page.tsx`), `/${s} page should be gone`)
+    assert.match(read('../components/home-services/ServiceQuoteForm.tsx'), /hashchange/)
   })
 
   it('keeps the pages and apply hub public while marketing is gated', () => {

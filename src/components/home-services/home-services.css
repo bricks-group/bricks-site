@@ -27,3 +27,15 @@
 @media (max-width:900px){.hs-grid{grid-template-columns:1fr 1fr;}.hs-cols{grid-template-columns:1fr;gap:28px;}.hs-cols .hs-wide{grid-column:auto;}}
 @media (max-width:560px){.hs-grid,.hs-home .hs-grid{grid-template-columns:1fr;}.hs-grid .hs-card{padding:18px 16px;}}
 .hs-note{margin-top:16px;font-size:var(--vs-fs-small,14px);color:var(--vs-fg-3,var(--inkMute));line-height:1.5;max-width:64ch;}
+.hs-trade{scroll-margin-top:84px;}
+.hs-trade-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:32px;align-items:start;}
+.hs-trade-grid h2{font-size:clamp(24px,2.4vw,30px);font-weight:500;letter-spacing:-.02em;color:var(--ink);margin:14px 0 10px;}
+.hs-trade-grid h3{font-size:15px;font-weight:500;color:var(--ink);margin:0 0 12px;}
+.hs-trade-sub{font-size:15px;line-height:1.55;color:var(--inkSoft);margin:0;max-width:52ch;}
+.hs-trade-intro .hs-rules{margin-top:16px;}
+.hs-for{font-size:14px;line-height:1.5;color:var(--inkSoft);margin:16px 0 0;}
+.hs-for b{font-weight:500;color:var(--ink);}
+.hs-jump{display:inline-flex;gap:6px;align-items:center;margin-top:18px;font-size:14px;color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--hairStrong);}
+.hs-jump:hover{color:var(--brickDeep);}
+.hs-anchor{display:block;position:relative;top:-96px;height:0;visibility:hidden;}
+@media (max-width:900px){.hs-trade-grid{grid-template-columns:1fr;gap:24px;}}

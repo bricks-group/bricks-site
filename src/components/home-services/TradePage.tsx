@@ -1,18 +1,19 @@
 import Link from 'next/link'
-import RevealObserver from '@/components/RevealObserver'
-import { Head, Arrow } from '@/components/calm/Calm'
+import { Arrow } from '@/components/calm/Calm'
 import { TRADES, type Trade } from '@/lib/services'
 import ServiceIcon from './ServiceIcon'
-import ServiceQuoteForm from './ServiceQuoteForm'
 import './home-services.css'
 
-/** Grid of the five home services, each linking to its page. */
-export function TradeGrid({ exclude, label = 'Home services' }: { exclude?: string; label?: string }) {
+/** Where a trade lives: its section on the single /services page. */
+export const tradeHref = (slug: string) => `/services#${slug}`
+
+/** Grid of the five home services, each linking to its section on /services. */
+export function TradeGrid({ label = 'Home services' }: { label?: string }) {
   return (
     <ul className="hs-grid" aria-label={label}>
-      {TRADES.filter((t) => t.slug !== exclude).map((t) => (
+      {TRADES.map((t) => (
         <li key={t.slug}>
-          <Link className="hs-card" href={`/${t.slug}`}>
+          <Link className="hs-card" href={tradeHref(t.slug)}>
             <ServiceIcon name={t.icon} />
             <h3>{t.name}</h3>
             <p>{t.short}</p>
@@ -32,68 +33,26 @@ function List({ items }: { items: { title: string; detail: string }[] }) {
   )
 }
 
-/** One trade page: what Bricks handles, who it's for, what you get back, and the quote form. One orange button: the form's submit. */
-export default function TradePage({ trade }: { trade: Trade }) {
+/** One trade's section on /services. No buttons: the only orange button on the page is the form submit. */
+export function TradeSection({ trade }: { trade: Trade }) {
   return (
-    <div className="hs">
-      <RevealObserver />
-      <section className="hero">
-        <div className="wrap">
-          <p className="eyebrow"><Link href="/services">Home services</Link> · {trade.name}</p>
-          <h1>{trade.h1}</h1>
-          <p className="sub">{trade.sub}</p>
-          <div className="cta-row">
-            <a className="btn btn-sec" href="#quote">Request a quote</a>
-            <Link className="btn btn-sec" href="/services">All home services</Link>
-          </div>
+    <section className="cm-sec rvl hs-trade" id={trade.slug} aria-labelledby={`${trade.slug}-h`}>
+      <div className="hs-trade-grid">
+        <div className="hs-trade-intro">
+          <ServiceIcon name={trade.icon} />
+          <h2 id={`${trade.slug}-h`}>{trade.name}</h2>
+          <p className="hs-trade-sub">{trade.sub}</p>
+          {trade.rules.length ? (
+            <div className="hs-rules" role="note">
+              {trade.rules.map((r) => <p key={r}><b>Good to know.</b> {r}</p>)}
+            </div>
+          ) : null}
+          <p className="hs-for"><b>For</b> {trade.forWhom.map((f) => f.title.toLowerCase()).join(', ')}.</p>
+          <a className="hs-jump" href={`#quote-${trade.slug}`}>Request a {trade.name.toLowerCase()} quote <Arrow /></a>
         </div>
-      </section>
-
-      <section className="cm-sec rvl" aria-label="What Bricks handles">
-        <Head title="What Bricks handles." />
-        <ul className="hs-grid">
-          {trade.handles.map((x) => (
-            <li key={x.title}>
-              <div className="hs-card">
-                <ServiceIcon name={trade.icon} />
-                <h3>{x.title}</h3>
-                <p>{x.detail}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        {trade.rules.length ? (
-          <div className="hs-rules" role="note">
-            {trade.rules.map((r) => <p key={r}><b>Good to know.</b> {r}</p>)}
-          </div>
-        ) : null}
-      </section>
-
-      <section className="cm-sec rvl" aria-label="Who it's for and what you get">
-        <div className="hs-cols">
-          <div><h3>Who it&apos;s for</h3><List items={trade.forWhom} /></div>
-          <div className="hs-wide"><h3>What you get back inside Bricks</h3><List items={trade.receive} /></div>
-        </div>
-      </section>
-
-      <section className="cm-sec hs-quote" id="quote" aria-label="Request a quote">
-        <Head title="Request a quote." lede="No prices are listed yet. A person at Bricks quotes every job in writing, and nothing is booked until you approve it." />
-        <ServiceQuoteForm trade={trade.slug} />
-      </section>
-
-      <section className="cm-sec rvl" aria-label="Other home services">
-        <Head title="Other home services." link={{ href: '/services', label: 'All home services' }} />
-        <TradeGrid exclude={trade.slug} label="Other home services" />
-      </section>
-    </div>
+        <div><h3>What Bricks handles</h3><List items={trade.handles} /></div>
+        <div><h3>What you get back inside Bricks</h3><List items={trade.receive} /></div>
+      </div>
+    </section>
   )
-}
-
-export function tradeMetadata(t: Trade) {
-  return {
-    title: t.title,
-    description: t.description,
-    alternates: { canonical: `/${t.slug}` },
-    openGraph: { title: t.title, description: t.description },
-  }
 }

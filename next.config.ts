@@ -43,6 +43,8 @@ const nextConfig: NextConfig = {
     return [
       // booking.brxs.ca is the old booking address; send every path to the booking page.
       { source: '/:path*', has: [{ type: 'host', value: 'booking.brxs.ca' }], destination: 'https://www.brxs.ca/book', permanent: false },
+      // Home services share one page; the old per-trade addresses land on their section.
+      ...['staging', 'cleaning', 'inspections', 'measurement', 'repairs'].map((t) => ({ source: `/${t}`, destination: `/services#${t}`, permanent: true })),
       { source: '/index.html', destination: '/', permanent: true },
       { source: '/support', destination: '/help', permanent: true },
       { source: '/faq', destination: '/help', permanent: true },

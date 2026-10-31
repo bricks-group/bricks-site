@@ -16,7 +16,7 @@ export const HOME_SERVICES: Article[] = [
     body: [
       p(`Staging, cleaning, inspections, measurement and repairs are booked through a quote request, not online checkout. Every property is different, so a person at Bricks reviews each request and quotes it in writing.`),
       ol(
-        `Open the service page, for example [Cleaning and turnovers](/cleaning), or [all home services](/services).`,
+        `Open [home services](/services). Every service has its own section, for example [Cleaning and turnovers](/services#cleaning), and one quote form at the bottom of the page covers all of them.`,
         `Fill in the form: who it's for, the address, the type of job and any details such as rooms, access or dates.`,
         `Send it. We email you a copy right away.`,
         `A person at Bricks reviews it and may reply with a few questions.`,
@@ -40,7 +40,7 @@ export const HOME_SERVICES: Article[] = [
     title: `Home staging`,
     summary: `Staging vacant or lived-in homes before photos and showings, by quote.`,
     body: [
-      p(`Bricks arranges staging for vacant and occupied homes, model suites and units between tenants. [Request a quote](/staging) with the address and the rooms you want staged.`),
+      p(`Bricks arranges staging for vacant and occupied homes, model suites and units between tenants. [Request a quote](/services#quote-staging) with the address and the rooms you want staged.`),
       h(`What's included`),
       ul(
         `A consult or a plan from your photos and floor plan.`,
@@ -59,7 +59,7 @@ export const HOME_SERVICES: Article[] = [
     title: `Cleaning and turnovers`,
     summary: `Pre-listing deep cleans, move-in and move-out cleans, rental turnovers and post-construction cleans.`,
     body: [
-      p(`[Request a quote](/cleaning) for a clean before listing photos, between owners or between tenants.`),
+      p(`[Request a quote](/services#quote-cleaning) for a clean before listing photos, between owners or between tenants.`),
       h(`Types of clean`),
       ul(
         `**Pre-listing deep clean:** kitchens, baths, floors, glass and fixtures, timed before the photo visit.`,
@@ -77,7 +77,7 @@ export const HOME_SERVICES: Article[] = [
     title: `Home and building inspections`,
     summary: `Pre-listing, pre-purchase, condo and new-build inspections in Ontario, with a written report.`,
     body: [
-      p(`[Request a quote](/inspections) for an inspection of a home, condo or building. Inspections are available in Ontario only.`),
+      p(`[Request a quote](/services#quote-inspections) for an inspection of a home, condo or building. Inspections are available in Ontario only.`),
       h(`Types of inspection`),
       ul(
         `Pre-listing inspections, to find issues before the home goes on the market.`,
@@ -98,7 +98,7 @@ export const HOME_SERVICES: Article[] = [
     title: `Measurement and floor area`,
     summary: `Measured interior floor area and floor plans for listings and leasing. Not a legal survey.`,
     body: [
-      p(`[Request a quote](/measurement) for measured interior floor area and a floor plan of each level.`),
+      p(`[Request a quote](/services#quote-measurement) for measured interior floor area and a floor plan of each level.`),
       h(`What's measured`),
       ul(
         `Room-by-room and total interior floor area for a listing or lease.`,
@@ -117,7 +117,7 @@ export const HOME_SERVICES: Article[] = [
     title: `Handyman and repairs`,
     summary: `Small repairs and deficiency lists, with a written estimate first. No electrical, plumbing or gas work.`,
     body: [
-      p(`[Request a quote](/repairs) for the small jobs that hold up a listing or a turnover.`),
+      p(`[Request a quote](/services#quote-repairs) for the small jobs that hold up a listing or a turnover.`),
       h(`What's included`),
       ul(
         `Drywall patches and paint touch-ups.`,

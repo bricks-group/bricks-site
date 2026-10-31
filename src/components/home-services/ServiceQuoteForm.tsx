@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics'
 import { PROPERTY_TYPES, QUOTE_CLIENT_TYPES, TIMING_OPTIONS, TRADES, tradeBySlug, type TradeSlug } from '@/lib/services'
 
@@ -34,6 +34,19 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
   const [sent, setSent] = useState<string | null>(null)
+
+  // One form for every trade: #staging (old /staging links redirect here) or
+  // #quote-staging (the "Request a quote" link in each section) picks the trade.
+  useEffect(() => {
+    const pick = () => {
+      const h = decodeURIComponent(window.location.hash.replace(/^#(quote-)?/, ''))
+      const x = tradeBySlug(h)
+      if (x) setSlug(x.slug)
+    }
+    pick()
+    window.addEventListener('hashchange', pick)
+    return () => window.removeEventListener('hashchange', pick)
+  }, [])
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

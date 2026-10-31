@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { Head, Rows } from '@/components/calm/Calm'
-import { TradeGrid } from '@/components/home-services/TradePage'
+import { TradeGrid, TradeSection } from '@/components/home-services/TradePage'
+import { TRADES } from '@/lib/services'
 import ServiceQuoteForm from '@/components/home-services/ServiceQuoteForm'
 import '@/components/home-services/home-services.css'
 
@@ -34,9 +35,11 @@ export default function ServicesPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Services">
-        <Head title="Five services, one system." />
+        <Head title="Five services, one system." lede="Pick a service to read what it covers, or go straight to the quote form." />
         <TradeGrid />
       </section>
+
+      {TRADES.map((t) => <TradeSection key={t.slug} trade={t} />)}
 
       <section className="cm-sec rvl" aria-label="How it works">
         <Head title="How it works." />
@@ -52,7 +55,8 @@ export default function ServicesPage() {
       </section>
 
       <section className="cm-sec hs-quote" id="quote" aria-label="Request a quote">
-        <Head title="Request a quote." lede="Pick a service and tell us about the property. No prices are listed yet." />
+        {TRADES.map((t) => <span key={t.slug} id={`quote-${t.slug}`} className="hs-anchor" aria-hidden="true" />)}
+        <Head title="Request a quote." lede="Pick a service and tell us about the property. No prices are listed yet. A person at Bricks quotes every job in writing, and nothing is booked until you approve it." />
         <ServiceQuoteForm />
       </section>
     </div>

@@ -30,7 +30,7 @@ export function isPublicPath(pathname: string): boolean {
   // Vendor apply hub for every trade (same reasoning as /photographers).
   if (pathname === '/work-with-bricks' || pathname.startsWith('/work-with-bricks/')) return true
   // Home services quote requests work like /book: a client can ask for a quote while marketing stays gated.
-  if (['/services', '/staging', '/cleaning', '/inspections', '/measurement', '/repairs'].some((x) => pathname === x || pathname.startsWith(`${x}/`))) return true
+  if (['/services'].some((x) => pathname === x || pathname.startsWith(`${x}/`))) return true
   // /book pay step links Terms + Privacy; keep legal surface public while marketing stays gated.
   if (pathname === '/terms' || pathname.startsWith('/terms/')) return true
   if (pathname === '/privacy' || pathname.startsWith('/privacy/')) return true

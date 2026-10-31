@@ -49,11 +49,11 @@ export default function Footer() {
           <h4>Home services</h4>
           <div className="foot-links">
             <Link href="/services">All services</Link>
-            <Link href="/staging">Staging</Link>
-            <Link href="/cleaning">Cleaning</Link>
-            <Link href="/inspections">Inspections</Link>
-            <Link href="/measurement">Measurement</Link>
-            <Link href="/repairs">Repairs</Link>
+            <Link href="/services#staging">Staging</Link>
+            <Link href="/services#cleaning">Cleaning</Link>
+            <Link href="/services#inspections">Inspections</Link>
+            <Link href="/services#measurement">Measurement</Link>
+            <Link href="/services#repairs">Repairs</Link>
           </div>
         </div>
         <div className="foot-col">
