@@ -24,14 +24,14 @@ export default function PrivacyPage() {
           <span className="badge">Legal</span>
           <h1>Privacy Policy</h1>
           <p className="sub">How Bricks Group collects, uses, and discloses personal information for brxs.ca, the Bricks apps, and related booking and photographer-apply flows.</p>
-          <div className="updated">Effective · 27 August 2026 · Last updated · 11 October 2026</div>
+          <div className="updated">Effective · 27 August 2026 · Last updated · 30 October 2026</div>
         </div>
       </section>
 
       <div className="legal-body">
         <section className="block">
           <h2>BRICKS PRIVACY POLICY</h2>
-          <p>Effective: August 27, 2026<br />Last updated: October 11, 2026<br />Organization: Bricks Group<br />Privacy contact: <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></p>
+          <p>Effective: August 27, 2026<br />Last updated: October 30, 2026<br />Organization: Bricks Group<br />Privacy contact: <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></p>
           <p>This policy explains how Bricks Group collects, uses, and discloses personal information for brxs.ca, the Bricks apps, and related booking and photographer-apply flows, under PIPEDA and applicable Ontario privacy rules.</p>
 
           <h3>1. What we collect</h3>
@@ -48,7 +48,7 @@ export default function PrivacyPage() {
           <ul>
             <li>Account and profile: name, email, phone, and (for photographers) photo, skills, service area, availability, and drone certificate details you enter.</li>
             <li>Photos, scans, and files you choose to upload: listing photos, 360° and floor plan captures, documents you scan or attach to a listing file, and portfolio samples.</li>
-            <li>Location (photographer accounts only, optional): while the app is open, to show how far you are from a job, to read the compass during 360° capture, and to record your position if you report that an agent did not show up. We do not track your location in the background.</li>
+            <li>Location (photographer accounts only): required to check in to a job, and used only to confirm you’re at the property. We store your position, its accuracy and your distance from the property when you check in, and use them if you report that the client did not show up. While the app is open, we also read the compass during 360° capture. We do not track your location in the background.</li>
             <li>Device push token: if you allow notifications, a token from Apple or Google that lets us send job and listing updates. Turning notifications off in your phone&rsquo;s settings stops them.</li>
             <li>Saved data on your phone: your job list or listing files are stored on the device so you can read them without signal. Signing out removes them.</li>
           </ul>

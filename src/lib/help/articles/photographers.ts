@@ -155,7 +155,7 @@ export const PHOTOGRAPHERS: Article[] = [
     body: [
       ol(
         `Before you leave, check the light for the facade and pack your kit.`,
-        `When you arrive, choose **Check in** on the job.`,
+        `When you arrive, choose **Check in** on the job. Location is required to check in. It's only used to confirm you're at the property, so check in when you're there.`,
         `Prep each room: clear counters, toilet seats down, beds made, cords hidden. Don't move heavy furniture or handle valuables.`,
         `Shoot the stills and clips on the job's list.`,
         `Reset the home the way you found it.`,
@@ -183,12 +183,12 @@ export const PHOTOGRAPHERS: Article[] = [
       p(`If the client doesn't show, you're paid half the job's payout. HST is added as usual if you're registered.`),
       p(`Before you report a no-show:`),
       ol(
-        `Wait 20 minutes on site.`,
-        `Check in on the job in the app.`,
-        `Take a photo of the property.`,
-        `Try to call the client.`,
+        `Check in on the job in the app when you're at the property. Location is required to check in, and it's only used to confirm you're there.`,
+        `Wait 20 minutes on site. The wait starts at check-in or the booked start, whichever is later. The app counts it down.`,
+        `Take a photo of the property in the app.`,
+        `Tap **Call client** in the app to try to reach them.`,
       ),
-      p(`Then open the job, choose **Report no-show**, add a note about what happened and tap **Confirm no-show**.`),
+      p(`**Report no-show** turns on once all four are done, and the app tells you what's still missing. Add a note about what happened and tap **Confirm no-show**. Report it within 90 minutes of when your wait started. After that, email help@brxs.ca.`),
       p(`Bricks reviews the report within 2 business days. Once it's approved, the half payout is sent like any other payout. If you disagree with the decision, you can appeal within 7 days by emailing help@brxs.ca.`),
     ],
     related: ['on-the-day', 'payouts'],

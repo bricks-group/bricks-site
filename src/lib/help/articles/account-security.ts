@@ -65,7 +65,7 @@ export const ACCOUNT_SECURITY: Article[] = [
         `Booking details: contact information, the property address and notes.`,
         `Payments: handled by Stripe. We never store full card numbers.`,
         `Photographer applications and profiles.`,
-        `In the apps: your profile, uploads, a push token, and for photographers, optional location while the app is open.`,
+        `In the apps: your profile, uploads, a push token, and for photographers, location when you check in to a job. It's required to check in and only used to confirm you're at the property.`,
       ),
       h(`Who processes it`),
       table(['Service', 'Purpose', 'Where'], [
