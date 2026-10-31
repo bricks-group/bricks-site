@@ -108,7 +108,7 @@ export default function InvestorsPage() {
           ]}
         />
         <p className="cm-note">{PLAN_NOTE}</p>
-        <p className="cm-note">Portfolio watch for properties you hold: a dated aerial and roof check compared with the last visit, $195 per property a month billed $585 a quarter, or $450 a month for a monthly visit. CAD plus tax, in your investor account. Acquisition captures are $1,250, or $2,250 mapped, <Link href="/book/property?for=investor">booked online</Link>. Your account compares the baseline with the latest visit and builds an insurance claim pack from the records either side of a date of loss.</p>
+        <p className="cm-note">Portfolio watch for properties you hold: a dated aerial and roof check compared with the last visit, $195 a month per property, billed $585 a quarter, or $450 a month per property for a monthly visit. CAD plus tax, in your investor account. Acquisition captures are $1,250, or $2,250 mapped, <Link href="/book/property?for=investor">booked online</Link>. Your account compares the baseline with the latest visit and builds an insurance claim pack from the records either side of a date of loss.</p>
       </section>
 
       <Close title="Need a site captured first?" href="/book/site" label="Book a site visit" primary={false} />

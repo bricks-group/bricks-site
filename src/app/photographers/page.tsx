@@ -163,6 +163,7 @@ export default function PhotographersPage() {
             items={[
               { title: 'Progress visit', detail: 'Drone photos and video of the site.', value: '$185' },
               { title: 'Mapped capture', detail: 'A mapping flight for an orthomosaic and 3D model. Unlocked after a test mission.', value: '$735' },
+              { title: 'Mapped plan visit', detail: 'A repeat mapping flight on a monthly, every-2-weeks or weekly site plan.', value: '$685 / $635 / $475' },
               { title: 'Mapping setup', detail: 'Ground control for the first mapped flight on a site.', value: '+$315' },
             ]}
           />

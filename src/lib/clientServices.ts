@@ -21,7 +21,7 @@ const PM: ClientService[] = [
   { key: 'pm_condition_report', name: 'Condition report', detail: 'Dated room-by-room photos at move-in or move-out, compared with the last report.' },
   { key: 'pm_turnover', name: 'Turnover bundle', detail: 'Move-out condition report and new listing set in one visit.' },
   { key: 'pm_building_set', name: 'Building set', detail: 'Exterior, aerials and shared spaces for the whole building.' },
-  { key: 'pm_rentals_plan', name: 'Rentals plan', detail: 'A set number of unit visits each month, for 5, 12 or 25 units.' },
+  { key: 'pm_rentals_plan', name: 'Rentals plan', detail: '5, 12 or 25 turnovers a month, as credits you can spend on any rentals visit across your buildings.' },
 ]
 const CRE: ClientService[] = [
   { key: 'cre_leasing', name: 'Leasing set', detail: 'Photos, a measured floor plan and a Virtual Visit of the space. Priced by size.' },
@@ -31,7 +31,7 @@ const CRE: ClientService[] = [
 const INV: ClientService[] = [
   { key: 'inv_acquisition', name: 'Acquisition capture', detail: 'A dated baseline of the property when you buy: photos, aerials and a report.' },
   { key: 'inv_acquisition_mapped', name: 'Mapped acquisition capture', detail: 'The baseline plus a measured map and 3D model of the site.' },
-  { key: 'inv_watch', name: 'Portfolio watch', detail: 'A dated check of each property every quarter, compared with the last one.' },
+  { key: 'inv_watch', name: 'Portfolio watch', detail: 'A dated check of each property every quarter or every month, compared with the last one.' },
 ]
 const SITE: ClientService = { key: 'site_progress', name: 'Site progress', detail: 'Drone visits, maps, models, reports and comparisons for anything under construction.' }
 

@@ -333,9 +333,11 @@ export const PROPERTY_MANAGERS: Article[] = [
   {
     slug: 'rentals-plans',
     title: `Monthly rentals plans`,
-    summary: `Rentals 5, 12 or 25 turnovers a month, chosen in your account.`,
+    summary: `Rentals 5, 12 or 25 turnovers a month, as credits for any rentals visit.`,
     body: [
       table(['Plan', 'Turnovers a month', 'Price a month'], [['Rentals 5', '5', '$1,325'], ['Rentals 12', '12', '$2,990'], ['Rentals 25', '25', '$5,875']]),
+      p(`Each paid month adds that many turnover credits. Spend them on any rentals visit, at any of your buildings: a turnover is 1 credit, a building set 3. Unused credits roll over one month, up to one month's worth.`),
+      p(`Nothing is booked without your confirmation. If you cancel, the plan runs to the end of the month you've paid for.`),
       p(`CAD plus tax. Choose a plan in your [property manager account](${signupUrl('property_manager')}).`),
     ],
     related: ['property-manager-services'],
@@ -405,8 +407,9 @@ export const INVESTORS: Article[] = [
     summary: `A dated aerial and roof check, compared with the last visit.`,
     body: [
       p(`Portfolio watch is for properties you hold: a dated aerial and roof check, compared with the last visit.`),
-      table(['Cadence', 'Price'], [['Quarterly', '$195 per property a month, billed $585 a quarter'], ['Monthly', '$450 a month for a monthly visit']]),
+      table(['Cadence', 'Price'], [['Quarterly', '$195 a month per property, billed $585 a quarter'], ['Monthly', '$450 a month per property, one visit a month']]),
       p(`CAD plus tax, set up in your [investor account](${signupUrl('investor')}).`),
+      p(`Each paid period adds a visit. Bricks emails a proposed date and you confirm it in one tap, or turn on auto-confirm. Nothing is booked until it's confirmed. If you cancel, the plan runs to the end of the period you've paid for.`),
     ],
     related: ['acquisition-capture', 'insurance-claim-pack'],
   },

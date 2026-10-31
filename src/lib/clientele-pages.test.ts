@@ -135,7 +135,7 @@ test('approved client prices (2026-10-25) match the app; one-off visits are book
     assert.doesNotMatch(read(`src/app/${p}/page.tsx`), /by request|confirm the price/, p)
   }
   assert.match(read('src/app/commercial/page.tsx'), /\$1,590 a month/)
-  assert.match(read('src/app/investors/page.tsx'), /\$195 per property a month billed \$585 a quarter, or \$450 a month/)
+  assert.match(read('src/app/investors/page.tsx'), /\$195 a month per property, billed \$585 a quarter, or \$450 a month per property/)
   assert.match(read('src/app/teams/page.tsx'), /\$79 per agent a month, or \$790 a year/)
   const llms = read('public/llms.txt')
   assert.match(llms, /booked and paid online at \/book\/property/)
@@ -150,4 +150,17 @@ test('blog posts and the blog layout carry no founder name or founder stats', ()
   for (const p of ['src/components/BlogPostLayout.tsx', 'src/app/blog/page.tsx', ...posts]) {
     assert.doesNotMatch(read(p), /Raphael|Merchant|CoStar|14,000|founder|down the street/i, p)
   }
+})
+
+test('plan copy: rentals are turnovers, watch is per property, site plans never auto-book and cancel at period end', () => {
+  const svc = read('src/lib/clientServices.ts')
+  assert.match(svc, /5, 12 or 25 turnovers a month/)
+  assert.doesNotMatch(svc, /25 units/)
+  const site = read('src/app/book/site/SiteBookingForm.tsx')
+  assert.match(site, /confirm in one tap/)
+  assert.match(site, /end of the month you&apos;ve paid for/)
+  const pay = read('src/lib/help/articles/photographers.ts')
+  assert.match(pay, /\$685 \/ \$635 \/ \$475/)
+  assert.match(pay, /not paid again on top/)
+  assert.doesNotMatch(pay + svc + site, /down the street/i)
 })

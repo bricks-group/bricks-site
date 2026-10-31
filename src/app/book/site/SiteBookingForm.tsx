@@ -188,7 +188,7 @@ export default function SiteBookingForm() {
                 <button key={c.key} type="button" aria-pressed={cadence === c.key} onClick={() => setCadence(c.key)}>{c.label}</button>
               ))}
             </div>
-            <p className="hint">Billed monthly per site, month to month. To change or cancel, email help@brxs.ca.</p>
+            <p className="hint">Billed monthly per site, month to month. We book your first visit for the date you pick. After that, we email each date for you to confirm in one tap, and nothing is booked until you do. To change or cancel, email help@brxs.ca. Cancelling takes effect at the end of the month you&apos;ve paid for.</p>
           </fieldset>
         )}
 
