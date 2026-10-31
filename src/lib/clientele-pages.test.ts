@@ -173,3 +173,13 @@ test('property pages book through the property checkout, not the agent listing f
     assert.doesNotMatch(read(p), /href="\/book"/, `${p} sends clients to the agent /book flow`)
   }
 })
+
+test('pricing lists property-account visit prices from the checkout table, and builders can create an account', () => {
+  const pricing = read('src/app/pricing/page.tsx')
+  assert.match(pricing, /aria-label="Property accounts"/)
+  for (const href of ['/property-managers', '/commercial', '/investors', '/reits']) {
+    assert.ok(pricing.includes(`href: '${href}'`), `pricing links ${href}`)
+  }
+  assert.match(pricing, /ONE_OFFS_FOR\[kind\]/, 'from-prices come from the /book/property table, not typed figures')
+  assert.match(read('src/app/builders/page.tsx'), /signupUrl\('builder'\)/)
+})

@@ -5,6 +5,7 @@ import RevealObserver from '@/components/RevealObserver'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
 import { OFFICE_PLANS, OFFICE_INCLUDES, OFFICE_MONTHLY_NOTE, SOFTWARE_BLURB, SOFTWARE_PLANS, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
+import { ONE_OFFS, ONE_OFFS_FOR, money } from '@/lib/propertyCheckout'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import {
   COVERAGE_LINE,
@@ -35,6 +36,9 @@ export const metadata: Metadata = {
 }
 
 const BANDS = ['Small', 'Mid', 'Large', 'XL'] as const
+
+/** Lowest one-off visit price for a property client type, from the same table /book/property charges. */
+const fromFor = (kind: keyof typeof ONE_OFFS_FOR) => money(Math.min(...ONE_OFFS_FOR[kind].map((k) => ONE_OFFS[k].cents)))
 
 /** Offers whose prices this page renders (packages + priced rows of the à la carte table). */
 const PRICING_PAGE_OFFERS: readonly MediaOfferId[] = [
@@ -140,6 +144,18 @@ export default function PricingPage() {
             { title: PER_VISIT[0].name, detail: PER_VISIT[0].what, value: `${fmt(PER_VISIT[0].price)} ${PER_VISIT[0].unit}` },
             { title: PER_VISIT[1].name, detail: PER_VISIT[1].what, value: `${fmt(PER_VISIT[1].price)} ${PER_VISIT[1].unit}` },
             { title: 'Monthly plans', detail: 'Visual or mapped, monthly to weekly.', value: `from ${fmt(PLANS[0].rows[0].price)} / site / mo` },
+          ]}
+        />
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Property accounts">
+        <Head title="Property accounts." lede="Visits priced per unit, space or property, booked and paid online. CAD, before HST." />
+        <Rows
+          items={[
+            { title: 'Property managers', detail: 'Listing sets, condition reports and turnovers, per unit.', value: `from ${fromFor('property_manager')}`, href: '/property-managers' },
+            { title: 'Commercial', detail: 'Leasing sets priced by space size, and aerial sets.', value: `from ${fromFor('commercial')}`, href: '/commercial' },
+            { title: 'Investors', detail: 'Acquisition captures, with or without a mapped site.', value: `from ${fromFor('investor')}`, href: '/investors' },
+            { title: 'REITs', detail: 'Every visit above, 10% off at 10 or more properties and 15% off at 25.', href: '/reits' },
           ]}
         />
       </section>

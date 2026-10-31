@@ -9,6 +9,7 @@ import { PER_VISIT, PLANS, PLAN_NOTE, fmt } from '@/lib/commercial'
 import { Head, Rows, Stats } from '@/components/calm/Calm'
 import { FeatureList } from '@/components/features/Feature'
 import { HUB } from '@/lib/site-progress-features'
+import { signupUrl } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: 'Site progress software and drone visits for builders & developers | Bricks',
@@ -90,7 +91,7 @@ export default function BuildersPage() {
           </p>
           <div className="cta-row">
             <Link className="btn btn-night btn-primary" href="/book/site">Book a site visit</Link>
-            <a className="btn btn-sec" href="#hub">See the builder hub</a>
+            <a className="btn btn-sec" href={signupUrl('builder')}>Create a builder account</a>
           </div>
           <div className="bx-hero-img">
             <SitePic name="tower-cranes" eager widths={[640, 960, 1280, 1600, 2000]} alt="Drone view of a high-rise under construction, with tower cranes" sizes="(max-width:900px) 100vw, 1100px" />
