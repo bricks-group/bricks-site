@@ -178,6 +178,8 @@ export default function PhotographersPage() {
           </div>
           <div className="faq">
             <div className="qa"><h4>How long does review take?</h4><p>We review every application by hand, mostly on portfolio quality. Expect a reply within 1–3 business days.</p></div>
+            <div className="qa"><h4>What happens after I&apos;m approved?</h4><p>You get an email with a short setup checklist in the Bricks app: sign in, connect Stripe payouts, confirm your availability, read the vendor guide and accept the current agreement. Jobs start coming to you once it&apos;s done. There&apos;s no test shoot.</p></div>
+            <div className="qa"><h4>What do I need to apply?</h4><p>8–15 real estate photos you shot and edited yourself, and your resume (PDF, DOC or DOCX).</p></div>
             <div className="qa"><h4>What equipment do I need?</h4><p>A full-frame camera or equivalent, fast primes, and a DJI or Autel drone for aerial work. List your kit in the form.</p></div>
             <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes. You need Transport Canada Advanced RPAS certification, and we check it before sending you drone work.</p></div>
             <div className="qa"><h4>Do I need insurance?</h4><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies.</p></div>

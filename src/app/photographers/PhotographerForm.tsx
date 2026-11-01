@@ -54,6 +54,22 @@ function imageType(f: File): string {
 }
 function fileKey(f: File) { return `${f.name}:${f.size}:${f.lastModified}` }
 
+// Resume goes to private storage with the samples (Dispatch kind "resume").
+const RESUME_MAX_BYTES = 10 * 1024 * 1024
+const RESUME_TYPES: Record<string, string> = {
+  pdf: 'application/pdf',
+  doc: 'application/msword',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+}
+function resumeType(f: File): string {
+  if (f.type && Object.values(RESUME_TYPES).includes(f.type)) return f.type
+  const ext = (f.name.split('.').pop() || '').toLowerCase()
+  return RESUME_TYPES[ext] || ''
+}
+type Kind = 'sample' | 'rpas_cert' | 'resume'
+type Upload = { f: File; kind: Kind }
+function uploadType(u: Upload) { return u.kind === 'resume' ? resumeType(u.f) : imageType(u.f) }
+
 const DAYS = [
   { v: 'mon', l: 'Mon' }, { v: 'tue', l: 'Tue' }, { v: 'wed', l: 'Wed' }, { v: 'thu', l: 'Thu' }, { v: 'fri', l: 'Fri' },
 ]
@@ -79,7 +95,7 @@ export default function PhotographerForm() {
   const [showWhy, setShowWhy] = useState(false)
   const acceptMsg = showWhy ? lockedReason(APPLY_DOCS, legal.read) : ''
   const [err, setErr] = useState('')
-  const [resumeWarning, setResumeWarning] = useState('')
+  const [realEstate, setRealEstate] = useState(false)
   const [cityChoice, setCityChoice] = useState('')
   const [rpas, setRpas] = useState('')
   const [samples, setSamples] = useState<File[]>([])
@@ -112,75 +128,45 @@ export default function PhotographerForm() {
     if (problems.length) setErr(problems.join('. ') + '.')
   }
 
-  async function uploadEvidence(files: File[], cert: File | null): Promise<{ session: string; samplePaths: string[]; certPath: string | null }> {
+  async function uploadEvidence(files: File[], cert: File | null, resume: File): Promise<{ session: string; samplePaths: string[]; certPath: string | null; resumePath: string }> {
+    const all: Upload[] = [
+      ...files.map((f) => ({ f, kind: 'sample' as Kind })),
+      ...(cert ? [{ f: cert, kind: 'rpas_cert' as Kind }] : []),
+      { f: resume, kind: 'resume' as Kind },
+    ]
+    const result = (paths: Record<string, string>, session: string) => ({
+      session,
+      samplePaths: files.map((f) => paths[fileKey(f)]),
+      certPath: cert ? paths[fileKey(cert)] : null,
+      resumePath: paths[fileKey(resume)],
+    })
     // Re-use earlier uploads on a resubmit (same files, same session).
-    const all = cert ? [...files, cert] : files
-    if (uploaded && all.every((f) => uploaded.paths[fileKey(f)])) {
-      return {
-        session: uploaded.session,
-        samplePaths: files.map((f) => uploaded.paths[fileKey(f)]),
-        certPath: cert ? uploaded.paths[fileKey(cert)] : null,
-      }
-    }
+    if (uploaded && all.every((u) => uploaded.paths[fileKey(u.f)])) return result(uploaded.paths, uploaded.session)
     setProgress('Preparing upload…')
     const r = await fetch(DISPATCH_API + '/sample-uploads', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        files: all.map((f, i) => ({ name: f.name, type: imageType(f), size: f.size, kind: cert && i === all.length - 1 ? 'rpas_cert' : 'sample' })),
-      }),
+      body: JSON.stringify({ files: all.map((u) => ({ name: u.f.name, type: uploadType(u), size: u.f.size, kind: u.kind })) }),
     })
     const data = await r.json().catch(() => ({}))
-    if (!r.ok) throw new Error(data.detail || 'Photo upload is unavailable right now. Please try again.')
+    if (!r.ok) throw new Error(data.detail || 'Upload is unavailable right now. Please try again.')
     const uploads: { path: string; signed_url: string }[] = data.uploads || []
     let done = 0
     const paths: Record<string, string> = {}
-    const queue = all.map((f, i) => ({ f, u: uploads[i] }))
+    const queue = all.map((u, i) => ({ ...u, u: uploads[i] }))
     async function worker() {
       while (queue.length) {
         const item = queue.shift()
         if (!item) return
-        const put = await fetch(item.u.signed_url, { method: 'PUT', headers: { 'Content-Type': imageType(item.f) }, body: item.f })
+        const put = await fetch(item.u.signed_url, { method: 'PUT', headers: { 'Content-Type': uploadType(item) }, body: item.f })
         if (!put.ok) throw new Error(`${item.f.name} didn't upload. Please try again.`)
         paths[fileKey(item.f)] = item.u.path
         done += 1
-        setProgress(`Uploading photos ${done}/${all.length}…`)
+        setProgress(`Uploading files ${done}/${all.length}…`)
       }
     }
     await Promise.all([worker(), worker(), worker()])
     setUploaded({ session: data.session, paths })
-    return {
-      session: data.session,
-      samplePaths: files.map((f) => paths[fileKey(f)]),
-      certPath: cert ? paths[fileKey(cert)] : null,
-    }
-  }
-
-  const RESUME_MAX_BYTES = 8 * 1024 * 1024 // 8MB
-  const RESUME_EXTS = ['.pdf', '.doc', '.docx']
-
-  function fileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onload = () => resolve((reader.result as string).split(',')[1] || '')
-      reader.onerror = reject
-      reader.readAsDataURL(file)
-    })
-  }
-
-  async function uploadResume(memberId: string, applicationToken: string, file: File) {
-    const base64 = await fileToBase64(file)
-    const fd = new FormData()
-    fd.append('member_id', memberId)
-    fd.append('doc_type', 'resume')
-    fd.append('filename', file.name)
-    fd.append('file_data', base64)
-    // Server _check_application_token requires the token from /apply (Form field token or application_token).
-    if (applicationToken) {
-      fd.append('token', applicationToken)
-      fd.append('application_token', applicationToken)
-    }
-    const r = await fetch(DISPATCH_API + '/documents', { method: 'POST', body: fd })
-    if (!r.ok) throw new Error('resume upload failed')
+    return result(paths, data.session)
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -221,6 +207,7 @@ export default function PhotographerForm() {
     if (samples.length < MIN_SAMPLES || samples.length > MAX_SAMPLES) {
       setErr(`Upload ${MIN_SAMPLES}–${MAX_SAMPLES} sample real estate photos (you have ${samples.length}).`); return
     }
+    if (!realEstate) { setErr('Confirm your samples are real estate photos of homes you shot.'); return }
 
     const droneChecked = specialties.includes('drone')
     const rpasLevel = droneChecked ? rpas : ''
@@ -263,16 +250,9 @@ export default function PhotographerForm() {
     const sourceDetail = sourceVal === 'other' || sourceVal.startsWith('referral_') ? (sourceDetailRaw || null) : null
 
     const resumeFile = (fd.get('resume') as File) || null
-    if (!resumeFile || resumeFile.size === 0) {
-      setErr('Please attach your resume (PDF, DOC, or DOCX).'); return
-    }
-    const lower = resumeFile.name.toLowerCase()
-    if (!RESUME_EXTS.some((ext) => lower.endsWith(ext))) {
-      setErr('Resume must be a PDF, DOC, or DOCX file.'); return
-    }
-    if (resumeFile.size > RESUME_MAX_BYTES) {
-      setErr('Resume file is too large (8MB max).'); return
-    }
+    if (!resumeFile || resumeFile.size === 0) { setErr('Attach your resume (PDF, DOC or DOCX).'); return }
+    if (!resumeType(resumeFile)) { setErr('Your resume must be a PDF, DOC or DOCX file.'); return }
+    if (resumeFile.size > RESUME_MAX_BYTES) { setErr('Your resume must be under 10 MB.'); return }
     if (!legal.done) { setShowWhy(true); setErr('Read both documents and accept the agreement before submitting.'); return }
     if (!accepted) { setErr('Please read and accept the IC Agreement before submitting.'); return }
 
@@ -302,16 +282,19 @@ export default function PhotographerForm() {
     setSubmitting(true)
     let ev
     try {
-      ev = await uploadEvidence(samples, droneClaimed ? certFile : null)
+      ev = await uploadEvidence(samples, droneClaimed ? certFile : null, resumeFile)
     } catch (upErr) {
       setProgress('')
-      setErr((upErr as Error).message || 'Your photos didn\'t upload. Please try again.'); setSubmitting(false); return
+      setErr((upErr as Error).message || 'Your files didn\'t upload. Please try again.'); setSubmitting(false); return
     }
     const payload = {
       ...basePayload,
       sample_upload_session: ev.session,
       sample_paths: ev.samplePaths,
       rpas_cert_path: ev.certPath,
+      samples_are_real_estate: true,
+      resume_path: ev.resumePath,
+      resume_name: resumeFile.name,
     }
     setProgress('Sending application…')
     try {
@@ -325,13 +308,6 @@ export default function PhotographerForm() {
         setErr(detail); setProgress(''); setSubmitting(false); return
       }
 
-      if (resumeFile && resumeFile.size > 0 && data.member_id) {
-        try {
-          await uploadResume(data.member_id, data.application_token || '', resumeFile)
-        } catch {
-          setResumeWarning('Application received, but your resume didn’t upload — email it to help@brxs.ca if you’d like it reviewed.')
-        }
-      }
       setSubmitted(true)
     } catch {
       setErr('Network error. Please check your connection and try again.'); setProgress(''); setSubmitting(false)
@@ -344,7 +320,6 @@ export default function PhotographerForm() {
         <div className="check">✓</div>
         <h3>Application received.</h3>
         <p>We&apos;ll review your photos and be in touch within 3 business days. Check your email — including spam.</p>
-        {resumeWarning && <p style={{ color: 'var(--brickDeep)', marginTop: 10 }}>{resumeWarning}</p>}
       </div>
     )
   }
@@ -458,7 +433,7 @@ export default function PhotographerForm() {
       <div className="field"><label htmlFor="f_samples">Sample real estate photos <span className="req">*</span> <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>({MIN_SAMPLES}–{MAX_SAMPLES} photos)</span></label>
         <input id="f_samples" type="file" multiple accept="image/jpeg,image/png,image/webp,image/heic,.heic,.heif"
           onChange={(e) => { addSamples(e.target.files); e.target.value = '' }} />
-        <span className="hint-sm">Your own finished edits: interiors (kitchen, living, bedrooms, bathrooms) plus a front exterior. JPEG, PNG, WebP or HEIC, 15 MB each. We look at verticals, exposure, window views, colour and composition.</span>
+        <span className="hint-sm">Real estate only: your own finished edits of homes you shot, with interiors (kitchen, living, bedrooms, bathrooms) plus a front exterior. No portraits, events or landscapes. JPEG, PNG, WebP or HEIC, 15 MB each. We look at verticals, exposure, window views, colour and composition.</span>
         <div className="sample-count" aria-live="polite">{samples.length} of {MIN_SAMPLES}–{MAX_SAMPLES} added</div>
         {samples.length > 0 && (
           <div className="sample-grid">
@@ -471,13 +446,17 @@ export default function PhotographerForm() {
           </div>
         )}
       </div>
+      <label className="check-item" style={{ marginBottom: 16 }}>
+        <input type="checkbox" id="f_real_estate" checked={realEstate} onChange={(e) => setRealEstate(e.target.checked)} data-testid="apply-real-estate" />
+        <span>These are real estate photos of homes I shot and edited myself.</span>
+      </label>
       <div className="grid2">
         <div className="field"><label>Portfolio link <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label><input name="portfolio1" type="url" placeholder="https://yourportfolio.com" /></div>
         <div className="field"><label>Second link <span style={{ fontWeight: 400, letterSpacing: 0, textTransform: 'none' }}>(optional)</span></label><input name="portfolio2" type="url" placeholder="https://instagram.com/yourhandle" /></div>
       </div>
       <div className="field"><label>Resume <span className="req">*</span></label>
-        <input name="resume" type="file" accept=".pdf,.doc,.docx" required />
-        <span className="hint-sm">PDF, DOC, or DOCX — 8MB max. Required.</span>
+        <input name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required data-testid="apply-resume" />
+        <span className="hint-sm">PDF, DOC or DOCX, up to 10 MB. Kept private and seen only by the Bricks team.</span>
       </div>
 
       <div className="fsec">Availability</div>
