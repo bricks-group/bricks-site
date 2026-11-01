@@ -206,3 +206,15 @@ test('home page shows property-account starting prices from the checkout table',
     assert.ok(home.includes(`href="${href}"`), `home links ${href}`)
   }
 })
+
+test('/book/site plans are self-serve to manage or cancel', () => {
+  const s = read('src/app/book/site/SiteBookingForm.tsx')
+  assert.match(s, /Manage or cancel plan/)
+  assert.match(s, /\/api\/book\/site-manage/)
+  assert.match(s, /setItem\(PLAN_KEY, mode === 'plan' \? '1' : '0'\)/)
+  assert.doesNotMatch(s, /To change or cancel, email help@brxs\.ca/)
+  const r = read('src/app/api/book/site-manage/route.ts')
+  assert.match(r, /https:\/\/api\.brxs\.ca\/api\/book\/site-manage/)
+  assert.match(r, /X-Internal-Api-Key/)
+  assert.match(r, /startsWith\('https:\/\/billing\.stripe\.com\/'\)/)
+})

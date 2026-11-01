@@ -9,6 +9,7 @@ import { signupUrl } from '@/lib/brand'
 
 /** Booking email kept across the Stripe redirect so the success state can offer the matching builder account. */
 const EMAIL_KEY = 'bricks-site-booking-email'
+const PLAN_KEY = 'bricks-site-booking-plan'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type TrackProps = Record<string, string | number | boolean | null | undefined>
@@ -75,6 +76,9 @@ export default function SiteBookingForm() {
   const [busy, setBusy] = useState(false)
   const [paid, setPaid] = useState<'checking' | 'ok' | 'fail' | null>(null)
   const [bookedEmail, setBookedEmail] = useState('')
+  const [isPlan, setIsPlan] = useState(false)
+  const [manageMsg, setManageMsg] = useState('')
+  const [managing, setManaging] = useState(false)
 
   useEffect(() => {
     const sid = params.get('session_id') || ''
@@ -87,6 +91,7 @@ export default function SiteBookingForm() {
     try {
       const e = (sessionStorage.getItem(EMAIL_KEY) || '').trim()
       if (EMAIL_RE.test(e) && e.length <= 254) setBookedEmail(e)
+      setIsPlan(sessionStorage.getItem(PLAN_KEY) === '1')
     } catch { /* storage blocked: the link still opens sign-up */ }
   }, [params])
 
@@ -128,13 +133,31 @@ export default function SiteBookingForm() {
       const r = await fetch('/api/book/commercial-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string }
       if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email help@brxs.ca.'); return }
-      try { sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || '')) } catch { /* best-effort */ }
+      try {
+        sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || ''))
+        sessionStorage.setItem(PLAN_KEY, mode === 'plan' ? '1' : '0')
+      } catch { /* best-effort */ }
       evt('site_booking_checkout', { mode, service: String(payload.service_key || payload.plan_key) })
       window.location.href = j.url
     } catch {
       setMsg('Network error. Please email help@brxs.ca.')
     } finally {
       setBusy(false)
+    }
+  }
+
+  async function managePlan() {
+    setManaging(true)
+    setManageMsg('')
+    try {
+      const r = await fetch('/api/book/site-manage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ session_id: params.get('session_id') || '' }) })
+      const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string }
+      if (!r.ok || !j.ok || !j.url) { setManageMsg(j.error || 'Billing is unavailable. Email help@brxs.ca.'); return }
+      window.location.href = j.url
+    } catch {
+      setManageMsg('Network error. Email help@brxs.ca.')
+    } finally {
+      setManaging(false)
     }
   }
 
@@ -151,6 +174,14 @@ export default function SiteBookingForm() {
               <p className="hint">Create your builder account{bookedEmail ? <> with <b>{bookedEmail}</b></> : ' with the email you booked with'}. Visits booked with that email show up in your hub, with the reports built from them.</p>
               <a className="btn btn-sec" href={signupUrl('builder', bookedEmail || undefined)}>Create or open your builder account</a>
             </div>
+            {isPlan && (
+              <div className="claim">
+                <h3>Manage your plan</h3>
+                <p className="hint">Change your card, see invoices or cancel. Cancelling ends the plan after the month you&apos;ve paid for. Bookmark this page to come back.</p>
+                <button type="button" className="btn btn-sec" onClick={managePlan} disabled={managing}>{managing ? 'Opening…' : 'Manage or cancel plan'}</button>
+                {manageMsg && <p className="hint" role="alert">{manageMsg}</p>}
+              </div>
+            )}
           </>)}
           {paid === 'fail' && <p>We could not confirm the payment yet. If you were charged, your booking is safe; email help@brxs.ca and we will confirm it.</p>}
         </div>
@@ -188,7 +219,7 @@ export default function SiteBookingForm() {
                 <button key={c.key} type="button" aria-pressed={cadence === c.key} onClick={() => setCadence(c.key)}>{c.label}</button>
               ))}
             </div>
-            <p className="hint">Billed monthly per site, month to month. We book your first visit for the date you pick. After that, we email each date for you to confirm in one tap, and nothing is booked until you do. To change or cancel, email help@brxs.ca. Cancelling takes effect at the end of the month you&apos;ve paid for.</p>
+            <p className="hint">Billed monthly per site, month to month. We book your first visit for the date you pick. After that, we email each date for you to confirm in one tap, and nothing is booked until you do. Change your card or cancel any time from your booking confirmation, or email help@brxs.ca. Cancelling takes effect at the end of the month you&apos;ve paid for.</p>
           </fieldset>
         )}
 
