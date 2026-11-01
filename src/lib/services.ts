@@ -28,12 +28,20 @@ export type Trade = {
   scopes: string[]
   /** Vendor side: who should apply, and what they need. */
   apply: { role: string; lede: string; needs: string[]; cgl: boolean; wsibOptional: boolean }
+  /**
+   * Off = paused for clients and applicants: hidden from /services, the quote form,
+   * /work-with-bricks and help. The entry and its code stay. Mirrors Dispatch
+   * trade_registry.json `enabled` (Dispatch also blocks applying and assignment).
+   */
+  enabled: boolean
 }
 
-export const TRADES: readonly Trade[] = [
+/** Every trade, including paused ones. Use TRADES for anything a client or applicant sees. */
+export const ALL_TRADES: readonly Trade[] = [
   {
     slug: 'staging',
     vendorType: 'stager',
+    enabled: true,
     name: 'Home staging',
     short: 'Furnished, styled rooms before photos and showings.',
     icon: 'staging',
@@ -70,6 +78,7 @@ export const TRADES: readonly Trade[] = [
   {
     slug: 'cleaning',
     vendorType: 'cleaner',
+    enabled: true,
     name: 'Cleaning and turnovers',
     short: 'Deep cleans before listing, move-outs and rental turnovers.',
     icon: 'cleaning',
@@ -106,6 +115,7 @@ export const TRADES: readonly Trade[] = [
   {
     slug: 'inspections',
     vendorType: 'inspector',
+    enabled: true,
     name: 'Home and building inspections',
     short: 'Pre-listing, pre-purchase, condo and new-build inspections in Ontario.',
     icon: 'inspection',
@@ -142,6 +152,7 @@ export const TRADES: readonly Trade[] = [
   {
     slug: 'measurement',
     vendorType: 'measurer',
+    enabled: true,
     name: 'Measurement and floor area',
     short: 'Measured interior floor area and floor plans.',
     icon: 'measure',
@@ -180,6 +191,8 @@ export const TRADES: readonly Trade[] = [
   {
     slug: 'repairs',
     vendorType: 'handyman',
+    // Paused for launch (2026-11-01). Set to true to turn repairs back on.
+    enabled: false,
     name: 'Handyman and repairs',
     short: 'Small repairs and deficiency lists before listing or between tenants.',
     icon: 'repairs',
@@ -218,6 +231,19 @@ export const TRADES: readonly Trade[] = [
     },
   },
 ]
+
+/** Trades on sale. Paused trades (enabled: false) are left out everywhere clients or applicants look. */
+export const TRADES: readonly Trade[] = ALL_TRADES.filter((t) => t.enabled)
+
+export function isTradeEnabled(slug: TradeSlug): boolean {
+  return TRADES.some((t) => t.slug === slug)
+}
+
+/** "staging, cleaning, inspections and measurement" from the trades on sale. */
+export function tradeListPhrase(): string {
+  const n = TRADES.map((t) => t.slug)
+  return n.length < 2 ? n.join('') : `${n.slice(0, -1).join(', ')} and ${n[n.length - 1]}`
+}
 
 export const TRADE_SLUGS = TRADES.map((t) => t.slug)
 

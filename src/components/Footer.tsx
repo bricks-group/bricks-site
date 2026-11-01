@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { isTradeEnabled } from '@/lib/services'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { LEGAL_NAME, SOCIAL_PROFILES } from '@/lib/schema'
 import BrandMark from '@/components/BrandMark'
@@ -53,7 +54,7 @@ export default function Footer() {
             <Link href="/services#cleaning">Cleaning</Link>
             <Link href="/services#inspections">Inspections</Link>
             <Link href="/services#measurement">Measurement</Link>
-            <Link href="/services#repairs">Repairs</Link>
+            {isTradeEnabled('repairs') && <Link href="/services#repairs">Repairs</Link>}
           </div>
         </div>
         <div className="foot-col">

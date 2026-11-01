@@ -3,12 +3,14 @@ import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { Head, Rows } from '@/components/calm/Calm'
 import { TradeGrid, TradeSection } from '@/components/home-services/TradePage'
-import { TRADES } from '@/lib/services'
+import { TRADES, isTradeEnabled, tradeListPhrase } from '@/lib/services'
 import ServiceQuoteForm from '@/components/home-services/ServiceQuoteForm'
 import '@/components/home-services/home-services.css'
 
 const title = 'Home services | Bricks'
-const description = 'Staging, cleaning and turnovers, inspections, measurement and repairs, requested inside Bricks and quoted in writing.'
+const LIST = tradeListPhrase()
+const NUM = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][TRADES.length] || String(TRADES.length)
+const description = `${LIST.charAt(0).toUpperCase()}${LIST.slice(1)}, requested inside Bricks and quoted in writing.`
 
 export const metadata: Metadata = {
   title,
@@ -25,7 +27,7 @@ export default function ServicesPage() {
         <div className="wrap">
           <h1>Book home services inside Bricks.</h1>
           <p className="sub">
-            Staging, cleaning, inspections, measurement and repairs, requested from the same system as your listings and units. A person at Bricks quotes every job in writing, and the results are kept with the property.
+            {LIST.charAt(0).toUpperCase() + LIST.slice(1)}, requested from the same system as your listings and units. A person at Bricks quotes every job in writing, and the results are kept with the property.
           </p>
           <div className="cta-row">
             <a className="btn btn-sec" href="#quote">Request a quote</a>
@@ -35,7 +37,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Services">
-        <Head title="Five services, one system." lede="Pick a service to read what it covers, or go straight to the quote form." />
+        <Head title={`${NUM} services, one system.`} lede="Pick a service to read what it covers, or go straight to the quote form." />
         <TradeGrid />
       </section>
 
@@ -51,7 +53,7 @@ export default function ServicesPage() {
             { title: 'Get the results inside Bricks', detail: 'Reports, photos, checklists and measurements are kept with the property in your Bricks account.' },
           ]}
         />
-        <p className="hs-note">Inspections are available in Ontario only. Repairs don’t include electrical, plumbing or gas work. A measurement is not a legal survey.</p>
+        <p className="hs-note">Inspections are available in Ontario only.{isTradeEnabled('repairs') ? ' Repairs don’t include electrical, plumbing or gas work.' : ''} A measurement is not a legal survey.</p>
       </section>
 
       <section className="cm-sec hs-quote" id="quote" aria-label="Request a quote">

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { ARTICLES, COLLECTIONS, articleHref, collectionHref } from '@/lib/help'
+import { isTradeEnabled } from '@/lib/services'
 
 const BASE = 'https://www.brxs.ca'
 
@@ -12,7 +13,7 @@ const PUBLIC_NOW = [
   { path: '/work-with-bricks/cleaning', changeFrequency: 'monthly' as const, priority: 0.5 },
   { path: '/work-with-bricks/inspections', changeFrequency: 'monthly' as const, priority: 0.5 },
   { path: '/work-with-bricks/measurement', changeFrequency: 'monthly' as const, priority: 0.5 },
-  { path: '/work-with-bricks/repairs', changeFrequency: 'monthly' as const, priority: 0.5 },
+  ...(isTradeEnabled('repairs') ? [{ path: '/work-with-bricks/repairs', changeFrequency: 'monthly' as const, priority: 0.5 }] : []),
   { path: '/services', changeFrequency: 'monthly' as const, priority: 0.75 },
   { path: '/real-estate-photography', changeFrequency: 'weekly' as const, priority: 0.95 },
   { path: '/media', changeFrequency: 'weekly' as const, priority: 0.9 },

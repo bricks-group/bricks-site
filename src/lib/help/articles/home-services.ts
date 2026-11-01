@@ -1,13 +1,26 @@
 import type { Article } from '../types'
 import { p, h, ul, ol, note, flow, qa } from '../blocks'
 import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
+import { isTradeEnabled, tradeListPhrase } from '@/lib/services'
+
+/** Repairs is paused for launch (services.ts `enabled: false`); its articles and mentions come back with the flag. */
+const REPAIRS = isTradeEnabled('repairs')
+const REPAIR_SLUGS = new Set(['handyman-and-repairs', 'repairs-scope-for-vendors'])
+const LIST = tradeListPhrase()
+const LIST_CAP = LIST.charAt(0).toUpperCase() + LIST.slice(1)
+const CGL_WHO = REPAIRS ? 'repair and inspection vendors' : 'inspection vendors'
+/** Drop paused-trade articles and the related links that point at them. */
+function onSale(list: Article[]): Article[] {
+  if (REPAIRS) return list
+  return list.filter((a) => !REPAIR_SLUGS.has(a.slug)).map((a) => ({ ...a, related: a.related?.filter((r) => !REPAIR_SLUGS.has(r)) }))
+}
 
 /**
  * Home services sold as quote requests (phase 1). No prices: every job is quoted by a person.
  * Keep the compliance lines: measurement is never a survey; repairs exclude electrical,
  * plumbing and gas; inspections are Ontario only.
  */
-export const HOME_SERVICES: Article[] = [
+export const HOME_SERVICES: Article[] = onSale([
   {
     slug: 'how-quote-requests-work',
     title: `How quote requests work`,
@@ -15,7 +28,7 @@ export const HOME_SERVICES: Article[] = [
     popular: true,
     howto: true,
     body: [
-      p(`Staging, cleaning, inspections, measurement and repairs are booked through a quote request, not online checkout. Every property is different, so a person at Bricks reviews each request and quotes it in writing.`),
+      p(`${LIST_CAP} are booked through a quote request, not online checkout. Every property is different, so a person at Bricks reviews each request and quotes it in writing.`),
       ol(
         `Open [home services](/services). Every service has its own section, for example [Cleaning and turnovers](/services#cleaning), and one quote form at the bottom of the page covers all of them.`,
         `Fill in the form: who it's for, the address, the type of job and any details such as rooms, access or dates.`,
@@ -30,7 +43,7 @@ export const HOME_SERVICES: Article[] = [
       p(`Reports, photos, checklists and measurements are kept with the property in your Bricks account. If you don't have an account yet, we send them by email and you can [create one](/help/getting-started) later.`),
       qa(
         [`Is a quote request a booking?`, `No. It's a request for a price. Nothing is booked until you approve the written quote.`],
-        [`Who does the work?`, `Vetted independent vendors that Bricks schedules and checks. $2M commercial general liability insurance is required for repair and inspection vendors.`],
+        [`Who does the work?`, `Vetted independent vendors that Bricks schedules and checks. $2M commercial general liability insurance is required for ${CGL_WHO}.`],
         [`Can I combine services with a photo visit?`, `Yes. Say so in the details, for example a clean or staging before listing photos, and we schedule them in order.`],
       ),
     ],
@@ -89,8 +102,8 @@ export const HOME_SERVICES: Article[] = [
       h(`What you get back`),
       p(`A written report with photos, organised by system and area, kept with the property in your Bricks account.`),
       h(`Insurance`),
-      p(`$2M commercial general liability insurance is required for repair and inspection vendors. A person at Bricks checks the certificate before an inspector takes jobs.`),
-      note(`Need a repair from the report? [Handyman and repairs](/help/home-services/handyman-and-repairs) covers small items such as caulking, trim and doors.`),
+      p(`$2M commercial general liability insurance is required for ${CGL_WHO}. A person at Bricks checks the certificate before an inspector takes jobs.`),
+      ...(REPAIRS ? [note(`Need a repair from the report? [Handyman and repairs](/help/home-services/handyman-and-repairs) covers small items such as caulking, trim and doors.`)] : []),
     ],
     related: ['how-quote-requests-work', 'handyman-and-repairs'],
   },
@@ -139,22 +152,22 @@ export const HOME_SERVICES: Article[] = [
     ],
     related: ['how-quote-requests-work', 'home-inspections', 'cleaning-and-turnovers'],
   },
-]
+])
 
 /** Vendor-side articles for the "Working with Bricks" collection (slug stays 'photographers'). */
-export const TRADE_VENDORS: Article[] = [
+export const TRADE_VENDORS: Article[] = onSale([
   {
     slug: 'apply-as-a-home-services-vendor',
     title: `Apply as a home services vendor`,
-    summary: `Stagers, cleaning crews, inspectors, measurers and repair vendors: how to apply.`,
+    summary: REPAIRS ? `Stagers, cleaning crews, inspectors, measurers and repair vendors: how to apply.` : `Stagers, cleaning crews, inspectors and measurers: how to apply.`,
     howto: true,
     body: [
-      p(`Bricks works with independent vendors in five trades besides photography: staging, cleaning, inspections, measurement and repairs. Start at [brxs.ca/work-with-bricks](/work-with-bricks) and pick your trade.`),
+      p(`Bricks works with independent vendors in ${REPAIRS ? 'five' : 'four'} trades besides photography: ${LIST}. Start at [brxs.ca/work-with-bricks](/work-with-bricks) and pick your trade.`),
       ol(
         `Pick your trade at [Work with Bricks](/work-with-bricks).`,
         `Add your contact details, business name, home city and travel radius.`,
         `List your tools, equipment and the jobs you do. No photo samples are needed for these trades.`,
-        `Inspectors and repair vendors: upload a certificate of insurance showing $2M commercial general liability, which is required for repair and inspection vendors.`,
+        REPAIRS ? `Inspectors and repair vendors: upload a certificate of insurance showing $2M commercial general liability, which is required for repair and inspection vendors.` : `Inspectors: upload a certificate of insurance showing $2M commercial general liability, which is required for inspection vendors.`,
         `Add your HST/GST number, or confirm the small-supplier exemption.`,
         `Read and accept the independent contractor agreement, then submit.`,
       ),
@@ -166,18 +179,18 @@ export const TRADE_VENDORS: Article[] = [
   {
     slug: 'insurance-for-home-services-vendors',
     title: `Insurance for home services vendors`,
-    summary: `$2M commercial general liability insurance is required for repair and inspection vendors. WSIB is optional for repairs.`,
+    summary: REPAIRS ? `$2M commercial general liability insurance is required for repair and inspection vendors. WSIB is optional for repairs.` : `$2M commercial general liability insurance is required for inspection vendors.`,
     body: [
       h(`Who needs proof of insurance`),
       ul(
         `**Inspectors:** a certificate of insurance showing $2M commercial general liability, required for inspection vendors.`,
-        `**Handyman and repair vendors:** a certificate of insurance showing $2M commercial general liability, required for repair vendors. A WSIB clearance is optional and helps if you have workers.`,
+        ...(REPAIRS ? [`**Handyman and repair vendors:** a certificate of insurance showing $2M commercial general liability, required for repair vendors. A WSIB clearance is optional and helps if you have workers.`] : []),
         `**Stagers, cleaning crews and measurers:** no certificate is required to apply.`,
       ),
       h(`How it's checked`),
       p(`Upload the certificate as a PDF or image in the application. A person at Bricks checks the insurer, the limit and the expiry date before you take jobs. Send a new certificate when your policy renews.`),
       qa(
-        [`Can I apply before my certificate arrives?`, `For inspections and repairs, no. The application needs the certificate and the $2M confirmation.`],
+        [`Can I apply before my certificate arrives?`, `For inspections${REPAIRS ? ' and repairs' : ''}, no. The application needs the certificate and the $2M confirmation.`],
         [`Does Bricks insure my work?`, `No. You're an independent contractor and carry your own insurance.`],
       ),
     ],
@@ -208,4 +221,4 @@ export const TRADE_VENDORS: Article[] = [
     ],
     related: ['apply-as-a-home-services-vendor', 'insurance-for-home-services-vendors'],
   },
-]
+])

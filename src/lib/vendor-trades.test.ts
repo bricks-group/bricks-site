@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { TRADES, TRADE_SLUGS, cleanQuoteRequest, quoteConfirmation, quoteInboxMessage } from './services.ts'
+import { ALL_TRADES, TRADES, TRADE_SLUGS, isTradeEnabled, cleanQuoteRequest, quoteConfirmation, quoteInboxMessage } from './services.ts'
 import { QUOTE_INBOX, confirmationPayload, resendPayload, sendClientConfirmation } from './contact-mail.ts'
 import { articleBySlug } from './help/index.ts'
 import { isPublicPath } from '../middleware.ts'
@@ -37,7 +37,8 @@ describe('home services pages', () => {
     assert.match(read('../components/home-services/TradePage.tsx'), /id=\{trade\.slug\}/)
     const cfg = read('../../next.config.ts')
     assert.match(cfg, /\['staging', 'cleaning', 'inspections', 'measurement', 'repairs'\]\.map\(\(t\) => \(\{ source: `\/\$\{t\}`, destination: `\/services#\$\{t\}`, permanent: true \}\)\)/)
-    assert.deepEqual([...TRADE_SLUGS].sort(), ['cleaning', 'inspections', 'measurement', 'repairs', 'staging'])
+    assert.deepEqual(ALL_TRADES.map((t) => t.slug).sort(), ['cleaning', 'inspections', 'measurement', 'repairs', 'staging'])
+    assert.deepEqual([...TRADE_SLUGS].sort(), ['cleaning', 'inspections', 'measurement', 'staging'])
     for (const s of TRADE_SLUGS) assert.throws(() => read(`../app/${s}/page.tsx`), `/${s} page should be gone`)
     assert.match(read('../components/home-services/ServiceQuoteForm.tsx'), /hashchange/)
   })
@@ -74,7 +75,7 @@ describe('home services pages', () => {
   })
 
   it('states the repairs exclusion and that inspections are Ontario only', () => {
-    const r = TRADES.find((t) => t.slug === 'repairs')!
+    const r = ALL_TRADES.find((t) => t.slug === 'repairs')!
     assert.ok(r.rules.some((x) => /electrical, plumbing or gas/.test(x)))
     const i = TRADES.find((t) => t.slug === 'inspections')!
     assert.ok(i.rules.some((x) => /Ontario only/.test(x)))
@@ -120,15 +121,15 @@ describe('quote requests', () => {
   })
 
   it('sends a Bricks-only confirmation that books nothing', () => {
-    const r = cleanQuoteRequest({ ...base, trade: 'repairs' })
+    assert.equal(cleanQuoteRequest({ ...base, trade: 'repairs' }).ok, false, 'repairs is paused')
+    const r = cleanQuoteRequest({ ...base, trade: 'inspections' })
     assert.ok(r.ok)
     if (!r.ok) return
     const c = quoteConfirmation(r.q)
-    assert.match(c.subject, /repairs request/i)
+    assert.match(c.subject, /inspection/i)
     assert.match(c.text, /Nothing is booked or charged until you approve a quote/)
-    assert.match(c.text, /electrical, plumbing or gas/)
-    assert.ok(!c.text.includes('[handyman]'), 'no internal vendor type in client copy')
-    assert.ok(quoteInboxMessage(r.q).includes('[handyman]'))
+    assert.ok(!c.text.includes('[inspector]'), 'no internal vendor type in client copy')
+    assert.ok(quoteInboxMessage(r.q).includes('[inspector]'))
     const p = confirmationPayload({ to: 'pat@example.com', name: 'Pat', ...c })
     assert.equal(p.from, 'Bricks <hello@brxs.ca>')
     assert.deepEqual(p.reply_to, ['help@brxs.ca'])
@@ -171,5 +172,20 @@ describe('no photographer no-show fee', () => {
     assert.ok(/2 business days/.test(vendorCopy))
     assert.ok(/help@brxs\.ca/.test(vendorCopy))
     assert.ok(!/down the street/i.test(vendorCopy))
+  })
+})
+
+describe('paused trades (repairs, 2026-11-01)', () => {
+  it('keeps repairs in the registry but off sale everywhere', () => {
+    const r = ALL_TRADES.find((t) => t.slug === 'repairs')
+    assert.ok(r && r.enabled === false && r.vendorType === 'handyman')
+    assert.equal(isTradeEnabled('repairs'), false)
+    assert.ok(!TRADES.some((t) => t.slug === 'repairs'))
+    const bad = cleanQuoteRequest({ trade: 'repairs', clientType: 'agent', name: 'A', email: 'a@b.co', address: '1 Main' })
+    assert.equal(bad.ok, false)
+    assert.equal(articleBySlug('handyman-and-repairs'), undefined)
+    assert.equal(articleBySlug('repairs-scope-for-vendors'), undefined)
+    assert.ok(!read('../../public/llms.txt').includes('services#repairs'))
+    assert.ok(!read('../app/sitemap.ts').includes("path: '/work-with-bricks/repairs', changeFrequency") || read('../app/sitemap.ts').includes("isTradeEnabled('repairs')"))
   })
 })
