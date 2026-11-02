@@ -1,15 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LegalDocRows, LegalDocSheet, useLegalReads } from '@/components/legal/LegalDocRows'
 import { lockedReason, type LegalDocKey } from '@/lib/legal-docs'
 import type { Trade } from '@/lib/services'
+import {
+  tradeFromRegistry, uploadSlots, uploadsError, uploadPlan, vettingError, vettingPayload,
+  type Reference, type RegistryTrade,
+} from '@/lib/trade-vetting'
 
 // Same flow and scoring as /photographers, minus photo samples and the resume.
 const APPLY_DOCS: readonly LegalDocKey[] = ['ic', 'privacy']
 const DISPATCH_API = 'https://dispatch-api.brxs.ca/api/onboarding'
 const CGL_MIN_CENTS = 200_000_000 // $2M
-const DOC_MAX_BYTES = 4 * 1024 * 1024
+// base64 adds a third, and Vercel caps request bodies at 4.5 MB.
+const DOC_MAX_BYTES = 3 * 1024 * 1024
+const SHRINK_OVER_BYTES = 2.5 * 1024 * 1024
 const DOC_EXTS = ['.pdf', '.png', '.jpg', '.jpeg']
 
 const SOURCE_OPTIONS: { value: string; label: string }[] = [
@@ -58,12 +64,35 @@ function fileToBase64(file: File): Promise<string> {
   })
 }
 
+// Phone photos are often over the limit: scale big JPEG/PNG images down before upload.
+async function shrinkImage(file: File): Promise<File> {
+  if (file.size <= SHRINK_OVER_BYTES || !/^image\/(jpeg|png)$/.test(file.type)) return file
+  try {
+    const bmp = await createImageBitmap(file)
+    const scale = Math.min(1, 2400 / Math.max(bmp.width, bmp.height))
+    const canvas = document.createElement('canvas')
+    canvas.width = Math.round(bmp.width * scale); canvas.height = Math.round(bmp.height * scale)
+    canvas.getContext('2d')?.drawImage(bmp, 0, 0, canvas.width, canvas.height)
+    const blob: Blob | null = await new Promise((r) => canvas.toBlob(r, 'image/jpeg', 0.85))
+    if (!blob || blob.size >= file.size) return file
+    return new File([blob], file.name.replace(/\.(png|jpe?g)$/i, '') + '.jpg', { type: 'image/jpeg' })
+  } catch {
+    return file
+  }
+}
+
+async function shrinkAll(files: File[]): Promise<File[]> {
+  return Promise.all(files.map(shrinkImage))
+}
+
 function checkDoc(f: File | null, label: string): string {
   if (!f || f.size === 0) return ''
   if (!DOC_EXTS.some((x) => f.name.toLowerCase().endsWith(x))) return `${label} must be a PDF, PNG or JPEG.`
-  if (f.size > DOC_MAX_BYTES) return `${label} is too large (4 MB max).`
+  if (f.size > DOC_MAX_BYTES) return `${label} is too large (3 MB max).`
   return ''
 }
+
+const EMPTY_REF: Reference = { name: '', contact: '', relationship: '' }
 
 export default function TradeApplyForm({ trade }: { trade: Trade }) {
   const needsCgl = trade.apply.cgl
@@ -79,13 +108,36 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
   const [err, setErr] = useState('')
   const [docWarning, setDocWarning] = useState('')
   const today = new Date().toISOString().slice(0, 10)
+  // Vetting rules come from Dispatch's trade registry; null = old flow.
+  const [vt, setVt] = useState<RegistryTrade | null>(null)
+  const [reviewsLink, setReviewsLink] = useState('')
+  const [refs, setRefs] = useState<Reference[]>([{ ...EMPTY_REF }, { ...EMPTY_REF }])
+  const [policeConsent, setPoliceConsent] = useState(false)
+  const [docFiles, setDocFiles] = useState<Record<string, File[]>>({})
+  const [docExpiry, setDocExpiry] = useState<Record<string, string>>({})
+  const [progress, setProgress] = useState('')
+  const slots = vt ? uploadSlots(vt, { skipKinds: needsCgl ? ['coi'] : [] }) : []
 
-  async function uploadDoc(memberId: string, token: string, docType: 'coi' | 'wsib', file: File) {
+  useEffect(() => {
+    let live = true
+    fetch(DISPATCH_API + '/trades')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (live) setVt(tradeFromRegistry(d, trade.vendorType)) })
+      .catch(() => {})
+    return () => { live = false }
+  }, [trade.vendorType])
+
+  function setRef(i: number, k: keyof Reference, v: string) {
+    setRefs((rs) => rs.map((r, j) => (j === i ? { ...r, [k]: v } : r)))
+  }
+
+  async function uploadDoc(memberId: string, token: string, docType: string, file: File, expiry?: string) {
     const fd = new FormData()
     fd.append('member_id', memberId)
     fd.append('doc_type', docType)
     fd.append('filename', file.name)
     fd.append('file_data', await fileToBase64(file))
+    if (expiry) fd.append('expiry_date', expiry)
     if (token) { fd.append('token', token); fd.append('application_token', token) }
     const r = await fetch(DISPATCH_API + '/documents', { method: 'POST', body: fd })
     if (!r.ok) throw new Error(`${docType} upload failed`)
@@ -129,16 +181,30 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
     if (!(availability.notice_hours >= 1)) { setErr('Tell us how much notice you need.'); return }
     if (availability.has_car === null || availability.has_licence === null) { setErr("Tell us whether you have a vehicle and a driver's licence."); return }
 
-    const coi = (fd.get('coi') as File) || null
+    const coiRaw = (fd.get('coi') as File) || null
+    const coi = coiRaw && coiRaw.size ? await shrinkImage(coiRaw) : coiRaw
+    const coiExpiry = s('coi_expiry')
     const wsib = (fd.get('wsib_file') as File) || null
     const cglConfirmed = fd.get('cgl_confirmed') === 'on'
     if (needsCgl) {
       if (!coi || coi.size === 0) { setErr('Attach your certificate of insurance (PDF, PNG or JPEG).'); return }
       if (!s('insurer')) { setErr('Enter your insurer.'); return }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(coiExpiry)) { setErr('Add the expiry date on your certificate of insurance.'); return }
+      if (coiExpiry < today) { setErr('Your certificate of insurance has expired. Upload a current one.'); return }
       if (!cglConfirmed) { setErr('Confirm you carry at least $2M commercial general liability insurance.'); return }
     }
     const docErr = checkDoc(needsCgl ? coi : null, 'Certificate of insurance') || checkDoc(trade.apply.wsibOptional ? wsib : null, 'WSIB clearance')
     if (docErr) { setErr(docErr); return }
+
+    const vettingInput = { reviewsLink, references: refs, policeConsent, businessName: s('business_name'), hstNumber: s('hst_number') }
+    let shrunk: Record<string, File[]> = {}
+    if (vt) {
+      const vErr = vettingError(vt, vettingInput)
+      if (vErr) { setErr(vErr); return }
+      shrunk = Object.fromEntries(await Promise.all(Object.entries(docFiles).map(async ([k, fs]) => [k, await shrinkAll(fs)] as const)))
+      const uErr = uploadsError(slots, shrunk, docExpiry, today, { maxBytes: DOC_MAX_BYTES, exts: DOC_EXTS })
+      if (uErr) { setErr(uErr); return }
+    }
 
     const hstNumber = s('hst_number')
     if (!hstNumber && !hstExempt) { setErr('Enter your HST/GST number, or confirm the small-supplier exemption below.'); return }
@@ -183,6 +249,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
         cgl_limit_cents: cglConfirmed ? CGL_MIN_CENTS : 0,
         wsib_number: trade.apply.wsibOptional ? s('wsib_number') || undefined : undefined,
       },
+      ...(vt ? { vetting: vettingPayload(vettingInput), docs_pending: true } : {}),
     }
 
     setSubmitting(true)
@@ -195,14 +262,26 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
       }
       const failed: string[] = []
       if (data.member_id) {
-        if (needsCgl && coi && coi.size) {
-          try { await uploadDoc(data.member_id, data.application_token || '', 'coi', coi) } catch { failed.push('certificate of insurance') }
+        const token = data.application_token || ''
+        const plan = [
+          ...(needsCgl && coi && coi.size ? [{ kind: 'coi', label: 'certificate of insurance', file: coi, expiry: coiExpiry }] : []),
+          ...(trade.apply.wsibOptional && wsib && wsib.size ? [{ kind: 'wsib', label: 'WSIB clearance', file: wsib, expiry: undefined }] : []),
+          ...(vt ? uploadPlan(slots, shrunk, docExpiry) : []),
+        ]
+        for (let i = 0; i < plan.length; i++) {
+          const u = plan[i]
+          setProgress(`Uploading ${i + 1} of ${plan.length}…`)
+          try { await uploadDoc(data.member_id, token, u.kind, u.file, u.expiry) } catch { if (!failed.includes(u.label)) failed.push(u.label) }
         }
-        if (trade.apply.wsibOptional && wsib && wsib.size) {
-          try { await uploadDoc(data.member_id, data.application_token || '', 'wsib', wsib) } catch { failed.push('WSIB clearance') }
+        if (vt) {
+          // Review and notify once the documents are in (the daily backlog catches a missed call).
+          await fetch(DISPATCH_API + `/apply/${encodeURIComponent(data.member_id)}/submitted`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }),
+          }).catch(() => {})
         }
+        setProgress('')
       }
-      if (failed.length) setDocWarning(`Application received, but your ${failed.join(' and ')} didn’t upload. Email it to help@brxs.ca so we can review your application.`)
+      if (failed.length) setDocWarning(`Application received, but these didn’t upload: ${failed.join(', ')}. Email them to help@brxs.ca so we can review your application.`)
       setSubmitted(true)
     } catch {
       setErr('Network error. Please check your connection and try again.'); setSubmitting(false)
@@ -276,9 +355,14 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
             <div className="field"><label htmlFor="t_insurer">Insurer <span className="req">*</span></label><input id="t_insurer" name="insurer" required /></div>
             <div className="field"><label htmlFor="t_policy">Policy number</label><input id="t_policy" name="policy_number" /></div>
           </div>
-          <div className="field"><label htmlFor="t_coi">Certificate of insurance <span className="req">*</span></label>
-            <input id="t_coi" name="coi" type="file" accept=".pdf,.png,.jpg,.jpeg" required />
-            <span className="hint-sm">PDF, PNG or JPEG, 4 MB max.</span>
+          <div className="grid2">
+            <div className="field"><label htmlFor="t_coi">Certificate of insurance <span className="req">*</span></label>
+              <input id="t_coi" name="coi" type="file" accept=".pdf,.png,.jpg,.jpeg" required />
+              <span className="hint-sm">PDF, PNG or JPEG, 3 MB max.</span>
+            </div>
+            <div className="field"><label htmlFor="t_coi_exp">Expiry date <span className="req">*</span></label>
+              <input id="t_coi_exp" name="coi_expiry" type="date" min={today} required />
+            </div>
           </div>
           <label className="check-item">
             <input type="checkbox" name="cgl_confirmed" data-testid="cgl-confirm" />
@@ -292,6 +376,56 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
               </div>
             </>
           )}
+        </>
+      ) : null}
+
+      {vt && vt.identity.reviews_or_refs ? (
+        <>
+          <div className="fsec">Reviews and references</div>
+          <p className="hint-sm" style={{ margin: '0 0 12px' }}>You&apos;ll be working in people&apos;s homes. Add a link to your Google or HomeStars reviews, or two references we can contact.</p>
+          <div className="field"><label htmlFor="t_reviews">Reviews link</label>
+            <input id="t_reviews" type="url" placeholder="https://" value={reviewsLink} onChange={(e) => setReviewsLink(e.target.value)} data-testid="vet-reviews" />
+          </div>
+          {refs.map((r, i) => (
+            <div className="grid3" key={i}>
+              <div className="field"><label htmlFor={`t_ref_n${i}`}>Reference {i + 1} name</label><input id={`t_ref_n${i}`} value={r.name} onChange={(e) => setRef(i, 'name', e.target.value)} /></div>
+              <div className="field"><label htmlFor={`t_ref_c${i}`}>Phone or email</label><input id={`t_ref_c${i}`} value={r.contact} onChange={(e) => setRef(i, 'contact', e.target.value)} /></div>
+              <div className="field"><label htmlFor={`t_ref_r${i}`}>How you know them</label><input id={`t_ref_r${i}`} placeholder="Past client" value={r.relationship} onChange={(e) => setRef(i, 'relationship', e.target.value)} /></div>
+            </div>
+          ))}
+        </>
+      ) : null}
+
+      {vt && slots.length ? (
+        <>
+          <div className="fsec">Documents</div>
+          <p className="hint-sm" style={{ margin: '0 0 12px' }}>A person at Bricks checks every document before you take jobs. PDF, PNG or JPEG, 3 MB max each. Large photos are resized for you.</p>
+          {slots.map((sl) => (
+            <div className={sl.expires ? 'grid2' : ''} key={sl.kind}>
+              <div className="field">
+                <label htmlFor={`t_doc_${sl.kind}`}>{sl.label}{' '}
+                  {sl.required ? <span className="req">*</span> : <span className="opt">(optional)</span>}
+                </label>
+                <input
+                  id={`t_doc_${sl.kind}`} type="file" accept=".pdf,.png,.jpg,.jpeg" multiple={sl.multiple} data-testid={`vet-doc-${sl.kind}`}
+                  onChange={(e) => { const fs = Array.from(e.target.files || []); setDocFiles((d) => ({ ...d, [sl.kind]: fs })) }}
+                />
+                {sl.multiple ? <span className="hint-sm">At least {sl.minCount} files.{(docFiles[sl.kind] || []).length ? ` ${(docFiles[sl.kind] || []).length} picked.` : ''}</span> : null}
+                {sl.kind === 'police_check' ? <span className="hint-sm">Don&apos;t have one yet? You can send it after you apply. You need it before your first job.</span> : null}
+              </div>
+              {sl.expires ? (
+                <div className="field"><label htmlFor={`t_exp_${sl.kind}`}>Expiry date <span className="req">*</span></label>
+                  <input id={`t_exp_${sl.kind}`} type="date" min={today} value={docExpiry[sl.kind] || ''} onChange={(e) => setDocExpiry((d) => ({ ...d, [sl.kind]: e.target.value }))} />
+                </div>
+              ) : null}
+            </div>
+          ))}
+          {vt.identity.police_check ? (
+            <label className="check-item" style={{ marginBottom: 16 }}>
+              <input type="checkbox" checked={policeConsent} onChange={(e) => setPoliceConsent(e.target.checked)} data-testid="vet-police-consent" />
+              <span>I agree to a police check before I take jobs in clients&apos; homes, and I&apos;ll share the result with Bricks.</span>
+            </label>
+          ) : null}
         </>
       ) : null}
 
@@ -363,7 +497,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
 
       <div className="err" role="alert">{err}</div>
       <div className="cta-row">
-        <button type="submit" className="btn btn-night btn-primary" disabled={submitting}>{submitting ? 'Sending…' : 'Submit application'}</button>
+        <button type="submit" className="btn btn-night btn-primary" disabled={submitting}>{submitting ? (progress || 'Sending…') : 'Submit application'}</button>
       </div>
       <p className="hint-sm">A person at Bricks reviews every application and makes every decision.</p>
 
@@ -372,6 +506,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
         .tform .fsec{font-size:16px;font-weight:500;letter-spacing:-0.2px;color:var(--ink);margin:24px 0 16px;padding-top:24px;border-top:1px solid var(--hair);}
         .tform .fsec:first-of-type{margin-top:0;padding-top:0;border-top:none;}
         .tform .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+        .tform .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
         .tform .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;min-width:0;}
         .tform .field > label{font-size:13px;font-weight:500;color:var(--inkMute);}
         .tform .req{color:var(--brickDeep);} .tform .opt{font-weight:400;}
@@ -396,7 +531,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
         .success-box .check{font-size:38px;margin-bottom:14px;color:var(--brickDeep);}
         .success-box h3{font-weight:500;font-size:24px;margin:0 0 10px;color:var(--ink);}
         .success-box p{color:var(--inkMute);font-size:14.5px;line-height:1.6;max-width:420px;margin:0 auto;}
-        @media (max-width:680px){.tform{padding:20px 16px;}.tform .grid2{grid-template-columns:1fr;gap:0;}}
+        @media (max-width:680px){.tform{padding:20px 16px;}.tform .grid2,.tform .grid3{grid-template-columns:1fr;gap:0;}}
       `}</style>
     </form>
   )
