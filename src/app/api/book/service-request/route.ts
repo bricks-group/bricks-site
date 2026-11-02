@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAnonKey, getSupabasePublicUrl } from '@/lib/supabase-public'
 import { QUOTE_INBOX, isSmokeTest, sendClientConfirmation, sendContactMessage } from '@/lib/contact-mail'
 import { cleanQuoteRequest, quoteConfirmation, quoteInboxMessage } from '@/lib/services'
+import { checkRules, clientIp, fallbackStore, memoryStore, serviceRequestRules, supabaseStore, TOO_MANY, type Store } from '@/lib/rate-limit'
+
+const SERVICE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/$/, '')
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+const limiter: Store = fallbackStore(SERVICE_URL && SERVICE_KEY ? supabaseStore(SERVICE_URL, SERVICE_KEY) : null, memoryStore())
 
 /**
  * Home services quote request from /services and the trade pages. Public like
@@ -22,6 +27,10 @@ export async function POST(req: NextRequest) {
   if (!r.ok) return NextResponse.json({ ok: false, error: r.error }, { status: 400 })
   const q = r.q
   const m = { name: q.name, email: q.email, message: quoteInboxMessage(q) }
+
+  // 5/hour per IP, 3/hour per email, checked before any email goes out.
+  const rl = await checkRules(serviceRequestRules(clientIp(req.headers), q.email), limiter)
+  if (!rl.ok) return NextResponse.json({ ok: false, error: TOO_MANY }, { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } })
 
   const sent = await sendContactMessage(m, {
     sourceLabel: `the Bricks /${q.trade.slug} quote form`,
