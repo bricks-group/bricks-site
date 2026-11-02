@@ -37,7 +37,7 @@ async function sendWelcome(email: string): Promise<{ emailed: boolean; mail_bloc
         headers: { Authorization: `Bearer ${resend}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           from: 'Bricks <noreply@brxs.ca>',
-          reply_to: 'support@brxs.ca',
+          reply_to: 'help@brxs.ca',
           to: [email],
           subject: "You're on the Bricks list",
           html: welcomeHtml(),
@@ -55,7 +55,7 @@ async function sendWelcome(email: string): Promise<{ emailed: boolean; mail_bloc
       },
       body: JSON.stringify({
         From: 'Bricks <noreply@brxs.ca>',
-        ReplyTo: 'support@brxs.ca',
+        ReplyTo: 'help@brxs.ca',
         To: email,
         Subject: "You're on the Bricks list",
         HtmlBody: welcomeHtml(),
