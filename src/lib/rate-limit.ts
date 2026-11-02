@@ -4,8 +4,8 @@ import { createHash } from 'node:crypto'
  * Fixed-window rate limiting for public form endpoints.
  *
  * Durable store: Supabase RPC public.www_rate_limit_hit (migration
- * supabase/migrations/20261102120000_www_rate_limits.sql, not yet applied).
- * Until that exists the limiter falls back to per-instance memory, which still
+ * supabase/migrations/20261102120000_www_rate_limits.sql, applied to prod 2026-11-02).
+ * If the RPC errors the limiter falls back to per-instance memory, which still
  * stops rapid bursts hitting the same warm instance.
  */
 
