@@ -17,13 +17,14 @@ import {
   signupUrl,
 } from '@/lib/brand'
 import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
   description:
     'Listing media from $248 for HDR photos, licensed drone and a floor plan, priced by home size. Software plans from free, plus brokerage seats. CAD.',
   alternates: { canonical: '/pricing' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Real Estate Photography Pricing & Plans | Bricks',
     description: 'Listing media from $248 for HDR photos, licensed drone and a floor plan. Software plans from free.',
     url: 'https://www.brxs.ca/pricing',

@@ -3,13 +3,14 @@ import BlogPostLayout from '@/components/BlogPostLayout'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: "What's included in a professional listing photo shoot? | Bricks",
   description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, photos in 24h and other media on a 24–48h target — plus the add-ons you can stack.',
   alternates: { canonical: '/blog/whats-included-listing-shoot' },
   robots: { index: true, follow: true },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     type: 'article',
     title: "What's included in a professional listing photo shoot?",
     description: 'The core set every Bricks standard shoot ships: HDR, licensed drone, floor plan, photos in 24h, other media on a 24–48h target — plus add-ons.',

@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Drone photography rules for real estate in Ontario | Bricks',
   description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant aerial shoot looks like.',
   alternates: { canonical: '/blog/drone-photography-rules-ontario' },
   robots: { index: true, follow: true },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     type: 'article',
     title: 'Drone photography rules for real estate in Ontario',
     description: 'Transport Canada Advanced RPAS rules for real estate drone photography: certification, no-fly zones, and what a compliant aerial shoot looks like.',

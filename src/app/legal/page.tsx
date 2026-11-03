@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Bricks — Legal',
   description: 'Terms of Service, Privacy Policy, Data Processing Agreement, and photographer Independent Contractor Agreement for Bricks Group.',
   alternates: { canonical: '/legal' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Bricks — Legal',
     description: 'Terms, Privacy, DPA, and photographer Independent Contractor Agreement for Bricks Group.',
   },

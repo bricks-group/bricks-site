@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Bricks — Delete your account',
   description:
     'How to delete a Bricks account, in the app or by email, and what Bricks Group deletes and keeps.',
   alternates: { canonical: '/account-deletion' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Bricks — Delete your account',
     description: 'How to delete a Bricks account, and what we delete and keep.',
   },

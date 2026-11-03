@@ -6,6 +6,7 @@ import { TradeGrid, TradeSection } from '@/components/home-services/TradePage'
 import { TRADES, isTradeEnabled, tradeListPhrase } from '@/lib/services'
 import ServiceQuoteForm from '@/components/home-services/ServiceQuoteForm'
 import '@/components/home-services/home-services.css'
+import { OG_IMAGE } from '@/lib/og'
 
 const title = 'Home services | Bricks'
 const LIST = tradeListPhrase()
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: '/services' },
-  openGraph: { title, description },
+  openGraph: { images: [OG_IMAGE], title, description },
 }
 
 export default function ServicesPage() {

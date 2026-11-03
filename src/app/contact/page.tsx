@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import ContactForm from './ContactForm'
 import { AREA_SERVED_SCHEMA, COVERAGE_LINE } from '@/lib/brand'
 import { ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Contact Bricks | Canadian real estate media',
   description: 'Contact Bricks for Canadian listing media — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Email hello@brxs.ca or call 343-453-4578. For support, email help@brxs.ca.',
   alternates: { canonical: '/contact' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Contact Bricks | Canadian real estate media',
     description: 'Listing media for Canadian real estate: HDR photos, licensed drone and floor plans.',
   },

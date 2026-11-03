@@ -5,6 +5,7 @@ import { Head, Arrow } from '@/components/calm/Calm'
 import { TRADES } from '@/lib/services'
 import ServiceIcon from '@/components/home-services/ServiceIcon'
 import '@/components/home-services/home-services.css'
+import { OG_IMAGE } from '@/lib/og'
 
 const title = 'Work with Bricks | Bricks'
 const description = 'Apply as an independent vendor: photographers and pilots, stagers, cleaning crews, inspectors, measurers and repair vendors.'
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: '/work-with-bricks' },
-  openGraph: { title, description },
+  openGraph: { images: [OG_IMAGE], title, description },
 }
 
 function CameraIcon() {

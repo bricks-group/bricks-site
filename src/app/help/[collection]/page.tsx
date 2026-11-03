@@ -6,6 +6,7 @@ import HelpIcon from '@/components/help/HelpIcon'
 import HelpSearch from '@/components/help/HelpSearch'
 import { ContactBand, Crumbs, JsonLd } from '@/components/help/Parts'
 import { breadcrumbLd } from '@/lib/help/jsonld'
+import { OG_IMAGE } from '@/lib/og'
 
 export const dynamicParams = false
 
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description: c.summary,
     alternates: { canonical: collectionHref(c.slug) },
-    openGraph: { title, description: c.summary, url: collectionHref(c.slug) },
+    openGraph: { images: [OG_IMAGE], title, description: c.summary, url: collectionHref(c.slug) },
     twitter: { card: 'summary', title, description: c.summary },
   }
 }
