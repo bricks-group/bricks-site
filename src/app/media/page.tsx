@@ -5,12 +5,13 @@ import MediaShowcase from '@/components/media-showcase/MediaShowcase'
 import './media-page.css'
 import { Head, Rows, Close } from '@/components/calm/Calm'
 import { CORE_FROM, VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Listing media — photos, drone, floor plans, film and 3D | Bricks',
   description: 'HDR listing photos, licensed drone, floor plans, cinematic reels and Virtual Visit 3D, booked online and delivered inside Bricks.',
   alternates: { canonical: '/media' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Listing media, inside Bricks',
     description: 'HDR photos, licensed drone, floor plans, film and 3D. Booked online, priced by home size.',
   },

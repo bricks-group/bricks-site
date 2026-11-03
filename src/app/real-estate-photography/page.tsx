@@ -21,9 +21,9 @@ import {
   DRONE_RANGE,
 } from '@/lib/pricing'
 import { ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
-const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+const OG = OG_IMAGE
 
 const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0]
 

@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 import { OS_LOGIN } from '@/lib/brand'
 import { ORG_REF, SITE_ID } from '@/lib/schema'
 import { Head, Rows, Close } from '@/components/calm/Calm'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'About Bricks — software for Canadian real estate',
   description:
     'Bricks is the system that brings it all together for Canadian real estate: software for builders, developers, investors and realtors, with listing media and Site Progress booked inside.',
   alternates: { canonical: '/about' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     type: 'website',
     title: 'About Bricks',
     description: 'The system that brings it all together for Canadian real estate.',

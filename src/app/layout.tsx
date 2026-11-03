@@ -6,6 +6,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import MotionLayer from '@/components/MotionLayer'
 import { AUTH_HEAD_SCRIPT } from '@/lib/site-session'
+import { OG_IMAGE } from '@/lib/og'
 import './globals.css'
 import './map-cutout.css'
 import './book/book-wizard.css'
@@ -29,8 +30,9 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'Bricks',
     locale: 'en_CA',
+    images: [OG_IMAGE],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', images: [OG_IMAGE] },
   ...(gated ? { robots: { index: false, follow: false } } : {}),
 }
 

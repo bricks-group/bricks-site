@@ -4,9 +4,9 @@ import BookingWizard from './BookingWizard'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 import { mediaServiceSchema } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
-const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+const OG = OG_IMAGE
 
 export const metadata: Metadata = {
   title: 'Book Real Estate Photography & Listing Photos Canada | Bricks',

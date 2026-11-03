@@ -5,9 +5,9 @@ import PhotographerForm from './PhotographerForm'
 import { COVERAGE_LINE, GO_URL, STATUS } from '@/lib/brand'
 import { ORG_ID } from '@/lib/schema'
 import { Rows } from '@/components/calm/Calm'
+import { OG_IMAGE } from '@/lib/og'
 
-const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+const OG = OG_IMAGE
 
 export const metadata: Metadata = {
   title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',

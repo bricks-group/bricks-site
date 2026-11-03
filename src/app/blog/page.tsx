@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
-const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+const OG = OG_IMAGE
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Guides & Listing Media Blog | Bricks',
