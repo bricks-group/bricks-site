@@ -4,13 +4,14 @@ import CoverageMap from '@/components/CoverageMap'
 import { coverageDetailCards } from '@/lib/coverage'
 import { AREA_SERVED_SCHEMA, COVERAGE_LINE, TOUR_NAME, VISIT_NAME } from '@/lib/brand'
 import { ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Service Areas | Listing Photos & Real Estate Photography Canada — Bricks',
   description:
     'Bricks delivers listing photos and real estate photography across Canada. HDR, licensed drone, floor plan included — confirm coverage and travel at booking. Not limited to one metro.',
   alternates: { canonical: '/service-areas' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Service Areas | Listing Photos Canada — Bricks',
     description: `Bricks listing media across Canada. ${COVERAGE_LINE} HDR, drone, floor plans, optional virtual tour.`,
   },

@@ -16,6 +16,7 @@ import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 import { FeaturePic } from '@/components/features/FeatureShot'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import HomeServicesBand from '@/components/home-services/HomeServicesBand'
+import { OG_IMAGE } from '@/lib/og'
 
 const faqs = [
   {
@@ -51,12 +52,12 @@ export const metadata: Metadata = {
     locale: 'en_CA',
     title: 'Bricks — the system for Canadian real estate',
     description: 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    images: [OG_IMAGE],
   },
   twitter: {
     title: 'Bricks — the system for Canadian real estate',
-    description: 'The system for Canadian real estate. Book professional media today.',
-    images: ['https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+    description: 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
+    images: [OG_IMAGE],
   },
 }
 

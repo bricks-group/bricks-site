@@ -5,6 +5,7 @@ import HelpIcon from '@/components/help/HelpIcon'
 import HelpSearch from '@/components/help/HelpSearch'
 import { ContactBand, JsonLd } from '@/components/help/Parts'
 import { BASE } from '@/lib/help/jsonld'
+import { OG_IMAGE } from '@/lib/og'
 
 const TITLE = 'Bricks help centre'
 const DESC = 'Answers about booking listing media, plans and billing, the Bricks app, integrations, privacy, and shooting for Bricks.'
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESC,
   alternates: { canonical: '/help' },
-  openGraph: { title: TITLE, description: DESC, url: '/help' },
+  openGraph: { images: [OG_IMAGE], title: TITLE, description: DESC, url: '/help' },
   twitter: { card: 'summary', title: TITLE, description: DESC },
 }
 

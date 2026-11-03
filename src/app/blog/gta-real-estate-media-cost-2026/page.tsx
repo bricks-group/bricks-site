@@ -3,13 +3,14 @@ import BlogPostLayout from '@/components/BlogPostLayout'
 import { PHOTO_RATE, DRONE_RATE, REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, bandCells, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'How much does real estate photography cost in the GTA? (2026) | Bricks',
   description: '2026 GTA real estate media pricing: what agents pay for HDR photography, drone, floor plans, virtual tours and video, with real market ranges and what drives the price.',
   alternates: { canonical: '/blog/gta-real-estate-media-cost-2026' },
   robots: { index: true, follow: true },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     type: 'article',
     title: 'How much does real estate photography cost in the GTA? (2026)',
     description: 'What GTA agents actually pay for HDR, drone, floor plans, virtual tours and video — with real market ranges.',

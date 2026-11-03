@@ -5,13 +5,14 @@ import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import { SystemBand, Photo, HeroPlate, PlateImg } from '@/components/clientele/Clientele'
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Commercial real estate media, Virtual Visit and site mapping | Bricks',
   description:
     'HDR photos, licensed drone, floor plans, Virtual Visit free-roam 3D and mapped site captures for commercial and industrial property in Canada, booked online and delivered into Bricks.',
   alternates: { canonical: '/commercial' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Commercial property, shown properly | Bricks',
     description: 'Listing media, Virtual Visit and mapped site captures in one system.',
   },

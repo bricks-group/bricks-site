@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
 import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Bricks — Terms of Service',
   description: 'Bricks listing-media terms of service and cancellation policy. Contracting party: Bricks Group. Effective 27 August 2026.',
   alternates: { canonical: '/terms' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Bricks — Terms of Service',
     description: 'Bricks listing-media terms of service and cancellation policy. Contracting party: Bricks Group.',
   },

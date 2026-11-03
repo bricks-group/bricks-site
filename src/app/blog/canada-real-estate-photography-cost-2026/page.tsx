@@ -16,9 +16,9 @@ import {
 } from '@/lib/pricing'
 import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
-const OG =
-  'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/74E774C6-1524-4287-B115-25CA213E4BBD.PNG'
+const OG = OG_IMAGE
 
 export const metadata: Metadata = {
   title: 'How much does real estate photography cost in Canada? (2026) | Bricks',
@@ -61,7 +61,7 @@ export default function Post() {
             mainEntityOfPage: 'https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026',
             keywords:
               'real estate photography cost Canada, listing photos price, MLS photos Canada, real estate photographer Canada, drone real estate photos cost',
-            image: OG,
+            image: OG_IMAGE_URL,
           }),
         }}
       />

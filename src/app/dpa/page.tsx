@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
 import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Data Processing Agreement — Bricks',
   description:
     'Bricks Group Data Processing Agreement for brokerages, teams, and enterprise clients that process third-party personal data on the Bricks platform. PIPEDA-aligned.',
   alternates: { canonical: '/dpa' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Data Processing Agreement — Bricks',
     description: 'Bricks Group DPA for enterprise brokerage clients. PIPEDA-aligned.',
   },

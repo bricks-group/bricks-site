@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { legalDocCss } from '@/components/legalDocCss'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Bricks — Privacy Policy',
   description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca and the Bricks apps, under PIPEDA. Privacy contact: privacy@brxs.ca.',
   alternates: { canonical: '/privacy' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Bricks — Privacy Policy',
     description: 'How Bricks Group collects, uses, and discloses personal information for brxs.ca. Privacy contact: privacy@brxs.ca.',
   },

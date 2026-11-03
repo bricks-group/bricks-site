@@ -3,13 +3,14 @@ import BlogPostLayout from '@/components/BlogPostLayout'
 import { REEL_RANGE, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Virtual tour vs. video walkthrough: which sells listings faster? | Bricks',
   description: 'When a path-confined virtual tour beats a cinematic video walkthrough — and when the reverse is true. Virtual visit (Gaussian splat) is a separate product.',
   alternates: { canonical: '/blog/3d-tour-vs-video-walkthrough' },
   robots: { index: true, follow: true },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     type: 'article',
     title: 'Virtual tour vs. video walkthrough: which sells listings faster?',
     description: 'When a virtual tour beats a cinematic reel — and when the reverse is true. Virtual visit is a separate product.',

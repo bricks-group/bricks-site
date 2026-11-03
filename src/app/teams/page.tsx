@@ -7,6 +7,7 @@ import { ESIGN, LAUNCH } from '@/lib/agent-features'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import { signupUrl } from '@/lib/brand'
 import { SOFTWARE_PLANS } from '@/lib/catalog'
+import { OG_IMAGE } from '@/lib/og'
 
 /** Team plan base price is the lead's paid plan (OS common/team_seats.py TEAM_PLAN_MONTHLY_CENTS). */
 const TEAM_PLANS = SOFTWARE_PLANS.filter((p) => p.id !== 'clay')
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   description:
     'One plan for a team of up to 6 agents: a shared pipeline, listing files, e-sign and listing media booked from the listing. Priced as the lead’s plan, monthly or yearly, CAD.',
   alternates: { canonical: '/teams' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'One desk for the whole team | Bricks',
     description: 'Up to 6 agents on one plan, with a shared pipeline.',
   },

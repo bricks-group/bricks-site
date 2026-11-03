@@ -6,6 +6,7 @@ import { Head } from '@/components/calm/Calm'
 import { TRADE_SLUGS, tradeBySlug } from '@/lib/services'
 import TradeApplyForm from '../TradeApplyForm'
 import '@/components/home-services/home-services.css'
+import { OG_IMAGE } from '@/lib/og'
 
 export const dynamicParams = false
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ trade: st
   if (!t) return {}
   const title = `Apply: ${t.apply.role.toLowerCase()} | Work with Bricks`
   const description = `${t.apply.lede} Apply to take ${t.name.toLowerCase()} jobs through Bricks.`
-  return { title, description, alternates: { canonical: `/work-with-bricks/${t.slug}` }, openGraph: { title, description } }
+  return { title, description, alternates: { canonical: `/work-with-bricks/${t.slug}` }, openGraph: { images: [OG_IMAGE], title, description } }
 }
 
 export default async function TradeApplyPage({ params }: { params: Promise<{ trade: string }> }) {

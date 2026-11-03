@@ -5,6 +5,7 @@ import { Head, Rows, Close } from '@/components/calm/Calm'
 import { SystemBand } from '@/components/clientele/Clientele'
 import { signupUrl } from '@/lib/brand'
 import { ONE_OFFS, ONE_OFFS_FOR, money } from '@/lib/propertyCheckout'
+import { OG_IMAGE } from '@/lib/og'
 
 /** REIT visit prices, from the same table /book/property charges (server recomputes). */
 const SCOPE: Record<string, string> = { unit: 'per unit', space: 'per space', building: 'per building', property: 'per property' }
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   description:
     'One account for a REIT portfolio: leasing media and Virtual Visit for units and spaces, condition reports, quarterly property checks and site progress for new buildings.',
   alternates: { canonical: '/reits' },
-  openGraph: {
+  openGraph: { images: [OG_IMAGE],
     title: 'Every property, on one record | Bricks',
     description: 'Leasing media, condition reports and dated property checks across the portfolio.',
   },
