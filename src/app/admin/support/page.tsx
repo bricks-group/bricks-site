@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { supportDb } from '@/lib/support/db'
-import { approveAndSend, dismiss, isAdmin } from './actions'
+import { approveAndSend, dismiss, isAdmin, pendingCodeEmail, requestCode, signInCode, signInPassword, signOut } from './actions'
+import { SIGNIN_MESSAGES } from '@/lib/support/account-signin'
 import './support.css'
 import { helpRef, plainReasons } from '@/lib/support/alert'
 
@@ -30,10 +31,40 @@ export default async function SupportReview({ searchParams }: { searchParams: Pr
   }
   const preview = process.env.VERCEL_ENV === 'preview'
   if (!preview && !(await isAdmin())) {
+    const codeEmail = await pendingCodeEmail()
+    const msg = sp.e ? SIGNIN_MESSAGES[sp.e] : ''
     return (
       <main className="sr">
         <h1>Support review</h1>
-        <p>{sp.e === 'link' ? 'That link has expired or is not valid.' : 'Sign in with the link in your latest help@ alert email.'}</p>
+        <p className="lede">Sign in with your Bricks account, the same one you use for the Bricks app. The Open button in any help@ alert email also signs you in.</p>
+        {msg && <p className="note" role="status">{msg}</p>}
+        <section className="card signin">
+          <h2>Sign in with your Bricks account</h2>
+          <form action={signInPassword}>
+            <label htmlFor="sr-email">Email</label>
+            <input id="sr-email" name="email" type="email" autoComplete="username" required defaultValue={codeEmail} />
+            <label htmlFor="sr-password">Password</label>
+            <input id="sr-password" name="password" type="password" autoComplete="current-password" required />
+            <div className="actions"><button className="primary" type="submit">Sign in</button></div>
+          </form>
+          <details style={{ marginTop: 18 }} open={sp.e === 'sent'}>
+            <summary>No password? Email me a sign-in code</summary>
+            {sp.e === 'sent' ? (
+              <form action={signInCode}>
+                <label htmlFor="sr-code">Code from the email{codeEmail ? ` sent to ${codeEmail}` : ''}</label>
+                <input id="sr-code" name="code" inputMode="numeric" autoComplete="one-time-code" required />
+                {!codeEmail && <input name="email" type="email" placeholder="Email" required />}
+                <div className="actions"><button className="primary" type="submit">Sign in</button></div>
+              </form>
+            ) : (
+              <form action={requestCode}>
+                <label htmlFor="sr-code-email">Email</label>
+                <input id="sr-code-email" name="email" type="email" autoComplete="username" required />
+                <div className="actions"><button type="submit">Email me a code</button></div>
+              </form>
+            )}
+          </details>
+        </section>
       </main>
     )
   }
@@ -48,6 +79,7 @@ export default async function SupportReview({ searchParams }: { searchParams: Pr
     <main className="sr">
       <h1>Support review</h1>
       <p className="lede">help@brxs.ca drafts. Auto-send is off. Nothing goes to a customer until you press Approve &amp; send. <a href={sp.all ? '/admin/support' : '/admin/support?all=1'}>{sp.all ? 'Show pending only' : 'Show all'}</a></p>
+      {!preview && <form action={signOut} className="signout"><button type="submit">Sign out</button></form>}
       {sample && <p className="note">Preview with sample data. Buttons are disabled here.</p>}
       {!sample && !res.ok && <p>Could not load drafts.</p>}
       {res.ok && rows.length === 0 && <p>No drafts waiting.</p>}

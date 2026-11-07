@@ -19,3 +19,8 @@
 .sr button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);}
 .sr button:disabled{opacity:.5;cursor:not-allowed;}
 .sr .note{padding:12px 14px;border-radius:0;background:var(--paperDeep);font-size:var(--vs-fs-small);}
+.sr .signin form{display:flex;flex-direction:column;gap:6px;max-width:420px;}
+.sr .signin input{box-sizing:border-box;width:100%;padding:11px 12px;border-radius:0;font:inherit;font-family:var(--vs-sans);font-size:var(--vs-fs-small);border:1px solid var(--hairStrong);background:var(--paper);color:var(--ink);margin-bottom:8px;}
+.sr .signin details form{margin-top:12px;}
+.sr .signout{margin:-16px 0 24px;}
+.sr .signout button{padding:7px 12px;font-size:13px;}
