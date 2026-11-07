@@ -3,6 +3,7 @@
 import { useId, useMemo, useState } from 'react'
 import './software.css'
 import { TODAY_PER_VISIT } from '@/lib/market-rates'
+import { agentSavings, builderSavings } from '@/lib/savings-math'
 
 /**
  * Savings calculator. Every input is the visitor's own number; the defaults are labelled examples.
@@ -32,36 +33,41 @@ function Field({ label, hint, value, onChange, unit, max }: { label: string; hin
 }
 
 type Line = { label: string; sub?: string; amount: number }
+type Part = { label: string; value: number }
 
 /**
- * One story, top to bottom: what you spend today, the Bricks price, the saving, then where it comes from.
+ * One story, top to bottom: what you spend today, what it costs with Bricks, the saving, then where it comes from.
+ * Today − With Bricks = You save, and the lines add up to the same figure (lib/savings-math).
  * A shortfall reads "costs $X more", never a red minus.
  */
-function Story({ today, bricks, setup, lines, short }: {
-  today: { value: number; sub: string }
-  bricks: { value: number; sub: string }
+function Story({ today, bricks, setup, lines, save, short }: {
+  today: { total: number; parts: Part[] }
+  bricks: { total: number; parts: Part[]; priceLabel: string }
   setup?: { value: number; sub: string }
   lines: Line[]
+  save: number
   short: string
 }) {
-  const net = lines.reduce((a, l) => a + l.amount, 0)
-  const ahead = net >= 0
+  const ahead = save >= 0
   const amt = (n: number) => (n >= 0 ? money(n) : `costs ${money(-n)} more`)
   return (
     <div className="sc-story">
       <div className="sc-row">
-        <div><p className="sc-row-k">What you spend today</p><p className="sc-row-s">{today.sub}</p></div>
-        <p className="sc-row-v">{money(today.value)}<span>/mo</span></p>
+        <div><p className="sc-row-k">What you spend today</p><p className="sc-row-s">{today.parts.map((x, i) => <span key={x.label} className="sc-part">{i ? "· " : ""}{x.label} {money(x.value)}</span>)}</p></div>
+        <p className="sc-row-v">{money(today.total)}<span>/mo</span></p>
       </div>
       <div className="sc-row">
-        <div><p className="sc-row-k">With Bricks <em>Bricks price</em></p><p className="sc-row-s">{bricks.sub}</p></div>
-        <p className="sc-row-v">{money(bricks.value)}<span>/mo</span></p>
+        <div>
+          <p className="sc-row-k">With Bricks</p>
+          <p className="sc-row-s"><span className="sc-part">{bricks.parts[0].label} {money(bricks.parts[0].value)} <em>{bricks.priceLabel}</em></span>{bricks.parts.slice(1).map((x) => <span key={x.label} className="sc-part">· {x.label} {money(x.value)}</span>)}</p>
+        </div>
+        <p className="sc-row-v">{money(bricks.total)}<span>/mo</span></p>
       </div>
       {setup ? <p className="sc-setup">Plus {money(setup.value)} setup, once. {setup.sub}</p> : null}
       <div className={`sc-save${ahead ? '' : ' is-short'}`}>
         <p className="sc-save-k">{ahead ? 'You save' : 'Bricks costs more'}</p>
-        <p className="sc-save-v">{money(Math.abs(net))}<span> a month</span></p>
-        <p className="sc-save-s">{ahead ? `${money(net * 12)} a year` : short}</p>
+        <p className="sc-save-v">{money(Math.abs(save))}<span> a month</span></p>
+        <p className="sc-save-s">{ahead ? `${money(save * 12)} a year` : short}</p>
       </div>
       <div className="sc-why">
         <p className="sc-why-h">Where it comes from</p>
@@ -89,17 +95,7 @@ function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
   const planName = plans.find((p) => p.id === plan)?.name ?? ''
   const planPrice = plans.find((p) => p.id === plan)?.monthly ?? 0
 
-  const r = useMemo(() => {
-    const hoursBack = listings * coordHours * (Math.min(share, 100) / 100)
-    const timeValue = hoursBack * rate
-    const toolChange = subs - planPrice
-    return {
-      hoursBack,
-      timeValue,
-      toolChange,
-      net: timeValue + toolChange,
-    }
-  }, [listings, coordHours, subs, rate, share, planPrice])
+  const r = useMemo(() => agentSavings({ listings, coordHours, subs, rate, share, planPrice }), [listings, coordHours, subs, rate, share, planPrice])
 
   return (
     <div className="sc-body">
@@ -124,11 +120,12 @@ function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
       </div>
       <div className="sc-out" aria-live="polite">
         <Story
-          today={{ value: subs, sub: 'Tools you would cancel' }}
-          bricks={{ value: planPrice, sub: planPrice ? `${planName} plan` : `${planName} plan, free` }}
+          today={{ total: r.today.total, parts: [{ label: 'Tools', value: r.today.cash }, { label: 'Your time', value: r.today.time }] }}
+          bricks={{ total: r.bricks.total, priceLabel: 'Bricks price', parts: [{ label: `${planName} plan`, value: r.bricks.price }, { label: 'Your time', value: r.bricks.time }] }}
+          save={r.save}
           lines={[
-            { label: 'Tools dropped, less the plan', sub: `${money(subs)} today, ${money(planPrice)} with Bricks`, amount: subs - planPrice },
-            { label: 'Time back', sub: `${hours(r.hoursBack)} at ${money(rate)} an hour`, amount: r.timeValue },
+            { label: 'Tools dropped, less the plan', sub: `${money(r.today.cash)} today, ${money(r.bricks.price)} for ${planName}`, amount: r.lines.cash },
+            { label: 'Time back', sub: `${hours(r.hoursNow - r.hoursWith)} of ${hours(r.hoursNow)} at ${money(rate)} an hour`, amount: r.lines.time },
           ]}
           short="With these numbers the plan costs more than the tools and time it replaces. A lower plan may fit better."
         />
@@ -138,10 +135,6 @@ function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
   )
 }
 
-function siteCost(visits: number, perVisit: number, plans: readonly { visits: number; price: number }[]) {
-  const plan = plans.find((p) => p.visits === visits)
-  return plan ? { cost: plan.price, how: `monthly plan with ${visits} visit${visits === 1 ? '' : 's'} each` } : { cost: visits * perVisit, how: `${visits} visit${visits === 1 ? '' : 's'} each at $${perVisit.toLocaleString('en-CA')}` }
-}
 
 function BuilderCalc({ site }: { site: SitePrice }) {
   const [sites, setSites] = useState(2)
@@ -157,15 +150,7 @@ function BuilderCalc({ site }: { site: SitePrice }) {
   const [rate, setRate] = useState(90)
   const [share, setShare] = useState(50)
 
-  const r = useMemo(() => {
-    const per = siteCost(visits, mapped ? site.mappedPerVisit : site.visualPerVisit, mapped ? site.mappedPlans : site.visualPlans)
-    const bricksCost = per.cost * sites
-    const setupOnce = mapped ? site.setup * sites : 0
-    const nowCost = payNow * visits * sites
-    const hoursBack = sites * reports * reportHours * (Math.min(share, 100) / 100)
-    const timeValue = hoursBack * rate
-    return { per, bricksCost, setupOnce, perVisit: visits ? per.cost / visits : 0, nowCost, visitChange: nowCost - bricksCost, hoursBack, timeValue, net: nowCost - bricksCost + timeValue }
-  }, [sites, visits, mapped, payNow, reports, reportHours, rate, share, site])
+  const r = useMemo(() => builderSavings({ sites, visits, mapped, payNow, reports, reportHours, rate, share }, site), [sites, visits, mapped, payNow, reports, reportHours, rate, share, site])
 
   return (
     <div className="sc-body">
@@ -188,12 +173,13 @@ function BuilderCalc({ site }: { site: SitePrice }) {
       </div>
       <div className="sc-out" aria-live="polite">
         <Story
-          today={{ value: r.nowCost, sub: `${plural(visits * sites, 'visit')} at ${money(payNow)}` }}
-          bricks={{ value: r.bricksCost, sub: `${plural(sites, 'site')}, ${plural(visits, 'visit')} each, ${money(r.perVisit)} a visit` }}
+          today={{ total: r.today.total, parts: [{ label: 'Visits', value: r.today.cash }, { label: 'Report time', value: r.today.time }] }}
+          bricks={{ total: r.bricks.total, priceLabel: 'Bricks price', parts: [{ label: 'Visits', value: r.bricks.price }, { label: 'Report time', value: r.bricks.time }] }}
           setup={r.setupOnce ? { value: r.setupOnce, sub: `${money(site.setup)} per site for ground control, first month only.` } : undefined}
+          save={r.save}
           lines={[
-            { label: 'Visits', sub: `${money(r.nowCost)} today, ${money(r.bricksCost)} with Bricks`, amount: r.nowCost - r.bricksCost },
-            { label: 'Report time back', sub: `${hours(r.hoursBack)} at ${money(rate)} an hour`, amount: r.timeValue },
+            { label: 'Visits', sub: `${plural(visits * sites, 'visit')}: ${money(r.today.cash)} today, ${money(r.bricks.price)} with Bricks (${money(r.perVisit)} each)`, amount: r.lines.cash },
+            { label: 'Report time back', sub: `${hours(r.hoursNow - r.hoursWith)} of ${hours(r.hoursNow)} at ${money(rate)} an hour`, amount: r.lines.time },
           ]}
           short="With these numbers Bricks costs more than what you pay today. You get one vendor, one place and dated evidence for every report."
         />
