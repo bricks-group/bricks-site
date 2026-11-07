@@ -40,6 +40,20 @@ function Result({ label, value, sub }: { label: string; value: string; sub?: str
   )
 }
 
+/** The one headline figure. A shortfall is shown as a plain amount with an honest note, never as an alarming red minus. */
+function Net({ net, short }: { net: number; short: string }) {
+  const ahead = net >= 0
+  return (
+    <div className={`sc-net${ahead ? '' : ' is-short'}`}>
+      <p className="sc-net-k">{ahead ? 'Net a month' : 'Costs more than it saves, a month'}</p>
+      <p className="sc-net-v">{money(Math.abs(net))}</p>
+      <p className="sc-net-s">{ahead ? `${money(net * 12)} a year` : short}</p>
+    </div>
+  )
+}
+
+const plural = (n: number, one: string, many = `${one}s`) => `${n.toLocaleString('en-CA')} ${n === 1 ? one : many}`
+
 function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
   const [listings, setListings] = useState(4)
   const [coordHours, setCoordHours] = useState(3)
@@ -49,7 +63,10 @@ function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
   const [subs, setSubs] = useState(60)
   const [rate, setRate] = useState(75)
   const [share, setShare] = useState(30)
-  const [plan, setPlan] = useState(plans[1]?.id ?? plans[0].id)
+  // Example tools are a CRM, e-sign, a spreadsheet, a website builder and file transfer. Keystone ($49) is the
+  // lowest plan that covers them (CRM and e-sign from Keystone; listing site on every plan), so it is the honest default.
+  const [plan, setPlan] = useState((plans.find((p) => p.id === 'keystone') ?? plans[1] ?? plans[0]).id)
+  const planName = plans.find((p) => p.id === plan)?.name ?? ''
   const planPrice = plans.find((p) => p.id === plan)?.monthly ?? 0
 
   const r = useMemo(() => {
@@ -87,16 +104,17 @@ function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
               </button>
             ))}
           </div>
-          <p className="sc-hint">Real Bricks prices, monthly, CAD before tax. Yearly billing gets two months free.</p>
+          <p className="sc-hint">Starts on Keystone, the lowest plan with the CRM and e-sign from the example tools. Forms come with Marble; the AI suite with Diamond. Real Bricks prices, monthly, CAD before tax. Yearly billing gets two months free.</p>
         </div>
       </div>
       <div className="sc-out" aria-live="polite">
         <dl>
-          <Result label="Hours back a month" value={hours(r.hoursBack)} sub={`${listings} listings × ${coordHours} h × ${share}%`} />
-          <Result label="Value of that time" value={money(r.timeValue)} sub={`${hours(r.hoursBack)} × $${rate} an hour`} />
-          <Result label="Tools cancelled, less the plan" value={money(r.toolChange)} sub={`$${subs} − $${planPrice} for the plan`} />
-          <Result label="Net a month" value={money(r.net)} sub={`${money(r.net * 12)} a year`} />
+          <Result label="Hours back a month" value={hours(r.hoursBack)} sub={`${share}% of ${plural(coordHours, 'hour')} on each of ${plural(listings, 'listing')}`} />
+          <Result label="Value of that time" value={money(r.timeValue)} sub={`At ${money(rate)} an hour`} />
+          <Result label="Tools you drop" value={`${money(subs)}/mo`} sub="The tools you said you would cancel" />
+          <Result label="Bricks plan" value={`${money(planPrice)}/mo`} sub={planPrice ? `${planName}, before tax` : `${planName}, free`} />
         </dl>
+        <Net net={r.net} short="With these numbers the plan costs more than the tools and time it replaces. A lower plan, or your own figures, may fit better." />
         <table className="sc-tally">
           <caption>Each month, from your numbers</caption>
           <thead><tr><th scope="col"></th><th scope="col">Now</th><th scope="col">With Bricks</th></tr></thead>
@@ -115,7 +133,7 @@ function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
 
 function siteCost(visits: number, perVisit: number, plans: readonly { visits: number; price: number }[]) {
   const plan = plans.find((p) => p.visits === visits)
-  return plan ? { cost: plan.price, how: `monthly plan, ${visits} visit${visits === 1 ? '' : 's'}` } : { cost: visits * perVisit, how: `${visits} × $${perVisit.toLocaleString('en-CA')} per visit` }
+  return plan ? { cost: plan.price, how: `monthly plan with ${visits} visit${visits === 1 ? '' : 's'} each` } : { cost: visits * perVisit, how: `${visits} visit${visits === 1 ? '' : 's'} each at $${perVisit.toLocaleString('en-CA')}` }
 }
 
 function BuilderCalc({ site }: { site: SitePrice }) {
@@ -160,11 +178,12 @@ function BuilderCalc({ site }: { site: SitePrice }) {
       </div>
       <div className="sc-out" aria-live="polite">
         <dl>
-          <Result label="Bricks visits a month" value={money(r.bricksCost)} sub={`${sites} site${sites === 1 ? '' : 's'} × ${r.per.how}`} />
-          <Result label="Visit cost change" value={money(r.visitChange)} sub={`${money(r.nowCost)} today − ${money(r.bricksCost)} with Bricks`} />
-          <Result label="Report hours back" value={hours(r.hoursBack)} sub={`worth ${money(r.timeValue)}`} />
-          <Result label="Net a month" value={money(r.net)} sub={`${money(r.net * 12)} a year`} />
+          <Result label="Visits today" value={money(r.nowCost)} sub={`${plural(visits * sites, 'visit')} at ${money(payNow)} each`} />
+          <Result label="Bricks visits" value={money(r.bricksCost)} sub={`${plural(sites, 'site')}, ${r.per.how}`} />
+          <Result label="Report hours back" value={hours(r.hoursBack)} sub={`${share}% of ${plural(reportHours, 'hour')} on each of ${plural(sites * reports, 'report')}`} />
+          <Result label="Value of that time" value={money(r.timeValue)} sub={`At ${money(rate)} an hour`} />
         </dl>
+        <Net net={r.net} short="With these numbers Bricks visits cost more than what you pay today. What you get is one vendor, one place and dated evidence for every report." />
         <table className="sc-tally">
           <caption>Each month, from your numbers</caption>
           <thead><tr><th scope="col"></th><th scope="col">Now</th><th scope="col">With Bricks</th></tr></thead>
@@ -173,7 +192,7 @@ function BuilderCalc({ site }: { site: SitePrice }) {
             <tr><th scope="row">Reports compiled by hand</th><td>{sites * reports}</td><td>Drafted, you review</td></tr>
           </tbody>
         </table>
-        <p className="sc-fine">A negative number means Bricks costs more than what you pay today. Bricks isn’t pitched as the cheapest per visit: it’s one vendor, one place and dated evidence for every report. CAD before tax.</p>
+        <p className="sc-fine">Bricks isn’t pitched as the cheapest per visit: it’s one vendor, one place and dated evidence for every report. CAD before tax.</p>
       </div>
     </div>
   )
