@@ -6,6 +6,7 @@
  */
 import { randomBytes } from 'node:crypto'
 import type { Db } from '../../support/db'
+import type { ChatAlertSender } from '../../support/alert'
 import { cleanQuestion, escalationReasons, looksLikeInjection, type EscalationReason } from './policy'
 
 const EMAIL = /^[^@\s<>"]{1,64}@[^@\s<>"]{1,190}\.[a-z]{2,}$/i
@@ -53,7 +54,7 @@ export function summarize(input: EscalationInput): { summary: string; reasons: E
   return { summary, reasons }
 }
 
-export async function saveEscalation(db: Db, input: EscalationInput, indexVersion: string): Promise<{ ok: true; ref: string } | { ok: false }> {
+export async function saveEscalation(db: Db, input: EscalationInput, indexVersion: string, alert?: ChatAlertSender): Promise<{ ok: true; ref: string } | { ok: false }> {
   const { summary, reasons } = summarize(input)
   const ref = caseRef()
   const c = await db.insert('support_cases', {
@@ -68,5 +69,13 @@ export async function saveEscalation(db: Db, input: EscalationInput, indexVersio
     notes: `Support case ${ref} (support_cases.id=${caseId})\n${summary}`,
   })
   if (o.ok && o.rows[0]) await db.update('support_cases', { id: caseId }, { ops_escalation_id: o.rows[0].id })
+  // Owner alert to raph@brxs.ca. Must never fail the handoff: errors are logged and swallowed.
+  if (alert) {
+    try {
+      const test = /^\s*\[?test\]?\b/i.test(input.note) || input.transcript.some((t) => t.role === 'user' && /^\s*\[test\]/i.test(t.text))
+      const r = await alert({ ref, caseId, contactEmail: input.email, summary, reasons, pagePath: input.pagePath, test })
+      if (!r.ok) console.error('chat alert failed', r.error)
+    } catch (e) { console.error('chat alert threw', e instanceof Error ? e.message : e) }
+  }
   return { ok: true, ref }
 }

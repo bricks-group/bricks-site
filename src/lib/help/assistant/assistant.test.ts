@@ -172,6 +172,28 @@ describe('escalation hand-off', () => {
     assert.deepEqual(writes.map((w) => w[0]), ['support_cases', 'ops_escalations'])
     assert.equal(writes[1][1].escalation_type, 'support_chat')
   })
+  it('alerts the owner once per case and never fails the handoff', async () => {
+    const db: Db = {
+      insert: async (t, row) => ({ ok: true, status: 201, rows: [{ id: `${t}-1`, ...row }] }),
+      update: async () => ({ ok: true, status: 204 }),
+      select: async () => ({ ok: true, rows: [] }),
+      rpc: async () => ({ ok: true, data: 1 }),
+    }
+    const p = parseEscalation({ consent: true, email: 'a@b.co', note: '[TEST] please call me', transcript: [{ role: 'user', text: 'charged twice' }] })
+    assert.ok(p.ok)
+    if (!p.ok) return
+    const seen: { test?: boolean; caseId: string }[] = []
+    const ok = await saveEscalation(db, p.value, 'v1', async (a) => { seen.push(a); return { ok: true } })
+    assert.ok(ok.ok)
+    assert.equal(seen.length, 1)
+    assert.equal(seen[0].test, true)
+    const boom = await saveEscalation(db, p.value, 'v1', async () => { throw new Error('down') })
+    assert.ok(boom.ok)
+    const { buildChatAlert } = await import('../../support/alert.ts')
+    const b = buildChatAlert({ ref: 'HLP-1', caseId: 'c', contactEmail: 'a@b.co', summary: 'S', reasons: ['refund'], pagePath: '/help', test: true })
+    assert.match(b.subject, /^\[TEST\] Chat handoff needs you: HLP-1/)
+    assert.match(b.text, /a@b\.co[\s\S]*refund[\s\S]*S/)
+  })
 })
 
 describe('rate limiting', () => {

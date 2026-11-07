@@ -111,3 +111,50 @@ export function resendAlerter(env: Env = process.env, f: typeof fetch = fetch): 
     return { ok: true, id: j.id }
   }
 }
+
+/* ---------- website chat handoffs (support_chat) ---------- */
+export type ChatAlertInput = { ref: string; caseId: string; contactEmail: string; summary: string; reasons: string[]; pagePath: string; test?: boolean }
+
+export function buildChatAlert(a: ChatAlertInput): { subject: string; text: string } {
+  const tag = a.test ? '[TEST] ' : ''
+  return {
+    subject: `${tag}Chat handoff needs you: ${a.ref} (from ${a.contactEmail})`.slice(0, 200),
+    text: [
+      `A visitor asked the website help chat for a person. Nothing has been sent to them yet.`,
+      ``,
+      `Case: ${a.ref}`,
+      `Reply to: ${a.contactEmail}`,
+      `Why: ${a.reasons.length ? a.reasons.join(', ') : 'visitor asked for a person'}`,
+      a.pagePath ? `Page: https://www.brxs.ca${a.pagePath}` : '',
+      ``,
+      `Summary:`,
+      a.summary,
+      ``,
+      `Reply to them from help@brxs.ca. Full transcript: support_cases.id=${a.caseId} (ref ${a.ref}).`,
+    ].filter((l, i, arr) => l !== '' || arr[i - 1] !== '').join('\n'),
+  }
+}
+
+export type ChatAlertSender = (a: ChatAlertInput) => Promise<{ ok: boolean; id?: string; error?: string }>
+
+/** Same safeguards as resendAlerter: idempotency key per case, Bricks-alert headers (loop guard), never throws. */
+export function resendChatAlerter(env: Env = process.env, f: typeof fetch = fetch): ChatAlertSender | undefined {
+  const key = (env.RESEND_API_KEY || '').trim()
+  if (!key) return undefined
+  const to = (env.SUPPORT_ALERT_TO || ALERT_TO).trim()
+  return async (a) => {
+    try {
+      const { subject, text } = buildChatAlert(a)
+      const r = await f('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'Idempotency-Key': `chat-alert:${a.caseId}`.slice(0, 256) },
+        body: JSON.stringify({ from: ALERT_FROM, to: [to], subject, text, headers: { 'Auto-Submitted': 'auto-generated', 'X-Bricks-Alert': '1' } }),
+      })
+      if (!r.ok) return { ok: false, error: `resend_alert_${r.status}` }
+      const j = (await r.json().catch(() => ({}))) as { id?: string }
+      return { ok: true, id: j.id }
+    } catch (e) {
+      return { ok: false, error: e instanceof Error ? e.message : 'alert_failed' }
+    }
+  }
+}
