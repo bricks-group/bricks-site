@@ -51,6 +51,24 @@ export function reviewLink(env: Env = process.env, days = 7, nowSec = Math.floor
   return `${base}/login?t=${encodeURIComponent(signAdminToken(secret, nowSec + days * 86400))}`
 }
 
+
+/* ---------- branded HTML (General Sans webfont where supported, safe fallback stack) ---------- */
+const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+const linkify = (t: string) => esc(t).replace(/https:\/\/[^\s<]+/g, (u) => `<a href="${u}" style="color:#14110E;text-decoration:underline">${u.length > 60 ? 'Open review page' : u}</a>`)
+export const EMAIL_FONT = "'General Sans','Helvetica Neue',Helvetica,Arial,sans-serif"
+export function alertHtml(text: string): string {
+  const FONT = 'https://www.brxs.ca/fonts'
+  const body = text.split('\n').map((l) => (l ? linkify(l) : '&nbsp;')).join('<br>')
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light dark"><style>
+@font-face{font-family:'General Sans';src:url('${FONT}/GeneralSans-Regular.woff2') format('woff2');font-weight:400;}
+@font-face{font-family:'General Sans';src:url('${FONT}/GeneralSans-Medium.woff2') format('woff2');font-weight:500;}
+</style></head><body style="margin:0;padding:0;background:#F4F1EB">
+<div style="max-width:600px;margin:0 auto;padding:28px 24px;font-family:${EMAIL_FONT};font-size:15px;line-height:1.55;color:#3B332A">
+<div style="font-family:${EMAIL_FONT};font-weight:500;font-size:13px;letter-spacing:.02em;color:#14110E;margin-bottom:16px">Bricks</div>
+<div style="font-family:${EMAIL_FONT}">${body}</div>
+</div></body></html>`
+}
+
 /* ---------- alert content ---------- */
 const snippet = (t: string, n = 400) => { const s = t.replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n) + '…' : s }
 
@@ -104,7 +122,7 @@ export function resendAlerter(env: Env = process.env, f: typeof fetch = fetch): 
     const r = await f('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'Idempotency-Key': `alert:${a.emailId}`.slice(0, 256) },
-      body: JSON.stringify({ from: ALERT_FROM, to: [to], subject, text, headers: { 'Auto-Submitted': 'auto-generated', 'X-Bricks-Alert': '1' } }),
+      body: JSON.stringify({ from: ALERT_FROM, to: [to], subject, text, html: alertHtml(text), headers: { 'Auto-Submitted': 'auto-generated', 'X-Bricks-Alert': '1' } }),
     })
     if (!r.ok) return { ok: false, error: `resend_alert_${r.status}` }
     const j = (await r.json().catch(() => ({}))) as { id?: string }
@@ -148,7 +166,7 @@ export function resendChatAlerter(env: Env = process.env, f: typeof fetch = fetc
       const r = await f('https://api.resend.com/emails', {
         method: 'POST',
         headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'Idempotency-Key': `chat-alert:${a.caseId}`.slice(0, 256) },
-        body: JSON.stringify({ from: ALERT_FROM, to: [to], subject, text, headers: { 'Auto-Submitted': 'auto-generated', 'X-Bricks-Alert': '1' } }),
+        body: JSON.stringify({ from: ALERT_FROM, to: [to], subject, text, html: alertHtml(text), headers: { 'Auto-Submitted': 'auto-generated', 'X-Bricks-Alert': '1' } }),
       })
       if (!r.ok) return { ok: false, error: `resend_alert_${r.status}` }
       const j = (await r.json().catch(() => ({}))) as { id?: string }
