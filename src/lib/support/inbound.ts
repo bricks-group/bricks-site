@@ -12,7 +12,8 @@
 import { createHmac, timingSafeEqual } from 'node:crypto'
 import type { Db } from './db'
 import { respond } from '../help/assistant/answer'
-import { buildIndex, SITE } from '../help/assistant/corpus'
+import { buildIndex, SITE, type RetrievalIndex } from '../help/assistant/corpus'
+import { retrieve, terms, coverage, type Retrieved } from '../help/assistant/retrieve'
 import { escalationReasons, looksLikeInjection, type EscalationReason } from '../help/assistant/policy'
 
 type Env = Record<string, string | undefined>
@@ -116,7 +117,9 @@ const slugOf = (url: string) => url.split('#')[0].split('/').pop() || ''
 
 export async function classifyEmail(subject: string, text: string, auth: { dkim?: string; dmarc?: string } | null): Promise<Classification> {
   const body = text.split(/\n(?:On .{0,200}wrote:|-{2,}\s*Original Message|From: .*\n)/)[0].slice(0, 2000)
-  const question = `${subject}\n${body}`.slice(0, 600)
+  // The internal test subject is a marker, not part of the question (it pulled in unrelated 'pipeline' articles).
+  const subj = subject.trim().toLowerCase().startsWith(TEST_SUBJECT) ? subject.trim().slice(TEST_SUBJECT.length) : subject
+  const question = `${subj}\n${body}`.slice(0, 600)
   const reasons: Classification['reasons'] = [...escalationReasons(`${subject}\n${body}`)]
   if (looksLikeInjection(`${subject}\n${body}`)) reasons.push('injection')
   const reply = await respond(question)
@@ -128,12 +131,81 @@ export async function classifyEmail(subject: string, text: string, auth: { dkim?
   const authOk = auth ? auth.dkim === 'pass' || auth.dmarc === 'pass' : false
   if (!authOk) reasons.push('sender_unverified')
   const routine = reply.kind === 'answer' && reasons.length === 0
-  const citations = reply.citations
-  const links = citations.map((c) => `- ${c.title}: ${c.url}`).join('\n')
-  const draft = reply.kind === 'answer'
-    ? `Hi,\n\nThanks for getting in touch. ${reply.text.replace(/^From the help article “([^”]+)”[^:]*: /, 'Our help article “$1” covers this: ')}\n\nMore detail:\n${links}\n\nIf this doesn’t answer it, just reply and a person on the Bricks team will pick it up.\n\nBricks support\n(This reply was drafted automatically from our published help articles.)`
-    : `Hi,\n\nThanks for getting in touch. [KAM: answer here — this needs a person: ${[...new Set(reasons)].join(', ')}]\n\n${links ? `Related help:\n${links}\n\n` : ''}Bricks support`
+  const composed = reply.kind === 'answer' ? composeAnswer(question, reply.text, reply.citations) : null
+  // Stored citations match the links actually shown in the draft.
+  const citations = composed ? composed.links : reply.citations
+  const draft = composed
+    ? composed.text
+    : `Hi,\n\nThanks for getting in touch. [KAM: answer here — this needs a person: ${[...new Set(reasons)].join(', ')}]\n\n${citations.length ? `Related help:\n${citations.slice(0, 3).map((c) => `- ${c.title}: ${c.url}`).join('\n')}\n\n` : ''}Bricks support`
   return { routine, category, reasons: [...new Set(reasons)], draft, citations, indexVersion }
+}
+
+/* ---------- reply composer ---------- */
+
+/** Extra articles must be nearly as relevant as the matched one and cover most of the question. */
+export const RELATED_MIN_SCORE_RATIO = 0.85
+export const RELATED_MIN_COVERAGE = 0.6
+export const MAX_RELATED = 2
+const MAX_ANSWER_CHARS = 420
+
+const sentencesOf = (t: string) => t.split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter(Boolean)
+/** A sentence a person would write: starts with a capital or digit, ends with punctuation, has a few real words. */
+const isComplete = (s: string) => /^[A-Z0-9"“$]/.test(s) && /[.!?]["”)]?$/.test(s) && s.split(/\s+/).length >= 4
+/** Share of the smaller sentence's terms that the other repeats. High means the same point said twice. */
+function overlap(a: string, b: string): number {
+  const x = new Set(terms(a)), y = new Set(terms(b))
+  if (!x.size || !y.size) return 0
+  let n = 0
+  for (const t of x) if (y.has(t)) n++
+  return n / Math.min(x.size, y.size)
+}
+
+/** Pick up to 3 complete, non-repeating sentences from the matched article that best answer the question, in article order. */
+export function answerSentences(question: string, text: string): string[] {
+  const q = new Set(terms(question))
+  const all = sentencesOf(text).map((s, i) => ({ s, i, n: new Set(terms(s).filter((t) => q.has(t))).size })).filter((x) => isComplete(x.s))
+  // The article's own opening line is its cleanest summary, so it leads when it is on topic.
+  const w = (x: { i: number; n: number }) => x.n + (x.i === 0 && x.n > 0 ? 1 : 0)
+  const ranked = [...all].sort((a, b) => w(b) - w(a) || a.i - b.i)
+  const picked: typeof all = []
+  let len = 0
+  for (const r of ranked) {
+    if (picked.length >= 3) break
+    if (picked.length && r.n === 0) break
+    if (picked.some((p) => overlap(p.s, r.s) >= 0.6)) continue
+    if (len + r.s.length + 1 > MAX_ANSWER_CHARS) continue
+    picked.push(r)
+    len += r.s.length + 1
+  }
+  return picked.sort((a, b) => a.i - b.i).map((p) => p.s)
+}
+
+/** Related articles worth showing: strong, on-topic, at most MAX_RELATED, and none when weak. */
+export function relatedLinks(question: string, hits: Retrieved[], primaryUrl: string): { url: string; title: string }[] {
+  const top = hits.find((h) => h.chunk.url === primaryUrl) ?? hits[0]
+  if (!top) return []
+  return hits
+    .filter((h) => h.chunk.url !== primaryUrl)
+    .filter((h) => h.score >= top.score * RELATED_MIN_SCORE_RATIO && coverage(question, h) >= RELATED_MIN_COVERAGE)
+    .slice(0, MAX_RELATED)
+    .map((h) => ({ url: h.chunk.url, title: h.chunk.title }))
+}
+
+export function composeAnswer(question: string, replyText: string, citations: { url: string; title: string }[], index: RetrievalIndex = buildIndex()): { text: string; links: { url: string; title: string }[] } {
+  const primary = citations[0]
+  const hits = retrieve(index, question, 4)
+  const chunk = hits.find((h) => h.chunk.url === primary?.url)?.chunk
+  // Extractive replies are rebuilt from the article itself; model replies are already prose.
+  const fromArticle = chunk ? answerSentences(question, chunk.text) : []
+  const answer = fromArticle.length
+    ? fromArticle.join(' ')
+    : replyText.replace(/^From the help article “[^”]+”[^:]*: /, '').trim()
+  const related = primary ? relatedLinks(question, hits, primary.url) : []
+  const lines = ['Hi,', '', `Thanks for your note. ${answer}`]
+  if (primary) lines.push('', `There’s more in our help article “${primary.title}”: ${primary.url}`)
+  if (related.length) lines.push('', 'You might also find these useful:', ...related.map((c) => `- ${c.title}: ${c.url}`))
+  lines.push('', 'If that doesn’t cover it, just reply and someone on the team will help.', '', 'This answer was drafted automatically from our published help articles.', '', 'Bricks support')
+  return { text: lines.join('\n'), links: primary ? [primary, ...related] : [] }
 }
 
 /* ---------- processing ---------- */
