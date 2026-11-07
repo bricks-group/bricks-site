@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ARTICLES, articleHref, collectionHref, getArticle, getCollection, headings, relatedTo } from '@/lib/help'
+import { ARTICLES, articleHref, collectionHref, getArticle, getCollection, headings, relatedTo, helpCanonical } from '@/lib/help'
 import Blocks from '@/components/help/Blocks'
 import Feedback from '@/components/help/Feedback'
 import HelpIcon from '@/components/help/HelpIcon'
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description: a.summary,
-    alternates: { canonical: articleHref(a) },
+    alternates: { canonical: helpCanonical(articleHref(a)) },
     openGraph: { images: [OG_IMAGE], title, description: a.summary, url: articleHref(a), type: 'article' },
     twitter: { card: 'summary', title, description: a.summary },
   }

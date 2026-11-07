@@ -67,7 +67,34 @@ export function isPublicPath(pathname: string): boolean {
   return false
 }
 
+const HELP_HOST = 'help.brxs.ca'
+const WWW_HOSTS = new Set(['www.brxs.ca', 'brxs.ca'])
+const HELP_PASSTHROUGH = /^\/(_next|api|admin|assets|media|fonts|screens)(\/|$)|^\/(favicon\.svg|favicon\.ico|robots\.txt|sitemap\.xml)$/
+
+/** help.brxs.ca serves the /help hub at its root; www /help/* redirects there (one canonical home). */
+function helpHostRoute(request: NextRequest): NextResponse | null {
+  const host = (request.headers.get('host') || '').toLowerCase().split(':')[0]
+  const { pathname, search } = request.nextUrl
+  if (host === HELP_HOST) {
+    if (pathname === '/admin' || pathname === '/admin/') {
+      const u = request.nextUrl.clone(); u.pathname = '/admin/support'; return NextResponse.redirect(u)
+    }
+    if (pathname === '/help' || pathname.startsWith('/help/')) {
+      const u = request.nextUrl.clone(); u.pathname = pathname.slice(5) || '/'; return NextResponse.redirect(u, 308)
+    }
+    if (HELP_PASSTHROUGH.test(pathname)) return null
+    const u = request.nextUrl.clone(); u.pathname = pathname === '/' ? '/help' : `/help${pathname}`
+    return NextResponse.rewrite(u)
+  }
+  if (WWW_HOSTS.has(host) && (pathname === '/help' || pathname.startsWith('/help/'))) {
+    return NextResponse.redirect(`https://${HELP_HOST}${pathname.slice(5) || '/'}${search}`, 308)
+  }
+  return null
+}
+
 export function middleware(request: NextRequest) {
+  const routed = helpHostRoute(request)
+  if (routed) return routed
   const { pathname } = request.nextUrl
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-bricks-pathname', pathname)

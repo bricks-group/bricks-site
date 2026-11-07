@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { COLLECTIONS, articleHref, articlesIn, collectionHref, getCollection } from '@/lib/help'
+import { COLLECTIONS, articleHref, articlesIn, collectionHref, getCollection, helpCanonical } from '@/lib/help'
 import HelpIcon from '@/components/help/HelpIcon'
 import HelpSearch from '@/components/help/HelpSearch'
 import { ContactBand, Crumbs, JsonLd } from '@/components/help/Parts'
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: collectionHref(c.slug) },
+    alternates: { canonical: helpCanonical(collectionHref(c.slug)) },
     openGraph: { images: [OG_IMAGE], title, description, url: collectionHref(c.slug) },
     twitter: { card: 'summary', title, description },
   }

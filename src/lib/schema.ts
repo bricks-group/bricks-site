@@ -274,7 +274,7 @@ export function faqPageSchema(faqs: readonly { q: string; a: string }[]) {
   }
 }
 
-const PAGE_NAMES: Record<string, string> = {
+export const PAGE_NAMES: Record<string, string> = {
   '/about': 'About', '/pricing': 'Pricing', '/platform': 'Software', '/media': 'Listing media',
   '/builders': 'Site Progress for builders', '/investors': 'Investors', '/agents': 'Agents',
   '/brokerage': 'Brokerages', '/teams': 'Teams', '/reits': 'REITs', '/commercial': 'Commercial',

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { ARTICLES, COLLECTIONS, articleHref, collectionHref } from '@/lib/help'
+import { ARTICLES, COLLECTIONS, articleHref, collectionHref, helpCanonical } from '@/lib/help'
 import { isTradeEnabled } from '@/lib/services'
 
 const BASE = 'https://www.brxs.ca'
@@ -78,9 +78,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: r.priority,
   }))
   const help = [
-    { url: `${BASE}/help`, lastModified: contentUpdated, changeFrequency: 'weekly' as const, priority: 0.8 },
-    ...COLLECTIONS.map((c) => ({ url: `${BASE}${collectionHref(c.slug)}`, lastModified: contentUpdated, changeFrequency: 'monthly' as const, priority: 0.6 })),
-    ...ARTICLES.map((a) => ({ url: `${BASE}${articleHref(a)}`, lastModified: a.updated, changeFrequency: 'monthly' as const, priority: 0.5 })),
+    { url: 'https://help.brxs.ca/', lastModified: contentUpdated, changeFrequency: 'weekly' as const, priority: 0.8 },
+    ...COLLECTIONS.map((c) => ({ url: helpCanonical(collectionHref(c.slug)), lastModified: contentUpdated, changeFrequency: 'monthly' as const, priority: 0.6 })),
+    ...ARTICLES.map((a) => ({ url: helpCanonical(articleHref(a)), lastModified: a.updated, changeFrequency: 'monthly' as const, priority: 0.5 })),
   ]
   return [...pages, ...help]
 }

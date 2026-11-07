@@ -13,7 +13,7 @@ const DESC = 'Answers about booking listing media, plans and billing, the Bricks
 export const metadata: Metadata = {
   title: TITLE,
   description: DESC,
-  alternates: { canonical: '/help' },
+  alternates: { canonical: 'https://help.brxs.ca/' },
   openGraph: { images: [OG_IMAGE], title: TITLE, description: DESC, url: '/help' },
   twitter: { card: 'summary', title: TITLE, description: DESC },
 }

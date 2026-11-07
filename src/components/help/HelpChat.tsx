@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 type Citation = { url: string; title: string }
 type Reply = { kind: 'answer' | 'escalate' | 'unsupported' | 'refused' | 'invalid'; text: string; citations: Citation[] }
@@ -8,7 +9,8 @@ type Msg = { role: 'user' | 'assistant'; text: string; citations?: Citation[]; k
 
 const DISCLOSURE = 'This is an AI assistant. It answers only from the Bricks help articles, links its sources, and can’t make changes to bookings, payments or accounts. It can be wrong. For anything else, ask for a person.'
 
-export default function HelpChat({ pathname }: { pathname: string }) {
+export default function HelpChat() {
+  const pathname = usePathname() || ''
   const [open, setOpen] = useState(false)
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [q, setQ] = useState('')

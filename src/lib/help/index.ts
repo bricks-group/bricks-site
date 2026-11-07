@@ -46,6 +46,8 @@ export const ARTICLES: ArticleWithCollection[] = COLLECTIONS.flatMap((c) =>
 const BY_SLUG = new Map(ARTICLES.map((a) => [a.slug, a]))
 
 export const articleHref = (a: { collection: string; slug: string }) => `/help/${a.collection}/${a.slug}`
+/** Absolute canonical on the help hub host (help.brxs.ca serves /help at its root). */
+export const helpCanonical = (href: string) => `https://help.brxs.ca${href.replace(/^\/help/, '') || '/'}`
 export const collectionHref = (slug: string) => `/help/${slug}`
 
 export function getCollection(slug: string): Collection | undefined {

@@ -14,7 +14,7 @@ export const ALERT_FROM = 'Bricks Alerts <alerts@brxs.ca>'
 export const REVIEW_PATH = '/admin/support'
 
 
-const site = (env: Env) => (env.SUPPORT_REVIEW_BASE_URL || 'https://www.brxs.ca').replace(/\/$/, '')
+const site = (env: Env) => (env.SUPPORT_REVIEW_BASE_URL || 'https://help.brxs.ca').replace(/\/$/, '')
 
 /* ---------- admin link tokens (HMAC, no DB) ---------- */
 export function adminSecret(env: Env = process.env): string {
