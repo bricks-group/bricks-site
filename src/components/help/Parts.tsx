@@ -1,3 +1,4 @@
+import { helpHubHref } from '@/lib/help/href'
 import Link from 'next/link'
 
 export function Crumbs({ items }: { items: { href?: string; label: string }[] }) {
@@ -5,7 +6,7 @@ export function Crumbs({ items }: { items: { href?: string; label: string }[] })
     <nav aria-label="Breadcrumb">
       <ol className="hc-crumbs">
         {items.map((c, i) => (
-          <li key={i}>{c.href ? <Link href={c.href}>{c.label}</Link> : <span aria-current="page">{c.label}</span>}</li>
+          <li key={i}>{c.href ? <Link href={helpHubHref(c.href)}>{c.label}</Link> : <span aria-current="page">{c.label}</span>}</li>
         ))}
       </ol>
     </nav>
@@ -22,7 +23,7 @@ export function ContactBand() {
           <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> about anything else. Or call <a href="tel:+13434534578">343-453-4578</a>.
         </p>
       </div>
-      <Link href="/contact" className="btn btn-brick">Contact us</Link>
+      <Link href="/contact/contact-us" className="btn btn-brick">Contact us</Link>
     </section>
   )
 }

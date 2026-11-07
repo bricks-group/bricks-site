@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import ProjectSitePlan from './ProjectSitePlan'
 
+// Public projects render once on demand, then revalidate instead of SSR per visit.
+export const revalidate = 60
+export async function generateStaticParams() { return [] }
+
 // Same env var + default the /api/book/slots route already uses to reach
 // Bricks-OS server-side.
 const OS_API = (process.env.BRICKS_OS_API_URL || 'https://api.brxs.ca').replace(/\/$/, '')

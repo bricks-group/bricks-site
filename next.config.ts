@@ -14,6 +14,15 @@ const nextConfig: NextConfig = {
       { key: 'Access-Control-Allow-Methods', value: 'GET, HEAD, OPTIONS' },
     ]
     return [
+      // Only fingerprinted assets are immutable. Stable URLs stay refreshable.
+      ...['/media/:path*', '/assets/:path*', '/screens/:path*', '/fonts/:path*'].map(source => ({
+        source,
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400' }],
+      })),
+      ...['/fonts/GeneralSans-Medium.0168813e5da4.woff2', '/fonts/GeneralSans-Regular.1336dc613744.woff2', '/fonts/GeneralSans-Semibold.225c2c18bd1c.woff2', '/fonts/JetBrainsMono-Medium.086c48dfbea9.woff2', '/fonts/JetBrainsMono-Regular.a9cb1cd82332.woff2', '/fonts/fonts.34eb12ef4704.css'].map(source => ({
+        source,
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      })),
       { source: '/terms', headers: legalCors },
       { source: '/privacy', headers: legalCors },
       { source: '/legal/ic-agreement.txt', headers: legalCors },

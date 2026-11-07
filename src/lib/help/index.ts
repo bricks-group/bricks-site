@@ -117,3 +117,5 @@ export function articleLinks(a: Article): string[] {
   for (const m of all.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) out.push(m[1])
   return out
 }
+
+export { helpHubHref } from './href'

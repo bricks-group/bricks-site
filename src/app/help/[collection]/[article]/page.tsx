@@ -1,3 +1,4 @@
+import { helpHubHref } from '@/lib/help/href'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -66,7 +67,7 @@ export default async function ArticlePage({ params }: Props) {
                 <ul className="hc-list">
                   {related.map((r) => (
                     <li key={r.slug}>
-                      <Link href={articleHref(r)}>
+                      <Link href={helpHubHref(articleHref(r))}>
                         <span className="hc-list-t">{r.title}</span>
                         <HelpIcon name="chevron" size={20} />
                         <span className="hc-list-s">{r.summary}</span>

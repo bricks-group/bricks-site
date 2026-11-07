@@ -1,3 +1,4 @@
+import { helpHubHref } from '@/lib/help/href'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -55,7 +56,7 @@ export default async function CollectionPage({ params }: Props) {
           <ul className="hc-list">
             {items.map((a) => (
               <li key={a.slug}>
-                <Link href={articleHref(a)}>
+                <Link href={helpHubHref(articleHref(a))}>
                   <span className="hc-list-t">{a.title}</span>
                   <HelpIcon name="chevron" size={20} />
                   <span className="hc-list-s">{a.summary}</span>
@@ -68,7 +69,7 @@ export default async function CollectionPage({ params }: Props) {
           <h2 id="hc-more">{c.audience ? 'Other kinds of client' : 'More topics'}</h2>
           <ul className="hc-chips" style={{ marginTop: 14 }}>
             {others.map((x) => (
-              <li key={x.slug}><Link className="hc-chip" href={collectionHref(x.slug)}><HelpIcon name={x.icon} size={20} />{x.title}</Link></li>
+              <li key={x.slug}><Link className="hc-chip" href={helpHubHref(collectionHref(x.slug))}><HelpIcon name={x.icon} size={20} />{x.title}</Link></li>
             ))}
           </ul>
         </section>

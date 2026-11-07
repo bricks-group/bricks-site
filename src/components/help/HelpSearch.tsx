@@ -1,4 +1,5 @@
 'use client'
+import { helpHubHref } from '@/lib/help/href'
 import Link from 'next/link'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { search, type Hit, type SearchDoc } from '@/lib/help/search'
@@ -6,7 +7,7 @@ import HelpIcon from './HelpIcon'
 
 let cache: Promise<SearchDoc[]> | null = null
 function loadIndex(): Promise<SearchDoc[]> {
-  if (!cache) cache = fetch('/help/search-index.json').then((r) => (r.ok ? r.json() : Promise.reject(r.status))).catch((e) => { cache = null; throw e })
+  if (!cache) cache = fetch('/search-index.json').then((r) => (r.ok ? r.json() : Promise.reject(r.status))).catch((e) => { cache = null; throw e })
   return cache
 }
 
@@ -40,7 +41,7 @@ export default function HelpSearch({ syncUrl = false, compact = false }: { syncU
     }
   }, [q, docs, syncUrl])
 
-  const action = compact ? '/help' : undefined
+  const action = compact ? '/' : undefined
   const showing = q.trim().length > 0
 
   return (
@@ -78,7 +79,7 @@ export default function HelpSearch({ syncUrl = false, compact = false }: { syncU
                 <ul className="hc-results-list">
                   {hits.map((h) => (
                     <li key={h.doc.u}>
-                      <Link href={h.doc.u}>
+                      <Link href={helpHubHref(h.doc.u)}>
                         <span className="hc-results-c">{h.doc.c}</span>
                         <span className="hc-results-t">{h.doc.t}</span>
                         <span className="hc-results-s">{h.snippet}</span>
@@ -88,7 +89,7 @@ export default function HelpSearch({ syncUrl = false, compact = false }: { syncU
                 </ul>
               </>
             ) : (
-              <p className="hc-results-empty">No articles match &ldquo;{q.trim()}&rdquo;. Try fewer words, or <Link href="/help/contact/contact-us">contact us</Link>.</p>
+              <p className="hc-results-empty">No articles match &ldquo;{q.trim()}&rdquo;. Try fewer words, or <Link href="/contact/contact-us">contact us</Link>.</p>
             )
           ) : null}
         </div>

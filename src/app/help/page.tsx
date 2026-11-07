@@ -1,3 +1,4 @@
+import { helpHubHref } from '@/lib/help/href'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ARTICLES, COLLECTIONS, POPULAR, articleHref, articlesIn, collectionHref, getCollection } from '@/lib/help'
@@ -60,7 +61,7 @@ export default function HelpHome() {
           <p className="hc-sec-sub">Guides for how you use Bricks.</p>
           <ul className="hc-chips">
             {SHORTCUTS.map((s) => (
-              <li key={s.href}><Link className="hc-chip" href={s.href}><HelpIcon name={s.icon} size={20} />{s.label}</Link></li>
+              <li key={s.href}><Link className="hc-chip" href={helpHubHref(s.href)}><HelpIcon name={s.icon} size={20} />{s.label}</Link></li>
             ))}
           </ul>
         </section>
@@ -71,7 +72,7 @@ export default function HelpHome() {
           <ul className="hc-list hc-cols">
             {popular.map((a) => (
               <li key={a.slug}>
-                <Link href={articleHref(a)}>
+                <Link href={helpHubHref(articleHref(a))}>
                   <span className="hc-list-t">{a.title}</span>
                   <HelpIcon name="chevron" size={20} />
                   <span className="hc-list-s">{a.summary}</span>
@@ -105,7 +106,7 @@ function CollectionGrid({ items }: { items: typeof COLLECTIONS }) {
       {items.map((c) => {
         const n = articlesIn(c.slug).length
         return (
-          <Link key={c.slug} href={collectionHref(c.slug)} className="hc-card">
+          <Link key={c.slug} href={helpHubHref(collectionHref(c.slug))} className="hc-card">
             <HelpIcon name={c.icon} />
             <span className="hc-card-t">{c.title}</span>
             <span className="hc-card-s">{c.summary}</span>

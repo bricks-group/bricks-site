@@ -62,9 +62,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
         <meta name="theme-color" content="#F4F1EB" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
-        <link rel="preload" href="/fonts/GeneralSans-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/GeneralSans-Medium.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="/fonts/fonts.css" />
+        <link rel="preload" href="/fonts/GeneralSans-Regular.1336dc613744.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/GeneralSans-Medium.0168813e5da4.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="/fonts/fonts.34eb12ef4704.css" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var KEY='bricks-theme';var stored=localStorage.getItem(KEY)||'system';var resolved=stored==='dark'||stored==='light'?stored:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var root=document.documentElement;root.setAttribute('data-theme',resolved);root.style.colorScheme=resolved;}catch(e){}})();`,
