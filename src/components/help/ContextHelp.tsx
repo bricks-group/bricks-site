@@ -1,5 +1,5 @@
 'use client'
-import Link from 'next/link'
+import { HELP_URL } from '@/lib/nav'
 import { usePathname } from 'next/navigation'
 import type { ContextLink } from '@/lib/help/context-links'
 
@@ -11,6 +11,9 @@ export function lookupContextHelp(pathname: string, table: Record<string, Contex
   return table[key] ?? []
 }
 
+/** Help lives on help.brxs.ca: plain absolute links, so no cross-origin RSC prefetch (www /help 308s there). */
+const helpAbs = (href: string) => HELP_URL + (href.replace(/^\/help/, '') || '/')
+
 /** "Help for this page": specific articles for the page the visitor is on. */
 export default function ContextHelp({ table }: { table: Record<string, ContextLink[]> }) {
   const links = lookupContextHelp(usePathname() || '/', table)
@@ -21,10 +24,10 @@ export default function ContextHelp({ table }: { table: Record<string, ContextLi
         <h2 className="context-help-title">Help for this page</h2>
         <ul className="context-help-list">
           {links.map((l) => (
-            <li key={l.href}><Link href={l.href}>{l.title}</Link></li>
+            <li key={l.href}><a href={helpAbs(l.href)}>{l.title}</a></li>
           ))}
         </ul>
-        <Link href="/help" className="context-help-all">All help articles</Link>
+        <a href={HELP_URL} className="context-help-all">All help articles</a>
       </div>
     </aside>
   )
