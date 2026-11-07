@@ -9,6 +9,7 @@ import { SOFTWARE_PLANS } from '@/lib/catalog'
 import { PER_VISIT, PLANS as SITE_PLANS } from '@/lib/commercial'
 import { OS_LOGIN } from '@/lib/brand'
 import { HELP_URL } from '@/lib/nav'
+import { TODAY_PER_VISIT } from '@/lib/market-rates'
 import { OG_IMAGE } from '@/lib/og'
 import '@/components/software/software.css'
 
@@ -76,6 +77,7 @@ export default function WhyBricksPage() {
         <ul className="sw-sources">
           <li><strong>Bricks software prices:</strong> Clay free, Keystone $49, Marble $99 and Diamond $149 a month, CAD before tax, from the Bricks price list on <Link href="/pricing">pricing</Link>.</li>
           <li><strong>Site Progress prices:</strong> a progress visit ${PER_VISIT[0].price}, a mapped capture ${PER_VISIT[1].price.toLocaleString('en-CA')} and a one-time ${PER_VISIT[2].price} mapping setup, or monthly plans per site, from <a href={`${HELP_URL}/builders/site-progress-pricing`}>Site Progress pricing</a>.</li>
+          <li><strong>What you pay today:</strong> the builder example starts at ${TODAY_PER_VISIT.visual} a progress visit and ${TODAY_PER_VISIT.mapped.toLocaleString('en-CA')} a mapped capture, the middle of published GTA and Ontario one-off prices checked in October and November 2026. Replace them with your own quotes.</li>
           <li><strong>Time saved:</strong> your hours multiplied by the share you set. Bricks doesn’t supply a percentage. Set it to what you believe, including zero.</li>
           <li><strong>Value of time:</strong> your own hourly figure.</li>
           <li><strong>Tools replaced:</strong> only what you would actually cancel. Bricks includes a CRM from Keystone, e-sign from Keystone, forms from Marble, and a listing site and launch kit on every plan.</li>

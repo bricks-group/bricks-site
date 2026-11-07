@@ -2,6 +2,7 @@
 
 import { useId, useMemo, useState } from 'react'
 import './software.css'
+import { TODAY_PER_VISIT } from '@/lib/market-rates'
 
 /**
  * Savings calculator. Every input is the visitor's own number; the defaults are labelled examples.
@@ -104,6 +105,7 @@ function AgentCalc({ plans }: { plans: readonly PlanPrice[] }) {
               </button>
             ))}
           </div>
+          {plan === 'clay' ? <p className="sc-hint">Clay has no CRM or e-sign, so only count tools it replaces, like a listing site.</p> : null}
           <p className="sc-hint">Starts on Keystone, the lowest plan with the CRM and e-sign from the example tools. Forms come with Marble; the AI suite with Diamond. Real Bricks prices, monthly, CAD before tax. Yearly billing gets two months free.</p>
         </div>
       </div>
@@ -140,8 +142,12 @@ function BuilderCalc({ site }: { site: SitePrice }) {
   const [sites, setSites] = useState(2)
   const [visits, setVisits] = useState(2)
   const [mapped, setMapped] = useState(false)
-  const [payNow, setPayNow] = useState(600)
-  const [vendors, setVendors] = useState(2)
+  // "Today" follows the visit type until the visitor types their own figure.
+  const [payNow, setPayNowRaw] = useState<number>(TODAY_PER_VISIT.visual)
+  const [payEdited, setPayEdited] = useState(false)
+  const setPayNow = (n: number) => { setPayEdited(true); setPayNowRaw(n) }
+  const chooseKind = (m: boolean) => { setMapped(m); if (!payEdited) setPayNowRaw(m ? TODAY_PER_VISIT.mapped : TODAY_PER_VISIT.visual) }
+  const [vendors, setVendors] = useState(1)
   const [reports, setReports] = useState(1)
   const [reportHours, setReportHours] = useState(4)
   const [rate, setRate] = useState(90)
@@ -150,10 +156,11 @@ function BuilderCalc({ site }: { site: SitePrice }) {
   const r = useMemo(() => {
     const per = siteCost(visits, mapped ? site.mappedPerVisit : site.visualPerVisit, mapped ? site.mappedPlans : site.visualPlans)
     const bricksCost = per.cost * sites
+    const setupOnce = mapped ? site.setup * sites : 0
     const nowCost = payNow * visits * sites
     const hoursBack = sites * reports * reportHours * (Math.min(share, 100) / 100)
     const timeValue = hoursBack * rate
-    return { per, bricksCost, nowCost, visitChange: nowCost - bricksCost, hoursBack, timeValue, net: nowCost - bricksCost + timeValue, handoffsNow: sites * visits * vendors, handoffsWith: sites * visits }
+    return { per, bricksCost, setupOnce, perVisit: visits ? per.cost / visits : 0, nowCost, visitChange: nowCost - bricksCost, hoursBack, timeValue, net: nowCost - bricksCost + timeValue, handoffsNow: sites * visits * vendors, handoffsWith: sites * visits }
   }, [sites, visits, mapped, payNow, vendors, reports, reportHours, rate, share, site])
 
   return (
@@ -164,13 +171,13 @@ function BuilderCalc({ site }: { site: SitePrice }) {
         <div className="sc-field">
           <span className="sc-label" id="kind-l">Visit type</span>
           <div className="sc-seg" role="radiogroup" aria-labelledby="kind-l">
-            <button type="button" role="radio" aria-checked={!mapped} className={!mapped ? 'on' : ''} onClick={() => setMapped(false)}>Progress visit</button>
-            <button type="button" role="radio" aria-checked={mapped} className={mapped ? 'on' : ''} onClick={() => setMapped(true)}>Mapped capture</button>
+            <button type="button" role="radio" aria-checked={!mapped} className={!mapped ? 'on' : ''} onClick={() => chooseKind(false)}>Progress visit</button>
+            <button type="button" role="radio" aria-checked={mapped} className={mapped ? 'on' : ''} onClick={() => chooseKind(true)}>Mapped capture</button>
           </div>
-          <p className="sc-hint">Mapped plans add a one-time ${site.setup.toLocaleString('en-CA')} setup per site, not included here.</p>
+          <p className="sc-hint">Mapped plans add a one-time ${site.setup.toLocaleString('en-CA')} ground-control setup per site in the first month. It’s shown under the result, not in the monthly figure.</p>
         </div>
-        <Field label="What you pay per visit today" hint="Pilot, processing and any photographer, together. Example: $600." value={payNow} onChange={setPayNow} unit="$" />
-        <Field label="Vendors per visit today" hint="Drone pilot, map processing, photographer. Example: 2." value={vendors} onChange={setVendors} />
+        <Field label="What you pay per visit today" hint={`Pilot, processing and any photographer, together. Example: $${(mapped ? TODAY_PER_VISIT.mapped : TODAY_PER_VISIT.visual).toLocaleString('en-CA')}, the middle of published GTA and Ontario ${mapped ? 'mapped capture' : 'progress visit'} prices. Use your own quote.`} value={payNow} onChange={setPayNow} unit="$" />
+        <Field label="Vendors per visit today" hint="Drone pilot, map processing, photographer. Example: 1, one company doing it all." value={vendors} onChange={setVendors} />
         <Field label="Reports per site a month" hint="Progress reports and investor updates. Example: 1." value={reports} onChange={setReports} />
         <Field label="Hours compiling each report" hint="Pulling images, writing what changed, laying it out. Example: 4." value={reportHours} onChange={setReportHours} unit="h" />
         <Field label="What an hour of that time is worth" hint="Your own figure. Example: $90." value={rate} onChange={setRate} unit="$ / h" />
@@ -179,11 +186,12 @@ function BuilderCalc({ site }: { site: SitePrice }) {
       <div className="sc-out" aria-live="polite">
         <dl>
           <Result label="Visits today" value={money(r.nowCost)} sub={`${plural(visits * sites, 'visit')} at ${money(payNow)} each`} />
-          <Result label="Bricks visits" value={money(r.bricksCost)} sub={`${plural(sites, 'site')}, ${r.per.how}`} />
+          <Result label="Bricks visits" value={money(r.bricksCost)} sub={`${plural(sites, 'site')}, ${r.per.how}${visits ? `, ${money(r.perVisit)} a visit` : ''}${r.setupOnce ? `. Plus ${money(site.setup)} setup per site, once` : ''}`} />
           <Result label="Report hours back" value={hours(r.hoursBack)} sub={`${share}% of ${plural(reportHours, 'hour')} on each of ${plural(sites * reports, 'report')}`} />
           <Result label="Value of that time" value={money(r.timeValue)} sub={`At ${money(rate)} an hour`} />
         </dl>
         <Net net={r.net} short="With these numbers Bricks visits cost more than what you pay today. What you get is one vendor, one place and dated evidence for every report." />
+        {r.setupOnce ? <p className="sc-first">First month, after the one-time setup of {money(r.setupOnce)}: {r.net - r.setupOnce >= 0 ? money(r.net - r.setupOnce) : `${money(r.setupOnce - r.net)} more than it saves`}.</p> : null}
         <table className="sc-tally">
           <caption>Each month, from your numbers</caption>
           <thead><tr><th scope="col"></th><th scope="col">Now</th><th scope="col">With Bricks</th></tr></thead>

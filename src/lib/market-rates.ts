@@ -25,3 +25,12 @@ export const PRICE_ROWS: Record<'builder' | 'agent' | 'pm', PriceRow[]> = {
     { job: 'Condition report', unit: 'move-in or move-out', market: [75, 200], bricks: ONE_OFFS.pm_condition_report.cents / 100, bricksNote: 'compared with the last report' },
   ],
 }
+
+/**
+ * Calculator "what you pay today" starting values, per visit, CAD before tax.
+ * Median of published Canadian one-off prices (private research, 17 Oct and 7 Nov 2026):
+ * progress visit, 7 prices from $199 to $750, median $400; mapped capture
+ * (orthomosaic + 3D), 5 prices from $950 to $1,950, median $1,499, rounded to $1,500.
+ * Labelled on the site as examples; visitors replace them with their own.
+ */
+export const TODAY_PER_VISIT = { visual: 400, mapped: 1500 } as const

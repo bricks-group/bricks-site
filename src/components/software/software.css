@@ -293,3 +293,4 @@
 html[data-theme="dark"] .sc-net-v{color:var(--brick);}
 .sc-net-s{margin:6px 0 0;font-size:13px;line-height:1.45;color:var(--inkSoft);max-width:52ch;text-wrap:pretty;}
 .sc-net.is-short .sc-net-v{color:var(--ink);}
+.sc-first{margin:10px 0 0;font-size:13px;line-height:1.45;color:var(--inkSoft);}
