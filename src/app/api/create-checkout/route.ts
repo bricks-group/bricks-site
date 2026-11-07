@@ -3,6 +3,7 @@ import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
 import { stripVirtualStaging } from '@/lib/pricing'
 import { termsAcceptanceMeta } from '@/lib/terms-version'
 import { resolvePropertyTimezone, localYmd, isBookableStart } from '@/lib/schedule'
+import { agentIdentityError } from '@/lib/agent-identity'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -107,6 +108,8 @@ export async function POST(req: Request) {
   if (!body || typeof body !== 'object') return bad('Expected JSON object')
   // Virtual staging is off sale (VIRTUAL_STAGING_ENABLED in lib/pricing): never price or charge it.
   body = stripVirtualStaging(body)
+  const idErr = agentIdentityError(body)
+  if (idErr) return bad(idErr)
 
   const preferredDate = (body.preferred_date || '').toString().trim()
   const preferredWindow = (body.preferred_window || '').toString().trim().toLowerCase()
