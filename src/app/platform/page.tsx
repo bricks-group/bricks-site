@@ -101,8 +101,8 @@ export default function PlatformPage() {
         .wrap{max-width:var(--container);padding-left:var(--gutter);padding-right:var(--gutter);}
         .platform-os-stage{margin:0;}
         .platform-surf-head{padding:var(--sec-half) var(--gutter) var(--head-gap);}
-        .platform-surf-head h2{font-weight:500;font-size:28px;letter-spacing:-0.7px;line-height:1.05;color:var(--ink);margin-top:8px;}
-        .platform-surf-head p{font-size:15px;color:var(--inkSoft);margin-top:8px;line-height:1.45;max-width:640px;}
+        .platform-surf-head h2,.prod-row .prod-copy h2{font-weight:500;font-size:var(--vs-fs-section);letter-spacing:-.02em;line-height:1.12;color:var(--ink);margin-top:8px;}
+        .platform-surf-head p{font-size:var(--vs-fs-body);color:var(--inkSoft);margin-top:8px;line-height:1.45;max-width:640px;}
         .platform-surf-cta{padding:var(--gap) var(--gutter) 0;}
         .platform-os-stage .tray{width:min(calc(100% - var(--gutter) * 2), calc(var(--container) - var(--gutter) * 2));margin:0 auto;}
         .prod-row-flip{margin-bottom:var(--sec-half);}

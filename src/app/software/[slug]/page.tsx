@@ -124,7 +124,7 @@ export default async function SoftwareModulePage({ params }: Props) {
       <Close title="Start with the software." href={OS_LOGIN} label="Try Bricks free" external />
       <style>{`
         .sw-hero .wrap{max-width:var(--container);padding-left:var(--gutter);padding-right:var(--gutter);}
-        .sw-first{padding-top:8px;}
+        .sw-first{padding-top:24px;}
       `}</style>
     </>
   )

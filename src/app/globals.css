@@ -159,7 +159,7 @@ html[data-bx-auth="in"] .drawer-links .nav-auth-in{display:block !important;}
   background:var(--brickTint);color:var(--brickDeep);margin-bottom:16px;}
 .hero h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;
   color:var(--ink);max-width:760px;}
-.hero p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:520px;}
+.hero p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:520px;line-height:1.45;}
 .updated{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--inkFaint);margin-top:12px;}
 .cta-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;align-items:center;}
 .btn{font-weight:500;font-size:14px;border-radius:2px;padding:13px 22px;
@@ -1295,10 +1295,10 @@ html[data-theme="dark"] .map-cutout-gl img{
 .trust-tile,.proof-card,.phone-device,.phone-device-screen,.btn-night{
   border-radius:2px !important;
 }
-/* Hero windows keep Mac-soft radius (Cursor) — not the sitewide 2px lock */
-.prod-hero .pwin{border-radius:10px !important;}
+/* Hero windows follow the sitewide 2px square-edge lock (2026-11-07) */
+.prod-hero .pwin{border-radius:2px !important;}
 @media (max-width:900px){
-  .prod-hero .pwin{border-radius:10px !important;}
+  .prod-hero .pwin{border-radius:2px !important;}
 }
 .phone-device{
   padding:3px !important;box-shadow:none !important;

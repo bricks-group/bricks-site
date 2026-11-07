@@ -3,8 +3,8 @@
 
 /* Hero */
 .hero-home{padding:var(--hero-top) 0 var(--sec-half) !important;}
-.hero-home h1{font-size:var(--vs-fs-display) !important;line-height:1.08 !important;letter-spacing:-.02em !important;max-width:18ch !important;font-weight:500;}
-.hero-home p.sub{font-size:var(--vs-fs-body) !important;color:var(--vs-fg-2) !important;max-width:44ch !important;margin-top:16px !important;line-height:1.45;}
+.hero-home h1{max-width:18ch !important;font-weight:500;}
+.hero-home p.sub{max-width:44ch !important;}
 .hero-home .cta-row{margin-top:24px;display:flex;flex-direction:row !important;flex-wrap:wrap;gap:12px !important;align-items:center !important;}
 .hero-home .cta-row .btn{width:auto !important;}
 .prod-hero .tray{width:min(calc(100% - (var(--gutter) * 2)), calc(1200px - (var(--gutter) * 2)));}

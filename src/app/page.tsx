@@ -207,9 +207,9 @@ export default function Home() {
 
       <style>{`
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
-        .hero-home h1{font-weight:500;font-size:46px;line-height:1.02;letter-spacing:-1.6px;color:var(--ink);max-width:820px;}
+        .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:820px;}
         .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:600px;line-height:1.45;}
-        .hero-home .hero-calc{border-radius:0;border:1px solid var(--ink);color:var(--ink);background:transparent;padding:0 18px;min-height:44px;display:inline-flex;align-items:center;text-decoration:none;}
+        .hero-home .hero-calc{border-radius:0;border:1px solid var(--ink);color:var(--ink);background:transparent;padding:12px 22px;min-height:48px;box-sizing:border-box;display:inline-flex;align-items:center;text-decoration:none;}
         .hero-home .hero-calc:hover{background:var(--ink);color:var(--paper);}
         .hero-home .cta-row{align-items:center;}
         .hf-shot{background:var(--paperDeep);}
@@ -219,8 +219,8 @@ export default function Home() {
         @media (max-width:680px){.hf-shot picture{inset:14px 14px 0 14px;}}
         @media (max-width:680px){
           .hero-home{padding:36px var(--gutter) 24px;}
-          .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:22ch;}
-          .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:40ch;line-height:1.4;}
+          .hero-home h1{font-size:34px;max-width:22ch;}
+          .hero-home p.sub{margin-top:12px;max-width:40ch;}
           .hero-home .cta-row{margin-top:22px;gap:20px;}
         }
       `}</style>

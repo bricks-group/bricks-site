@@ -77,7 +77,7 @@ html[data-theme="dark"] .ci-row{--ci-ink:#fff;--ci-filter:brightness(0) invert(1
 /* Closing band button (Close). Orange primary when it repeats the hero action, otherwise outlined.
    Both must read in light, prefers-color-scheme dark and the data-theme toggle: --night equals the dark
    page colour, so the old filled night button vanished in dark mode. */
-.cm-close .btn{min-height:44px;transition:background-color .15s ease,color .15s ease,border-color .15s ease;}
+.cm-close .btn{min-height:48px;padding:12px 22px;box-sizing:border-box;transition:background-color .15s ease,color .15s ease,border-color .15s ease;}
 .cm-close .btn.btn-primary{background:#D2542B!important;color:#fff!important;border:1px solid #D2542B!important;}
 .cm-close .btn.btn-primary:hover{background:#B8461F!important;border-color:#B8461F!important;filter:none;}
 .cm-close .btn.btn-primary:active{background:#A8401F!important;border-color:#A8401F!important;}
