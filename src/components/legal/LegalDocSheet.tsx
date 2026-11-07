@@ -177,7 +177,7 @@ const LEGAL_SHEET_CSS = `
 @keyframes ldocSheet{from{transform:translateY(100%)}to{transform:none}}
 @media (max-width:640px){
   .ldoc-overlay{align-items:flex-end;padding:0;padding-top:max(12px,env(safe-area-inset-top));}
-  .ldoc-panel{max-width:none;height:100%;border-radius:12px 12px 0 0;border-bottom:0;animation:ldocSheet .26s cubic-bezier(.2,.8,.2,1);}
+  .ldoc-panel{max-width:none;height:100%;border-radius:2px 2px 0 0;border-bottom:0;animation:ldocSheet .26s cubic-bezier(.2,.8,.2,1);}
   .ldoc-grip{display:block;width:36px;height:4px;border-radius:2px;background:var(--hairStrong);margin:8px auto 0;}
   .ldoc-head{padding:12px 20px 14px;}
   .ldoc-body{padding:4px 20px 24px;}

@@ -7,6 +7,7 @@ import BrandMark from '@/components/BrandMark'
 import { OS_LOGIN, OS_URL } from '@/lib/brand'
 import { clearHintCookies, osLogoutUrl } from '@/lib/site-session'
 import './nav-builders.css'
+import { SOFTWARE_MODULES, moduleHref } from '@/lib/software-modules'
 
 const links = [
   { href: '/platform', label: 'Software' },
@@ -69,18 +70,34 @@ export default function Nav() {
             <span className="nav-flag">Canada</span>
           </div>
           <nav className="nav-links" aria-label="Primary">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`${pathname === l.href || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}${l.href === '/builders' ? ' nav-nowrap' : ''}`}
-                aria-label={l.href === '/builders' ? l.label : undefined}
-              >
-                {l.href === '/builders' ? (
-                  <><span className="nav-full">{l.label}</span><span className="nav-short">Builders</span></>
-                ) : l.label}
-              </Link>
-            ))}
+            {links.map((l) => {
+              const link = (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`${pathname === l.href || (l.href === '/builders' && pathname === '/construction') || (l.href === '/platform' && (pathname.startsWith('/software/') || pathname === '/why-bricks')) ? 'active' : ''}${l.href === '/builders' ? ' nav-nowrap' : ''}`}
+                  aria-label={l.href === '/builders' ? l.label : undefined}
+                >
+                  {l.href === '/builders' ? (
+                    <><span className="nav-full">{l.label}</span><span className="nav-short">Builders</span></>
+                  ) : l.label}
+                </Link>
+              )
+              if (l.href !== '/platform') return link
+              // Software menu: opens on hover or keyboard focus; square panel, no pills.
+              return (
+                <div key={l.href} className="nav-menu">
+                  {link}
+                  <div className="nav-panel" role="group" aria-label="Software">
+                    <Link href="/platform" className="nav-panel-all">All of the software</Link>
+                    {SOFTWARE_MODULES.map((m) => (
+                      <Link key={m.slug} href={moduleHref(m.slug)} className={pathname === moduleHref(m.slug) ? 'active' : ''}>{m.name}</Link>
+                    ))}
+                    <Link href="/why-bricks" className={`nav-panel-why${pathname === '/why-bricks' ? ' active' : ''}`}>With and without Bricks</Link>
+                  </div>
+                </div>
+              )
+            })}
           </nav>
           <div className="nav-actions">
             {/* Signed-in state comes from <html data-bx-auth>, set before paint (see site-session.ts). */}
@@ -146,6 +163,7 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
+          <Link href="/why-bricks" className={pathname === '/why-bricks' ? 'active' : ''} onClick={() => setOpen(false)}>With and without Bricks</Link>
           <Link href="/agents" className={pathname === '/agents' ? 'active' : ''} onClick={() => setOpen(false)}>Agents</Link>
           <Link href="/teams" className={pathname === '/teams' ? 'active' : ''} onClick={() => setOpen(false)}>Teams</Link>
           <Link href="/brokerage" className={pathname === '/brokerage' ? 'active' : ''} onClick={() => setOpen(false)}>Brokerages</Link>

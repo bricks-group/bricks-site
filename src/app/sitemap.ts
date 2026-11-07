@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { ARTICLES, COLLECTIONS, articleHref, collectionHref } from '@/lib/help'
 import { isTradeEnabled } from '@/lib/services'
+import { SOFTWARE_MODULES } from '@/lib/software-modules'
 
 const BASE = 'https://www.brxs.ca'
 
@@ -49,7 +50,9 @@ const PRODUCT_PAGES = [
   { path: '/about', changeFrequency: 'monthly' as const, priority: 0.6 },
   { path: '/service-areas', changeFrequency: 'weekly' as const, priority: 0.8 },
   { path: '/fall-market', changeFrequency: 'monthly' as const, priority: 0.65 },
-  { path: '/platform', changeFrequency: 'monthly' as const, priority: 0.55 },
+  { path: '/platform', changeFrequency: 'monthly' as const, priority: 0.8 },
+  { path: '/why-bricks', changeFrequency: 'monthly' as const, priority: 0.75 },
+  ...SOFTWARE_MODULES.map((m) => ({ path: `/software/${m.slug}`, changeFrequency: 'monthly' as const, priority: 0.7 })),
   { path: '/agents', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/brokerage', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/contact', changeFrequency: 'yearly' as const, priority: 0.4 },
