@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SiteBreadcrumbs from '@/components/SiteBreadcrumbs'
-import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
+import ChromeGate from '@/components/ChromeGate'
+import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA, PAGE_NAMES } from '@/lib/schema'
+import { CONTEXT_HELP_PATHS, contextHelpFor } from '@/lib/help/context-links'
 import MotionLayer from '@/components/MotionLayer'
 import ContextHelp from '@/components/help/ContextHelp'
 import HelpChat from '@/components/help/HelpChat'
@@ -42,10 +43,10 @@ export const metadata: Metadata = {
   ...(gated ? { robots: { index: false, follow: false } } : {}),
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = (await headers()).get('x-bricks-pathname') || ''
-  // /gate and the plan visit one-tap page use their own focused chrome.
-  const bare = pathname === '/gate' || pathname === '/visit' || pathname.startsWith('/visit/')
+// Built once at build time; client chrome looks up the current path (keeps the root layout static).
+const CONTEXT_HELP_TABLE = Object.fromEntries(CONTEXT_HELP_PATHS.map((p) => [p, contextHelpFor(p)]))
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -71,15 +72,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body>
-        {bare ? null : <Nav />}
-        {bare ? null : <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA] }) }} />}
-        {bare ? null : <SiteBreadcrumbs pathname={pathname} />}
+        <ChromeGate>
+          <Nav />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA] }) }} />
+          <SiteBreadcrumbs names={PAGE_NAMES} />
+        </ChromeGate>
         {children}
-        {bare ? null : <Footer><ContextHelp pathname={pathname} /></Footer>}
-        {!bare && chatStatus().enabled ? <HelpChat pathname={pathname} /> : null}
-        {bare ? null : <MotionLayer />}
+        <ChromeGate>
+          <Footer><ContextHelp table={CONTEXT_HELP_TABLE} /></Footer>
+          {chatStatus().enabled ? <HelpChat /> : null}
+          <MotionLayer />
+          <Script src="/assets/protect.js" strategy="afterInteractive" />
+        </ChromeGate>
         <Analytics />
-        {bare ? null : <Script src="/assets/protect.js" strategy="afterInteractive" />}
       </body>
     </html>
   )
