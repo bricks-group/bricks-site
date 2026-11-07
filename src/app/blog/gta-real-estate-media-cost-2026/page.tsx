@@ -56,7 +56,7 @@ export default function Post() {
           <li><strong>HDR photography:</strong> $149 (budget à la carte) up to ~$329 for premium full-service shoots. Typical mid-market is $200–$289.</li>
           <li><strong>Drone photos:</strong> $39 for a few frames, $100–$149 for a proper set. Drone <em>video</em> runs $90–$250.</li>
           <li><strong>Floor plans:</strong> almost always $99–$149, and frequently included.</li>
-          <li><strong>Virtual tour (path-confined):</strong> $149 entry (phone-scanned) up to $300+ for a Matterport-style capture. This is not a virtual visit.</li>
+          <li><strong>Virtual tour (path-confined):</strong> $149 entry (phone-scanned) up to $300+ for a scanned 3D tour. This is not a virtual visit.</li>
           <li><strong>Cinematic / walkthrough video:</strong> $169 budget, $289–$400 typical, $525+ for high-end.</li>
           <li><strong>Social reel:</strong> $149–$200.</li>
           <li><strong>Twilight:</strong> $175–$225 for a real blue-hour shoot; some providers offer a digital twilight for ~$25 per image.</li>

@@ -66,8 +66,8 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <h1>Connect every part of real estate. Make each one stronger.</h1>
-          <p className="sub">One system that ties builders, agents, property managers and vendors together, with every project, listing and payment on one record.</p>
+          <h1>The system that brings it all together.</h1>
+          <p className="sub">Bring deals, listings, bookings and conversations into one place. Your software, your team and the people who get each property ready.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="btn btn-sec hero-calc" href="/why-bricks#calculator">Work out your savings</Link>

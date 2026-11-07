@@ -37,7 +37,7 @@ export default function Post() {
             dateModified: '2026-07-22',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             mainEntityOfPage: 'https://www.brxs.ca/blog/3d-tour-vs-video-walkthrough',
-            keywords: 'virtual tour vs video walkthrough, real estate video, Matterport-style walkthrough, Gaussian splat virtual visit',
+            keywords: 'virtual tour vs video walkthrough, real estate video, scanned 3D walkthrough, Gaussian splat virtual visit',
           }),
         }}
       />

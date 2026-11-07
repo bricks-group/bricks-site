@@ -3900,7 +3900,7 @@
       th: th,
       dark: dark,
       title: "Forms & e-signatures",
-      sub: "Provincial board forms \u2014 pre-filled from the deal, signed in-system. No DocuSign round-trips.",
+      sub: "Provincial board forms \u2014 pre-filled from the deal, signed in-system. No separate e-sign tool.",
       actions: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Btn, {
         variant: "ghost",
         dark: dark,

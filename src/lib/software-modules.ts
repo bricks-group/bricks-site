@@ -73,7 +73,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     plan: 'Transactions are on every plan, including free Clay. E-sign comes with Keystone, forms and the deal room with Marble. Every brokerage seat includes all of it.',
     faqs: [
       { q: 'Can I bring in the deals I already have?', a: 'Yes. Use Import deals on the Transactions page, or add them one at a time.' },
-      { q: 'Does Bricks connect to Docusign?', a: 'Not yet. Bricks has its own e-sign, with fingerprints and an audit trail, on Keystone and up.' },
+      { q: 'Do I need a separate e-sign tool?', a: 'No. Bricks has its own e-sign, with fingerprints and an audit trail, on Keystone and up.' },
       { q: 'Can my broker review deal files?', a: 'Yes, on a brokerage account. Compliance lists the files missing documents and the documents waiting for review.' },
     ],
     related: ['documents-and-delivery', 'updates', 'listings'],
@@ -342,7 +342,6 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
       { title: 'MLS® feeds', body: 'PropTx (TRREB) through the RESO Web API, Bridge Interactive including Cornerstone and ITSO, another RESO Web API feed, or Repliers.' },
       { title: 'CRM', body: 'Follow Up Boss syncs contacts and deals both ways. kvCORE (BoldTrail) pulls your contacts into Bricks.' },
       { title: 'Calendars', body: 'Google Calendar, Apple Calendar with an app-specific password, or a private calendar link.' },
-      { title: 'Not yet', body: 'Docusign isn’t set up yet. A Lone Wolf key can be saved, but nothing syncs yet.' },
     ],
     plan: 'Connections are available on every account. The CRM itself starts on Keystone.',
     faqs: [

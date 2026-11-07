@@ -1385,7 +1385,7 @@ function FormsContent({ th, dark }) {
   ];
   return (
     <>
-      <ModHead th={th} dark={dark} title="Forms & e-signatures" sub="Provincial board forms — pre-filled from the deal, signed in-system. No DocuSign round-trips."
+      <ModHead th={th} dark={dark} title="Forms & e-signatures" sub="Provincial board forms — pre-filled from the deal, signed in-system. No separate e-sign tool."
         actions={<><Btn variant="ghost" dark={dark} icon="file">Templates</Btn><Btn variant="primary" dark={dark} icon="plus">New document</Btn></>}/>
       <KpiRow th={th} items={kpis}/>
       <div style={{ border:`1px solid ${th.hair}`, borderRadius:2 }}>
