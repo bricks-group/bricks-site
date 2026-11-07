@@ -1,46 +1,50 @@
 # Bricks
 
-> Listing media for Canadian real estate — HDR photography, licensed drone, floor plans, with optional virtual tour (path-confined) and virtual visit (free-roam Gaussian splat). Photos delivered in 24 hours; other media in 24–48h. Brand: Bricks / Bricks Group. Serving Canada.
+> Bricks is subscription software for Canadian real estate, built by Bricks Group in Ontario, Canada. Builders, developers and investors, as well as brokerages, teams and realtors, use Bricks. Listing media, Virtual Visit and Site Progress are services booked inside the software.
 
-Bricks is a real estate media company operated by Bricks Group in Canada. Agents and brokerages book listing photo/video/drone shoots online; Bricks delivers edited photos within 24 hours and other media within 24–48 hours. Coverage is Canada-wide; exact serviceability is confirmed at booking (do not treat legacy GTA city lists as the brand geography).
+Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-on, not a path-confined virtual tour and never included in a media package. Site Progress covers dated drone visits, mapping and orthomosaics, models, documents, reports and comparisons over time. Confirm service availability and any travel costs for the property at booking; inspections are Ontario only.
 
-Two spatial products, never collapsed: **virtual tour** is a path-confined walkthrough; **virtual visit** is a Gaussian splat (SuperSplat), free-roam, never called a tour, always a paid add-on, never packaged.
+## Primary sources
 
-Every Bricks app is called **Bricks** for customers and photographers (the photographer app is "the Bricks app"). Do not use internal names such as "Bricks OS", "GO" or "Vendor OS".
+- [Home](https://www.brxs.ca/): What Bricks is, who it serves and common questions.
+- [About](https://www.brxs.ca/about): Software-first company definition; Ontario, Canada.
+- [Software](https://www.brxs.ca/platform): The Bricks web software and account types.
+- [Pricing](https://www.brxs.ca/pricing): Clay, Keystone, Marble and Diamond, monthly or annual in CAD; separate service and brokerage pricing.
+- [Listing media and Virtual Visit](https://www.brxs.ca/media): Photography, drone, video, reels, floor plans and free-roam 3D.
+- [Site Progress](https://www.brxs.ca/builders): Builder and developer reports, maps, models and comparisons over time.
+- [Book listing media](https://www.brxs.ca/book): Address-based quotes and booking.
+- [Book Site Progress](https://www.brxs.ca/book/site): A site visit or monitoring plan.
+- [Book a property visit](https://www.brxs.ca/book/property): Condition reports, turnovers, leasing sets and acquisition captures are booked and paid online at /book/property.
+- [Home services](https://www.brxs.ca/services): Staging, cleaning, inspections and measurement, by approved written quote.
+- [Home staging](https://www.brxs.ca/services#staging): Staging plans, installation and removal, by quote.
+- [Cleaning and turnovers](https://www.brxs.ca/services#cleaning): Property cleaning with a checklist and photo proof, by quote.
+- [Inspections](https://www.brxs.ca/services#inspections): Ontario home and building inspections with written reports, by quote.
+- [Measurement](https://www.brxs.ca/services#measurement): Floor area and floor plans, by quote; legal land surveys are referred to an Ontario Land Surveyor.
+- [Service areas](https://www.brxs.ca/service-areas): Canada-wide coverage, subject to property-specific confirmation.
+- [Gallery](https://www.brxs.ca/gallery): First-party listing photography samples.
 
-## Core pages
+## Customers and vendors
 
-- [Book a shoot](https://www.brxs.ca/book): Online booking with live quote and exact clock time (public while marketing gate is on).
-- [Real estate photography](https://www.brxs.ca/real-estate-photography): Commercial landing for listing photos / MLS media Canada-wide.
-- [Pricing](https://www.brxs.ca/pricing): Software plans, brokerage seats, and à-la-carte listing media (CAD by footprint).
-- [Gallery](https://www.brxs.ca/gallery): Sample listing photography from Bricks.
-- [Service areas](https://www.brxs.ca/service-areas): Canada-wide coverage framing; detail cities are operational, not brand.
-- [Photographers](https://www.brxs.ca/photographers): Independent contractor network — apply to shoot for Bricks (IC v1.9).
-- [Builders](https://www.brxs.ca/builders): Site Progress for builders, developers and investors — the builder hub (progress reports as PDF or expiring read-only links, monthly investor updates, importing your own GeoTIFF/LAS/OBJ captures as dated visits, 3D compare with fill, cut and area changed). Reports include measurements with method and scale source, progress by line item in the builder's own figures, scale bars and photo pins on true maps, an issues log, changes since the last report, weather per visit (NASA POWER), capture details, revisions with a change log and SHA-256 checksums in the evidence index. Reports are visual documentation, not a cost, quantity or completion certification. Plus scheduled drone visits: one vendor, one portal, dated evidence for every draw. Progress visit $495, mapped capture $1,499; monthly plans per site, month to month: visual $450 / $850 / $1,600, mapped $1,400 / $2,600 / $3,900 (1, 2 or 4 visits a month; mapped adds a $650 one-time setup). CAD, plus HST.
-- [Investors](https://www.brxs.ca/investors): For investors and lenders — acquisition captures (a dated baseline when you buy: $1,250, or $2,250 mapped, booked and paid online at /book/property; the account compares the baseline with the latest visit and builds an insurance claim pack around a date of loss), portfolio watch ($195 per property a month billed $585 a quarter, or $450 a month for a monthly visit; CAD, plus HST), plus dated site visits, progress reports, investor updates, Site Progress mapping, 3D models and comparisons over time, shared as a PDF or an expiring read-only link (no account needed to read). REIT and leasing accounts track units by building (unit number, phase, monthly rent, size; available, reserved or leased), entered by the team in Bricks, with no leasing-system sync yet.
-- [Commercial](https://www.brxs.ca/commercial): Commercial and industrial real estate — HDR photos, licensed drone, floor plans, Virtual Visit (free-roam 3D, paid add-on) and mapped site captures (orthomosaic, 3D model, measurable site map; $1,499 per capture, $650 one-time mapping setup), delivered into the listing in Bricks. Leasing desk plan for landlords and leasing teams: $1,590 a month for two leasing sets (spaces up to 7,500 sq ft) and hosted Virtual Visits for every space. CAD, plus HST.
-- [Property managers](https://www.brxs.ca/property-managers): For property managers and landlords — unit photos, floor plans and Virtual Visit for leasing, booked by address, plus a leasing account with units and leasing status by building. Condition reports ($145, dated move-in or move-out photos compared room by room with the last report) and turnover visits ($295, condition report plus new listing photos and floor plan) are booked and paid online at /book/property. The account shows each unit's turnover stage and prints an owner report for any period. Monthly rentals plans in the property manager account: Rentals 5, 12 or 25 turnovers a month at $1,325, $2,990 or $5,875 a month. CAD, plus HST.
-- [Teams](https://www.brxs.ca/teams): For real estate teams — up to 6 agents on one plan with a shared pipeline, billed yearly. Bigger teams add seats at $79 per agent a month or $790 a year (CAD, plus HST), or move to brokerage seats.
-- [REITs](https://www.brxs.ca/reits): For REITs — one account for the portfolio: units and leasing status by building, leasing media for units and commercial spaces, condition reports, quarterly property checks and site progress for new buildings. Condition reports, turnovers, leasing sets, aerials and acquisition captures are booked online at the same prices as the property manager, commercial and investor pages, with 10% off every visit booked from an account holding 10 or more properties and 15% off at 25; rentals, leasing desk and portfolio watch plans are priced as on the property manager, commercial and investor pages.
-- [Home services](https://www.brxs.ca/services): Staging, cleaning and turnovers, home and building inspections and measurement, booked through Bricks by quote request (no public prices; nothing is booked or charged until the client approves a written quote). Results are kept with the property in the client's Bricks account.
-- [Home staging](https://www.brxs.ca/services#staging): Staging for vacant and occupied homes, model suites and units between tenants: plan, install and removal, by quote.
-- [Cleaning and turnovers](https://www.brxs.ca/services#cleaning): Pre-listing deep cleans, move-in and move-out cleans, rental turnovers and post-construction cleans, with photo proof and a checklist, by quote.
-- [Home and building inspections](https://www.brxs.ca/services#inspections): Pre-listing, pre-purchase, condo and new-build inspections and building condition assessments, Ontario only. Written report with photos. $2M commercial general liability insurance is required for inspection vendors. By quote.
-- [Measurement and floor area](https://www.brxs.ca/services#measurement): Measured interior floor area, floor plans and commercial rentable area, by quote. A measurement is not a legal survey; for a legal land survey Bricks refers clients to an Ontario Land Surveyor.
-- [Work with Bricks](https://www.brxs.ca/work-with-bricks): Apply as an independent vendor: photographers and pilots, stagers, cleaning crews, inspectors and measurers. Inspectors upload a certificate of insurance: $2M commercial general liability insurance is required for inspection vendors.
-- [Book a property visit](https://www.brxs.ca/book/property): Book and pay for one visit: turnover $295, condition report $145, listing set $195 or $255 with video, building set $650, leasing sets $595 / $895 / $1,450 by size (up to 2,500 / 7,500 / 20,000 sq ft), aerial set $349, acquisition capture $1,250 or $2,250 mapped. CAD, plus HST. Monthly plans, larger spaces and multi-property work go through the request form on the same page.
-- [Help centre](https://www.brxs.ca/help): Answers on booking, changes and refunds, plans and billing, each client type, integrations, privacy, home services by quote, working with Bricks as a vendor, and the photographer and pilot capture guide. Full article list: [help/llms.txt](https://www.brxs.ca/help/llms.txt).
-- [About](https://www.brxs.ca/about): Company background.
-- [Contact](https://www.brxs.ca/contact): Get in touch.
-- [Terms](https://www.brxs.ca/terms): Client booking terms and cancellation schedule.
-- [Privacy](https://www.brxs.ca/privacy): How Bricks Group handles personal information.
-- [Legal](https://www.brxs.ca/legal): Index of agreements.
-- [DPA](https://www.brxs.ca/dpa): Data Processing Agreement for enterprise / brokerage controllers.
+- [Investors and lenders](https://www.brxs.ca/investors): Acquisition captures, portfolio watch and project evidence.
+- [Commercial property](https://www.brxs.ca/commercial): Leasing media, aerials and site mapping.
+- [Property managers](https://www.brxs.ca/property-managers): Condition reports, turnovers, rental media and unit status.
+- [REITs](https://www.brxs.ca/reits): Portfolio, leasing and site progress workflows.
+- [Agents](https://www.brxs.ca/agents): Listings, deals and media in one place.
+- [Teams](https://www.brxs.ca/teams): Shared pipelines and team plans; extra seats are $79 per agent a month or $790 a year (CAD, plus tax).
+- [Brokerages](https://www.brxs.ca/brokerage): Seat plans and office workflows.
+- [Work with Bricks](https://www.brxs.ca/work-with-bricks): Photographers, pilots, stagers, cleaners, inspectors and measurers.
 
-## Blog
+## Support and policies
 
-- [How much does real estate photography cost in Canada? (2026)](https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026)
-- [How much does real estate photography cost in the GTA? (2026)](https://www.brxs.ca/blog/gta-real-estate-media-cost-2026)
-- [What's included in a professional listing photo shoot?](https://www.brxs.ca/blog/whats-included-listing-shoot)
-- [Virtual tour vs. video walkthrough](https://www.brxs.ca/blog/3d-tour-vs-video-walkthrough)
-- [Drone photography rules for real estate in Ontario](https://www.brxs.ca/blog/drone-photography-rules-ontario)
+- [Contact](https://www.brxs.ca/contact): help@brxs.ca for support; hello@brxs.ca for general enquiries; privacy@brxs.ca for privacy.
+- [Help centre](https://www.brxs.ca/help): Product and service questions, booking, billing and support.
+- [Help article index](https://www.brxs.ca/help/llms.txt): Source links for every published help article.
+- [Terms](https://www.brxs.ca/terms): Binding booking and cancellation terms. Delivery times are targets, not guarantees.
+- [Privacy](https://www.brxs.ca/privacy): Personal information practices.
+- [Legal](https://www.brxs.ca/legal): Agreements and Data Processing Agreement.
+- [Guides](https://www.brxs.ca/blog): Photography costs, drone rules and media choices.
+
+## Extended reference
+
+- [Full first-party text](https://www.brxs.ca/llms-full.txt): Generated from the public definitions, catalog, real FAQs and complete help article content, with source URLs.
+- [Sitemap](https://www.brxs.ca/sitemap.xml): Canonical public page inventory.

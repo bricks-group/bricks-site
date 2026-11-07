@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import { siteProgressServiceSchema } from '@/lib/schema'
 import SiteBookingForm from './SiteBookingForm'
 import { PER_VISIT, SITE_PRODUCT, fmt } from '@/lib/commercial'
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function SiteBookingPage() {
   return (
     <section className="block">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteProgressServiceSchema('https://www.brxs.ca/book/site')) }} />
       <div className="wrap">
         <div className="sec-head">
           <div>

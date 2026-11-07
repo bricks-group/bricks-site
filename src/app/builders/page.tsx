@@ -10,6 +10,9 @@ import { Head, Rows, Stats } from '@/components/calm/Calm'
 import { FeatureList } from '@/components/features/Feature'
 import { HUB } from '@/lib/site-progress-features'
 import { signupUrl } from '@/lib/brand'
+import PublicFaqs from '@/components/PublicFaqs'
+import { SITE_PROGRESS_FAQS } from '@/lib/public-content'
+import { siteProgressServiceSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
@@ -82,6 +85,7 @@ export default function BuildersPage() {
   return (
     <>
       <RevealObserver />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteProgressServiceSchema('https://www.brxs.ca/builders')) }} />
 
       <section className="hero">
         <div className="wrap">
@@ -156,6 +160,7 @@ export default function BuildersPage() {
         </div>
       </section>
 
+      <PublicFaqs title="Questions about Site Progress." faqs={SITE_PROGRESS_FAQS} />
       <style>{pageCss}</style>
     </>
   )

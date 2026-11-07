@@ -16,7 +16,7 @@ import {
   VISIT_SHORT,
   signupUrl,
 } from '@/lib/brand'
-import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
+import { mediaServiceSchema, virtualVisitServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
@@ -70,6 +70,7 @@ export default function PricingPage() {
   return (
     <>
       <RevealObserver />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(virtualVisitServiceSchema('https://www.brxs.ca/media#virtual-visit')) }} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(mediaServiceSchema({ url: 'https://www.brxs.ca/pricing', offers: PRICING_PAGE_OFFERS })) }}

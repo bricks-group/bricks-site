@@ -7,7 +7,8 @@ import {
   VISIT_NAME,
   VISIT_PACKAGING,
 } from '@/lib/brand'
-import { OFFICE_PLANS } from '@/lib/catalog'
+import { OFFICE_PLANS, SOFTWARE_PLANS } from '@/lib/catalog'
+import { BRICKS_DEFINITION, LISTING_MEDIA_DESCRIPTION, VIRTUAL_VISIT_DESCRIPTION, SITE_PROGRESS_DESCRIPTION } from '@/lib/public-content'
 import {
   DRONE_RATE,
   MEDIA_PACKAGE_FROM,
@@ -68,8 +69,7 @@ export const ORGANIZATION_SCHEMA = {
   url: SITE_URL,
   logo: LOGO_SCHEMA,
   image: { '@id': LOGO_ID },
-  description:
-    'Bricks is a Canadian real estate media and software company based in Mississauga, Ontario. Agents book HDR listing photography, licensed drone, and floor plans online at brxs.ca; the Bricks app is live in preview at app.brxs.ca.',
+  description: BRICKS_DEFINITION,
   slogan: 'The system for Canadian real estate.',
   foundingDate: FOUNDING_YEAR,
   address: {
@@ -92,13 +92,20 @@ export const ORGANIZATION_SCHEMA = {
     },
     {
       '@type': 'ContactPoint',
-      contactType: 'sales',
+      contactType: 'general enquiries',
       email: 'hello@brxs.ca',
       areaServed: 'CA',
       availableLanguage: ['en'],
     },
+    {
+      '@type': 'ContactPoint',
+      contactType: 'privacy enquiries',
+      email: 'privacy@brxs.ca',
+      areaServed: 'CA',
+      availableLanguage: ['en'],
+    },
   ],
-  knowsAbout: ['Real estate photography', 'Listing photos', 'Drone photography', 'Floor plans', 'Virtual tours', 'Real estate software'],
+  knowsAbout: ['Real estate software', 'Listing media', 'Virtual Visit', 'Site Progress', 'Drone mapping', 'Orthomosaics', 'Progress reports', 'Real estate photography'],
   sameAs: SAME_AS,
 }
 
@@ -125,33 +132,29 @@ export const ORG_REF = {
 /* constants the visible pages render (pricing.ts / catalog.ts).       */
 /* ------------------------------------------------------------------ */
 
-/** Bricks (the web app) for brokerages: one Offer per seat tier (CAD per seat per year). */
+/** Emit only the plans visibly covered by the page. Amounts derive from the public catalog. */
 export function osSoftwareApplicationSchema(pageUrl: string) {
+  const individual = SOFTWARE_PLANS.flatMap((plan) => {
+    const monthly = Number(plan.price.match(/[\d,]+/)?.[0].replaceAll(',', '') ?? 0)
+    const annual = plan.yearly.match(/\$([\d,]+)/)?.[1]
+    return [
+      { '@type': 'Offer', name: `${plan.name} — monthly`, url: 'https://www.brxs.ca/pricing', priceCurrency: 'CAD', price: monthly,
+        priceSpecification: { '@type': 'UnitPriceSpecification', price: monthly, priceCurrency: 'CAD', billingDuration: 'P1M' } },
+      ...(annual ? [{ '@type': 'Offer', name: `${plan.name} — annual`, url: 'https://www.brxs.ca/pricing', priceCurrency: 'CAD', price: Number(annual.replaceAll(',', '')),
+        priceSpecification: { '@type': 'UnitPriceSpecification', price: Number(annual.replaceAll(',', '')), priceCurrency: 'CAD', billingDuration: 'P1Y' } }] : []),
+    ]
+  })
+  const brokerage = OFFICE_PLANS.map((p) => ({
+    '@type': 'Offer', name: `${p.name} (${p.seats})`, url: pageUrl, priceCurrency: 'CAD', price: p.seatPricePerYear,
+    priceSpecification: { '@type': 'UnitPriceSpecification', price: p.seatPricePerYear, priceCurrency: 'CAD', unitText: 'seat per year', billingDuration: 'P1Y' },
+  }))
+  const offers = pageUrl.endsWith('/brokerage') ? brokerage
+    : pageUrl.endsWith('/pricing') ? [...individual, ...brokerage]
+    : individual.filter((p) => p.name === 'Clay — monthly' || p.name === 'Keystone — monthly')
   return {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    '@id': 'https://www.brxs.ca/#bricks-os',
-    name: 'Bricks',
-    applicationCategory: 'BusinessApplication',
-    // Web only: the site states the apps are not in the App Store or Google Play yet.
-    operatingSystem: 'Web',
-    url: OS_URL,
-    provider: { '@id': ORG_ID },
-    publisher: { '@id': ORG_ID },
-    offers: OFFICE_PLANS.map((p) => ({
-      '@type': 'Offer',
-      name: `${p.name} (${p.seats})`,
-      url: pageUrl,
-      priceCurrency: 'CAD',
-      price: p.seatPricePerYear,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: p.seatPricePerYear,
-        priceCurrency: 'CAD',
-        unitText: 'seat per year',
-        referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'ANN' },
-      },
-    })),
+    '@context': 'https://schema.org', '@type': 'SoftwareApplication', '@id': 'https://www.brxs.ca/#software',
+    name: 'Bricks', description: BRICKS_DEFINITION, applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web', url: OS_URL, provider: { '@id': ORG_ID }, publisher: { '@id': ORG_ID }, offers,
   }
 }
 
@@ -199,7 +202,9 @@ export function mediaServiceSchema(opts: { url: string; name?: string; offers: r
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    ...(opts.name ? { name: opts.name } : {}),
+    '@id': 'https://www.brxs.ca/#listing-media',
+    name: opts.name ?? 'Bricks listing media',
+    description: LISTING_MEDIA_DESCRIPTION,
     serviceType: 'Real estate photography and media',
     url: opts.url,
     provider: ORG_REF,
@@ -210,4 +215,57 @@ export function mediaServiceSchema(opts: { url: string; name?: string; offers: r
       itemListElement: opts.offers.filter((id) => VIRTUAL_STAGING_ENABLED || id !== 'staging').map((id) => MEDIA_OFFERS[id]),
     },
   }
+}
+
+
+export function virtualVisitServiceSchema(pageUrl: string) {
+  return {
+    '@context': 'https://schema.org', '@type': 'Service', '@id': 'https://www.brxs.ca/#virtual-visit',
+    name: 'Bricks Virtual Visit', serviceType: 'Free-roam 3D property visit',
+    description: VIRTUAL_VISIT_DESCRIPTION, url: pageUrl, provider: ORG_REF, areaServed: AREA_SERVED_SCHEMA,
+  }
+}
+
+export function siteProgressServiceSchema(pageUrl: string) {
+  return {
+    '@context': 'https://schema.org', '@type': 'Service', '@id': 'https://www.brxs.ca/#site-progress',
+    name: 'Bricks Site Progress', serviceType: 'Site progress documentation and drone mapping',
+    description: SITE_PROGRESS_DESCRIPTION, url: pageUrl, provider: ORG_REF, areaServed: AREA_SERVED_SCHEMA,
+  }
+}
+
+export function faqPageSchema(faqs: readonly { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  }
+}
+
+const PAGE_NAMES: Record<string, string> = {
+  '/about': 'About', '/pricing': 'Pricing', '/platform': 'Software', '/media': 'Listing media',
+  '/builders': 'Site Progress for builders', '/investors': 'Investors', '/agents': 'Agents',
+  '/brokerage': 'Brokerages', '/teams': 'Teams', '/reits': 'REITs', '/commercial': 'Commercial',
+  '/property-managers': 'Property managers', '/book': 'Book listing media',
+  '/book/property': 'Book a property visit', '/book/site': 'Book Site Progress',
+  '/contact': 'Contact', '/gallery': 'Gallery', '/service-areas': 'Service areas',
+  '/real-estate-photography': 'Real estate photography', '/photographers': 'Photographers',
+  '/work-with-bricks': 'Work with Bricks', '/services': 'Home services', '/blog': 'Guides',
+  '/fall-market': 'Fall listing media', '/legal': 'Legal', '/terms': 'Terms of Service',
+  '/privacy': 'Privacy Policy', '/dpa': 'Data Processing Agreement', '/account-deletion': 'Account deletion',
+  '/blog/3d-tour-vs-video-walkthrough': 'Virtual tours vs video walkthroughs',
+  '/blog/canada-real-estate-photography-cost-2026': 'Canada photography costs',
+  '/blog/gta-real-estate-media-cost-2026': 'GTA media costs',
+  '/blog/whats-included-listing-shoot': 'What a listing shoot includes',
+  '/blog/drone-photography-rules-ontario': 'Ontario drone rules',
+  '/work-with-bricks/staging': 'Staging vendors', '/work-with-bricks/cleaning': 'Cleaning vendors',
+  '/work-with-bricks/inspections': 'Inspection vendors', '/work-with-bricks/measurement': 'Measurement vendors',
+}
+
+/** Help pages already have their own visible breadcrumbs and JSON-LD. */
+export function siteBreadcrumbItems(pathname: string) {
+  const name = PAGE_NAMES[pathname]
+  if (!name) return []
+  const parent = pathname.startsWith('/blog/') ? '/blog'
+    : pathname.startsWith('/work-with-bricks/') ? '/work-with-bricks' : undefined
+  return [{ name: 'Home', path: '/' }, ...(parent ? [{ name: PAGE_NAMES[parent], path: parent }] : []), { name, path: pathname }]
 }

@@ -12,7 +12,7 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/gate' || pathname === '/api/gate') return true
   if (pathname.startsWith('/_next')) return true
   if (pathname === '/favicon.svg' || pathname === '/favicon.ico') return true
-  if (pathname === '/robots.txt' || pathname === '/sitemap.xml') return true
+  if (['/robots.txt', '/sitemap.xml', '/llms.txt', '/llms-full.txt'].includes(pathname)) return true
   // Static assets needed for public pages (OG, author card, gallery thumbs on shared chrome).
   if (pathname.startsWith('/media/') || pathname.startsWith('/assets/')) return true
   if (pathname.startsWith('/screens/')) return true

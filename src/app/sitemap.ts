@@ -4,7 +4,7 @@ import { isTradeEnabled } from '@/lib/services'
 
 const BASE = 'https://www.brxs.ca'
 
-/** Routes currently allowlisted while the marketing gate is on (immediate SEO). */
+/** Canonical public marketing and booking pages. */
 const PUBLIC_NOW = [
   { path: '/book', changeFrequency: 'weekly' as const, priority: 1 },
   { path: '/photographers', changeFrequency: 'weekly' as const, priority: 0.9 },
@@ -25,8 +25,8 @@ const PUBLIC_NOW = [
   { path: '/blog/drone-photography-rules-ontario', changeFrequency: 'monthly' as const, priority: 0.7 },
 ]
 
-/** Shipped in repo / sitemap for launch; still behind the marketing gate today. */
-const GATED_READY = [
+/** Additional public product, audience and company pages. */
+const PRODUCT_PAGES = [
   { path: '/', changeFrequency: 'weekly' as const, priority: 1 },
   { path: '/pricing', changeFrequency: 'weekly' as const, priority: 0.9 },
   { path: '/gallery', changeFrequency: 'monthly' as const, priority: 0.7 },
@@ -48,21 +48,23 @@ const GATED_READY = [
   { path: '/property-managers', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/teams', changeFrequency: 'monthly' as const, priority: 0.6 },
   { path: '/reits', changeFrequency: 'monthly' as const, priority: 0.55 },
+  { path: '/book/site', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/book/property', changeFrequency: 'monthly' as const, priority: 0.5 },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
-  const pages = [...PUBLIC_NOW, ...GATED_READY].map((r) => ({
+  // Last meaningful site-wide content/schema update; never substitute crawl/build time.
+  const contentUpdated = '2026-11-07'
+  const pages = [...PUBLIC_NOW, ...PRODUCT_PAGES].map((r) => ({
     url: `${BASE}${r.path}`,
-    lastModified: now,
+    lastModified: contentUpdated,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }))
   const help = [
-    { url: `${BASE}/help`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
-    ...COLLECTIONS.map((c) => ({ url: `${BASE}${collectionHref(c.slug)}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 })),
-    ...ARTICLES.map((a) => ({ url: `${BASE}${articleHref(a)}`, lastModified: new Date(`${a.updated}T12:00:00-04:00`), changeFrequency: 'monthly' as const, priority: 0.5 })),
+    { url: `${BASE}/help`, lastModified: contentUpdated, changeFrequency: 'weekly' as const, priority: 0.8 },
+    ...COLLECTIONS.map((c) => ({ url: `${BASE}${collectionHref(c.slug)}`, lastModified: contentUpdated, changeFrequency: 'monthly' as const, priority: 0.6 })),
+    ...ARTICLES.map((a) => ({ url: `${BASE}${articleHref(a)}`, lastModified: a.updated, changeFrequency: 'monthly' as const, priority: 0.5 })),
   ]
   return [...pages, ...help]
 }

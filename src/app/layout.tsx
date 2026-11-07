@@ -4,6 +4,8 @@ import { headers } from 'next/headers'
 import { Analytics } from '@vercel/analytics/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import SiteBreadcrumbs from '@/components/SiteBreadcrumbs'
+import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 import MotionLayer from '@/components/MotionLayer'
 import { AUTH_HEAD_SCRIPT } from '@/lib/site-session'
 import { OG_IMAGE } from '@/lib/og'
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
   },
   description: gated
     ? 'bricks'
-    : 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
+    : 'Subscription software for Canadian real estate: builders, developers, investors and realtors, with listing media, Virtual Visit and Site Progress booked inside.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
     type: 'website',
@@ -66,6 +68,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         {bare ? null : <Nav />}
+        {bare ? null : <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA] }) }} />}
+        {bare ? null : <SiteBreadcrumbs pathname={pathname} />}
         {children}
         {bare ? null : <Footer />}
         {bare ? null : <MotionLayer />}

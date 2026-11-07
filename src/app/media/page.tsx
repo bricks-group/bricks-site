@@ -5,6 +5,9 @@ import MediaShowcase from '@/components/media-showcase/MediaShowcase'
 import './media-page.css'
 import { Head, Rows, Close } from '@/components/calm/Calm'
 import { CORE_FROM, VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
+import PublicFaqs from '@/components/PublicFaqs'
+import { MEDIA_FAQS } from '@/lib/public-content'
+import { mediaServiceSchema, virtualVisitServiceSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
@@ -32,6 +35,8 @@ export default function MediaPage() {
   return (
     <>
       <RevealObserver />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(mediaServiceSchema({ url: 'https://www.brxs.ca/media', offers: ['essentials'] })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(virtualVisitServiceSchema('https://www.brxs.ca/media#virtual-visit')) }} />
       <section className="hero">
         <div className="wrap">
           <h1>Listing media, booked inside Bricks.</h1>
@@ -50,6 +55,7 @@ export default function MediaPage() {
         <p className="cm-note">Essentials, from ${CORE_FROM}, covers HDR photos, licensed drone and a floor plan. Prices scale with home size.</p>
       </section>
 
+      <div id="virtual-visit"><PublicFaqs title="Questions about listing media." faqs={MEDIA_FAQS} /></div>
       <Close title="Ready when the listing is." href="/book" label="Book media" />
     </>
   )

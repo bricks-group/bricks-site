@@ -1710,3 +1710,10 @@ body:has(.closer:last-of-type) > footer{margin-top:0;}
 
 /* Visible keyboard focus (legal-checklist item 15, 2026-10-23) */
 :focus-visible{outline:2px solid var(--brickDeep);outline-offset:2px;}
+
+/* Public breadcrumb hierarchy mirrors the page's structured data. */
+.site-crumbs{padding-top:18px;padding-bottom:0;font-size:12px;color:var(--inkMute);}
+.site-crumbs ol{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;padding:0;}
+.site-crumbs li{display:flex;align-items:center;gap:8px;}
+.site-crumbs li + li::before{content:'/';color:var(--inkMute);}
+.site-crumbs a{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-underline-offset:3px;}

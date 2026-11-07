@@ -74,6 +74,7 @@ export default function Footer() {
             <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/legal">Legal</Link>
+            <a href="/llms.txt">AI reference</a>
           </div>
         </div>
       </div>

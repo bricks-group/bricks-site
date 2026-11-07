@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { OS_LOGIN } from '@/lib/brand'
 import { ORG_REF, SITE_ID } from '@/lib/schema'
 import { Head, Rows, Close } from '@/components/calm/Calm'
+import { BRICKS_DEFINITION } from '@/lib/public-content'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
@@ -51,7 +52,8 @@ export default function AboutPage() {
       </section>
 
       <section className="cm-sec ab-story" aria-label="Our story">
-        <p>We build software for the companies that make real estate: builders, developers and investors, and the brokerages and realtors who sell what they build.</p>
+        <Head title="What is Bricks?" />
+        <p>{BRICKS_DEFINITION}</p>
         <p>Projects, listings and deals live in one place. When a site needs a progress visit or a listing needs media, you book it inside Bricks, and the files land where the work is.</p>
       </section>
 
@@ -61,6 +63,7 @@ export default function AboutPage() {
           items={[
             { title: 'Software', detail: 'Deals, CRM, e-sign and site files in one system.', href: '/platform' },
             { title: 'Site Progress', detail: 'Maps, models and reports for every site, compared over time.', href: '/builders' },
+            { title: 'Virtual Visit', detail: 'Free-roam 3D, booked as a paid add-on.', href: '/media#virtual-visit' },
             { title: 'Listing media', detail: 'Photos, drone, video and 3D, delivered to the listing.', href: '/media' },
           ]}
         />

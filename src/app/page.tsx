@@ -12,38 +12,17 @@ import './home-v3.css'
 import { CORE_FROM } from '@/lib/pricing'
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { fromPriceFor } from '@/lib/propertyCheckout'
-import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
+import { BRICKS_DEFINITION, HOME_FAQS } from '@/lib/public-content'
 import { FeaturePic } from '@/components/features/FeatureShot'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import HomeServicesBand from '@/components/home-services/HomeServicesBand'
 import { OG_IMAGE } from '@/lib/og'
 
-const faqs = [
-  {
-    id: 'what',
-    q: 'What is Bricks?',
-    a: 'Software for Canadian real estate. Progress reports and site files for builders, and deals, CRM and e-sign for realtors, with listing media and Site Progress booked inside it.',
-  },
-  {
-    id: 'who',
-    q: 'Who is it for?',
-    a: 'Builders, developers and investors running projects, and the brokerages, teams and agents selling them.',
-  },
-  {
-    id: 'booking',
-    q: 'How do I book media or a site visit?',
-    a: 'From inside Bricks, or online. Enter the address, pick what you need and see the full price before you pay.',
-  },
-  {
-    id: 'coverage',
-    q: 'Where do you work?',
-    a: 'Across Canada. Travel is priced from the assigned crew’s location and shown before you pay.',
-  },
-] as const
+const faqs = HOME_FAQS
 
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
-  description: 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
+  description: 'Subscription software for Canadian real estate: builders, developers, investors and realtors, with listing media, Virtual Visit and Site Progress booked inside.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -51,12 +30,12 @@ export const metadata: Metadata = {
     url: 'https://www.brxs.ca/',
     locale: 'en_CA',
     title: 'Bricks — the system for Canadian real estate',
-    description: 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
+    description: 'Subscription software for Canadian real estate: builders, developers, investors and realtors, with listing media, Virtual Visit and Site Progress booked inside.',
     images: [OG_IMAGE],
   },
   twitter: {
     title: 'Bricks — the system for Canadian real estate',
-    description: 'The system for Canadian real estate. Listing media, deals, e-sign and CRM in one place.',
+    description: 'Subscription software for Canadian real estate: builders, developers, investors and realtors, with listing media, Virtual Visit and Site Progress booked inside.',
     images: [OG_IMAGE],
   },
 }
@@ -65,16 +44,6 @@ export default function Home() {
   return (
     <>
       <RevealObserver />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA],
-          }),
-        }}
-      />
 
       <script
         type="application/ld+json"
@@ -94,7 +63,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system that brings it all together.</h1>
-          <p className="sub">Software for builders, developers, investors and realtors. Listing media and Site Progress are booked inside it.</p>
+          <p className="sub">{BRICKS_DEFINITION}</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="cm-link" href="/pricing">See pricing</Link>
