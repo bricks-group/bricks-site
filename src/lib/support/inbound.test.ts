@@ -256,6 +256,8 @@ describe('owner alerts', () => {
       assert.doesNotMatch(out, /human_requested|support_cases|[0-9a-f]{8}-[0-9a-f]{4}-|HLP-/)
     }
     assert.match(html, /Open in review page/)
+    assert.doesNotMatch(html, /border-radius:\s*[1-9]/)
+    assert.doesNotMatch(require('node:fs').readFileSync(new URL('../../app/admin/support/support.css', import.meta.url), 'utf8'), /border-radius:\s*[1-9]/)
     assert.match(html, /mailto:a%40b\.co\?subject=/)
     assert.match(txt, /Help › Booking/)
     assert.equal(txt.split('\n').filter((l) => l.startsWith('Page:')).length, 1)

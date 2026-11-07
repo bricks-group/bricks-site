@@ -137,7 +137,7 @@ export function alertHtml(v: AlertView): string {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="bg" style="background:#F4F1EB"><tr><td align="center" style="padding:32px 16px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;font-family:${F}">
 <tr><td style="padding:0 4px 20px"><span class="ink" style="font-family:${F};font-weight:500;font-size:18px;letter-spacing:-.02em;color:#14110E">bricks</span>${v.test ? `<span style="margin-left:10px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#A8401F">Test</span>` : ''}</td></tr>
-<tr><td class="card" style="background:#FFFFFF;border:1px solid #E6E2DA;border-radius:14px;padding:28px">
+<tr><td class="card" style="background:#FFFFFF;border:1px solid #E6E2DA;border-radius:0;padding:28px">
 <div class="mute" style="font-size:13px;color:#6B6054;margin-bottom:6px">${esc(helpRef(v.helpNo))}</div>
 <h1 class="ink" style="margin:0 0 6px;font-family:${F};font-weight:500;font-size:22px;line-height:1.25;letter-spacing:-.02em;color:#14110E">${esc(headline(v))}</h1>
 <p class="soft" style="margin:0 0 20px;font-size:14px;color:#3B332A">${v.kind === 'email_draft_waiting' ? 'Auto-send is off, so nothing has been sent.' : 'Nothing has been sent to them yet.'}</p>
@@ -149,9 +149,9 @@ ${why.length ? row('Why', esc(why.join(' · '))) : ''}
 </table>
 <div class="quote ink" style="border-left:3px solid #D6D2CA;padding:2px 0 2px 14px;font-size:15px;line-height:1.55;color:#14110E;margin-bottom:${hist.length ? 12 : 20}px">${esc(clip(v.latest, 600) || '(no message)')}</div>
 ${hist.length ? `<div class="mute" style="font-size:13px;color:#6B6054;margin-bottom:20px">Earlier: ${hist.map((h) => esc(clip(h, 140))).join(' · ')}</div>` : ''}
-${v.draft ? `<div class="mute" style="font-size:13px;color:#6B6054;margin-bottom:6px">Suggested reply</div><div class="draft soft" style="background:#F4F1EB;border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.55;color:#3B332A;white-space:pre-wrap;margin-bottom:24px">${esc(v.draft.trim())}</div>` : ''}
+${v.draft ? `<div class="mute" style="font-size:13px;color:#6B6054;margin-bottom:6px">Suggested reply</div><div class="draft soft" style="background:#F4F1EB;border-radius:0;padding:14px 16px;font-size:14px;line-height:1.55;color:#3B332A;white-space:pre-wrap;margin-bottom:24px">${esc(v.draft.trim())}</div>` : ''}
 <table role="presentation" cellpadding="0" cellspacing="0"><tr>
-<td style="border-radius:10px" class="btn" bgcolor="#14110E"><a href="${esc(v.reviewUrl)}" class="btn" style="display:inline-block;padding:12px 20px;font-family:${F};font-weight:500;font-size:14px;color:#F4F1EB;text-decoration:none;border-radius:10px;background:#14110E">Open in review page</a></td>
+<td style="border-radius:0" class="btn" bgcolor="#14110E"><a href="${esc(v.reviewUrl)}" class="btn" style="display:inline-block;padding:12px 20px;font-family:${F};font-weight:500;font-size:14px;color:#F4F1EB;text-decoration:none;border-radius:0;background:#14110E">Open in review page</a></td>
 <td style="padding-left:16px"><a href="${esc(mailtoReply(v))}" class="ink" style="font-family:${F};font-size:14px;color:#14110E">Reply by email</a></td>
 </tr></table>
 </td></tr>
