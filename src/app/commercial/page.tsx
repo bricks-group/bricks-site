@@ -83,7 +83,7 @@ export default function CommercialPage() {
             { fig: fmt(VISUAL.price), label: `${VISUAL.name}, ${VISUAL.unit}` },
           ]}
         />
-        <p className="cm-note">CAD, plus HST. Survey-grade accuracy is quoted separately. Maps and models are visual documentation, not a survey.</p>
+        <p className="cm-note">CAD, plus tax. Survey-grade accuracy is quoted separately. Maps and models are visual documentation, not a survey.</p>
       </section>
 
       <section className="cm-sec rvl" aria-label="Accounts">
@@ -93,7 +93,7 @@ export default function CommercialPage() {
             { title: 'Commercial brokers and agents', detail: 'Start free as an individual. Team and brokerage plans are on the pricing page.', href: signupUrl('solo'), external: true },
             { title: 'Owners and developers mapping a site', detail: 'A builder account keeps every visit, map and report for the property.', href: signupUrl('builder'), external: true },
             { title: 'Landlords and leasing teams', detail: 'A commercial account shows which spaces have leasing media and which need it, with a printable leasing package and a CSV listing sheet for each property.', href: signupUrl('commercial'), external: true },
-            { title: 'Leasing sets, booked online', detail: '$595 up to 2,500 sq ft, $895 up to 7,500 sq ft, $1,450 up to 20,000 sq ft. Aerial sets $349. CAD plus HST.', href: '/book/property?for=commercial' },
+            { title: 'Leasing sets, booked online', detail: '$595 up to 2,500 sq ft, $895 up to 7,500 sq ft, $1,450 up to 20,000 sq ft. Aerial sets $349. CAD plus tax.', href: '/book/property?for=commercial' },
             { title: 'Leasing desk plan', detail: '$1,590 a month, CAD plus tax: two leasing sets a month for spaces up to 7,500 sq ft, and hosted Virtual Visits for every space.', href: signupUrl('commercial'), external: true },
           ]}
         />

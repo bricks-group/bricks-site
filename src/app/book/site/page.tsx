@@ -7,7 +7,7 @@ import { PER_VISIT, SITE_PRODUCT, fmt } from '@/lib/commercial'
 export const metadata: Metadata = {
   title: 'Book a construction progress visit or site plan | Bricks',
   description:
-    `Book a drone progress visit (${fmt(PER_VISIT[0].price)}) or mapped capture (${fmt(PER_VISIT[1].price)}), or start a monthly site monitoring plan. One vendor, one portal, dated evidence for every draw. CAD, plus HST.`,
+    `Book a drone progress visit (${fmt(PER_VISIT[0].price)}) or mapped capture (${fmt(PER_VISIT[1].price)}), or start a monthly site monitoring plan. One vendor, one portal, dated evidence for every draw. CAD, plus tax.`,
   alternates: { canonical: '/book/site' },
   robots: { index: true, follow: true },
 }

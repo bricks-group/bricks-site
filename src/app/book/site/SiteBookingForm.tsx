@@ -276,7 +276,7 @@ export default function SiteBookingForm() {
         {quote.lines.map(([k, val]) => (<div key={k} className="row"><span>{k}</span><span>{fmt(val)}</span></div>))}
         <div className="row"><span>{quote.taxLabel}</span><span>${quote.tax.toFixed(2)}</span></div>
         <div className="row tot"><span>Total</span><span>${quote.total.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
-        {mode === 'plan' && <p className="hint">Then {fmt(quote.recurring)} + HST per month.</p>}
+        {mode === 'plan' && <p className="hint">Then {fmt(quote.recurring)} plus tax ({quote.taxLabel}) per month.</p>}
         <p className="hint">CAD. Survey-grade work is quoted separately.</p>
       </aside>
       <style>{css}</style>

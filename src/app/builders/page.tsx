@@ -137,7 +137,7 @@ export default function BuildersPage() {
                 pl.rows.map((r) => ({
                   title: `${pl.kind}, ${r.cadence.toLowerCase()}`,
                   detail: `${r.visits} visit${r.visits === 1 ? '' : 's'} a month`,
-                  value: `${fmt(r.price)} / site / mo`,
+                  value: `${fmt(r.price)} / site / mo + tax`,
                 })),
               ),
             ]}

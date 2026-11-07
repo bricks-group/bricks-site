@@ -25,7 +25,7 @@ const FAQS = [
   { q: 'What is photogrammetry in construction?', a: 'Measuring a site from overlapping photos. A drone photographs the site from many positions, and software rebuilds it as an orthomosaic, an elevation model and a 3D model you can measure on.' },
   { q: 'How often should a site be mapped?', a: 'Often enough to catch the changes you report on. Many sites map monthly, and busy phases such as earthworks may justify every two weeks or weekly.' },
   { q: 'Can photogrammetry replace a surveyor?', a: 'No. It gives fast, repeatable estimates for documentation and planning. Legal surveys and survey-grade work are separate.' },
-  { q: 'What does drone photogrammetry cost with Bricks?', a: `A mapped capture is ${fmt(MAPPED.price)} ${MAPPED.unit}, plus ${fmt(SETUP.price)} one-time mapping setup per site. Monthly mapped plans start at ${fmt(MAPPED_PLAN.rows[0].price)} per site. CAD, plus HST.` },
+  { q: 'What does drone photogrammetry cost with Bricks?', a: `A mapped capture is ${fmt(MAPPED.price)} ${MAPPED.unit}, plus ${fmt(SETUP.price)} one-time mapping setup per site. Monthly mapped plans start at ${fmt(MAPPED_PLAN.rows[0].price)} per site. CAD, plus tax.` },
 ]
 
 export default function Post() {
@@ -79,7 +79,7 @@ export default function Post() {
         <p>
           With <Link href="/drone-mapping">Bricks drone mapping</Link>, a certified, insured pilot flies the site, and the first mapped flight includes ground control setup. Each mapped capture delivers an orthomosaic, a 3D model and a measurable site map as a dated visit in Site Progress. Two mapped visits can be compared on a 0.5 m grid, leaving out changes under 10 cm. Cut, fill, net volume and area show their method and are estimates. You can also import your own GeoTIFF, LAS, LAZ, E57, PLY, OBJ or GLB files.
         </p>
-        <p>A mapped capture is {fmt(MAPPED.price)} {MAPPED.unit}, with a {fmt(SETUP.price)} one-time setup. Mapped plans per site: {MAPPED_PLAN.rows.map((r) => `${r.cadence.toLowerCase()} visits ${fmt(r.price)} a month`).join(', ')}. CAD, plus HST.</p>
+        <p>A mapped capture is {fmt(MAPPED.price)} {MAPPED.unit}, with a {fmt(SETUP.price)} one-time setup. Mapped plans per site: {MAPPED_PLAN.rows.map((r) => `${r.cadence.toLowerCase()} visits ${fmt(r.price)} a month`).join(', ')}. CAD, plus tax.</p>
 
         <h2>FAQ</h2>
         <div className="faq">

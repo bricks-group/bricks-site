@@ -150,7 +150,7 @@ export default function PricingPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Property accounts">
-        <Head title="Property accounts." lede="Visits priced per unit, space or property, booked and paid online. CAD, before HST." />
+        <Head title="Property accounts." lede="Visits priced per unit, space or property, booked and paid online. CAD, plus tax based on the property's province." />
         <Rows
           items={[
             { title: 'Property managers', detail: 'Listing sets, condition reports and turnovers, per unit.', value: `from ${fromFor('property_manager')}`, href: '/property-managers' },
@@ -192,7 +192,7 @@ export default function PricingPage() {
               ))}
             </tbody>
           </table>
-          <p className="cm-note">Small: up to 1,200 sq ft. Mid: 1,200–2,500. Large: 2,500–4,000. XL: 4,000+. Travel is $0 inside the no-travel-fee area on our coverage map; outside it, the first 25 km from the assigned photographer are free, then $0.75 per additional km, confirmed before payment. Prices in CAD, before HST.</p>
+          <p className="cm-note">Small: up to 1,200 sq ft. Mid: 1,200–2,500. Large: 2,500–4,000. XL: 4,000+. Travel is $0 inside the no-travel-fee area on our coverage map; outside it, the first 25 km from the assigned photographer are free, then $0.75 per additional km, confirmed before payment. Prices in CAD, plus tax based on the property's province.</p>
         </details>
       </section>
 

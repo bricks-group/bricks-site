@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 const FAQS = [
   { q: 'What do I get from a mapped capture?', a: 'An orthomosaic, a 3D model and a measurable site map, kept as a dated visit on the site’s timeline in your builder account.' },
   { q: 'Is drone mapping a legal survey?', a: 'No. Cut, fill, volume and area measurements are estimates, and the method is shown with each number. They are not a survey. Survey-grade accuracy is quoted separately.' },
-  { q: 'What does drone mapping cost?', a: `A mapped capture is ${fmt(MAPPED.price)} ${MAPPED.unit}, plus a one-time ${fmt(SETUP.price)} mapping setup for ground control on the first mapped flight. Monthly mapped plans start at ${fmt(MAPPED_PLAN.rows[0].price)} per site. CAD, plus HST.` },
+  { q: 'What does drone mapping cost?', a: `A mapped capture is ${fmt(MAPPED.price)} ${MAPPED.unit}, plus a one-time ${fmt(SETUP.price)} mapping setup for ground control on the first mapped flight. Monthly mapped plans start at ${fmt(MAPPED_PLAN.rows[0].price)} per site. CAD, plus tax.` },
   { q: 'Who flies the site?', a: 'Vetted pilots with a Transport Canada Advanced Operations certificate and at least $2,000,000 drone liability insurance per occurrence, or the higher minimum you set on the order.' },
   { q: 'Can I bring my own files?', a: 'Yes. Import GeoTIFF, LAS, LAZ, E57, PLY, OBJ, GLB, photos, video and PDF, up to 5 GB a file. Imported files are marked as imported.' },
 ]
