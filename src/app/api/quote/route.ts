@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { isProvinceBlock } from '@/lib/property-tax'
 import { buildQuote } from '@/lib/quote-engine'
 import { stripVirtualStaging } from '@/lib/pricing'
 
@@ -48,6 +49,10 @@ export async function POST(req: Request) {
     const proxied = await quoteViaOs(body)
     if (proxied?.ok && proxied.j?.quote) {
       return NextResponse.json({ ok: true, quote: proxied.j.quote, via: 'os-assign' })
+    }
+    if (proxied && !proxied.ok && proxied.status === 422 && isProvinceBlock(proxied.j)) {
+      // Province rules from OS (Saskatchewan unavailable / province unknown).
+      return NextResponse.json({ ok: false, error: proxied.j?.error || proxied.j?.detail, code: proxied.j?.code || 'province' }, { status: 422 })
     }
     if (proxied && !proxied.ok && proxied.status === 409) {
       return NextResponse.json(

@@ -9,6 +9,7 @@ import { track } from '@vercel/analytics'
 import BricksLoader from '@/components/BricksLoader'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
+import { propertyTax, provinceFromAddress } from '@/lib/property-tax'
 
 /** Booking email kept across the Stripe redirect so the success state can offer the matching builder account. */
 const EMAIL_KEY = 'bricks-site-booking-email'
@@ -20,7 +21,6 @@ function evt(name: string, props?: TrackProps) {
   try { track(name, props) } catch { /* analytics is best-effort */ }
 }
 
-const HST = 0.13
 const SETUP = PER_VISIT.find((x) => x.key === 'setup')!.price
 const VISUAL = PER_VISIT.find((x) => x.key === 'visual')!.price
 const MAPPED = PER_VISIT.find((x) => x.key === 'mapped')!.price
@@ -98,6 +98,7 @@ export default function SiteBookingForm() {
     } catch { /* storage blocked: the link still opens sign-up */ }
   }, [params])
 
+  const [siteAddress, setSiteAddress] = useState('')
   const quote = useMemo(() => {
     const lines: Array<[string, number]> = []
     let recurring = 0
@@ -113,9 +114,10 @@ export default function SiteBookingForm() {
       if (planKind === 'mapped') lines.push(['First mapped setup (first invoice)', SETUP])
     }
     const sub = lines.reduce((a, [, v]) => a + v, 0)
-    const tax = Math.round(sub * HST * 100) / 100
-    return { lines, sub, tax, total: sub + tax, recurring }
-  }, [mode, service, firstMapped, planKind, cadence])
+    const t = propertyTax(provinceFromAddress(siteAddress))
+    const tax = Math.round(sub * t.rate * 100) / 100
+    return { lines, sub, tax, taxLabel: t.label, total: sub + tax, recurring }
+  }, [mode, service, firstMapped, planKind, cadence, siteAddress])
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -229,7 +231,7 @@ export default function SiteBookingForm() {
 
         <fieldset>
           <legend>Site</legend>
-          <div><label className="f" htmlFor="sbAddr">Site address</label><input type="text" id="sbAddr" name="site_address" placeholder="Street address or nearest intersection, city" required minLength={6} /></div>
+          <div><label className="f" htmlFor="sbAddr">Site address</label><input type="text" id="sbAddr" name="site_address" onChange={(e) => setSiteAddress(e.target.value)} placeholder="Street address or nearest intersection, city" required minLength={6} /></div>
           <div className="two">
             <div><label className="f" htmlFor="sbDate">{mode === 'plan' ? 'First visit date' : 'Preferred date'}</label><input type="date" id="sbDate" name="preferred_date" min={minDate()} required /></div>
             <div><label className="f" htmlFor="sbCo">Company</label><input type="text" id="sbCo" name="company" placeholder="Builder / developer / GC" /></div>
@@ -272,7 +274,7 @@ export default function SiteBookingForm() {
       <aside aria-label="Summary">
         <span className="over">{mode === 'plan' ? 'First invoice' : 'Total'}</span>
         {quote.lines.map(([k, val]) => (<div key={k} className="row"><span>{k}</span><span>{fmt(val)}</span></div>))}
-        <div className="row"><span>HST (13%)</span><span>${quote.tax.toFixed(2)}</span></div>
+        <div className="row"><span>{quote.taxLabel}</span><span>${quote.tax.toFixed(2)}</span></div>
         <div className="row tot"><span>Total</span><span>${quote.total.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></div>
         {mode === 'plan' && <p className="hint">Then {fmt(quote.recurring)} + HST per month.</p>}
         <p className="hint">CAD. Survey-grade work is quoted separately.</p>

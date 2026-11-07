@@ -657,7 +657,7 @@ export default function BookingWizard() {
   function QuoteBlock({ q, editable }: { q: Quote; editable: boolean }) {
     return (
       <>
-        <div className="qhead"><div className="qhead-l">Your tailored quote</div><div className="qhead-t">${q.total.toFixed(2)} <span>CAD · incl. HST</span></div></div>
+        <div className="qhead"><div className="qhead-l">Your tailored quote</div><div className="qhead-t">${q.total.toFixed(2)} <span>CAD · incl. {(q as { tax_type?: string }).tax_type || 'HST'}</span></div></div>
         <div className="qmeta">{q.sqft ? q.sqft.toLocaleString() + ' sqft' : 'sqft n/a'} · {q.footprint_label}{q.gta_major ? ' · GTA major — $0 travel' : q.travel_pending ? ' · assigning photographer…' : (q.distance_km != null ? ' · ' + q.distance_km + ' km from photographer base' : '')}{q.sqft_source ? ' · ' + q.sqft_source : ''}</div>
         <div className="qlines">
           {packageLines(q, FLOOR_PLAN_ONLY_RATE).map((l) => (
@@ -668,7 +668,7 @@ export default function BookingWizard() {
             <div key={a.label} className="qrow"><span className="qk">{a.label}</span><span className="qv">${a.amount.toFixed(2)}</span></div>
           ))}
           <div className="qrow"><span className="qk">Subtotal</span><span className="qv">${q.subtotal.toFixed(2)}</span></div>
-          <div className="qrow"><span className="qk">HST (13%)</span><span className="qv">${q.hst.toFixed(2)}</span></div>
+          <div className="qrow"><span className="qk">{(q as { tax_label?: string }).tax_label || 'HST (13%)'}</span><span className="qv">${q.hst.toFixed(2)}</span></div>
         </div>
         {editable && (
           <div className="sqft-edit">

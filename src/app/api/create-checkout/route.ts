@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { isProvinceBlock, propertyTax } from '@/lib/property-tax'
 import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
 import { stripVirtualStaging } from '@/lib/pricing'
 import { termsAcceptanceMeta } from '@/lib/terms-version'
@@ -96,6 +97,30 @@ async function proxyToOs(body: Record<string, unknown>) {
   })
   const j = await res.json().catch(() => ({}))
   return { ok: res.ok && j?.ok, status: res.status, j }
+}
+
+type TaxQuote = { tax_province?: string; tax_type?: string; tax_rate?: number; subtotal_cents?: number; tax_cents?: number; tax_label?: string; subtotal?: number; hst?: number }
+
+function taxMeta(q: unknown, viaOs: boolean, amountCents: number) {
+  const t = (q || {}) as TaxQuote
+  const local = propertyTax('ON')
+  const province = (viaOs && t.tax_province) || local.province
+  const rate = viaOs && t.tax_rate != null ? t.tax_rate : local.rate
+  const type = (viaOs && t.tax_type) || local.type
+  const tax = viaOs && t.tax_cents != null ? t.tax_cents : Math.round((t.hst || 0) * 100)
+  const sub = viaOs && t.subtotal_cents != null ? t.subtotal_cents : Math.round((t.subtotal || 0) * 100)
+  const meta: Record<string, string> = {
+    tax_location_basis: 'property',
+    tax_province: province,
+    tax_jurisdiction: `CA-${province}`,
+    tax_type: type,
+    tax_rate: String(rate),
+    subtotal_cents: String(sub),
+    tax_cents: String(tax),
+    total_cents: String(amountCents),
+  }
+  Object.defineProperty(meta, 'tax_label_display', { value: (viaOs && t.tax_label) || local.label, enumerable: false })
+  return meta as Record<string, string> & { tax_label_display: string }
 }
 
 export async function POST(req: Request) {
@@ -211,6 +236,9 @@ export async function POST(req: Request) {
     if (proxied?.ok && proxied.j?.quote) {
       q = proxied.j.quote
       viaOs = true
+    } else if (proxied && proxied.status === 422 && isProvinceBlock(proxied.j)) {
+      // Province rules (Saskatchewan unavailable / province unknown): never fall back.
+      return bad(proxied.j?.error || proxied.j?.detail || 'This address cannot be booked online yet.', 422)
     } else if (proxied && proxied.status === 409) {
       return bad(
         proxied.j?.error ||
@@ -368,6 +396,9 @@ export async function POST(req: Request) {
     }).slice(0, 480),
     // Terms acceptance (Counsel 2026-11-07): version shown at the pay button + time.
     ...termsAcceptanceMeta(),
+    // Property-province GST/HST (OS backend/common/property_tax.py); the OS tax
+    // ledger and Dispatch payout basis read these. Local quotes are GTA (ON) only.
+    ...taxMeta(q, viaOs, amountCents),
   }
 
   const form = new URLSearchParams()
@@ -391,7 +422,7 @@ export async function POST(req: Request) {
     : `Travel ${q.travel_fee} CAD from assigned photographer`
   form.append(
     'line_items[0][price_data][product_data][description]',
-    `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. HST). ${travelDesc}, base ${q.base_rate} CAD.`,
+    `${meta.package_interest || (floorPlanOnly ? 'Floor plan only' : 'HDR photo + drone')} (incl. ${taxMeta(q, viaOs, amountCents).tax_label_display}). ${travelDesc}, base ${q.base_rate} CAD.`,
   )
   form.append('line_items[0][price_data][unit_amount]', String(amountCents))
   form.append('line_items[0][quantity]', '1')
