@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { readAvailability } from '@/lib/availability-read'
 import { localYmd } from '@/lib/schedule'
 
 type DayInfo = { date: string; available: boolean; open?: number; reason?: string }
@@ -60,8 +61,10 @@ export function BookCalendar({
     setLoading(true)
     const qs = new URLSearchParams({ start: today, days: String(maxMonthsAhead * 31), tz })
     if (area) qs.set('area', area)
-    fetch('/api/book/days?' + qs.toString(), { cache: 'no-store' })
-      .then((r) => r.json())
+    const load = () => {
+      if (document.hidden || !alive) return
+      document.removeEventListener('visibilitychange', load)
+      readAvailability('/api/book/days?' + qs.toString())
       .then((j: { source?: string; days?: DayInfo[] }) => {
         if (!alive) return
         const map: Record<string, DayInfo> = {}
@@ -71,7 +74,12 @@ export function BookCalendar({
       })
       .catch(() => alive && setLive(false))
       .finally(() => alive && setLoading(false))
+    }
+    // Never start background network work for a hidden booking tab. No timer.
+    if (document.hidden) document.addEventListener('visibilitychange', load)
+    else load()
     return () => {
+      document.removeEventListener('visibilitychange', load)
       alive = false
     }
   }, [today, tz, area, maxMonthsAhead, checkAvailability])

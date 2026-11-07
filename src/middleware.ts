@@ -123,5 +123,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image).*)'],
+  matcher: ['/((?!_next/static|_next/image|fonts/|assets/|media/|screens/|supersplat-viewer/|favicon\\.svg$|favicon\\.ico$|\\.well-known/|bimi/).*)'],
 }

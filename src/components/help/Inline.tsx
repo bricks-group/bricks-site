@@ -1,3 +1,4 @@
+import { helpHubHref } from '@/lib/help/href'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 
@@ -16,7 +17,7 @@ function render(text: string): ReactNode[] {
     const at = m.index ?? 0
     if (at > last) out.push(text.slice(last, at))
     if (m[1] !== undefined) {
-      const href = m[2]
+      const href = helpHubHref(m[2])
       const label = render(m[1])
       if (href.startsWith('/')) out.push(<Link key={i++} href={href}>{label}</Link>)
       else if (href.startsWith('mailto:') || href.startsWith('tel:')) out.push(<a key={i++} href={href}>{label}</a>)

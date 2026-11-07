@@ -23,10 +23,10 @@ export async function GET(req: NextRequest) {
     })
     const j = (await res.json()) as { ok?: boolean; source?: string; days?: unknown[] }
     if (res.ok && j.ok && Array.isArray(j.days) && j.source === 'live') {
-      return NextResponse.json({ ok: true, source: 'live', days: j.days }, { headers: { 'Cache-Control': 'no-store' } })
+      return NextResponse.json({ ok: true, source: 'live', days: j.days }, { headers: { 'Cache-Control': 'public, max-age=30, s-maxage=60, stale-while-revalidate=30' } })
     }
   } catch {
     /* fall through */
   }
-  return NextResponse.json({ ok: true, source: 'fallback', days: [] })
+  return NextResponse.json({ ok: true, source: 'fallback', days: [] }, { headers: { 'Cache-Control': 'no-store' } })
 }

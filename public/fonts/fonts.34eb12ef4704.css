@@ -1,0 +1,7 @@
+/* Self-hosted webfonts. General Sans: Indian Type Foundry via Fontshare, ITF Free Font License (self-hosting permitted, see GeneralSans-LICENSE-FFL.txt).
+   JetBrains Mono v2.304: SIL Open Font License 1.1 (JetBrainsMono-LICENSE-OFL.txt). */
+@font-face{font-family:'General Sans';src:url('/fonts/GeneralSans-Regular.1336dc613744.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'General Sans';src:url('/fonts/GeneralSans-Medium.0168813e5da4.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'General Sans';src:url('/fonts/GeneralSans-Semibold.225c2c18bd1c.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('/fonts/JetBrainsMono-Regular.a9cb1cd82332.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('/fonts/JetBrainsMono-Medium.086c48dfbea9.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
