@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
@@ -32,7 +33,7 @@ export default function Post() {
             description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant aerial shoot looks like.',
             author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
             datePublished: '2026-07-22',
-            dateModified: '2026-07-22',
+            dateModified: '2026-11-07',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             mainEntityOfPage: 'https://www.brxs.ca/blog/drone-photography-rules-ontario',
             keywords: 'drone photography rules Ontario, real estate drone Toronto, Transport Canada Advanced RPAS, aerial photography GTA',
@@ -49,6 +50,7 @@ export default function Post() {
         <h2>You need an Advanced RPAS certificate</h2>
         <p>In Canada, flying a drone for <strong>commercial work — including real estate photography</strong> — requires a <strong>Transport Canada pilot certificate</strong>. For the kind of flying real estate needs (near people, near buildings, often in controlled airspace around the GTA), that means the <strong>Advanced Operations</strong> certificate: a written exam, an in-person flight review, and registration of the aircraft.</p>
         <p>Bricks&apos; drone work is flown under an <strong>Advanced RPAS (Remotely Piloted Aircraft Systems) certificate</strong>. That&apos;s the difference between &quot;someone with a DJI&quot; and a compliant operator who can legally fly in the complex airspace around Toronto, Mississauga, and the airports.</p>
+        <p>Getting certified yourself? Our <Link href="/blog/drone-licence-canada">drone licence guide for Canada</Link> covers Basic vs Advanced, age limits, the exams, the flight review and drone registration. Booking aerials for a listing? See <Link href="/drone-photography">real estate drone photography</Link>.</p>
 
         <h2>The rules that actually affect your shoot</h2>
         <h3>Controlled airspace &amp; no-fly zones</h3>

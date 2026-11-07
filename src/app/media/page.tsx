@@ -55,6 +55,19 @@ export default function MediaPage() {
         <p className="cm-note">Essentials, from ${CORE_FROM}, covers HDR photos, licensed drone and a floor plan. Prices scale with home size.</p>
       </section>
 
+      <section className="cm-sec rvl" aria-label="Services in detail">
+        <Head title="Each service in detail." />
+        <Rows
+          items={[
+            { title: 'Real estate photography', href: '/real-estate-photography' },
+            { title: 'Drone photography', href: '/drone-photography' },
+            { title: 'Virtual tours and Virtual Visit', href: '/virtual-tours' },
+            { title: 'Real estate video', href: '/real-estate-video' },
+            { title: 'Drone mapping for construction', href: '/drone-mapping' },
+          ]}
+        />
+      </section>
+
       <div id="virtual-visit"><PublicFaqs title="Questions about listing media." faqs={MEDIA_FAQS} /></div>
       <Close title="Ready when the listing is." href="/book" label="Book media" />
     </>

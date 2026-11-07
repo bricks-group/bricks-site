@@ -26,11 +26,51 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    href: '/blog/drone-licence-canada',
+    tag: 'Drone · Canada',
+    title: 'Drone licence in Canada: Basic vs Advanced (2026)',
+    desc: 'Transport Canada’s Basic, Advanced and Level 1 Complex certificates: ages, exams, flight reviews, registration and what real estate needs.',
+    read: '7 min',
+    date: '2026-11-07',
+  },
+  {
+    href: '/blog/home-inspection-cost-ontario',
+    tag: 'Home services · Ontario',
+    title: 'Home inspection cost in Ontario (2026): what sets the price',
+    desc: 'Typical ranges from published price guides, what moves the number, add-on tests and how to get a written quote.',
+    read: '6 min',
+    date: '2026-11-07',
+  },
+  {
+    href: '/blog/move-out-cleaning-checklist',
+    tag: 'Home services',
+    title: 'Move-out cleaning checklist, room by room',
+    desc: 'Everything to clean before handing back the keys or turning a unit over, and how to document it.',
+    read: '5 min',
+    date: '2026-11-07',
+  },
+  {
+    href: '/blog/what-is-an-orthomosaic',
+    tag: 'Site Progress',
+    title: 'What is an orthomosaic?',
+    desc: 'The drone map builders measure, compare and report on, and how it differs from an aerial photo.',
+    read: '5 min',
+    date: '2026-11-07',
+  },
+  {
+    href: '/blog/photogrammetry-for-construction',
+    tag: 'Site Progress',
+    title: 'Photogrammetry for construction: a practical guide',
+    desc: 'What drone photogrammetry produces on a job site, where it helps, its limits, and running it on a schedule.',
+    read: '6 min',
+    date: '2026-11-07',
+  },
+  {
     href: '/blog/canada-real-estate-photography-cost-2026',
     tag: 'Pricing · Canada',
     title: 'How much does real estate photography cost in Canada? (2026)',
-    desc: 'Canada-wide cost overview for listing photos, MLS media, drone, floor plans, and tours — expands the GTA cluster.',
-    read: '8 min',
+    desc: 'Canada-wide cost overview for listing photos, MLS media, drone, floor plans, and tours, with a full price table by home size.',
+    read: '9 min',
     date: '2026-09-12',
   },
   {
@@ -96,7 +136,7 @@ export default function BlogPage() {
           <span className="badge">Resources</span>
           <h1>Real estate photography &amp; listing media, explained.</h1>
           <p className="sub">
-            Practical guides for Canadian agents — listing photo costs, MLS media, drone rules, and what a shoot includes.
+            Practical guides for Canadian agents, builders and property owners — listing photo costs, drone rules and licences, site mapping, inspections and cleaning.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">

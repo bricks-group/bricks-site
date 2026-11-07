@@ -10,13 +10,13 @@ import { OG_IMAGE } from '@/lib/og'
 const OG = OG_IMAGE
 
 export const metadata: Metadata = {
-  title: "Real Estate Photographer Jobs Across Canada | Bricks",
+  title: "Real Estate Photographer Jobs in Toronto & Across Canada | Bricks",
   description:
-    'Shoot listings for Bricks across Canada. Jobs come to you in the Bricks app at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
+    'Real estate photography jobs in Toronto, the GTA and across Canada. Jobs come to you in the Bricks app at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
   alternates: { canonical: '/photographers' },
   robots: { index: true, follow: true },
   openGraph: {
-    title: "Real Estate Photographer Jobs Across Canada | Bricks",
+    title: "Real Estate Photographer Jobs in Toronto & Across Canada | Bricks",
     description:
       'Shoot listings across Canada at a fixed rate per job. Apply in about four minutes.',
     images: [OG],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Real Estate Photographer Jobs Across Canada | Bricks",
+    title: "Real Estate Photographer Jobs in Toronto & Across Canada | Bricks",
     description: 'Shoot listings across Canada at a fixed rate per job.',
     images: [OG],
   },
@@ -168,6 +168,24 @@ export default function PhotographersPage() {
             ]}
           />
           <p className="note">The commercial insurance requirement is set out in a Commercial Work Addendum to the contractor agreement; listing jobs do not require insurance.</p>
+        </section>
+
+        <section className="block rvl" id="toronto" aria-label="Photography jobs in Toronto">
+          <div className="sec-head">
+            <div>
+              <h2>Photography jobs in Toronto and the GTA.</h2>
+            </div>
+          </div>
+          <p className="rate-lead">Toronto and the Golden Horseshoe are Bricks’ home base, where clients book listing shoots with no travel fee in the GTA’s major markets. Jobs are sent to you by specialty, tier and distance.</p>
+          <Rows
+            items={[
+              { title: 'Condos and houses', detail: 'Downtown condo interiors and amenities, and detached and semi-detached homes across the city and the 905.' },
+              { title: 'Drone in controlled airspace', detail: 'Much of Toronto sits in controlled airspace around Pearson and Billy Bishop. Aerial jobs need an Advanced certificate and NAV CANADA authorization.' },
+              { title: 'Builder site work', detail: 'Tier 3 pilots with verified insurance can take builder progress visits and mapped captures.' },
+              { title: 'Also hiring across Canada', detail: 'Ottawa, Calgary, Vancouver and beyond. Apply from anywhere in Canada.' },
+            ]}
+          />
+          <p className="note">New to drone certification? Read <Link href="/blog/drone-licence-canada">how to get a drone licence in Canada</Link>.</p>
         </section>
 
         <section className="block rvl">

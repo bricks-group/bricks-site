@@ -25,6 +25,10 @@ export default function Footer() {
             <Link href="/builders">Site Progress</Link>
             <Link href="/media">Listing media</Link>
             <Link href="/real-estate-photography">Listing photos</Link>
+            <Link href="/drone-photography">Drone photography</Link>
+            <Link href="/virtual-tours">Virtual tours</Link>
+            <Link href="/real-estate-video">Real estate video</Link>
+            <Link href="/drone-mapping">Drone mapping</Link>
             <Link href="/pricing">Pricing</Link>
             <Link href="/gallery">Work</Link>
             <Link href="/service-areas">Service areas</Link>

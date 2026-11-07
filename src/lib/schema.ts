@@ -234,6 +234,39 @@ export function siteProgressServiceSchema(pageUrl: string) {
   }
 }
 
+/** One focused Service entity for a single-service landing page. Offers come from MEDIA_OFFERS only. */
+export function focusedServiceSchema(opts: {
+  url: string; id: string; name: string; serviceType: string; description: string
+  offers?: readonly MediaOfferId[]; areaServed?: readonly object[]
+}) {
+  const offers = (opts.offers ?? []).filter((id) => VIRTUAL_STAGING_ENABLED || id !== 'staging').map((id) => MEDIA_OFFERS[id])
+  return {
+    '@context': 'https://schema.org', '@type': 'Service', '@id': `https://www.brxs.ca${opts.id}`,
+    name: opts.name, serviceType: opts.serviceType, description: opts.description, url: opts.url,
+    provider: ORG_REF, areaServed: opts.areaServed ?? AREA_SERVED_SCHEMA,
+    ...(offers.length ? { hasOfferCatalog: { '@type': 'OfferCatalog', name: `${opts.name} (CAD, pre-tax)`, itemListElement: offers } } : {}),
+  }
+}
+
+export const ONTARIO_AREA_SCHEMA = [{ '@type': 'State', name: 'Ontario', containedInPlace: { '@type': 'Country', name: 'Canada' } }] as const
+
+export function cityAreaSchema(city: string, province: string) {
+  return [{ '@type': 'City', name: city, containedInPlace: { '@type': 'State', name: province } }] as const
+}
+
+/** BlogPosting for a guide under /blog. Same shape as the hand-written posts. */
+export function blogPostingSchema(opts: { path: string; headline: string; description: string; datePublished: string; dateModified?: string; keywords: string; image: string }) {
+  return {
+    '@context': 'https://schema.org', '@type': 'BlogPosting',
+    headline: opts.headline, description: opts.description,
+    author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
+    datePublished: opts.datePublished, dateModified: opts.dateModified ?? opts.datePublished,
+    publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
+    mainEntityOfPage: `https://www.brxs.ca${opts.path}`,
+    keywords: opts.keywords, image: opts.image,
+  }
+}
+
 export function faqPageSchema(faqs: readonly { q: string; a: string }[]) {
   return {
     '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -259,6 +292,15 @@ const PAGE_NAMES: Record<string, string> = {
   '/blog/drone-photography-rules-ontario': 'Ontario drone rules',
   '/work-with-bricks/staging': 'Staging vendors', '/work-with-bricks/cleaning': 'Cleaning vendors',
   '/work-with-bricks/inspections': 'Inspection vendors', '/work-with-bricks/measurement': 'Measurement vendors',
+  '/drone-photography': 'Drone photography', '/virtual-tours': 'Virtual tours', '/real-estate-video': 'Real estate video',
+  '/drone-mapping': 'Drone mapping', '/home-staging': 'Home staging', '/home-inspection-ontario': 'Home inspection (Ontario)',
+  '/move-out-cleaning': 'Move-out and turnover cleaning',
+  '/real-estate-photography/toronto': 'Toronto', '/real-estate-photography/ottawa': 'Ottawa',
+  '/real-estate-photography/calgary': 'Calgary', '/real-estate-photography/vancouver': 'Vancouver',
+  '/blog/drone-licence-canada': 'Drone licence in Canada', '/blog/what-is-an-orthomosaic': 'What is an orthomosaic',
+  '/blog/photogrammetry-for-construction': 'Photogrammetry for construction',
+  '/blog/home-inspection-cost-ontario': 'Home inspection cost in Ontario',
+  '/blog/move-out-cleaning-checklist': 'Move-out cleaning checklist',
 }
 
 /** Help pages already have their own visible breadcrumbs and JSON-LD. */
@@ -266,6 +308,7 @@ export function siteBreadcrumbItems(pathname: string) {
   const name = PAGE_NAMES[pathname]
   if (!name) return []
   const parent = pathname.startsWith('/blog/') ? '/blog'
-    : pathname.startsWith('/work-with-bricks/') ? '/work-with-bricks' : undefined
+    : pathname.startsWith('/work-with-bricks/') ? '/work-with-bricks'
+    : pathname.startsWith('/real-estate-photography/') ? '/real-estate-photography' : undefined
   return [{ name: 'Home', path: '/' }, ...(parent ? [{ name: PAGE_NAMES[parent], path: parent }] : []), { name, path: pathname }]
 }

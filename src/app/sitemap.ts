@@ -23,6 +23,22 @@ const PUBLIC_NOW = [
   { path: '/blog/whats-included-listing-shoot', changeFrequency: 'monthly' as const, priority: 0.75 },
   { path: '/blog/3d-tour-vs-video-walkthrough', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/blog/drone-photography-rules-ontario', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/blog/drone-licence-canada', changeFrequency: 'monthly' as const, priority: 0.75 },
+  { path: '/blog/what-is-an-orthomosaic', changeFrequency: 'monthly' as const, priority: 0.65 },
+  { path: '/blog/photogrammetry-for-construction', changeFrequency: 'monthly' as const, priority: 0.65 },
+  { path: '/blog/home-inspection-cost-ontario', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/blog/move-out-cleaning-checklist', changeFrequency: 'monthly' as const, priority: 0.65 },
+  { path: '/real-estate-photography/toronto', changeFrequency: 'monthly' as const, priority: 0.85 },
+  { path: '/real-estate-photography/ottawa', changeFrequency: 'monthly' as const, priority: 0.75 },
+  { path: '/real-estate-photography/calgary', changeFrequency: 'monthly' as const, priority: 0.75 },
+  { path: '/real-estate-photography/vancouver', changeFrequency: 'monthly' as const, priority: 0.75 },
+  { path: '/drone-photography', changeFrequency: 'monthly' as const, priority: 0.85 },
+  { path: '/virtual-tours', changeFrequency: 'monthly' as const, priority: 0.8 },
+  { path: '/real-estate-video', changeFrequency: 'monthly' as const, priority: 0.8 },
+  { path: '/drone-mapping', changeFrequency: 'monthly' as const, priority: 0.75 },
+  { path: '/home-staging', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/home-inspection-ontario', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/move-out-cleaning', changeFrequency: 'monthly' as const, priority: 0.7 },
 ]
 
 /** Additional public product, audience and company pages. */

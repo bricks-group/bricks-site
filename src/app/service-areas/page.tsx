@@ -85,6 +85,9 @@ export default function ServiceAreasPage() {
             <p>
               <Link href="/book">Enter the listing address</Link> and we&apos;ll size the home, quote travel and show the exact times available. City not on the map? Ask anyway.
             </p>
+            <p>
+              City guides: <Link href="/real-estate-photography/toronto">Toronto</Link>, <Link href="/real-estate-photography/ottawa">Ottawa</Link>, <Link href="/real-estate-photography/calgary">Calgary</Link> and <Link href="/real-estate-photography/vancouver">Vancouver</Link>.
+            </p>
           </div>
         </div>
       </section>

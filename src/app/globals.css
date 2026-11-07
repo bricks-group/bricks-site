@@ -188,6 +188,16 @@ section.block.block-flush{border-top:none;}
 .prose a.author-card{text-decoration:none;}
 .prose blockquote{margin:24px 0;padding:16px 24px;border-left:2px solid var(--brick);
   background:var(--paperDeep);color:var(--inkSoft);font-size:15px;}
+.landing-prose{margin-top:20px;max-width:760px;}
+.landing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap,12px);}
+.landing-grid img{width:100%;height:auto;display:block;}
+.landing-embed{aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:var(--radius,12px);margin-top:20px;}
+@media (max-width:680px){.landing-grid{grid-template-columns:1fr 1fr;gap:8px;}}
+.prose .table-wrap{overflow-x:auto;margin:0 0 20px;}
+.prose table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:480px;}
+.prose th,.prose td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--hair);color:var(--inkSoft);vertical-align:top;}
+.prose th{color:var(--ink);font-weight:500;}
+.prose td.num,.prose th.num{font-variant-numeric:tabular-nums;white-space:nowrap;}
 .prose .lead{font-size:17.5px;color:var(--ink);line-height:1.65;}
 
 /* author card (end of articles) */

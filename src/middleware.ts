@@ -42,6 +42,9 @@ export function isPublicPath(pathname: string): boolean {
   if (pathname === '/blog' || pathname.startsWith('/blog/')) return true
   if (pathname === '/real-estate-photography' || pathname.startsWith('/real-estate-photography/')) return true
   if (pathname === '/listing-photos' || pathname.startsWith('/listing-photos/')) return true
+  if (['/drone-photography', '/virtual-tours', '/real-estate-video', '/drone-mapping', '/home-staging', '/home-inspection-ontario', '/move-out-cleaning'].includes(pathname)) return true
+  // IndexNow key file at the site root (public by design: search engines fetch it to verify submissions).
+  if (/^\/[a-f0-9]{32}\.txt$/.test(pathname)) return true
   // Prospect demo: contact-first /demo + signed unlock. Mint UI /demo/invite stays gated.
   if (pathname === '/demo' || pathname === '/demo/') return true
   if (pathname === '/demo/unlock' || pathname.startsWith('/demo/unlock/')) return true

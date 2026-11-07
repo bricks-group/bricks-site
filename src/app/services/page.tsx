@@ -57,6 +57,19 @@ export default function ServicesPage() {
         <p className="hs-note">Inspections are available in Ontario only.{isTradeEnabled('repairs') ? ' Repairs don’t include electrical, plumbing or gas work.' : ''} A measurement is not a legal survey.</p>
       </section>
 
+      <section className="cm-sec rvl" aria-label="Service guides">
+        <Head title="Read more by service." />
+        <Rows
+          items={[
+            { title: 'Home staging', detail: 'Vacant and lived-in homes, timed with the listing photos.', href: '/home-staging' },
+            { title: 'Move-out and turnover cleaning', detail: 'Empty units and pre-listing deep cleans, with photo proof.', href: '/move-out-cleaning' },
+            { title: 'Home inspections in Ontario', detail: 'Pre-listing, pre-purchase, condo and new-build.', href: '/home-inspection-ontario' },
+            { title: 'Home inspection cost in Ontario', detail: 'Typical ranges and what moves the price.', href: '/blog/home-inspection-cost-ontario' },
+            { title: 'Move-out cleaning checklist', detail: 'Room by room.', href: '/blog/move-out-cleaning-checklist' },
+          ]}
+        />
+      </section>
+
       <section className="cm-sec hs-quote" id="quote" aria-label="Request a quote">
         {TRADES.map((t) => <span key={t.slug} id={`quote-${t.slug}`} className="hs-anchor" aria-hidden="true" />)}
         <Head title="Request a quote." lede="Pick a service and tell us about the property. No prices are listed yet. A person at Bricks quotes every job in writing, and nothing is booked until you approve it." />

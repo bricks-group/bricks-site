@@ -104,7 +104,7 @@ export default function BuildersPage() {
       </section>
 
       <section className="cm-sec" id="hub" aria-label="The builder hub">
-        <Head title="The builder hub." lede="Dated, measured evidence from every visit, for your team, your lenders and your quantity surveyor." />
+        <Head title="The builder hub." lede="Dated, measured evidence from every visit, for your team, your lenders and your quantity surveyor." link={{ href: '/drone-mapping', label: 'Drone mapping' }} />
         <FeatureList items={HUB} label="Builder hub features" sheet="B" />
       </section>
 

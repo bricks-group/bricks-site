@@ -20,6 +20,15 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [Cleaning and turnovers](https://www.brxs.ca/services#cleaning): Property cleaning with a checklist and photo proof, by quote.
 - [Inspections](https://www.brxs.ca/services#inspections): Ontario home and building inspections with written reports, by quote.
 - [Measurement](https://www.brxs.ca/services#measurement): Floor area and floor plans, by quote; legal land surveys are referred to an Ontario Land Surveyor.
+- [Real estate photography](https://www.brxs.ca/real-estate-photography): Listing photo packages and prices by home size.
+- [Drone photography](https://www.brxs.ca/drone-photography): Licensed aerial listing photos by Transport Canada certified pilots.
+- [Virtual tours](https://www.brxs.ca/virtual-tours): Path-confined virtual tours, and Virtual Visit free-roam 3D as a separate add-on.
+- [Real estate video](https://www.brxs.ca/real-estate-video): Calm, editorial 30–45 second listing films.
+- [Drone mapping](https://www.brxs.ca/drone-mapping): Orthomosaics, 3D models and measurable site maps for construction; estimates, not a survey.
+- [Home staging page](https://www.brxs.ca/home-staging): Staging for vacant and lived-in homes, by written quote.
+- [Move-out and turnover cleaning](https://www.brxs.ca/move-out-cleaning): Move-out, turnover and pre-listing cleans with photo proof, by written quote.
+- [Home inspections in Ontario](https://www.brxs.ca/home-inspection-ontario): Pre-listing, pre-purchase, condo and new-build inspections; Ontario only.
+- [City pages](https://www.brxs.ca/real-estate-photography/toronto): Toronto (home base), plus [Ottawa](https://www.brxs.ca/real-estate-photography/ottawa), [Calgary](https://www.brxs.ca/real-estate-photography/calgary) and [Vancouver](https://www.brxs.ca/real-estate-photography/vancouver), where a photographer is confirmed at booking.
 - [Service areas](https://www.brxs.ca/service-areas): Canada-wide coverage, subject to property-specific confirmation.
 - [Gallery](https://www.brxs.ca/gallery): First-party listing photography samples.
 
@@ -42,7 +51,7 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [Terms](https://www.brxs.ca/terms): Binding booking and cancellation terms. Delivery times are targets, not guarantees.
 - [Privacy](https://www.brxs.ca/privacy): Personal information practices.
 - [Legal](https://www.brxs.ca/legal): Agreements and Data Processing Agreement.
-- [Guides](https://www.brxs.ca/blog): Photography costs, drone rules and media choices.
+- [Guides](https://www.brxs.ca/blog): Photography costs, drone rules and licences, site mapping, inspections and cleaning.
 
 ## Extended reference
 

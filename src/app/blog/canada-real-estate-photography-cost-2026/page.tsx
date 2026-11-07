@@ -13,29 +13,56 @@ import {
   FOOTPRINT_BANDS,
   PHOTO_RANGE,
   DRONE_RANGE,
+  REEL_RATE,
+  TOUR_RATE,
+  TWILIGHT_RATE,
+  VISIT_RATE,
+  BAND_LABELS,
+  FLOOR_PLAN_ONLY_RATE,
+  CORE_FROM,
 } from '@/lib/pricing'
+import { sumRates } from '@/lib/landing'
+import { CITY_PAGES } from '@/lib/city-pages'
 import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
 const OG = OG_IMAGE
 
+const cad = (n: number) => `$${n.toLocaleString('en-CA')}`
+const ESSENTIALS = sumRates(PHOTO_RATE, DRONE_RATE)
+const STORY = sumRates(PHOTO_RATE, DRONE_RATE, REEL_RATE)
+const SHOWCASE = sumRates(PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE)
+const SUITE = sumRates(PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE)
+const RATE_ROWS: { name: string; cells: string[] }[] = [
+  { name: 'HDR photos', cells: bandCells(PHOTO_RATE) },
+  { name: 'Licensed drone (add-on)', cells: bandCells(DRONE_RATE) },
+  { name: 'Cinematic reel (add-on)', cells: bandCells(REEL_RATE) },
+  { name: `${TOUR_NAME} (add-on)`, cells: bandCells(TOUR_RATE) },
+  { name: 'Twilight (add-on)', cells: bandCells(TWILIGHT_RATE) },
+  { name: `${VISIT_NAME} (add-on only)`, cells: bandCells(VISIT_RATE) },
+  { name: 'Essentials: photos + drone + floor plan', cells: ESSENTIALS.map(cad) },
+  { name: 'Story: Essentials + reel', cells: STORY.map(cad) },
+  { name: `Showcase: Story + ${TOUR_NAME.toLowerCase()}`, cells: SHOWCASE.map(cad) },
+  { name: 'Full suite: Showcase + twilight', cells: SUITE.map(cad) },
+]
+
 export const metadata: Metadata = {
   title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
-  description: "Explore 2026 real estate photography costs across Canada, including listing photos, drone, floor plans and virtual tours, with a guide to Bricks quotes.",
+  description: "What real estate photography costs in Canada in 2026: market ranges and a full Bricks price table by home size for listing photos, drone, floor plans, video and virtual tours.",
   alternates: { canonical: '/blog/canada-real-estate-photography-cost-2026' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'article',
     title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
-    description: "Explore 2026 real estate photography costs across Canada, including listing photos, drone, floor plans and virtual tours, with a guide to Bricks quotes.",
+    description: "What real estate photography costs in Canada in 2026: market ranges and a full Bricks price table by home size for listing photos, drone, floor plans, video and virtual tours.",
     images: [OG],
     url: 'https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026',
   },
   twitter: {
     card: 'summary_large_image',
     title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
-    description: "Explore 2026 real estate photography costs across Canada, including listing photos, drone, floor plans and virtual tours, with a guide to Bricks quotes.",
+    description: "What real estate photography costs in Canada in 2026: market ranges and a full Bricks price table by home size for listing photos, drone, floor plans, video and virtual tours.",
     images: [OG],
   },
 }
@@ -54,7 +81,7 @@ export default function Post() {
               'Canada-wide guide to real estate photography and listing media costs for HDR photos, drone, floor plans, and virtual tours.',
             author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
             datePublished: '2026-09-12',
-            dateModified: '2026-09-12',
+            dateModified: '2026-11-07',
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             mainEntityOfPage: 'https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026',
             keywords:
@@ -88,10 +115,18 @@ export default function Post() {
               },
               {
                 '@type': 'Question',
+                name: 'Does Bricks charge travel?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75 a km. There is no travel fee in the GTA’s major markets. Travel is on the quote before checkout.',
+                },
+              },
+              {
+                '@type': 'Question',
                 name: 'Does a floor plan come with listing photos?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'Many Canadian providers charge $99–$149 extra for a floor plan. Bricks includes a branded 2D floor plan on every standard shoot.',
+                  text: `Many Canadian providers charge $99–$149 extra for a floor plan. Bricks includes a branded 2D floor plan from Essentials up, or sells it on its own for $${FLOOR_PLAN_ONLY_RATE}.`,
                 },
               },
             ],
@@ -101,7 +136,7 @@ export default function Post() {
       <BlogPostLayout
         badge="Resources · Pricing · Canada"
         title="How much does real estate photography cost in Canada? (2026)"
-        sub="A Canada-wide look at listing photos, MLS media, drone, floor plans, and virtual tours — then how Bricks prices the same work à la carte. Expands our GTA cost cluster without treating one metro as the whole country."
+        sub="A Canada-wide look at listing photos, MLS media, drone, floor plans, and virtual tours — then how Bricks prices the same work à la carte. Updated November 2026 with a full price table by home size."
       >
         <p className="lead">
           Canadian agents buy <strong>listing photos</strong> the same way everywhere: by footprint, by service stack, and by how fast MLS-ready files need to land. Prices move with metro density, but the shopping list is national — HDR stills, optional drone real estate photos, a floor plan, and sometimes a path-confined virtual tour.
@@ -150,7 +185,7 @@ export default function Post() {
         </p>
         <h3>3. Travel and access</h3>
         <p>
-          Canada is large. Desks either include a free radius from base or quote travel up front. Bricks: first 25 km from the assigned photographer’s base free, then $0.75/km — confirmed at assignment. {COVERAGE_LINE}
+          Canada is large. Desks either include a free radius from base or quote travel up front. Bricks: first 25 km from the assigned photographer’s location free, then $0.75/km, and no travel fee in the GTA’s major markets. The photographer is assigned before you pay, so travel is on the quote before checkout. {COVERAGE_LINE}
         </p>
         <h3>4. Turnaround</h3>
         <p>
@@ -171,7 +206,7 @@ export default function Post() {
             Licensed drone: <strong>{bandCells(DRONE_RATE).join(' / ')}</strong> ({DRONE_RANGE})
           </li>
           <li>
-            Floor plan: <strong>included</strong> on every standard shoot
+            Floor plan: <strong>included</strong> from Essentials up, or <strong>${FLOOR_PLAN_ONLY_RATE}</strong> on its own
           </li>
           <li>
             Cinematic reel: <strong>+{REEL_RANGE}</strong>
@@ -189,14 +224,39 @@ export default function Post() {
             Rush: <strong>+${RUSH_FLAT}</strong>
           </li>
         </ul>
+        <h2>Bricks price table by home size (2026)</h2>
+        <p>Every line below comes from the same rates the booking quote uses. CAD, before travel and tax. Bands: {FOOTPRINT_BANDS} sq ft.</p>
+        <div className="table-wrap">
+          <table>
+            <thead><tr><th>Service</th>{BAND_LABELS.map((b) => <th key={b} className="num">{b}</th>)}</tr></thead>
+            <tbody>
+              {RATE_ROWS.map((r) => <tr key={r.name}><td>{r.name}</td>{r.cells.map((c, i) => <td key={i} className="num">{c}</td>)}</tr>)}
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Worked examples</h2>
+        <ul>
+          <li><strong>A small condo, photos only:</strong> {bandCells(PHOTO_RATE)[0]} before tax.</li>
+          <li><strong>A mid-size detached home with Essentials</strong> (photos, drone, floor plan): {cad(ESSENTIALS[1])} before tax. Essentials starts at ${CORE_FROM} for the Small band.</li>
+          <li><strong>A large home with Showcase</strong> (Essentials, reel and {TOUR_NAME.toLowerCase()}): {cad(SHOWCASE[2])} before tax.</li>
+          <li><strong>Add {VISIT_NAME}</strong> to the same large home: +{bandCells(VISIT_RATE)[2]}.</li>
+        </ul>
+        <p>Inside GTA major markets there’s no travel fee. Elsewhere, add $0.75 for every km beyond the first 25 km from the assigned photographer.</p>
         <p>
           Get a live tailored quote on <Link href="/book">Book a shoot</Link>. Product overview for agents:{' '}
-          <Link href="/real-estate-photography">Real estate photography &amp; listing photos</Link>.
+          <Link href="/real-estate-photography">Real estate photography &amp; listing photos</Link>. Per-service detail: <Link href="/drone-photography">drone photography</Link>, <Link href="/virtual-tours">virtual tours</Link> and <Link href="/real-estate-video">real estate video</Link>.
         </p>
 
         <h2>Regional notes (without a laundry list)</h2>
         <p>
           Toronto / GTA, Vancouver / Lower Mainland, Calgary / Edmonton, Ottawa / Montreal, and Atlantic markets all buy the same media stack. Where certified drone operators are scarce, aerial premiums rise. Where condo inventory dominates, average photo tickets fall but volume rises. Bricks recruits photographers Canada-wide so coverage can follow booked demand — confirm at booking rather than assuming a city page equals a guaranteed slot.
+        </p>
+        <p>
+          City guides:{' '}
+          {CITY_PAGES.map((c, i) => (
+            <span key={c.slug}>{i ? ', ' : ''}<Link href={`/real-estate-photography/${c.slug}`}>{c.city}</Link></span>
+          ))}.
         </p>
 
         <h2>FAQ</h2>
