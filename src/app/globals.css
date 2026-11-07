@@ -19,7 +19,7 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --paper:#141210; --paperSoft:#1C1A17; --paperDeep:#23201C;
-    --ink:#F4F1EB; --inkSoft:#D6CFC2; --inkMute:#8F8678; --inkFaint:#5C564E;
+    --ink:#F4F1EB; --inkSoft:#D6CFC2; --inkMute:#8F8678; --inkFaint:#9F978C;
     --hair:#F4F1EB14; --hairStrong:#F4F1EB26;
     --brickTint:rgba(210,84,43,.15); --brickSoft:rgba(210,84,43,.30); --brickDeep:#D2542B;
   }
@@ -27,7 +27,7 @@
 [data-theme="dark"]{
   color-scheme:dark;
   --paper:#141210; --paperSoft:#1C1A17; --paperDeep:#23201C;
-  --ink:#F4F1EB; --inkSoft:#D6CFC2; --inkMute:#8F8678; --inkFaint:#5C564E;
+  --ink:#F4F1EB; --inkSoft:#D6CFC2; --inkMute:#8F8678; --inkFaint:#9F978C;
   --hair:#F4F1EB14; --hairStrong:#F4F1EB26;
   --brickTint:rgba(210,84,43,.15); --brickSoft:rgba(210,84,43,.30); --brickDeep:#D2542B;
 }
