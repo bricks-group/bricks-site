@@ -112,7 +112,7 @@ export default function Home() {
             <Link className="hf-link" href="/book">Book media</Link>
           </div>
           <div className="hf-frame tray tray-book tray-phone">
-            <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" /></PhoneFrame>
+            <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" darkBar="#1C1C14" /></PhoneFrame>
           </div>
         </section>
 

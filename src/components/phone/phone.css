@@ -120,3 +120,5 @@
 .pfa:is([data-play='1'],[data-play='p']) .pfs-states li{color:#14110E;}
 .pfa[data-play='p'] *,.pfa[data-play='p'] *::before,.pfa[data-play='p'] *::after{animation-play-state:paused !important;}
 @media (prefers-reduced-motion: reduce){.pfa *,.pfa *::before,.pfa *::after{animation:none !important;}}
+html[data-theme="dark"] .pf-screen{background:#1C1A17;}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .pf-screen{background:#1C1A17;}}

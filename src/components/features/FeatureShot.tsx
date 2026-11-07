@@ -20,19 +20,29 @@ export type FeatureShotName = keyof typeof SHOTS
 
 type Props = { name: FeatureShotName; alt: string; sizes?: string; caption?: string }
 
-/** Bare responsive picture of one shot (AVIF, WebP, JPG). */
+/** Bare responsive picture of one shot (AVIF, WebP, JPG), light and dark captures.
+ * The dark set (name-dark-W) is the same capture with UI luma flipped onto the dark tokens;
+ * photographic regions (orthophotos, site photos, 3D viewers) are left untouched.
+ * html[data-theme] picks which one shows (visual-tokens.css, .fp-light / .fp-dark). */
 export function FeaturePic({ name, alt, sizes = '(max-width:900px) 100vw, 640px' }: { name: FeatureShotName; alt: string; sizes?: string }) {
   const p = SHOTS[name]
-  const set = (ext: string) => p.widths.map((w) => `/media/features/${name}-${w}.${ext} ${w}w`).join(', ')
   const fw = p.widths[p.widths.length - 1]
   const fh = Math.round((p.h * fw) / p.w)
   return (
-    <picture>
-      <source type="image/avif" srcSet={set('avif')} sizes={sizes} />
-      <source type="image/webp" srcSet={set('webp')} sizes={sizes} />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`/media/features/${name}-${fw}.jpg`} srcSet={set('jpg')} sizes={sizes} width={fw} height={fh} alt={alt} loading="lazy" decoding="async" />
-    </picture>
+    <>
+      {(['light', 'dark'] as const).map((t) => {
+        const stem = t === 'light' ? name : `${name}-dark`
+        const set = (ext: string) => p.widths.map((w) => `/media/features/${stem}-${w}.${ext} ${w}w`).join(', ')
+        return (
+          <picture key={t} className={`fp-${t}`}>
+            <source type="image/avif" srcSet={set('avif')} sizes={sizes} />
+            <source type="image/webp" srcSet={set('webp')} sizes={sizes} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/media/features/${stem}-${fw}.jpg`} srcSet={set('jpg')} sizes={sizes} width={fw} height={fh} alt={t === 'light' ? alt : ''} aria-hidden={t === 'dark' ? true : undefined} loading="lazy" decoding="async" />
+          </picture>
+        )
+      })}
+    </>
   )
 }
 

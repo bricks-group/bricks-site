@@ -53,7 +53,7 @@ export default function PlatformPage() {
           <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
         <div className="tray tray-book tray-phone">
-          <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" /></PhoneFrame>
+          <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" darkBar="#1C1C14" /></PhoneFrame>
         </div>
       </section>
 

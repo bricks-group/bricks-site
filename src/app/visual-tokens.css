@@ -97,3 +97,16 @@ html[data-theme="dark"] .scr-light{display:none;}
 @media (min-width:1001px){.hf .tray-phone{--pf-w:min(272px,60%);--pf-top:4.5%;}}
 /* /platform fixed-height trays (520px): size the phone so the panel clips it, as on home */
 .tray.tray-phone:not(.hf .tray-phone){--pf-w:min(290px,80%);--pf-top:6%;}
+
+/* Feature captures (FeaturePic): light and dark sets, the theme picks one. Hidden copies don't load (loading=lazy). */
+html:not([data-theme="dark"]) .fp-dark{display:none !important;}
+html[data-theme="dark"] .fp-light{display:none !important;}
+@media (prefers-color-scheme:dark){
+  html:not([data-theme]) .fp-dark{display:block !important;}
+  html:not([data-theme]) .fp-light{display:none !important;}
+}
+/* ScreenStatic without JS: follow the system scheme too */
+@media (prefers-color-scheme:dark){
+  html:not([data-theme]) .scr-dark{display:block;}
+  html:not([data-theme]) .scr-light{display:none;}
+}
