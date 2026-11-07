@@ -9,8 +9,8 @@ export default function HomeServicesBand() {
   return (
     <section className="cm-sec rvl hs-home" style={{ '--hs-columns': TRADES.length } as CSSProperties} aria-label="Book services inside Bricks">
       <Head
-        title="Book services inside Bricks."
-        lede={`${tradeListPhrase().charAt(0).toUpperCase()}${tradeListPhrase().slice(1)}, requested from the same system as your listings and units. Each job is quoted in writing, and the results are kept with the property.`}
+        title="Bring your service providers together."
+        lede={`${tradeListPhrase().charAt(0).toUpperCase()}${tradeListPhrase().slice(1)}. Request the people you need in one place, with a written quote and the results kept with the property.`}
         link={{ href: '/services', label: 'All home services' }}
       />
       <TradeGrid />

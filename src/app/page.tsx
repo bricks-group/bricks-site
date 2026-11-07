@@ -22,7 +22,7 @@ const faqs = HOME_FAQS
 
 export const metadata: Metadata = {
   title: 'Bricks — the system for Canadian real estate',
-  description: 'Subscription software for Canadian real estate: builders, developers, investors and realtors, with listing media, Virtual Visit and Site Progress booked inside.',
+  description: 'Bricks brings deals, listings, bookings, service providers and communication into one real estate system. Media, Virtual Visit and Site Progress are part of it.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
     url: 'https://www.brxs.ca/',
     locale: 'en_CA',
     title: 'Bricks — the system for Canadian real estate',
-    description: 'Subscription software for Canadian real estate: builders, developers, investors and realtors, with listing media, Virtual Visit and Site Progress booked inside.',
+    description: 'Bricks brings deals, listings, bookings, service providers and communication into one real estate system. Media, Virtual Visit and Site Progress are part of it.',
     images: [OG_IMAGE],
   },
   twitter: {
     title: 'Bricks — the system for Canadian real estate',
-    description: 'Subscription software for Canadian real estate: builders, developers, investors and realtors, with listing media, Virtual Visit and Site Progress booked inside.',
+    description: 'Bricks brings deals, listings, bookings, service providers and communication into one real estate system. Media, Virtual Visit and Site Progress are part of it.',
     images: [OG_IMAGE],
   },
 }
@@ -63,7 +63,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system that brings it all together.</h1>
-          <p className="sub">Software for builders, developers, investors and realtors. Listing media and Site Progress are booked inside it.</p>
+          <p className="sub">Bring deals, listings, bookings and conversations into one place. Your software, your team and the people who get each property ready.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="cm-link" href="/pricing">See pricing</Link>
@@ -82,8 +82,8 @@ export default function Home() {
       <div className="hf" aria-label="Inside Bricks">
         <section className="hf-row rvl" aria-label="Site Progress">
           <div className="hf-copy">
-            <h2>Site Progress, reported.</h2>
-            <p>Progress reports measured on true maps, with an issues log, weather for each visit and a checksum for every file. As a PDF or a link that expires.</p>
+            <h2>From the first site visit.</h2>
+            <p>Site Progress keeps visits, maps, issues and reports with the project. Share a dated update without piecing it together from separate files.</p>
             <Link className="hf-link" href="/builders">See the builder hub</Link>
             <span className="hf-fine">Shown with sample data</span>
           </div>
@@ -95,7 +95,7 @@ export default function Home() {
         <section className="hf-row hf-flip rvl" aria-label="The software">
           <div className="hf-copy">
             <h2>One desk for every deal.</h2>
-            <p>Deals, CRM, e-sign and MLS® prep on one screen.</p>
+            <p>Deals, contacts, documents and next steps, together. Less to chase across separate threads.</p>
             <Link className="hf-link" href="/platform">See the software</Link>
           </div>
           <div className="hf-frame tray tray-crm">
@@ -107,8 +107,8 @@ export default function Home() {
 
         <section className="hf-row rvl" aria-label="Listing media">
           <div className="hf-copy">
-            <h2>Listing media, booked inside.</h2>
-            <p>Photos, drone, video and 3D at an exact time. Delivery lands on the listing.</p>
+            <h2>Media, part of the same workflow.</h2>
+            <p>Book photographers, drone, video and Virtual Visit from the same system. The finished work stays with the listing.</p>
             <Link className="hf-link" href="/book">Book media</Link>
           </div>
           <div className="hf-frame tray tray-book tray-phone">
@@ -120,8 +120,8 @@ export default function Home() {
         {AGENT_LAUNCH_LIVE ? (
           <section className="hf-row hf-flip rvl" aria-label="Listing launch and deal room">
             <div className="hf-copy">
-              <h2>From listing to closing.</h2>
-              <p>A launch kit for every listing. On Marble and brokerage seats, a private deal room for each lawyer, broker and inspector on the deal.</p>
+              <h2>Keep everyone in the loop.</h2>
+              <p>A launch kit for every listing. On Marble and brokerage seats, private deal rooms keep lawyers, brokers and inspectors working from the same file.</p>
               <Link className="hf-link" href="/agents">For agents</Link>
               <span className="hf-fine">Shown with sample data</span>
             </div>
@@ -133,7 +133,7 @@ export default function Home() {
       </div>
 
       <section className="cm-sec rvl" aria-label="Who it is for">
-        <Head title="Built for the whole project." lede="From the first site visit to the last listing." />
+        <Head title="One system. Every part of the work." lede="From the first site visit to the last closing." />
         <Rows
           items={[
             { title: 'Builders and developers', detail: 'Progress reports, 3D compare and site visits for every project.', href: '/builders' },
@@ -178,7 +178,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Close title="Start with the software." href="https://app.brxs.ca/login" label="Try Bricks free" external />
+      <Close title="Bring it all together." href="https://app.brxs.ca/login" label="Try Bricks free" external />
 
       <style>{`
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
