@@ -32,7 +32,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
             <Link href="/real-estate-video">Real estate video</Link>
             <Link href="/drone-mapping">Drone mapping</Link>
             <Link href="/pricing">Pricing</Link>
-            <Link href="/gallery">Work</Link>
+            <Link href="/gallery">Our work</Link>
             <Link href="/service-areas">Service areas</Link>
             <a href={COMPANION_URL} rel="noopener noreferrer">Companion</a>
             <a href={GO_URL} rel="noopener noreferrer">Photographer app</a>
@@ -69,8 +69,9 @@ export default function Footer({ children }: { children?: ReactNode }) {
             <Link href="/work-with-bricks">Work with Bricks</Link>
             <Link href="/photographers">Photographers</Link>
             <Link href="/about">About</Link>
+                        <a href="https://help.brxs.ca">Help centre</a>
             <Link href="/contact">Contact</Link>
-            <Link href="/help">Help centre</Link>
+            <a href="mailto:help@brxs.ca">help@brxs.ca</a>
             <Link href="/blog">Blog</Link>
           </div>
         </div>

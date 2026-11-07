@@ -1,3 +1,4 @@
+import { softwareParts } from '@/lib/nav'
 import type { Metadata } from 'next'
 import RevealObserver from '@/components/RevealObserver'
 import PhoneFrame from '@/components/phone/PhoneFrame'
@@ -54,6 +55,20 @@ export default function PlatformPage() {
         </div>
         <div className="tray tray-book tray-phone">
           <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" darkBar="#1C1C14" /></PhoneFrame>
+        </div>
+      </section>
+
+      <section className="cm-sec rvl platform-parts" aria-label="What is inside Bricks">
+        <div className="wrap">
+          <h2>What&apos;s inside.</h2>
+          <div className="pp-grid">
+            {softwareParts.map((m) => (
+              <div key={m.href} id={m.href.split('#')[1]} className="pp-item">
+                <h3>{m.label}</h3>
+                <p>{m.detail}.</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

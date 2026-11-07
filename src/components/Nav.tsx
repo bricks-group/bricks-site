@@ -1,19 +1,19 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
 import { OS_LOGIN, OS_URL } from '@/lib/brand'
 import { clearHintCookies, osLogoutUrl } from '@/lib/site-session'
+import { HELP_URL, softwareParts } from '@/lib/nav'
 import './nav-builders.css'
 
 const links = [
-  { href: '/platform', label: 'Software' },
   { href: '/builders', label: 'Builders & developers' },
   { href: '/media', label: 'Media' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/gallery', label: 'Work' },
+  { href: '/gallery', label: 'Our work' },
 ]
 
 /**
@@ -34,10 +34,33 @@ function logOut() {
 export default function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [sw, setSw] = useState(false)
+  const [swDrawer, setSwDrawer] = useState(false)
+  const swRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setOpen(false)
+    setSw(false)
   }, [pathname])
+
+  useEffect(() => {
+    if (!sw) return
+    function onDown(e: MouseEvent) {
+      if (swRef.current && !swRef.current.contains(e.target as Node)) setSw(false)
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setSw(false)
+        swRef.current?.querySelector<HTMLButtonElement>('button')?.focus()
+      }
+    }
+    document.addEventListener('mousedown', onDown)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [sw])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -69,6 +92,39 @@ export default function Nav() {
             <span className="nav-flag">Canada</span>
           </div>
           <nav className="nav-links" aria-label="Primary">
+            <div
+              className={`nav-dd${sw ? ' open' : ''}`}
+              ref={swRef}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node)) setSw(false)
+              }}
+            >
+              <button
+                type="button"
+                className={`nav-dd-btn${pathname === '/platform' || pathname.startsWith('/software') ? ' active' : ''}`}
+                aria-expanded={sw}
+                aria-controls="nav-software-menu"
+                onClick={() => setSw((v) => !v)}
+              >
+                Software<span className="nav-dd-caret" aria-hidden="true" />
+              </button>
+              <div id="nav-software-menu" className="nav-dd-panel" hidden={!sw}>
+                <Link href="/platform" className="nav-dd-all" onClick={() => setSw(false)}>
+                  <strong>All software</strong>
+                  <span>One system, from site to sale</span>
+                </Link>
+                <ul>
+                  {softwareParts.map((m) => (
+                    <li key={m.href}>
+                      <Link href={m.href} onClick={() => setSw(false)}>
+                        <strong>{m.label}</strong>
+                        <span>{m.detail}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             {links.map((l) => (
               <Link
                 key={l.href}
@@ -93,18 +149,12 @@ export default function Nav() {
             <button type="button" className="nav-login nav-auth-in nav-logout" onClick={logOut}>
               Log out
             </button>
-            <Link
-              href="/help"
-              className={`nav-sec${pathname.startsWith('/help') ? ' active' : ''}`}
-            >
+            <a href={HELP_URL} className="nav-login nav-help">
               Help
-            </Link>
-            <Link
-              href="/contact"
-              className={`nav-sec${pathname === '/contact' ? ' active' : ''}`}
-            >
-              Contact
-            </Link>
+            </a>
+            <a href={OS_LOGIN} className="nav-cta nav-auth-out">
+              Try Bricks free
+            </a>
             <button
               className={`nav-burger${open ? ' open' : ''}`}
               aria-label="Menu"
@@ -135,7 +185,22 @@ export default function Nav() {
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <nav className="drawer-links">
+        <nav className="drawer-links" aria-label="Site menu">
+          <button
+            type="button"
+            className="drawer-dd-btn"
+            aria-expanded={swDrawer}
+            aria-controls="drawer-software"
+            onClick={() => setSwDrawer((v) => !v)}
+          >
+            Software<span aria-hidden="true">{swDrawer ? '−' : '+'}</span>
+          </button>
+          <div id="drawer-software" className="drawer-sub" hidden={!swDrawer}>
+            <Link href="/platform" onClick={() => setOpen(false)}>All software</Link>
+            {softwareParts.map((m) => (
+              <Link key={m.href} href={m.href} onClick={() => setOpen(false)}>{m.label}</Link>
+            ))}
+          </div>
           {links.map((l) => (
             <Link
               key={l.href}
@@ -154,7 +219,7 @@ export default function Nav() {
           <Link href="/commercial" className={pathname === '/commercial' ? 'active' : ''} onClick={() => setOpen(false)}>Commercial</Link>
           <Link href="/property-managers" className={pathname === '/property-managers' ? 'active' : ''} onClick={() => setOpen(false)}>Property managers</Link>
           <Link href="/services" className={pathname === '/services' ? 'active' : ''} onClick={() => setOpen(false)}>Home services</Link>
-          <Link href="/help" className={pathname.startsWith('/help') ? 'active' : ''} onClick={() => setOpen(false)}>Help</Link>
+          <a href={HELP_URL} onClick={() => setOpen(false)}>Help</a>
           <Link
             href="/contact"
             className={pathname === '/contact' ? 'active' : ''}
@@ -171,6 +236,9 @@ export default function Nav() {
           <button type="button" className="nav-auth-in drawer-logout" onClick={logOut}>
             Log out
           </button>
+          <a href={OS_LOGIN} className="drawer-cta nav-auth-out" onClick={() => setOpen(false)}>
+            Try Bricks free
+          </a>
         </nav>
       </div>
     </>
