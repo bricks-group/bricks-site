@@ -1762,3 +1762,12 @@ body:has(.closer:last-of-type) > footer{margin-top:0;}
 .hchat-status{margin:0;font-size:12px;color:var(--inkMute);}
 .hchat-person{background:none;border:0;border-top:1px solid var(--hair);padding:8px;font:inherit;font-size:12px;color:var(--inkMute);cursor:pointer;}
 @media print{.hchat,.context-help{display:none}}
+
+/* Dark theme: the night closer would match the page (#141210) and vanish. Lift it to a raised graphite
+   card with a hairline so it stays a contrasting block in both themes. Brick primary is unchanged. */
+html[data-theme="dark"] .closer,
+html[data-theme="dark"] .cm-close{--paper:#2A2622;background:#2A2622;box-shadow:inset 0 0 0 1px rgba(244,241,235,.10);}
+@media (prefers-color-scheme:dark){
+  html:not([data-theme="light"]) .closer,
+  html:not([data-theme="light"]) .cm-close{--paper:#2A2622;background:#2A2622;box-shadow:inset 0 0 0 1px rgba(244,241,235,.10);}
+}
