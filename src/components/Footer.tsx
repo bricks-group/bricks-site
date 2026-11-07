@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { isTradeEnabled } from '@/lib/services'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
@@ -5,9 +6,10 @@ import { LEGAL_NAME, SOCIAL_PROFILES } from '@/lib/schema'
 import BrandMark from '@/components/BrandMark'
 import ThemeToggle from '@/components/ThemeToggle'
 
-export default function Footer() {
+export default function Footer({ children }: { children?: ReactNode }) {
   return (
     <footer>
+      {children}
       <div className="foot-inner">
         <div className="foot-brand">
           <Link href="/" className="brand" aria-label="Bricks — home">

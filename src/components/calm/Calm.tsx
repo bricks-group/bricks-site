@@ -77,7 +77,7 @@ export function Head({ title, lede, link }: { title: string; lede?: string; link
 export function Close({ title, href, label, external, primary = true }: { title: string; href: string; label: string; external?: boolean; primary?: boolean }) {
   const cls = primary ? 'btn btn-night btn-primary' : 'btn btn-night'
   return (
-    <section className="cm-close" aria-label={label}>
+    <section className="cm-close closer" aria-label={label}>
       <h2>{title}</h2>
       {external ? <a className={cls} href={href}>{label}</a> : <Link className={cls} href={href}>{label}</Link>}
     </section>

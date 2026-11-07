@@ -42,7 +42,7 @@ a.cm-row:hover .cm-arrow{color:var(--vs-fg);}
 }
 
 /* Closing band: one heading, one action. */
-.cm-close{max-width:var(--container,1200px);margin:var(--vs-sec,96px) auto 0;padding:0 var(--gutter);box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start;gap:20px;}
+.cm-close{--ink:#F4F1EB;--paper:#141210;--vs-fg:#F4F1EB;background:#141210;color:#F4F1EB;max-width:var(--container,1200px);margin:var(--vs-sec,96px) auto 0;padding:var(--vs-sec,96px) var(--gutter);box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start;gap:20px;}
 .cm-close h2{font-size:var(--vs-fs-section);font-weight:500;letter-spacing:-.02em;line-height:1.12;color:var(--vs-fg);margin:0;max-width:20ch;}
 
 /* Quiet "see everything" disclosure for reference tables. */

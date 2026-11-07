@@ -75,8 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {bare ? null : <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA] }) }} />}
         {bare ? null : <SiteBreadcrumbs pathname={pathname} />}
         {children}
-        {bare ? null : <ContextHelp pathname={pathname} />}
-        {bare ? null : <Footer />}
+        {bare ? null : <Footer><ContextHelp pathname={pathname} /></Footer>}
         {!bare && chatStatus().enabled ? <HelpChat pathname={pathname} /> : null}
         {bare ? null : <MotionLayer />}
         <Analytics />
