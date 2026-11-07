@@ -123,3 +123,5 @@
 /* v13: original painted tray shows around the desk on desktop too (bleeds right/bottom like the phones) */
 .hf-frame.tray-crm .tray-stage-fill{position:absolute;inset:6% 0 0 5%;display:flex;}
 .hf-frame.tray-crm .tray-stage-fill .pwin{width:100%;height:100%;max-width:none;box-shadow:none;}
+/* Home closer: centered title and action in both themes and at phone widths. */
+body:has(.hero-home) .cm-close.closer{align-items:center;text-align:center;}
