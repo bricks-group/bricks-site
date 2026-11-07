@@ -176,7 +176,7 @@ export default function PhotographersPage() {
               <h2>Photography jobs in Toronto and the GTA.</h2>
             </div>
           </div>
-          <p className="rate-lead">Toronto and the Golden Horseshoe are Bricks’ home base, where clients book listing shoots with no travel fee in the GTA’s major markets. Jobs are sent to you by specialty, tier and distance.</p>
+          <p className="rate-lead">Toronto and the Golden Horseshoe are Bricks’ home base, where clients book listing shoots with no travel fee inside the no-travel-fee area on our coverage map. Jobs are sent to you by specialty, tier and distance.</p>
           <Rows
             items={[
               { title: 'Condos and houses', detail: 'Downtown condo interiors and amenities, and detached and semi-detached homes across the city and the 905.' },

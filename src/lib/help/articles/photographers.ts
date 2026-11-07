@@ -86,7 +86,7 @@ export const PHOTOGRAPHERS: Article[] = [
         ['Rental listing set', '$80', '+$15'],
         ['Rental listing set with video', '$105', '+$20'],
         ['Condition report', '$60', '+$10'],
-        ['Turnover bundle', '$115', '+$25'],
+        ['Turnover media bundle', '$115', '+$25'],
         ['Building set', '$275', '+$45'],
         ['Rentals plan turnover', '$115', 'None'],
         ['Leasing set, up to 2,500 sq ft', '$240', '+$50'],

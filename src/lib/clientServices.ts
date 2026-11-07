@@ -19,9 +19,9 @@ const PM: ClientService[] = [
   { key: 'pm_listing_set', name: 'Rental listing set', detail: 'Photos and a measured floor plan for one unit.' },
   { key: 'pm_listing_video', name: 'Rental listing set with video', detail: 'The listing set plus a short vertical walkthrough.' },
   { key: 'pm_condition_report', name: 'Condition report', detail: 'Dated room-by-room photos at move-in or move-out, compared with the last report.' },
-  { key: 'pm_turnover', name: 'Turnover bundle', detail: 'Move-out condition report and new listing set in one visit.' },
+  { key: 'pm_turnover', name: 'Turnover media bundle', detail: 'Move-out condition report and new listing set in one visit. Media only: cleaning and repairs are not included.' },
   { key: 'pm_building_set', name: 'Building set', detail: 'Exterior, aerials and shared spaces for the whole building.' },
-  { key: 'pm_rentals_plan', name: 'Rentals plan', detail: '5, 12 or 25 turnovers a month, as credits you can spend on any rentals visit across your buildings.' },
+  { key: 'pm_rentals_plan', name: 'Rentals plan', detail: '5, 12 or 25 turnover media bundles a month, as credits you can spend on any rentals visit across your buildings.' },
 ]
 const CRE: ClientService[] = [
   { key: 'cre_leasing', name: 'Leasing set', detail: 'Photos, a measured floor plan and a Virtual Visit of the space. Priced by size.' },

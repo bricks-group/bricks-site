@@ -86,10 +86,10 @@ export const KNOWS_ABOUT = [
 export const TOUR_NAME = 'Virtual tour'
 export const TOUR_BLURB = 'Path walkthrough. You stay on the path.'
 
-/** Free-roam Gaussian splat. Always a paid add-on. Never packaged. Never called a tour. */
+/** Free-roam Gaussian splat. Paid add-on to residential packages (included in commercial leasing/acquisition scopes). Never called a tour. */
 export const VISIT_NAME = 'Virtual visit'
 export const VISIT_BLURB = 'Free-roam 3D (Gaussian splat). Not a tour. Always a paid add-on.'
-export const VISIT_PACKAGING = 'Always a paid add-on — never included in any package.'
+export const VISIT_PACKAGING = 'Virtual Visit is a separately priced add-on to residential listing-media packages; it is not included in Photos only, Essentials, Story, Showcase or Full suite. Commercial leasing sets and acquisition captures include it as specified in their scope.'
 
 export const WORK_PHOTOS = [
   { src: '/media/work/01.jpg', alt: 'Row of brick homes on a tree-lined street — listing exterior' },

@@ -5,7 +5,7 @@ import BookPropertySwitch from './BookPropertySwitch'
 export const metadata: Metadata = {
   title: "Book Property Visits, Reports & Leasing Media | Bricks",
   description:
-    'Book and pay for one visit: turnovers, condition reports, listing sets, leasing sets, aerials and acquisition captures. Prices in CAD, plus HST.',
+    'Book and pay for one visit: turnover media bundles, condition reports, listing sets, leasing sets, aerials and acquisition captures. Prices in CAD, plus HST.',
   alternates: { canonical: '/book/property' },
   robots: { index: true, follow: true },
 }

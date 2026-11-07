@@ -175,7 +175,7 @@ export const BROKERAGES: Article[] = [
       table(['Tier', 'Seats', 'Per seat, yearly', 'Per seat, monthly'], OFFICE_PLANS.map((o) => [
         o.name, o.seats, o.price.replace(' / seat / yr', ''), `$${OFFICE_SEAT_PRICE_PER_MONTH[o.id]}`,
       ])),
-      p(`Monthly is the yearly rate plus 25%, with no lock-in. Prices are CAD, before HST. Agents don't pay separately, and media is billed separately.`),
+      p(`Monthly is $74 (Boutique), $56 (Growth), $44 (Enterprise) or $31 (Franchise) per seat per month, with no lock-in. Prices are CAD, before HST. Agents don't pay separately, and media is billed separately.`),
       p(`Fewer than 5 agents? See [team plans](/help/teams/team-plan).`),
     ],
     related: ['set-up-your-brokerage', 'office-seat-billing'],
@@ -308,7 +308,7 @@ export const PROPERTY_MANAGERS: Article[] = [
   {
     slug: 'property-manager-services',
     title: `What property managers can book`,
-    summary: `Turnovers, condition reports, listing sets and building sets, booked online.`,
+    summary: `Turnover media bundles, condition reports, listing sets and building sets, booked online. Media only: physical turnover cleaning is quoted separately.`,
     popular: true,
     body: [
       table(['Service', 'What you get', 'Price'], ['pm_turnover', 'pm_condition_report', 'pm_listing_set', 'pm_listing_video', 'pm_building_set'].map(oneOff)),
@@ -334,9 +334,9 @@ export const PROPERTY_MANAGERS: Article[] = [
   {
     slug: 'rentals-plans',
     title: `Monthly rentals plans`,
-    summary: `Rentals 5, 12 or 25 turnovers a month, as credits for any rentals visit.`,
+    summary: `Rentals 5, 12 or 25 turnover media bundles a month, as credits for any rentals visit.`,
     body: [
-      table(['Plan', 'Turnovers a month', 'Price a month'], [['Rentals 5', '5', '$1,325'], ['Rentals 12', '12', '$2,990'], ['Rentals 25', '25', '$5,875']]),
+      table(['Plan', 'Turnover media bundles a month', 'Price a month'], [['Rentals 5', '5', '$1,325'], ['Rentals 12', '12', '$2,990'], ['Rentals 25', '25', '$5,875']]),
       p(`Each paid month adds that many turnover credits. Spend them on any rentals visit, at any of your buildings: a turnover is 1 credit, a building set 3. Unused credits roll over one month, up to one month's worth.`),
       p(`Nothing is booked without your confirmation. If you cancel, the plan runs to the end of the month you've paid for.`),
       p(`CAD plus tax. Choose a plan in your [property manager account](${signupUrl('property_manager')}).`),
@@ -463,7 +463,7 @@ export const REITS: Article[] = [
     summary: `Residential, commercial and investor visits. 10% off at 10 properties, 15% at 25.`,
     body: [
       ul(
-        `**Residential buildings:** listing sets, condition reports and turnovers by unit. See [Property managers](/help/property-managers/property-manager-services).`,
+        `**Residential buildings:** listing sets, condition reports and turnover media bundles by unit. See [Property managers](/help/property-managers/property-manager-services).`,
         `**Office, retail and industrial:** leasing sets priced by size, and aerial sets. See [Commercial](/help/commercial/commercial-leasing-sets).`,
         `**Acquisitions and watch:** a dated baseline when you buy, then a check every quarter. See [Investors](/help/investors/acquisition-capture).`,
         `**Construction:** [Site Progress](/help/builders/site-progress-pricing).`,

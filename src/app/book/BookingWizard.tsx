@@ -5,6 +5,7 @@ import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE
 import { packageLines } from '@/lib/quote-lines'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { BookCalendar } from './BookCalendar'
+import { TERMS_VERSION } from '@/lib/terms-version'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, buildTwilightSlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
 import LegalDocSheet from '@/components/legal/LegalDocSheet'
@@ -634,6 +635,7 @@ export default function BookingWizard() {
       twilight_addon: floorPlanOnly ? false : twilight,
       property_lat: addrLat,
       property_lng: addrLng,
+      terms_version: TERMS_VERSION,
       rush_addon: rush,
       staging_addon: VIRTUAL_STAGING_ENABLED && staging,
       staging_images: VIRTUAL_STAGING_ENABLED && staging ? Math.max(1, stagingImages || 1) : 0,
@@ -909,7 +911,7 @@ export default function BookingWizard() {
               <div className="err">{errs[3]}</div>
               <p style={{ fontSize: 12.5, color: 'var(--inkSoft)', marginTop: 12, lineHeight: 1.45, padding: '12px 16px', border: '1px solid var(--hairStrong)', borderRadius: 2, background: 'var(--bgRaised, transparent)' }}>
                 <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Cancellation / no-show:</strong>{' '}
-                More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. No callout fee. Full schedule in the <Link href="/terms#refunds" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
+                24 hours or more before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. No callout fee. Full schedule in the <Link href="/terms#refunds" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
               </p>
               <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" onClick={openLegal('privacy')} style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
               <LegalDocSheet doc={legalOpen} read={legalOpen ? !!legalRead[legalOpen] : false} onRead={(k) => setLegalRead((r) => ({ ...r, [k]: true }))} onClose={() => setLegalOpen(null)} />
@@ -946,13 +948,13 @@ export default function BookingWizard() {
           <div className="faq">
             <div className="qa"><h3>What&apos;s in Essentials?</h3><p>HDR interiors and exteriors, licensed drone and a branded floor plan, from ${CORE_FROM}.</p></div>
             <div className="qa"><h3>Are the photos MLS-safe?</h3><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
-            <div className="qa"><h3>How does travel work?</h3><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and it&apos;s on your quote before you pay.</p></div>
+            <div className="qa"><h3>How does travel work?</h3><p>Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.</p></div>
             <div className="qa"><h3>Is the {VISIT_NAME.toLowerCase()} included?</h3><p>No. It&apos;s an add-on, {VISIT_PRICE_LABEL.toLowerCase()}. Pick it in Step 2.</p></div>
             <div className="qa"><h3>How fast is delivery?</h3><p>We aim to deliver photos 24 hours after the shoot, and other media in 24–48 hours. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
             <div className="qa"><h3>What&apos;s included with twilight?</h3><p>Exterior photos at blue hour, with the windows lit and colour still in the sky. Add it to any shoot in Step 2.</p></div>
             {VIRTUAL_STAGING_ENABLED && <div className="qa"><h3>What is virtual staging?</h3><p>Furniture added to photos of vacant rooms, marked as virtually staged. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>}
-            <div className="qa"><h3>Can I reschedule after booking?</h3><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
-            <div className="qa"><h3>What if I need to cancel?</h3><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
+            <div className="qa"><h3>Can I reschedule after booking?</h3><p>24 hours or more before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
+            <div className="qa"><h3>What if I need to cancel?</h3><p>24 hours or more before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
             <div className="qa"><h3>How do refunds work?</h3><p>Refunds go back to your original payment method, typically within 5–10 business days.</p></div>
             <div className="qa"><h3>Can I pay with Apple Pay or Google Pay?</h3><p>Yes, plus cards. Apple Pay works in Safari and on iOS, Google Pay in Chrome and on Android. We don&apos;t take PayPal, Klarna, Afterpay or Interac.</p></div>
           </div>

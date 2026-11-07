@@ -103,7 +103,7 @@ test('agents, teams and brokerage pages sign up, not just log in', () => {
   }
 })
 
-test('brokerage monthly seat rate is the yearly rate plus 25%', async () => {
+test('brokerage monthly seat rates stay $74/$56/$44/$31 (close to yearly ×1.25, never re-derived)', async () => {
   const { OFFICE_SEAT_PRICE_PER_MONTH, OFFICE_SEAT_PRICE_PER_YEAR } = await import('./catalog')
   for (const k of Object.keys(OFFICE_SEAT_PRICE_PER_YEAR) as (keyof typeof OFFICE_SEAT_PRICE_PER_YEAR)[]) {
     const yearlyPerMonth = OFFICE_SEAT_PRICE_PER_YEAR[k] / 12
@@ -155,7 +155,7 @@ test('blog posts and the blog layout carry no founder name or founder stats', ()
 
 test('plan copy: rentals are turnovers, watch is per property, site plans never auto-book and cancel at period end', () => {
   const svc = read('src/lib/clientServices.ts')
-  assert.match(svc, /5, 12 or 25 turnovers a month/)
+  assert.match(svc, /5, 12 or 25 turnover media bundles a month/)
   assert.doesNotMatch(svc, /25 units/)
   const site = read('src/app/book/site/SiteBookingForm.tsx')
   assert.match(site, /confirm in one tap/)

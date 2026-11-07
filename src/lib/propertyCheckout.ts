@@ -12,7 +12,7 @@ export type MoveKind = 'move_in' | 'move_out'
 export type OneOff = { key: string; name: string; cents: number; scope: Scope; what: string; move?: MoveKind[]; maxSqft?: number; drone?: boolean }
 
 export const ONE_OFFS: Record<string, OneOff> = {
-  pm_turnover: { key: 'pm_turnover', name: 'Turnover', cents: 29500, scope: 'unit', move: ['move_out'], what: 'Move-out condition report plus listing photos and floor plan in one visit.' },
+  pm_turnover: { key: 'pm_turnover', name: 'Turnover media bundle', cents: 29500, scope: 'unit', move: ['move_out'], what: 'Move-out condition report plus listing photos and floor plan in one visit. Media only: cleaning and repairs are not included.' },
   pm_condition_report: { key: 'pm_condition_report', name: 'Condition report', cents: 14500, scope: 'unit', move: ['move_in', 'move_out'], what: 'Dated photos of every room at move-in or move-out, compared with the last report.' },
   pm_listing_set: { key: 'pm_listing_set', name: 'Listing set', cents: 19500, scope: 'unit', what: 'Photos and a floor plan for the listing.' },
   pm_listing_video: { key: 'pm_listing_video', name: 'Listing set with video', cents: 25500, scope: 'unit', what: 'Photos, floor plan and a short video.' },

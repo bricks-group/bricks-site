@@ -2,7 +2,7 @@
 export const BRICKS_DEFINITION = 'Bricks is subscription software for Canadian real estate: builders, developers, investors, brokerages, teams and realtors. Listing media, Virtual Visit free-roam 3D and Site Progress — drone mapping, orthomosaics, models, documents, reports and comparisons over time — are services booked inside Bricks. Bricks Group is based in Ontario, Canada.'
 
 export const LISTING_MEDIA_DESCRIPTION = 'Listing media is a service booked inside Bricks: HDR photography, licensed drone, floor plans, video and cinematic reels, with files delivered to the listing.'
-export const VIRTUAL_VISIT_DESCRIPTION = 'Virtual Visit is Bricks’ flagship free-roam 3D service, built from a Gaussian splat. It is a paid add-on, not a path-confined virtual tour, and is never included in a media package.'
+export const VIRTUAL_VISIT_DESCRIPTION = 'Virtual Visit is Bricks’ flagship free-roam 3D service, built from a Gaussian splat—not a path-confined virtual tour. It is a separately priced add-on to residential listing-media packages. Commercial leasing sets and acquisition captures include Virtual Visit as specified in their scope.'
 export const SITE_PROGRESS_DESCRIPTION = 'Site Progress brings dated site visits, drone mapping and orthomosaics, models, documents, reports and comparisons over time into Bricks for builders, developers and investors.'
 
 export const HOME_FAQS = [

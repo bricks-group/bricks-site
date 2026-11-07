@@ -57,7 +57,7 @@ export default function ReitsPage() {
         <Head title="Priced by the property." lede="Every visit is priced and booked online. With 10 or more properties in your account, every visit booked from it is 10% off, and 15% off at 25. Site progress prices are on the builders page." link={{ href: '/builders#pricing', label: 'Site progress prices' }} />
         <Rows
           items={[
-            { title: 'Residential buildings', detail: 'Listing sets, condition reports and turnovers by unit.', href: '/property-managers' },
+            { title: 'Residential buildings', detail: 'Listing sets, condition reports and turnover media bundles by unit.', href: '/property-managers' },
             { title: 'Office, retail and industrial', detail: 'Leasing sets priced by size, and aerial sets.', href: '/commercial' },
             { title: 'Acquisitions and watch', detail: 'A dated baseline when you buy, then a check every quarter.', href: '/investors' },
           ]}

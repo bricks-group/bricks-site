@@ -18,7 +18,7 @@ export type CityPage = {
   faqs: { q: string; a: string }[]
 }
 
-const TRAVEL = 'Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75 a km. Bricks assigns the photographer before you pay, so travel is on your quote and final before checkout.'
+const TRAVEL = 'Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.'
 const CONFIRM = 'Bricks confirms a local photographer when you book. Checkout stays blocked until a photographer is assigned and the final price is shown.'
 
 export const CITY_PAGES: readonly CityPage[] = [

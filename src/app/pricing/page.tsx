@@ -88,7 +88,7 @@ export default function PricingPage() {
             mainEntity: [
               { '@type': 'Question', name: "What's in Essentials?", acceptedAnswer: { '@type': 'Answer', text: `HDR photos, licensed drone and a floor plan in one shoot, from $${CORE_FROM}.` } },
               { '@type': 'Question', name: 'Are the photos MLS-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.' } },
-              { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'Travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75/km. It’s often free in the GTA, and you see it before you pay.' } },
+              { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.' } },
               { '@type': 'Question', name: 'How is home size measured?', acceptedAnswer: { '@type': 'Answer', text: 'By finished area and complexity. Not sure? Choose "advise me" when you book and we\'ll size it from the address.' } },
               { '@type': 'Question', name: 'Virtual tour or virtual visit?', acceptedAnswer: { '@type': 'Answer', text: `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).` } },
               ...(VIRTUAL_STAGING_ENABLED ? [{ '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture added to photos of vacant rooms, marked as virtually staged. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.` } }] : []),
@@ -192,7 +192,7 @@ export default function PricingPage() {
               ))}
             </tbody>
           </table>
-          <p className="cm-note">Small: up to 1,200 sq ft. Mid: 1,200–2,500. Large: 2,500–4,000. XL: 4,000+. Travel is priced from the assigned photographer’s location: first 25 km free, then $0.75/km. Prices in CAD, before HST.</p>
+          <p className="cm-note">Small: up to 1,200 sq ft. Mid: 1,200–2,500. Large: 2,500–4,000. XL: 4,000+. Travel is $0 inside the no-travel-fee area on our coverage map; outside it, the first 25 km from the assigned photographer are free, then $0.75 per additional km, confirmed before payment. Prices in CAD, before HST.</p>
         </details>
       </section>
 
@@ -201,13 +201,13 @@ export default function PricingPage() {
           <div className="faq">
             <div className="qa"><h3>What&apos;s in Essentials?</h3><p>HDR photos, licensed drone and a floor plan in one shoot.</p></div>
             <div className="qa"><h3>Are the photos MLS-safe?</h3><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
-            <div className="qa"><h3>How does travel work?</h3><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and you see it before you pay.</p></div>
+            <div className="qa"><h3>How does travel work?</h3><p>Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.</p></div>
             <div className="qa"><h3>How is home size measured?</h3><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
             <div className="qa"><h3>Virtual tour or virtual visit?</h3><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
             {VIRTUAL_STAGING_ENABLED && <div className="qa"><h3>What is virtual staging?</h3><p>Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.</p></div>}
             <div className="qa"><h3>Where do you shoot?</h3><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
             <div className="qa"><h3>Can I add AI without upgrading?</h3><p>{ADDONS_BLURB}</p></div>
-            <div className="qa"><h3>Brokerage or individual plan?</h3><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, or monthly at 25% more, and every seat gets all of Bricks plus trust accounting.</p></div>
+            <div className="qa"><h3>Brokerage or individual plan?</h3><p>Agents choose Clay, Keystone, Marble or Diamond. Brokerages buy seats: Boutique (5–24 seats), $74 monthly or $708 annually; Growth (25–74), $56 monthly or $540 annually; Enterprise (75–199), $44 monthly or $420 annually; Franchise (200+), $31 monthly or $300 annually. Prices are per seat in CAD, before tax. Every seat gets all of Bricks plus trust accounting.</p></div>
           </div>
         </section>
 

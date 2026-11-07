@@ -128,7 +128,7 @@ export const PLANS_BILLING: Article[] = [
       table(['Tier', 'Seats', 'Yearly, per seat', 'Monthly, per seat'], OFFICE_PLANS.map((o) => [
         o.name, o.seats, `$${o.seatPricePerYear}`, `$${OFFICE_SEAT_PRICE_PER_MONTH[o.id]}`,
       ])),
-      p(`Yearly is billed once a year. Prefer monthly? It's the yearly rate plus 25%, with no lock-in. [Ask us](/contact) to set it up. Every seat gets all of Bricks, plus trust accounting. Agents don't pay separately, and media is billed separately.`),
+      p(`Yearly is billed once a year. Prefer monthly? Boutique is $74, Growth $56, Enterprise $44 and Franchise $31 per seat per month, with no lock-in. [Ask us](/contact) to set it up. Every seat gets all of Bricks, plus trust accounting. Agents don't pay separately, and media is billed separately.`),
       p(`More in [Brokerages](/help/brokerages).`),
     ],
     related: ['brokerage-seat-pricing', 'plans-overview'],
