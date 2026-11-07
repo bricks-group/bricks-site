@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/components/SiteLink'
 import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
 import { OS_LOGIN, OS_URL } from '@/lib/brand'

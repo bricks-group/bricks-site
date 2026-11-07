@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import Link from 'next/link'
+import Link from '@/components/SiteLink'
 import { isTradeEnabled } from '@/lib/services'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { LEGAL_NAME, SOCIAL_PROFILES } from '@/lib/schema'
@@ -77,7 +77,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
             <Link href="/work-with-bricks">Work with Bricks</Link>
             <Link href="/photographers">Photographers</Link>
             <Link href="/about">About</Link>
-                        <a href="https://help.brxs.ca">Help centre</a>
+            <a href="https://help.brxs.ca">Help centre</a>
             <Link href="/contact">Contact</Link>
             <a href="mailto:help@brxs.ca">help@brxs.ca</a>
             <Link href="/blog">Blog</Link>
