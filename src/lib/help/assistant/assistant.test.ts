@@ -182,17 +182,15 @@ describe('escalation hand-off', () => {
     const p = parseEscalation({ consent: true, email: 'a@b.co', note: '[TEST] please call me', transcript: [{ role: 'user', text: 'charged twice' }] })
     assert.ok(p.ok)
     if (!p.ok) return
-    const seen: { test?: boolean; caseId: string }[] = []
+    const seen: { view: { test?: boolean; kind: string }; idempotencyKey: string }[] = []
     const ok = await saveEscalation(db, p.value, 'v1', async (a) => { seen.push(a); return { ok: true } })
     assert.ok(ok.ok)
     assert.equal(seen.length, 1)
-    assert.equal(seen[0].test, true)
+    assert.equal(seen[0].view.test, true)
+    assert.equal(seen[0].view.kind, 'chat_handoff')
+    assert.equal(seen[0].idempotencyKey, 'chat-alert:support_cases-1')
     const boom = await saveEscalation(db, p.value, 'v1', async () => { throw new Error('down') })
     assert.ok(boom.ok)
-    const { buildChatAlert } = await import('../../support/alert.ts')
-    const b = buildChatAlert({ ref: 'HLP-1', caseId: 'c', contactEmail: 'a@b.co', summary: 'S', reasons: ['refund'], pagePath: '/help', test: true })
-    assert.match(b.subject, /^\[TEST\] Chat handoff needs you: HLP-1/)
-    assert.match(b.text, /a@b\.co[\s\S]*refund[\s\S]*S/)
   })
 })
 

@@ -59,7 +59,7 @@ export default function HelpChat({ pathname }: { pathname: string }) {
       if (d.ok) {
         setHandoff(false)
         setStatus('')
-        setMsgs((m) => [...m, { role: 'assistant', text: `Passed to the Bricks team (reference ${d.ref}). A person will reply to ${email}. Nothing about your booking or account has been changed.` }])
+        setMsgs((m) => [...m, { role: 'assistant', text: `Passed to the Bricks team (${d.ref}). A person will reply to ${email}. Nothing about your booking or account has been changed.` }])
         scroll()
       } else setStatus(d.error || 'Couldn’t send. Email help@brxs.ca.')
     } catch {

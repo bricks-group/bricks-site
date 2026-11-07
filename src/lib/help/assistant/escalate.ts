@@ -6,7 +6,7 @@
  */
 import { randomBytes } from 'node:crypto'
 import type { Db } from '../../support/db'
-import type { ChatAlertSender } from '../../support/alert'
+import { reviewLink, type AlertSender } from '../../support/alert'
 import { cleanQuestion, escalationReasons, looksLikeInjection, type EscalationReason } from './policy'
 
 const EMAIL = /^[^@\s<>"]{1,64}@[^@\s<>"]{1,190}\.[a-z]{2,}$/i
@@ -54,7 +54,7 @@ export function summarize(input: EscalationInput): { summary: string; reasons: E
   return { summary, reasons }
 }
 
-export async function saveEscalation(db: Db, input: EscalationInput, indexVersion: string, alert?: ChatAlertSender): Promise<{ ok: true; ref: string } | { ok: false }> {
+export async function saveEscalation(db: Db, input: EscalationInput, indexVersion: string, alert?: AlertSender): Promise<{ ok: true; ref: string; helpNo?: number } | { ok: false }> {
   const { summary, reasons } = summarize(input)
   const ref = caseRef()
   const c = await db.insert('support_cases', {
@@ -64,6 +64,9 @@ export async function saveEscalation(db: Db, input: EscalationInput, indexVersio
   })
   if (!c.ok || !c.rows[0]) return { ok: false }
   const caseId = String(c.rows[0].id)
+  const helpNo = (c.rows[0].help_no as number | undefined) ?? undefined
+  // Human reference shown to the visitor and in alerts ("Help #1042"); the random ref stays as an internal key.
+  const shownRef = helpNo ? `Help #${helpNo}` : ref
   const o = await db.insert('ops_escalations', {
     escalation_type: 'support_chat', status: 'open', attempt_count: 1,
     notes: `Support case ${ref} (support_cases.id=${caseId})\n${summary}`,
@@ -73,9 +76,18 @@ export async function saveEscalation(db: Db, input: EscalationInput, indexVersio
   if (alert) {
     try {
       const test = /^\s*\[?test\]?\b/i.test(input.note) || input.transcript.some((t) => t.role === 'user' && /^\s*\[test\]/i.test(t.text))
-      const r = await alert({ ref, caseId, contactEmail: input.email, summary, reasons, pagePath: input.pagePath, test })
+      const users = [...input.transcript.filter((t) => t.role === 'user').map((t) => t.text), input.note].filter(Boolean)
+      const r = await alert({
+        view: {
+          kind: 'chat_handoff', helpNo: helpNo ?? null, who: input.email, replyTo: input.email, latest: users[users.length - 1] ?? '',
+          history: users.slice(0, -1), pagePath: input.pagePath || undefined, reasons: reasons.length ? reasons : ['human_requested'],
+          reviewUrl: reviewLink(), test,
+        },
+        idempotencyKey: `chat-alert:${caseId}`,
+        meta: { Case: caseId, Ref: ref },
+      })
       if (!r.ok) console.error('chat alert failed', r.error)
     } catch (e) { console.error('chat alert threw', e instanceof Error ? e.message : e) }
   }
-  return { ok: true, ref }
+  return { ok: true, ref: shownRef, helpNo }
 }

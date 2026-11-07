@@ -234,20 +234,31 @@ describe('owner alerts', () => {
   it('alerts needs_kam for escalations, draft_waiting for routine shadow, nothing for suppressed', async () => {
     const { db } = memDb()
     const kinds: string[] = []
-    const alert = async (a: { kind: string }) => { kinds.push(a.kind); return { ok: true, id: 'a' } }
+    const alert = async (a: { view: { kind: string } }) => { kinds.push(a.view.kind); return { ok: true, id: 'a' } }
     await processEvent('a1', ev('x1'), { db, fetchEmail: async () => mail({ subject: 'Refund', text: 'I want a refund for my shoot' }), flags: SHADOW, alert })
     await processEvent('a2', ev('x2'), { db, fetchEmail: async () => mail({ message_id: '<x2@x>' }), flags: SHADOW, alert })
     await processEvent('a3', ev('x3'), { db, fetchEmail: async () => mail({ message_id: '<x3@x>', from: 'noreply@brxs.ca' }), flags: SHADOW, alert })
     await processEvent('a4', ev('x4'), { db, fetchEmail: async () => mail({ message_id: '<x4@x>', headers: { 'X-Bricks-Alert': '1' } }), flags: SHADOW, alert })
-    assert.deepEqual(kinds, ['needs_kam', 'draft_waiting'])
+    assert.deepEqual(kinds, ['email_needs_kam', 'email_draft_waiting'])
   })
   it('admin tokens verify and expire', async () => {
-    const { signAdminToken, verifyAdminToken, buildAlert } = await import('./alert.ts')
+    const { signAdminToken, verifyAdminToken, alertSubject, alertText, alertHtml } = await import('./alert.ts')
     const t = signAdminToken('s', 2000)
     assert.ok(verifyAdminToken('s', t, 1000))
     assert.ok(!verifyAdminToken('s', t, 3000))
     assert.ok(!verifyAdminToken('other', t, 1000))
-    const b = buildAlert({ kind: 'needs_kam', emailId: 'e', from: 'a@b.c', subject: 'Hub', text: 'hi', reasons: ['refund'], draft: 'D' }, 'L')
-    assert.match(b.text, /a@b\.c[\s\S]*refund[\s\S]*D[\s\S]*L/)
+    const v = { kind: 'chat_handoff' as const, helpNo: 2481, who: 'a@b.co', replyTo: 'a@b.co', latest: 'I need a person', history: ['hello', 'I need a person'], pagePath: '/help/booking', reasons: ['human_requested', 'refund'], reviewUrl: 'https://x/r', draft: null }
+    assert.equal(alertSubject(v), 'Someone asked to talk to a person · Help #2481')
+    const txt = alertText(v), html = alertHtml(v)
+    for (const out of [txt, html]) {
+      assert.match(out, /They asked for a person/)
+      assert.match(out, /Refund question/)
+      assert.doesNotMatch(out, /human_requested|support_cases|[0-9a-f]{8}-[0-9a-f]{4}-|HLP-/)
+    }
+    assert.match(html, /Open in review page/)
+    assert.match(html, /mailto:a%40b\.co\?subject=/)
+    assert.match(txt, /Help › Booking/)
+    assert.equal(txt.split('\n').filter((l) => l.startsWith('Page:')).length, 1)
+    assert.equal(txt.split('\n').filter((l) => l.startsWith('From:')).length, 1)
   })
 })

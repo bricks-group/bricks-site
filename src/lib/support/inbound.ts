@@ -18,7 +18,7 @@ import { escalationReasons, looksLikeInjection, type EscalationReason } from '..
 
 type Env = Record<string, string | undefined>
 
-import type { AlertSender } from './alert'
+import { reviewLink, type AlertSender } from './alert'
 export const HELP_ADDRESS = 'help@brxs.ca'
 export const NEVER_PROCESS = ['hello@brxs.ca', 'privacy@brxs.ca']
 export const MAX_ATTEMPTS = 5
@@ -345,7 +345,7 @@ export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db:
     thread_id: threadId, inbound_message_id: messageRowId, idempotency_key: `reply:${meta.email_id}`,
     mode: canAuto ? 'auto' : 'shadow', status: canAuto ? 'queued' : 'shadow', category: cls.category,
     needs_kam: !cls.routine, escalation_reasons: cls.reasons, to_email: from,
-    subject: subject.match(/^re:/i) ? subject : `Re: ${subject}`, body_text: cls.draft, citations: cls.citations,
+    subject: `${subject.match(/^re:/i) ? subject : `Re: ${subject}`}${th.rows[0]?.help_no ? ` · Help #${th.rows[0].help_no}` : ''}`, body_text: cls.draft, citations: cls.citations,
     index_version: cls.indexVersion, ops_escalation_id: opsId,
   }, { onConflict: 'idempotency_key', ignoreDuplicates: true })
   await db.update('support_email_threads', { id: threadId }, { status: cls.routine ? 'drafted' : 'escalated', category: cls.category })
@@ -366,8 +366,13 @@ export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db:
     const noDraft = !cls.draft || !row
     try {
       const r = await deps.alert({
-        kind: !cls.routine || noDraft ? 'needs_kam' : 'draft_waiting', emailId: meta.email_id!, from, subject, text,
-        reasons: cls.reasons, draft: cls.draft || null, outboundId: row ? String(row.id) : null, test: internalTest,
+        view: {
+          kind: !cls.routine || noDraft ? 'email_needs_kam' : 'email_draft_waiting', helpNo: (th.rows[0]?.help_no as number | undefined) ?? null,
+          who: from, replyTo: from, subject, latest: text, reasons: noDraft ? [...cls.reasons, 'no_draft'] : cls.reasons,
+          draft: cls.draft || null, reviewUrl: reviewLink(env), test: internalTest,
+        },
+        idempotencyKey: `alert:${meta.email_id}`,
+        meta: { Thread: threadId, Draft: row ? String(row.id) : '', Email: meta.email_id! },
       })
       if (row) await db.update('support_email_outbound', { id: String(row.id) }, r.ok ? { alerted_at: new Date().toISOString(), alert_message_id: r.id ?? null } : { alert_error: r.error ?? 'alert_failed' })
       if (!r.ok) console.error('support alert failed', r.error)

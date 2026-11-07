@@ -3,7 +3,7 @@ import { chatStatus } from '@/lib/help/assistant/config'
 import { buildIndex } from '@/lib/help/assistant/corpus'
 import { parseEscalation, saveEscalation } from '@/lib/help/assistant/escalate'
 import { supportDb } from '@/lib/support/db'
-import { resendChatAlerter } from '@/lib/support/alert'
+import { resendAlerter } from '@/lib/support/alert'
 import { clientKey, limited, requestIp } from '@/lib/support/rate-limit'
 
 export const runtime = 'nodejs'
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   if (await limited(db, clientKey('help-esc', requestIp(req.headers)), { windowSec: 3600, max: 5 })) {
     return NextResponse.json({ ok: false, error: 'Too many requests. Email help@brxs.ca.' }, { status: 429, headers: { 'Retry-After': '3600' } })
   }
-  const saved = await saveEscalation(db, parsed.value, buildIndex().version, resendChatAlerter())
+  const saved = await saveEscalation(db, parsed.value, buildIndex().version, resendAlerter())
   if (!saved.ok) return NextResponse.json({ ok: false, error: 'Couldn’t save that. Email help@brxs.ca.' }, { status: 502 })
   return NextResponse.json({ ok: true, ref: saved.ref })
 }
