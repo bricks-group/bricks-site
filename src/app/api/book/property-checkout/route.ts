@@ -1,3 +1,5 @@
+// Property-manager checkout is deliberately exempt from agent brokerage validation.
+// Keep this separate from /api/create-checkout; this is not a listing-agent booking.
 import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'

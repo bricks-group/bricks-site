@@ -43,3 +43,12 @@ test('body carries only the fields the service uses, all on the proxy allowlist'
   const all = checkoutBody('commercial', { ...base, service_key: 'cre_leasing_m', sqft: '6400', company: 'Bayview' })
   for (const k of [...Object.keys(all), 'move_kind', 'move_date']) assert.ok(allow.includes(`'${k}'`), k)
 })
+
+
+test('property managers are exempt from the listing-agent brokerage requirement', () => {
+  assert.equal(checkCheckout(base, T), '')
+  const body = checkoutBody('property_manager', base)
+  assert.equal('brokerage' in body, false)
+  const route = readFileSync(join(__dirname, '..', 'app', 'api', 'book', 'property-checkout', 'route.ts'), 'utf8')
+  assert.equal(route.includes('agentIdentityError'), false)
+})
