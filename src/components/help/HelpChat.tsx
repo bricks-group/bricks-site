@@ -7,7 +7,7 @@ type Citation = { url: string; title: string }
 type Reply = { kind: 'answer' | 'escalate' | 'unsupported' | 'refused' | 'invalid'; text: string; citations: Citation[] }
 type Msg = { role: 'user' | 'assistant'; text: string; citations?: Citation[]; kind?: Reply['kind'] }
 
-const DISCLOSURE = 'This is an AI assistant. It answers only from the Bricks help articles, links its sources, and can’t make changes to bookings, payments or accounts. It can be wrong. For anything else, ask for a person.'
+const DISCLOSURE = 'Brixton is the Bricks AI assistant. It answers only from the Bricks help articles, links its sources, and can’t make changes to bookings, payments or accounts. It can be wrong. For anything else, ask for a person.'
 
 export default function HelpChat() {
   const pathname = usePathname() || ''
@@ -72,10 +72,10 @@ export default function HelpChat() {
   return (
     <div className={`hchat${open ? ' is-open' : ''}`}>
       {open ? (
-        <section className="hchat-panel" role="dialog" aria-label="Bricks AI help assistant">
+        <section className="hchat-panel" role="dialog" aria-label="Brixton, the Bricks help assistant">
           <header className="hchat-head">
             <div>
-              <strong>Bricks AI assistant</strong>
+              <strong>Brixton</strong>
               <span className="hchat-badge">AI</span>
             </div>
             <button type="button" className="hchat-x" onClick={() => setOpen(false)} aria-label="Close assistant">×</button>
@@ -110,7 +110,7 @@ export default function HelpChat() {
           {!handoff ? <button type="button" className="hchat-person" onClick={() => setHandoff(true)}>Talk to a person instead</button> : null}
         </section>
       ) : (
-        <button type="button" className="hchat-launch" onClick={() => setOpen(true)}>Ask Bricks AI</button>
+        <button type="button" className="hchat-launch" onClick={() => setOpen(true)}>Ask Brixton</button>
       )}
     </div>
   )
