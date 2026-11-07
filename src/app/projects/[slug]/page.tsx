@@ -72,7 +72,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title,
     description,
     alternates: { canonical: `/projects/${project.slug}` },
-    robots: { index: true, follow: true },
+    // A builder's sales page hosted by Bricks, not a Bricks catalogue: keep it out of search (TRESA safeguard 5).
+    robots: { index: false, follow: false },
     openGraph: {
       title,
       description,
