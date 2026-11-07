@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { addressedToHelp, classifyEmail, flags, processEvent, signForTest, suppressionReason, threadKey, verifySignature, type ReceivedEmail } from './inbound.ts'
+import { addressedToHelp, answerSentences, classifyEmail, relatedLinks, flags, processEvent, signForTest, suppressionReason, threadKey, verifySignature, type ReceivedEmail } from './inbound.ts'
 import type { Db } from './db.ts'
 
 const SECRET = 'whsec_' + Buffer.from('test-secret-key-123').toString('base64')
@@ -197,5 +197,35 @@ describe('processing in shadow mode', () => {
     const out = await processEvent('m', ev('e6'), { db, fetchEmail: null, flags: SHADOW })
     assert.equal(out.status, 'pending_fetch')
     assert.equal(t.support_email_events[0].status, 'pending_fetch')
+  })
+})
+
+describe('reply composer', () => {
+  const auth = { dkim: 'pass' }
+  it('writes one clean opening with no repeated or fragmentary sentences (pipeline test email)', async () => {
+    const c = await classifyEmail('help@ pipeline test', 'What are the drone rules for a shoot?\n', auth)
+    assert.match(c.draft, /^Hi,\n\nThanks for your note\. Every drone pilot is Transport Canada certified\. /)
+    assert.doesNotMatch(c.draft, /Drone is flown by pilots who hold/)
+    assert.doesNotMatch(c.draft, /covers this:/)
+    assert.match(c.draft, /\n\nBricks support$/)
+  })
+  it('drops weak related links (no-access, roster pipeline) and caps extras at 2', async () => {
+    const c = await classifyEmail('help@ pipeline test', 'What are the drone rules for a shoot?\n', auth)
+    assert.doesNotMatch(c.draft, /no-access-or-no-show|brokerage-roster-pipeline/)
+    assert.deepEqual(c.citations.map((x) => x.url), ['https://www.brxs.ca/help/booking/drone-rules'])
+    for (const q of ['How much does a listing shoot cost and what is included?', 'Can I cancel or reschedule my shoot?', 'How do I reset my password?']) {
+      const d = await classifyEmail('Question', q, auth)
+      assert.ok(d.citations.length <= 3, q)
+      assert.ok(!/You might also/.test(d.draft) || d.citations.length > 1)
+    }
+  })
+  it('answerSentences removes near-duplicates and fragments', () => {
+    const out = answerSentences('drone pilot rules', 'Every drone pilot is Transport Canada certified. Some sites. Drone is flown by pilots who hold a Transport Canada drone pilot certificate. Rules may stop a drone flight on the day.')
+    assert.deepEqual(out, ['Every drone pilot is Transport Canada certified.', 'Rules may stop a drone flight on the day.'])
+  })
+  it('relatedLinks returns none when nothing is close to the top match', () => {
+    const mk = (url: string, score: number, matched: number) => ({ chunk: { url, title: url } as never, score, matched })
+    assert.deepEqual(relatedLinks('drone rules shoot', [mk('a', 10, 3), mk('b', 7, 2), mk('c', 6, 1)], 'a'), [])
+    assert.equal(relatedLinks('drone rules shoot', [mk('a', 10, 3), mk('b', 9.5, 3), mk('c', 9, 2), mk('d', 9, 3)], 'a').length, 2)
   })
 })
