@@ -4,7 +4,7 @@ import RevealObserver from '@/components/RevealObserver'
 import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
 import PhoneFrame from '@/components/phone/PhoneFrame'
-import PhoneVideo from '@/components/phone/PhoneVideo'
+import { BookingMock, ProgressReportMock, DealRoomMock } from '@/components/home-products/HomeProductMock'
 import { Stats, Rows, Head, Close } from '@/components/calm/Calm'
 import { IntegrationsRow } from '@/components/calm/Integrations'
 import './home-v10.css'
@@ -13,7 +13,6 @@ import { CORE_FROM } from '@/lib/pricing'
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { fromPriceFor } from '@/lib/propertyCheckout'
 import { HOME_FAQS } from '@/lib/public-content'
-import { FeaturePic } from '@/components/features/FeatureShot'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import HomeServicesBand from '@/components/home-services/HomeServicesBand'
 import { OG_IMAGE } from '@/lib/og'
@@ -88,7 +87,7 @@ export default function Home() {
             <span className="hf-fine">Shown with sample data</span>
           </div>
           <div className="hf-frame hf-photo hf-shot">
-            <FeaturePic name="progress-report" alt="The top of a Bricks progress report with sample data: an orthomosaic with a scale bar and photo location pins" sizes="(max-width:900px) 100vw, 780px" />
+            <ProgressReportMock />
           </div>
         </section>
 
@@ -112,7 +111,7 @@ export default function Home() {
             <Link className="hf-link" href="/book">Book media</Link>
           </div>
           <div className="hf-frame tray tray-book tray-phone">
-            <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" darkBar="#1C1C14" /></PhoneFrame>
+            <PhoneFrame label="Bricks booking illustration with sample data: listing details and package"><BookingMock /></PhoneFrame>
           </div>
         </section>
 
@@ -126,7 +125,7 @@ export default function Home() {
               <span className="hf-fine">Shown with sample data</span>
             </div>
             <div className="hf-frame hf-photo hf-shot">
-              <FeaturePic name="deal-room" alt="A Bricks deal room page for a buyer's lawyer, with sample data: conditions, key dates and documents for one deal" sizes="(max-width:900px) 100vw, 780px" />
+              <DealRoomMock />
             </div>
           </section>
         ) : null}

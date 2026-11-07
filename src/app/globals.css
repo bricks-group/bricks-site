@@ -1771,3 +1771,14 @@ html[data-theme="dark"] .cm-close{--paper:#2A2622;background:#2A2622;box-shadow:
   html:not([data-theme="light"]) .closer,
   html:not([data-theme="light"]) .cm-close{--paper:#2A2622;background:#2A2622;box-shadow:inset 0 0 0 1px rgba(244,241,235,.10);}
 }
+/* Product proof photography keeps its original colour and exposure in either theme. */
+html[data-theme="dark"] .work-card .img img,
+html[data-theme="dark"] .still,
+html[data-theme="dark"] .reel-video,
+html[data-theme="dark"] .grid3 .card .img img{filter:none;}
+@media (prefers-color-scheme:dark){
+ html:not([data-theme="light"]) .work-card .img img,
+ html:not([data-theme="light"]) .still,
+ html:not([data-theme="light"]) .reel-video,
+ html:not([data-theme="light"]) .grid3 .card .img img{filter:none;}
+}
