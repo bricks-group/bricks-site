@@ -18,6 +18,7 @@ import { escalationReasons, looksLikeInjection, type EscalationReason } from '..
 
 type Env = Record<string, string | undefined>
 
+import type { AlertSender } from './alert'
 export const HELP_ADDRESS = 'help@brxs.ca'
 export const NEVER_PROCESS = ['hello@brxs.ca', 'privacy@brxs.ca']
 export const MAX_ATTEMPTS = 5
@@ -76,7 +77,7 @@ export function suppressionReason(from: string, headers: Headers, subject: strin
   if (hdr(headers, 'x-autoreply') || hdr(headers, 'x-autorespond') || hdr(headers, 'x-auto-response-suppress').match(/all|oof|autoreply/i)) return 'auto_reply'
   if (hdr(headers, 'list-id') || hdr(headers, 'list-unsubscribe')) return 'mailing_list'
   if (/^(auto(matic)? reply|out of (the )?office|undeliver|delivery status notification|mail delivery (failed|subsystem)|returned mail)/i.test(subject.trim())) return 'auto_reply_subject'
-  if (hdr(headers, 'x-bricks-support') ) return 'own_reply_loop'
+  if (hdr(headers, 'x-bricks-support') || hdr(headers, 'x-bricks-alert')) return 'own_reply_loop'
   return null
 }
 
@@ -258,7 +259,7 @@ export type Outcome = { http: number; status: string; detail?: string }
 
 const htmlToText = (h: string) => h.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/gi, ' ').replace(/<br\s*\/?>|<\/p>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').trim()
 
-export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db: Db; fetchEmail: FetchEmail | null; flags: Flags; env?: Env; send?: (o: { to: string; subject: string; text: string; inReplyTo: string; idempotencyKey: string }) => Promise<{ id: string }> }): Promise<Outcome> {
+export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db: Db; fetchEmail: FetchEmail | null; flags: Flags; env?: Env; send?: (o: { to: string; subject: string; text: string; inReplyTo: string; idempotencyKey: string }) => Promise<{ id: string }>; alert?: AlertSender }): Promise<Outcome> {
   const { db } = deps
   const env = deps.env ?? process.env
   if (ev.type !== 'email.received' || !ev.data?.email_id) return { http: 200, status: 'ignored', detail: 'event_type' }
@@ -357,6 +358,20 @@ export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db:
     } catch (e) {
       await db.update('support_email_outbound', { id: String(row.id) }, { status: 'failed', last_error: e instanceof Error ? e.message : 'send_failed', attempts: 1 })
     }
+  }
+  // Owner alert: one per inbound email (Resend idempotency key alert:<email_id>). Never blocks processing.
+  const row = ledger.rows[0]
+  const autoSent = canAuto && row && deps.send
+  if (deps.alert && !autoSent) {
+    const noDraft = !cls.draft || !row
+    try {
+      const r = await deps.alert({
+        kind: !cls.routine || noDraft ? 'needs_kam' : 'draft_waiting', emailId: meta.email_id!, from, subject, text,
+        reasons: cls.reasons, draft: cls.draft || null, outboundId: row ? String(row.id) : null, test: internalTest,
+      })
+      if (row) await db.update('support_email_outbound', { id: String(row.id) }, r.ok ? { alerted_at: new Date().toISOString(), alert_message_id: r.id ?? null } : { alert_error: r.error ?? 'alert_failed' })
+      if (!r.ok) console.error('support alert failed', r.error)
+    } catch (e) { console.error('support alert threw', e instanceof Error ? e.message : e) }
   }
   await mark('processed')
   return { http: 200, status: cls.routine ? (canAuto ? 'auto' : 'shadow_drafted') : 'escalated' }

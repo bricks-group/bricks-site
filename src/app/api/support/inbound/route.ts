@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supportDb } from '@/lib/support/db'
+import { resendAlerter } from '@/lib/support/alert'
 import { flags, processEvent, resendFetcher, resendSender, verifySignature, type WebhookEvent } from '@/lib/support/inbound'
 
 export const runtime = 'nodejs'
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
   const db = supportDb()
   if (!db) return NextResponse.json({ ok: false, error: 'db unavailable' }, { status: 503 })
   // Sending happens only when SUPPORT_AUTOSEND_ENABLED=true AND SUPPORT_SHADOW_MODE=false, for verified routine answers.
-  const out = await processEvent(h.id!, ev, { db, fetchEmail: resendFetcher(), flags: f, send: f.autosend && !f.shadow ? resendSender() : undefined })
+  const out = await processEvent(h.id!, ev, { db, fetchEmail: resendFetcher(), flags: f, send: f.autosend && !f.shadow ? resendSender() : undefined, alert: resendAlerter() })
   return NextResponse.json({ ok: out.http < 300, status: out.status }, { status: out.http })
 }
 

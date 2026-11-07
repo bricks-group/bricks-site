@@ -59,6 +59,8 @@ export function isPublicPath(pathname: string): boolean {
   // Help assistant + signed help@ inbound webhook (own kill switches and auth).
   if (pathname === '/api/help-chat' || pathname.startsWith('/api/help-chat/')) return true
   if (pathname === '/api/support/inbound') return true
+  // Support review: own signed-link auth (SUPPORT_ADMIN_SECRET), noindex.
+  if (pathname === '/admin/support' || pathname.startsWith('/admin/support/')) return true
   // Plan visit one-tap link from client emails (token-signed; no account).
   if (pathname === '/visit' || pathname.startsWith('/visit/')) return true
   if (pathname.startsWith('/api/visit/')) return true
