@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "compile:os": "node scripts/compile-os.js",
-    "test": "npx --yes tsx --test src/lib/ai-seo.test.ts src/lib/schedule.test.ts src/lib/demo-invite.test.ts src/lib/cutout-weather.test.ts src/middleware.test.ts src/lib/site-session.test.ts src/lib/coverage-gta-travel.test.ts src/lib/visit-staging-pricing.test.ts src/lib/book-prefill.test.ts src/lib/book-recommend.test.ts src/lib/form-labels-calm.test.ts src/lib/quote-lines.test.ts src/lib/launch-audit.test.ts src/lib/clientele-pages.test.ts src/lib/demo-personas.test.ts src/lib/closers.test.ts src/lib/property-checkout.test.ts src/lib/contact-mail.test.ts src/lib/help/help.test.ts src/lib/help/feedback.test.ts src/lib/vendor-trades.test.ts src/lib/help/assistant/assistant.test.ts src/lib/support/inbound.test.ts",
+    "test": "npx --yes tsx --test src/lib/ai-seo.test.ts src/lib/schedule.test.ts src/lib/schedule-twilight.test.ts src/lib/demo-invite.test.ts src/lib/cutout-weather.test.ts src/middleware.test.ts src/lib/site-session.test.ts src/lib/coverage-gta-travel.test.ts src/lib/visit-staging-pricing.test.ts src/lib/book-prefill.test.ts src/lib/book-recommend.test.ts src/lib/form-labels-calm.test.ts src/lib/quote-lines.test.ts src/lib/launch-audit.test.ts src/lib/clientele-pages.test.ts src/lib/demo-personas.test.ts src/lib/closers.test.ts src/lib/property-checkout.test.ts src/lib/contact-mail.test.ts src/lib/help/help.test.ts src/lib/help/feedback.test.ts src/lib/vendor-trades.test.ts src/lib/help/assistant/assistant.test.ts src/lib/support/inbound.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "repository": {

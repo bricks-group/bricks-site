@@ -5,7 +5,7 @@ import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE
 import { packageLines } from '@/lib/quote-lines'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { BookCalendar } from './BookCalendar'
-import { type BookSlot, WORK_END, WORK_START, buildDaySlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
+import { type BookSlot, WORK_END, WORK_START, buildDaySlots, buildTwilightSlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
 import LegalDocSheet from '@/components/legal/LegalDocSheet'
 import type { LegalDocKey } from '@/lib/legal-docs'
@@ -114,6 +114,7 @@ type SlotsResponse = {
   ok?: boolean
   availability?: 'live' | 'hours'
   slots?: BookSlot[]
+  twilight_slots?: BookSlot[]
 }
 
 const PKG_DEFS: Record<string, { drone: boolean; reel: boolean; tour: boolean; twilight: boolean; floorPlanOnly?: boolean }> = {
@@ -476,23 +477,37 @@ export default function BookingWizard() {
     if (bookingZone.province) qs.set('province', bookingZone.province)
     if (selectedAddr || addr.trim()) qs.set('address', selectedAddr || addr.trim())
     qs.set('tz', propertyTz)
+    const wantTwilight = twilight && !floorPlanOnly
+    if (wantTwilight) {
+      qs.set('twilight', '1')
+      if (addrLat != null && addrLng != null) { qs.set('lat', String(addrLat)); qs.set('lng', String(addrLng)) }
+    }
+    const twilightPoint = { lat: addrLat, lng: addrLng, province: bookingZone.province }
+    const withTwilight = (base: BookSlot[], extra: BookSlot[]) => {
+      if (!wantTwilight || !extra.length) return base
+      const seen = new Set(base.map((s) => s.start))
+      return [...base, ...extra.filter((s) => !seen.has(s.start))].sort((a, b) => a.start.localeCompare(b.start))
+    }
     fetch('/api/book/slots?' + qs.toString(), { cache: 'no-store' })
       .then((r) => r.json().then((j: SlotsResponse) => ({ ok: r.ok && j.ok, j })))
       .then((res) => {
-        const list = Array.isArray(res.j.slots) ? res.j.slots : []
+        const list = withTwilight(
+          Array.isArray(res.j.slots) ? res.j.slots : [],
+          Array.isArray(res.j.twilight_slots) ? res.j.twilight_slots : [],
+        )
         if (res.ok) {
           setDaySlots(list)
           setSlotsLive(res.j.availability === 'live')
           setSlotsHint(list.length ? '' : 'No remaining shoot hours that day — pick another date.')
           return
         }
-        const local = buildDaySlots(ymd, new Date(), propertyTz)
+        const local = withTwilight(buildDaySlots(ymd, new Date(), propertyTz), buildTwilightSlots(ymd, new Date(), propertyTz, twilightPoint))
         setDaySlots(local)
         setSlotsLive(false)
         setSlotsHint(local.length ? '' : 'No remaining shoot hours that day — pick another date.')
       })
       .catch(() => {
-        const local = buildDaySlots(ymd, new Date(), propertyTz)
+        const local = withTwilight(buildDaySlots(ymd, new Date(), propertyTz), buildTwilightSlots(ymd, new Date(), propertyTz, twilightPoint))
         setDaySlots(local)
         setSlotsLive(false)
         setSlotsHint(local.length ? "Couldn't check booked times — showing open shoot hours." : 'No remaining shoot hours that day — pick another date.')
@@ -502,9 +517,10 @@ export default function BookingWizard() {
 
   useEffect(() => {
     loadSlots(date)
-    // Reload when the property zone changes so Vancouver clocks replace the fallback.
+    // Reload when the property zone changes so Vancouver clocks replace the fallback,
+    // and when twilight / the pin changes (twilight adds one sunset slot).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date, propertyTz])
+  }, [date, propertyTz, twilight, floorPlanOnly, addrLat, addrLng])
 
   function servicesSummary() {
     const pkg = matchedPackage()
@@ -616,6 +632,8 @@ export default function BookingWizard() {
       reel_addon: floorPlanOnly ? false : reel,
       tour_addon: floorPlanOnly ? false : tour,
       twilight_addon: floorPlanOnly ? false : twilight,
+      property_lat: addrLat,
+      property_lng: addrLng,
       rush_addon: rush,
       staging_addon: VIRTUAL_STAGING_ENABLED && staging,
       staging_images: VIRTUAL_STAGING_ENABLED && staging ? Math.max(1, stagingImages || 1) : 0,
@@ -856,7 +874,7 @@ export default function BookingWizard() {
                 )}
                 {!date && <div className="slotmsg">Pick a date above to see clock times.</div>}
                 <p className="hint-sm" style={{ marginTop: 12 }}>
-                  {`Property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}.${slotsLive ? ' Booked times are hidden.' : ''}`}
+                  {`Property local time (${propertyAbbrev}). Shoot hours ${WORK_START}–${WORK_END}.${twilight && !floorPlanOnly ? ' Twilight adds one time around sunset.' : ''}${slotsLive ? ' Booked times are hidden.' : ''}`}
                 </p>
               </div>
               <div className="field"><label>Access notes</label><textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Lockbox code, occupied, deadline…" /></div>

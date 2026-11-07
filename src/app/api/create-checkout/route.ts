@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
 import { stripVirtualStaging } from '@/lib/pricing'
-import { resolvePropertyTimezone, localYmd } from '@/lib/schedule'
+import { resolvePropertyTimezone, localYmd, isBookableStart } from '@/lib/schedule'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -289,6 +289,27 @@ export async function POST(req: Request) {
     (body.twilight_addon === true ||
       body.twilight_addon === 'true' ||
       ['suite', 'full'].includes(pkgNorm))
+  // Shoot hours guard (launch review 2026-11-07): a start must be a normal
+  // 09:00–17:00 slot, or the sunset twilight slot when twilight is booked.
+  // Never general evening slots.
+  {
+    const plat = Number(body.property_lat)
+    const plng = Number(body.property_lng)
+    if (
+      !isBookableStart(preferredDate, slotStart, zone.tz, {
+        twilight: twilightOn,
+        lat: Number.isFinite(plat) && body.property_lat != null ? plat : null,
+        lng: Number.isFinite(plng) && body.property_lng != null ? plng : null,
+        province: zone.province,
+      })
+    ) {
+      return bad(
+        twilightOn
+          ? 'selected_slot_start must be a shoot-hours slot or the twilight slot near sunset for that date'
+          : 'selected_slot_start must be within shoot hours (twilight times need the twilight add-on)',
+      )
+    }
+  }
   const floorPlan =
     floorPlanOnly ||
     body.floor_plan_included === true ||

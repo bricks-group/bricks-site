@@ -320,3 +320,108 @@ export function filterOpenSlots(slots: BookSlot[], taken: { start: string; end: 
   if (!taken.length) return slots
   return slots.filter((s) => !taken.some((t) => rangesOverlap(s.start, s.end, t.start, t.end)))
 }
+
+// ── Twilight (blue hour) add-on slots ──────────────────────────────────────
+// Launch review 2026-11-07: 09:00–17:00 hours block blue hour for most of the
+// year. A twilight booking gets ONE extra slot around local sunset (computed
+// for the property's lat/lng and date; NOAA solar formula, no library), never
+// general evening slots.
+
+/** Minutes before sunset the twilight session starts (sunset−30 → sunset+30). */
+export const TWILIGHT_LEAD_MIN = 30
+export const TWILIGHT_ROUND_MIN = 15
+
+/** Province fallback point (largest metro) when the address has no pin. */
+export const PROVINCE_POINT: Record<ProvinceCode, { lat: number; lng: number }> = {
+  BC: { lat: 49.28, lng: -123.12 },
+  AB: { lat: 51.05, lng: -114.07 },
+  SK: { lat: 50.45, lng: -104.61 },
+  MB: { lat: 49.9, lng: -97.14 },
+  ON: { lat: 43.65, lng: -79.38 },
+  QC: { lat: 45.5, lng: -73.57 },
+  NB: { lat: 46.09, lng: -64.78 },
+  NS: { lat: 44.65, lng: -63.57 },
+  PE: { lat: 46.24, lng: -63.13 },
+  NL: { lat: 47.56, lng: -52.71 },
+  YT: { lat: 60.72, lng: -135.05 },
+  NT: { lat: 62.45, lng: -114.37 },
+  NU: { lat: 63.75, lng: -68.52 },
+}
+
+/** Sunset instant (UTC ISO) for a civil date at lat/lng; null in polar day/night. */
+export function sunsetIso(ymd: string, lat: number, lng: number): string | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd) || !Number.isFinite(lat) || !Number.isFinite(lng)) return null
+  const y = Number(ymd.slice(0, 4))
+  const mo = Number(ymd.slice(5, 7)) - 1
+  const d = Number(ymd.slice(8, 10))
+  const dayMs = Date.UTC(y, mo, d)
+  const n = Math.floor((dayMs - Date.UTC(y, 0, 1)) / 86400000) + 1
+  const yearDays = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0 ? 366 : 365
+  const g = ((2 * Math.PI) / yearDays) * (n - 1)
+  const eqtime =
+    229.18 *
+    (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g))
+  const decl =
+    0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g) +
+    0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g)
+  const rad = Math.PI / 180
+  const cosHa =
+    Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(decl)) - Math.tan(lat * rad) * Math.tan(decl)
+  if (cosHa < -1 || cosHa > 1) return null
+  const ha = Math.acos(cosHa) / rad
+  const sunsetUtcMin = 720 - 4 * (lng - ha) - eqtime
+  return new Date(dayMs + Math.round(sunsetUtcMin) * 60000).toISOString()
+}
+
+export type TwilightPoint = { lat?: number | null; lng?: number | null; province?: ProvinceCode | null }
+
+function twilightPoint(p: TwilightPoint): { lat: number; lng: number } | null {
+  if (typeof p.lat === 'number' && typeof p.lng === 'number' && Number.isFinite(p.lat) && Number.isFinite(p.lng)) {
+    return { lat: p.lat, lng: p.lng }
+  }
+  return p.province ? PROVINCE_POINT[p.province] : null
+}
+
+/** The single twilight add-on slot for a date (property-local), or [] if none. */
+export function buildTwilightSlots(
+  ymd: string,
+  now = new Date(),
+  tz: string = FALLBACK_TZ,
+  point: TwilightPoint = {},
+): BookSlot[] {
+  const pt = twilightPoint(point)
+  if (!pt) return []
+  const ss = sunsetIso(ymd, pt.lat, pt.lng)
+  if (!ss) return []
+  const localSunset = hmToMin(localClockHm(ss, tz))
+  let startMin = localSunset - TWILIGHT_LEAD_MIN
+  startMin -= ((startMin % TWILIGHT_ROUND_MIN) + TWILIGHT_ROUND_MIN) % TWILIGHT_ROUND_MIN
+  if (startMin < 0 || startMin + SLOT_DURATION_MIN > 24 * 60) return []
+  const bounds = slotBoundsIso(ymd, minToHm(startMin), tz)
+  if (!bounds) return []
+  const today = localYmd(now, tz)
+  if (ymd < today) return []
+  if (ymd === today && new Date(bounds.start).getTime() <= now.getTime()) return []
+  return [{ start: bounds.start, end: bounds.end, label: `${formatSlotLabel(bounds.start, tz)} · Twilight` }]
+}
+
+/**
+ * Server-side guard: a booked start must be a normal shoot-hours start, or —
+ * only when the twilight add-on is on — the twilight slot for that date.
+ * (Ignores "now"; checkout separately rejects past slots.)
+ */
+export function isBookableStart(
+  ymd: string,
+  startIso: string,
+  tz: string,
+  opts: { twilight?: boolean } & TwilightPoint = {},
+): boolean {
+  const t = Date.parse(startIso)
+  if (!Number.isFinite(t)) return false
+  const epoch = new Date(0)
+  const normal = buildDaySlots(ymd, epoch, tz)
+  if (normal.some((s) => Date.parse(s.start) === t)) return true
+  if (!opts.twilight) return false
+  // ±20 min tolerance: client pin vs province fallback can shift rounding one step.
+  return buildTwilightSlots(ymd, epoch, tz, opts).some((s) => Math.abs(Date.parse(s.start) - t) <= 20 * 60000)
+}

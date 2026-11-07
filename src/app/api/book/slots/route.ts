@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { WORK_END, WORK_START, buildDaySlots, filterOpenSlots, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
+import { WORK_END, WORK_START, buildDaySlots, buildTwilightSlots, filterOpenSlots, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 
 const SUPABASE_URL = (
   process.env.SUPABASE_URL ||
@@ -98,6 +98,16 @@ export async function GET(req: NextRequest) {
   const live = leads !== null || os !== null
   const slots = live ? filterOpenSlots(generated, taken) : generated
 
+  // Twilight add-on: one extra slot around local sunset (never general evenings).
+  const sp = req.nextUrl.searchParams
+  const wantTwilight = sp.get('twilight') === '1' || sp.get('twilight') === 'true'
+  const lat = sp.get('lat') != null ? Number(sp.get('lat')) : null
+  const lng = sp.get('lng') != null ? Number(sp.get('lng')) : null
+  const twilightGenerated = wantTwilight
+    ? buildTwilightSlots(date, new Date(), zone.tz, { lat, lng, province: zone.province })
+    : []
+  const twilightSlots = live ? filterOpenSlots(twilightGenerated, taken) : twilightGenerated
+
   return json({
     ok: true,
     date,
@@ -107,5 +117,6 @@ export async function GET(req: NextRequest) {
     hours: { start: WORK_START, end: WORK_END },
     availability: live ? 'live' : 'hours',
     slots,
+    twilight_slots: twilightSlots,
   })
 }
