@@ -48,9 +48,9 @@ export function signForTest(secret: string, id: string, timestamp: string, body:
 export const bare = (a: string) => (a.match(/<([^>]+)>/)?.[1] ?? a).trim().toLowerCase()
 
 export function addressedToHelp(to: string[], receivedFor: string[], env: Env = process.env): boolean {
-  const extra = (env.SUPPORT_INBOUND_ADDRESS || '').trim().toLowerCase()
+  const extra = (env.SUPPORT_INBOUND_ADDRESS || '').split(',').map((x) => x.trim().toLowerCase()).filter(Boolean)
   const all = [...to, ...receivedFor].map(bare)
-  return all.some((a) => a === HELP_ADDRESS || (!!extra && a === extra))
+  return all.some((a) => a === HELP_ADDRESS || extra.includes(a))
 }
 
 export function onlyOtherInboxes(to: string[], receivedFor: string[]): boolean {
@@ -77,6 +77,12 @@ export function suppressionReason(from: string, headers: Headers, subject: strin
   if (/^(auto(matic)? reply|out of (the )?office|undeliver|delivery status notification|mail delivery (failed|subsystem)|returned mail)/i.test(subject.trim())) return 'auto_reply_subject'
   if (hdr(headers, 'x-bricks-support') ) return 'own_reply_loop'
   return null
+}
+
+/** Internal end-to-end test: own-domain sender + exact subject. Always shadow, never sent. */
+export const TEST_SUBJECT = 'help@ pipeline test'
+export function isInternalTest(from: string, subject: string): boolean {
+  return bare(from).endsWith('@brxs.ca') && subject.trim().toLowerCase().startsWith(TEST_SUBJECT)
 }
 
 export function threadKey(msg: { references: string; inReplyTo: string; messageId: string; from: string; subject: string }): string {
@@ -157,6 +163,25 @@ export function resendFetcher(env: Env = process.env, f: typeof fetch = fetch): 
   }
 }
 
+/** Resend sender for verified routine auto-replies. Marks mail so our own pipeline suppresses it (loop guard). */
+export function resendSender(env: Env = process.env, f: typeof fetch = fetch) {
+  const key = (env.RESEND_API_KEY || '').trim()
+  if (!key) return undefined
+  return async (o: { to: string; subject: string; text: string; inReplyTo: string; idempotencyKey: string }) => {
+    const r = await f('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'Idempotency-Key': o.idempotencyKey.slice(0, 256) },
+      body: JSON.stringify({
+        from: 'Bricks Support <help@brxs.ca>', to: [o.to], reply_to: 'help@brxs.ca', subject: o.subject, text: o.text,
+        headers: { 'Auto-Submitted': 'auto-replied', 'X-Bricks-Support': '1', ...(o.inReplyTo ? { 'In-Reply-To': o.inReplyTo, References: o.inReplyTo } : {}) },
+      }),
+    })
+    if (!r.ok) throw new Error(`resend_send_${r.status}`)
+    const j = (await r.json()) as { id?: string }
+    return { id: j.id ?? '' }
+  }
+}
+
 export type Outcome = { http: number; status: string; detail?: string }
 
 const htmlToText = (h: string) => h.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/gi, ' ').replace(/<br\s*\/?>|<\/p>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').trim()
@@ -213,13 +238,14 @@ export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db:
   const threadId = String(th.rows[0]?.id ?? '')
   if (!threadId) { await mark('failed', 'thread_upsert'); return { http: 500, status: 'retry' } }
 
-  const suppressed = suppressionReason(from, headers, subject)
+  const internalTest = isInternalTest(from, subject)
+  const suppressed = internalTest ? null : suppressionReason(from, headers, subject)
   const cls = suppressed ? null : await classifyEmail(subject, text, email.authentication ?? null)
   const msg = await db.insert('support_email_messages', {
     thread_id: threadId, direction: 'inbound', provider_email_id: meta.email_id, rfc_message_id: messageId || null,
     in_reply_to: hdr(headers, 'in-reply-to') || null, references_header: hdr(headers, 'references') || null,
     from_email: from, to_emails: [...to, ...rf].map(bare), subject, text_body: text, received_at: email.created_at || ev.created_at || null,
-    classification: cls ? { routine: cls.routine, category: cls.category, reasons: cls.reasons, index_version: cls.indexVersion, auth: email.authentication ?? null } : null,
+    classification: cls ? { test: internalTest, routine: cls.routine, category: cls.category, reasons: cls.reasons, index_version: cls.indexVersion, auth: email.authentication ?? null } : null,
     suppressed_reason: suppressed,
   }, { onConflict: 'provider_email_id', ignoreDuplicates: true })
   const messageRowId = msg.rows[0]?.id ?? null
@@ -230,12 +256,18 @@ export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db:
   if (!cls.routine) {
     const o = await db.insert('ops_escalations', {
       escalation_type: 'support_email', status: 'open', attempt_count: 1,
-      notes: `help@ email from ${from}: "${subject}"\nReasons: ${cls.reasons.join(', ')}\nThread: support_email_threads.id=${threadId}\n--- Suggested reply ---\n${cls.draft}`.slice(0, 8000),
+      notes: `${internalTest ? '[INTERNAL TEST] ' : ''}help@ email from ${from}: "${subject}"\nReasons: ${cls.reasons.join(', ')}\nThread: support_email_threads.id=${threadId}\n--- Suggested reply ---\n${cls.draft}`.slice(0, 8000),
     })
     opsId = o.rows[0]?.id ?? null
   }
   // Ledger: one row per inbound email, ever (idempotency key = provider email id).
-  const canAuto = cls.routine && deps.flags.autosend && !deps.flags.shadow
+  // Auto-send needs: routine + both flags + not a test + no auto reply on this thread in the last 24h (loop guard).
+  let canAuto = cls.routine && deps.flags.autosend && !deps.flags.shadow && !internalTest
+  if (canAuto) {
+    const since = new Date(Date.now() - 86_400_000).toISOString()
+    const recent = await db.select('support_email_outbound', `thread_id=eq.${threadId}&mode=eq.auto&created_at=gte.${encodeURIComponent(since)}&select=id`)
+    if (!recent.ok || recent.rows.length) canAuto = false
+  }
   const ledger = await db.insert('support_email_outbound', {
     thread_id: threadId, inbound_message_id: messageRowId, idempotency_key: `reply:${meta.email_id}`,
     mode: canAuto ? 'auto' : 'shadow', status: canAuto ? 'queued' : 'shadow', category: cls.category,

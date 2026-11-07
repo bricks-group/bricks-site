@@ -146,6 +146,29 @@ describe('processing in shadow mode', () => {
     assert.match(String(t.ops_escalations[0].notes), /Suggested reply/)
     assert.equal(t.support_email_outbound[0].needs_kam, true)
   })
+  it('auto-sends only verified routine answers when shadow is off, once per thread per day', async () => {
+    const { db, t } = memDb()
+    const sent: string[] = []
+    const f = flags({ SUPPORT_INBOUND_ENABLED: 'true', SUPPORT_AUTOSEND_ENABLED: 'true', SUPPORT_SHADOW_MODE: 'false' })
+    const send = async (o: { to: string }) => { sent.push(o.to); return { id: 'r1' } }
+    const out = await processEvent('m1', ev('e1'), { db, fetchEmail: async () => mail(), flags: f, send })
+    assert.equal(out.status, 'auto')
+    assert.equal(t.support_email_outbound[0].status, 'sent')
+    // second routine email on the same thread inside 24h is drafted, not sent (memDb select returns all rows)
+    await processEvent('m2', ev('e2'), { db, fetchEmail: async () => mail({ message_id: '<m2@x>', headers: { References: '<m1@example.com>' } }), flags: f, send })
+    // escalations are never sent
+    await processEvent('m3', ev('e3'), { db, fetchEmail: async () => mail({ message_id: '<m3@x>', subject: 'Refund', text: 'I want a refund for my shoot' }), flags: f, send })
+    assert.deepEqual(sent, ['client@example.com'])
+  })
+  it('processes the internal pipeline test from brxs.ca as shadow only', async () => {
+    const { db, t } = memDb()
+    let sent = 0
+    const f = flags({ SUPPORT_INBOUND_ENABLED: 'true', SUPPORT_AUTOSEND_ENABLED: 'true', SUPPORT_SHADOW_MODE: 'false' })
+    const out = await processEvent('m', ev('e9'), { db, fetchEmail: async () => mail({ from: 'raph@brxs.ca', subject: 'help@ pipeline test', text: 'What are the drone rules?' }), flags: f, send: async () => { sent++; return { id: 'x' } } })
+    assert.notEqual(out.status, 'suppressed')
+    assert.equal(sent, 0)
+    assert.equal(t.support_email_outbound[0].status, 'shadow')
+  })
   it('suppresses auto-replies without drafting', async () => {
     const { db, t } = memDb()
     const out = await processEvent('m', ev('e3'), { db, fetchEmail: async () => mail({ headers: { 'Auto-Submitted': 'auto-replied' } }), flags: SHADOW })

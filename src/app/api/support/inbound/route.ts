@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supportDb } from '@/lib/support/db'
-import { flags, processEvent, resendFetcher, verifySignature, type WebhookEvent } from '@/lib/support/inbound'
+import { flags, processEvent, resendFetcher, resendSender, verifySignature, type WebhookEvent } from '@/lib/support/inbound'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 /**
  * Resend Receiving webhook for help@brxs.ca. Kill switch: SUPPORT_INBOUND_ENABLED.
  * Signature: RESEND_INBOUND_WEBHOOK_SECRET (Svix). Shadow mode by default; auto-send
- * is not wired to a sender in this build, so nothing can be emailed to a customer.
+ * needs SUPPORT_AUTOSEND_ENABLED=true and SUPPORT_SHADOW_MODE=false; only verified routine answers are sent.
  */
 export async function POST(req: NextRequest) {
   const f = flags()
@@ -23,12 +23,12 @@ export async function POST(req: NextRequest) {
   try { ev = JSON.parse(body) } catch { return NextResponse.json({ ok: false }, { status: 400 }) }
   const db = supportDb()
   if (!db) return NextResponse.json({ ok: false, error: 'db unavailable' }, { status: 503 })
-  // autosend is forced off in this build: no sender is wired, so shadow drafts are the only output.
-  const out = await processEvent(h.id!, ev, { db, fetchEmail: resendFetcher(), flags: { ...f, autosend: false } })
+  // Sending happens only when SUPPORT_AUTOSEND_ENABLED=true AND SUPPORT_SHADOW_MODE=false, for verified routine answers.
+  const out = await processEvent(h.id!, ev, { db, fetchEmail: resendFetcher(), flags: f, send: f.autosend && !f.shadow ? resendSender() : undefined })
   return NextResponse.json({ ok: out.http < 300, status: out.status }, { status: out.http })
 }
 
 export async function GET() {
   const f = flags()
-  return NextResponse.json({ enabled: f.enabled, shadow: f.shadow, autosend: false, configured: Boolean((process.env.RESEND_INBOUND_WEBHOOK_SECRET || '').trim()), fetchConfigured: Boolean((process.env.RESEND_INBOUND_API_KEY || '').trim()) })
+  return NextResponse.json({ enabled: f.enabled, shadow: f.shadow, autosend: f.autosend && !f.shadow, configured: Boolean((process.env.RESEND_INBOUND_WEBHOOK_SECRET || '').trim()), fetchConfigured: Boolean((process.env.RESEND_INBOUND_API_KEY || '').trim()) })
 }
