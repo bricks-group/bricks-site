@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { Head, Close } from '@/components/calm/Calm'
-import WorkflowCompare from '@/components/software/WorkflowCompare'
+import JobCompare from '@/components/software/JobCompare'
 import SavingsCalculator from '@/components/software/SavingsCalculator'
 import ModuleGrid from '@/components/software/ModuleGrid'
 import { SOFTWARE_PLANS } from '@/lib/catalog'
@@ -12,7 +12,7 @@ import { OG_IMAGE } from '@/lib/og'
 import '@/components/software/software.css'
 
 const title = 'With and without Bricks: tools, handoffs and savings | Bricks'
-const description = 'See one listing and one site visit side by side, with and without Bricks, then work out your own time and money saved with a calculator that uses your numbers and Bricks’ real prices.'
+const description = 'See the same work side by side, job by job, with and without Bricks, then work out your own time and money saved with a calculator that uses your numbers and Bricks’ real prices.'
 
 export const metadata: Metadata = {
   title,
@@ -52,7 +52,7 @@ export default function WhyBricksPage() {
       <section className="hero hero-tight sw-hero">
         <div className="wrap">
           <h1>The same work, with fewer moving parts.</h1>
-          <p className="sub">Real estate work is spread across separate tools, message threads and vendors. Here is one site visit and one listing, with and without Bricks, and a calculator for your own numbers.</p>
+          <p className="sub">Side by side, job by job. Then work out your own savings, with Bricks’ real prices.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={OS_LOGIN}>Try Bricks free</a>
             <a className="btn btn-sec" href="#calculator">Work out your savings</a>
@@ -60,14 +60,9 @@ export default function WhyBricksPage() {
         </div>
       </section>
 
-      <section className="cm-sec sw-first" aria-label="One site visit, with and without Bricks">
-        <Head title="One site visit, booking to report." lede="Builders and developers. The steps on the left use separate vendors and tools. The steps on the right happen in Bricks." link={{ href: '/software/site-progress', label: 'Site Progress' }} />
-        <WorkflowCompare variant="builder" />
-      </section>
-
-      <section className="cm-sec rvl" aria-label="One listing, with and without Bricks">
-        <Head title="One listing, start to close." lede="Agents and teams." />
-        <WorkflowCompare variant="agent" />
+      <section className="cm-sec sw-first" aria-label="With and without Bricks">
+        <Head title="One job per row." lede="The same work, with and without Bricks." />
+        <JobCompare />
       </section>
 
       <section className="cm-sec rvl" id="calculator" aria-label="Savings calculator">

@@ -18,7 +18,7 @@ import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import HomeServicesBand from '@/components/home-services/HomeServicesBand'
 import ModuleGrid from '@/components/software/ModuleGrid'
 import WhoFor from '@/components/software/WhoFor'
-import WorkflowCompare from '@/components/software/WorkflowCompare'
+import JobCompare from '@/components/software/JobCompare'
 import '@/components/software/software.css'
 import { OG_IMAGE } from '@/lib/og'
 
@@ -67,15 +67,13 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>Connect every part of real estate. Make each one stronger.</h1>
-          <p className="sub">Bricks is the one system linking builders and developers, agents and brokerages, property managers and the vendors who do the work. Projects, listings, bookings, deals and payments share one record, so nothing falls between people.</p>
+          <p className="sub">One system that ties builders, agents, property managers and vendors together, with every project, listing and payment on one record.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="btn btn-sec hero-calc" href="/why-bricks#calculator">Work out your savings</Link>
           </div>
         </div>
       </section>
-
-      <WhoFor />
 
       <section className="prod-hero" aria-label="Bricks desk">
         <div className="tray tray-os">
@@ -86,33 +84,35 @@ export default function Home() {
       </section>
 
       <section className="cm-sec rvl" aria-label="The problem">
-        <Head title="Real estate work is scattered." lede="One deal touches many tools, threads and people. Most of the work is keeping them in step." />
+        <Head title="Real estate work is scattered." lede="Most of the work is keeping everyone in step." />
         <ul className="sw-trio">
           <li>
             <h3>Too many tools.</h3>
-            <p>Contacts in one app, signatures in another, deals in a spreadsheet and files in a shared drive. Each with its own login and its own copy of the facts.</p>
+            <p>Contacts, signatures, deals and files, each in its own app.</p>
           </li>
           <li>
             <h3>Too many messages.</h3>
-            <p>Texts asking for an arrival time, emails with lockbox codes, the same document sent to the lawyer, the broker and the inspector.</p>
+            <p>The same dates and documents, sent to everyone by hand.</p>
           </li>
           <li>
             <h3>Too many vendors.</h3>
-            <p>A photographer, a drone operator, a stager and a cleaner, each with their own booking, invoice and delivery link.</p>
+            <p>A booking, an invoice and a download link from each.</p>
           </li>
         </ul>
       </section>
 
       <section className="cm-sec rvl" aria-label="One system">
-        <Head title="One system for the whole job." lede="Each part works on its own and shares the same listing, deal and people with the rest." link={{ href: '/platform', label: 'See the software' }} />
+        <Head title="One system for the whole job." lede="Every part shares the same record." link={{ href: '/platform', label: 'See the software' }} />
         <ModuleGrid />
       </section>
+
+      <WhoFor />
 
       <div className="hf" aria-label="Inside Bricks">
         <section className="hf-row rvl" aria-label="The software">
           <div className="hf-copy">
             <h2>One desk for every deal.</h2>
-            <p>Prices, commission, conditions, key dates, documents and signatures on one file per deal. Less to chase across separate threads.</p>
+            <p>Price, conditions, dates, documents and signatures on one file.</p>
             <Link className="hf-link" href="/software/deals">Deals and transactions</Link>
           </div>
           <div className="hf-frame tray tray-crm">
@@ -126,7 +126,7 @@ export default function Home() {
           <section className="hf-row hf-flip rvl" aria-label="Listing launch and deal room">
             <div className="hf-copy">
               <h2>Keep everyone in the loop.</h2>
-              <p>Bookings, shoots and deliveries send their own updates. On Marble and brokerage seats, private deal rooms keep lawyers, brokers and inspectors working from the same file.</p>
+              <p>Bookings and deliveries send their own updates. Deal rooms give lawyers, brokers and inspectors the same file (Marble and brokerage seats).</p>
               <Link className="hf-link" href="/software/updates">Updates and deal rooms</Link>
               <span className="hf-fine">Shown with sample data</span>
             </div>
@@ -139,7 +139,7 @@ export default function Home() {
         <section className="hf-row rvl" aria-label="Listing media">
           <div className="hf-copy">
             <h2>Vendors, booked inside it.</h2>
-            <p>Book photos, drone, video, floor plans and Virtual Visit from the listing at an exact time. Bricks assigns the photographer, edits in-house and pays them. The finished work lands on the listing.</p>
+            <p>Book photos, drone, video and floor plans at an exact time. Bricks assigns, edits and pays. The work lands on the listing.</p>
             <Link className="hf-link" href="/software/booking-and-dispatch">Booking and vendor dispatch</Link>
           </div>
           <div className="hf-frame tray tray-book tray-phone">
@@ -150,7 +150,7 @@ export default function Home() {
         <section className="hf-row hf-flip rvl" aria-label="Site Progress">
           <div className="hf-copy">
             <h2>From the first site visit.</h2>
-            <p>For builders, Site Progress keeps visits, maps, issues and reports with the project. Share a dated update without piecing it together from separate files.</p>
+            <p>Visits, maps, issues and reports stay with the project. Share a dated update from one place.</p>
             <Link className="hf-link" href="/software/site-progress">Site Progress for builders</Link>
             <span className="hf-fine">Shown with sample data</span>
           </div>
@@ -161,8 +161,8 @@ export default function Home() {
       </div>
 
       <section className="cm-sec rvl" aria-label="With and without Bricks">
-        <Head title="The same listing, with fewer moving parts." lede="An example listing, from booking to closing." link={{ href: '/why-bricks', label: 'Work out your savings' }} />
-        <WorkflowCompare variant="agent" compact />
+        <Head title="With and without Bricks." lede="One job per row." link={{ href: '/why-bricks#calculator', label: 'Work out your savings' }} />
+        <JobCompare />
       </section>
 
       <IntegrationsRow />

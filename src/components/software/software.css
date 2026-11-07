@@ -149,3 +149,57 @@ html[data-theme="dark"] .sc-res:last-child dd{color:var(--brick);}
 @media (max-width:1100px){.who-grid{grid-template-columns:1fr 1fr;}}
 @media (max-width:600px){.who{padding-top:40px;}.who-grid{grid-template-columns:1fr;}}
 #how{scroll-margin-top:80px;}
+/* JobCompare: one job per row, Bricks column emphasised */
+.jc{margin-top:28px;}
+.jc-tabs{max-width:520px;border:1px solid var(--hairStrong);border-bottom:0;}
+.jc-table{border:1px solid var(--hairStrong);}
+.jc-row{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(0,1.3fr) minmax(0,1.3fr);border-top:1px solid var(--hair);}
+.jc-row:first-child{border-top:0;}
+.jc-row > span{padding:16px 20px;min-width:0;}
+.jc-head > span{font-size:12px;font-weight:500;letter-spacing:.02em;padding-top:12px;padding-bottom:12px;color:var(--inkMute);}
+.jc-head .jc-with{color:var(--paper);}
+.jc-job{font-size:15px;font-weight:500;color:var(--ink);}
+.jc-without{display:flex;flex-direction:column;gap:6px;color:var(--inkMute);font-size:14.5px;line-height:1.4;}
+.jc-tools{font-size:12px;color:var(--inkMute);opacity:.85;}
+.jc-tools::before{content:'';display:inline-block;width:8px;height:1px;background:currentColor;vertical-align:middle;margin-right:6px;}
+.jc-with{display:flex;gap:12px;align-items:flex-start;background:var(--ink);color:var(--paper);font-size:15px;font-weight:500;line-height:1.4;}
+.jc-row + .jc-row .jc-with{box-shadow:inset 0 1px 0 rgba(255,255,255,.08);}
+.jc-mark{flex:none;width:10px;height:10px;margin-top:5px;background:var(--brick);}
+.jc-foot > span{padding-top:14px;padding-bottom:14px;}
+.jc-foot .jc-job{font-size:12px;font-weight:500;color:var(--inkMute);}
+.jc-foot .jc-without,.jc-foot .jc-with{flex-direction:row;flex-wrap:wrap;gap:6px 18px;font-size:13px;font-weight:400;}
+.jc-num b{font-size:20px;font-weight:500;letter-spacing:-.3px;margin-right:4px;}
+.jc-foot .jc-without .jc-num b{color:var(--inkSoft);}
+@media (max-width:700px){
+  .jc-tabs{max-width:none;}
+  .jc-row{grid-template-columns:1fr 1fr;}
+  .jc-row .jc-job{grid-column:1 / -1;padding-bottom:0;}
+  .jc-head .jc-job{display:none;}
+  .jc-row > span{padding:12px 14px;}
+  .jc-without,.jc-with{font-size:13.5px;}
+  .jc-with{gap:8px;}
+  .jc-mark{width:8px;height:8px;}
+  .jc-num b{font-size:17px;}
+}
+/* Compact Who Bricks is for */
+.who-grid.who-tight .who-card{padding:22px 20px;gap:8px;}
+.who-tight .who-card h3{font-size:18px;margin:0;}
+.who-tight .who-line{font-size:14px;line-height:1.4;color:var(--inkSoft);margin:0;flex:1;}
+.who-tight .who-go{margin-top:10px;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);align-self:flex-start;padding-bottom:1px;}
+.who-tight .who-go:hover{color:var(--brick);border-color:var(--brick);}
+.who-tight .who-go::after{content:' \2192';}
+.jc-row{border-top:0;}
+.jc-row + .jc-row > .jc-job,.jc-row + .jc-row > .jc-without{border-top:1px solid var(--hair);}
+.jc-row + .jc-row > .jc-with{border-top:1px solid color-mix(in srgb,var(--paper) 14%,transparent);box-shadow:none;}
+@media (max-width:700px){.jc-row + .jc-row > .jc-job{border-top:1px solid var(--hair);}.jc-row + .jc-row > .jc-without{border-top:0;}.jc-row + .jc-row > .jc-with{border-top:0;}}
+/* motion: CSS only, short, transform/opacity (no JS animation) */
+.sc-tabs button{transition:background-color 160ms ease,color 160ms ease,transform 120ms cubic-bezier(.23,1,.32,1);}
+.sc-tabs button:active{transform:scale(.98);}
+.jc-panel .jc-row{transition:opacity 220ms cubic-bezier(.23,1,.32,1),transform 220ms cubic-bezier(.23,1,.32,1);}
+@starting-style{.jc-panel .jc-row{opacity:0;transform:translateY(4px);}}
+.jc-panel .jc-row:nth-child(2){transition-delay:30ms}.jc-panel .jc-row:nth-child(3){transition-delay:60ms}.jc-panel .jc-row:nth-child(4){transition-delay:90ms}.jc-panel .jc-row:nth-child(5){transition-delay:120ms}.jc-panel .jc-row:nth-child(n+6){transition-delay:150ms}
+@media (prefers-reduced-motion:reduce){.jc-panel .jc-row{transform:none;transition:opacity 150ms ease;transition-delay:0ms!important;}}
+.who-n{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:var(--inkMute);}
+.who-tight .who-card{transition:background-color 160ms ease;}
+@media (hover:hover) and (pointer:fine){.who-tight .who-card:hover{background:var(--paperDeep);}}
+@media (max-width:600px){.who-grid.who-tight{grid-template-columns:1fr 1fr;}.who-grid.who-tight .who-card{padding:16px 14px;}.who-tight .who-card h3{font-size:16px;}.who-tight .who-line{font-size:13px;}.who-tight .who-go{font-size:13px;}}
