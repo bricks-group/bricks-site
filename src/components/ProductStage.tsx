@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import ProductWindow from '@/components/ProductWindow'
-import { TransactionsMock } from '@/components/home-products/HomeProductMock'
 
 /**
  * Cursor homepage ProductStage — stacked Mac windows, limited interaction.
@@ -61,7 +60,14 @@ export default function ProductStage() {
         className={`prod-stack-sub${front === 'deal' ? ' is-front' : ' is-back'}`}
         style={{ zIndex: front === 'deal' ? 100 : 10 }}
       >
-        <TransactionsMock />
+        <ProductWindow
+          title="Transactions"
+          src="/screens/os.html?screen=transactions&lock=1"
+          nw={1440}
+          nh={920}
+          fit="contain"
+          zoomAt={zoomAt}
+        />
         {front !== 'deal' ? (
           <button
             type="button"
