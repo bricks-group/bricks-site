@@ -13,18 +13,17 @@ import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Site progress software and drone visits for builders & developers | Bricks',
-  description:
-    'Progress reports, investor updates, 3D compare and your own capture imports for builders, developers, GCs and investors in Canada, with scheduled drone visits by vetted, insured, certified pilots. One vendor, one portal, dated evidence for every draw.',
+  title: "Site Progress Software for Builders & Developers | Bricks",
+  description: "Manage Site Progress in Bricks with dated drone visits, mapping, models, reports and comparisons over time for builders and developers across Canada.",
   alternates: { canonical: '/builders' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Site Progress for builders & developers | Bricks',
-    description: 'Progress reports, investor updates and 3D compare from every dated site visit, ours or your own.',
+    title: "Site Progress Software for Builders & Developers | Bricks",
+    description: "Manage Site Progress in Bricks with dated drone visits, mapping, models, reports and comparisons over time for builders and developers across Canada.",
   },
   twitter: {
     card: 'summary',
-    title: 'Site Progress for builders & developers | Bricks',
-    description: 'Progress reports, investor updates and 3D compare from every dated site visit.',
+    title: "Site Progress Software for Builders & Developers | Bricks",
+    description: "Manage Site Progress in Bricks with dated drone visits, mapping, models, reports and comparisons over time for builders and developers across Canada.",
   },
 }
 

@@ -926,17 +926,17 @@ export default function BookingWizard() {
             <p>Add-ons, scheduling, and what happens if plans change.</p>
           </div>
           <div className="faq">
-            <div className="qa"><h4>What&apos;s in Essentials?</h4><p>HDR interiors and exteriors, licensed drone and a branded floor plan, from ${CORE_FROM}.</p></div>
-            <div className="qa"><h4>Are the photos MLS-safe?</h4><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
-            <div className="qa"><h4>How does travel work?</h4><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and it&apos;s on your quote before you pay.</p></div>
-            <div className="qa"><h4>Is the {VISIT_NAME.toLowerCase()} included?</h4><p>No. It&apos;s an add-on, {VISIT_PRICE_LABEL.toLowerCase()}. Pick it in Step 2.</p></div>
-            <div className="qa"><h4>How fast is delivery?</h4><p>We aim to deliver photos 24 hours after the shoot, and other media in 24–48 hours. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
-            <div className="qa"><h4>What&apos;s included with twilight?</h4><p>Exterior photos at blue hour, with the windows lit and colour still in the sky. Add it to any shoot in Step 2.</p></div>
-            {VIRTUAL_STAGING_ENABLED && <div className="qa"><h4>What is virtual staging?</h4><p>Furniture added to photos of vacant rooms, marked as virtually staged. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>}
-            <div className="qa"><h4>Can I reschedule after booking?</h4><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
-            <div className="qa"><h4>What if I need to cancel?</h4><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
-            <div className="qa"><h4>How do refunds work?</h4><p>Refunds go back to your original payment method, typically within 5–10 business days.</p></div>
-            <div className="qa"><h4>Can I pay with Apple Pay or Google Pay?</h4><p>Yes, plus cards. Apple Pay works in Safari and on iOS, Google Pay in Chrome and on Android. We don&apos;t take PayPal, Klarna, Afterpay or Interac.</p></div>
+            <div className="qa"><h3>What&apos;s in Essentials?</h3><p>HDR interiors and exteriors, licensed drone and a branded floor plan, from ${CORE_FROM}.</p></div>
+            <div className="qa"><h3>Are the photos MLS-safe?</h3><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
+            <div className="qa"><h3>How does travel work?</h3><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and it&apos;s on your quote before you pay.</p></div>
+            <div className="qa"><h3>Is the {VISIT_NAME.toLowerCase()} included?</h3><p>No. It&apos;s an add-on, {VISIT_PRICE_LABEL.toLowerCase()}. Pick it in Step 2.</p></div>
+            <div className="qa"><h3>How fast is delivery?</h3><p>We aim to deliver photos 24 hours after the shoot, and other media in 24–48 hours. Rush (+${RUSH_FLAT}) is faster. You get a media link and a property website, with MLS, web and print downloads.</p></div>
+            <div className="qa"><h3>What&apos;s included with twilight?</h3><p>Exterior photos at blue hour, with the windows lit and colour still in the sky. Add it to any shoot in Step 2.</p></div>
+            {VIRTUAL_STAGING_ENABLED && <div className="qa"><h3>What is virtual staging?</h3><p>Furniture added to photos of vacant rooms, marked as virtually staged. {STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.</p></div>}
+            <div className="qa"><h3>Can I reschedule after booking?</h3><p>More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know — see the <Link href="/terms#refunds">cancellation policy</Link>.</p></div>
+            <div className="qa"><h3>What if I need to cancel?</h3><p>More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee. Full schedule in the <Link href="/terms#refunds">Terms</Link>.</p></div>
+            <div className="qa"><h3>How do refunds work?</h3><p>Refunds go back to your original payment method, typically within 5–10 business days.</p></div>
+            <div className="qa"><h3>Can I pay with Apple Pay or Google Pay?</h3><p>Yes, plus cards. Apple Pay works in Safari and on iOS, Google Pay in Chrome and on Android. We don&apos;t take PayPal, Klarna, Afterpay or Interac.</p></div>
           </div>
         </section>
       </div>

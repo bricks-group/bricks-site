@@ -6,20 +6,19 @@ import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/bra
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Fall Market Listing Photos & Real Estate Photography | Bricks',
-  description:
-    'Book fall listing photos early. Bricks delivers HDR real estate photography, licensed drone, floor plans, plus optional virtual tour and virtual visit — photos in 24h, other media on a 24–48h target — reserve before the rush.',
+  title: "Fall Listing Photos & Real Estate Photography | Bricks",
+  description: "Plan your fall listing media with Bricks. Book HDR photography, licensed drone and floor plans, with optional tours and Virtual Visit for your next listing.",
   alternates: { canonical: '/fall-market' },
   openGraph: {
-    title: 'Fall Market Listing Photos | Bricks',
-    description: 'Reserve your fall listing photo shoot. HDR, drone, floor plans — photos in 24h, other media 24–48h, MLS-ready.',
+    title: "Fall Listing Photos & Real Estate Photography | Bricks",
+    description: "Plan your fall listing media with Bricks. Book HDR photography, licensed drone and floor plans, with optional tours and Virtual Visit for your next listing.",
     images: [OG_IMAGE],
     url: 'https://www.brxs.ca/fall-market',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fall Market Listing Photos | Bricks',
-    description: 'Reserve fall real estate photography before the rush. HDR, drone, floor plans — photos in 24h, other media on a 24–48h target.',
+    title: "Fall Listing Photos & Real Estate Photography | Bricks",
+    description: "Plan your fall listing media with Bricks. Book HDR photography, licensed drone and floor plans, with optional tours and Virtual Visit for your next listing.",
     images: [OG_IMAGE],
   },
 }
@@ -64,9 +63,9 @@ export default function FallMarket() {
             <div><span className="over">Why book early</span><h2>Everyone lists at once.</h2></div>
           </div>
           <div className="reasons">
-            <div className="r"><span className="ic">01</span><h4>Compressed timing</h4><p>Fall listings cluster between Labour Day and late October.</p></div>
-            <div className="r"><span className="ic">02</span><h4>Weekend open houses</h4><p>Miss your shoot by a few days and you can miss the weekend your listing needed.</p></div>
-            <div className="r"><span className="ic">03</span><h4>Finite capacity</h4><p>Capacity doesn&apos;t grow when demand does. Earlier bookings keep their date.</p></div>
+            <div className="r"><span className="ic">01</span><h3>Compressed timing</h3><p>Fall listings cluster between Labour Day and late October.</p></div>
+            <div className="r"><span className="ic">02</span><h3>Weekend open houses</h3><p>Miss your shoot by a few days and you can miss the weekend your listing needed.</p></div>
+            <div className="r"><span className="ic">03</span><h3>Finite capacity</h3><p>Capacity doesn&apos;t grow when demand does. Earlier bookings keep their date.</p></div>
           </div>
         </section>
       </div>
@@ -77,10 +76,10 @@ export default function FallMarket() {
             <div><span className="over">Every shoot</span><h2>Same standard, same prices.</h2></div>
           </div>
           <div className="incl">
-            <div className="c"><span className="ic">01</span><h4>HDR photography</h4><p>Interiors and exteriors, edited for MLS.</p></div>
-            <div className="c"><span className="ic">02</span><h4>Licensed drone</h4><p>Aerial photos of the lot, roofline and surroundings.</p></div>
-            <div className="c"><span className="ic">03</span><h4>Floor plan</h4><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
-            <div className="c"><span className="ic">04</span><h4>Fast delivery</h4><p>We aim to deliver photos in 24 hours, in one branded portal.</p></div>
+            <div className="c"><span className="ic">01</span><h3>HDR photography</h3><p>Interiors and exteriors, edited for MLS.</p></div>
+            <div className="c"><span className="ic">02</span><h3>Licensed drone</h3><p>Aerial photos of the lot, roofline and surroundings.</p></div>
+            <div className="c"><span className="ic">03</span><h3>Floor plan</h3><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
+            <div className="c"><span className="ic">04</span><h3>Fast delivery</h3><p>We aim to deliver photos in 24 hours, in one branded portal.</p></div>
           </div>
           <p className="note">Twilight exteriors and cinematic reels help in shorter fall daylight. <Link href="/pricing" style={{ color: 'var(--brickDeep)' }}>See pricing →</Link></p>
         </section>
@@ -108,7 +107,7 @@ export default function FallMarket() {
           </div>
           <div className="faq">
             {faqs.map((f) => (
-              <div key={f.q} className="qa"><h4>{f.q}</h4><p>{f.a}</p></div>
+              <div key={f.q} className="qa"><h3>{f.q}</h3><p>{f.a}</p></div>
             ))}
           </div>
         </section>
@@ -120,7 +119,7 @@ export default function FallMarket() {
         .reasons .r{background:var(--paper);padding:24px;}
         .reasons .r .ic{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0;
           text-transform:none;color:var(--brickDeep);display:block;margin-bottom:8px;}
-        .reasons .r h4{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:6px;}
+        .reasons .r h3{font-weight:500;font-size:16px;color:var(--ink);margin-bottom:6px;}
         .reasons .r p{font-size:13px;color:var(--inkMute);line-height:1.5;}
         .deadline{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brickSoft);
           letter-spacing:0;text-transform:none;margin-top:16px;}

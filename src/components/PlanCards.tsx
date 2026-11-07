@@ -20,7 +20,7 @@ export default function PlanCards({ style }: { style?: React.CSSProperties }) {
         return (
           <div key={p.id} className={`c rvl${rec ? ' rec' : ''}`}>
             <span className="ic">{p.price}{rec ? <b className="rec-tag">Recommended</b> : null}</span>
-            <h4>{p.name}</h4>
+            <h3>{p.name}</h3>
             <p className="yr">{p.yearly}</p>
             <p className="val">{p.value}</p>
             <p className="inh">{prev ? `Everything in ${prev}, plus` : 'Includes'} <span className="cnt">· {n} of {PLAN_FEATURES.length}</span></p>

@@ -10,13 +10,13 @@ import { OG_IMAGE } from '@/lib/og'
 const OG = OG_IMAGE
 
 export const metadata: Metadata = {
-  title: 'Real Estate Photographer Jobs Canada | Shoot Listing Photos for Bricks',
+  title: "Real Estate Photographer Jobs Across Canada | Bricks",
   description:
     'Shoot listings for Bricks across Canada. Jobs come to you in the Bricks app at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
   alternates: { canonical: '/photographers' },
   robots: { index: true, follow: true },
   openGraph: {
-    title: 'Real Estate Photographer Jobs Canada | Bricks',
+    title: "Real Estate Photographer Jobs Across Canada | Bricks",
     description:
       'Shoot listings across Canada at a fixed rate per job. Apply in about four minutes.',
     images: [OG],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Real Estate Photographer Jobs Canada | Bricks',
+    title: "Real Estate Photographer Jobs Across Canada | Bricks",
     description: 'Shoot listings across Canada at a fixed rate per job.',
     images: [OG],
   },
@@ -177,13 +177,13 @@ export default function PhotographersPage() {
             </div>
           </div>
           <div className="faq">
-            <div className="qa"><h4>How long does review take?</h4><p>We review every application by hand, mostly on portfolio quality. Expect a reply within 1–3 business days.</p></div>
-            <div className="qa"><h4>What happens after I&apos;m approved?</h4><p>You get an email with a short setup checklist in the Bricks app: sign in, connect Stripe payouts, confirm your availability, read the vendor guide and accept the current agreement. Jobs start coming to you once it&apos;s done. There&apos;s no test shoot.</p></div>
-            <div className="qa"><h4>What do I need to apply?</h4><p>8–15 real estate photos you shot and edited yourself, and your resume (PDF, DOC or DOCX).</p></div>
-            <div className="qa"><h4>What equipment do I need?</h4><p>A full-frame camera or equivalent, fast primes, and a DJI or Autel drone for aerial work. List your kit in the form.</p></div>
-            <div className="qa"><h4>Do I need drone certification?</h4><p>For aerial jobs, yes. You need Transport Canada Advanced RPAS certification, and we check it before sending you drone work.</p></div>
-            <div className="qa"><h4>Do I need insurance?</h4><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies.</p></div>
-            <div className="qa"><h4>Am I an employee?</h4><p>No. You&apos;re an independent contractor with Bricks Group under Ontario law, in control of your equipment, methods and availability.</p></div>
+            <div className="qa"><h3>How long does review take?</h3><p>We review every application by hand, mostly on portfolio quality. Expect a reply within 1–3 business days.</p></div>
+            <div className="qa"><h3>What happens after I&apos;m approved?</h3><p>You get an email with a short setup checklist in the Bricks app: sign in, connect Stripe payouts, confirm your availability, read the vendor guide and accept the current agreement. Jobs start coming to you once it&apos;s done. There&apos;s no test shoot.</p></div>
+            <div className="qa"><h3>What do I need to apply?</h3><p>8–15 real estate photos you shot and edited yourself, and your resume (PDF, DOC or DOCX).</p></div>
+            <div className="qa"><h3>What equipment do I need?</h3><p>A full-frame camera or equivalent, fast primes, and a DJI or Autel drone for aerial work. List your kit in the form.</p></div>
+            <div className="qa"><h3>Do I need drone certification?</h3><p>For aerial jobs, yes. You need Transport Canada Advanced RPAS certification, and we check it before sending you drone work.</p></div>
+            <div className="qa"><h3>Do I need insurance?</h3><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies.</p></div>
+            <div className="qa"><h3>Am I an employee?</h3><p>No. You&apos;re an independent contractor with Bricks Group under Ontario law, in control of your equipment, methods and availability.</p></div>
           </div>
         </section>
 

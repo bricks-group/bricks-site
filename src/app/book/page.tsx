@@ -9,22 +9,20 @@ import { OG_IMAGE } from '@/lib/og'
 const OG = OG_IMAGE
 
 export const metadata: Metadata = {
-  title: 'Book Real Estate Photography & Listing Photos Canada | Bricks',
-  description:
-    'Book listing photos online: HDR photography, licensed drone and a floor plan on standard shoots. Live quote from the address.',
+  title: "Book Real Estate Photography & Listing Media | Bricks",
+  description: "Book listing media through Bricks: choose HDR photos, licensed drone, floor plans and optional 3D or video. Enter your property address to see a live quote.",
   alternates: { canonical: '/book' },
   robots: { index: true, follow: true },
   openGraph: {
-    title: 'Book Real Estate Photography & Listing Photos | Bricks',
-    description:
-      'Book listing media online: HDR photos, drone and a floor plan. Pick an exact time.',
+    title: "Book Real Estate Photography & Listing Media | Bricks",
+    description: "Book listing media through Bricks: choose HDR photos, licensed drone, floor plans and optional 3D or video. Enter your property address to see a live quote.",
     images: [OG],
     url: 'https://www.brxs.ca/book',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Book Listing Photos Canada | Bricks',
-    description: 'HDR real estate photography, drone, floor plan — book online with a live quote.',
+    title: "Book Real Estate Photography & Listing Media | Bricks",
+    description: "Book listing media through Bricks: choose HDR photos, licensed drone, floor plans and optional 3D or video. Enter your property address to see a live quote.",
     images: [OG],
   },
 }

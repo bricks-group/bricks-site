@@ -29,23 +29,20 @@ const CORE_FROM = PHOTO_RATE[0] + DRONE_RATE[0]
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography & Listing Photos Canada | Bricks',
-  description:
-    'Professional real estate photography and MLS listing photos across Canada. HDR stills, licensed drone, floor plan included on standard shoots, photos in 24h and other media on a 24–48h target. Book listing media online.',
+  description: "Book real estate photography through Bricks across Canada. Explore HDR listing photos, licensed drone and floor plans, plus delivery targets and media options.",
   alternates: { canonical: '/real-estate-photography' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     title: 'Real Estate Photography & Listing Photos Canada | Bricks',
-    description:
-      'HDR listing photos, MLS-ready delivery, licensed drone, and floor plans — Canada-wide. Book online.',
+    description: "Book real estate photography through Bricks across Canada. Explore HDR listing photos, licensed drone and floor plans, plus delivery targets and media options.",
     images: [OG],
     url: 'https://www.brxs.ca/real-estate-photography',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Real Estate Photography & Listing Photos Canada | Bricks',
-    description:
-      'HDR listing photos, MLS-ready delivery, licensed drone, and floor plans — Canada-wide.',
+    description: "Book real estate photography through Bricks across Canada. Explore HDR listing photos, licensed drone and floor plans, plus delivery targets and media options.",
     images: [OG],
   },
 }
@@ -178,7 +175,7 @@ export default function RealEstatePhotographyPage() {
         <div className="faq">
           {faqs.map((f) => (
             <div className="qa" key={f.q}>
-              <h4>{f.q}</h4>
+              <h3>{f.q}</h3>
               <p>{f.a}</p>
             </div>
           ))}

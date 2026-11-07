@@ -4,17 +4,17 @@ import { legalDocCss } from '@/components/legalDocCss'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Bricks — Legal',
-  description: 'Terms of Service, Privacy Policy, Data Processing Agreement, and photographer Independent Contractor Agreement for Bricks Group.',
+  title: "Bricks Legal Documents, Agreements & Privacy | Canada",
+  description: "Find Bricks legal documents in one place: Terms of Service, Privacy Policy, Data Processing Agreement and the photographer Independent Contractor Agreement.",
   alternates: { canonical: '/legal' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Bricks — Legal',
-    description: 'Terms, Privacy, DPA, and photographer Independent Contractor Agreement for Bricks Group.',
+    title: "Bricks Legal Documents, Agreements & Privacy | Canada",
+    description: "Find Bricks legal documents in one place: Terms of Service, Privacy Policy, Data Processing Agreement and the photographer Independent Contractor Agreement.",
   },
   twitter: {
     card: 'summary',
-    title: 'Bricks — Legal',
-    description: 'Terms, Privacy, DPA, and photographer Independent Contractor Agreement for Bricks Group.',
+    title: "Bricks Legal Documents, Agreements & Privacy | Canada",
+    description: "Find Bricks legal documents in one place: Terms of Service, Privacy Policy, Data Processing Agreement and the photographer Independent Contractor Agreement.",
   },
 }
 
@@ -35,6 +35,7 @@ export default function LegalHubPage() {
       <div className="legal-body">
         <section className="block" id="agreements">
           <h2>Documents</h2>
+          <p>Use this index to find the document relevant to your use of Bricks. Each link opens the full document; the summaries here help you navigate and do not replace its terms.</p>
           <ul>
             <li>
               <Link href="/terms">Terms of Service</Link> — media booking terms on brxs.ca. Effective 27 August 2026.
@@ -54,6 +55,7 @@ export default function LegalHubPage() {
 
         <section className="block" id="contact">
           <h2>Contact</h2>
+          <p>For a question about a document, include its name and the section you are referring to. Direct privacy questions and personal information requests to <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a>.</p>
           <p>
             Support: <a href="mailto:help@brxs.ca">help@brxs.ca</a>
             <br />

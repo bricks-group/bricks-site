@@ -6,19 +6,18 @@ import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'About Bricks — software for Canadian real estate',
-  description:
-    'Bricks is the system that brings it all together for Canadian real estate: software for builders, developers, investors and realtors, with listing media and Site Progress booked inside.',
+  description: "Meet Bricks, subscription software for Canadian real estate. Manage your work in one place, with listing media and Site Progress services booked inside.",
   alternates: { canonical: '/about' },
   openGraph: { images: [OG_IMAGE],
     type: 'website',
     title: 'About Bricks',
-    description: 'The system that brings it all together for Canadian real estate.',
+    description: "Meet Bricks, subscription software for Canadian real estate. Manage your work in one place, with listing media and Site Progress services booked inside.",
     url: 'https://www.brxs.ca/about',
   },
   twitter: {
     card: 'summary',
     title: 'About Bricks',
-    description: 'The system that brings it all together for Canadian real estate.',
+    description: "Meet Bricks, subscription software for Canadian real estate. Manage your work in one place, with listing media and Site Progress services booked inside.",
   },
 }
 

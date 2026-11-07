@@ -6,6 +6,7 @@ import HelpIcon from '@/components/help/HelpIcon'
 import HelpSearch from '@/components/help/HelpSearch'
 import { ContactBand, Crumbs, JsonLd } from '@/components/help/Parts'
 import { breadcrumbLd } from '@/lib/help/jsonld'
+import { COLLECTION_DESCRIPTIONS } from '@/lib/help/collections'
 import { OG_IMAGE } from '@/lib/og'
 
 export const dynamicParams = false
@@ -21,12 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCollection(collection)
   if (!c) return {}
   const title = `${c.title} · Bricks help centre`
+  const description = COLLECTION_DESCRIPTIONS[c.slug] ?? c.summary
   return {
     title,
-    description: c.summary,
+    description,
     alternates: { canonical: collectionHref(c.slug) },
-    openGraph: { images: [OG_IMAGE], title, description: c.summary, url: collectionHref(c.slug) },
-    twitter: { card: 'summary', title, description: c.summary },
+    openGraph: { images: [OG_IMAGE], title, description, url: collectionHref(c.slug) },
+    twitter: { card: 'summary', title, description },
   }
 }
 

@@ -20,18 +20,18 @@ import { mediaServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } fr
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Real Estate Photography Pricing & Software Plans Canada | Bricks',
+  title: "Bricks Software Plans & Listing Media Pricing | Canada",
   description:
     'Listing media from $248 for HDR photos, licensed drone and a floor plan, priced by home size. Software plans from free, plus brokerage seats. CAD.',
   alternates: { canonical: '/pricing' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Real Estate Photography Pricing & Plans | Bricks',
+    title: "Bricks Software Plans & Listing Media Pricing | Canada",
     description: 'Listing media from $248 for HDR photos, licensed drone and a floor plan. Software plans from free.',
     url: 'https://www.brxs.ca/pricing',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Real Estate Photography Pricing | Bricks',
+    title: "Bricks Software Plans & Listing Media Pricing | Canada",
     description: 'À la carte listing photo rates and software plans for Canadian real estate.',
   },
 }
@@ -198,15 +198,15 @@ export default function PricingPage() {
         <section className="cm-sec rvl" aria-label="Questions">
           <Head title="Before you book." />
           <div className="faq">
-            <div className="qa"><h4>What&apos;s in Essentials?</h4><p>HDR photos, licensed drone and a floor plan in one shoot.</p></div>
-            <div className="qa"><h4>Are the photos MLS-safe?</h4><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
-            <div className="qa"><h4>How does travel work?</h4><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and you see it before you pay.</p></div>
-            <div className="qa"><h4>How is home size measured?</h4><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
-            <div className="qa"><h4>Virtual tour or virtual visit?</h4><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
-            {VIRTUAL_STAGING_ENABLED && <div className="qa"><h4>What is virtual staging?</h4><p>Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.</p></div>}
-            <div className="qa"><h4>Where do you shoot?</h4><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
-            <div className="qa"><h4>Can I add AI without upgrading?</h4><p>{ADDONS_BLURB}</p></div>
-            <div className="qa"><h4>Brokerage or individual plan?</h4><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, or monthly at 25% more, and every seat gets all of Bricks plus trust accounting.</p></div>
+            <div className="qa"><h3>What&apos;s in Essentials?</h3><p>HDR photos, licensed drone and a floor plan in one shoot.</p></div>
+            <div className="qa"><h3>Are the photos MLS-safe?</h3><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
+            <div className="qa"><h3>How does travel work?</h3><p>Travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75/km. It&apos;s often free in the GTA, and you see it before you pay.</p></div>
+            <div className="qa"><h3>How is home size measured?</h3><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
+            <div className="qa"><h3>Virtual tour or virtual visit?</h3><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
+            {VIRTUAL_STAGING_ENABLED && <div className="qa"><h3>What is virtual staging?</h3><p>Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.</p></div>}
+            <div className="qa"><h3>Where do you shoot?</h3><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
+            <div className="qa"><h3>Can I add AI without upgrading?</h3><p>{ADDONS_BLURB}</p></div>
+            <div className="qa"><h3>Brokerage or individual plan?</h3><p>Agents choose a plan from Clay to Diamond. Brokerages buy seats yearly, or monthly at 25% more, and every seat gets all of Bricks plus trust accounting.</p></div>
           </div>
         </section>
 

@@ -5,7 +5,7 @@
  */
 
 /* Footer: plain sentence-case column labels and theme switch. */
-.foot-col h4{font-family:var(--vs-sans);font-size:13px;letter-spacing:0;text-transform:none;color:var(--vs-fg-3);font-weight:500;}
+.foot-col .foot-heading{font-family:var(--vs-sans);font-size:13px;letter-spacing:0;text-transform:none;color:var(--vs-fg-3);font-weight:500;}
 .theme-switch button{font-family:var(--vs-sans);font-size:12.5px;letter-spacing:0;text-transform:none;}
 
 /* Small labels that were uppercase mono chips: sentence case, quiet. Figures keep mono, without tracking. */

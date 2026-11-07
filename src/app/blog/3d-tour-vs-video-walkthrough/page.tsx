@@ -6,17 +6,17 @@ import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Virtual tour vs. video walkthrough: which sells listings faster? | Bricks',
+  title: "Virtual Tours vs Video Walkthroughs for Listings | Bricks",
   description: 'When a path-confined virtual tour beats a cinematic video walkthrough — and when the reverse is true. Virtual visit (Gaussian splat) is a separate product.',
   alternates: { canonical: '/blog/3d-tour-vs-video-walkthrough' },
   robots: { index: true, follow: true },
   openGraph: { images: [OG_IMAGE],
     type: 'article',
-    title: 'Virtual tour vs. video walkthrough: which sells listings faster?',
+    title: "Virtual Tours vs Video Walkthroughs for Listings | Bricks",
     description: 'When a virtual tour beats a cinematic reel — and when the reverse is true. Virtual visit is a separate product.',
   },
   twitter: {
-    title: 'Virtual tour vs. video walkthrough',
+    title: "Virtual Tours vs Video Walkthroughs for Listings | Bricks",
     description: 'When to use a virtual tour vs a video walkthrough. Virtual visit is a separate free-roam splat.',
   },
 }
@@ -87,9 +87,9 @@ export default function Post() {
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h4>Is a {TOUR_NAME.toLowerCase()} the same as a floor plan?</h4><p>No. A floor plan is a flat dimensioned drawing (included on every Bricks standard shoot). A {TOUR_NAME.toLowerCase()} is path-confined and spatial but isn&apos;t a substitute for a measured plan. A {VISIT_NAME.toLowerCase()} is a free-roam splat — never a tour.</p></div>
-          <div className="qa"><h4>Which helps SEO / portals more?</h4><p>Listings with both rich media types get more saves and views on major portals; the reel drives initial engagement, the {TOUR_NAME.toLowerCase()} extends time-on-listing.</p></div>
-          <div className="qa"><h4>Can I use the reel on social?</h4><p>Yes — the cinematic reel is formatted for Instagram, TikTok, and Realtor.ca embeds. That&apos;s its main job.</p></div>
+          <div className="qa"><h3>Is a {TOUR_NAME.toLowerCase()} the same as a floor plan?</h3><p>No. A floor plan is a flat dimensioned drawing (included on every Bricks standard shoot). A {TOUR_NAME.toLowerCase()} is path-confined and spatial but isn&apos;t a substitute for a measured plan. A {VISIT_NAME.toLowerCase()} is a free-roam splat — never a tour.</p></div>
+          <div className="qa"><h3>Which helps SEO / portals more?</h3><p>Listings with both rich media types get more saves and views on major portals; the reel drives initial engagement, the {TOUR_NAME.toLowerCase()} extends time-on-listing.</p></div>
+          <div className="qa"><h3>Can I use the reel on social?</h3><p>Yes — the cinematic reel is formatted for Instagram, TikTok, and Realtor.ca embeds. That&apos;s its main job.</p></div>
         </div>
       </BlogPostLayout>
     </>

@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import BookPropertySwitch from './BookPropertySwitch'
 
 export const metadata: Metadata = {
-  title: 'Book a turnover, condition report, leasing set or acquisition capture | Bricks',
+  title: "Book Property Visits, Reports & Leasing Media | Bricks",
   description:
     'Book and pay for one visit: turnovers, condition reports, listing sets, leasing sets, aerials and acquisition captures. Prices in CAD, plus HST.',
   alternates: { canonical: '/book/property' },

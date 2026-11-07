@@ -12,13 +12,12 @@ import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Site progress evidence for investors, lenders and REITs | Bricks',
-  description:
-    'Dated site visits, progress reports, investor updates and 3D compare for the projects you fund or own, plus units and leasing status for REITs. Shared as a PDF or an expiring read-only link.',
+  title: "Site Progress Reports for Investors & Lenders | Bricks",
+  description: "Track projects in Bricks with dated site visits, progress reports, investor updates and 3D comparisons. Share evidence as a PDF or an expiring read-only link.",
   alternates: { canonical: '/investors' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Evidence your investors can check | Bricks',
-    description: 'Dated site visits, progress reports and investor updates in one system.',
+    title: "Site Progress Reports for Investors & Lenders | Bricks",
+    description: "Track projects in Bricks with dated site visits, progress reports, investor updates and 3D comparisons. Share evidence as a PDF or an expiring read-only link.",
   },
 }
 

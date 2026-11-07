@@ -7,21 +7,19 @@ const OG = OG_IMAGE
 
 export const metadata: Metadata = {
   title: 'Real Estate Photography Guides & Listing Media Blog | Bricks',
-  description:
-    'Canadian real estate photography guides by Bricks — Canada-wide and GTA listing photo costs, drone rules, virtual tour vs video, and what’s included in a pro MLS shoot.',
+  description: "Read Bricks guides to Canadian listing media: photography costs, drone rules, virtual tours, video walkthroughs and what to expect from a listing shoot.",
   alternates: { canonical: '/blog' },
   robots: { index: true, follow: true },
   openGraph: {
     title: 'Real Estate Photography Guides & Listing Media Blog | Bricks',
-    description:
-      'Canada-wide listing media guides — photography cost, drone rules, virtual tours, and what’s in a pro shoot.',
+    description: "Read Bricks guides to Canadian listing media: photography costs, drone rules, virtual tours, video walkthroughs and what to expect from a listing shoot.",
     images: [OG],
     url: 'https://www.brxs.ca/blog',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Real Estate Photography Guides | Bricks',
-    description: 'Listing photos, MLS media, drone rules, and shoot inclusions for Canadian agents.',
+    description: "Read Bricks guides to Canadian listing media: photography costs, drone rules, virtual tours, video walkthroughs and what to expect from a listing shoot.",
     images: [OG],
   },
 }

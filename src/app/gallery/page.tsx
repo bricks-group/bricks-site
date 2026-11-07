@@ -5,20 +5,19 @@ import Script from 'next/script'
 import RevealObserver from '@/components/RevealObserver'
 
 export const metadata: Metadata = {
-  title: 'Real Estate Photography Gallery — Listing Photos Canada | Bricks',
-  description:
-    'Selected Bricks real estate photography and listing photos — HDR stills, drone real estate photos, and floor plans across residential, multifamily, commercial, and industrial.',
+  title: "Real Estate Photography & Listing Photo Gallery | Bricks",
+  description: "Browse Bricks listing photo samples from homes, multifamily, commercial and industrial properties, with aerial images and before-and-after editing comparisons.",
   alternates: { canonical: '/gallery' },
   openGraph: {
-    title: 'Real Estate Photography Gallery | Bricks',
-    description: 'HDR listing photos, drone, and floor plans — Canadian residential and commercial work samples.',
+    title: "Real Estate Photography & Listing Photo Gallery | Bricks",
+    description: "Browse Bricks listing photo samples from homes, multifamily, commercial and industrial properties, with aerial images and before-and-after editing comparisons.",
     images: ['/media/work/02.jpg'],
     url: 'https://www.brxs.ca/gallery',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Real Estate Photography Gallery | Bricks',
-    description: 'Listing photo samples — residential, multifamily, commercial, industrial.',
+    title: "Real Estate Photography & Listing Photo Gallery | Bricks",
+    description: "Browse Bricks listing photo samples from homes, multifamily, commercial and industrial properties, with aerial images and before-and-after editing comparisons.",
     images: ['/media/work/02.jpg'],
   },
 }
@@ -98,13 +97,14 @@ export default function GalleryPage() {
       <section className="hero">
         <div className="wrap">
           <h1>Real shoots, not stock.</h1>
-          <p className="sub">Homes, multifamily, commercial and industrial, shot to one standard.</p>
+          <p className="sub">Homes, multifamily, commercial and industrial, shot to one standard. Explore interiors, exteriors and aerial views from Bricks listing media work.</p>
         </div>
       </section>
 
       <div className="wrap work-wrap">
         <section className="block rvl" aria-label="Before and after">
-          <p className="ba-hint">Drag to compare.</p>
+          <h2>Before and after</h2>
+          <p className="ba-hint">Compare HDR blending, twilight editing and sky enhancement on request. Drag each divider to see the original image beside the edited version.</p>
           <div className="ba-grid">
             {beforeAfter.map((p) => {
               const name = p.label.replace(/ before and after$/i, '')
@@ -130,6 +130,8 @@ export default function GalleryPage() {
         </section>
 
         <section className="block rvl" aria-label="Work">
+          <h2>Selected listing photography</h2>
+          <p className="ba-hint">The gallery brings together residential rooms and exteriors, multifamily amenities, commercial aerials and industrial buildings. Use these samples to discuss the views and spaces your next property needs. Listing media is a service you can book inside Bricks.</p>
           <Grid images={[...residential, ...multifamily, ...commercial, ...industrial]} />
         </section>
       </div>

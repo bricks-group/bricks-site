@@ -7,12 +7,12 @@ import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Unit photos and Virtual Visit for property managers and landlords | Bricks',
+  title: "Property Management Software, Unit Photos & 3D | Bricks",
   description:
     'Unit photos, floor plans and Virtual Visit free-roam 3D for leasing, booked by address, with units and leasing status for every building in one Bricks account.',
   alternates: { canonical: '/property-managers' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Show every unit before the viewing | Bricks',
+    title: "Property Management Software, Unit Photos & 3D | Bricks",
     description: 'Unit media, Virtual Visit for leasing, and your units in one system.',
   },
 }

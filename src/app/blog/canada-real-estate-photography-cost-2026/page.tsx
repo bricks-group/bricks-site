@@ -21,23 +21,21 @@ import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 const OG = OG_IMAGE
 
 export const metadata: Metadata = {
-  title: 'How much does real estate photography cost in Canada? (2026) | Bricks',
-  description:
-    '2026 Canada-wide real estate photography pricing: what agents pay for listing photos, MLS media, drone, floor plans, virtual tours — and how Bricks quotes à la carte.',
+  title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
+  description: "Explore 2026 real estate photography costs across Canada, including listing photos, drone, floor plans and virtual tours, with a guide to Bricks quotes.",
   alternates: { canonical: '/blog/canada-real-estate-photography-cost-2026' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'article',
-    title: 'How much does real estate photography cost in Canada? (2026)',
-    description:
-      'Canada-wide listing media cost guide — HDR photos, drone, floor plans, virtual tours — with Bricks à la carte ranges.',
+    title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
+    description: "Explore 2026 real estate photography costs across Canada, including listing photos, drone, floor plans and virtual tours, with a guide to Bricks quotes.",
     images: [OG],
     url: 'https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How much does real estate photography cost in Canada? (2026)',
-    description: 'Canada-wide listing media pricing for agents — HDR, drone, floor plans, tours.',
+    title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
+    description: "Explore 2026 real estate photography costs across Canada, including listing photos, drone, floor plans and virtual tours, with a guide to Bricks quotes.",
     images: [OG],
   },
 }
@@ -204,17 +202,17 @@ export default function Post() {
         <h2>FAQ</h2>
         <div className="faq">
           <div className="qa">
-            <h4>Is tax included?</h4>
+            <h3>Is tax included?</h3>
             <p>Usually no. Bricks quotes media pre-tax and adds applicable HST/GST at checkout.</p>
           </div>
           <div className="qa">
-            <h4>Why publish Canada-wide and GTA posts?</h4>
+            <h3>Why publish Canada-wide and GTA posts?</h3>
             <p>
               Agents search both ways. The <Link href="/blog/gta-real-estate-media-cost-2026">GTA cost guide</Link> is a regional deep-dive; this page is the national frame so we never imply Bricks only serves one metro.
             </p>
           </div>
           <div className="qa">
-            <h4>Can photographers join from outside the GTA?</h4>
+            <h3>Can photographers join from outside the GTA?</h3>
             <p>
               Yes — applications are open Canada-wide on <Link href="/photographers">/photographers</Link>.
             </p>

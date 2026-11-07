@@ -5,17 +5,17 @@ import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Drone photography rules for real estate in Ontario | Bricks',
-  description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant aerial shoot looks like.',
+  description: "Understand Ontario real estate drone photography rules, including Transport Canada certification, controlled airspace, altitude and planning a legal shoot.",
   alternates: { canonical: '/blog/drone-photography-rules-ontario' },
   robots: { index: true, follow: true },
   openGraph: { images: [OG_IMAGE],
     type: 'article',
     title: 'Drone photography rules for real estate in Ontario',
-    description: 'Transport Canada Advanced RPAS rules for real estate drone photography: certification, no-fly zones, and what a compliant aerial shoot looks like.',
+    description: "Understand Ontario real estate drone photography rules, including Transport Canada certification, controlled airspace, altitude and planning a legal shoot.",
   },
   twitter: {
     title: 'Drone photography rules for real estate in Ontario',
-    description: 'Transport Canada Advanced RPAS rules for Ontario real estate drone photography.',
+    description: "Understand Ontario real estate drone photography rules, including Transport Canada certification, controlled airspace, altitude and planning a legal shoot.",
   },
 }
 
@@ -74,9 +74,9 @@ export default function Post() {
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h4>Can any drone photo be used in a listing?</h4><p>Only if flown legally by a certified pilot with the right airspace clearance. Bricks flies under an Advanced RPAS certificate.</p></div>
-          <div className="qa"><h4>What if the home is near the airport?</h4><p>Then it&apos;s almost certainly controlled airspace — we file the NAV CANADA authorization before the shoot. That&apos;s standard for much of Mississauga and Etobicoke.</p></div>
-          <div className="qa"><h4>Is drone included or extra?</h4><p>Licensed drone coverage is part of the core Bricks shoot; aerial video can be added as a reel. <a href="/pricing">See pricing →</a></p></div>
+          <div className="qa"><h3>Can any drone photo be used in a listing?</h3><p>Only if flown legally by a certified pilot with the right airspace clearance. Bricks flies under an Advanced RPAS certificate.</p></div>
+          <div className="qa"><h3>What if the home is near the airport?</h3><p>Then it&apos;s almost certainly controlled airspace — we file the NAV CANADA authorization before the shoot. That&apos;s standard for much of Mississauga and Etobicoke.</p></div>
+          <div className="qa"><h3>Is drone included or extra?</h3><p>Licensed drone coverage is part of the core Bricks shoot; aerial video can be added as a reel. <a href="/pricing">See pricing →</a></p></div>
         </div>
       </BlogPostLayout>
     </>

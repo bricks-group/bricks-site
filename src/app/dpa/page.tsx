@@ -6,17 +6,16 @@ import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'Data Processing Agreement — Bricks',
-  description:
-    'Bricks Group Data Processing Agreement for brokerages, teams, and enterprise clients that process third-party personal data on the Bricks platform. PIPEDA-aligned.',
+  description: "Read the Bricks Group Data Processing Agreement for brokerages, teams and enterprise clients handling third-party personal data through the Bricks platform.",
   alternates: { canonical: '/dpa' },
   openGraph: { images: [OG_IMAGE],
     title: 'Data Processing Agreement — Bricks',
-    description: 'Bricks Group DPA for enterprise brokerage clients. PIPEDA-aligned.',
+    description: "Read the Bricks Group Data Processing Agreement for brokerages, teams and enterprise clients handling third-party personal data through the Bricks platform.",
   },
   twitter: {
     card: 'summary',
     title: 'Data Processing Agreement — Bricks',
-    description: 'Bricks Group DPA for enterprise brokerage clients. PIPEDA-aligned.',
+    description: "Read the Bricks Group Data Processing Agreement for brokerages, teams and enterprise clients handling third-party personal data through the Bricks platform.",
   },
 }
 

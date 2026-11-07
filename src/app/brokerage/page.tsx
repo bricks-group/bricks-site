@@ -11,8 +11,8 @@ import { ESIGN, LAUNCH } from '@/lib/agent-features'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 
 export const metadata: Metadata = {
-  title: 'bricks for brokerages — software agents join for, and stay for',
-  description: 'Recruit and keep agents with one desk for deals, e-sign and listing media, plus roster, pipeline and trust accounting for the office. Priced per seat, billed yearly.',
+  title: "Real Estate Brokerage Software, Deals & Media | Bricks",
+  description: "Bricks brings brokerage software, deals, e-sign and listing media together, with roster, pipeline and trust accounting for the office. Explore seat plans.",
   alternates: { canonical: '/brokerage' },
 }
 

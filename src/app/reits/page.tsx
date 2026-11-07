@@ -13,13 +13,12 @@ const REIT_VISITS = ONE_OFFS_FOR.reit_leasing.map((k) => ONE_OFFS[k])
 const off = (cents: number, pct: number) => money(Math.round((cents * (100 - pct)) / 100))
 
 export const metadata: Metadata = {
-  title: 'Bricks for REITs | Leasing media, condition reports and site progress',
-  description:
-    'One account for a REIT portfolio: leasing media and Virtual Visit for units and spaces, condition reports, quarterly property checks and site progress for new buildings.',
+  title: "REIT Portfolio Software, Media & Site Progress | Bricks",
+  description: "Manage a REIT portfolio in Bricks with leasing media, Virtual Visit, condition reports, property checks and Site Progress services booked from one account.",
   alternates: { canonical: '/reits' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Every property, on one record | Bricks',
-    description: 'Leasing media, condition reports and dated property checks across the portfolio.',
+    title: "REIT Portfolio Software, Media & Site Progress | Bricks",
+    description: "Manage a REIT portfolio in Bricks with leasing media, Virtual Visit, condition reports, property checks and Site Progress services booked from one account.",
   },
 }
 

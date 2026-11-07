@@ -8,13 +8,12 @@ import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Commercial real estate media, Virtual Visit and site mapping | Bricks',
-  description:
-    'HDR photos, licensed drone, floor plans, Virtual Visit free-roam 3D and mapped site captures for commercial and industrial property in Canada, booked online and delivered into Bricks.',
+  title: "Commercial Property Media, 3D Visits & Mapping | Bricks",
+  description: "Manage commercial property work in Bricks and book listing photos, drone, floor plans, Virtual Visit 3D and site mapping for your buildings and spaces.",
   alternates: { canonical: '/commercial' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Commercial property, shown properly | Bricks',
-    description: 'Listing media, Virtual Visit and mapped site captures in one system.',
+    title: "Commercial Property Media, 3D Visits & Mapping | Bricks",
+    description: "Manage commercial property work in Bricks and book listing photos, drone, floor plans, Virtual Visit 3D and site mapping for your buildings and spaces.",
   },
 }
 

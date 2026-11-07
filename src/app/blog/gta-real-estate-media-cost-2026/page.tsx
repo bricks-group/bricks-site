@@ -6,18 +6,18 @@ import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'How much does real estate photography cost in the GTA? (2026) | Bricks',
-  description: '2026 GTA real estate media pricing: what agents pay for HDR photography, drone, floor plans, virtual tours and video, with real market ranges and what drives the price.',
+  title: "GTA Real Estate Photography & Media Costs, 2026 | Bricks",
+  description: "Compare 2026 GTA real estate photography and media costs, including HDR photos, drone, floor plans, tours and video, and learn what affects your quote.",
   alternates: { canonical: '/blog/gta-real-estate-media-cost-2026' },
   robots: { index: true, follow: true },
   openGraph: { images: [OG_IMAGE],
     type: 'article',
-    title: 'How much does real estate photography cost in the GTA? (2026)',
-    description: 'What GTA agents actually pay for HDR, drone, floor plans, virtual tours and video — with real market ranges.',
+    title: "GTA Real Estate Photography & Media Costs, 2026 | Bricks",
+    description: "Compare 2026 GTA real estate photography and media costs, including HDR photos, drone, floor plans, tours and video, and learn what affects your quote.",
   },
   twitter: {
-    title: 'How much does real estate photography cost in the GTA? (2026)',
-    description: '2026 GTA real estate media pricing, with real market ranges.',
+    title: "GTA Real Estate Photography & Media Costs, 2026 | Bricks",
+    description: "Compare 2026 GTA real estate photography and media costs, including HDR photos, drone, floor plans, tours and video, and learn what affects your quote.",
   },
 }
 
@@ -95,9 +95,9 @@ export default function Post() {
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h4>Is HST included?</h4><p>No — media pricing is almost always quoted pre-tax. Bricks adds 13% HST at checkout.</p></div>
-          <div className="qa"><h4>Why is drone sometimes cheap and sometimes $250?</h4><p>A few static drone photos is a quick add; a licensed operator shooting aerial <em>video</em> with a Transport Canada Advanced RPAS certificate is a different skill and liability — that&apos;s the premium end.</p></div>
-          <div className="qa"><h4>Do I save by booking regularly?</h4><p>Yes. Agents and teams with a steady pipeline get per-shoot rates tuned to their volume. Ask when you book.</p></div>
+          <div className="qa"><h3>Is HST included?</h3><p>No — media pricing is almost always quoted pre-tax. Bricks adds 13% HST at checkout.</p></div>
+          <div className="qa"><h3>Why is drone sometimes cheap and sometimes $250?</h3><p>A few static drone photos is a quick add; a licensed operator shooting aerial <em>video</em> with a Transport Canada Advanced RPAS certificate is a different skill and liability — that&apos;s the premium end.</p></div>
+          <div className="qa"><h3>Do I save by booking regularly?</h3><p>Yes. Agents and teams with a steady pipeline get per-shoot rates tuned to their volume. Ask when you book.</p></div>
         </div>
       </BlogPostLayout>
     </>

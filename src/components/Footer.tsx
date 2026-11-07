@@ -19,7 +19,7 @@ export default function Footer() {
           </p>
         </div>
         <div className="foot-col">
-          <h4>Product</h4>
+          <h2 className="foot-heading">Product</h2>
           <div className="foot-links">
             <Link href="/platform">Software</Link>
             <Link href="/builders">Site Progress</Link>
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-col">
-          <h4>Who it&apos;s for</h4>
+          <h2 className="foot-heading">Who it&apos;s for</h2>
           <div className="foot-links">
             <Link href="/agents">Agents</Link>
             <Link href="/teams">Teams</Link>
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-col">
-          <h4>Home services</h4>
+          <h2 className="foot-heading">Home services</h2>
           <div className="foot-links">
             <Link href="/services">All services</Link>
             <Link href="/services#staging">Staging</Link>
@@ -58,7 +58,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-col">
-          <h4>Company</h4>
+          <h2 className="foot-heading">Company</h2>
           <div className="foot-links">
             <Link href="/work-with-bricks">Work with Bricks</Link>
             <Link href="/photographers">Photographers</Link>
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="foot-col">
-          <h4>Legal</h4>
+          <h2 className="foot-heading">Legal</h2>
           <div className="foot-links">
             <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy</Link>

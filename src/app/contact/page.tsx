@@ -5,16 +5,16 @@ import { ORG_REF } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Contact Bricks | Canadian real estate media',
-  description: 'Contact Bricks for Canadian listing media — HDR photography, licensed drone, floor plans, with optional virtual tour and virtual visit. Email hello@brxs.ca or call 343-453-4578. For support, email help@brxs.ca.',
+  title: "Contact Bricks for Software, Bookings & Support | Canada",
+  description: "Contact Bricks about software, listing media or Site Progress. Find support, general enquiry and privacy emails, or send a note about your property or account.",
   alternates: { canonical: '/contact' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Contact Bricks | Canadian real estate media',
-    description: 'Listing media for Canadian real estate: HDR photos, licensed drone and floor plans.',
+    title: "Contact Bricks for Software, Bookings & Support | Canada",
+    description: "Contact Bricks about software, listing media or Site Progress. Find support, general enquiry and privacy emails, or send a note about your property or account.",
   },
   twitter: {
-    title: 'Contact Bricks | Canadian real estate media',
-    description: 'Listing media for Canadian real estate.',
+    title: "Contact Bricks for Software, Bookings & Support | Canada",
+    description: "Contact Bricks about software, listing media or Site Progress. Find support, general enquiry and privacy emails, or send a note about your property or account.",
   },
 }
 
@@ -43,18 +43,18 @@ export default function ContactPage() {
       <section className="hero">
         <div className="wrap">
           <span className="badge">Contact</span>
-          <h1>Let&apos;s shoot your next listing.</h1>
-          <p className="sub">Tell us about the listing. We&apos;ll confirm coverage and send pricing.</p>
-          <p className="sub product-hint">Asking about the software? Say so in your note.</p>
+          <h1>Let&apos;s talk about your next step.</h1>
+          <p className="sub">Ask about Bricks software, your account or services booked inside it, including listing media, Virtual Visit and Site Progress.</p>
+          <p className="sub product-hint">For a property enquiry, include the address and the service you need so we can check coverage and help you plan the visit.</p>
         </div>
       </section>
 
       <section className="block">
         <div className="wrap">
           <div className="contact-grid">
-            <div className="c"><div className="l">Support</div><div className="v"><a href="mailto:help@brxs.ca">help@brxs.ca</a></div></div>
-            <div className="c"><div className="l">General enquiries</div><div className="v"><a href="mailto:hello@brxs.ca">hello@brxs.ca</a></div></div>
-            <div className="c"><div className="l">Privacy</div><div className="v"><a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></div></div>
+            <div className="c"><div className="l">Support</div><div className="v"><a href="mailto:help@brxs.ca">help@brxs.ca</a></div><p>For help with your account, a booking or delivered media. Include a booking reference if you have one.</p></div>
+            <div className="c"><div className="l">General enquiries</div><div className="v"><a href="mailto:hello@brxs.ca">hello@brxs.ca</a></div><p>For general questions about Bricks software, listing media, Virtual Visit or Site Progress services.</p></div>
+            <div className="c"><div className="l">Privacy</div><div className="v"><a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></div><p>For questions about personal information or to make a privacy request. Do not include passwords or payment details.</p></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+13434534578">343-453-4578</a></div></div>
             <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>
           </div>
@@ -71,6 +71,7 @@ export default function ContactPage() {
         .contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);
           border:1px solid var(--hair);border-radius:2px;margin:0 0 var(--sec-half);}
         .contact-grid .c{background:var(--paper);padding:var(--card-pad);}
+        .contact-grid .c p{font-size:14px;line-height:1.6;color:var(--inkMute);margin-top:12px;}
         .contact-grid .c:last-child:nth-child(odd){grid-column:1 / -1;}
         .contact-grid .c .l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0;
           text-transform:none;color:var(--inkMute);}

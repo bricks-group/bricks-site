@@ -6,18 +6,18 @@ import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: "What's included in a professional listing photo shoot? | Bricks",
-  description: 'The core set every Bricks standard listing shoot ships: HDR photography, licensed drone, floor plan, photos in 24h and other media on a 24–48h target — plus the add-ons you can stack.',
+  title: "What a Professional Listing Photo Shoot Includes | Bricks",
+  description: "See what a Bricks standard listing shoot includes: HDR photos, licensed drone and a floor plan, plus delivery targets and optional media for your listing.",
   alternates: { canonical: '/blog/whats-included-listing-shoot' },
   robots: { index: true, follow: true },
   openGraph: { images: [OG_IMAGE],
     type: 'article',
-    title: "What's included in a professional listing photo shoot?",
-    description: 'The core set every Bricks standard shoot ships: HDR, licensed drone, floor plan, photos in 24h, other media on a 24–48h target — plus add-ons.',
+    title: "What a Professional Listing Photo Shoot Includes | Bricks",
+    description: "See what a Bricks standard listing shoot includes: HDR photos, licensed drone and a floor plan, plus delivery targets and optional media for your listing.",
   },
   twitter: {
-    title: "What's included in a pro listing shoot?",
-    description: 'HDR, licensed drone, floor plan, photos in 24h and other media on a 24–48h target — plus the add-ons.',
+    title: "What a Professional Listing Photo Shoot Includes | Bricks",
+    description: "See what a Bricks standard listing shoot includes: HDR photos, licensed drone and a floor plan, plus delivery targets and optional media for your listing.",
   },
 }
 
@@ -82,9 +82,9 @@ export default function Post() {
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h4>Is the floor plan really included?</h4><p>Yes — every Bricks standard shoot includes a dimensioned floor plan at no extra charge. Photos only drops drone and the floor plan.</p></div>
-          <div className="qa"><h4>What if I only want photos, no drone?</h4><p>Licensed drone is part of the core set because it&apos;s the highest-impact frame for most homes; if a listing genuinely doesn&apos;t suit aerials, tell us at booking and we&apos;ll tailor the shoot.</p></div>
-          <div className="qa"><h4>How many photos do I get?</h4><p>It scales with footprint — a condo gets fewer frames than an estate. You&apos;ll see the full set in the delivery gallery; tell us if you need a specific count for a portal.</p></div>
+          <div className="qa"><h3>Is the floor plan really included?</h3><p>Yes — every Bricks standard shoot includes a dimensioned floor plan at no extra charge. Photos only drops drone and the floor plan.</p></div>
+          <div className="qa"><h3>What if I only want photos, no drone?</h3><p>Licensed drone is part of the core set because it&apos;s the highest-impact frame for most homes; if a listing genuinely doesn&apos;t suit aerials, tell us at booking and we&apos;ll tailor the shoot.</p></div>
+          <div className="qa"><h3>How many photos do I get?</h3><p>It scales with footprint — a condo gets fewer frames than an estate. You&apos;ll see the full set in the delivery gallery; tell us if you need a specific count for a portal.</p></div>
         </div>
       </BlogPostLayout>
     </>

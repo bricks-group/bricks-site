@@ -7,18 +7,17 @@ import { ORG_REF } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'Service Areas | Listing Photos & Real Estate Photography Canada — Bricks',
-  description:
-    'Bricks delivers listing photos and real estate photography across Canada. HDR, licensed drone, floor plan included — confirm coverage and travel at booking. Not limited to one metro.',
+  title: "Real Estate Photography & Media Service Areas | Bricks",
+  description: "Find Bricks real estate photography and listing media coverage across Canada. Review service areas, then confirm availability and any travel costs at booking.",
   alternates: { canonical: '/service-areas' },
   openGraph: { images: [OG_IMAGE],
-    title: 'Service Areas | Listing Photos Canada — Bricks',
+    title: "Real Estate Photography & Media Service Areas | Bricks",
     description: `Bricks listing media across Canada. ${COVERAGE_LINE} HDR, drone, floor plans, optional virtual tour.`,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Service Areas | Listing Photos Canada — Bricks',
-    description: 'Listing photos and real estate photography for Canadian agents — Canada-wide coverage confirmed at booking.',
+    title: "Real Estate Photography & Media Service Areas | Bricks",
+    description: "Find Bricks real estate photography and listing media coverage across Canada. Review service areas, then confirm availability and any travel costs at booking.",
   },
 }
 
@@ -104,7 +103,7 @@ export default function ServiceAreasPage() {
                 <p className="over" style={{ marginBottom: 6 }}>
                   {a.region}
                 </p>
-                <h4>{a.name}</h4>
+                <h3>{a.name}</h3>
                 <p style={{ fontWeight: 500, color: 'var(--ink)', marginBottom: 8 }}>{a.headline}</p>
                 <p>{a.desc}</p>
               </div>
