@@ -12,7 +12,7 @@ import './home-v3.css'
 import { CORE_FROM } from '@/lib/pricing'
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { fromPriceFor } from '@/lib/propertyCheckout'
-import { BRICKS_DEFINITION, HOME_FAQS } from '@/lib/public-content'
+import { HOME_FAQS } from '@/lib/public-content'
 import { FeaturePic } from '@/components/features/FeatureShot'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import HomeServicesBand from '@/components/home-services/HomeServicesBand'
@@ -63,7 +63,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system that brings it all together.</h1>
-          <p className="sub">{BRICKS_DEFINITION}</p>
+          <p className="sub">Software for builders, developers, investors and realtors. Listing media and Site Progress are booked inside it.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="cm-link" href="/pricing">See pricing</Link>
@@ -166,7 +166,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="cm-sec rvl" id="faq" aria-label="Frequently asked questions">
+      <section className="cm-sec rvl home-faq" id="faq" aria-label="Frequently asked questions">
         <Head title="Common questions." />
         <div className="faq faq-home">
           {faqs.map((f) => (

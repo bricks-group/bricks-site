@@ -85,3 +85,7 @@ html[data-theme="dark"] .ci-row{--ci-ink:#fff;--ci-filter:brightness(0) invert(1
 .cm-close .btn:not(.btn-primary):hover{background:var(--ink);color:var(--paper);}
 .cm-close .btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
 .cm-close .btn.btn-primary:focus-visible{box-shadow:0 0 0 1px var(--paper) inset;}
+
+/* Homepage FAQ: keep the accordion and heading centered together. */
+.home-faq .faq-home{margin-inline:auto;}
+.home-faq .cm-head{justify-content:center;text-align:center;}
