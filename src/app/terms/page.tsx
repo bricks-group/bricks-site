@@ -67,11 +67,11 @@ export default function TermsPage() {
         <section className="block" id="refunds">
           <h2>5. Reschedule, cancellation, refunds</h2>
           <p>Contact <a href="mailto:help@brxs.ca">help@brxs.ca</a> as soon as you know.</p>
-          <p>Reschedule more than 24 hours before the shoot window: free.</p>
+          <p>Reschedule 24 hours or more before the shoot window: free.</p>
           <p>Reschedule inside 24 hours: we will try; if we cannot, section 5 cancellation rules apply.</p>
           <p>Your cancellation (or no-access / no-show on your side):</p>
           <ul>
-            <li>More than 24 hours before the shoot window: full refund to the original payment method.</li>
+            <li>24 hours or more before the shoot window: full refund to the original payment method.</li>
             <li>Inside 24 hours, or no-show / no access: no refund.</li>
             <li>There is no callout fee on any cancellation.</li>
           </ul>

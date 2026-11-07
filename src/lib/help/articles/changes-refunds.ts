@@ -5,12 +5,12 @@ export const CHANGES_REFUNDS: Article[] = [
   {
     slug: 'reschedule-a-shoot',
     title: `Reschedule a shoot`,
-    summary: `Free more than 24 hours before the shoot window. Inside 24 hours, we'll try.`,
+    summary: `Free 24 hours or more before the shoot window. Inside 24 hours, we'll try.`,
     popular: true,
     howto: true,
     body: [
       table(['When you ask', 'What happens'], [
-        ['More than 24 hours before the shoot window', 'Free'],
+        ['24 hours or more before the shoot window', 'Free'],
         ['Inside 24 hours', `We'll try. If we can't, the cancellation rules apply.`],
       ]),
       ol(
@@ -25,12 +25,12 @@ export const CHANGES_REFUNDS: Article[] = [
   {
     slug: 'cancel-a-shoot',
     title: `Cancel a shoot`,
-    summary: `Full refund more than 24 hours ahead. No refund inside 24 hours.`,
+    summary: `Full refund 24 hours or more ahead. No refund inside 24 hours.`,
     popular: true,
     howto: true,
     body: [
       table(['When you cancel', 'Refund'], [
-        ['More than 24 hours before the shoot window', 'Full refund'],
+        ['24 hours or more before the shoot window', 'Full refund'],
         ['Inside 24 hours', 'No refund'],
         ['No-show, or the photographer can’t get in', 'No refund'],
       ]),

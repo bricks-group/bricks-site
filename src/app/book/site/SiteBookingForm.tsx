@@ -1,5 +1,8 @@
 'use client'
 
+import Link from 'next/link'
+import { TERMS_VERSION } from '@/lib/terms-version'
+
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { track } from '@vercel/analytics'
@@ -124,6 +127,7 @@ export default function SiteBookingForm() {
       contact_email: v('contact_email'), contact_phone: v('contact_phone'), site_contact_name: v('site_contact_name'),
       site_contact_phone: v('site_contact_phone'), access_notes: v('access_notes'), preferred_date: v('preferred_date'),
       min_insurance_cad: Number(ins), requires_rpas_advanced: rpas,
+      terms_version: TERMS_VERSION,
     }
     if (mode === 'one_off') { payload.service_key = service; payload.mapped_setup = service === 'mapped_visit' && firstMapped }
     else payload.plan_key = `${planKind}_${cadence}`
@@ -257,6 +261,7 @@ export default function SiteBookingForm() {
           <div><label className="f" htmlFor="sbPhone">Phone</label><input type="tel" id="sbPhone" name="contact_phone" placeholder="Optional" /></div>
         </fieldset>
 
+        <p className="terms-line" style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule.</p>
         <div className="cta-row">
           <button type="submit" className="btn btn-brick" disabled={busy}>{busy && <BricksLoader variant="cycle" size={16} color="currentColor" style={{ marginRight: 8 }} />}{busy ? 'Opening checkout…' : 'Continue to payment'}</button>
           <a className="btn btn-sec" href="/builders#quote">Talk to us instead</a>

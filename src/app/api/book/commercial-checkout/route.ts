@@ -11,7 +11,7 @@ const OS_COMMERCIAL_CHECKOUT = 'https://api.brxs.ca/api/book/commercial-checkout
 const FIELDS = [
   'mode', 'service_key', 'mapped_setup', 'plan_key', 'plan_kind', 'cadence', 'site_address', 'company',
   'contact_name', 'contact_email', 'contact_phone', 'site_contact_name', 'site_contact_phone', 'access_notes',
-  'min_insurance_cad', 'requires_rpas_advanced', 'preferred_date', 'dry_run',
+  'min_insurance_cad', 'requires_rpas_advanced', 'preferred_date', 'dry_run', 'terms_version',
 ] as const
 
 export async function POST(req: Request) {

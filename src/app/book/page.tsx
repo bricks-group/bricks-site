@@ -66,7 +66,7 @@ export default function BookPage() {
                 name: 'Can I reschedule after booking?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'More than 24 hours before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email help@brxs.ca.',
+                  text: '24 hours or more before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email help@brxs.ca.',
                 },
               },
               {
@@ -74,7 +74,7 @@ export default function BookPage() {
                 name: 'What if I need to cancel?',
                 acceptedAnswer: {
                   '@type': 'Answer',
-                  text: 'More than 24 hours before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee.',
+                  text: '24 hours or more before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee.',
                 },
               },
               {

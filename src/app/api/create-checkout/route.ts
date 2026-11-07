@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
 import { stripVirtualStaging } from '@/lib/pricing'
+import { termsAcceptanceMeta } from '@/lib/terms-version'
 import { resolvePropertyTimezone, localYmd, isBookableStart } from '@/lib/schedule'
 
 export const runtime = 'nodejs'
@@ -362,6 +363,8 @@ export async function POST(req: Request) {
       assignee_id: (q as { assignee_id?: string }).assignee_id || null,
       base_rate: q.base_rate ?? null,
     }).slice(0, 480),
+    // Terms acceptance (Counsel 2026-11-07): version shown at the pay button + time.
+    ...termsAcceptanceMeta(),
   }
 
   const form = new URLSearchParams()
