@@ -51,3 +51,19 @@
 .platform-parts .pp-item h3{margin:0 0 6px;font-size:17px;font-weight:500;}
 .platform-parts .pp-item p{margin:0;color:var(--inkMute);font-size:14px;}
 header .nav-flag,header .nav-cta,header .nav-burger span,.drawer .drawer-links .drawer-cta{border-radius:0;}
+/* Grouped Software menu + Who it's for menu */
+.nav-dd-btn.nav-nowrap{white-space:nowrap;}
+.nav-dd-panel.nav-dd-groups{width:720px;}
+.nav-dd-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.nav-dd-group{padding:4px 0;}
+.nav-dd-group + .nav-dd-group{border-left:1px solid var(--hair);}
+.nav-dd-label{margin:6px 12px 4px;font-family:var(--mono,ui-monospace,monospace);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--inkMute);}
+.nav-dd-panel .nav-dd-group ul,.nav-dd-panel.nav-dd-who ul{grid-template-columns:1fr;}
+.nav-dd-panel.nav-dd-who{width:340px;}
+.nav-links .nav-help-link{white-space:nowrap;}
+@media (min-width:900px) and (max-width:1139px){.nav-dd-panel.nav-dd-groups{width:600px;}}
+/* drawer groups */
+.drawer-group{display:flex;flex-direction:column;padding-top:6px;}
+.drawer-label{margin:8px 0 2px;font-family:var(--mono,ui-monospace,monospace);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--inkMute);}

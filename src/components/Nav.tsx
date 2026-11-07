@@ -6,11 +6,12 @@ import { usePathname } from 'next/navigation'
 import BrandMark from '@/components/BrandMark'
 import { OS_LOGIN, OS_URL } from '@/lib/brand'
 import { clearHintCookies, osLogoutUrl } from '@/lib/site-session'
-import { HELP_URL, softwareParts } from '@/lib/nav'
+import { HELP_URL, audienceLinks, softwareGroups, type NavItem } from '@/lib/nav'
 import './nav-builders.css'
 
+const AUDIENCE_PATHS = ['/builders', '/construction', '/agents', '/teams', '/brokerage', '/office', '/property-managers', '/photographers']
+
 const links = [
-  { href: '/builders', label: 'Builders & developers' },
   { href: '/media', label: 'Media' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/gallery', label: 'Our work' },
@@ -34,24 +35,25 @@ function logOut() {
 export default function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
-  const [sw, setSw] = useState(false)
-  const [swDrawer, setSwDrawer] = useState(false)
-  const swRef = useRef<HTMLDivElement>(null)
+  const [menu, setMenu] = useState<'sw' | 'who' | null>(null)
+  const [drawerMenu, setDrawerMenu] = useState<'sw' | 'who' | null>(null)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     setOpen(false)
-    setSw(false)
+    setMenu(null)
   }, [pathname])
 
   useEffect(() => {
-    if (!sw) return
+    if (!menu) return
+    const current = menu
     function onDown(e: MouseEvent) {
-      if (swRef.current && !swRef.current.contains(e.target as Node)) setSw(false)
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setMenu(null)
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') {
-        setSw(false)
-        swRef.current?.querySelector<HTMLButtonElement>('button')?.focus()
+        setMenu(null)
+        navRef.current?.querySelector<HTMLButtonElement>(`[aria-controls="nav-${current}-menu"]`)?.focus()
       }
     }
     document.addEventListener('mousedown', onDown)
@@ -60,7 +62,7 @@ export default function Nav() {
       document.removeEventListener('mousedown', onDown)
       window.removeEventListener('keydown', onKey)
     }
-  }, [sw])
+  }, [menu])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -91,52 +93,70 @@ export default function Nav() {
             </Link>
             <span className="nav-flag">Canada</span>
           </div>
-          <nav className="nav-links" aria-label="Primary">
+          <nav className="nav-links" aria-label="Primary" ref={navRef}>
             <div
-              className={`nav-dd${sw ? ' open' : ''}`}
-              ref={swRef}
+              className={`nav-dd${menu === 'sw' ? ' open' : ''}`}
               onBlur={(e) => {
-                if (!e.currentTarget.contains(e.relatedTarget as Node)) setSw(false)
+                if (!e.currentTarget.contains(e.relatedTarget as Node) && menu === 'sw') setMenu(null)
               }}
             >
               <button
                 type="button"
                 className={`nav-dd-btn${pathname === '/platform' || pathname.startsWith('/software') ? ' active' : ''}`}
-                aria-expanded={sw}
-                aria-controls="nav-software-menu"
-                onClick={() => setSw((v) => !v)}
+                aria-expanded={menu === 'sw'}
+                aria-controls="nav-sw-menu"
+                onClick={() => setMenu((v) => (v === 'sw' ? null : 'sw'))}
               >
                 Software<span className="nav-dd-caret" aria-hidden="true" />
               </button>
-              <div id="nav-software-menu" className="nav-dd-panel" hidden={!sw}>
-                <Link href="/platform" className="nav-dd-all" onClick={() => setSw(false)}>
+              <div id="nav-sw-menu" className="nav-dd-panel nav-dd-groups" hidden={menu !== 'sw'}>
+                <Link href="/platform" className="nav-dd-all" onClick={() => setMenu(null)}>
                   <strong>All software</strong>
                   <span>One system, from site to sale</span>
                 </Link>
+                <div className="nav-dd-cols">
+                  {softwareGroups.map((g) => (
+                    <div key={g.label} className="nav-dd-group">
+                      <p className="nav-dd-label">{g.label}</p>
+                      <ul>
+                        {g.items.map((m) => (
+                          <DdItem key={m.label} item={m} onPick={() => setMenu(null)} />
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div
+              className={`nav-dd${menu === 'who' ? ' open' : ''}`}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node) && menu === 'who') setMenu(null)
+              }}
+            >
+              <button
+                type="button"
+                className={`nav-dd-btn nav-nowrap${AUDIENCE_PATHS.includes(pathname) ? ' active' : ''}`}
+                aria-expanded={menu === 'who'}
+                aria-controls="nav-who-menu"
+                onClick={() => setMenu((v) => (v === 'who' ? null : 'who'))}
+              >
+                Who it&rsquo;s for<span className="nav-dd-caret" aria-hidden="true" />
+              </button>
+              <div id="nav-who-menu" className="nav-dd-panel nav-dd-who" hidden={menu !== 'who'}>
                 <ul>
-                  {softwareParts.map((m) => (
-                    <li key={m.href}>
-                      <Link href={m.href} onClick={() => setSw(false)}>
-                        <strong>{m.label}</strong>
-                        <span>{m.detail}</span>
-                      </Link>
-                    </li>
+                  {audienceLinks.map((m) => (
+                    <DdItem key={m.href} item={m} onPick={() => setMenu(null)} />
                   ))}
                 </ul>
               </div>
             </div>
             {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`${pathname === l.href || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}${l.href === '/builders' ? ' nav-nowrap' : ''}`}
-                aria-label={l.href === '/builders' ? l.label : undefined}
-              >
-                {l.href === '/builders' ? (
-                  <><span className="nav-full">{l.label}</span><span className="nav-short">Builders</span></>
-                ) : l.label}
+              <Link key={l.href} href={l.href} className={pathname === l.href ? 'active' : ''}>
+                {l.label}
               </Link>
             ))}
+            <a href={HELP_URL} className="nav-help-link">Help</a>
           </nav>
           <div className="nav-actions">
             {/* Signed-in state comes from <html data-bx-auth>, set before paint (see site-session.ts). */}
@@ -149,9 +169,6 @@ export default function Nav() {
             <button type="button" className="nav-login nav-auth-in nav-logout" onClick={logOut}>
               Log out
             </button>
-            <a href={HELP_URL} className="nav-login nav-help">
-              Help
-            </a>
             <a href={OS_LOGIN} className="nav-cta nav-auth-out">
               Try Bricks free
             </a>
@@ -189,36 +206,51 @@ export default function Nav() {
           <button
             type="button"
             className="drawer-dd-btn"
-            aria-expanded={swDrawer}
+            aria-expanded={drawerMenu === 'sw'}
             aria-controls="drawer-software"
-            onClick={() => setSwDrawer((v) => !v)}
+            onClick={() => setDrawerMenu((v) => (v === 'sw' ? null : 'sw'))}
           >
-            Software<span aria-hidden="true">{swDrawer ? '−' : '+'}</span>
+            Software<span aria-hidden="true">{drawerMenu === 'sw' ? '−' : '+'}</span>
           </button>
-          <div id="drawer-software" className="drawer-sub" hidden={!swDrawer}>
+          <div id="drawer-software" className="drawer-sub" hidden={drawerMenu !== 'sw'}>
             <Link href="/platform" onClick={() => setOpen(false)}>All software</Link>
-            {softwareParts.map((m) => (
-              <Link key={m.href} href={m.href} onClick={() => setOpen(false)}>{m.label}</Link>
+            {softwareGroups.map((g) => (
+              <div key={g.label} className="drawer-group">
+                <p className="drawer-label">{g.label}</p>
+                {g.items.map((m) => (
+                  <Link key={m.label} href={m.href} onClick={() => setOpen(false)}>{m.label}</Link>
+                ))}
+              </div>
             ))}
           </div>
+          <button
+            type="button"
+            className="drawer-dd-btn"
+            aria-expanded={drawerMenu === 'who'}
+            aria-controls="drawer-who"
+            onClick={() => setDrawerMenu((v) => (v === 'who' ? null : 'who'))}
+          >
+            Who it&rsquo;s for<span aria-hidden="true">{drawerMenu === 'who' ? '−' : '+'}</span>
+          </button>
+          <div id="drawer-who" className="drawer-sub" hidden={drawerMenu !== 'who'}>
+            <Link href="/builders" onClick={() => setOpen(false)}>Builders &amp; developers</Link>
+            <Link href="/agents" onClick={() => setOpen(false)}>Agents &amp; brokerages</Link>
+            <Link href="/teams" onClick={() => setOpen(false)}>Teams</Link>
+            <Link href="/property-managers" onClick={() => setOpen(false)}>Property managers</Link>
+            <Link href="/photographers" onClick={() => setOpen(false)}>Vendors</Link>
+            <div className="drawer-group">
+              <p className="drawer-label">Also</p>
+              <Link href="/investors" onClick={() => setOpen(false)}>Investors</Link>
+              <Link href="/reits" onClick={() => setOpen(false)}>REITs</Link>
+              <Link href="/commercial" onClick={() => setOpen(false)}>Commercial</Link>
+              <Link href="/services" onClick={() => setOpen(false)}>Home services</Link>
+            </div>
+          </div>
           {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={pathname === l.href || (l.href === '/brokerage' && pathname === '/office') || (l.href === '/builders' && pathname === '/construction') ? 'active' : ''}
-              onClick={() => setOpen(false)}
-            >
+            <Link key={l.href} href={l.href} className={pathname === l.href ? 'active' : ''} onClick={() => setOpen(false)}>
               {l.label}
             </Link>
           ))}
-          <Link href="/agents" className={pathname === '/agents' ? 'active' : ''} onClick={() => setOpen(false)}>Agents</Link>
-          <Link href="/teams" className={pathname === '/teams' ? 'active' : ''} onClick={() => setOpen(false)}>Teams</Link>
-          <Link href="/brokerage" className={pathname === '/brokerage' ? 'active' : ''} onClick={() => setOpen(false)}>Brokerages</Link>
-          <Link href="/investors" className={pathname === '/investors' ? 'active' : ''} onClick={() => setOpen(false)}>Investors</Link>
-          <Link href="/reits" className={pathname === '/reits' ? 'active' : ''} onClick={() => setOpen(false)}>REITs</Link>
-          <Link href="/commercial" className={pathname === '/commercial' ? 'active' : ''} onClick={() => setOpen(false)}>Commercial</Link>
-          <Link href="/property-managers" className={pathname === '/property-managers' ? 'active' : ''} onClick={() => setOpen(false)}>Property managers</Link>
-          <Link href="/services" className={pathname === '/services' ? 'active' : ''} onClick={() => setOpen(false)}>Home services</Link>
           <a href={HELP_URL} onClick={() => setOpen(false)}>Help</a>
           <Link
             href="/contact"
@@ -242,5 +274,16 @@ export default function Nav() {
         </nav>
       </div>
     </>
+  )
+}
+
+function DdItem({ item, onPick }: { item: NavItem; onPick: () => void }) {
+  return (
+    <li>
+      <Link href={item.href} onClick={onPick}>
+        <strong>{item.label}</strong>
+        <span>{item.detail}</span>
+      </Link>
+    </li>
   )
 }

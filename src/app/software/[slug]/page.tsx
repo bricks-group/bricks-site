@@ -77,7 +77,7 @@ export default async function SoftwareModulePage({ params }: Props) {
         </ul>
       </section>
 
-      <section className="cm-sec rvl" aria-label="How it works">
+      <section id="how" className="cm-sec rvl" aria-label="How it works">
         <Head title="How it works." />
         <ol className="sw-steps">
           {m.steps.map((s) => (
