@@ -36,7 +36,7 @@ html{overflow-x:clip;scroll-behavior:smooth;color-scheme:light;}
 html[data-theme="dark"]{color-scheme:dark;}
 body{overflow-x:clip;font-family:'General Sans',system-ui,sans-serif;color:var(--inkSoft);
   font-size:15px;line-height:1.55;background:var(--paper);-webkit-font-smoothing:antialiased;}
-.wrap{max-width:980px;margin:0 auto;padding:0 var(--gutter-lg);}
+.wrap{max-width:var(--container,1200px);margin:0 auto;padding:0 var(--gutter);}
 .mono{font-family:'JetBrains Mono',monospace;}
 .over{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;
   letter-spacing:0;text-transform:none;color:var(--inkMute);display:block;}
@@ -150,7 +150,10 @@ html[data-bx-auth="in"] .drawer-links .nav-auth-in{display:block !important;}
   .hero,.hero-tight{padding:var(--hero-top) var(--gutter) var(--sec-half);}
 }
 
-.hero .wrap{padding:0 var(--gutter-lg);}
+/* One shared container owns the horizontal gutter. Hero used to add another gutter
+   outside .wrap, shifting its text right of breadcrumbs and section headings. */
+.hero:has(> .wrap){padding-inline:0;}
+.hero > .wrap{padding-inline:var(--gutter);}
 .badge{display:inline-block;padding:5px 10px;font-family:'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:0;text-transform:none;border-radius:2px;
   background:var(--brickTint);color:var(--brickDeep);margin-bottom:16px;}
