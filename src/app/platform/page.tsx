@@ -42,7 +42,7 @@ export default function PlatformPage() {
           <h2>On the web.</h2>
           <p>The desk for your projects, listings and deals.</p>
         </div>
-        <div className="tray tray-os">
+        <div className="tray tray-tx">
           <div className="tray-stage">
             <ProductStage />
           </div>
@@ -60,7 +60,7 @@ export default function PlatformPage() {
           <p>Book media and follow every listing from Companion.</p>
           <p className="surf-link"><a href={COMPANION_URL} rel="noopener noreferrer">Open Companion</a></p>
         </div>
-        <div className="tray tray-book tray-phone">
+        <div className="tray tray-disp tray-phone">
           <PhoneFrame label="Screen recording of the real Bricks booking flow on brxs.ca/book with sample data: listing details, package, time, review"><PhoneVideo name="book" bar="#EFF1EE" darkBar="#1C1C14" /></PhoneFrame>
         </div>
       </section>

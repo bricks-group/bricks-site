@@ -208,7 +208,7 @@ html[data-theme="dark"] .sc-res:last-child dd{color:var(--brick);}
 .ec-tabs{max-width:560px;border:1px solid var(--hairStrong);border-bottom:0;}
 .ec-panel{border:1px solid var(--hairStrong);display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);}
 .ec-flows{display:grid;grid-template-columns:1fr 1fr;}
-.ec-k{margin:0 0 6px;font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--inkMute);}
+.ec-k{margin:0 0 14px;font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--inkMute);}
 .ec-n{margin:0 0 18px;font-size:clamp(48px,6vw,72px);font-weight:500;letter-spacing:-.04em;line-height:1;}
 .ec-n span{font-size:15px;letter-spacing:0;font-weight:400;margin-left:8px;}
 .ec-without{padding:28px;color:var(--inkMute);}
@@ -244,3 +244,31 @@ html[data-theme="dark"] .sc-res:last-child dd{color:var(--brick);}
 .ec-incl li{display:flex;gap:10px;align-items:baseline;font-size:14px;color:var(--ink);padding:10px 0;border-bottom:1px solid var(--hair);}
 .ec-incl li::before{content:'';flex:none;width:8px;height:8px;background:var(--brick);transform:translateY(-1px);}
 .ec-note{margin:12px 0 0;font-size:12px;color:var(--inkMute);}
+.sw-shot-stage{position:absolute !important;inset:7% 7% 0 7%;overflow:hidden;box-shadow:0 18px 40px rgba(20,16,12,.18);}
+.sw-shot-stage img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;}
+.sw-shot-stage picture{height:100%;}
+@media (max-width:680px){.sw-shot-stage{inset:8% 6% 0 6%;}}
+
+/* Half the work: counted proof strip */
+.ec-panel{grid-template-areas:'proof proof' 'flows prices';}
+.ec-proof{grid-area:proof;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--hairStrong);}
+.ec-flows{grid-area:flows;}.ec-prices{grid-area:prices;}
+.ec-proof li{padding:18px 22px;display:flex;flex-direction:column;gap:8px;min-width:0;}
+.ec-proof li + li{border-left:1px solid var(--hair);}
+.ec-proof-l{font-size:12.5px;color:var(--inkMute);}
+.ec-proof-n{display:flex;align-items:baseline;gap:8px;font-size:28px;font-weight:500;letter-spacing:-.02em;line-height:1;}
+.ec-proof-n s{text-decoration:none;color:var(--inkMute);}
+.ec-proof-n > span[aria-hidden]{font-size:16px;color:var(--inkMute);}
+.ec-proof-n b{font-weight:500;color:var(--brick);}
+.ec-proof-v{display:flex;flex-direction:column;gap:4px;}
+.ec-blocks{display:flex;gap:3px;height:8px;}
+.ec-blocks i{width:14px;height:8px;background:var(--hairStrong);}
+.ec-blocks.on i{background:var(--brick);}
+.ec-blocks i.ec-zero{width:14px;background:transparent;border:1px dashed var(--brick);box-sizing:border-box;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+@media (max-width:1000px){.ec-panel{grid-template-areas:'proof' 'flows' 'prices';}}
+@media (max-width:600px){.ec-proof{grid-template-columns:1fr 1fr;}.ec-proof li{padding:14px 16px;}.ec-proof li:nth-child(3){border-left:0;}.ec-proof li:nth-child(n+3){border-top:1px solid var(--hair);}.ec-proof-n{font-size:24px;}}
+/* Tabs: full width, three equal columns matching Without / With / Price */
+.ec-tabs{max-width:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));}
+.ec-tabs button{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ec-tabs button + button{border-left:1px solid var(--hairStrong);}

@@ -51,7 +51,7 @@ export default function WhyBricksPage() {
 
       <section className="hero hero-tight sw-hero">
         <div className="wrap">
-          <h1>Easier. At market prices.</h1>
+          <h1>Half the work. At market prices.</h1>
           <p className="sub">The same job with and without Bricks, priced against published rates. Then try your own numbers.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={OS_LOGIN}>Try Bricks free</a>
@@ -61,7 +61,7 @@ export default function WhyBricksPage() {
       </section>
 
       <section className="cm-sec sw-first" aria-label="With and without Bricks">
-        <Head title="Bricks makes it easy." lede="Half the steps, at market prices." />
+        <Head title="Bricks halves the work." lede="Counted job by job, at market prices." />
         <EaseCompare />
       </section>
 

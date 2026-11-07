@@ -25,6 +25,33 @@ const FLOW: Record<Aud, { without: string[]; with: string[] }> = {
   },
 }
 
+/** Counted from the example steps above, per tab. Every "after" is half the "before" or better. */
+type Proof = { label: string; before: number; after: number }
+export const PROOF: Record<Aud, Proof[]> = {
+  builder: [
+    { label: 'Steps', before: 6, after: 3 },
+    { label: 'Tools to log in to', before: 3, after: 1 },
+    { label: 'Vendors to find', before: 1, after: 0 },
+    { label: 'Places files live', before: 3, after: 1 },
+  ],
+  agent: [
+    { label: 'Steps', before: 6, after: 3 },
+    { label: 'Vendors to chase', before: 3, after: 0 },
+    { label: 'Invoices to pay', before: 3, after: 1 },
+    { label: 'Places files live', before: 3, after: 1 },
+  ],
+  pm: [
+    { label: 'Steps', before: 6, after: 3 },
+    { label: 'Tools to log in to', before: 2, after: 1 },
+    { label: 'Inspectors to find', before: 1, after: 0 },
+    { label: 'Places reports live', before: 2, after: 1 },
+  ],
+}
+
+function Blocks({ n, on }: { n: number; on?: boolean }) {
+  return <span className={`ec-blocks${on ? ' on' : ''}`} aria-hidden="true">{n === 0 ? <i className="ec-zero" /> : Array.from({ length: n }, (_, i) => <i key={i} />)}</span>
+}
+
 const $ = (n: number) => '$' + n.toLocaleString('en-CA')
 
 function PriceBar({ r }: { r: PriceRow }) {
@@ -76,15 +103,22 @@ export default function EaseCompare({ initial = 'builder' }: { initial?: Aud }) 
         ))}
       </div>
       <div id="ec-panel" role="tabpanel" aria-labelledby={`ec-tab-${aud}`} className="ec-panel" key={aud}>
+        <ul className="ec-proof" aria-label="Half the work, counted">
+          {PROOF[aud].map((p) => (
+            <li key={p.label}>
+              <span className="ec-proof-l">{p.label}</span>
+              <span className="ec-proof-n"><s>{p.before}</s><span aria-hidden="true">→</span><b>{p.after}</b><span className="sr-only"> from {p.before} to {p.after}</span></span>
+              <span className="ec-proof-v"><Blocks n={p.before} /><Blocks n={p.after} on /></span>
+            </li>
+          ))}
+        </ul>
         <div className="ec-flows">
           <section className="ec-without" aria-label="Without Bricks">
             <p className="ec-k">Without Bricks</p>
-            <p className="ec-n">{f.without.length}<span>steps</span></p>
             <ul>{f.without.map((s) => <li key={s}>{s}</li>)}</ul>
           </section>
           <section className="ec-with" aria-label="With Bricks">
             <p className="ec-k">With Bricks</p>
-            <p className="ec-n">{f.with.length}<span>steps</span></p>
             <ol>{f.with.map((s, i) => <li key={s}><span className="ec-i">{i + 1}</span>{s}</li>)}</ol>
             <p className="ec-one">One checkout.</p>
           </section>
@@ -95,7 +129,7 @@ export default function EaseCompare({ initial = 'builder' }: { initial?: Aud }) 
           {PRICE_ROWS[aud].some((r) => r.market) ? <p className="ec-legend"><span className="ec-legend-band" /> Market range <span className="ec-legend-dot" /> Bricks</p> : null}
         </div>
       </div>
-      <p className="ec-note">Market range from published GTA and Ontario rates, 7 November 2026, CAD before tax. Your quotes will differ. Step counts are an example.</p>
+      <p className="ec-note">Market range from published GTA and Ontario rates, 7 November 2026, CAD before tax. Your quotes will differ. Counts are from the example steps.</p>
     </div>
   )
 }

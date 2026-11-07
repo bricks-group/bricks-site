@@ -390,11 +390,18 @@ html[data-theme="dark"] .logo-txt{color:var(--inkSoft);opacity:.9;}
   min-height:560px;
   border:none;
 }
-.tray-os{background-image:url(/media/paint/os.jpg);}
-.tray-crm{background-image:url(/media/paint/crm.jpg);}
-.tray-tx{background-image:url(/media/paint/tx.jpg);}
-.tray-book{background-image:url(/media/paint/book.jpg);}
-.tray-disp{background-image:url(/media/paint/disp.jpg);}
+.tray-os{background-image:url(/media/paint/os.jpg);background-image:image-set(url(/media/paint/os-1600.avif) type('image/avif'),url(/media/paint/os-1600.webp) type('image/webp'),url(/media/paint/os.jpg) type('image/jpeg'));}
+.tray-crm{background-image:url(/media/paint/crm.jpg);background-image:image-set(url(/media/paint/crm-1600.avif) type('image/avif'),url(/media/paint/crm-1600.webp) type('image/webp'),url(/media/paint/crm.jpg) type('image/jpeg'));}
+.tray-tx{background-image:url(/media/paint/tx.jpg);background-image:image-set(url(/media/paint/tx-1600.avif) type('image/avif'),url(/media/paint/tx-1600.webp) type('image/webp'),url(/media/paint/tx.jpg) type('image/jpeg'));}
+.tray-book{background-image:url(/media/paint/book.jpg);background-image:image-set(url(/media/paint/book-1600.avif) type('image/avif'),url(/media/paint/book-1600.webp) type('image/webp'),url(/media/paint/book.jpg) type('image/jpeg'));}
+.tray-disp{background-image:url(/media/paint/disp.jpg);background-image:image-set(url(/media/paint/disp-1600.avif) type('image/avif'),url(/media/paint/disp-1600.webp) type('image/webp'),url(/media/paint/disp.jpg) type('image/jpeg'));}
+@media (max-width:700px){
+  .tray-os{background-image:image-set(url(/media/paint/os-900.avif) type('image/avif'),url(/media/paint/os-900.webp) type('image/webp'),url(/media/paint/os.jpg) type('image/jpeg'));}
+  .tray-crm{background-image:image-set(url(/media/paint/crm-900.avif) type('image/avif'),url(/media/paint/crm-900.webp) type('image/webp'),url(/media/paint/crm.jpg) type('image/jpeg'));}
+  .tray-tx{background-image:image-set(url(/media/paint/tx-900.avif) type('image/avif'),url(/media/paint/tx-900.webp) type('image/webp'),url(/media/paint/tx.jpg) type('image/jpeg'));}
+  .tray-book{background-image:image-set(url(/media/paint/book-900.avif) type('image/avif'),url(/media/paint/book-900.webp) type('image/webp'),url(/media/paint/book.jpg) type('image/jpeg'));}
+  .tray-disp{background-image:image-set(url(/media/paint/disp-900.avif) type('image/avif'),url(/media/paint/disp-900.webp) type('image/webp'),url(/media/paint/disp.jpg) type('image/jpeg'));}
+}
 .tray::after{
   content:"";
   position:absolute;

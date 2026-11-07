@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import RevealObserver from '@/components/RevealObserver'
 import { Head, Close } from '@/components/calm/Calm'
-import ModuleVisual from '@/components/software/ModuleVisual'
+import ModuleVisual, { PAINTS } from '@/components/software/ModuleVisual'
 import ModuleGrid from '@/components/software/ModuleGrid'
 import { SOFTWARE_MODULES, moduleBySlug } from '@/lib/software-modules'
 import { OS_LOGIN } from '@/lib/brand'
@@ -67,7 +67,7 @@ export default async function SoftwareModulePage({ params }: Props) {
       </section>
 
       <section className="cm-sec sw-first" aria-label="Product">
-        <ModuleVisual v={m.visuals[0]} />
+        <ModuleVisual v={m.visuals[0]} paint={paintFor(m.slug, 0)} />
       </section>
 
       <section className="cm-sec rvl" aria-label="What it replaces">
@@ -89,7 +89,7 @@ export default async function SoftwareModulePage({ params }: Props) {
       {m.visuals.length > 1 ? (
         <section className="cm-sec rvl" aria-label="More of the product">
           <div className="sw-visuals">
-            {m.visuals.slice(1).map((v, i) => <ModuleVisual key={i} v={v} />)}
+            {m.visuals.slice(1).map((v, i) => <ModuleVisual key={i} v={v} paint={paintFor(m.slug, i + 1)} />)}
           </div>
         </section>
       ) : null}
@@ -128,4 +128,10 @@ export default async function SoftwareModulePage({ params }: Props) {
       `}</style>
     </>
   )
+}
+
+/** Each module page starts on a different painting and rotates from there, so neighbouring panels never repeat. */
+function paintFor(slug: string, i: number) {
+  const base = SOFTWARE_MODULES.findIndex((x) => x.slug === slug)
+  return PAINTS[(base * 2 + i) % PAINTS.length]
 }

@@ -67,7 +67,7 @@ export default function Home() {
       <section className="hero hero-home">
         <div className="wrap">
           <h1>The system that brings it all together.</h1>
-          <p className="sub">Bring deals, listings, bookings and conversations into one place. Your software, your team and the people who get each property ready.</p>
+          <p className="sub">Bring deals, listings, bookings and updates into one place. Your software, your team and the people who get each property ready.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
             <Link className="btn btn-sec hero-calc" href="/why-bricks#calculator">Work out your savings</Link>
@@ -130,8 +130,10 @@ export default function Home() {
               <Link className="hf-link" href="/software/updates">Updates and deal rooms</Link>
               <span className="hf-fine">Shown with sample data</span>
             </div>
-            <div className="hf-frame hf-photo hf-shot">
-              <FeaturePic name="deal-room" alt="A Bricks deal room page for a buyer's lawyer, with sample data: conditions, key dates and documents for one deal" sizes="(max-width:900px) 100vw, 780px" />
+            <div className="hf-frame tray tray-tx hf-shot-tray">
+              <div className="tray-stage hf-shot-stage">
+              <FeaturePic name="deal-room" alt="A Bricks deal room page for a buyer's lawyer, with sample data: conditions, key dates and documents for one deal" sizes="(max-width:900px) 92vw, 720px" />
+              </div>
             </div>
           </section>
         ) : null}
@@ -154,14 +156,16 @@ export default function Home() {
             <Link className="hf-link" href="/software/site-progress">Site Progress for builders</Link>
             <span className="hf-fine">Shown with sample data</span>
           </div>
-          <div className="hf-frame hf-photo hf-shot">
-            <FeaturePic name="progress-report" alt="The top of a Bricks progress report with sample data: an orthomosaic with a scale bar and photo location pins" sizes="(max-width:900px) 100vw, 780px" />
+          <div className="hf-frame tray tray-disp hf-shot-tray">
+            <div className="tray-stage hf-shot-stage">
+            <FeaturePic name="progress-report" alt="The top of a Bricks progress report with sample data: an orthomosaic with a scale bar and photo location pins" sizes="(max-width:900px) 92vw, 720px" />
+            </div>
           </div>
         </section>
       </div>
 
       <section className="cm-sec rvl" aria-label="With and without Bricks">
-        <Head title="Bricks makes it easy." lede="Half the steps, at market prices." link={{ href: '/why-bricks#calculator', label: 'Work out your savings' }} />
+        <Head title="Half the work." lede="At market prices." link={{ href: '/why-bricks#calculator', label: 'Work out your savings' }} />
         <EaseCompare />
       </section>
 
