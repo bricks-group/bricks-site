@@ -68,7 +68,7 @@ export default function WhyBricksPage() {
       </section>
 
       <section className="cm-sec rvl" id="calculator" aria-label="Savings calculator">
-        <Head title="Work out your own savings." lede="Every input is yours to change. Starting values are examples, not averages." />
+        <Head title="Your monthly saving with Bricks." lede="What you spend today, against the Bricks price. Change any number to yours." />
         <SavingsCalculator plans={PLAN_PRICES} site={SITE} />
       </section>
 
