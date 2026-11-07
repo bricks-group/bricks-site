@@ -1742,6 +1742,8 @@ body:has(.closer:last-of-type) > footer{margin-top:0;}
 
 /* Bricks AI help assistant (components/help/HelpChat.tsx) */
 .hchat{position:fixed;right:20px;bottom:20px;z-index:60;font-size:14px;}
+/* The fixed launcher sits bottom-right (20px + ~46px tall): give the footer meta row room under it so the theme switch is never covered at the page end */
+body:has(.hchat) .foot-meta{padding-bottom:88px;}
 .hchat-launch{background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:12px 18px;font:inherit;font-weight:500;cursor:pointer;box-shadow:0 6px 24px #0002;}
 .hchat-panel{width:min(380px,calc(100vw - 32px));max-height:min(620px,calc(100vh - 40px));display:flex;flex-direction:column;background:var(--paper);color:var(--inkSoft);border:1px solid var(--hairStrong);border-radius:12px;box-shadow:0 12px 40px #0003;overflow:hidden;}
 .hchat-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--hair);color:var(--ink);}
