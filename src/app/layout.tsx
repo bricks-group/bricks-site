@@ -7,6 +7,9 @@ import Footer from '@/components/Footer'
 import SiteBreadcrumbs from '@/components/SiteBreadcrumbs'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/schema'
 import MotionLayer from '@/components/MotionLayer'
+import ContextHelp from '@/components/help/ContextHelp'
+import HelpChat from '@/components/help/HelpChat'
+import { chatStatus } from '@/lib/help/assistant/config'
 import { AUTH_HEAD_SCRIPT } from '@/lib/site-session'
 import { OG_IMAGE } from '@/lib/og'
 import './globals.css'
@@ -72,7 +75,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {bare ? null : <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA] }) }} />}
         {bare ? null : <SiteBreadcrumbs pathname={pathname} />}
         {children}
+        {bare ? null : <ContextHelp pathname={pathname} />}
         {bare ? null : <Footer />}
+        {!bare && chatStatus().enabled ? <HelpChat pathname={pathname} /> : null}
         {bare ? null : <MotionLayer />}
         <Analytics />
         {bare ? null : <Script src="/assets/protect.js" strategy="afterInteractive" />}
