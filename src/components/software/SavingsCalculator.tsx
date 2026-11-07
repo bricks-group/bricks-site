@@ -173,19 +173,19 @@ function BuilderCalc({ site }: { site: SitePrice }) {
             <tr><th scope="row">Reports compiled by hand</th><td>{sites * reports}</td><td>Drafted, you review</td></tr>
           </tbody>
         </table>
-        <p className="sc-fine">A negative number means Bricks costs more than what you pay today. Bricks isn’t pitched as the cheapest per visit: it’s one vendor, one place and dated evidence for every report. CAD before HST.</p>
+        <p className="sc-fine">A negative number means Bricks costs more than what you pay today. Bricks isn’t pitched as the cheapest per visit: it’s one vendor, one place and dated evidence for every report. CAD before tax.</p>
       </div>
     </div>
   )
 }
 
-export default function SavingsCalculator({ plans, site, initial = 'agent' }: { plans: readonly PlanPrice[]; site: SitePrice; initial?: 'agent' | 'builder' }) {
+export default function SavingsCalculator({ plans, site, initial = 'builder' }: { plans: readonly PlanPrice[]; site: SitePrice; initial?: 'agent' | 'builder' }) {
   const [tab, setTab] = useState<'agent' | 'builder'>(initial)
   return (
     <div className="sc">
       <div className="sc-tabs" role="tablist" aria-label="Calculator">
-        <button type="button" role="tab" aria-selected={tab === 'agent'} className={tab === 'agent' ? 'on' : ''} onClick={() => setTab('agent')}>Agents and teams</button>
         <button type="button" role="tab" aria-selected={tab === 'builder'} className={tab === 'builder' ? 'on' : ''} onClick={() => setTab('builder')}>Builders and developers</button>
+        <button type="button" role="tab" aria-selected={tab === 'agent'} className={tab === 'agent' ? 'on' : ''} onClick={() => setTab('agent')}>Agents and teams</button>
       </div>
       {tab === 'agent' ? <AgentCalc plans={plans} /> : <BuilderCalc site={site} />}
     </div>

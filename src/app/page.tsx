@@ -5,7 +5,7 @@ import ProductStage from '@/components/ProductStage'
 import OsDeskShot from '@/components/OsDeskShot'
 import PhoneFrame from '@/components/phone/PhoneFrame'
 import PhoneVideo from '@/components/phone/PhoneVideo'
-import { Stats, Rows, Head, Close } from '@/components/calm/Calm'
+import { Stats, Head, Close } from '@/components/calm/Calm'
 import { IntegrationsRow } from '@/components/calm/Integrations'
 import './home-v10.css'
 import './home-v3.css'
@@ -17,6 +17,7 @@ import { FeaturePic } from '@/components/features/FeatureShot'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import HomeServicesBand from '@/components/home-services/HomeServicesBand'
 import ModuleGrid from '@/components/software/ModuleGrid'
+import WhoFor from '@/components/software/WhoFor'
 import WorkflowCompare from '@/components/software/WorkflowCompare'
 import '@/components/software/software.css'
 import { OG_IMAGE } from '@/lib/og'
@@ -24,21 +25,21 @@ import { OG_IMAGE } from '@/lib/og'
 const faqs = HOME_FAQS
 
 export const metadata: Metadata = {
-  title: 'Bricks — the system for Canadian real estate',
-  description: 'Real estate runs on scattered tools, endless messages and a different vendor for every job. Bricks brings deals, listings, bookings, vendors, documents and payments into one system.',
+  title: 'Bricks: connect every part of real estate',
+  description: 'Bricks connects builders and developers, agents and brokerages, property managers and vendors in one system, and makes each of them stronger: projects, listings, bookings, deals and payments on one record.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: 'Bricks',
     url: 'https://www.brxs.ca/',
     locale: 'en_CA',
-    title: 'Bricks — the system for Canadian real estate',
-    description: 'Real estate runs on scattered tools, endless messages and a different vendor for every job. Bricks brings deals, listings, bookings, vendors, documents and payments into one system.',
+    title: 'Bricks: connect every part of real estate',
+    description: 'Bricks connects builders and developers, agents and brokerages, property managers and vendors in one system, and makes each of them stronger: projects, listings, bookings, deals and payments on one record.',
     images: [OG_IMAGE],
   },
   twitter: {
-    title: 'Bricks — the system for Canadian real estate',
-    description: 'Real estate runs on scattered tools, endless messages and a different vendor for every job. Bricks brings deals, listings, bookings, vendors, documents and payments into one system.',
+    title: 'Bricks: connect every part of real estate',
+    description: 'Bricks connects builders and developers, agents and brokerages, property managers and vendors in one system, and makes each of them stronger: projects, listings, bookings, deals and payments on one record.',
     images: [OG_IMAGE],
   },
 }
@@ -65,14 +66,16 @@ export default function Home() {
 
       <section className="hero hero-home">
         <div className="wrap">
-          <h1>The system that brings it all together.</h1>
-          <p className="sub">Real estate runs on scattered tools, endless messages and a different vendor for every job. Bricks puts deals, listings, bookings, vendors, documents and payments in one system.</p>
+          <h1>Connect every part of real estate. Make each one stronger.</h1>
+          <p className="sub">Bricks is the one system linking builders and developers, agents and brokerages, property managers and the vendors who do the work. Projects, listings, bookings, deals and payments share one record, so nothing falls between people.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href="https://app.brxs.ca/login">Try Bricks free</a>
-            <Link className="cm-link" href="/why-bricks">With and without Bricks</Link>
+            <Link className="btn btn-sec hero-calc" href="/why-bricks#calculator">Work out your savings</Link>
           </div>
         </div>
       </section>
+
+      <WhoFor />
 
       <section className="prod-hero" aria-label="Bricks desk">
         <div className="tray tray-os">
@@ -162,18 +165,6 @@ export default function Home() {
         <WorkflowCompare variant="agent" compact />
       </section>
 
-      <section className="cm-sec rvl" aria-label="Who it is for">
-        <Head title="One system. Every part of the work." lede="From the first site visit to the last closing." />
-        <Rows
-          items={[
-            { title: 'Builders and developers', detail: 'Progress reports, 3D compare and site visits for every project.', href: '/builders' },
-            { title: 'Investors and lenders', detail: 'Monthly updates with dated, mapped evidence before each draw.', href: '/investors' },
-            { title: 'Brokerages', detail: 'Every seat on one system, with trust accounting.', href: '/brokerage' },
-            { title: 'Agents and teams', detail: AGENT_LAUNCH_LIVE ? 'Deals, e-sign and a launch kit for every listing. A deal room for every closing on Marble.' : 'Deals, CRM and e-sign, with media on the listing.', href: '/agents' },
-          ]}
-        />
-      </section>
-
       <IntegrationsRow />
 
       <HomeServicesBand />
@@ -212,8 +203,10 @@ export default function Home() {
 
       <style>{`
         .hero-home{padding:64px var(--gutter) 40px;border-bottom:none;}
-        .hero-home h1{font-weight:500;font-size:46px;line-height:1.0;letter-spacing:-1.6px;color:var(--ink);max-width:760px;}
-        .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:460px;line-height:1.45;}
+        .hero-home h1{font-weight:500;font-size:46px;line-height:1.02;letter-spacing:-1.6px;color:var(--ink);max-width:820px;}
+        .hero-home p.sub{font-size:17px;color:var(--inkSoft);margin-top:16px;max-width:600px;line-height:1.45;}
+        .hero-home .hero-calc{border-radius:0;border:1px solid var(--ink);color:var(--ink);background:transparent;padding:0 18px;min-height:44px;display:inline-flex;align-items:center;text-decoration:none;}
+        .hero-home .hero-calc:hover{background:var(--ink);color:var(--paper);}
         .hero-home .cta-row{align-items:center;}
         .hf-shot{background:var(--paperDeep);}
         .hf-fine{display:block;margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:0;text-transform:none;color:var(--inkMute);}
@@ -222,8 +215,8 @@ export default function Home() {
         @media (max-width:680px){.hf-shot picture{inset:14px 14px 0 14px;}}
         @media (max-width:680px){
           .hero-home{padding:36px var(--gutter) 24px;}
-          .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:20ch;}
-          .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:32ch;line-height:1.4;}
+          .hero-home h1{font-size:clamp(28px,7.2vw,36px);letter-spacing:-1.2px;max-width:22ch;}
+          .hero-home p.sub{font-size:15px;color:var(--inkMute);margin-top:12px;max-width:40ch;line-height:1.4;}
           .hero-home .cta-row{margin-top:22px;gap:20px;}
         }
       `}</style>

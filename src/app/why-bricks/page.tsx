@@ -52,22 +52,22 @@ export default function WhyBricksPage() {
       <section className="hero hero-tight sw-hero">
         <div className="wrap">
           <h1>The same work, with fewer moving parts.</h1>
-          <p className="sub">Real estate work is spread across separate tools, message threads and vendors. Here is one listing and one site visit, with and without Bricks, and a calculator for your own numbers.</p>
+          <p className="sub">Real estate work is spread across separate tools, message threads and vendors. Here is one site visit and one listing, with and without Bricks, and a calculator for your own numbers.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={OS_LOGIN}>Try Bricks free</a>
-            <a className="cm-link" href="#calculator">Work out your savings</a>
+            <a className="btn btn-sec" href="#calculator">Work out your savings</a>
           </div>
         </div>
       </section>
 
-      <section className="cm-sec sw-first" aria-label="One listing, with and without Bricks">
-        <Head title="One listing, start to close." lede="Agents and teams. The steps on the left use separate tools and vendors. The steps on the right happen in Bricks." />
-        <WorkflowCompare variant="agent" />
+      <section className="cm-sec sw-first" aria-label="One site visit, with and without Bricks">
+        <Head title="One site visit, booking to report." lede="Builders and developers. The steps on the left use separate vendors and tools. The steps on the right happen in Bricks." link={{ href: '/software/site-progress', label: 'Site Progress' }} />
+        <WorkflowCompare variant="builder" />
       </section>
 
-      <section className="cm-sec rvl" aria-label="One site visit, with and without Bricks">
-        <Head title="One site visit, booking to report." lede="Builders and developers." link={{ href: '/software/site-progress', label: 'Site Progress' }} />
-        <WorkflowCompare variant="builder" />
+      <section className="cm-sec rvl" aria-label="One listing, with and without Bricks">
+        <Head title="One listing, start to close." lede="Agents and teams." />
+        <WorkflowCompare variant="agent" />
       </section>
 
       <section className="cm-sec rvl" id="calculator" aria-label="Savings calculator">

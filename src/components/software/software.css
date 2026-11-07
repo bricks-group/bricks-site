@@ -134,3 +134,17 @@ html[data-theme="dark"] .sc-res:last-child dd{color:var(--brick);}
 .sw-sources{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair);}
 .sw-sources li{padding:12px 0;border-bottom:1px solid var(--hair);font-size:14px;line-height:1.5;color:var(--inkSoft);}
 .sw-sources strong{color:var(--ink);font-weight:500;}
+
+/* Who Bricks is for: four equal square cards, builders first. */
+.who{padding-top:56px;}
+.who-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:0;}
+.who-card{background:var(--paper);padding:24px 22px 26px;display:flex;flex-direction:column;gap:10px;min-width:0;}
+.who-card h3{font-size:19px;font-weight:500;letter-spacing:-.4px;line-height:1.15;color:var(--ink);margin:4px 0 0;}
+.who-benefit{font-size:14.5px;line-height:1.45;color:var(--ink);margin:0;}
+.who-does{list-style:none;margin:6px 0 0;padding:0;border-top:1px solid var(--hair);flex:1;}
+.who-does li{font-size:13px;line-height:1.45;color:var(--inkSoft);padding:9px 0;border-bottom:1px solid var(--hair);}
+.who-cta{align-self:flex-start;margin-top:12px;display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--ink);border-radius:0;color:var(--ink);text-decoration:none;font-size:13.5px;font-weight:500;}
+.who-cta:hover{background:var(--ink);color:var(--paper);}
+.who-cta:focus-visible{outline:2px solid var(--brick);outline-offset:2px;}
+@media (max-width:1100px){.who-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:600px){.who{padding-top:40px;}.who-grid{grid-template-columns:1fr;}}

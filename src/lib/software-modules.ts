@@ -383,7 +383,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
       { title: 'Evidence you can check', body: 'An evidence index with SHA-256 checksums, weather for each visit and the capture details.' },
       { title: 'Your own files', body: 'GeoTIFF, LAS, LAZ, E57, PLY, OBJ, GLB, photos, video or PDF, up to 5 GB a file, marked as imported.' },
     ],
-    plan: 'Visits are priced per visit, or per site each month on a plan. Mapped plans add a one-time setup. CAD, plus HST.',
+    plan: 'Visits are priced per visit, or per site each month on a plan. Mapped plans add a one-time setup. CAD, plus tax.',
     faqs: [
       { q: 'Does a report certify completion or quantities?', a: 'No. Reports are visual documentation of site conditions, not a cost, quantity or completion certification. Each report says so.' },
       { q: 'Do readers need an account?', a: 'No. Share a PDF or a read-only link that expires.' },
