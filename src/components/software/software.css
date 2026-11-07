@@ -331,3 +331,15 @@ html[data-theme="dark"] .sc-save-v{color:var(--brick);}
 .sc-row-s em{font-style:normal;font-size:11.5px;color:var(--inkMute);margin:0 2px 0 4px;padding:1px 5px;border:1px solid var(--hairStrong);border-radius:0;white-space:nowrap;}
 .sc-part{white-space:nowrap;margin-right:6px;}
 .sc-row > div:first-child{min-width:0;flex:1 1 auto;}.sc-row-s{display:flex;flex-wrap:wrap;column-gap:0;}
+/* "How we work this out": one small square +/- disclosure under the calculator */
+.sw-how{margin-top:16px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);}
+.sw-how summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;cursor:pointer;font-size:14px;font-weight:500;color:var(--ink);}
+.sw-how summary::-webkit-details-marker{display:none;}
+.sw-how summary::after{content:"";flex:none;width:20px;height:20px;box-sizing:border-box;border:1px solid var(--hairStrong);border-radius:0;
+  background:linear-gradient(var(--ink),var(--ink)) center/10px 1.5px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1.5px 10px no-repeat;}
+.sw-how[open] summary::after{background:linear-gradient(var(--ink),var(--ink)) center/10px 1.5px no-repeat;border-color:var(--ink);}
+.sw-how summary:hover::after{border-color:var(--ink);}
+.sw-how summary:focus-visible{outline:2px solid var(--brick);outline-offset:2px;}
+.sw-how ul{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:6px;}
+.sw-how li{font-size:14px;line-height:1.5;color:var(--inkSoft);max-width:64ch;}
+.sw-how a{color:var(--ink);text-decoration:underline;text-underline-offset:2px;}

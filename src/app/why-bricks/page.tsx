@@ -8,8 +8,6 @@ import ModuleGrid from '@/components/software/ModuleGrid'
 import { SOFTWARE_PLANS } from '@/lib/catalog'
 import { PER_VISIT, PLANS as SITE_PLANS } from '@/lib/commercial'
 import { OS_LOGIN } from '@/lib/brand'
-import { HELP_URL } from '@/lib/nav'
-import { TODAY_PER_VISIT } from '@/lib/market-rates'
 import { OG_IMAGE } from '@/lib/og'
 import '@/components/software/software.css'
 
@@ -36,8 +34,8 @@ const SITE = {
 }
 
 const FAQS = [
-  { q: 'Where do the calculator’s numbers come from?', a: 'From you. Every input is your own figure, and the starting values are examples you should replace. The only fixed numbers are Bricks’ own prices, taken from the same price list the checkout uses.' },
-  { q: 'Why no industry averages?', a: 'Every business coordinates differently, so we don’t quote an average. Your own numbers are a better guide than anyone else’s.' },
+  { q: 'Where do the calculator’s numbers come from?', a: 'Bricks prices come from the same price list the checkout uses. The starting “today” prices for builders are the middle of published GTA and Ontario rates. Everything else is an example for you to replace.' },
+  { q: 'Why not use averages for my time?', a: 'Every business coordinates differently, so hours and the share Bricks takes off your plate are yours to set. Your own numbers are a better guide than anyone else’s.' },
   { q: 'Does it include the cost of media?', a: 'No. Listing media is priced separately and isn’t counted. For builders, the calculator compares what you pay per visit today with Bricks’ visit and plan prices.' },
   { q: 'What if the result is negative?', a: 'Then Bricks may cost you more than what you do today, and the calculator shows that. It still keeps everything in one place with dated records, which may or may not matter to you.' },
 ]
@@ -70,21 +68,16 @@ export default function WhyBricksPage() {
       <section className="cm-sec rvl" id="calculator" aria-label="Savings calculator">
         <Head title="Your monthly saving with Bricks." lede="What you spend today, against the Bricks price. Change any number to yours." />
         <SavingsCalculator plans={PLAN_PRICES} site={SITE} />
+        <details className="sw-how">
+          <summary>How we work this out</summary>
+          <ul>
+            <li>Bricks prices come from our <Link href="/pricing">price list</Link>, CAD before tax.</li>
+            <li>The starting “today” prices are the middle of published GTA and Ontario rates.</li>
+            <li>Every other number is an example. Change it to yours.</li>
+          </ul>
+        </details>
       </section>
 
-      <section className="cm-sec rvl" aria-label="Assumptions and sources">
-        <Head title="Assumptions and sources." />
-        <ul className="sw-sources">
-          <li><strong>Bricks software prices:</strong> Clay free, Keystone $49, Marble $99 and Diamond $149 a month, CAD before tax, from the Bricks price list on <Link href="/pricing">pricing</Link>.</li>
-          <li><strong>Site Progress prices:</strong> a progress visit ${PER_VISIT[0].price}, a mapped capture ${PER_VISIT[1].price.toLocaleString('en-CA')} and a one-time ${PER_VISIT[2].price} mapping setup, or monthly plans per site, from <a href={`${HELP_URL}/builders/site-progress-pricing`}>Site Progress pricing</a>.</li>
-          <li><strong>What you pay today:</strong> the builder example starts at ${TODAY_PER_VISIT.visual} a progress visit and ${TODAY_PER_VISIT.mapped.toLocaleString('en-CA')} a mapped capture, the middle of published GTA and Ontario one-off prices checked in October and November 2026. Replace them with your own quotes.</li>
-          <li><strong>Time saved:</strong> your hours multiplied by the share you set. Bricks doesn’t supply a percentage. Set it to what you believe, including zero.</li>
-          <li><strong>Value of time:</strong> your own hourly figure.</li>
-          <li><strong>Tools replaced:</strong> only what you would actually cancel. Bricks includes a CRM from Keystone, e-sign from Keystone, forms from Marble, and a listing site and launch kit on every plan.</li>
-          <li><strong>Workflow counts:</strong> tallied from the example steps on this page, not measured from customers.</li>
-          <li><strong>External benchmarks:</strong> none used.</li>
-        </ul>
-      </section>
 
       <section className="cm-sec rvl" aria-label="The parts of Bricks">
         <Head title="What’s doing the work." link={{ href: '/platform', label: 'All of the software' }} />

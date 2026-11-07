@@ -8,7 +8,7 @@ import { agentSavings, builderSavings } from '@/lib/savings-math'
 /**
  * Savings calculator. Every input is the visitor's own number; the defaults are labelled examples.
  * Bricks prices are passed in from lib/catalog and lib/commercial (the same values Stripe charges),
- * never typed here. No industry benchmarks are used.
+ * never typed here. The builder "today" starting prices are the middle of published rates (lib/market-rates).
  */
 
 export type PlanPrice = { id: string; name: string; monthly: number }
