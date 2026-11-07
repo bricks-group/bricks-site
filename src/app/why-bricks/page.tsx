@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import RevealObserver from '@/components/RevealObserver'
 import { Head, Close } from '@/components/calm/Calm'
-import JobCompare from '@/components/software/JobCompare'
+import EaseCompare from '@/components/software/EaseCompare'
 import SavingsCalculator from '@/components/software/SavingsCalculator'
 import ModuleGrid from '@/components/software/ModuleGrid'
 import { SOFTWARE_PLANS } from '@/lib/catalog'
@@ -51,8 +51,8 @@ export default function WhyBricksPage() {
 
       <section className="hero hero-tight sw-hero">
         <div className="wrap">
-          <h1>The same work, with fewer moving parts.</h1>
-          <p className="sub">Side by side, job by job. Then work out your own savings, with Bricks’ real prices.</p>
+          <h1>Easier. At market prices.</h1>
+          <p className="sub">The same job with and without Bricks, priced against published rates. Then try your own numbers.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={OS_LOGIN}>Try Bricks free</a>
             <a className="btn btn-sec" href="#calculator">Work out your savings</a>
@@ -61,8 +61,8 @@ export default function WhyBricksPage() {
       </section>
 
       <section className="cm-sec sw-first" aria-label="With and without Bricks">
-        <Head title="One job per row." lede="The same work, with and without Bricks." />
-        <JobCompare />
+        <Head title="Bricks makes it easy." lede="Half the steps, at market prices." />
+        <EaseCompare />
       </section>
 
       <section className="cm-sec rvl" id="calculator" aria-label="Savings calculator">
@@ -88,9 +88,9 @@ export default function WhyBricksPage() {
         <ModuleGrid />
       </section>
 
-      <section className="cm-sec rvl" aria-label="Frequently asked questions">
+      <section className="cm-sec rvl faq-split" aria-label="Frequently asked questions">
         <Head title="Common questions." />
-        <div className="faq sw-faq">
+        <div className="faq faq-home">
           {FAQS.map((f) => (
             <details key={f.q} className="qa"><summary>{f.q}</summary><p>{f.a}</p></details>
           ))}

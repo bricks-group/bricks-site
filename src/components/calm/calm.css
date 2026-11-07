@@ -89,3 +89,21 @@ html[data-theme="dark"] .ci-row{--ci-ink:#fff;--ci-filter:brightness(0) invert(1
 /* Homepage FAQ: keep the accordion and heading centered together. */
 .home-faq .faq-home{margin-inline:auto;}
 .home-faq .cm-head{justify-content:center;text-align:center;}
+
+/* Closing band: full-bleed, content on the nav/footer container edges */
+.cm-close{max-width:none;width:100%;margin-left:0;margin-right:0;
+  padding-left:calc(max(0px,(100% - var(--container,1200px)) / 2) + var(--gutter));
+  padding-right:calc(max(0px,(100% - var(--container,1200px)) / 2) + var(--gutter));
+  padding-top:clamp(56px,7vw,88px);padding-bottom:clamp(56px,7vw,88px);}
+@media (min-width:900px){.cm-close{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:48px;}.cm-close h2{max-width:22ch;}}
+/* FAQ: two columns on the container, square +/- markers */
+@media (min-width:900px){
+  .cm-sec.faq-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);column-gap:48px;align-items:start;}
+  .cm-sec.faq-split > .cm-head{margin:0;justify-content:flex-start;text-align:left;}
+}
+.cm-sec.faq-split .faq{max-width:none;margin-inline:0;}
+.faq-split .faq-home summary::after{content:"";flex:none;width:20px;height:20px;border:1px solid var(--hairStrong);border-radius:0;
+  background:linear-gradient(var(--ink),var(--ink)) center/10px 1.5px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1.5px 10px no-repeat;}
+.faq-split .faq-home details[open] summary::after{background:linear-gradient(var(--ink),var(--ink)) center/10px 1.5px no-repeat;border-color:var(--ink);}
+.faq-split .faq-home summary:hover::after{border-color:var(--ink);}
+.faq-split .faq-home summary:focus-visible{outline:2px solid var(--brick);outline-offset:-2px;}

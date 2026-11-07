@@ -104,9 +104,9 @@ export default async function SoftwareModulePage({ params }: Props) {
         <p className="sw-plan">{m.plan} <Link href="/pricing">See pricing</Link>.</p>
       </section>
 
-      <section className="cm-sec rvl" aria-label="Frequently asked questions">
+      <section className="cm-sec rvl faq-split" aria-label="Frequently asked questions">
         <Head title="Common questions." />
-        <div className="faq sw-faq">
+        <div className="faq faq-home">
           {m.faqs.map((f) => (
             <details key={f.q} className="qa">
               <summary>{f.q}</summary>

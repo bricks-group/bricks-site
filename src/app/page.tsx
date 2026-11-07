@@ -18,7 +18,7 @@ import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import HomeServicesBand from '@/components/home-services/HomeServicesBand'
 import ModuleGrid from '@/components/software/ModuleGrid'
 import WhoFor from '@/components/software/WhoFor'
-import JobCompare from '@/components/software/JobCompare'
+import EaseCompare from '@/components/software/EaseCompare'
 import '@/components/software/software.css'
 import { OG_IMAGE } from '@/lib/og'
 
@@ -161,8 +161,8 @@ export default function Home() {
       </div>
 
       <section className="cm-sec rvl" aria-label="With and without Bricks">
-        <Head title="With and without Bricks." lede="One job per row." link={{ href: '/why-bricks#calculator', label: 'Work out your savings' }} />
-        <JobCompare />
+        <Head title="Bricks makes it easy." lede="Half the steps, at market prices." link={{ href: '/why-bricks#calculator', label: 'Work out your savings' }} />
+        <EaseCompare />
       </section>
 
       <IntegrationsRow />
@@ -187,7 +187,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="cm-sec rvl home-faq" id="faq" aria-label="Frequently asked questions">
+      <section className="cm-sec rvl faq-split" id="faq" aria-label="Frequently asked questions">
         <Head title="Common questions." />
         <div className="faq faq-home">
           {faqs.map((f) => (

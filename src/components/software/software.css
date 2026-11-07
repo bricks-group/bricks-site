@@ -203,3 +203,46 @@ html[data-theme="dark"] .sc-res:last-child dd{color:var(--brick);}
 .who-tight .who-card{transition:background-color 160ms ease;}
 @media (hover:hover) and (pointer:fine){.who-tight .who-card:hover{background:var(--paperDeep);}}
 @media (max-width:600px){.who-grid.who-tight{grid-template-columns:1fr 1fr;}.who-grid.who-tight .who-card{padding:16px 14px;}.who-tight .who-card h3{font-size:16px;}.who-tight .who-line{font-size:13px;}.who-tight .who-go{font-size:13px;}}
+/* EaseCompare: steps (the takeaway) + price bars */
+.ec{margin-top:28px;}
+.ec-tabs{max-width:560px;border:1px solid var(--hairStrong);border-bottom:0;}
+.ec-panel{border:1px solid var(--hairStrong);display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);}
+.ec-flows{display:grid;grid-template-columns:1fr 1fr;}
+.ec-k{margin:0 0 6px;font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--inkMute);}
+.ec-n{margin:0 0 18px;font-size:clamp(48px,6vw,72px);font-weight:500;letter-spacing:-.04em;line-height:1;}
+.ec-n span{font-size:15px;letter-spacing:0;font-weight:400;margin-left:8px;}
+.ec-without{padding:28px;color:var(--inkMute);}
+.ec-without .ec-n{color:var(--inkMute);}
+.ec-without ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
+.ec-without li{font-size:13px;padding:6px 10px;border:1px dashed var(--hairStrong);color:var(--inkSoft);}
+.ec-with{padding:28px;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;}
+.ec-with .ec-k{color:color-mix(in srgb,var(--paper) 65%,transparent);}
+.ec-with ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;}
+.ec-with li{display:flex;gap:12px;align-items:baseline;font-size:16px;font-weight:500;line-height:1.35;padding:10px 0;border-top:1px solid color-mix(in srgb,var(--paper) 16%,transparent);}
+.ec-i{flex:none;width:22px;height:22px;display:inline-grid;place-items:center;background:var(--brick);color:#fff;font-size:12px;font-family:'JetBrains Mono',ui-monospace,monospace;transform:translateY(-1px);}
+.ec-one{margin:auto 0 0;padding-top:16px;font-size:14px;color:color-mix(in srgb,var(--paper) 75%,transparent);}
+.ec-prices{padding:28px;border-left:1px solid var(--hairStrong);display:flex;flex-direction:column;gap:22px;}
+.ec-price-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.ec-price-job{font-size:15px;font-weight:500;color:var(--ink);display:flex;flex-direction:column;}
+.ec-price-job span{font-size:12px;font-weight:400;color:var(--inkMute);}
+.ec-price-fig{font-size:12px;color:var(--inkMute);white-space:nowrap;}
+.ec-price-fig b{font-size:24px;font-weight:500;color:var(--ink);letter-spacing:-.02em;margin-right:4px;}
+.ec-track{position:relative;height:10px;margin:12px 0 8px;background:var(--hair);}
+.ec-band{position:absolute;top:0;bottom:0;background:var(--hairStrong);}
+.ec-dot{position:absolute;top:-5px;width:4px;height:20px;margin-left:-2px;background:var(--brick);}
+.ec-price-sub{margin:0;font-size:12px;color:var(--inkMute);}
+.ec-price-sub sup{margin-left:2px;}.ec-price-sub sup a{color:var(--inkMute);}
+.ec-legend{margin:auto 0 0;font-size:11.5px;color:var(--inkMute);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.ec-legend-band{width:18px;height:8px;background:var(--hairStrong);}
+.ec-legend-dot{width:4px;height:14px;background:var(--brick);margin-left:10px;}
+.ec-sources{list-style:none;margin:14px 0 0;padding:0;font-size:12px;line-height:1.6;color:var(--inkMute);counter-reset:src;}
+.ec-sources li{counter-increment:src;}
+.ec-sources li::before{content:counter(src) '  ';font-family:'JetBrains Mono',ui-monospace,monospace;}
+.ec-sources li.ec-sources-note{counter-increment:none;margin-top:4px;}
+.ec-sources li.ec-sources-note::before{content:'';}
+.ec-sources a{color:var(--inkSoft);}
+.ec-panel > *{transition:opacity 200ms cubic-bezier(.23,1,.32,1);}
+@starting-style{.ec-panel > *{opacity:0;}}
+@media (max-width:1000px){.ec-panel{grid-template-columns:1fr;}.ec-prices{border-left:0;border-top:1px solid var(--hairStrong);}}
+@media (max-width:600px){.ec-flows{grid-template-columns:1fr;}.ec-without,.ec-with,.ec-prices{padding:20px;}.ec-tabs{max-width:none;}.ec-n{margin-bottom:12px;}}
+.ec-short{display:none;}@media (max-width:600px){.ec-full{display:none;}.ec-short{display:inline;}}

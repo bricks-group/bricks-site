@@ -79,7 +79,7 @@ export function Close({ title, href, label, external, primary = true }: { title:
   return (
     <section className="cm-close closer" aria-label={label}>
       <h2>{title}</h2>
-      {external ? <a className={cls} href={href}>{label}</a> : <Link className={cls} href={href}>{label}</Link>}
+      <div className="cm-close-cta">{external ? <a className={cls} href={href}>{label}</a> : <Link className={cls} href={href}>{label}</Link>}</div>
     </section>
   )
 }
