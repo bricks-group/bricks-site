@@ -203,7 +203,7 @@ function DetailPanel({ selected, phases }: { selected: Selected; phases: DevPhas
       {a.description ? <p style={{ fontSize: 13, color: 'var(--inkSoft)', marginTop: 8 }}>{a.description}</p> : null}
       {a.media_url ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={a.media_url} alt={a.name} style={{ width: '100%', borderRadius: 4, marginTop: 10 }} />
+        <img src={a.media_url} alt={a.name} style={{ width: '100%', borderRadius: 2, marginTop: 10 }} />
       ) : null}
     </div>
   )

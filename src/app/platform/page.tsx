@@ -8,10 +8,12 @@ import { IntegrationsList } from '@/components/calm/Integrations'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import { COMPANION_URL, OS_LOGIN } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
+import ModuleGrid from '@/components/software/ModuleGrid'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Bricks software — web and mobile',
-  description: 'The system that brings it all together: deals, CRM, e-sign, MLS prep and site files on the web and on your phone, with media and Site Progress booked inside.',
+  description: 'The system that brings it all together: deals, listings, booking and vendor dispatch, updates, documents, teams, payments and integrations on the web and on your phone, with media and Site Progress booked inside.',
   alternates: { canonical: '/platform' },
 }
 
@@ -27,9 +29,10 @@ export default function PlatformPage() {
       <section className="hero hero-tight">
         <div className="wrap">
           <h1>One system, from site to sale.</h1>
-          <p className="sub">Deals, CRM, e-sign, MLS® prep and site files, on the web and on your phone. Media and Site Progress are booked inside.</p>
+          <p className="sub">Deals, listings, vendors, documents, team and payments, on the web and on your phone. Media and Site Progress are booked inside.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={OS_LOGIN}>Try Bricks free</a>
+            <Link className="cm-link" href="/why-bricks">With and without Bricks</Link>
           </div>
         </div>
       </section>
@@ -44,6 +47,11 @@ export default function PlatformPage() {
             <ProductStage />
           </div>
         </div>
+      </section>
+
+      <section className="cm-sec rvl" id="modules" aria-label="Parts of the software">
+        <Head title="Every part, in depth." lede="What each part replaces, how it works and what it costs." link={{ href: '/why-bricks', label: 'With and without Bricks' }} />
+        <ModuleGrid />
       </section>
 
       <section className="prod-row rvl" aria-label="Companion on your phone">

@@ -8,6 +8,7 @@ import {
   VISIT_PACKAGING,
 } from '@/lib/brand'
 import { OFFICE_PLANS, SOFTWARE_PLANS } from '@/lib/catalog'
+import { SOFTWARE_MODULES } from '@/lib/software-modules'
 import { BRICKS_DEFINITION, LISTING_MEDIA_DESCRIPTION, VIRTUAL_VISIT_DESCRIPTION, SITE_PROGRESS_DESCRIPTION } from '@/lib/public-content'
 import {
   DRONE_RATE,
@@ -275,7 +276,8 @@ export function faqPageSchema(faqs: readonly { q: string; a: string }[]) {
 }
 
 export const PAGE_NAMES: Record<string, string> = {
-  '/about': 'About', '/pricing': 'Pricing', '/platform': 'Software', '/media': 'Listing media',
+  '/about': 'About', '/pricing': 'Pricing', '/platform': 'Software', '/why-bricks': 'With and without Bricks',
+  ...Object.fromEntries(SOFTWARE_MODULES.map((m) => [`/software/${m.slug}`, m.name])), '/media': 'Listing media',
   '/builders': 'Site Progress for builders', '/investors': 'Investors', '/agents': 'Agents',
   '/brokerage': 'Brokerages', '/teams': 'Teams', '/reits': 'REITs', '/commercial': 'Commercial',
   '/property-managers': 'Property managers', '/book': 'Book listing media',
@@ -309,6 +311,7 @@ export function siteBreadcrumbItems(pathname: string) {
   if (!name) return []
   const parent = pathname.startsWith('/blog/') ? '/blog'
     : pathname.startsWith('/work-with-bricks/') ? '/work-with-bricks'
-    : pathname.startsWith('/real-estate-photography/') ? '/real-estate-photography' : undefined
+    : pathname.startsWith('/real-estate-photography/') ? '/real-estate-photography'
+    : pathname.startsWith('/software/') ? '/platform' : undefined
   return [{ name: 'Home', path: '/' }, ...(parent ? [{ name: PAGE_NAMES[parent], path: parent }] : []), { name, path: pathname }]
 }

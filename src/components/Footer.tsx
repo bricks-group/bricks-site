@@ -5,6 +5,7 @@ import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
 import { LEGAL_NAME, SOCIAL_PROFILES } from '@/lib/schema'
 import BrandMark from '@/components/BrandMark'
 import ThemeToggle from '@/components/ThemeToggle'
+import { SOFTWARE_MODULES, moduleHref } from '@/lib/software-modules'
 
 export default function Footer({ children }: { children?: ReactNode }) {
   return (
@@ -21,9 +22,16 @@ export default function Footer({ children }: { children?: ReactNode }) {
           </p>
         </div>
         <div className="foot-col">
+          <h2 className="foot-heading">Software</h2>
+          <div className="foot-links">
+            <Link href="/platform">Overview</Link>
+            {SOFTWARE_MODULES.map((m) => <Link key={m.slug} href={moduleHref(m.slug)}>{m.short}</Link>)}
+            <Link href="/why-bricks">With and without Bricks</Link>
+          </div>
+        </div>
+        <div className="foot-col">
           <h2 className="foot-heading">Product</h2>
           <div className="foot-links">
-            <Link href="/platform">Software</Link>
             <Link href="/builders">Site Progress</Link>
             <Link href="/media">Listing media</Link>
             <Link href="/real-estate-photography">Listing photos</Link>
