@@ -67,7 +67,7 @@ export default function DronePhotographyPage() {
           title: 'Recent aerial work.',
           body: (
             <div className="landing-grid">
-              {AERIALS.map((p) => <Image key={p.src} src={p.src} alt={p.alt} width={640} height={480} loading="lazy" />)}
+              {AERIALS.map((p) => <Image key={p.src} src={p.src} alt={p.alt} width={1200} height={900} quality={90} sizes="(max-width:900px) 100vw, 33vw" loading="lazy" />)}
             </div>
           ),
           note: <><Link href="/gallery">See more work</Link> · Builders tracking a site over time should look at <Link href="/drone-mapping">drone mapping</Link>.</>,

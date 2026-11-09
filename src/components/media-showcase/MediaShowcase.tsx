@@ -77,7 +77,7 @@ export default function MediaShowcase() {
 
         <div className="ms-stage">
           <div className={tab === 'photos' ? 'ms-panel is-on' : 'ms-panel'} id="ms-panel-photos" role="tabpanel" aria-labelledby="ms-tab-photos" hidden={tab !== 'photos'}>
-            <Image src="/media/work/01.jpg" alt="Detached home exterior" fill sizes="(max-width:900px) 100vw, 1100px" />
+            <Image src="/media/work/01.jpg" alt="Detached home exterior" fill quality={90} sizes="(max-width:900px) 100vw, 1100px" />
           </div>
 
           <div className={tab === 'ba' ? 'ms-panel is-on' : 'ms-panel'} id="ms-panel-ba" role="tabpanel" aria-labelledby="ms-tab-ba" hidden={tab !== 'ba'}>
@@ -102,8 +102,8 @@ export default function MediaShowcase() {
             >
               {seen.ba ? (
                 <>
-                  <Image className="ms-ba-img" src={PAIRS[pair].after} alt={`${PAIRS[pair].k} — after`} fill loading="eager" sizes="(max-width:900px) 100vw, 1100px" />
-                  <Image className="ms-ba-img" src={PAIRS[pair].before} alt={`${PAIRS[pair].k} — before`} fill loading="eager" sizes="(max-width:900px) 100vw, 1100px" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
+                  <Image className="ms-ba-img" src={PAIRS[pair].after} alt={`${PAIRS[pair].k} — after`} fill quality={90} loading="eager" sizes="(max-width:900px) 100vw, 1100px" />
+                  <Image className="ms-ba-img" src={PAIRS[pair].before} alt={`${PAIRS[pair].k} — before`} fill quality={90} loading="eager" sizes="(max-width:900px) 100vw, 1100px" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
                 </>
               ) : null}
               <div className="ms-handle" style={{ left: `${pos}%` }} aria-hidden="true"><span className="ms-knob">↔</span></div>

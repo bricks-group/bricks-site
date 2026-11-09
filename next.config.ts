@@ -2,8 +2,13 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
+    // Allow q=90 for listing photos. Default Next 16 only permits 75, which softens
+    // gallery and showcase shots. Prefer static picture/srcset for new photos to
+    // stay off the Vercel image-transform quota when we can.
+    qualities: [75, 90],
     remotePatterns: [
       { protocol: 'https', hostname: 'rbywjnnctjglhcdemnnj.supabase.co' },
+      { protocol: 'https', hostname: 'images.brxs.ca' },
     ],
   },
   async headers() {

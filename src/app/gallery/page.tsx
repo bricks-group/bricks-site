@@ -69,7 +69,7 @@ function Grid({ images }: { images: Shot[] }) {
     <div className="work-grid">
       {images.map((img) => (
         <div key={img.src} className="work-card">
-          <div className="img"><Image src={img.src} alt={img.alt} width={720} height={540} loading="lazy" /></div>
+          <div className="img"><Image src={img.src} alt={img.alt} width={1200} height={900} quality={90} sizes="(max-width:900px) 100vw, 33vw" loading="lazy" /></div>
         </div>
       ))}
     </div>

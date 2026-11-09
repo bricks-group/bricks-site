@@ -82,7 +82,7 @@ export default function RealEstatePhotographyPage() {
         <div className="rep-grid">
           {samples.map((p) => (
             <div key={p.src} className="rvl">
-              <Image src={p.src} alt={p.alt} width={640} height={480} loading="lazy" />
+              <Image src={p.src} alt={p.alt} width={1200} height={900} quality={90} sizes="(max-width:900px) 100vw, 33vw" loading="lazy" />
             </div>
           ))}
         </div>
