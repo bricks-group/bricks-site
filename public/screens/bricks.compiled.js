@@ -11,7 +11,7 @@
   } /*EDITMODE-END*/;
 
   // Real Bricks listing photos, reused as sample thumbnails in mockups.
-  const SB_IMG = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/';
+  const SB_IMG = 'https://images.brxs.ca/';
 
   // Shared primitives — used by all screen files. Lean tokens + helpers.
   const T = {

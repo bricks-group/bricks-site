@@ -21,7 +21,7 @@ const PAIRS = [
   { k: 'Twilight', before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png' },
 ] as const
 
-const FILM_SRC = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4'
+const FILM_SRC = 'https://images.brxs.ca/Video/bid.mp4'
 
 export default function MediaShowcase() {
   const [tab, setTab] = useState<Tab>('photos')
