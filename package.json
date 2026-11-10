@@ -9,7 +9,9 @@
     "start": "next start",
     "compile:os": "node scripts/compile-os.js",
     "test": "npx --yes tsx --test src/lib/cpu-cache.test.ts src/lib/ai-seo.test.ts src/lib/schedule.test.ts src/lib/schedule-twilight.test.ts src/lib/terms-version.test.ts src/lib/demo-invite.test.ts src/lib/cutout-weather.test.ts src/middleware.test.ts src/lib/site-session.test.ts src/lib/coverage-gta-travel.test.ts src/lib/visit-staging-pricing.test.ts src/lib/book-prefill.test.ts src/lib/book-recommend.test.ts src/lib/form-labels-calm.test.ts src/lib/quote-lines.test.ts src/lib/launch-audit.test.ts src/lib/clientele-pages.test.ts src/lib/demo-personas.test.ts src/lib/closers.test.ts src/lib/property-checkout.test.ts src/lib/contact-mail.test.ts src/lib/help/help.test.ts src/lib/help/feedback.test.ts src/lib/vendor-trades.test.ts src/lib/help/assistant/assistant.test.ts src/lib/support/inbound.test.ts src/lib/support/account-signin.test.ts src/lib/agent-identity.test.ts src/lib/property-tax.test.ts src/lib/savings-math.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "preview:cf": "opennextjs-cloudflare build && wrangler deploy",
+    "build:cf": "opennextjs-cloudflare build"
   },
   "repository": {
     "type": "git",
@@ -26,9 +28,16 @@
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@babel/preset-react": "^7.29.7",
+    "@opennextjs/cloudflare": "^1.20.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.159.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261109.1": true,
+    "sharp@0.34.5": true
   }
 }

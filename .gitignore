@@ -13,3 +13,5 @@ build/
 .env.*
 !.env.example
 .vercel
+.open-next
+.wrangler
