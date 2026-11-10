@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { track } from '@vercel/analytics'
 import { PROPERTY_TYPES, QUOTE_CLIENT_TYPES, TIMING_OPTIONS, TRADES, tradeBySlug, type TradeSlug } from '@/lib/services'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -67,7 +66,6 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
       const r = await fetch('/api/book/service-request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (!r.ok || !j.ok) { setMsg(j.error || 'Could not send. Email help@brxs.ca.'); return }
-      try { track('service_quote_request', { trade: slug, client: body.clientType }) } catch { /* best-effort */ }
       setSent(email)
     } catch {
       setMsg('Network error. Please email help@brxs.ca.')

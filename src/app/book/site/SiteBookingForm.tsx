@@ -5,7 +5,6 @@ import { TERMS_VERSION } from '@/lib/terms-version'
 
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { track } from '@vercel/analytics'
 import BricksLoader from '@/components/BricksLoader'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
@@ -17,8 +16,8 @@ const PLAN_KEY = 'bricks-site-booking-plan'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type TrackProps = Record<string, string | number | boolean | null | undefined>
-function evt(name: string, props?: TrackProps) {
-  try { track(name, props) } catch { /* analytics is best-effort */ }
+function evt(_name: string, _props?: TrackProps) {
+  /* Vercel analytics removed */
 }
 
 const SETUP = PER_VISIT.find((x) => x.key === 'setup')!.price

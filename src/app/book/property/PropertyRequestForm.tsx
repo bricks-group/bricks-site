@@ -3,7 +3,6 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { track } from '@vercel/analytics'
 import { CLIENT_LABEL, SERVICES_FOR, isPropertyClient, type PropertyClient } from '@/lib/clientServices'
 import { signupUrl } from '@/lib/brand'
 
@@ -69,7 +68,6 @@ export default function PropertyRequestForm() {
       const r = await fetch('/api/book/property-request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (!r.ok || !j.ok) { setMsg(j.error || 'Could not send. Email help@brxs.ca.'); return }
-      try { track('property_request', { kind, services: chosen.map((s) => s.key).join(',') }) } catch { /* best-effort */ }
       setSent(email)
     } catch {
       setMsg('Network error. Please email help@brxs.ca.')

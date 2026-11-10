@@ -3,7 +3,6 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { track } from '@vercel/analytics'
 import { CLIENT_LABEL, isPropertyClient, type PropertyClient } from '@/lib/clientServices'
 import { ONE_OFFS, ONE_OFFS_FOR, addDays, checkCheckout, checkoutBody, money, tierForSqft, type CheckoutFields } from '@/lib/propertyCheckout'
 import { signupUrl } from '@/lib/brand'
@@ -86,7 +85,6 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
       // Not configured on this deploy (no key, or the API has no checkout yet): fall back to the request form.
       if (r.status === 503 || r.status === 404 || r.status === 405) { onRequest(); return }
       if (!r.ok || !j.url) { setMsg(j.error || 'Checkout failed. Email help@brxs.ca.'); return }
-      try { track('property_checkout', { kind, service: f.service_key }) } catch { /* best-effort */ }
       window.location.assign(j.url)
     } catch {
       setMsg('Network error. Please email help@brxs.ca.')

@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { track } from '@vercel/analytics'
 
 type TrackProps = Record<string, string | number | boolean | null | undefined>
-function evt(name: string, props?: TrackProps) {
-  try { track(name, props) } catch { /* analytics is best-effort */ }
+function evt(_name: string, _props?: TrackProps) {
+  /* Vercel analytics removed */
 }
 
 export default function NewsletterPopup() {

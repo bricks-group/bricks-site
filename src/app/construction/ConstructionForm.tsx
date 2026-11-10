@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { track } from '@vercel/analytics'
 import BricksLoader from '@/components/BricksLoader'
 
 type TrackProps = Record<string, string | number | boolean | null | undefined>
-function evt(name: string, props?: TrackProps) {
-  try { track(name, props) } catch { /* analytics is best-effort */ }
+function evt(_name: string, _props?: TrackProps) {
+  /* Vercel analytics removed */
 }
 
 const formCss = `

@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { track } from '@vercel/analytics'
 
 // Best-effort funnel analytics via Vercel Web Analytics. Never throws into the flow.
 type TrackProps = Record<string, string | number | boolean | null | undefined>
-function evt(name: string, props?: TrackProps) {
-  try { track(name, props) } catch { /* analytics is best-effort */ }
+function evt(_name: string, _props?: TrackProps) {
+  /* Vercel analytics removed */
 }
 
 export default function ContactForm() {

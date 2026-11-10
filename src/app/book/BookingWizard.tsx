@@ -10,7 +10,6 @@ import { type BookSlot, WORK_END, WORK_START, buildDaySlots, buildTwilightSlots,
 import Link from 'next/link'
 import LegalDocSheet from '@/components/legal/LegalDocSheet'
 import type { LegalDocKey } from '@/lib/legal-docs'
-import { track } from '@vercel/analytics'
 import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
 import { type BookPrefill, bookTypeOption, canSkipToPackages, readBookPrefill, readHandoff } from '@/lib/book-prefill'
@@ -158,8 +157,8 @@ function esc(s: string) {
 }
 
 type TrackProps = Record<string, string | number | boolean | null | undefined>
-function evt(name: string, props?: TrackProps) {
-  try { track(name, props) } catch { /* analytics is best-effort */ }
+function evt(_name: string, _props?: TrackProps) {
+  /* Vercel analytics removed */
 }
 
 export default function BookingWizard() {

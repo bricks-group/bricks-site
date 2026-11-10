@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Analytics } from '@vercel/analytics/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SiteBreadcrumbs from '@/components/SiteBreadcrumbs'
@@ -84,7 +83,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <MotionLayer />
           <Script src="/assets/protect.js" strategy="afterInteractive" />
         </ChromeGate>
-        <Analytics />
       </body>
     </html>
   )
