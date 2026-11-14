@@ -1,0 +1,5 @@
+# Hashed self-hosted media. Workers default is max-age=0, must-revalidate;
+# next.config headers do not apply to the Assets binding (media/ is also
+# outside the middleware matcher).
+/media/v/*
+  Cache-Control: public, max-age=31536000, immutable
