@@ -2,7 +2,6 @@
 
 import { FormEvent, Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import BrandMark from '@/components/BrandMark'
 
 function GateForm() {
   const router = useRouter()
@@ -58,7 +57,6 @@ function GateForm() {
             justifyContent: 'center',
           }}
         >
-          <BrandMark />
           <span className="wordmark">bricks</span>
         </div>
         <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

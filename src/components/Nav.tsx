@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from '@/components/SiteLink'
 import { usePathname } from 'next/navigation'
-import BrandMark from '@/components/BrandMark'
 import { OS_LOGIN, OS_URL } from '@/lib/brand'
 import { clearHintCookies, osLogoutUrl } from '@/lib/site-session'
 import { HELP_URL, audienceLinks, softwareGroups, type NavItem } from '@/lib/nav'
@@ -88,7 +87,6 @@ export default function Nav() {
         <div className="nav">
           <div className="brand-cluster">
             <Link href="/" className="brand" aria-label="Bricks — home">
-              <BrandMark />
               <span className="wordmark">bricks</span>
             </Link>
             <span className="nav-flag">Canada</span>
@@ -195,7 +193,6 @@ export default function Nav() {
       >
         <div className="drawer-head">
           <Link href="/" className="brand" aria-label="Bricks — home" onClick={() => setOpen(false)}>
-            <BrandMark />
             <span className="wordmark">bricks</span>
           </Link>
           <button className="drawer-close" aria-label="Close menu" onClick={() => setOpen(false)}>

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import BrandMark from '@/components/BrandMark'
 import BricksLoader from '@/components/BricksLoader'
 import { BookCalendar } from '@/app/book/BookCalendar'
 import type { VisitState } from '@/lib/plan-visit'
@@ -21,7 +20,6 @@ function Shell({ children }: { children: React.ReactNode }) {
     <main className="pv">
       <header className="pv-top">
         <a href="/" className="brand" aria-label="Bricks — home">
-          <BrandMark />
           <span className="wordmark">bricks</span>
         </a>
       </header>
