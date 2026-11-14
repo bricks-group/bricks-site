@@ -16,9 +16,11 @@ const TABS = [
 type Tab = (typeof TABS)[number]['id']
 
 const PAIRS = [
-  { k: 'HDR', before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png' },
-  { k: 'Sky, on request', before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png' },
-  { k: 'Twilight', before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png' },
+  // Pre-sized WebP (scripts/proof-images.mjs): next/image does not resize on Cloudflare, so the
+  // 1.3-9.8 MB source PNGs were served as-is.
+  { k: 'HDR', before: '/media/proof/hdr-before-1408.webp', after: '/media/proof/hdr-after-1408.webp' },
+  { k: 'Sky, on request', before: '/media/proof/sky-before-1408.webp', after: '/media/proof/sky-after-1408.webp' },
+  { k: 'Twilight', before: '/media/proof/twilight-before-1408.webp', after: '/media/proof/twilight-after-1408.webp' },
 ] as const
 
 const FILM_SRC = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4'

@@ -75,6 +75,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* The desk tray is the mobile LCP and is a CSS background, found only after CSS loads. Preload the same files globals.css picks. */}
+      <link rel="preload" as="image" href="/media/paint/os-900.avif" type="image/avif" media="(max-width:700px)" fetchPriority="high" />
+      <link rel="preload" as="image" href="/media/paint/os-1600.avif" type="image/avif" media="(min-width:701px)" fetchPriority="high" />
       <section className="prod-hero" aria-label="Bricks desk">
         <div className="tray tray-os">
           <div className="tray-stage">

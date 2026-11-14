@@ -58,10 +58,19 @@ const industrial: Shot[] = [
   { src: '/media/cre-industrial-3.jpg', alt: 'Industrial site exterior listing photo', t: 'Site' },
 ]
 
+// Pre-sized AVIF/WebP of public/media/proof/*.png (scripts/proof-images.mjs). The PNGs were
+// 1.3-9.8 MB each; React preloaded all six on every page that prefetched /gallery.
+const proof = (slug: string) => ({
+  avif: `/media/proof/${slug}-704.avif 704w, /media/proof/${slug}-1408.avif 1408w`,
+  webp: `/media/proof/${slug}-704.webp 704w, /media/proof/${slug}-1408.webp 1408w`,
+  src: `/media/proof/${slug}-1408.webp`,
+})
+const BA_SIZES = '(max-width:900px) 100vw, 33vw'
+
 const beforeAfter = [
-  { before: '/media/proof/Sky Before.png', after: '/media/proof/Sky After.png', label: 'Sky enhance (on request) before and after' },
-  { before: '/media/proof/HDR Before.png', after: '/media/proof/HDR After.png', label: 'HDR blending before and after' },
-  { before: '/media/proof/Twilight before.png', after: '/media/proof/twilight After.png', label: 'Twilight before and after' },
+  { before: proof('sky-before'), after: proof('sky-after'), label: 'Sky enhance (on request) before and after' },
+  { before: proof('hdr-before'), after: proof('hdr-after'), label: 'HDR blending before and after' },
+  { before: proof('twilight-before'), after: proof('twilight-after'), label: 'Twilight before and after' },
 ]
 
 function Grid({ images }: { images: Shot[] }) {
@@ -120,8 +129,14 @@ export default function GalleryPage() {
                   aria-valuemax={100}
                   aria-valuenow={50}
                 >
-                  <img className="ba-after" src={p.after} alt={`${name} — after`} />
-                  <img className="ba-before" src={p.before} alt={`${name} — before`} />
+                  <picture>
+                    <source type="image/avif" srcSet={p.after.avif} sizes={BA_SIZES} />
+                    <img className="ba-after" src={p.after.src} srcSet={p.after.webp} sizes={BA_SIZES} width={1408} height={768} alt={`${name} — after`} loading="lazy" decoding="async" />
+                  </picture>
+                  <picture>
+                    <source type="image/avif" srcSet={p.before.avif} sizes={BA_SIZES} />
+                    <img className="ba-before" src={p.before.src} srcSet={p.before.webp} sizes={BA_SIZES} width={1408} height={768} alt={`${name} — before`} loading="lazy" decoding="async" />
+                  </picture>
                   <div className="ba-handle" aria-hidden="true"><span className="ba-knob">↔</span></div>
                 </div>
               )

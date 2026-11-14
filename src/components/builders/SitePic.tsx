@@ -11,6 +11,9 @@ type Props = {
 export default function SitePic({ name, alt, sizes, eager = false, className, widths = [640, 960, 1280, 1600] }: Props) {
   const set = (ext: string) => widths.map((w) => `/media/site-progress/${name}-${w}.${ext} ${w}w`).join(', ')
   return (
+    <>
+    {/* Eager = the page's LCP image. Hoisted to <head> by React so the AVIF is fetched before CSS and JS. */}
+    {eager ? <link rel="preload" as="image" type="image/avif" imageSrcSet={set('avif')} imageSizes={sizes} fetchPriority="high" /> : null}
     <picture className={className}>
       <source type="image/avif" srcSet={set('avif')} sizes={sizes} />
       <source type="image/webp" srcSet={set('webp')} sizes={sizes} />
@@ -25,5 +28,6 @@ export default function SitePic({ name, alt, sizes, eager = false, className, wi
         decoding="async"
       />
     </picture>
+    </>
   )
 }
