@@ -26,6 +26,11 @@ export async function POST(req: Request) {
   const key = (process.env.INTERNAL_API_KEY || process.env.BRICKS_INTERNAL_API_KEY || '').trim()
   if (!key) return NextResponse.json({ ok: false, error: FAIL }, { status: 503 })
   const ip = connectingIp(req.headers)
+  // R1: missing CF-Connecting-IP must not share one 'unknown' rate-limit bucket,
+  // and must not be forwarded to OS as a real client IP.
+  if (!ip || ip === 'unknown') {
+    return NextResponse.json({ ok: false, error: 'We couldn’t confirm this request. Please try again.' }, { status: 400 })
+  }
   if (await limited(null, clientKey('coverage-waitlist', ip), WAITLIST_LIMIT)) {
     return NextResponse.json({ ok: false, error: 'Please try again in a moment.' }, { status: 429 })
   }

@@ -184,6 +184,25 @@ describe('connectingIp and coverage waitlist', () => {
     assert.equal(connectingIp(new Headers({ 'X-Forwarded-For': '198.51.100.1', 'x-real-ip': '192.0.2.1' })), 'unknown')
   })
 
+  it('returns 400 when CF-Connecting-IP is missing and does not call OS', async () => {
+    process.env.INTERNAL_API_KEY = 'test'
+    _resetMemory()
+    let called = 0
+    mockOs(() => {
+      called += 1
+      return { status: 200, body: { ok: true } }
+    })
+    const res = await waitlistPOST(new Request('https://www.brxs.ca/api/book/coverage-waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Forwarded-For': '198.51.100.1' },
+      body: JSON.stringify({ email: 'a@example.com', address: FAR_NORTH.address, flow: 'book' }),
+    }))
+    assert.equal(res.status, 400)
+    const j = await res.json()
+    assert.equal(j.ok, false)
+    assert.equal(called, 0)
+  })
+
   it('forwards CF-Connecting-IP to OS and returns 200; a ninth request from the same IP is 429', async () => {
     process.env.INTERNAL_API_KEY = 'test'
     _resetMemory()
