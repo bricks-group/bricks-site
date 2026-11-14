@@ -2,7 +2,7 @@ import { SOFTWARE_PLANS } from '@/lib/catalog'
 
 /** One plain sentence per live plan. Longer feature lists stay in the compare drawer. */
 export const PLAN_LINE: Record<string, string> = {
-  clay: 'Your listings, deals and MLS feed. No card.',
+  clay: 'Your listings, deals and MLS® feed. No card.',
   keystone: 'Adds CRM and e-sign.',
   marble: 'Adds forms and deal rooms.',
   diamond: 'Adds Brixton AI.',

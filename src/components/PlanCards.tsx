@@ -1,7 +1,7 @@
 import { SOFTWARE_PLANS, PLAN_FEATURES, PLAN_ORDER } from '@/lib/catalog'
 
 const LABEL: Record<string, string> = {
-  'Listing file, transactions, and BYO MLS': 'Your listings, deals and MLS feed',
+  'Listing file, transactions, and BYO MLS®': 'Your listings, deals and MLS® feed',
   'Book media at rack rate': 'Book shoots at standard prices',
 }
 const NOTE: Record<string, string> = {
