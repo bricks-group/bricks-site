@@ -53,7 +53,6 @@ const PRODUCT_PAGES = [
   { path: '/gallery', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/about', changeFrequency: 'monthly' as const, priority: 0.6 },
   { path: '/service-areas', changeFrequency: 'weekly' as const, priority: 0.8 },
-  { path: '/fall-market', changeFrequency: 'monthly' as const, priority: 0.65 },
   { path: '/platform', changeFrequency: 'monthly' as const, priority: 0.8 },
   { path: '/why-bricks', changeFrequency: 'monthly' as const, priority: 0.75 },
   ...SOFTWARE_MODULES.map((m) => ({ path: `/software/${m.slug}`, changeFrequency: 'monthly' as const, priority: 0.7 })),
