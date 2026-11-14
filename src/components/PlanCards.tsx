@@ -1,5 +1,13 @@
 import { SOFTWARE_PLANS, PLAN_FEATURES, PLAN_ORDER } from '@/lib/catalog'
 
+const LABEL: Record<string, string> = {
+  'Listing file, transactions, and BYO MLS': 'Your listings, deals and MLS feed',
+  'Book media at rack rate': 'Book shoots at standard prices',
+}
+const NOTE: Record<string, string> = {
+  'Fields on the PDF, SHA-256 fingerprints and an audit trail': 'A tamper-proof record of every signature.',
+}
+
 type St = 'new' | 'inherited' | 'addon' | 'no'
 function rowState(from: string, id: string, addon?: string): St {
   const at = PLAN_ORDER.indexOf(id as never), f = PLAN_ORDER.indexOf(from as never)
@@ -28,10 +36,10 @@ export default function PlanCards({ style }: { style?: React.CSSProperties }) {
               {PLAN_FEATURES.map((r) => {
                 const st = rowState(r.from, p.id, r.addon)
                 return (
-                  <li key={r.label} className={`st-${st}`}>
-                    {r.label}
+                  <li key={LABEL[r.label] ?? r.label} className={`st-${st}`}>
+                    {LABEL[r.label] ?? r.label}
                     {st === 'addon' ? <span className="add"> · add-on {r.addon}</span> : null}
-                    {r.note ? <span className="nt">{r.note}</span> : null}
+                    {(NOTE[r.note ?? ""] ?? r.note) ? <span className="nt">{NOTE[r.note ?? ""] ?? r.note}</span> : null}
                   </li>
                 )
               })}

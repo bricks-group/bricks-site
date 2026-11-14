@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PlanCards from '@/components/PlanCards'
+import PlanChoice from '@/components/PlanChoice'
 import RevealObserver from '@/components/RevealObserver'
 import { PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, RUSH_FLAT, FLOOR_PLAN_ONLY_RATE, STAGING_PRICE_LABEL, STAGING_PER_IMAGE, VIRTUAL_STAGING_ENABLED, bandCells, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS, CORE_FROM, STORY_FROM, SHOWCASE_FROM, FULL_FROM, PHOTO_ONLY_FROM } from '@/lib/pricing'
-import { OFFICE_PLANS, OFFICE_INCLUDES, OFFICE_MONTHLY_NOTE, SOFTWARE_BLURB, SOFTWARE_PLANS, ADDONS, ADDONS_BLURB } from '@/lib/catalog'
-import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
+import { OFFICE_PLANS, OFFICE_INCLUDES, OFFICE_MONTHLY_NOTE, OFFICE_SEAT_PRICE_PER_YEAR, ADDONS } from '@/lib/catalog'
+import { PER_VISIT, PLANS, PLAN_NOTE, SITE_PROGRESS_LINE, fmt } from '@/lib/commercial'
 import { fromPriceFor } from '@/lib/propertyCheckout'
 import { Head, Rows, Stats, Close } from '@/components/calm/Calm'
 import {
@@ -14,7 +15,6 @@ import {
   TOUR_SHORT,
   VISIT_NAME,
   VISIT_SHORT,
-  signupUrl,
 } from '@/lib/brand'
 import { mediaServiceSchema, virtualVisitServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
@@ -59,13 +59,6 @@ const rows = [
   { name: 'Rush delivery', inc: 'Faster than standard delivery (photos 24h · other media 24–48h)', flat: `+$${RUSH_FLAT} flat`, row: 'flat' },
 ]
 
-const PLAN_LINE: Record<string, string> = {
-  clay: 'Listing file, transactions and your MLS. No card.',
-  keystone: 'Adds CRM and e-sign.',
-  marble: 'Adds forms.',
-  diamond: 'Adds the AI suite.',
-}
-
 export default function PricingPage() {
   return (
     <>
@@ -93,7 +86,7 @@ export default function PricingPage() {
               { '@type': 'Question', name: 'Virtual tour or virtual visit?', acceptedAnswer: { '@type': 'Answer', text: `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).` } },
               ...(VIRTUAL_STAGING_ENABLED ? [{ '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture added to photos of vacant rooms, marked as virtually staged. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.` } }] : []),
               { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: 'Across Canada. Ask and we’ll confirm your area and quote any travel.' } },
-              { '@type': 'Question', name: 'Can I add AI without upgrading?', acceptedAnswer: { '@type': 'Answer', text: ADDONS_BLURB } },
+              { '@type': 'Question', name: 'Can I add Brixton AI without changing plan?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Brixton AI is one switch on a paid plan. Diamond includes it.' } },
             ],
           }),
         }}
@@ -102,7 +95,10 @@ export default function PricingPage() {
       <section className="hero">
         <div className="wrap">
           <h1>Pricing.</h1>
-          <p className="sub">Start free on the software. Book media and site visits inside it when you need them.</p>
+          <p className="sub">Start free. Book media and site visits when you need them.</p>
+          <div className="cta-row">
+            <Link className="btn btn-night btn-primary" href="/book">Book</Link>
+          </div>
         </div>
       </section>
 
@@ -118,8 +114,8 @@ export default function PricingPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Software plans">
-        <Head title="Software plans." lede={SOFTWARE_BLURB} />
-        <Rows items={SOFTWARE_PLANS.map((p) => ({ title: p.name, detail: PLAN_LINE[p.id], value: p.price }))} />
+        <Head title="Software plans." lede="Start free. The $99 plan is the one we recommend. Pay yearly and get two months free." />
+        <PlanChoice />
         <details className="cm-more">
           <summary>Compare every feature</summary>
           <PlanCards />
@@ -127,26 +123,41 @@ export default function PricingPage() {
         <p className="cm-note">Plans and office seats are billed under the <Link href="/terms#plans">software plan terms</Link>: billing cycle, renewal, cancellation and refunds.</p>
       </section>
 
-      <section className="cm-sec rvl" aria-label="AI add-ons">
-        <Head title="AI, without upgrading." lede={ADDONS_BLURB} />
-        <Rows items={ADDONS.map((a) => ({ title: a.name, value: a.price }))} />
+      <section className="cm-sec rvl" aria-label="Brixton AI">
+        <Head title="Brixton AI." lede="One switch on a paid plan. Diamond includes it." />
+        <details className="cm-more">
+          <summary>What you can add, and what it costs</summary>
+          <Rows items={ADDONS.map((a) => ({ title: a.name, value: a.price }))} />
+        </details>
       </section>
 
       <section className="cm-sec rvl" aria-label="Brokerage seats">
-        <Head title="Brokerages, per seat." lede={OFFICE_INCLUDES} link={{ href: '/brokerage', label: 'For brokerages' }} />
+        <Head title="Brokerages, per seat." lede={`${OFFICE_INCLUDES} Seats from $${OFFICE_SEAT_PRICE_PER_YEAR.franchise.toLocaleString('en-CA')} a year.`} link={{ href: '/brokerage', label: 'For brokerages' }} />
         <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: p.seats, value: p.price }))} />
-        <p className="cm-note">{OFFICE_MONTHLY_NOTE} Up to 6 agents fit on one <Link href="/teams">team plan</Link>.</p>
+        <details className="cm-more">
+          <summary>Month to month, and teams</summary>
+          <p className="cm-note">{OFFICE_MONTHLY_NOTE} Up to 6 agents fit on one <Link href="/teams">team plan</Link>.</p>
+        </details>
       </section>
 
       <section className="cm-sec rvl" aria-label="Site Progress">
-        <Head title="Site Progress." lede="One vendor, one portal, dated evidence for every draw. Per visit, or per site each month." link={{ href: '/builders', label: 'For builders' }} />
-        <Rows
-          items={[
-            { title: PER_VISIT[0].name, detail: PER_VISIT[0].what, value: `${fmt(PER_VISIT[0].price)} ${PER_VISIT[0].unit}` },
-            { title: PER_VISIT[1].name, detail: PER_VISIT[1].what, value: `${fmt(PER_VISIT[1].price)} ${PER_VISIT[1].unit}` },
-            { title: 'Monthly plans', detail: 'Visual or mapped, monthly to weekly.', value: `from ${fmt(PLANS[0].rows[0].price)} / site / mo` },
-          ]}
-        />
+        <Head title="Site Progress." lede={SITE_PROGRESS_LINE} link={{ href: '/builders', label: 'For builders' }} />
+        <details className="cm-more">
+          <summary>Every visit and plan</summary>
+          <Rows
+            items={[
+              { title: PER_VISIT[0].name, detail: PER_VISIT[0].what, value: `${fmt(PER_VISIT[0].price)} ${PER_VISIT[0].unit}` },
+              { title: PER_VISIT[1].name, detail: PER_VISIT[1].what, value: `${fmt(PER_VISIT[1].price)} ${PER_VISIT[1].unit}` },
+              { title: PER_VISIT[2].name, detail: PER_VISIT[2].what, value: `${fmt(PER_VISIT[2].price)} ${PER_VISIT[2].unit}` },
+              ...PLANS.flatMap((plan) => plan.rows.map((row) => ({
+                title: `${plan.kind}, ${row.cadence.toLowerCase()}`,
+                detail: `${row.visits} visit${row.visits === 1 ? '' : 's'} a month, per site.`,
+                value: `${fmt(row.price)} / site / mo`,
+              }))),
+            ]}
+          />
+          <p className="cm-note">{PLAN_NOTE}</p>
+        </details>
       </section>
 
       <section className="cm-sec rvl" aria-label="Property accounts">
@@ -206,15 +217,38 @@ export default function PricingPage() {
             <div className="qa"><h3>Virtual tour or virtual visit?</h3><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
             {VIRTUAL_STAGING_ENABLED && <div className="qa"><h3>What is virtual staging?</h3><p>Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.</p></div>}
             <div className="qa"><h3>Where do you shoot?</h3><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
-            <div className="qa"><h3>Can I add AI without upgrading?</h3><p>{ADDONS_BLURB}</p></div>
-            <div className="qa"><h3>Brokerage or individual plan?</h3><p>Agents choose Clay, Keystone, Marble or Diamond. Brokerages buy seats: Boutique (5–24 seats), $74 monthly or $708 annually; Growth (25–74), $56 monthly or $540 annually; Enterprise (75–199), $44 monthly or $420 annually; Franchise (200+), $31 monthly or $300 annually. Prices are per seat in CAD, before tax. Every seat gets all of Bricks plus trust accounting.</p></div>
+            <div className="qa"><h3>Can I add Brixton AI without changing plan?</h3><p>Yes. Brixton AI is one switch on a paid plan. Diamond includes it.</p></div>
+            <div className="qa"><h3>Brokerage or individual plan?</h3><p>Agents start free, or pick a paid plan. Offices buy seats, from ${OFFICE_SEAT_PRICE_PER_YEAR.franchise.toLocaleString('en-CA')} a year. Every seat gets all of Bricks plus trust accounting.</p></div>
           </div>
         </section>
 
 
-      <Close title="Start free. Book when you need to." href={signupUrl('solo')} label="Try Bricks free" external />
+      <Close title="See the price before you pay." href="/book" label="Book" />
 
       <style>{`
+        .hero .cta-row{margin-top:28px;}
+        .pr-choice{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:var(--vs-hair);border-bottom:var(--vs-hair);}
+        .pr-choice li{padding:28px 28px 28px 0;min-width:0;}
+        .pr-choice li + li{padding-left:28px;border-left:var(--vs-hair);}
+        .pr-choice .pr-choice-price{margin:0;font-family:var(--vs-mono);font-size:22px;letter-spacing:-.02em;color:var(--vs-fg);font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;}
+        .pr-choice .pr-choice-rec{font-family:var(--vs-sans);font-size:13px;font-weight:500;letter-spacing:0;color:var(--vs-fg);}
+        .pr-choice h3{margin:14px 0 0;font-size:17px;font-weight:500;letter-spacing:-.02em;color:var(--vs-fg);}
+        .pr-choice .pr-choice-line{margin:8px 0 0;font-size:15px;line-height:1.45;color:var(--vs-fg-2);max-width:28ch;}
+        .pr-choice .pr-choice-yr{margin:16px 0 0;font-size:13px;color:var(--vs-fg-3);line-height:1.4;}
+        .pr-choice li.is-rec{box-shadow:inset 2px 0 0 var(--vs-fg);}
+        @media (max-width:900px){
+          .pr-choice{grid-template-columns:1fr 1fr;}
+          .pr-choice li{padding:22px 20px 22px 0;}
+          .pr-choice li + li{padding-left:20px;}
+          .pr-choice li:nth-child(odd){border-left:none;padding-left:0;}
+          .pr-choice li:nth-child(n+3){border-top:var(--vs-hair);}
+        }
+        @media (max-width:560px){
+          .pr-choice{grid-template-columns:1fr;}
+          .pr-choice li,.pr-choice li + li{padding:18px 0;border-left:none;}
+          .pr-choice li + li{border-top:var(--vs-hair);}
+          .pr-choice li.is-rec{box-shadow:inset 2px 0 0 var(--vs-fg);padding-left:16px;}
+        }
         .trust{text-align:center;padding:8px 0 28px;}
         .rates{overflow-x:clip;}
         .tbl{width:100%;max-width:100%;border-collapse:collapse;}

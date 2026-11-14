@@ -29,3 +29,7 @@ export const PLAN_NOTE =
   'Plans are billed monthly per site, month to month. Mapped plans add the one-time $650 setup. Survey-grade accuracy is quoted separately. CAD, plus tax (GST/HST based on the property\'s province).'
 
 export const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`
+
+/** One line for Home, Pricing and anywhere Site Progress is priced. Figures come from PER_VISIT and PLANS (the same amounts Stripe charges). */
+export const SITE_PROGRESS_LINE =
+  `Site visits from ${fmt(PER_VISIT[0].price)}, or ${fmt(PLANS[0].rows[0].price)} a month on a plan. Mapped sites add a one-time ${fmt(PER_VISIT[2].price)} setup.`

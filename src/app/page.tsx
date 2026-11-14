@@ -10,7 +10,7 @@ import { IntegrationsRow } from '@/components/calm/Integrations'
 import './home-v10.css'
 import './home-v3.css'
 import { CORE_FROM } from '@/lib/pricing'
-import { PER_VISIT, fmt } from '@/lib/commercial'
+import { PER_VISIT, SITE_PROGRESS_LINE, fmt } from '@/lib/commercial'
 import { fromPriceFor } from '@/lib/propertyCheckout'
 import { HOME_FAQS } from '@/lib/public-content'
 import { FeaturePic } from '@/components/features/FeatureShot'
@@ -176,7 +176,7 @@ export default function Home() {
 
       <HomeServicesBand />
 
-      <section className="cm-sec rvl" aria-label="Pricing">
+      <section className="cm-sec rvl" id="pricing" aria-label="Pricing">
         <Head title="Start free. Book when you need to." link={{ href: '/pricing', label: 'See pricing' }} />
         <Stats
           label="Starting prices"
@@ -186,12 +186,19 @@ export default function Home() {
             { fig: fmt(PER_VISIT[0].price), label: 'Site visit, from' },
           ]}
         />
-        <p className="cm-note">
-          Property accounts: <Link href="/property-managers">property managers</Link> from {fromPriceFor('property_manager')},{' '}
-          <Link href="/commercial">commercial</Link> from {fromPriceFor('commercial')},{' '}
-          <Link href="/investors">investors</Link> from {fromPriceFor('investor')}, and <Link href="/reits">REITs</Link> save 10% to 15%.
-          Prices in CAD, before tax.
-        </p>
+        <p className="cm-note cm-price-line">{SITE_PROGRESS_LINE}</p>
+        <details className="cm-more">
+          <summary>Property visits</summary>
+          <p className="cm-note">
+            <Link href="/property-managers">Property managers</Link> from {fromPriceFor('property_manager')},{' '}
+            <Link href="/commercial">commercial</Link> from {fromPriceFor('commercial')},{' '}
+            <Link href="/investors">investors</Link> from {fromPriceFor('investor')}, and <Link href="/reits">REITs</Link> save 10% to 15%.
+            Prices in CAD, before tax.
+          </p>
+        </details>
+        <div className="cta-row home-price-cta">
+          <Link className="btn btn-night btn-primary" href="/book">Book</Link>
+        </div>
       </section>
 
       <section className="cm-sec rvl faq-split" id="faq" aria-label="Frequently asked questions">
@@ -215,6 +222,9 @@ export default function Home() {
         .hero-home .hero-calc{border-radius:0;border:1px solid var(--ink);color:var(--ink);background:transparent;padding:12px 22px;min-height:48px;box-sizing:border-box;display:inline-flex;align-items:center;text-decoration:none;}
         .hero-home .hero-calc:hover{background:var(--ink);color:var(--paper);}
         .hero-home .cta-row{align-items:center;}
+        .home-price-cta{margin-top:32px;}
+        .cm-price-line{max-width:46ch;font-size:16px;color:var(--vs-fg-2);margin-top:28px;}
+
         .hf-shot{background:var(--paperDeep);}
         .hf-fine{display:block;margin-top:12px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:0;text-transform:none;color:var(--inkMute);}
         .hf-shot picture{position:absolute;inset:24px 24px 0 24px;width:auto;height:auto;}

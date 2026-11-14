@@ -12,7 +12,7 @@ export const HOME_FAQS = [
   { id: 'coverage', q: 'Where do you work?', a: 'Across Canada. Availability and any travel charges are confirmed for the property at booking; inspections are available in Ontario only.' },
   { id: 'virtual-visit', q: 'What is Virtual Visit?', a: VIRTUAL_VISIT_DESCRIPTION },
   { id: 'site-progress', q: 'What is Site Progress?', a: SITE_PROGRESS_DESCRIPTION },
-  { id: 'plans', q: 'How much does Bricks software cost?', a: 'Clay is free. Keystone is $49 a month or $490 a year, Marble is $99 a month or $990 a year, and Diamond is $149 a month or $1,490 a year. All prices are CAD, before tax. Services are booked separately.' },
+  { id: 'plans', q: 'How much does Bricks software cost?', a: 'Start free. Paid plans are $49, $99 or $149 a month, or $490, $990 or $1,490 a year (two months free). The $99 plan is the one we recommend. CAD, before tax. Services are booked separately.' },
 ] as const
 
 export const MEDIA_FAQS = [
