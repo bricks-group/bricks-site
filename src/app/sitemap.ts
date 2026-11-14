@@ -2,6 +2,11 @@ import type { MetadataRoute } from 'next'
 import { ARTICLES, COLLECTIONS, articleHref, collectionHref, helpCanonical } from '@/lib/help'
 import { isTradeEnabled } from '@/lib/services'
 import { SOFTWARE_MODULES } from '@/lib/software-modules'
+import { currentSeason } from '@/lib/seasonal-market'
+
+// Rendered per request: the seasonal market entry follows the current season (Toronto time),
+// and the static-assets cache on Cloudflare has no ISR to revalidate a prerendered copy.
+export const dynamic = 'force-dynamic'
 
 const BASE = 'https://www.brxs.ca'
 
@@ -83,6 +88,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }))
+  // Only the in-season market page is listed; the other three 307 to it.
+  pages.push({ url: `${BASE}${currentSeason().slug}`, lastModified: '2026-11-14', changeFrequency: 'monthly', priority: 0.65 })
   const help = [
     { url: 'https://help.brxs.ca/', lastModified: contentUpdated, changeFrequency: 'weekly' as const, priority: 0.8 },
     ...COLLECTIONS.map((c) => ({ url: helpCanonical(collectionHref(c.slug)), lastModified: contentUpdated, changeFrequency: 'monthly' as const, priority: 0.6 })),

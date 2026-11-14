@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { marketRedirect } from './lib/seasonal-market'
 
 const COOKIE = 'bricks_www_gate'
 const PASSWORD_ENV = 'WWW_SITE_GATE_PASSWORD'
@@ -96,6 +97,13 @@ export function middleware(request: NextRequest) {
   const routed = helpHostRoute(request)
   if (routed) return routed
   const { pathname } = request.nextUrl
+  // Seasonal market pages: out-of-season URLs (and /market) go to the current season.
+  // 307 (temporary) so the target flips on the season date with no redeploy.
+  const season = marketRedirect(pathname)
+  if (season) {
+    const u = request.nextUrl.clone(); u.pathname = season
+    return NextResponse.redirect(u, 307)
+  }
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-bricks-pathname', pathname)
 

@@ -87,8 +87,6 @@ const nextConfig: NextConfig = {
       { source: '/blog/drone-photography-rules-ontario.html', destination: '/blog/drone-photography-rules-ontario', permanent: true },
       { source: '/blog/whats-included-listing-shoot.html', destination: '/blog/whats-included-listing-shoot', permanent: true },
       { source: '/photography', destination: '/real-estate-photography', permanent: true },
-      // Seasonal page retired 2026-11-14 (Markez, SEO scope).
-      { source: '/fall-market', destination: '/real-estate-photography', permanent: true },
       { source: '/listing-photos', destination: '/real-estate-photography', permanent: true },
       { source: '/listing-photos/', destination: '/real-estate-photography', permanent: true },
       { source: '/blog/canada-real-estate-photography-cost-2026.html', destination: '/blog/canada-real-estate-photography-cost-2026', permanent: true },
