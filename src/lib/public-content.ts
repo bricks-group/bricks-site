@@ -26,3 +26,40 @@ export const SITE_PROGRESS_FAQS = [
   { q: 'Can I compare site visits over time?', a: 'Yes. Bricks keeps captures as dated visits, including your own imported GeoTIFF, LAS and OBJ files. The builder hub supports 3D comparisons and reports showing changes since earlier visits.' },
   { q: 'Does a progress report certify completion or quantities?', a: 'No. Bricks reports are visual documentation, not a cost, quantity or completion certification. Reports can be shared as PDFs or expiring read-only links.' },
 ] as const
+
+// Generated from Markez's seo-content-w1/_src/faqs.py (2026-11-14). Edit there, not here.
+export const AGENT_FAQS = [
+  { q: "How much does Bricks cost for an agent?", a: "Clay is free. Keystone is $49 a month or $490 a year, Marble is $99 a month or $990 a year, and Diamond is $149 a month or $1,490 a year. CAD, before tax. Listing media is booked separately." },
+  { q: "What does each plan add?", a: "Clay includes the listing file, transactions, your own MLS® feed, the listing launch kit and media booking at rack rate. Keystone adds CRM and e-sign. Marble adds forms and the deal room. Diamond includes AI Listing Copy, AI CMA and AI Document Drafter." },
+  { q: "How do I book listing media?", a: "From the listing in Bricks, or at brxs.ca/book without an account. Enter the address, pick services and an exact time. Bricks assigns the photographer before you pay, so travel is on the quote. Photos usually arrive within 24 hours and other media within 24 to 48 hours. These are targets, not guarantees." },
+  { q: "Can I cancel or reschedule a shoot?", a: "Cancel 24 hours or more before the shoot window for a full refund. Inside 24 hours, or if the photographer can’t get in, there’s no refund. Rescheduling 24 hours or more ahead is free." },
+  { q: "Does Bricks post to my MLS®?", a: "No. The launch kit builds an MLS® package with board-sized photos, a field sheet, remarks and a required-field checklist. You submit it yourself. Bricks never posts or submits for you." },
+  { q: "Can my team use Bricks?", a: "Yes. Up to 6 agents share the lead’s plan, with one shared pipeline. Extra agents are $79 a month or $790 a year each, CAD plus tax. From about 17 agents, brokerage seats can cost less." },
+] as const
+
+export const PM_FAQS = [
+  { q: "What can property managers book in Bricks?", a: "A turnover media bundle for $295, a move-in or move-out condition report for $145, a rental listing set for $195, a listing set with video for $255, or a building set for $650. CAD, before HST." },
+  { q: "Does the turnover media bundle include cleaning?", a: "No. It is media only: a move-out condition report, new listing photos and a measured floor plan in one visit. Cleaning, repairs and other physical turnover work are not included." },
+  { q: "When should I book a condition report?", a: "A move-out report or turnover is shot within two weeks after the move-out date. A move-in report is shot within two weeks before move-in, while the unit is empty. Book at least 1 day ahead, or 2 days if there’s a drone." },
+  { q: "Are there monthly plans for rentals?", a: "Yes. Rentals 5, 12 and 25 give that many turnover media bundles a month for $1,325, $2,990 or $5,875 a month, CAD plus tax. Credits can be spent on any rentals visit, and unused credits roll over one month." },
+  { q: "Do I need an account to book?", a: "Not for one or two units. A property manager account shows every unit’s turnover and next step, compares each condition report room by room with the last one, and prints an owner report for any period." },
+  { q: "Does Bricks sync with my property management system?", a: "Not yet. Your team updates unit status in Bricks: available, reserved or leased." },
+] as const
+
+export const ABOUT_FAQS = [
+  { q: "What is Bricks?", a: "Bricks is subscription software for Canadian real estate: builders, developers, investors, brokerages, teams and realtors. Listing media, Virtual Visit free-roam 3D and Site Progress — drone mapping, orthomosaics, models, documents, reports and comparisons over time — are services booked inside Bricks. Bricks Group is based in Ontario, Canada." },
+  { q: "Who is Bricks for?", a: "Builders and developers, agents and brokerages, property managers, and the vendors who do the work on site. Each works from the same record." },
+  { q: "Who makes Bricks?", a: "Bricks Group, founded in 2026 and based in Mississauga, Ontario." },
+  { q: "Is Bricks software or a media company?", a: "Software first. Projects, listings and deals live in Bricks. When a site needs a progress visit or a listing needs media, you book it inside Bricks, and the files land where the work is." },
+  { q: "Where does Bricks work?", a: "Across Canada. Availability and any travel charges are confirmed for the property at booking. Inspections are available in Ontario only." },
+  { q: "How do I contact Bricks?", a: "Email hello@brxs.ca for general questions or help@brxs.ca for support, or call (289) 312-7425." },
+] as const
+
+export const BROKERAGE_FAQS = [
+  { q: "How much are brokerage seats?", a: "Billed yearly, a seat is $708 on Boutique (5–24 seats), $540 on Growth (25–74), $420 on Enterprise (75–199) and $300 on Franchise (200+). Month to month, it is $74, $56, $44 or $31 a seat, with no lock-in. CAD, before tax." },
+  { q: "What does every seat get?", a: "All of Bricks: deals, e-sign with an audit trail, a launch kit for each listing and a deal room for each closing. Agents don’t pay separately." },
+  { q: "Is trust accounting included?", a: "Yes, for brokerages only. It is part of every brokerage account, under Accounting in the Finance section. It isn’t available on agent or team plans." },
+  { q: "How many agents do I need for a brokerage plan?", a: "Brokerage plans start at 5 seats. With fewer agents, a team plan puts up to 6 agents on the lead’s plan." },
+  { q: "Is listing media included in the seat price?", a: "No. Media is billed separately. Agents book shoots from the listing, and the brokerage can mark favourite photographers, who get priority for its agents’ shoots." },
+  { q: "How do I set up my brokerage?", a: "Create a brokerage account and finish onboarding. In Billing, enter your seat count under Office plans and subscribe. Then add agents from Office, Agents, or share your invite link." },
+] as const

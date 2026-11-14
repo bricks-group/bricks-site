@@ -10,11 +10,17 @@ import { COMPANION_URL, OS_LOGIN } from '@/lib/brand'
 import { osSoftwareApplicationSchema } from '@/lib/schema'
 import ModuleGrid from '@/components/software/ModuleGrid'
 import Link from 'next/link'
+import { OG_IMAGE } from '@/lib/og'
+
+const TITLE = 'Real Estate Software: Deals, Listings, Sites | Bricks'
+const DESC = 'Deals, listings, vendor booking, e-sign, teams and payments in one system, on the web and your phone. Media and Site Progress booked inside. Start free.'
 
 export const metadata: Metadata = {
-  title: 'Bricks software — web and mobile',
-  description: 'Bricks on web and mobile: deals, listings, booking and dispatch, documents, teams, payments and integrations, with media and Site Progress inside.',
+  title: TITLE,
+  description: DESC,
   alternates: { canonical: '/platform' },
+  openGraph: { images: [OG_IMAGE], type: 'website', url: 'https://www.brxs.ca/platform', title: TITLE, description: DESC },
+  twitter: { title: TITLE, description: DESC },
 }
 
 export default function PlatformPage() {
@@ -66,7 +72,7 @@ export default function PlatformPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Who it is for">
-        <Head title="Who it’s for." />
+        <Head title="Who it’s for." link={{ href: '/blog/what-is-a-real-estate-operating-system', label: 'What is a real estate operating system?' }} />
         <Rows
           items={[
             { title: 'Builders and developers', detail: 'Progress reports, investor updates and 3D compare for every project.', href: '/builders' },

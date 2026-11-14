@@ -84,7 +84,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Listings and listing sites',
     blurb: 'One listing file for details, media and the deal, with a listing site and launch kit made from it.',
     metaTitle: 'Listings, listing sites and the launch kit | Bricks',
-    metaDescription: 'Keep each listing’s details, photos, Virtual Visits, documents and deal on one listing file. Bricks makes a listing site, feature sheet, social pack and MLS® package from it.',
+    metaDescription: 'Keep each listing’s photos, Virtual Visits, documents and deal on one file. Bricks builds the listing site, feature sheet, social pack and MLS® package.',
     h1: 'A listing file that keeps everything.',
     sub: 'Details, photos, floor plans, Virtual Visits, documents and the deal stay on one listing file. The listing site and launch kit are made from it.',
     replaces: [
@@ -123,7 +123,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Booking and vendor dispatch',
     blurb: 'Book photos, drone, video and 3D at an exact time. Bricks assigns, checks and pays the vendor.',
     metaTitle: 'Booking and vendor dispatch | Bricks',
-    metaDescription: 'Book listing media from the listing at an exact time. Bricks assigns the photographer before you pay, edits in-house and pays vendors directly. Home services are requested in the same place.',
+    metaDescription: 'Book listing media from the listing at an exact time. Bricks assigns the photographer before you pay and pays vendors directly. Home services too.',
     h1: 'Book the work. Bricks handles the vendor.',
     sub: 'Photos, drone, video, floor plans and Virtual Visits are booked from the listing at an exact time. Bricks assigns the photographer, holds every shoot to one standard and pays them.',
     replaces: [
@@ -163,7 +163,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Updates and deal rooms',
     blurb: 'Bookings, shoots and deadlines send their own updates. Each party sees only their part.',
     metaTitle: 'Updates, notifications and deal rooms | Bricks',
-    metaDescription: 'Fewer texts and emails asking where things are. Bricks sends booking, shoot and delivery updates, and gives lawyers, brokers and inspectors a private deal room with their own dates and reminders.',
+    metaDescription: 'Fewer where-is-it texts. Bricks sends booking, shoot and delivery updates, and gives lawyers, brokers and inspectors a private deal room with their dates.',
     h1: 'Fewer texts asking where things are.',
     sub: 'Bookings, shoots, deliveries and deal deadlines send their own updates. Everyone on a deal sees only the part that’s theirs.',
     replaces: [
@@ -202,7 +202,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Documents, e-sign and delivery',
     blurb: 'Documents, signatures, forms and finished media filed with the deal or listing they belong to.',
     metaTitle: 'Documents, e-sign, forms and media delivery | Bricks',
-    metaDescription: 'Store documents with folders and tags, send PDFs for e-signature with an audit trail, fill forms from the deal, and get edited media delivered straight to the listing.',
+    metaDescription: 'Store documents with folders and tags, send PDFs for e-signature with an audit trail, fill forms from the deal, and get edited media on the listing.',
     h1: 'Signed, filed and delivered to the right place.',
     sub: 'Documents, e-signatures, forms and finished media sit with the listing or deal they belong to, not in a shared drive and a pile of download links.',
     replaces: [
@@ -241,7 +241,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Teams, brokerages and roles',
     blurb: 'Teams of up to six and brokerages by the seat, with a shared pipeline, roster and compliance.',
     metaTitle: 'Teams, brokerages and roles | Bricks',
-    metaDescription: 'Run a team of up to six agents on one plan, or a brokerage per seat, with a shared pipeline, invites, shoot allocations, a roster, compliance review and trust accounting.',
+    metaDescription: 'Run a team of up to six agents on one plan, or a brokerage per seat: shared pipeline, invites, shoot allocations, roster, compliance and trust accounting.',
     h1: 'Everyone on one system, each with the right view.',
     sub: 'Teams share one plan and one pipeline. Brokerages get every seat on Bricks, with a roster, compliance review and trust accounting.',
     replaces: [
@@ -281,7 +281,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Payments, commissions and trust',
     blurb: 'Stripe checkout for bookings and plans, commission plans, agent statements and the trust account.',
     metaTitle: 'Payments, commissions and trust accounting | Bricks',
-    metaDescription: 'Bookings and plans are paid through Stripe. Brokerages run commission plans, agent statements and their trust account in Bricks, and vendors are paid automatically.',
+    metaDescription: 'Bookings and plans are paid through Stripe. Brokerages run commissions, agent statements and trust accounting in Bricks. Vendors get paid automatically.',
     h1: 'Money in and money out, on the record.',
     sub: 'Bookings and plans are paid through Stripe. Brokerages run commissions, agent statements and the trust account in the same system, and vendors are paid without invoices.',
     replaces: [
@@ -320,7 +320,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Integrations',
     blurb: 'Your MLS® feed, Follow Up Boss, kvCORE, calendars and Stripe. All optional.',
     metaTitle: 'Integrations: MLS® feeds, CRM and calendars | Bricks',
-    metaDescription: 'Bricks connects to PropTx (TRREB), Bridge Interactive, Repliers, Follow Up Boss, kvCORE, Google and Apple Calendar and Stripe. Contacts, calendar and e-sign are built in, so every connection is optional.',
+    metaDescription: 'Connect your MLS® feed, CRM, Google or Apple Calendar and Stripe to Bricks. Contacts, calendar and e-sign are built in, so every connection is optional.',
     h1: 'Works with the tools you keep.',
     sub: 'Contacts, calendar and e-sign are built in, so every connection is optional. Bring your MLS® feed and CRM on your own credentials.',
     replaces: [
@@ -357,7 +357,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Site Progress for builders',
     blurb: 'Dated drone visits, maps, 3D compare, progress reports and investor updates per project.',
     metaTitle: 'Site Progress software for builders and developers | Bricks',
-    metaDescription: 'Every site visit on one dated timeline: drone photos, maps and 3D. Bricks drafts progress reports and investor updates from the visits and shares them as a PDF or expiring link.',
+    metaDescription: 'Every site visit on one dated timeline: drone photos, maps and 3D. Bricks drafts progress reports and investor updates, shared as a PDF or expiring link.',
     h1: 'Every site visit, dated, mapped and reported.',
     sub: 'Bricks books the pilot, keeps each visit on the project timeline and drafts progress reports and investor updates from what was captured.',
     replaces: [

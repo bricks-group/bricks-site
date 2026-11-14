@@ -26,6 +26,14 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    href: '/blog/what-is-a-real-estate-operating-system',
+    tag: 'Software',
+    title: 'What is a real estate operating system?',
+    desc: 'One record for builders, agents, property managers and vendors, with services booked inside.',
+    read: '4 min',
+    date: '2026-11-14',
+  },
+  {
     href: '/blog/drone-licence-canada',
     tag: 'Drone · Canada',
     title: 'Drone licence in Canada: Basic vs Advanced (2026)',

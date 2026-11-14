@@ -16,17 +16,17 @@ import { siteProgressServiceSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: "Site Progress Software for Builders & Developers | Bricks",
-  description: "Manage Site Progress in Bricks with dated drone visits, mapping, models, reports and comparisons over time for builders and developers across Canada.",
+  title: "Site Progress & Drone Mapping for Builders | Bricks",
+  description: "Dated drone visits, orthomosaics, 3D models and progress reports for every site, compared over time. For builders and developers in Canada.",
   alternates: { canonical: '/builders' },
   openGraph: { images: [OG_IMAGE],
-    title: "Site Progress Software for Builders & Developers | Bricks",
-    description: "Manage Site Progress in Bricks with dated drone visits, mapping, models, reports and comparisons over time for builders and developers across Canada.",
+    title: "Site Progress & Drone Mapping for Builders | Bricks",
+    description: "Dated drone visits, orthomosaics, 3D models and progress reports for every site, compared over time. For builders and developers in Canada.",
   },
   twitter: {
     card: 'summary',
-    title: "Site Progress Software for Builders & Developers | Bricks",
-    description: "Manage Site Progress in Bricks with dated drone visits, mapping, models, reports and comparisons over time for builders and developers across Canada.",
+    title: "Site Progress & Drone Mapping for Builders | Bricks",
+    description: "Dated drone visits, orthomosaics, 3D models and progress reports for every site, compared over time. For builders and developers in Canada.",
   },
 }
 

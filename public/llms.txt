@@ -9,6 +9,7 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [Home](https://www.brxs.ca/): What Bricks is, who it serves and common questions.
 - [About](https://www.brxs.ca/about): Software-first company definition; Ontario, Canada.
 - [Software](https://www.brxs.ca/platform): The Bricks web software and account types.
+- [What is a real estate operating system?](https://www.brxs.ca/blog/what-is-a-real-estate-operating-system): Definition, who uses one, what it replaces and how booking works inside Bricks.
 - [Pricing](https://www.brxs.ca/pricing): Clay, Keystone, Marble and Diamond, monthly or annual in CAD; separate service and brokerage pricing.
 - [Listing media and Virtual Visit](https://www.brxs.ca/media): Photography, drone, video, reels, floor plans and free-roam 3D.
 - [Site Progress](https://www.brxs.ca/builders): Builder and developer reports, maps, models and comparisons over time.

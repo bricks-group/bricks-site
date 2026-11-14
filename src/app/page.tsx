@@ -26,7 +26,7 @@ const faqs = HOME_FAQS
 
 export const metadata: Metadata = {
   title: 'Bricks: connect every part of real estate',
-  description: 'Bricks connects builders and developers, agents and brokerages, property managers and vendors in one system, and makes each of them stronger: projects, listings, bookings, deals and payments on one record.',
+  description: 'Bricks connects builders, agents, brokerages, property managers and vendors in one system: projects, listings, bookings, deals and payments on one record.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -34,12 +34,12 @@ export const metadata: Metadata = {
     url: 'https://www.brxs.ca/',
     locale: 'en_CA',
     title: 'Bricks: connect every part of real estate',
-    description: 'Bricks connects builders and developers, agents and brokerages, property managers and vendors in one system, and makes each of them stronger: projects, listings, bookings, deals and payments on one record.',
+    description: 'Bricks connects builders, agents, brokerages, property managers and vendors in one system: projects, listings, bookings, deals and payments on one record.',
     images: [OG_IMAGE],
   },
   twitter: {
     title: 'Bricks: connect every part of real estate',
-    description: 'Bricks connects builders and developers, agents and brokerages, property managers and vendors in one system, and makes each of them stronger: projects, listings, bookings, deals and payments on one record.',
+    description: 'Bricks connects builders, agents, brokerages, property managers and vendors in one system: projects, listings, bookings, deals and payments on one record.',
     images: [OG_IMAGE],
   },
 }

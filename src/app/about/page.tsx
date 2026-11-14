@@ -2,27 +2,29 @@ import type { Metadata } from 'next'
 import { OS_LOGIN } from '@/lib/brand'
 import { ORG_REF, SITE_ID } from '@/lib/schema'
 import { Head, Rows, Close } from '@/components/calm/Calm'
-import { BRICKS_DEFINITION } from '@/lib/public-content'
+import { BRICKS_DEFINITION, ABOUT_FAQS } from '@/lib/public-content'
+import PublicFaqs from '@/components/PublicFaqs'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: 'About Bricks — software for Canadian real estate',
-  description: "Meet Bricks, subscription software for Canadian real estate. Manage your work in one place, with listing media and Site Progress services booked inside.",
+  title: 'About Bricks: The System for Canadian Real Estate',
+  description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
   alternates: { canonical: '/about' },
   openGraph: { images: [OG_IMAGE],
     type: 'website',
     title: 'About Bricks',
-    description: "Meet Bricks, subscription software for Canadian real estate. Manage your work in one place, with listing media and Site Progress services booked inside.",
+    description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
     url: 'https://www.brxs.ca/about',
   },
   twitter: {
     card: 'summary',
     title: 'About Bricks',
-    description: "Meet Bricks, subscription software for Canadian real estate. Manage your work in one place, with listing media and Site Progress services booked inside.",
+    description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
   },
 }
 
 const posts = [
+  { href: '/blog/what-is-a-real-estate-operating-system', title: 'What is a real estate operating system?' },
   { href: '/blog/canada-real-estate-photography-cost-2026', title: 'How much does real estate photography cost in Canada? (2026)' },
   { href: '/blog/3d-tour-vs-video-walkthrough', title: 'Virtual tour vs. video walkthrough: which sells faster?' },
   { href: '/blog/drone-photography-rules-ontario', title: 'Drone photography rules for real estate in Ontario' },
@@ -68,6 +70,8 @@ export default function AboutPage() {
           ]}
         />
       </section>
+
+      <PublicFaqs title="Questions about Bricks." faqs={ABOUT_FAQS} />
 
       <section className="cm-sec" aria-label="Guides">
         <Head title="Guides." link={{ href: '/blog', label: 'All guides' }} />

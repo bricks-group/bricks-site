@@ -8,11 +8,16 @@ import { COMPANION_URL, STATUS, signupUrl } from '@/lib/brand'
 import { FeatureList } from '@/components/features/Feature'
 import { ESIGN, LAUNCH } from '@/lib/agent-features'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
+import { OG_IMAGE } from '@/lib/og'
+import PublicFaqs from '@/components/PublicFaqs'
+import { AGENT_FAQS } from '@/lib/public-content'
 
 export const metadata: Metadata = {
-  title: 'Bricks for Agents & Teams: Listings, Deals and Media',
-  description: 'Run your pipeline, deals and listings in Bricks, then book listing media from the listing itself. Software plans for agents and teams start free.',
+  title: 'Real Estate Agent Software and Listing Media | Bricks',
+  description: 'Run listings, deals and e-sign in Bricks, and book listing media from the listing at an exact time. Start free on Clay; paid plans from $49 a month.',
   alternates: { canonical: '/agents' },
+  openGraph: { images: [OG_IMAGE], type: 'website', url: 'https://www.brxs.ca/agents', title: 'Real Estate Agent Software and Listing Media | Bricks', description: 'Run listings, deals and e-sign in Bricks, and book listing media from the listing at an exact time. Start free on Clay; paid plans from $49 a month.' },
+  twitter: { title: 'Real Estate Agent Software and Listing Media | Bricks', description: 'Run listings, deals and e-sign in Bricks, and book listing media from the listing at an exact time. Start free on Clay; paid plans from $49 a month.' },
 }
 
 export default function AgentsPage() {
@@ -66,6 +71,8 @@ export default function AgentsPage() {
           ]}
         />
       </section>
+
+      <PublicFaqs title="Questions from agents." faqs={AGENT_FAQS} />
 
       <Close title="Book the shoot from the listing." href="/book" label="Book media" primary={false} />
       <style>{`

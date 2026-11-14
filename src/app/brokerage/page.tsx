@@ -9,6 +9,8 @@ import { osSoftwareApplicationSchema } from '@/lib/schema'
 import { FeatureList } from '@/components/features/Feature'
 import { ESIGN, LAUNCH } from '@/lib/agent-features'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
+import PublicFaqs from '@/components/PublicFaqs'
+import { BROKERAGE_FAQS } from '@/lib/public-content'
 
 export const metadata: Metadata = {
   title: "Real Estate Brokerage Software, Deals & Media | Bricks",
@@ -78,6 +80,8 @@ export default function BrokeragePage() {
           ]}
         />
       </section>
+
+      <PublicFaqs title="Questions from brokerages." faqs={BROKERAGE_FAQS} />
 
       <Close title="Give your agents a reason to stay." href={signupUrl('brokerage')} label="Set up your brokerage" external />
       <style>{`

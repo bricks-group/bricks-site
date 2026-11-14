@@ -13,7 +13,7 @@ import { TODAY_PER_VISIT } from '@/lib/market-rates'
 import { OG_IMAGE } from '@/lib/og'
 import '@/components/software/software.css'
 
-const title = 'With and without Bricks: tools, handoffs and savings | Bricks'
+const title = 'With and Without Bricks: Tools, Handoffs, Savings | Bricks'
 const description = 'See the same work side by side, job by job, with and without Bricks, then work out your own time and money saved with a calculator that uses your numbers and Bricks’ real prices.'
 
 export const metadata: Metadata = {

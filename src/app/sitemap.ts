@@ -19,6 +19,7 @@ const PUBLIC_NOW = [
   { path: '/real-estate-photography', changeFrequency: 'weekly' as const, priority: 0.95 },
   { path: '/media', changeFrequency: 'weekly' as const, priority: 0.9 },
   { path: '/blog', changeFrequency: 'weekly' as const, priority: 0.85 },
+  { path: '/blog/what-is-a-real-estate-operating-system', changeFrequency: 'monthly' as const, priority: 0.8 },
   { path: '/blog/canada-real-estate-photography-cost-2026', changeFrequency: 'monthly' as const, priority: 0.8 },
   { path: '/blog/gta-real-estate-media-cost-2026', changeFrequency: 'monthly' as const, priority: 0.75 },
   { path: '/blog/whats-included-listing-shoot', changeFrequency: 'monthly' as const, priority: 0.75 },

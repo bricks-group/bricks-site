@@ -11,7 +11,7 @@ const MAPPED = PER_VISIT.find((x) => x.key === 'mapped')!
 const SETUP = PER_VISIT.find((x) => x.key === 'setup')!
 const MAPPED_PLAN = PLANS.find((p) => p.kind === 'Mapped')!
 const TITLE = 'Drone Mapping & Orthomosaics for Construction | Bricks'
-const DESC = `Drone mapping for construction sites in Canada: orthomosaics, 3D models and measurable site maps from certified, insured pilots. Mapped capture ${fmt(MAPPED.price)}, or on a monthly site plan.`
+const DESC = `Drone mapping for construction in Canada: orthomosaics, 3D models and measurable site maps from certified pilots. Mapped capture ${fmt(MAPPED.price)} or a monthly plan.`
 
 export const metadata: Metadata = {
   title: TITLE,

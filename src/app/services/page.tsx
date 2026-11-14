@@ -11,7 +11,7 @@ import { OG_IMAGE } from '@/lib/og'
 const title = 'Home services | Bricks'
 const LIST = tradeListPhrase()
 const NUM = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][TRADES.length] || String(TRADES.length)
-const description = `${LIST.charAt(0).toUpperCase()}${LIST.slice(1)}, requested inside Bricks and quoted in writing.`
+const description = `${LIST.charAt(0).toUpperCase()}${LIST.slice(1)}, for listings, rentals and sales, requested inside Bricks and quoted in writing by a person at Bricks.`
 
 export const metadata: Metadata = {
   title,

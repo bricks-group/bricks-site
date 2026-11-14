@@ -10,7 +10,7 @@ import { OG_IMAGE } from '@/lib/og'
 const URL = 'https://www.brxs.ca/move-out-cleaning'
 const T = tradeBySlug('cleaning')!
 const TITLE = 'Move-Out, Turnover & Pre-Listing Cleaning | Bricks'
-const DESC = 'Move-out cleaning, rental turnovers and pre-listing deep cleans, quoted in writing and booked inside Bricks, with room-by-room photo proof when the clean is done.'
+const DESC = 'Move-out cleaning, rental turnovers and pre-listing deep cleans, quoted in writing and booked in Bricks, with room-by-room photo proof when it’s done.'
 
 export const metadata: Metadata = {
   title: TITLE,

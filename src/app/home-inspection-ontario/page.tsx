@@ -9,8 +9,8 @@ import { OG_IMAGE } from '@/lib/og'
 
 const URL = 'https://www.brxs.ca/home-inspection-ontario'
 const T = tradeBySlug('inspections')!
-const TITLE = 'Home Inspection in Ontario: Pre-Listing & Pre-Purchase | Bricks'
-const DESC = 'Pre-listing, pre-purchase, condo and new-build home inspections in Ontario by insured inspectors. A written report with photos, kept with the property in Bricks.'
+const TITLE = 'Home Inspections in Ontario: Pre-Listing & Purchase | Bricks'
+const DESC = 'Pre-listing, pre-purchase, condo and new-build home inspections in Ontario by insured inspectors, with a written photo report kept on the property file.'
 
 export const metadata: Metadata = {
   title: TITLE,

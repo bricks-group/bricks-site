@@ -15,8 +15,8 @@ import { CITY_PAGES } from '@/lib/city-pages'
 import { OG_IMAGE } from '@/lib/og'
 
 const URL = 'https://www.brxs.ca/real-estate-photography'
-const TITLE = 'Real Estate Photography in Canada: Listing Photos & Drone | Bricks'
-const DESC = `Real estate photography across Canada: HDR listing photos from $${PHOTO_RATE[0]}, licensed drone, floor plans, film and virtual tours. Pick an exact time, see one quoted price, photos in 24 hours.`
+const TITLE = 'Real Estate Photography in Canada: Photos & Drone | Bricks'
+const DESC = `Real estate photography across Canada: HDR photos from $${PHOTO_RATE[0]}, licensed drone, floor plans, film and virtual tours. Exact times, one quoted price.`
 
 export const metadata: Metadata = {
   title: TITLE,

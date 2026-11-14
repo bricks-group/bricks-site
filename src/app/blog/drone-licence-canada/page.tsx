@@ -6,7 +6,7 @@ import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
 const PATH = '/blog/drone-licence-canada'
 const TITLE = 'Drone Licence in Canada: Basic vs Advanced (2026) | Bricks'
-const DESC = 'How to get a drone licence in Canada in 2026: Basic, Advanced and Level 1 Complex pilot certificates, age limits, exams, flight reviews, registration and which one real estate work needs.'
+const DESC = 'How to get a drone licence in Canada in 2026: Basic, Advanced and Level 1 Complex certificates, exams, flight reviews and what real estate work needs.'
 const TC = 'https://tc.canada.ca/en/aviation/drone-safety'
 
 export const metadata: Metadata = {

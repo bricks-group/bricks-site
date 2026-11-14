@@ -6,7 +6,7 @@ import { OG_IMAGE } from '@/lib/og'
 export const metadata: Metadata = {
   title: 'Bricks — Delete your account',
   description:
-    'How to delete a Bricks account, in the app or by email, and what Bricks Group deletes and keeps.',
+    'How to delete your Bricks account in the app or by email to privacy@brxs.ca, what Bricks Group deletes and keeps, and the 30-day timeline to finish.',
   alternates: { canonical: '/account-deletion' },
   openGraph: { images: [OG_IMAGE],
     title: 'Bricks — Delete your account',

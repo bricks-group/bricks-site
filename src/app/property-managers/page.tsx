@@ -5,6 +5,8 @@ import { Head, Rows, Close } from '@/components/calm/Calm'
 import { SystemBand, Photo, HeroPlate, PlateImg } from '@/components/clientele/Clientele'
 import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
+import PublicFaqs from '@/components/PublicFaqs'
+import { PM_FAQS } from '@/lib/public-content'
 
 export const metadata: Metadata = {
   title: "Property Management Software, Unit Photos & 3D | Bricks",
@@ -72,6 +74,8 @@ export default function PropertyManagersPage() {
         />
         <p className="cl-note">Your team updates unit status in Bricks. It doesn’t sync with a property management system yet.</p>
       </section>
+
+      <PublicFaqs title="Questions from property managers." faqs={PM_FAQS} />
 
       <Close title="See the work first." href="/gallery" label="See multifamily work" primary={false} />
     </>

@@ -20,18 +20,18 @@ import { mediaServiceSchema, virtualVisitServiceSchema, osSoftwareApplicationSch
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: "Bricks Software Plans & Listing Media Pricing | Canada",
+  title: "Pricing: Software Plans and Listing Media | Bricks",
   description:
-    'Listing media from $248 for HDR photos, licensed drone and a floor plan, priced by home size. Software plans from free, plus brokerage seats. CAD.',
+    'Clay is free; Keystone $49, Marble $99, Diamond $149 a month. Listing media from $248, priced by home size. Brokerage seats from $300 a year. CAD.',
   alternates: { canonical: '/pricing' },
   openGraph: { images: [OG_IMAGE],
-    title: "Bricks Software Plans & Listing Media Pricing | Canada",
+    title: "Pricing: Software Plans and Listing Media | Bricks",
     description: 'Listing media from $248 for HDR photos, licensed drone and a floor plan. Software plans from free.',
     url: 'https://www.brxs.ca/pricing',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Bricks Software Plans & Listing Media Pricing | Canada",
+    title: "Pricing: Software Plans and Listing Media | Bricks",
     description: 'À la carte listing photo rates and software plans for Canadian real estate.',
   },
 }

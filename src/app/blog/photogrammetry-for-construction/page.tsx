@@ -6,7 +6,7 @@ import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
 const PATH = '/blog/photogrammetry-for-construction'
-const TITLE = 'Photogrammetry for Construction: Drone Mapping Guide | Bricks'
+const TITLE = 'Photogrammetry for Construction: Drone Mapping | Bricks'
 const DESC = 'How drone photogrammetry works on a construction site, what it produces, what it’s good for, its limits, and how to run it on a schedule for progress reporting.'
 const MAPPED = PER_VISIT.find((x) => x.key === 'mapped')!
 const SETUP = PER_VISIT.find((x) => x.key === 'setup')!

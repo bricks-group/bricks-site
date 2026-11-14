@@ -49,20 +49,20 @@ const RATE_ROWS: { name: string; cells: string[] }[] = [
 
 export const metadata: Metadata = {
   title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
-  description: "What real estate photography costs in Canada in 2026: market ranges and a full Bricks price table by home size for listing photos, drone, floor plans, video and virtual tours.",
+  description: "What real estate photography costs in Canada in 2026: market ranges, plus the Bricks price table by home size for photos, drone, floor plans and tours.",
   alternates: { canonical: '/blog/canada-real-estate-photography-cost-2026' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'article',
     title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
-    description: "What real estate photography costs in Canada in 2026: market ranges and a full Bricks price table by home size for listing photos, drone, floor plans, video and virtual tours.",
+    description: "What real estate photography costs in Canada in 2026: market ranges, plus the Bricks price table by home size for photos, drone, floor plans and tours.",
     images: [OG],
     url: 'https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026',
   },
   twitter: {
     card: 'summary_large_image',
     title: "Real Estate Photography Costs in Canada, 2026 | Bricks",
-    description: "What real estate photography costs in Canada in 2026: market ranges and a full Bricks price table by home size for listing photos, drone, floor plans, video and virtual tours.",
+    description: "What real estate photography costs in Canada in 2026: market ranges, plus the Bricks price table by home size for photos, drone, floor plans and tours.",
     images: [OG],
   },
 }

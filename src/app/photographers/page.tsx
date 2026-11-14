@@ -10,13 +10,13 @@ import { OG_IMAGE } from '@/lib/og'
 const OG = OG_IMAGE
 
 export const metadata: Metadata = {
-  title: "Real Estate Photographer Jobs in Toronto & Across Canada | Bricks",
+  title: "Real Estate Photographer Jobs in Toronto & Canada | Bricks",
   description:
-    'Real estate photography jobs in Toronto, the GTA and across Canada. Jobs come to you in the Bricks app at a fixed rate per job, with automatic payouts. Apply in about four minutes.',
+    'Real estate photography jobs in Toronto, the GTA and across Canada. A fixed rate per job in the Bricks app, automatic payouts. Apply in about four minutes.',
   alternates: { canonical: '/photographers' },
   robots: { index: true, follow: true },
   openGraph: {
-    title: "Real Estate Photographer Jobs in Toronto & Across Canada | Bricks",
+    title: "Real Estate Photographer Jobs in Toronto & Canada | Bricks",
     description:
       'Shoot listings across Canada at a fixed rate per job. Apply in about four minutes.',
     images: [OG],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Real Estate Photographer Jobs in Toronto & Across Canada | Bricks",
+    title: "Real Estate Photographer Jobs in Toronto & Canada | Bricks",
     description: 'Shoot listings across Canada at a fixed rate per job.',
     images: [OG],
   },

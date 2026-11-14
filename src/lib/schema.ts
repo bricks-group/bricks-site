@@ -300,6 +300,7 @@ export const PAGE_NAMES: Record<string, string> = {
   '/real-estate-photography/toronto': 'Toronto', '/real-estate-photography/ottawa': 'Ottawa',
   '/real-estate-photography/calgary': 'Calgary', '/real-estate-photography/vancouver': 'Vancouver',
   '/blog/drone-licence-canada': 'Drone licence in Canada', '/blog/what-is-an-orthomosaic': 'What is an orthomosaic',
+  '/blog/what-is-a-real-estate-operating-system': 'What is a real estate operating system',
   '/blog/photogrammetry-for-construction': 'Photogrammetry for construction',
   '/blog/home-inspection-cost-ontario': 'Home inspection cost in Ontario',
   '/blog/move-out-cleaning-checklist': 'Move-out cleaning checklist',
