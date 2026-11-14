@@ -3,8 +3,8 @@
  * built from these arrays, so the schema always matches what visitors read. Every price comes
  * from the catalog (pricing.ts, catalog.ts); faq-prices.test.ts checks them.
  */
-import { CORE_FROM, RUSH_FLAT, STAGING_PER_IMAGE, STAGING_PRICE_LABEL, TOUR_RANGE, TRAVEL_FREE_KM, TRAVEL_PER_KM, TWILIGHT_RANGE, VIRTUAL_STAGING_ENABLED, VISIT_PRICE_LABEL } from './pricing'
-import { ADDONS_BLURB, OFFICE_PLANS, OFFICE_SEAT_PRICE_PER_MONTH, SOFTWARE_PLANS } from './catalog'
+import { CORE_FROM, RUSH_FLAT, STAGING_PRICE_LABEL, TOUR_RANGE, TRAVEL_FREE_KM, TRAVEL_PER_KM, TWILIGHT_RANGE, VIRTUAL_STAGING_ENABLED, VISIT_PRICE_LABEL } from './pricing'
+import { OFFICE_SEAT_PRICE_PER_YEAR } from './catalog'
 import { TOUR_NAME, VISIT_NAME } from './brand'
 
 /** An answer is text plus optional links; `a` is the plain text used in the schema. */
@@ -16,20 +16,19 @@ const faq = (q: string, ...parts: FaqPart[]): RichFaq => ({ q, parts, a: parts.m
 export const TRAVEL_ANSWER = `Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer’s location: the first ${TRAVEL_FREE_KM} km are free, then $${TRAVEL_PER_KM.toFixed(2)} per additional km. Your assigned photographer and final travel fee are confirmed before payment.`
 const MLS_SAFE = 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.'
 
-const seatLine = OFFICE_PLANS.map((p) => `${p.name} (${p.id === 'boutique' ? p.seats : p.seats.replace(' seats', '')}), $${OFFICE_SEAT_PRICE_PER_MONTH[p.id]} monthly or $${p.seatPricePerYear} annually`).join('; ')
-const planNames = SOFTWARE_PLANS.map((p) => p.name)
-const planList = `${planNames.slice(0, -1).join(', ')} or ${planNames[planNames.length - 1]}`
 
+// Kam (2026-11-14): /pricing keeps the calm FAQ from the live calm pricing page. Short answers, no
+// per-tier price lists, Brixton named. Full prices live in the pricing tables above the FAQ.
 export const PRICING_FAQS: readonly RichFaq[] = [
-  faq('What’s in Essentials?', `HDR photos, licensed drone and a floor plan in one shoot, from $${CORE_FROM}.`),
+  faq('What’s in Essentials?', 'HDR photos, licensed drone and a floor plan in one shoot.'),
   faq('Are the photos MLS®-safe?', MLS_SAFE),
   faq('How does travel work?', TRAVEL_ANSWER),
   faq('How is home size measured?', 'By finished area and complexity. Not sure? Choose “advise me” when you book and we’ll size it from the address.'),
-  faq('Virtual tour or virtual visit?', `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).`),
-  ...(VIRTUAL_STAGING_ENABLED ? [faq('What is virtual staging?', `Furniture added to photos of vacant rooms, marked as virtually staged. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.`)] : []),
+  faq('Virtual tour or virtual visit?', 'A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.'),
+  ...(VIRTUAL_STAGING_ENABLED ? [faq('What is virtual staging?', 'Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.')] : []),
   faq('Where do you shoot?', 'Across Canada. Ask and we’ll confirm your area and quote any travel.'),
-  faq('Can I add AI without upgrading?', ADDONS_BLURB),
-  faq('Brokerage or individual plan?', `Agents choose ${planList}. Brokerages buy seats: ${seatLine}. Prices are per seat in CAD, before tax. Every seat gets all of Bricks plus trust accounting.`),
+  faq('Can I add Brixton AI without changing plan?', 'Yes. Brixton AI is one switch on a paid plan. Diamond includes it.'),
+  faq('Brokerage or individual plan?', `Agents start free, or pick a paid plan. Offices buy seats, from $${OFFICE_SEAT_PRICE_PER_YEAR.franchise.toLocaleString('en-CA')} a year. Every seat gets all of Bricks plus trust accounting.`),
 ]
 
 export const BOOK_FAQS: readonly RichFaq[] = [

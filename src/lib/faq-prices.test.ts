@@ -88,19 +88,29 @@ for (const [page, faqs, files] of [
   })
 }
 
-test('/pricing and /book FAQ prices come from the catalog', () => {
+// Kam (2026-11-14): /pricing keeps the calm FAQ (no per-tier lists, Brixton named); /book keeps its catalog prices.
+test('/pricing FAQ is the calm version; /book FAQ prices come from the catalog', () => {
   const all = (fs: readonly { a: string }[]) => fs.map((f) => f.a).join(' ')
   const p = all(PRICING_FAQS), b = all(BOOK_FAQS)
-  for (const t of [p, b]) assert.ok(t.includes(`$${CORE_FROM}.`) && t.includes(TRAVEL_ANSWER))
+  for (const t of [p, b]) assert.ok(t.includes(TRAVEL_ANSWER))
+  assert.ok(b.includes(`$${CORE_FROM}.`))
   assert.ok(TRAVEL_ANSWER.includes(`first ${TRAVEL_FREE_KM} km`) && TRAVEL_ANSWER.includes(`$${TRAVEL_PER_KM.toFixed(2)} per additional km`))
-  assert.ok(p.includes(TOUR_RANGE) && p.includes(VISIT_PRICE_LABEL.toLowerCase()))
-  for (const v of [...Object.values(OFFICE_SEAT_PRICE_PER_YEAR), ...Object.values(OFFICE_SEAT_PRICE_PER_MONTH)]) assert.ok(p.includes(`$${v}`), `$${v}`)
+  assert.ok(PRICING_FAQS.some((f) => f.q === 'Can I add Brixton AI without changing plan?' && f.a === 'Yes. Brixton AI is one switch on a paid plan. Diamond includes it.'))
+  const bro = PRICING_FAQS.find((f) => f.q === 'Brokerage or individual plan?')!.a
+  assert.ok(bro.startsWith(`Agents start free, or pick a paid plan. Offices buy seats, from $${OFFICE_SEAT_PRICE_PER_YEAR.franchise} a year.`), bro)
+  const noTravel = PRICING_FAQS.filter((f) => f.a !== TRAVEL_ANSWER && f !== PRICING_FAQS.find((x) => x.q === 'Brokerage or individual plan?'))
+  for (const f of noTravel) assert.ok(!/\$\d/.test(f.a), `price in: ${f.q}`)
+  for (const v of Object.values(OFFICE_SEAT_PRICE_PER_MONTH)) assert.ok(!p.includes(`$${v} monthly`), `$${v} monthly`)
+  for (const pl of SOFTWARE_PLANS) assert.ok(!p.includes(pl.name) || pl.name === 'Diamond', pl.name)
   assert.ok(b.includes(`+$${RUSH_FLAT}`) && b.includes(TWILIGHT_RANGE) && b.includes(TOUR_RANGE))
 })
 
-test('team, commercial, investor and REIT FAQs use catalog prices', () => {
-  const team = TEAMS_FAQS.map((f) => f.a).join(' ')
-  assert.ok(team.includes(`$${TEAM_EXTRA_SEAT.monthly} a month, or $${TEAM_EXTRA_SEAT.yearly} a year`))
+test('team FAQ has no prices; commercial, investor and REIT FAQs use catalog prices', () => {
+  // Kam (2026-11-14): no plan names or prices in the /teams FAQ.
+  for (const f of TEAMS_FAQS) {
+    assert.ok(!/\$\d/.test(`${f.q} ${f.a}`), `price in: ${f.q}`)
+    for (const pl of SOFTWARE_PLANS) assert.ok(!`${f.q} ${f.a}`.includes(pl.name), `${pl.name} in: ${f.q}`)
+  }
   assert.match(read('src/app/teams/page.tsx'), new RegExp(`\\$${TEAM_EXTRA_SEAT.monthly} per agent a month, or \\$${TEAM_EXTRA_SEAT.yearly} a year`))
   const cre = COMMERCIAL_FAQS.map((f) => f.a).join(' ')
   for (const k of ['cre_leasing_s', 'cre_leasing_m', 'cre_leasing_l', 'cre_aerial']) assert.ok(cre.includes(money(ONE_OFFS[k].cents)), k)

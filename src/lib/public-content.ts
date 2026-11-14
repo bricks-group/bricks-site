@@ -1,6 +1,5 @@
 /** Shared public definitions: visible answers, structured data and the AI text export. */
 import { PER_VISIT, PLANS, fmt } from './commercial'
-import { TEAM_EXTRA_SEAT } from './catalog'
 import { ONE_OFFS, money } from './propertyCheckout'
 export const BRICKS_DEFINITION = 'Bricks is subscription software for Canadian real estate: builders, developers, investors, brokerages, teams and realtors. Listing media, Virtual Visit free-roam 3D and Site Progress — drone mapping, orthomosaics, models, documents, reports and comparisons over time — are services booked inside Bricks. Bricks Group is based in Ontario, Canada.'
 
@@ -76,10 +75,11 @@ export const BROKERAGE_FAQS = [
 ] as const
 
 // W2.1 (handoff §2, 2026-11-14): FAQs for /teams, /investors, /reits and /commercial.
+// Kam (2026-11-14): the /teams FAQ names no plans and shows no prices, like /agents.
 // Each page renders these through PublicFaqs, so the FAQPage JSON-LD matches the visible text.
 export const TEAMS_FAQS = [
   { q: 'Who counts as an agent on a team plan?', a: 'The lead and up to five agents share the lead’s plan, six in all. Each agent joins from an email invite and keeps their own login.' },
-  { q: 'What does an extra agent cost?', a: `Past six agents, each extra agent is $${TEAM_EXTRA_SEAT.monthly} a month, or $${TEAM_EXTRA_SEAT.yearly} a year, CAD plus tax. From about 17 agents, brokerage seats can cost less.` },
+  { q: 'What if our team grows past six?', a: 'Add more agents to the team plan, or move to brokerage seats as the office grows. Current prices are on the pricing page.' },
   { q: 'Can the team lead see every deal?', a: 'Yes. Everyone works from the same pipeline, and the lead sees every deal and listing, with who owns each one.' },
 ] as const
 
