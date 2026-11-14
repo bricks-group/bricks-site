@@ -285,7 +285,7 @@ export const PAGE_NAMES: Record<string, string> = {
   '/contact': 'Contact', '/gallery': 'Gallery', '/service-areas': 'Service areas',
   '/real-estate-photography': 'Real estate photography', '/photographers': 'Photographers',
   '/work-with-bricks': 'Work with Bricks', '/services': 'Home services', '/blog': 'Guides',
-  '/fall-market': 'Fall listing media', '/legal': 'Legal', '/terms': 'Terms of Service',
+  '/legal': 'Legal', '/terms': 'Terms of Service',
   '/privacy': 'Privacy Policy', '/dpa': 'Data Processing Agreement', '/account-deletion': 'Account deletion',
   '/blog/3d-tour-vs-video-walkthrough': 'Virtual tours vs video walkthroughs',
   '/blog/canada-real-estate-photography-cost-2026': 'Canada photography costs',
