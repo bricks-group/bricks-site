@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { addressedToHelp, answerSentences, classifyEmail, relatedLinks, flags, processEvent, signForTest, suppressionReason, threadKey, verifySignature, type ReceivedEmail } from './inbound.ts'
+import { addressedToHelp, answerSentences, classifyEmail, relatedLinks, flags, handleInboundRequest, inboxDbDownAlert, osInboundSaver, processEvent, safeMailExcerpt, signForTest, suppressionReason, threadKey, unavailableDb, verifySignature, type InboundRecord, type ReceivedEmail, type SaveInboundResult } from './inbound.ts'
 import type { Db } from './db.ts'
 
 const SECRET = 'whsec_' + Buffer.from('test-secret-key-123').toString('base64')
@@ -24,8 +24,20 @@ function memDb() {
       return { ok: true, status: 204 }
     },
     async select(table, q) {
-      const m = q.match(/provider_event_id=eq\.([^&]+)/)
-      return { ok: true, rows: (t[table] ?? []).filter((r) => !m || r.provider_event_id === decodeURIComponent(m[1])) }
+      const eq = (key: string) => {
+        const m = q.match(new RegExp(`${key}=eq\\.([^&]+)`))
+        return m ? decodeURIComponent(m[1]) : undefined
+      }
+      return {
+        ok: true,
+        rows: (t[table] ?? []).filter((r) => {
+          for (const key of ['provider_event_id', 'provider_email_id', 'rfc_message_id', 'idempotency_key', 'thread_id', 'thread_key']) {
+            const want = eq(key)
+            if (want !== undefined && String(r[key]) !== want) return false
+          }
+          return true
+        }),
+      }
     },
     async rpc() { return { ok: true, data: 1 } },
   }
@@ -155,7 +167,7 @@ describe('processing in shadow mode', () => {
     assert.equal(out.status, 'auto')
     assert.equal(t.support_email_outbound[0].status, 'sent')
     // second routine email on the same thread inside 24h is drafted, not sent (memDb select returns all rows)
-    await processEvent('m2', ev('e2'), { db, fetchEmail: async () => mail({ message_id: '<m2@x>', headers: { References: '<m1@example.com>' } }), flags: f, send })
+    await processEvent('m2', ev('e2'), { db, fetchEmail: async () => mail({ message_id: '<m2@x>' }), flags: f, send })
     // escalations are never sent
     await processEvent('m3', ev('e3'), { db, fetchEmail: async () => mail({ message_id: '<m3@x>', subject: 'Refund', text: 'I want a refund for my shoot' }), flags: f, send })
     assert.deepEqual(sent, ['client@example.com'])
@@ -262,5 +274,157 @@ describe('owner alerts', () => {
     assert.match(txt, /Help › Booking/)
     assert.equal(txt.split('\n').filter((l) => l.startsWith('Page:')).length, 1)
     assert.equal(txt.split('\n').filter((l) => l.startsWith('From:')).length, 1)
+  })
+})
+
+describe('fail-open alerts when the support inbox DB is down', () => {
+  const downMail = () => mail({ subject: 'Booking question', text: 'Can I book a shoot in Barrie next week? The unit is on Maple Street.' })
+
+  function alerts() {
+    const calls: { kind: string; who: string; subject?: string; latest: string; key: string }[] = []
+    const alert = async (a: { view: { kind: string; who: string; subject?: string; latest: string }; idempotencyKey: string }) => {
+      calls.push({ kind: a.view.kind, who: a.view.who, subject: a.view.subject, latest: a.view.latest, key: a.idempotencyKey })
+      return { ok: true, id: 'alert' }
+    }
+    return { calls, alert }
+  }
+
+  it('still alerts with sender, subject and a short excerpt when saves return 402', async () => {
+    inboxDbDownAlert.reset()
+    const { calls, alert } = alerts()
+    const out = await processEvent('m-down', ev('e-down'), { db: unavailableDb(), fetchEmail: async () => downMail(), flags: SHADOW, alert })
+    assert.equal(out.http, 500)
+    assert.equal(out.status, 'retry')
+    const mailAlert = calls.find((c) => c.key === 'alert:e-down')
+    assert.ok(mailAlert, JSON.stringify(calls))
+    assert.equal(mailAlert.who, 'client@example.com')
+    assert.equal(mailAlert.subject, 'Booking question')
+    assert.match(mailAlert.latest, /book a shoot in Barrie/)
+    assert.ok(mailAlert.latest.length <= 280)
+    const down = calls.find((c) => c.subject === 'Support inbox database is down')
+    assert.ok(down, 'expected a one-time DB-down alert')
+  })
+
+  it('dedupes the DB-down alert within an hour, and sends it again after', async () => {
+    inboxDbDownAlert.reset()
+    let now = 10_000_000
+    inboxDbDownAlert.now = () => now
+    inboxDbDownAlert.lastAt = 0
+    const { calls, alert } = alerts()
+    const deps = { db: unavailableDb(), fetchEmail: async () => downMail(), flags: SHADOW, alert }
+    await processEvent('m-a', ev('e-a'), deps)
+    await processEvent('m-b', ev('e-b'), deps)
+    const downs = () => calls.filter((c) => c.subject === 'Support inbox database is down')
+    assert.equal(downs().length, 1)
+    assert.equal(calls.filter((c) => c.key === 'alert:e-a' || c.key === 'alert:e-b').length, 2)
+    now += 60 * 60 * 1000
+    await processEvent('m-c', ev('e-c'), deps)
+    assert.equal(downs().length, 2)
+    inboxDbDownAlert.now = () => Date.now()
+    inboxDbDownAlert.reset()
+  })
+
+  it('safeMailExcerpt strips tags and caps length', () => {
+    assert.equal(safeMailExcerpt('  Hi <b>there</b>\n\nfriend  '), 'Hi there friend')
+    const long = 'x'.repeat(400)
+    assert.equal(safeMailExcerpt(long).length, 280)
+    assert.ok(safeMailExcerpt(long).endsWith('…'))
+  })
+})
+
+describe('signature is verified before parse or save', () => {
+  const SECRET = 'whsec_' + Buffer.from('test-secret-key-123').toString('base64')
+  const now = 1_800_000_000
+  const body = JSON.stringify(ev('e-sig'))
+
+  it('rejects a bad signature without saving or alerting', async () => {
+    const { db, t } = memDb()
+    const saved: string[] = []
+    const alerted: string[] = []
+    const out = await handleInboundRequest({
+      secret: SECRET,
+      headers: { id: 'msg_x', timestamp: String(now), signature: 'v1,notvalid' },
+      body,
+      nowSec: now,
+      deps: {
+        db,
+        saveInbound: async (record) => { saved.push(record.svix_id); return { ok: true, status: 'shadow_drafted' } },
+        fetchEmail: async () => mail(),
+        flags: SHADOW,
+        alert: async () => { alerted.push('yes'); return { ok: true, id: 'a' } },
+      },
+    })
+    assert.equal(out.http, 401)
+    assert.deepEqual(saved, [])
+    assert.deepEqual(alerted, [])
+    assert.deepEqual(Object.keys(t), [])
+  })
+
+  it('parses and saves only after a valid signature', async () => {
+    const { db } = memDb()
+    const sig = signForTest(SECRET, 'msg_ok', String(now), body)
+    const out = await handleInboundRequest({
+      secret: SECRET,
+      headers: { id: 'msg_ok', timestamp: String(now), signature: sig },
+      body,
+      nowSec: now,
+      deps: { db, fetchEmail: async () => mail(), flags: SHADOW },
+    })
+    assert.equal(out.http, 200)
+    assert.equal(out.body.status, 'shadow_drafted')
+  })
+})
+
+describe('OS inbound saver and fail-open alerting', () => {
+  it('POSTs the parsed message to api.brxs.ca with the internal key and never logs it', async () => {
+    const calls: { url: string; headers: Record<string, string>; body: InboundRecord }[] = []
+    const save = osInboundSaver(
+      { BRICKS_OS_API_URL: 'https://api.brxs.ca', INTERNAL_API_KEY: 'super-secret-key' },
+      (async (url, init) => {
+        calls.push({ url: String(url), headers: init?.headers as Record<string, string>, body: JSON.parse(String(init?.body)) })
+        return new Response(JSON.stringify({ ok: true, duplicate: false, status: 'shadow_drafted', thread_id: 't1' }), { status: 200 })
+      }) as typeof fetch,
+    )
+    const result = await save({ svix_id: 'msg_1', email_id: 'e1', from: 'a@b.co', to: ['help@brxs.ca'], received_for: [], subject: 'Hi', text: 'Hello', thread_key: 'sub:a@b.co|hi' })
+    assert.equal(result.ok, true)
+    assert.equal(calls[0].url, 'https://api.brxs.ca/api/support/inbound')
+    assert.equal(calls[0].headers['X-Internal-Api-Key'], 'super-secret-key')
+    assert.equal(calls[0].body.svix_id, 'msg_1')
+  })
+
+  it('alerts with sender, subject and excerpt when the OS save fails, and returns 500', async () => {
+    inboxDbDownAlert.now = () => Date.now()
+    inboxDbDownAlert.reset()
+    const calls: { key: string; subject?: string; who: string; latest: string }[] = []
+    const out = await processEvent('m-down', ev('e-down'), {
+      saveInbound: async () => ({ ok: false, http: 500, error: 'save_failed' }),
+      fetchEmail: async () => mail({ subject: 'Booking question', text: 'Can I book a shoot in Barrie next week?' }),
+      flags: SHADOW,
+      alert: async (a) => {
+        calls.push({ key: a.idempotencyKey, subject: a.view.subject, who: a.view.who, latest: a.view.latest })
+        return { ok: true, id: 'a' }
+      },
+    })
+    assert.equal(out.http, 500)
+    assert.equal(out.status, 'retry')
+    const mailAlert = calls.find((c) => c.key === 'alert:e-down')
+    assert.ok(mailAlert)
+    assert.equal(mailAlert!.who, 'client@example.com')
+    assert.equal(mailAlert!.subject, 'Booking question')
+    assert.match(mailAlert!.latest, /book a shoot in Barrie/)
+    assert.ok(calls.some((c) => c.subject === 'Support inbox database is down'))
+  })
+
+  it('does not alert a second time when the OS save reports a duplicate retry', async () => {
+    inboxDbDownAlert.reset()
+    const keys: string[] = []
+    const saveInbound = async (): Promise<SaveInboundResult> => ({ ok: true, duplicate: true, status: 'processed' })
+    const alert = async (a: { idempotencyKey: string }) => { keys.push(a.idempotencyKey); return { ok: true, id: 'a' } }
+    const deps = { saveInbound, fetchEmail: async () => mail(), flags: SHADOW, alert }
+    const first = await processEvent('m-dup', ev('e-dup'), { ...deps, saveInbound: async () => ({ ok: true, duplicate: false, status: 'shadow_drafted', outbound_id: 'o1', thread_id: 't1' }) })
+    assert.equal(first.status, 'shadow_drafted')
+    const again = await processEvent('m-dup', ev('e-dup'), deps)
+    assert.equal(again.status, 'duplicate')
+    assert.deepEqual(keys, ['alert:e-dup'])
   })
 })

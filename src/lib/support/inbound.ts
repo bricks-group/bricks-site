@@ -259,46 +259,315 @@ export type Outcome = { http: number; status: string; detail?: string }
 
 const htmlToText = (h: string) => h.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/gi, ' ').replace(/<br\s*\/?>|<\/p>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').trim()
 
-export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db: Db; fetchEmail: FetchEmail | null; flags: Flags; env?: Env; send?: (o: { to: string; subject: string; text: string; inReplyTo: string; idempotencyKey: string }) => Promise<{ id: string }>; alert?: AlertSender }): Promise<Outcome> {
-  const { db } = deps
+
+/** Short plaintext excerpt for fail-open owner alerts. Strips tags and control chars. */
+export function safeMailExcerpt(text: string, n = 280): string {
+  const s = String(text || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return s.length > n ? s.slice(0, n - 1) + '…' : s
+}
+
+/** Stand-in used when Supabase is unconfigured, so fail-open alerting still runs. */
+export function unavailableDb(): Db {
+  return {
+    insert: async () => ({ ok: false, status: 402, rows: [] }),
+    update: async () => ({ ok: false, status: 402 }),
+    select: async () => ({ ok: false, rows: [] }),
+    rpc: async () => ({ ok: false, data: null }),
+  }
+}
+
+/** Per-isolate hourly cap for the "support inbox DB is down" alert. No KV. */
+export const inboxDbDownAlert = {
+  lastAt: 0,
+  intervalMs: 60 * 60 * 1000,
+  now: () => Date.now(),
+  reset() {
+    this.lastAt = 0
+  },
+}
+
+export async function alertWhenInboxSaveFails(
+  deps: { alert?: AlertSender; env?: Env },
+  info: { from: string; subject: string; excerpt: string; emailId?: string },
+): Promise<void> {
+  if (!deps.alert) return
+  const env = deps.env ?? process.env
+  try {
+    await deps.alert({
+      view: {
+        kind: 'email_needs_kam',
+        helpNo: null,
+        who: info.from || 'unknown sender',
+        replyTo: info.from || 'raph@brxs.ca',
+        subject: info.subject || '(no subject)',
+        latest: info.excerpt || '(no excerpt — the inbox could not be saved)',
+        reasons: ['no_draft'],
+        draft: null,
+        reviewUrl: reviewLink(env),
+      },
+      idempotencyKey: (info.emailId ? `alert:${info.emailId}` : `alert-unsaved:${info.from}:${info.subject}`).slice(0, 256),
+      meta: { Email: info.emailId ?? '', Note: 'Support inbox save failed' },
+    })
+  } catch (e) {
+    console.error('support fail-open alert threw', e instanceof Error ? e.message : e)
+  }
+  const now = inboxDbDownAlert.now()
+  if (now - inboxDbDownAlert.lastAt < inboxDbDownAlert.intervalMs) return
+  inboxDbDownAlert.lastAt = now
+  try {
+    const r = await deps.alert({
+      view: {
+        kind: 'email_needs_kam',
+        helpNo: null,
+        who: 'Bricks support inbox',
+        replyTo: 'raph@brxs.ca',
+        subject: 'Support inbox database is down',
+        latest: 'The help@ inbox could not be saved. Inbound mail is being sent to you as an alert until the database is back.',
+        reasons: ['no_draft'],
+        draft: null,
+        reviewUrl: reviewLink(env),
+      },
+      idempotencyKey: `alert:db-down:${Math.floor(now / inboxDbDownAlert.intervalMs)}`,
+      meta: { Note: 'Hourly support inbox DB-down alert' },
+    })
+    if (!r.ok) inboxDbDownAlert.lastAt = 0
+  } catch (e) {
+    inboxDbDownAlert.lastAt = 0
+    console.error('support db-down alert threw', e instanceof Error ? e.message : e)
+  }
+}
+
+export type InboundRecord = {
+  svix_id: string
+  email_id?: string
+  event_type?: string
+  created_at?: string
+  from: string
+  to: string[]
+  received_for: string[]
+  subject: string
+  text: string
+  message_id?: string
+  in_reply_to?: string
+  references?: string
+  authentication?: { dkim?: string; dmarc?: string } | null
+  thread_key: string
+  suppressed_reason?: string | null
+  internal_test?: boolean
+  classification?: Classification | null
+  can_auto?: boolean
+  outbound_subject?: string
+  status?: 'pending_fetch' | 'failed' | 'dead_letter'
+  last_error?: string | null
+}
+
+export type SaveInboundResult = {
+  ok: boolean
+  http?: number
+  duplicate?: boolean
+  status?: string
+  thread_id?: string
+  help_no?: number | null
+  outbound_id?: string | null
+  inbound_message_id?: string | null
+  error?: string
+}
+
+type ProcessDeps = {
+  db?: Db
+  saveInbound?: (record: InboundRecord) => Promise<SaveInboundResult>
+  fetchEmail: FetchEmail | null
+  flags: Flags
+  env?: Env
+  send?: (o: { to: string; subject: string; text: string; inReplyTo: string; idempotencyKey: string }) => Promise<{ id: string }>
+  alert?: AlertSender
+}
+
+/** Production saver: POST the parsed message to the OS API (direct Postgres). */
+export function osInboundSaver(env: Env = process.env, f: typeof fetch = fetch) {
+  const base = (env.BRICKS_OS_API_URL || 'https://api.brxs.ca').replace(/\/$/, '')
+  const key = (env.INTERNAL_API_KEY || env.BRICKS_INTERNAL_API_KEY || '').trim()
+  return async (record: InboundRecord): Promise<SaveInboundResult> => {
+    if (!key) return { ok: false, http: 503, error: 'internal_key_missing' }
+    try {
+      const r = await f(`${base}/api/support/inbound`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Internal-Api-Key': key },
+        body: JSON.stringify(record),
+      })
+      const j = (await r.json().catch(() => ({}))) as SaveInboundResult
+      if (!r.ok) return { ok: false, http: r.status, error: typeof j.error === 'string' ? j.error : 'save_failed', duplicate: Boolean(j.duplicate) }
+      return { ok: true, http: r.status, ...j }
+    } catch {
+      return { ok: false, http: 500, error: 'save_failed' }
+    }
+  }
+}
+
+/** Test / legacy adapter: the same record shape, written through a Db (in-memory in tests). */
+export async function legacySave(db: Db, record: InboundRecord): Promise<SaveInboundResult> {
+  const svixId = record.svix_id
+  const ins = await db.insert('support_email_events', {
+    provider_event_id: svixId, email_id: record.email_id, event_type: record.event_type || 'email.received', status: 'received',
+    payload: { from: record.from, to: record.to, received_for: record.received_for, subject: record.subject, message_id: record.message_id, created_at: record.created_at }, attempts: 1,
+  }, { onConflict: 'provider_event_id', ignoreDuplicates: true })
+  if (!ins.ok) return { ok: false, http: 500, error: 'db_unavailable' }
+  if (!ins.rows.length) {
+    const ex = await db.select('support_email_events', `provider_event_id=eq.${encodeURIComponent(svixId)}&select=id,status,attempts`)
+    if (!ex.ok) return { ok: false, http: 500, error: 'db_unavailable' }
+    const row = ex.rows[0]
+    if (row && ['processed', 'ignored', 'suppressed', 'dead_letter'].includes(String(row.status))) {
+      return { ok: true, http: 200, duplicate: true, status: String(row.status), thread_id: undefined }
+    }
+    await db.update('support_email_events', { provider_event_id: svixId }, { attempts: Number(row?.attempts ?? 0) + 1, updated_at: new Date().toISOString() })
+  }
+  const mark = (status: string, last_error: string | null = null) =>
+    db.update('support_email_events', { provider_event_id: svixId }, { status, last_error, updated_at: new Date().toISOString() })
+
+  if (record.status === 'pending_fetch' || record.status === 'failed' || record.status === 'dead_letter') {
+    await mark(record.status, record.last_error ?? null)
+    return { ok: true, http: 200, duplicate: false, status: record.status }
+  }
+
+  const th = await db.insert('support_email_threads', {
+    thread_key: record.thread_key, subject: record.subject, customer_email: record.from, last_message_at: new Date().toISOString(),
+  }, { onConflict: 'thread_key' })
+  if (!th.ok) return { ok: false, http: 500, error: 'thread_upsert' }
+  const threadId = String(th.rows[0]?.id ?? '')
+  if (!threadId) return { ok: false, http: 500, error: 'thread_upsert' }
+
+  const existingMsg = record.email_id
+    ? await db.select('support_email_messages', `provider_email_id=eq.${encodeURIComponent(record.email_id)}&select=id`)
+    : { ok: true, rows: [] as Record<string, unknown>[] }
+  let messageRowId: unknown = existingMsg.rows[0]?.id ?? null
+  if (!messageRowId) {
+    const msg = await db.insert('support_email_messages', {
+      thread_id: threadId, direction: 'inbound', provider_email_id: record.email_id, rfc_message_id: record.message_id || null,
+      in_reply_to: record.in_reply_to || null, references_header: record.references || null,
+      from_email: record.from, to_emails: [...record.to, ...record.received_for], subject: record.subject, text_body: record.text,
+      received_at: record.created_at || null,
+      classification: record.classification ? {
+        test: Boolean(record.internal_test), routine: record.classification.routine, category: record.classification.category,
+        reasons: record.classification.reasons, index_version: record.classification.indexVersion, auth: record.authentication ?? null,
+      } : null,
+      suppressed_reason: record.suppressed_reason,
+    }, { onConflict: 'provider_email_id', ignoreDuplicates: true })
+    if (!msg.ok) return { ok: false, http: 500, error: 'message_insert' }
+    messageRowId = msg.rows[0]?.id ?? existingMsg.rows[0]?.id ?? null
+  }
+
+  if (record.suppressed_reason || !record.classification) {
+    await mark('suppressed', record.suppressed_reason ?? null)
+    return { ok: true, http: 200, duplicate: false, status: 'suppressed', thread_id: threadId, help_no: (th.rows[0]?.help_no as number | undefined) ?? null, inbound_message_id: messageRowId ? String(messageRowId) : null }
+  }
+
+  const cls = record.classification
+  let opsId: unknown = null
+  if (!cls.routine) {
+    const o = await db.insert('ops_escalations', {
+      escalation_type: 'support_email', status: 'open', attempt_count: 1,
+      notes: `${record.internal_test ? '[INTERNAL TEST] ' : ''}help@ email from ${record.from}: "${record.subject}"\nReasons: ${cls.reasons.join(', ')}\nThread: support_email_threads.id=${threadId}\n--- Suggested reply ---\n${cls.draft}`.slice(0, 8000),
+    })
+    opsId = o.rows[0]?.id ?? null
+  }
+  const ledger = await db.insert('support_email_outbound', {
+    thread_id: threadId, inbound_message_id: messageRowId, idempotency_key: `reply:${record.email_id}`,
+    mode: record.can_auto ? 'auto' : 'shadow', status: record.can_auto ? 'queued' : 'shadow', category: cls.category,
+    needs_kam: !cls.routine, escalation_reasons: cls.reasons, to_email: record.from,
+    subject: record.outbound_subject || `${record.subject.match(/^re:/i) ? record.subject : `Re: ${record.subject}`}${th.rows[0]?.help_no ? ` · Help #${th.rows[0].help_no}` : ''}`,
+    body_text: cls.draft, citations: cls.citations,
+    index_version: cls.indexVersion, ops_escalation_id: opsId,
+  }, { onConflict: 'idempotency_key', ignoreDuplicates: true })
+  if (!ledger.ok) return { ok: false, http: 500, error: 'outbound_insert' }
+  await db.update('support_email_threads', { id: threadId }, { status: cls.routine ? 'drafted' : 'escalated', category: cls.category })
+  await mark('processed')
+  const status = record.can_auto ? 'auto' : (cls.routine ? 'shadow_drafted' : 'escalated')
+  return {
+    ok: true, http: 200, duplicate: false, status,
+    thread_id: threadId, help_no: (th.rows[0]?.help_no as number | undefined) ?? null,
+    outbound_id: ledger.rows[0] ? String(ledger.rows[0].id) : null,
+    inbound_message_id: messageRowId ? String(messageRowId) : null,
+  }
+}
+
+export async function processEvent(svixId: string, ev: WebhookEvent, deps: ProcessDeps): Promise<Outcome> {
   const env = deps.env ?? process.env
   if (ev.type !== 'email.received' || !ev.data?.email_id) return { http: 200, status: 'ignored', detail: 'event_type' }
   const meta = ev.data
   const to = meta.to ?? [], rf = meta.received_for ?? []
 
-  // Never touch hello@/privacy@ mail; don't even store its metadata.
   if (!addressedToHelp(to, rf, env)) return { http: 200, status: 'ignored', detail: onlyOtherInboxes(to, rf) ? 'other_inbox' : 'not_help' }
 
-  // Dedupe on the webhook delivery id. A replay of a finished event is a no-op.
-  const ins = await db.insert('support_email_events', {
-    provider_event_id: svixId, email_id: meta.email_id, event_type: ev.type, status: 'received',
-    payload: { from: meta.from, to, received_for: rf, subject: meta.subject, message_id: meta.message_id, created_at: ev.created_at },
-  }, { onConflict: 'provider_event_id', ignoreDuplicates: true })
-  let attempts = 0
-  if (!ins.rows.length) {
-    const ex = await db.select('support_email_events', `provider_event_id=eq.${encodeURIComponent(svixId)}&select=status,attempts`)
-    const row = ex.rows[0]
-    if (row && ['processed', 'ignored', 'suppressed', 'dead_letter'].includes(String(row.status))) return { http: 200, status: 'duplicate' }
-    attempts = Number(row?.attempts ?? 0)
+  const peekMail = async (): Promise<{ from: string; subject: string; excerpt: string }> => {
+    const fallback = { from: bare(meta.from || ''), subject: (meta.subject || '').slice(0, 300), excerpt: '' }
+    if (!deps.fetchEmail || !meta.email_id) return fallback
+    try {
+      const email = await deps.fetchEmail(meta.email_id)
+      if (!email) return fallback
+      const from = bare(email.from || fallback.from)
+      const subject = (email.subject || fallback.subject).slice(0, 300)
+      const body = email.text || (email.html ? htmlToText(email.html) : '')
+      return { from, subject, excerpt: safeMailExcerpt(body) }
+    } catch {
+      return fallback
+    }
   }
-  attempts++
-  const mark = (status: string, last_error: string | null = null) =>
-    db.update('support_email_events', { provider_event_id: svixId }, { status, attempts, last_error, updated_at: new Date().toISOString() })
+  const failOpen = async (detail: string, mail?: { from: string; subject: string; excerpt: string }): Promise<Outcome> => {
+    const info = mail ?? await peekMail()
+    await alertWhenInboxSaveFails(deps, { from: info.from, subject: info.subject, excerpt: info.excerpt, emailId: meta.email_id })
+    return { http: 500, status: 'retry', detail }
+  }
+  const save = deps.saveInbound ?? (deps.db ? (record: InboundRecord) => legacySave(deps.db!, record) : null)
+  if (!save) return failOpen('save_unavailable')
 
   if (!deps.fetchEmail) {
-    await mark('pending_fetch', 'RESEND_INBOUND_API_KEY not set')
+    const parked = await save({
+      svix_id: svixId, email_id: meta.email_id, event_type: ev.type, from: bare(meta.from || ''),
+      to, received_for: rf, subject: (meta.subject || '').slice(0, 300), text: '', thread_key: `pending:${svixId}`,
+      status: 'pending_fetch', last_error: 'RESEND_INBOUND_API_KEY not set',
+    })
+    if (!parked.ok) return failOpen('db_unavailable')
     return { http: 200, status: 'pending_fetch' }
   }
+
   let email: ReceivedEmail | null
   try {
     email = await deps.fetchEmail(meta.email_id!)
   } catch (e) {
     const msg = e instanceof Error ? e.message : 'fetch_failed'
-    if (attempts >= MAX_ATTEMPTS) { await mark('dead_letter', msg); return { http: 200, status: 'dead_letter' } }
-    await mark('failed', msg)
-    return { http: 500, status: 'retry', detail: msg } // non-2xx -> Resend retries with backoff
+    // Count prior failed attempts via a failed-status save; Resend retries the webhook.
+    const prior = await save({
+      svix_id: svixId, email_id: meta.email_id, event_type: ev.type, from: bare(meta.from || ''),
+      to, received_for: rf, subject: (meta.subject || '').slice(0, 300), text: '', thread_key: `failed:${svixId}`,
+      status: 'failed', last_error: msg,
+    })
+    // We don't have a durable attempt counter without a successful first write; the
+    // route still returns 500 so Resend retries. After MAX_ATTEMPTS of failed saves
+    // that already recorded the event, mark dead_letter.
+    if (prior.ok && prior.status === 'dead_letter') return { http: 200, status: 'dead_letter' }
+    // Keep previous behaviour for memDb: increment by re-reading attempts.
+    if (deps.db) {
+      const ex = await deps.db.select('support_email_events', `provider_event_id=eq.${encodeURIComponent(svixId)}&select=status,attempts`)
+      const attempts = Number(ex.rows[0]?.attempts ?? 0)
+      if (attempts >= MAX_ATTEMPTS) {
+        await deps.db.update('support_email_events', { provider_event_id: svixId }, { status: 'dead_letter', last_error: msg, updated_at: new Date().toISOString() })
+        return { http: 200, status: 'dead_letter' }
+      }
+    }
+    return { http: 500, status: 'retry', detail: msg }
   }
-  if (!email) { await mark('dead_letter', 'email_not_found'); return { http: 200, status: 'dead_letter' } }
+  if (!email) {
+    await save({
+      svix_id: svixId, email_id: meta.email_id, event_type: ev.type, from: bare(meta.from || ''),
+      to, received_for: rf, subject: (meta.subject || '').slice(0, 300), text: '', thread_key: `dead:${svixId}`,
+      status: 'dead_letter', last_error: 'email_not_found',
+    })
+    return { http: 200, status: 'dead_letter' }
+  }
 
   const headers = email.headers ?? {}
   const from = bare(email.from || meta.from || '')
@@ -306,80 +575,79 @@ export async function processEvent(svixId: string, ev: WebhookEvent, deps: { db:
   const text = (email.text || (email.html ? htmlToText(email.html) : '')).slice(0, 20_000)
   const messageId = (email.message_id || meta.message_id || '').trim()
   const tKey = threadKey({ references: hdr(headers, 'references'), inReplyTo: hdr(headers, 'in-reply-to'), messageId, from, subject })
-
-  const th = await db.insert('support_email_threads', { thread_key: tKey, subject, customer_email: from, last_message_at: new Date().toISOString() }, { onConflict: 'thread_key' })
-  const threadId = String(th.rows[0]?.id ?? '')
-  if (!threadId) { await mark('failed', 'thread_upsert'); return { http: 500, status: 'retry' } }
-
   const internalTest = isInternalTest(from, subject)
   const suppressed = internalTest ? null : suppressionReason(from, headers, subject)
   const cls = suppressed ? null : await classifyEmail(subject, text, email.authentication ?? null)
-  const msg = await db.insert('support_email_messages', {
-    thread_id: threadId, direction: 'inbound', provider_email_id: meta.email_id, rfc_message_id: messageId || null,
-    in_reply_to: hdr(headers, 'in-reply-to') || null, references_header: hdr(headers, 'references') || null,
-    from_email: from, to_emails: [...to, ...rf].map(bare), subject, text_body: text, received_at: email.created_at || ev.created_at || null,
-    classification: cls ? { test: internalTest, routine: cls.routine, category: cls.category, reasons: cls.reasons, index_version: cls.indexVersion, auth: email.authentication ?? null } : null,
-    suppressed_reason: suppressed,
-  }, { onConflict: 'provider_email_id', ignoreDuplicates: true })
-  const messageRowId = msg.rows[0]?.id ?? null
 
-  if (suppressed || !cls) { await mark('suppressed', suppressed); return { http: 200, status: 'suppressed', detail: suppressed ?? '' } }
-
-  let opsId: unknown = null
-  if (!cls.routine) {
-    const o = await db.insert('ops_escalations', {
-      escalation_type: 'support_email', status: 'open', attempt_count: 1,
-      notes: `${internalTest ? '[INTERNAL TEST] ' : ''}help@ email from ${from}: "${subject}"\nReasons: ${cls.reasons.join(', ')}\nThread: support_email_threads.id=${threadId}\n--- Suggested reply ---\n${cls.draft}`.slice(0, 8000),
-    })
-    opsId = o.rows[0]?.id ?? null
-  }
-  // Ledger: one row per inbound email, ever (idempotency key = provider email id).
-  // Auto-send needs: routine + both flags + not a test + no auto reply on this thread in the last 24h (loop guard).
-  let canAuto = cls.routine && deps.flags.autosend && !deps.flags.shadow && !internalTest
-  if (canAuto) {
-    const since = new Date(Date.now() - 86_400_000).toISOString()
-    const recent = await db.select('support_email_outbound', `thread_id=eq.${threadId}&mode=eq.auto&created_at=gte.${encodeURIComponent(since)}&select=id`)
-    if (!recent.ok || recent.rows.length) canAuto = false
-  }
-  const ledger = await db.insert('support_email_outbound', {
-    thread_id: threadId, inbound_message_id: messageRowId, idempotency_key: `reply:${meta.email_id}`,
-    mode: canAuto ? 'auto' : 'shadow', status: canAuto ? 'queued' : 'shadow', category: cls.category,
-    needs_kam: !cls.routine, escalation_reasons: cls.reasons, to_email: from,
-    subject: `${subject.match(/^re:/i) ? subject : `Re: ${subject}`}${th.rows[0]?.help_no ? ` · Help #${th.rows[0].help_no}` : ''}`, body_text: cls.draft, citations: cls.citations,
-    index_version: cls.indexVersion, ops_escalation_id: opsId,
-  }, { onConflict: 'idempotency_key', ignoreDuplicates: true })
-  await db.update('support_email_threads', { id: threadId }, { status: cls.routine ? 'drafted' : 'escalated', category: cls.category })
-
-  if (canAuto && ledger.rows[0] && deps.send) {
-    const row = ledger.rows[0]
-    try {
-      const sent = await deps.send({ to: from, subject: String(row.subject), text: cls.draft, inReplyTo: messageId, idempotencyKey: String(row.idempotency_key) })
-      await db.update('support_email_outbound', { id: String(row.id) }, { status: 'sent', provider_message_id: sent.id, sent_at: new Date().toISOString(), attempts: 1 })
-    } catch (e) {
-      await db.update('support_email_outbound', { id: String(row.id) }, { status: 'failed', last_error: e instanceof Error ? e.message : 'send_failed', attempts: 1 })
+  let canAuto = Boolean(cls && cls.routine && deps.flags.autosend && !deps.flags.shadow && !internalTest)
+  if (canAuto && deps.db) {
+    const existingThread = await deps.db.select('support_email_threads', `thread_key=eq.${encodeURIComponent(tKey)}&select=id`)
+    const threadId = existingThread.rows[0] ? String(existingThread.rows[0].id) : ''
+    if (threadId) {
+      const since = new Date(Date.now() - 86_400_000).toISOString()
+      const recent = await deps.db.select('support_email_outbound', `thread_id=eq.${encodeURIComponent(threadId)}&mode=eq.auto&created_at=gte.${encodeURIComponent(since)}&select=id`)
+      if (!recent.ok || recent.rows.length) canAuto = false
     }
   }
-  // Owner alert: one per inbound email (Resend idempotency key alert:<email_id>). Never blocks processing.
-  const row = ledger.rows[0]
-  const autoSent = canAuto && row && deps.send
+
+  const saved = await save({
+    svix_id: svixId, email_id: meta.email_id, event_type: ev.type, created_at: email.created_at || ev.created_at,
+    from, to, received_for: rf, subject, text, message_id: messageId,
+    in_reply_to: hdr(headers, 'in-reply-to'), references: hdr(headers, 'references'),
+    authentication: email.authentication ?? null, thread_key: tKey,
+    suppressed_reason: suppressed, internal_test: internalTest, classification: cls, can_auto: canAuto,
+  })
+  if (!saved.ok) return failOpen('db_unavailable', { from, subject, excerpt: safeMailExcerpt(text) })
+  if (saved.duplicate) return { http: 200, status: 'duplicate' }
+
+  if (suppressed || !cls) return { http: 200, status: 'suppressed', detail: suppressed ?? '' }
+
+  if (canAuto && saved.outbound_id && deps.send) {
+    try {
+      const sent = await deps.send({ to: from, subject: `${subject.match(/^re:/i) ? subject : `Re: ${subject}`}${saved.help_no ? ` · Help #${saved.help_no}` : ''}`, text: cls.draft, inReplyTo: messageId, idempotencyKey: `reply:${meta.email_id}` })
+      if (deps.db) await deps.db.update('support_email_outbound', { id: saved.outbound_id }, { status: 'sent', provider_message_id: sent.id, sent_at: new Date().toISOString(), attempts: 1 })
+    } catch (e) {
+      if (deps.db) await deps.db.update('support_email_outbound', { id: saved.outbound_id }, { status: 'failed', last_error: e instanceof Error ? e.message : 'send_failed', attempts: 1 })
+    }
+  }
+
+  const autoSent = canAuto && saved.outbound_id && deps.send
   if (deps.alert && !autoSent) {
-    const noDraft = !cls.draft || !row
+    const noDraft = !cls.draft || !saved.outbound_id
     try {
       const r = await deps.alert({
         view: {
-          kind: !cls.routine || noDraft ? 'email_needs_kam' : 'email_draft_waiting', helpNo: (th.rows[0]?.help_no as number | undefined) ?? null,
+          kind: !cls.routine || noDraft ? 'email_needs_kam' : 'email_draft_waiting', helpNo: saved.help_no ?? null,
           who: from, replyTo: from, subject, latest: text, reasons: noDraft ? [...cls.reasons, 'no_draft'] : cls.reasons,
           draft: cls.draft || null, reviewUrl: reviewLink(env), test: internalTest,
         },
         idempotencyKey: `alert:${meta.email_id}`,
-        meta: { Thread: threadId, Draft: row ? String(row.id) : '', Email: meta.email_id! },
+        meta: { Thread: saved.thread_id || '', Draft: saved.outbound_id || '', Email: meta.email_id! },
       })
-      if (row) await db.update('support_email_outbound', { id: String(row.id) }, r.ok ? { alerted_at: new Date().toISOString(), alert_message_id: r.id ?? null } : { alert_error: r.error ?? 'alert_failed' })
+      if (saved.outbound_id && deps.db) {
+        await deps.db.update('support_email_outbound', { id: saved.outbound_id }, r.ok ? { alerted_at: new Date().toISOString(), alert_message_id: r.id ?? null } : { alert_error: r.error ?? 'alert_failed' })
+      }
       if (!r.ok) console.error('support alert failed', r.error)
     } catch (e) { console.error('support alert threw', e instanceof Error ? e.message : e) }
   }
-  await mark('processed')
-  return { http: 200, status: cls.routine ? (canAuto ? 'auto' : 'shadow_drafted') : 'escalated' }
+  return { http: 200, status: cls.routine ? (canAuto && deps.send ? 'auto' : 'shadow_drafted') : 'escalated' }
+}
+
+/** Verify the Svix signature against the raw body before parsing or saving. */
+export async function handleInboundRequest(input: {
+  secret: string
+  headers: { id: string | null; timestamp: string | null; signature: string | null }
+  body: string
+  nowSec?: number
+  deps: ProcessDeps
+}): Promise<{ http: number; body: Record<string, unknown> }> {
+  if (!verifySignature(input.secret, input.headers, input.body, input.nowSec)) {
+    return { http: 401, body: { ok: false, error: 'bad signature' } }
+  }
+  let ev: WebhookEvent
+  try { ev = JSON.parse(input.body) } catch { return { http: 400, body: { ok: false } } }
+  const out = await processEvent(input.headers.id || '', ev, input.deps)
+  return { http: out.http, body: { ok: out.http < 300, status: out.status } }
 }
 
 export const SUPPORT_SITE = SITE
