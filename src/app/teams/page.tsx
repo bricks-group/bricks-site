@@ -8,6 +8,8 @@ import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 import { signupUrl } from '@/lib/brand'
 import { SOFTWARE_PLANS } from '@/lib/catalog'
 import { OG_IMAGE } from '@/lib/og'
+import PublicFaqs from '@/components/PublicFaqs'
+import { TEAMS_FAQS } from '@/lib/public-content'
 
 /** Team plan base price is the lead's paid plan (OS common/team_seats.py TEAM_PLAN_MONTHLY_CENTS). */
 const TEAM_PLANS = SOFTWARE_PLANS.filter((p) => p.id !== 'clay')
@@ -71,6 +73,8 @@ export default function TeamsPage() {
           ]}
         />
       </section>
+
+      <PublicFaqs title="Questions from teams." faqs={TEAMS_FAQS} />
 
       <Close title="Book the shoot from the listing." href="/book" label="Book media" primary={false} />
     </>

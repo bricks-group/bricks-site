@@ -6,6 +6,8 @@ import { SystemBand } from '@/components/clientele/Clientele'
 import { signupUrl } from '@/lib/brand'
 import { ONE_OFFS, ONE_OFFS_FOR, money } from '@/lib/propertyCheckout'
 import { OG_IMAGE } from '@/lib/og'
+import PublicFaqs from '@/components/PublicFaqs'
+import { REITS_FAQS } from '@/lib/public-content'
 
 /** REIT visit prices, from the same table /book/property charges (server recomputes). */
 const SCOPE: Record<string, string> = { unit: 'per unit', space: 'per space', building: 'per building', property: 'per property' }
@@ -75,6 +77,8 @@ export default function ReitsPage() {
         />
         <p className="cl-note">Your team updates unit status in Bricks. It doesn’t sync with a property management system yet.</p>
       </section>
+
+      <PublicFaqs title="Questions from REITs." faqs={REITS_FAQS} />
 
       <Close title="Book the first visit." href="/book/property?for=reit_leasing" label="Book a visit" primary={false} />
     </>

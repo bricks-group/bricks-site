@@ -7,7 +7,7 @@ import { PROPERTY_PRICE_GROUPS } from '@/lib/propertyCheckout'
 export const metadata: Metadata = {
   title: "Book Property Visits, Reports & Leasing Media | Bricks",
   description:
-    'Book and pay for one visit: turnover media bundles, condition reports, listing sets, leasing sets, aerials and acquisition captures. Prices in CAD, plus tax.',
+    'Book and pay for one visit: condition reports, turnover media bundles, listing and leasing sets, aerials and acquisition captures. CAD, plus tax.',
   alternates: { canonical: '/book/property' },
   robots: { index: true, follow: true },
 }

@@ -201,7 +201,7 @@ export const BOOKING: Article[] = [
         `A property website for the listing.`,
         `If you have a Bricks account, the media also lands on the listing in the app.`,
       ),
-      p(`Every photo and film is edited by Bricks in-house. Photos are MLS-safe: real window views, and no fake skies by default.`),
+      p(`Every photo and film is edited by Bricks in-house. Photos are MLS®-safe: real window views, and no fake skies by default.`),
       note(`Download and keep copies. Bricks isn't a long-term archive once files are delivered.`),
     ],
     related: ['using-your-media', 'media-not-arrived', 'twilight-photos'],
@@ -227,7 +227,7 @@ export const BOOKING: Article[] = [
     summary: `Quick answers to the questions people ask most before they book.`,
     body: [
       qa(
-        [`Are the photos MLS-safe?`, `Yes. Bricks keeps real window views and doesn't add fake skies by default. Twilight is shot for real at blue hour.`],
+        [`Are the photos MLS®-safe?`, `Yes. Bricks keeps real window views and doesn't add fake skies by default. Twilight is shot for real at blue hour.`],
         [`What's in Essentials?`, `HDR photos, licensed drone and a floor plan in one shoot.`],
         [`Can I pay with Apple Pay or Google Pay?`, `Yes, plus cards. Apple Pay works in Safari and on iOS, Google Pay in Chrome and on Android. Bricks doesn't take PayPal, Klarna, Afterpay or Interac.`],
         [`How fast is delivery?`, `Photos typically within 24 hours of the shoot, other media within 24–48 hours.`],

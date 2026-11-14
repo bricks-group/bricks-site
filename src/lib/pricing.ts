@@ -21,6 +21,9 @@ export const TWILIGHT_RATE = [150, 170, 185, 200] as const;
 /** Virtual tour (path-confined walkthrough) — paid add-on. Not the virtual visit splat. */
 export const TOUR_RATE = [149, 199, 249, 299] as const;
 export const RUSH_FLAT = 75;
+/** Travel outside the no-travel-fee area: first km free from the assigned vendor, then per km (quote-engine charges these). */
+export const TRAVEL_FREE_KM = 25;
+export const TRAVEL_PER_KM = 0.75;
 export const STAGING_PER_IMAGE = 35;
 /**
  * Virtual staging is off sale until in-house staging (on Bricks' own GPU)

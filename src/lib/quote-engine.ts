@@ -17,6 +17,8 @@ import {
   BAND_LABELS,
   LEGACY_COMPANION_PACKAGE_IDS,
   finalFootprintBand,
+  TRAVEL_FREE_KM,
+  TRAVEL_PER_KM,
 } from '@/lib/pricing'
 import { isGtaMajorMarket, GTA_MAJOR_TRAVEL_ZERO_LABEL } from '@/lib/coverage'
 
@@ -27,8 +29,8 @@ import { isGtaMajorMarket, GTA_MAJOR_TRAVEL_ZERO_LABEL } from '@/lib/coverage'
 // / Montevideo / Mississauga HQ as fee base. travel_pending is NOT the happy path.
 // Coverage TRAVEL_BASE is map-only. www quote uses GTA $0 locally; checkout/OS
 // allocates vendor and blocks if none available.
-const FREE_KM = 25
-const PER_KM = 0.75
+const FREE_KM = TRAVEL_FREE_KM
+const PER_KM = TRAVEL_PER_KM
 const HST = 0.13
 
 export type QuoteAddon = { label: string; amount: number }

@@ -10,6 +10,8 @@ import { hubItems } from '@/lib/site-progress-features'
 import { PER_VISIT, PLANS, PLAN_NOTE, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
+import PublicFaqs from '@/components/PublicFaqs'
+import { INVESTORS_FAQS } from '@/lib/public-content'
 
 export const metadata: Metadata = {
   title: "Construction Draw Reports for Investors & Lenders | Bricks",
@@ -31,7 +33,7 @@ export default function InvestorsPage() {
         <div className="wrap">
           <h1>Evidence your investors can check.</h1>
           <p className="sub">
-            Bricks is the system that brings it all together: dated site visits, progress reports and investor updates for every project you fund or own.
+            Bricks is the system that brings it all together: construction draw evidence for lenders and investors, from dated site visits, progress reports and investor updates for every project you fund or own.
           </p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={signupUrl('investor')}>Create an investor account</a>
@@ -110,6 +112,8 @@ export default function InvestorsPage() {
         <p className="cm-note">{PLAN_NOTE}</p>
         <p className="cm-note">Portfolio watch for properties you hold: a dated aerial and roof check compared with the last visit, $195 a month per property, billed $585 a quarter, or $450 a month per property for a monthly visit. CAD plus tax, in your investor account. Acquisition captures are $1,250, or $2,250 mapped, <Link href="/book/property?for=investor">booked online</Link>. Your account compares the baseline with the latest visit and builds an insurance claim pack from the records either side of a date of loss.</p>
       </section>
+
+      <PublicFaqs title="Questions from investors and lenders." faqs={INVESTORS_FAQS} />
 
       <Close title="Need a site captured first?" href="/book/site" label="Book a site visit" primary={false} />
     </>

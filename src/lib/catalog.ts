@@ -85,6 +85,9 @@ export const OFFICE_SEAT_PRICE_PER_MONTH = { boutique: 74, growth: 56, enterpris
 export const OFFICE_MONTHLY_NOTE =
   'Prefer monthly? Boutique is $74, Growth $56, Enterprise $44 and Franchise $31 per seat per month, with no lock-in. Annual billing is $708, $540, $420 and $300 per seat per year, respectively. CAD, before tax.'
 
+/** Extra agent on a team plan, past the six the lead's plan covers (CAD, before tax). */
+export const TEAM_EXTRA_SEAT = { monthly: 79, yearly: 790 } as const
+
 export const OFFICE_INCLUDES =
   'Every seat gets all of Bricks, plus trust accounting. Agents don’t pay separately.'
 
