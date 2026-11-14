@@ -13,7 +13,7 @@ export const SOFTWARE_PLANS = [
     yearly: 'No card',
     over: 'Individual',
     value: 'Free desk. No card.',
-    points: ['Book media at rack rate', 'Listing file, transactions, and BYO MLS'],
+    points: ['Book media at rack rate', 'Listing file, transactions, and BYO MLS®'],
   },
   {
     id: 'keystone',
@@ -92,8 +92,8 @@ export const OFFICE_INCLUDES =
 export const PLAN_ORDER = ['clay', 'keystone', 'marble', 'diamond'] as const
 export const PLAN_FEATURES: readonly { label: string; from: (typeof PLAN_ORDER)[number]; note?: string; addon?: string }[] = [
   { label: 'Book media at rack rate', from: 'clay' },
-  { label: 'Listing file, transactions, and BYO MLS', from: 'clay' },
-  ...(AGENT_LAUNCH_LIVE ? [{ label: 'Listing launch kit', from: 'clay' as const, note: 'Feature sheet, social pack and MLS package, on every plan' }] : []),
+  { label: 'Listing file, transactions, and BYO MLS®', from: 'clay' },
+  ...(AGENT_LAUNCH_LIVE ? [{ label: 'Listing launch kit', from: 'clay' as const, note: 'Feature sheet, social pack and MLS® package, on every plan' }] : []),
   { label: 'CRM', from: 'keystone' },
   { label: 'E-sign and shareable links', from: 'keystone', note: 'Fields on the PDF, SHA-256 fingerprints and an audit trail' },
   { label: 'Forms', from: 'marble' },

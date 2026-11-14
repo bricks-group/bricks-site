@@ -10,6 +10,9 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [About](https://www.brxs.ca/about): Software-first company definition; Ontario, Canada.
 - [Software](https://www.brxs.ca/platform): The Bricks web software and account types.
 - [What is a real estate operating system?](https://www.brxs.ca/blog/what-is-a-real-estate-operating-system): Definition, who uses one, what it replaces and how booking works inside Bricks.
+- [What brokerage software needs to do in Ontario](https://www.brxs.ca/blog/brokerage-software-ontario): Trust, commissions, roster, deal files and MLS® feeds, and how Bricks prices brokerage seats.
+- [Drone progress reports for Ontario builders](https://www.brxs.ca/blog/drone-progress-reports-ontario-builders): Rules, flight cadence, what a dated visit includes and what a report can’t certify.
+- [Move-in and move-out condition reports in Ontario](https://www.brxs.ca/blog/move-out-condition-report-ontario): What to photograph, when to book it and how a dated record helps at the Landlord and Tenant Board.
 - [Pricing](https://www.brxs.ca/pricing): Clay, Keystone, Marble and Diamond, monthly or annual in CAD; separate service and brokerage pricing.
 - [Listing media and Virtual Visit](https://www.brxs.ca/media): Photography, drone, video, reels, floor plans and free-roam 3D.
 - [Site Progress](https://www.brxs.ca/builders): Builder and developer reports, maps, models and comparisons over time.

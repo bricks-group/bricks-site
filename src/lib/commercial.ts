@@ -33,3 +33,9 @@ export const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`
 /** One line for Home, Pricing and anywhere Site Progress is priced. Figures come from PER_VISIT and PLANS (the same amounts Stripe charges). */
 export const SITE_PROGRESS_LINE =
   `Site visits from ${fmt(PER_VISIT[0].price)}, or ${fmt(PLANS[0].rows[0].price)} a month on a plan. Mapped sites add a one-time ${fmt(PER_VISIT[2].price)} setup.`
+
+/** Server-rendered price list on /book/site (crawlable above the client form). */
+export const SITE_PRICE_GROUPS: { label: string; items: { name: string; price: string }[] }[] = [
+  { label: 'One visit', items: PER_VISIT.map((x) => ({ name: x.name, price: `${fmt(x.price)} ${x.unit}` })) },
+  ...PLANS.map((p) => ({ label: `${p.kind} plans, per site a month`, items: p.rows.map((r) => ({ name: r.cadence, price: fmt(r.price) })) })),
+]

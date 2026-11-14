@@ -42,7 +42,7 @@ export default function MoveOutCleaningPage() {
           body: (
             <>
               <p>Between tenants, the clean is one step of several: the move-out condition report, the clean, any touch-ups, then the move-in report and new listing photos. Bricks keeps them on the same unit, so the clean’s photos and checklist sit next to the reports.</p>
-              <p>Property managers can book move-out condition reports and listing sets online at <Link href="/property-managers">property managers</Link>, and request the clean here.</p>
+              <p>Property managers can book move-out condition reports and listing sets online at <Link href="/property-managers">property managers</Link>, and request the clean here. What to photograph is in our guide to <Link href="/blog/move-out-condition-report-ontario">move-in and move-out condition reports</Link>.</p>
             </>
           ),
         },

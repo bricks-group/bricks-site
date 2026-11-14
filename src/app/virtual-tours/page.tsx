@@ -24,7 +24,7 @@ const FAQS = [
   { q: 'What is the difference between a virtual tour and a Virtual Visit?', a: `A ${TOUR_NAME.toLowerCase()} moves viewers along a set path through the home. A ${VISIT_NAME} is free-roam 3D: viewers move anywhere in the space. They are separate products with separate prices.` },
   { q: 'How much does a virtual tour cost?', a: `A ${TOUR_NAME.toLowerCase()} is ${bandCells(TOUR_RATE).join(' / ')} CAD before HST by footprint. It is included in Showcase (from $${SHOWCASE_FROM}) and Full suite.` },
   { q: 'Is Virtual Visit included in a package?', a: `No. ${VISIT_NAME} is ${bandCells(VISIT_RATE).join(' / ')} by footprint. ${VISIT_PACKAGING}` },
-  { q: 'Can I put the tour on MLS and my listing site?', a: 'Yes. Media arrives as a link you can use on MLS®, your website and social, along with a property website for the listing.' },
+  { q: 'Can I put the tour on MLS® and my listing site?', a: 'Yes. Media arrives as a link you can use on MLS®, your website and social, along with a property website for the listing.' },
 ]
 
 export default function VirtualToursPage() {

@@ -12,12 +12,12 @@ import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
-  title: "Site Progress Reports for Investors & Lenders | Bricks",
-  description: "Track projects in Bricks with dated site visits, progress reports, investor updates and 3D comparisons. Share evidence as a PDF or an expiring read-only link.",
+  title: "Construction Draw Reports for Investors & Lenders | Bricks",
+  description: "Dated site visits, construction progress reports and investor updates for lenders and investors. Share evidence as a PDF or an expiring read-only link.",
   alternates: { canonical: '/investors' },
   openGraph: { images: [OG_IMAGE],
-    title: "Site Progress Reports for Investors & Lenders | Bricks",
-    description: "Track projects in Bricks with dated site visits, progress reports, investor updates and 3D comparisons. Share evidence as a PDF or an expiring read-only link.",
+    title: "Construction Draw Reports for Investors & Lenders | Bricks",
+    description: "Dated site visits, construction progress reports and investor updates for lenders and investors. Share evidence as a PDF or an expiring read-only link.",
   },
 }
 

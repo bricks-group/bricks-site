@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import BookPropertySwitch from './BookPropertySwitch'
+import BookPriceList from '@/components/BookPriceList'
+import { PROPERTY_PRICE_GROUPS } from '@/lib/propertyCheckout'
 
 export const metadata: Metadata = {
   title: "Book Property Visits, Reports & Leasing Media | Bricks",
@@ -20,6 +22,7 @@ export default function PropertyBookPage() {
           </div>
           <p>Pick the service, the property and a date, then pay. Prices in CAD, plus tax.</p>
         </div>
+        <BookPriceList groups={PROPERTY_PRICE_GROUPS} note="One visit, booked and paid online. CAD, plus tax. Plans and spaces over 20,000 sq ft are by request." />
         <Suspense fallback={null}>
           <BookPropertySwitch />
         </Suspense>

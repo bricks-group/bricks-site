@@ -28,7 +28,7 @@ const faqs = [
   { q: 'How far out should I book?', a: 'As soon as you have a listing date in mind. September and early October fill fastest.' },
   { q: "What's included?", a: 'HDR photos, licensed drone and a floor plan on every standard shoot. Reels, virtual tours and virtual visits are add-ons.' },
   { q: 'Where do you shoot?', a: 'Across Canada. Ask and we’ll confirm your area.' },
-  { q: 'When do I get my media?', a: 'We aim to deliver edited, MLS-ready photos in 24 hours, other media in 24–48 hours, fall included.' },
+  { q: 'When do I get my media?', a: 'We aim to deliver edited, MLS®-ready photos in 24 hours, other media in 24–48 hours, fall included.' },
 ]
 
 export default function FallMarket() {
@@ -76,7 +76,7 @@ export default function FallMarket() {
             <div><span className="over">Every shoot</span><h2>Same standard, same prices.</h2></div>
           </div>
           <div className="incl">
-            <div className="c"><span className="ic">01</span><h3>HDR photography</h3><p>Interiors and exteriors, edited for MLS.</p></div>
+            <div className="c"><span className="ic">01</span><h3>HDR photography</h3><p>Interiors and exteriors, edited for MLS®.</p></div>
             <div className="c"><span className="ic">02</span><h3>Licensed drone</h3><p>Aerial photos of the lot, roofline and surroundings.</p></div>
             <div className="c"><span className="ic">03</span><h3>Floor plan</h3><p>Branded 2D layout with room dimensions — included on every shoot.</p></div>
             <div className="c"><span className="ic">04</span><h3>Fast delivery</h3><p>We aim to deliver photos in 24 hours, in one branded portal.</p></div>

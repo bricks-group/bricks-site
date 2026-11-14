@@ -20,20 +20,21 @@ export default function SiteRail() {
   const { ref, active } = useStepScroll<HTMLElement>(n)
   const state = (i: number) => (i === active ? 'is-on' : i < active ? 'is-past' : 'is-next')
 
-  const head = (
+  // Rendered twice (mobile / desktop). Distinct H2s so the page has no duplicate heading (W2 handoff 08).
+  const head = (title: string) => (
     <div className="cap-copy slab-head">
-      <h2>Every visit, in layers.</h2>
+      <h2>{title}</h2>
       <p className="cap-lede">Photos, maps, models and reports, compared over time.</p>
     </div>
   )
 
   return (
     <section ref={ref} className="cap-band flow-band slab slab-pinned slab-b site-rail" aria-label="How site progress works" style={{ ['--n' as string]: n }}>
-      <div className="cap-inner slab-head-m">{head}</div>
+      <div className="cap-inner slab-head-m">{head('Every visit, in layers.')}</div>
       <div className="slab-pin">
         <div className="cap-inner slab-b-inner">
           <div className="slab-b-top">
-            <div className="slab-head-d">{head}</div>
+            <div className="slab-head-d">{head('Maps, models and compare, by date.')}</div>
             <div className="slab-b-steps">
               <div className="slab-b-railwrap">
                 <span className="slab-b-track" aria-hidden="true"><i /></span>

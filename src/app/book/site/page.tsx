@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { siteProgressServiceSchema } from '@/lib/schema'
 import SiteBookingForm from './SiteBookingForm'
-import { PER_VISIT, SITE_PRODUCT, fmt } from '@/lib/commercial'
+import { PER_VISIT, SITE_PRODUCT, SITE_PRICE_GROUPS, fmt } from '@/lib/commercial'
+import BookPriceList from '@/components/BookPriceList'
 
 export const metadata: Metadata = {
   title: 'Book a construction progress visit or site plan | Bricks',
@@ -26,6 +27,7 @@ export default function SiteBookingPage() {
             One visit or a monthly plan. We confirm the flight with your site contact.
           </p>
         </div>
+        <BookPriceList groups={SITE_PRICE_GROUPS} note="Mapped plans add the one-time mapping setup. Plans are billed monthly per site, month to month. CAD, plus tax." />
         <Suspense fallback={null}>
           <SiteBookingForm />
         </Suspense>

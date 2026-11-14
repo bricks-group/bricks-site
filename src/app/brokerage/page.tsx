@@ -59,7 +59,7 @@ export default function BrokeragePage() {
       <section className="cm-sec rvl" aria-label="Seats">
         <Head title="Per seat, billed yearly." lede={OFFICE_INCLUDES} link={{ href: '/pricing', label: 'See pricing' }} />
         <Rows items={OFFICE_PLANS.map((p) => ({ title: p.name, detail: `${p.seats} · or $${OFFICE_SEAT_PRICE_PER_MONTH[p.id]} / seat / mo, month to month`, value: p.price }))} />
-        <p className="cm-note">{OFFICE_MONTHLY_NOTE} Fewer than 5 agents? See <Link href="/teams">team plans</Link>.</p>
+        <p className="cm-note">{OFFICE_MONTHLY_NOTE} Fewer than 5 agents? See <Link href="/teams">team plans</Link>. Comparing systems? Read <Link href="/blog/brokerage-software-ontario">what brokerage software needs to do in Ontario</Link>.</p>
       </section>
 
       <section className="cm-sec rvl" aria-label="What's inside">

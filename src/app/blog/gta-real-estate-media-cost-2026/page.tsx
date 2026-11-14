@@ -2,8 +2,15 @@ import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { PHOTO_RATE, DRONE_RATE, REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, bandCells, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
-import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { LOGO_SCHEMA, ORG_REF, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
+
+// Visible FAQ and FAQPage JSON-LD come from this one array (W2 handoff 3.5).
+const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
+  { q: 'Is HST included?', a: 'No — media pricing is almost always quoted pre-tax. Bricks adds 13% HST at checkout.' },
+  { q: 'Why is drone sometimes cheap and sometimes $250?', a: 'A few static drone photos is a quick add; a licensed operator shooting aerial video with a Transport Canada Advanced RPAS certificate is a different skill and liability — that’s the premium end.' },
+  { q: 'Do I save by booking regularly?', a: 'Yes. Agents and teams with a steady pipeline get per-shoot rates tuned to their volume. Ask when you book.' },
+]
 
 export const metadata: Metadata = {
   title: "GTA Real Estate Photography & Media Costs, 2026 | Bricks",
@@ -41,6 +48,7 @@ export default function Post() {
           }),
         }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS.map(({ q, a }) => ({ q, a })))) }} />
       <BlogPostLayout
         badge="Resources · Pricing"
         title="How much does real estate photography cost in the GTA? (2026)"
@@ -95,9 +103,7 @@ export default function Post() {
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h3>Is HST included?</h3><p>No — media pricing is almost always quoted pre-tax. Bricks adds 13% HST at checkout.</p></div>
-          <div className="qa"><h3>Why is drone sometimes cheap and sometimes $250?</h3><p>A few static drone photos is a quick add; a licensed operator shooting aerial <em>video</em> with a Transport Canada Advanced RPAS certificate is a different skill and liability — that&apos;s the premium end.</p></div>
-          <div className="qa"><h3>Do I save by booking regularly?</h3><p>Yes. Agents and teams with a steady pipeline get per-shoot rates tuned to their volume. Ask when you book.</p></div>
+          {FAQS.map((f) => <div className="qa" key={f.q}><h3>{f.q}</h3><p>{f.a}{f.link ? <> <a href={f.link.href}>{f.link.label}</a></> : null}</p></div>)}
         </div>
       </BlogPostLayout>
     </>

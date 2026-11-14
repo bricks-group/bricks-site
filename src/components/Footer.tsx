@@ -22,7 +22,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
           </p>
         </div>
         <div className="foot-col">
-          <h2 className="foot-heading">Software</h2>
+          <p className="foot-heading">Software</p>
           <div className="foot-links">
             <Link href="/platform">Overview</Link>
             {SOFTWARE_MODULES.map((m) => <Link key={m.slug} href={moduleHref(m.slug)}>{m.short}</Link>)}
@@ -30,7 +30,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
           </div>
         </div>
         <div className="foot-col">
-          <h2 className="foot-heading">Product</h2>
+          <p className="foot-heading">Product</p>
           <div className="foot-links">
             <Link href="/builders">Site Progress</Link>
             <Link href="/media">Listing media</Link>
@@ -48,7 +48,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
           </div>
         </div>
         <div className="foot-col">
-          <h2 className="foot-heading">Who it&apos;s for</h2>
+          <p className="foot-heading">Who it&apos;s for</p>
           <div className="foot-links">
             <Link href="/agents">Agents</Link>
             <Link href="/teams">Teams</Link>
@@ -61,7 +61,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
           </div>
         </div>
         <div className="foot-col">
-          <h2 className="foot-heading">Home services</h2>
+          <p className="foot-heading">Home services</p>
           <div className="foot-links">
             <Link href="/services">All services</Link>
             <Link href="/services#staging">Staging</Link>
@@ -72,7 +72,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
           </div>
         </div>
         <div className="foot-col">
-          <h2 className="foot-heading">Company</h2>
+          <p className="foot-heading">Company</p>
           <div className="foot-links">
             <Link href="/work-with-bricks">Work with Bricks</Link>
             <Link href="/photographers">Photographers</Link>
@@ -84,7 +84,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
           </div>
         </div>
         <div className="foot-col">
-          <h2 className="foot-heading">Legal</h2>
+          <p className="foot-heading">Legal</p>
           <div className="foot-links">
             <Link href="/terms">Terms</Link>
             <Link href="/privacy">Privacy</Link>

@@ -302,6 +302,9 @@ export const PAGE_NAMES: Record<string, string> = {
   '/blog/drone-licence-canada': 'Drone licence in Canada', '/blog/what-is-an-orthomosaic': 'What is an orthomosaic',
   '/blog/what-is-a-real-estate-operating-system': 'What is a real estate operating system',
   '/blog/photogrammetry-for-construction': 'Photogrammetry for construction',
+  '/blog/brokerage-software-ontario': 'Brokerage software in Ontario',
+  '/blog/drone-progress-reports-ontario-builders': 'Drone progress reports for Ontario builders',
+  '/blog/move-out-condition-report-ontario': 'Move-out condition reports in Ontario',
   '/blog/home-inspection-cost-ontario': 'Home inspection cost in Ontario',
   '/blog/move-out-cleaning-checklist': 'Move-out cleaning checklist',
 }

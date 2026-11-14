@@ -80,7 +80,7 @@ export default function PricingPage() {
             '@type': 'FAQPage',
             mainEntity: [
               { '@type': 'Question', name: "What's in Essentials?", acceptedAnswer: { '@type': 'Answer', text: `HDR photos, licensed drone and a floor plan in one shoot, from $${CORE_FROM}.` } },
-              { '@type': 'Question', name: 'Are the photos MLS-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.' } },
+              { '@type': 'Question', name: 'Are the photos MLS®-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.' } },
               { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.' } },
               { '@type': 'Question', name: 'How is home size measured?', acceptedAnswer: { '@type': 'Answer', text: 'By finished area and complexity. Not sure? Choose "advise me" when you book and we\'ll size it from the address.' } },
               { '@type': 'Question', name: 'Virtual tour or virtual visit?', acceptedAnswer: { '@type': 'Answer', text: `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).` } },
@@ -211,7 +211,7 @@ export default function PricingPage() {
           <Head title="Before you book." />
           <div className="faq">
             <div className="qa"><h3>What&apos;s in Essentials?</h3><p>HDR photos, licensed drone and a floor plan in one shoot.</p></div>
-            <div className="qa"><h3>Are the photos MLS-safe?</h3><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
+            <div className="qa"><h3>Are the photos MLS®-safe?</h3><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
             <div className="qa"><h3>How does travel work?</h3><p>Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.</p></div>
             <div className="qa"><h3>How is home size measured?</h3><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
             <div className="qa"><h3>Virtual tour or virtual visit?</h3><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>

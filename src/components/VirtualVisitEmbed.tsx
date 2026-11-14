@@ -14,7 +14,7 @@ export default function VirtualVisitEmbed() {
     <div className="visit-embed">
       {!loaded ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img className="visit-embed-fallback" src={SPLAT_GIF} alt="" aria-hidden />
+        <img className="visit-embed-fallback" src={SPLAT_GIF} alt="Virtual Visit free-roam 3D walkthrough of a sample home" />
       ) : null}
       <iframe
         className="visit-embed-frame"

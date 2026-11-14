@@ -2,8 +2,15 @@ import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { REEL_RANGE, TOUR_RANGE, TWILIGHT_RANGE, RUSH_FLAT, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
-import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { LOGO_SCHEMA, ORG_REF, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
+
+// Visible FAQ and FAQPage JSON-LD come from this one array (W2 handoff 3.5).
+const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
+  { q: 'Is the floor plan really included?', a: 'Yes — every Bricks standard shoot includes a dimensioned floor plan at no extra charge. Photos only drops drone and the floor plan.' },
+  { q: 'What if I only want photos, no drone?', a: 'Licensed drone is part of the core set because it’s the highest-impact frame for most homes; if a listing genuinely doesn’t suit aerials, tell us at booking and we’ll tailor the shoot.' },
+  { q: 'How many photos do I get?', a: 'It scales with footprint — a condo gets fewer frames than an estate. You’ll see the full set in the delivery gallery; tell us if you need a specific count for a portal.' },
+]
 
 export const metadata: Metadata = {
   title: "What a Professional Listing Photo Shoot Includes | Bricks",
@@ -41,6 +48,7 @@ export default function Post() {
           }),
         }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS.map(({ q, a }) => ({ q, a })))) }} />
       <BlogPostLayout
         badge="Resources · The shoot"
         title="What's included in a professional listing photo shoot?"
@@ -50,18 +58,18 @@ export default function Post() {
 
         <h2>The core set (included on every standard shoot)</h2>
         <h3>HDR photography</h3>
-        <p>Exposure-bracketed, blended interiors and exteriors — the standard for MLS-ready listing photos. Shot to show the space accurately, not just brightly. Volume scales with footprint (more rooms = more frames).</p>
+        <p>Exposure-bracketed, blended interiors and exteriors — the standard for MLS®-ready listing photos. Shot to show the space accurately, not just brightly. Volume scales with footprint (more rooms = more frames).</p>
         <h3>Licensed drone coverage</h3>
         <p>Aerial exteriors and approach shots, flown under a Transport Canada <strong>Advanced RPAS certificate</strong> with the right airspace clearance. This is the &quot;wow&quot; frame for most homes and is included, not extra.</p>
         <h3>Floor plan</h3>
         <p>A clean, dimensioned floor plan — included on every standard shoot. Buyers reference it constantly; portals surface it prominently.</p>
         <h3>24-hour photo delivery</h3>
-        <p>Edited, MLS-ready files delivered to your inbox within two business days, with a gallery link for download.</p>
+        <p>Edited, MLS®-ready files delivered to your inbox within two business days, with a gallery link for download.</p>
 
         <h2>Add-ons you can stack</h2>
         <ul>
           <li><strong>Cinematic reel</strong> (+{REEL_RANGE}) — a 30–45s motion reel for social and the listing page. Best for reach.</li>
-          <li><strong>{TOUR_NAME}</strong> (+{TOUR_RANGE}) — {TOUR_BLURB} MLS-ready. À la carte add-on; included in Showcase and Full suite.</li>
+          <li><strong>{TOUR_NAME}</strong> (+{TOUR_RANGE}) — {TOUR_BLURB} MLS®-ready. À la carte add-on; included in Showcase and Full suite.</li>
           <li><strong>{VISIT_NAME}</strong> ({VISIT_PRICE_LABEL}) — {VISIT_BLURB} Same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). {VISIT_PACKAGING}</li>
           <li><strong>Twilight photography</strong> (+{TWILIGHT_RANGE}) — blue-hour exteriors with lit windows. Best for premium listings.</li>
           <li><strong>Rush delivery</strong> (+${RUSH_FLAT}) — faster than the standard window (photos 24h · other media 24–48h).</li>
@@ -82,9 +90,7 @@ export default function Post() {
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h3>Is the floor plan really included?</h3><p>Yes — every Bricks standard shoot includes a dimensioned floor plan at no extra charge. Photos only drops drone and the floor plan.</p></div>
-          <div className="qa"><h3>What if I only want photos, no drone?</h3><p>Licensed drone is part of the core set because it&apos;s the highest-impact frame for most homes; if a listing genuinely doesn&apos;t suit aerials, tell us at booking and we&apos;ll tailor the shoot.</p></div>
-          <div className="qa"><h3>How many photos do I get?</h3><p>It scales with footprint — a condo gets fewer frames than an estate. You&apos;ll see the full set in the delivery gallery; tell us if you need a specific count for a portal.</p></div>
+          {FAQS.map((f) => <div className="qa" key={f.q}><h3>{f.q}</h3><p>{f.a}{f.link ? <> <a href={f.link.href}>{f.link.label}</a></> : null}</p></div>)}
         </div>
       </BlogPostLayout>
     </>

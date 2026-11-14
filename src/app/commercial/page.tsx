@@ -6,14 +6,15 @@ import { SystemBand, Photo, HeroPlate, PlateImg } from '@/components/clientele/C
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
+import { ONE_OFFS, money } from '@/lib/propertyCheckout'
 
 export const metadata: Metadata = {
-  title: "Commercial Property Media, 3D Visits & Mapping | Bricks",
-  description: "Manage commercial property work in Bricks and book listing photos, drone, floor plans, Virtual Visit 3D and site mapping for your buildings and spaces.",
+  title: "Commercial Real Estate Photography, Toronto & GTA | Bricks",
+  description: `Commercial real estate photography for Toronto and the GTA: leasing sets from ${money(ONE_OFFS.cre_leasing_s.cents)}, aerials ${money(ONE_OFFS.cre_aerial.cents)}, Virtual Visit 3D and site mapping, booked in Bricks.`,
   alternates: { canonical: '/commercial' },
   openGraph: { images: [OG_IMAGE],
-    title: "Commercial Property Media, 3D Visits & Mapping | Bricks",
-    description: "Manage commercial property work in Bricks and book listing photos, drone, floor plans, Virtual Visit 3D and site mapping for your buildings and spaces.",
+    title: "Commercial Real Estate Photography, Toronto & GTA | Bricks",
+    description: `Commercial real estate photography for Toronto and the GTA: leasing sets from ${money(ONE_OFFS.cre_leasing_s.cents)}, aerials ${money(ONE_OFFS.cre_aerial.cents)}, Virtual Visit 3D and site mapping, booked in Bricks.`,
   },
 }
 
