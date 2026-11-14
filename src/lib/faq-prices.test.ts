@@ -2,8 +2,11 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { AGENT_FAQS, PM_FAQS, BROKERAGE_FAQS, SITE_PROGRESS_FAQS } from './public-content'
-import { OFFICE_SEAT_PRICE_PER_YEAR, OFFICE_SEAT_PRICE_PER_MONTH, SOFTWARE_PLANS } from './catalog'
+import { AGENT_FAQS, PM_FAQS, BROKERAGE_FAQS, SITE_PROGRESS_FAQS, TEAMS_FAQS, COMMERCIAL_FAQS, INVESTORS_FAQS, REITS_FAQS } from './public-content'
+import { PRICING_FAQS, BOOK_FAQS, TRAVEL_ANSWER } from './faq-content'
+import { CORE_FROM, RUSH_FLAT, TOUR_RANGE, TWILIGHT_RANGE, VISIT_PRICE_LABEL, TRAVEL_FREE_KM, TRAVEL_PER_KM } from './pricing'
+import { faqPageSchema } from './schema'
+import { OFFICE_SEAT_PRICE_PER_YEAR, OFFICE_SEAT_PRICE_PER_MONTH, SOFTWARE_PLANS, TEAM_EXTRA_SEAT } from './catalog'
 import { ONE_OFFS, ONE_OFFS_FOR, PROPERTY_PRICE_GROUPS, money } from './propertyCheckout'
 import { PER_VISIT, PLANS, SITE_PRICE_GROUPS, fmt } from './commercial'
 import { BROKERAGE_SOFTWARE_ONTARIO_FAQS, DRONE_PROGRESS_REPORTS_ONTARIO_BUILDERS_FAQS, MOVE_OUT_CONDITION_REPORT_ONTARIO_FAQS } from './guide-faqs'
@@ -63,4 +66,46 @@ test('/property-managers copy repeats the checkout prices', () => {
   const pm = read('src/app/property-managers/page.tsx')
   for (const k of ['pm_condition_report', 'pm_turnover']) assert.ok(pm.includes(money(ONE_OFFS[k].cents)), k)
   assert.equal(PM_FAQS.length, 9)
+})
+
+// W2.1: /pricing and /book build the visible FAQ and the FAQPage JSON-LD from one array, with catalog prices.
+for (const [page, faqs, files] of [
+  ['/pricing', PRICING_FAQS, ['src/app/pricing/page.tsx']],
+  ['/book', BOOK_FAQS, ['src/app/book/page.tsx', 'src/app/book/BookingWizard.tsx']],
+] as const) {
+  test(`${page} FAQ schema is generated from the visible FAQ array`, () => {
+    const src = files.map(read).join('\n')
+    assert.doesNotMatch(src, /'@type': 'FAQPage'/, 'no hand-written FAQPage')
+    assert.doesNotMatch(src, /className="qa"/, 'no hand-written visible Q&As')
+    assert.match(src, page === '/book' ? /faqPageSchema\(BOOK_FAQS\)/ : /faqPageSchema\(PRICING_FAQS\)/)
+    assert.match(src, page === '/book' ? /<RichFaqList faqs=\{BOOK_FAQS\}/ : /<RichFaqList faqs=\{PRICING_FAQS\}/)
+    const schema = faqPageSchema(faqs)
+    assert.equal(schema.mainEntity.length, faqs.length)
+    for (const f of faqs) {
+      assert.equal(f.a, f.parts.map((p) => (typeof p === 'string' ? p : p.label)).join(''), f.q)
+      assert.doesNotMatch(`${f.q} ${f.a}`, /'/, `straight apostrophe in: ${f.q}`)
+    }
+  })
+}
+
+test('/pricing and /book FAQ prices come from the catalog', () => {
+  const all = (fs: readonly { a: string }[]) => fs.map((f) => f.a).join(' ')
+  const p = all(PRICING_FAQS), b = all(BOOK_FAQS)
+  for (const t of [p, b]) assert.ok(t.includes(`$${CORE_FROM}.`) && t.includes(TRAVEL_ANSWER))
+  assert.ok(TRAVEL_ANSWER.includes(`first ${TRAVEL_FREE_KM} km`) && TRAVEL_ANSWER.includes(`$${TRAVEL_PER_KM.toFixed(2)} per additional km`))
+  assert.ok(p.includes(TOUR_RANGE) && p.includes(VISIT_PRICE_LABEL.toLowerCase()))
+  for (const v of [...Object.values(OFFICE_SEAT_PRICE_PER_YEAR), ...Object.values(OFFICE_SEAT_PRICE_PER_MONTH)]) assert.ok(p.includes(`$${v}`), `$${v}`)
+  assert.ok(b.includes(`+$${RUSH_FLAT}`) && b.includes(TWILIGHT_RANGE) && b.includes(TOUR_RANGE))
+})
+
+test('team, commercial, investor and REIT FAQs use catalog prices', () => {
+  const team = TEAMS_FAQS.map((f) => f.a).join(' ')
+  assert.ok(team.includes(`$${TEAM_EXTRA_SEAT.monthly} a month, or $${TEAM_EXTRA_SEAT.yearly} a year`))
+  assert.match(read('src/app/teams/page.tsx'), new RegExp(`\\$${TEAM_EXTRA_SEAT.monthly} per agent a month, or \\$${TEAM_EXTRA_SEAT.yearly} a year`))
+  const cre = COMMERCIAL_FAQS.map((f) => f.a).join(' ')
+  for (const k of ['cre_leasing_s', 'cre_leasing_m', 'cre_leasing_l', 'cre_aerial']) assert.ok(cre.includes(money(ONE_OFFS[k].cents)), k)
+  for (const f of [...INVESTORS_FAQS, ...REITS_FAQS]) assert.ok(!/\$\d/.test(f.a), f.q)
+  for (const [p, n] of [['teams', 'TEAMS_FAQS'], ['commercial', 'COMMERCIAL_FAQS'], ['investors', 'INVESTORS_FAQS'], ['reits', 'REITS_FAQS']]) {
+    assert.match(read(`src/app/${p}/page.tsx`), new RegExp(`<PublicFaqs title="[^"]+" faqs=\\{${n}\\} />`), p)
+  }
 })

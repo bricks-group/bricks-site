@@ -24,7 +24,7 @@ export const INTEGRATIONS: Article[] = [
   },
   {
     slug: 'mls-feeds',
-    title: `Connect your MLS feed`,
+    title: `Connect your MLS® feed`,
     summary: `Bring your board feed on your own credentials. Bricks pulls from it. Publishing stays manual.`,
     howto: true,
     body: [

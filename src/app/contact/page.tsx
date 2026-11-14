@@ -6,15 +6,15 @@ import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: "Contact Bricks for Software, Bookings & Support | Canada",
-  description: "Contact Bricks about software, listing media or Site Progress. Find support, general enquiry and privacy emails, or send a note about your property or account.",
+  description: "Contact Bricks about software, listing media or Site Progress: support, general and privacy emails, or a note about your property or account.",
   alternates: { canonical: '/contact' },
   openGraph: { images: [OG_IMAGE],
     title: "Contact Bricks for Software, Bookings & Support | Canada",
-    description: "Contact Bricks about software, listing media or Site Progress. Find support, general enquiry and privacy emails, or send a note about your property or account.",
+    description: "Contact Bricks about software, listing media or Site Progress: support, general and privacy emails, or a note about your property or account.",
   },
   twitter: {
     title: "Contact Bricks for Software, Bookings & Support | Canada",
-    description: "Contact Bricks about software, listing media or Site Progress. Find support, general enquiry and privacy emails, or send a note about your property or account.",
+    description: "Contact Bricks about software, listing media or Site Progress: support, general and privacy emails, or a note about your property or account.",
   },
 }
 

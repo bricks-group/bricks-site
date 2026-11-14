@@ -29,7 +29,7 @@ export const AGENTS: Article[] = [
   {
     slug: 'listing-launch-kit',
     title: `The listing launch kit`,
-    summary: `A feature sheet, social pack and MLS package, made from the listing. On every plan.`,
+    summary: `A feature sheet, social pack and MLS® package, made from the listing. On every plan.`,
     body: [
       p(`Bricks builds a launch kit from the listing's details and its delivered photos. It's on every plan, including free Clay.`),
       table(['Piece', 'What it is'], [

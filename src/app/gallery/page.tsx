@@ -6,18 +6,18 @@ import RevealObserver from '@/components/RevealObserver'
 
 export const metadata: Metadata = {
   title: "Real Estate Photography & Listing Photo Gallery | Bricks",
-  description: "Browse Bricks listing photo samples from homes, multifamily, commercial and industrial properties, with aerial images and before-and-after editing comparisons.",
+  description: "Real estate photography portfolio from Bricks: homes, multifamily, commercial and industrial listings, aerials and before-and-after editing.",
   alternates: { canonical: '/gallery' },
   openGraph: {
     title: "Real Estate Photography & Listing Photo Gallery | Bricks",
-    description: "Browse Bricks listing photo samples from homes, multifamily, commercial and industrial properties, with aerial images and before-and-after editing comparisons.",
+    description: "Real estate photography portfolio from Bricks: homes, multifamily, commercial and industrial listings, aerials and before-and-after editing.",
     images: ['/media/work/02.jpg'],
     url: 'https://www.brxs.ca/gallery',
   },
   twitter: {
     card: 'summary_large_image',
     title: "Real Estate Photography & Listing Photo Gallery | Bricks",
-    description: "Browse Bricks listing photo samples from homes, multifamily, commercial and industrial properties, with aerial images and before-and-after editing comparisons.",
+    description: "Real estate photography portfolio from Bricks: homes, multifamily, commercial and industrial listings, aerials and before-and-after editing.",
     images: ['/media/work/02.jpg'],
   },
 }
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 type Shot = { src: string; alt: string; t: string; d?: string }
 
 const residential: Shot[] = [
-  { src: '/media/work/02.jpg', alt: 'HDR listing photo — residential exterior for MLS', t: 'Exterior' },
+  { src: '/media/work/02.jpg', alt: 'HDR listing photo — residential exterior for MLS®', t: 'Exterior' },
   { src: '/media/res-ext-1.jpg', alt: 'Real estate photography — brick house exterior listing photo', t: 'Exterior' },
   { src: '/media/res-dining-1.jpg', alt: 'Listing photos — residential dining room interior HDR', t: 'Dining' },
   { src: '/media/work/07.jpg', alt: 'Condo living room listing photo in the GTA', t: 'Living' },
@@ -53,7 +53,7 @@ const industrial: Shot[] = [
   { src: '/media/cre-harvester-exterior.jpg', alt: 'Commercial industrial exterior — HDR listing photo', t: 'Exterior' },
   { src: '/media/cre-harvester-dock.jpg', alt: 'Loading dock exterior — commercial listing photo', t: 'Dock' },
   { src: '/media/cre-hanlon-exterior.jpg', alt: 'Industrial park exterior listing photo', t: 'Exterior' },
-  { src: '/media/cre-industrial-1.jpg', alt: 'Industrial building exterior — MLS-ready still', t: 'Exterior' },
+  { src: '/media/cre-industrial-1.jpg', alt: 'Industrial building exterior — MLS®-ready still', t: 'Exterior' },
   { src: '/media/cre-industrial-2.jpg', alt: 'Industrial facade listing photo', t: 'Facade' },
   { src: '/media/cre-industrial-3.jpg', alt: 'Industrial site exterior listing photo', t: 'Site' },
 ]

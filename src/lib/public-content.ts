@@ -1,5 +1,7 @@
 /** Shared public definitions: visible answers, structured data and the AI text export. */
 import { PER_VISIT, PLANS, fmt } from './commercial'
+import { TEAM_EXTRA_SEAT } from './catalog'
+import { ONE_OFFS, money } from './propertyCheckout'
 export const BRICKS_DEFINITION = 'Bricks is subscription software for Canadian real estate: builders, developers, investors, brokerages, teams and realtors. Listing media, Virtual Visit free-roam 3D and Site Progress — drone mapping, orthomosaics, models, documents, reports and comparisons over time — are services booked inside Bricks. Bricks Group is based in Ontario, Canada.'
 
 export const LISTING_MEDIA_DESCRIPTION = 'Listing media is a service booked inside Bricks: HDR photography, licensed drone, floor plans, video and cinematic reels, with files delivered to the listing.'
@@ -71,4 +73,31 @@ export const BROKERAGE_FAQS = [
   { q: "How many agents do I need for a brokerage plan?", a: "Brokerage plans start at 5 seats. With fewer agents, a team plan puts up to 6 agents on the lead’s plan." },
   { q: "Is listing media included in the seat price?", a: "No. Media is billed separately. Agents book shoots from the listing, and the brokerage can mark favourite photographers, who get priority for its agents’ shoots." },
   { q: "How do I set up my brokerage?", a: "Create a brokerage account and finish onboarding. In Billing, enter your seat count under Office plans and subscribe. Then add agents from Office, Agents, or share your invite link." },
+] as const
+
+// W2.1 (handoff §2, 2026-11-14): FAQs for /teams, /investors, /reits and /commercial.
+// Each page renders these through PublicFaqs, so the FAQPage JSON-LD matches the visible text.
+export const TEAMS_FAQS = [
+  { q: 'Who counts as an agent on a team plan?', a: 'The lead and up to five agents share the lead’s plan, six in all. Each agent joins from an email invite and keeps their own login.' },
+  { q: 'What does an extra agent cost?', a: `Past six agents, each extra agent is $${TEAM_EXTRA_SEAT.monthly} a month, or $${TEAM_EXTRA_SEAT.yearly} a year, CAD plus tax. From about 17 agents, brokerage seats can cost less.` },
+  { q: 'Can the team lead see every deal?', a: 'Yes. Everyone works from the same pipeline, and the lead sees every deal and listing, with who owns each one.' },
+] as const
+
+export const INVESTORS_FAQS = [
+  { q: 'What does a construction draw report show?', a: 'The dated site visits for the period: drone photos, true maps, before and after, milestones and what changed. The builder’s schedule, budget and % complete stay marked as their own figures. It documents site conditions; it isn’t a cost, quantity or completion certification.' },
+  { q: 'How do shared report links work?', a: 'Each report or investor update can be shared as a read-only link that expires, or as a PDF. Readers don’t need a Bricks account.' },
+  { q: 'Can a builder share their reports with me?', a: 'Yes. Builders share each report or update with you as a link that expires, or as a PDF, and you don’t need an account to read it.' },
+] as const
+
+export const REITS_FAQS = [
+  { q: 'What does a REIT account cover?', a: 'Leasing media for units and spaces, condition reports, quarterly property checks and site progress for new buildings, filed by property in one Bricks account.' },
+  { q: 'Are there portfolio discounts?', a: 'Yes. With 10 or more properties in your account, every visit booked from it is 10% off, and 15% off at 25.' },
+  { q: 'Does Bricks sync with our property management system?', a: 'Not yet. Your team updates unit status in Bricks: available, reserved or leased.' },
+] as const
+
+const LEASING = ['cre_leasing_s', 'cre_leasing_m', 'cre_leasing_l'].map((k) => ONE_OFFS[k])
+export const COMMERCIAL_FAQS = [
+  { q: 'What does a leasing set include?', a: `Photos, a measured floor plan and a Virtual Visit of the space. ${LEASING.map((o) => `${money(o.cents)} up to ${o.maxSqft!.toLocaleString('en-CA')} sq ft`).join(', ')}. CAD plus tax.` },
+  { q: 'Can you shoot the building from the air?', a: `Yes. An aerial set is ${money(ONE_OFFS.cre_aerial.cents)}: aerial photos and video of the site, flown by certified pilots.` },
+  { q: 'Is Virtual Visit a path tour?', a: 'No. It’s free-roam 3D of the space, so tenants and buyers can move anywhere they like. Leasing sets include one, and it can be added to any media booking.' },
 ] as const

@@ -6,7 +6,10 @@ import { SystemBand, Photo, HeroPlate, PlateImg } from '@/components/clientele/C
 import { PER_VISIT, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
 import { OG_IMAGE } from '@/lib/og'
-import { ONE_OFFS, money } from '@/lib/propertyCheckout'
+import PublicFaqs from '@/components/PublicFaqs'
+import { COMMERCIAL_FAQS } from '@/lib/public-content'
+import { ORG_REF } from '@/lib/schema'
+import { ONE_OFFS, ONE_OFFS_FOR, money } from '@/lib/propertyCheckout'
 
 export const metadata: Metadata = {
   title: "Commercial Real Estate Photography, Toronto & GTA | Bricks",
@@ -22,15 +25,31 @@ const MAPPED = PER_VISIT.find((x) => x.key === 'mapped')!
 const SETUP = PER_VISIT.find((x) => x.key === 'setup')!
 const VISUAL = PER_VISIT.find((x) => x.key === 'visual')!
 
+/** Service + offers for the commercial visits this page prices, from the /book/property checkout table. */
+const COMMERCIAL_SERVICE_SCHEMA = {
+  '@context': 'https://schema.org', '@type': 'Service', '@id': 'https://www.brxs.ca/commercial#service',
+  name: 'Commercial real estate photography', serviceType: 'Commercial real estate photography',
+  description: 'Leasing sets with photos, a measured floor plan and a Virtual Visit of the space, and aerial sets, booked online.',
+  url: 'https://www.brxs.ca/commercial', provider: ORG_REF,
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog', name: 'Commercial visits (CAD, pre-tax)',
+    itemListElement: ONE_OFFS_FOR.commercial.map((k) => ONE_OFFS[k]).map((o) => ({
+      '@type': 'Offer', price: o.cents / 100, priceCurrency: 'CAD',
+      itemOffered: { '@type': 'Service', name: o.name, description: o.what },
+    })),
+  },
+}
+
 export default function CommercialPage() {
   return (
     <>
       <RevealObserver />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(COMMERCIAL_SERVICE_SCHEMA) }} />
       <section className="hero">
         <div className="wrap">
           <h1>Commercial property, shown properly.</h1>
           <p className="sub">
-            Bricks is the system that brings it all together: listing media, Virtual Visit and mapped site captures, booked online and delivered into one listing file.
+            Bricks is the system that brings it all together: commercial real estate photography, Virtual Visit and mapped site captures, booked online and delivered into one listing file.
           </p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={signupUrl('commercial')}>Create a commercial account</a>
@@ -99,6 +118,8 @@ export default function CommercialPage() {
           ]}
         />
       </section>
+
+      <PublicFaqs title="Questions about commercial media." faqs={COMMERCIAL_FAQS} />
 
       <Close title="See the work first." href="/gallery" label="See commercial work" primary={false} />
     </>

@@ -7,18 +7,18 @@ import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: "Fall Listing Photos & Real Estate Photography | Bricks",
-  description: "Plan your fall listing media with Bricks. Book HDR photography, licensed drone and floor plans, with optional tours and Virtual Visit for your next listing.",
+  description: "Plan fall listing media with Bricks: HDR photos, licensed drone and floor plans, with optional tours and Virtual Visit. Same standard, same prices.",
   alternates: { canonical: '/fall-market' },
   openGraph: {
     title: "Fall Listing Photos & Real Estate Photography | Bricks",
-    description: "Plan your fall listing media with Bricks. Book HDR photography, licensed drone and floor plans, with optional tours and Virtual Visit for your next listing.",
+    description: "Plan fall listing media with Bricks: HDR photos, licensed drone and floor plans, with optional tours and Virtual Visit. Same standard, same prices.",
     images: [OG_IMAGE],
     url: 'https://www.brxs.ca/fall-market',
   },
   twitter: {
     card: 'summary_large_image',
     title: "Fall Listing Photos & Real Estate Photography | Bricks",
-    description: "Plan your fall listing media with Bricks. Book HDR photography, licensed drone and floor plans, with optional tours and Virtual Visit for your next listing.",
+    description: "Plan fall listing media with Bricks: HDR photos, licensed drone and floor plans, with optional tours and Virtual Visit. Same standard, same prices.",
     images: [OG_IMAGE],
   },
 }

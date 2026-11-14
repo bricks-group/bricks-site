@@ -16,13 +16,16 @@ import {
   VISIT_NAME,
   VISIT_SHORT,
 } from '@/lib/brand'
-import { mediaServiceSchema, virtualVisitServiceSchema, osSoftwareApplicationSchema, type MediaOfferId } from '@/lib/schema'
+import { mediaServiceSchema, virtualVisitServiceSchema, osSoftwareApplicationSchema, faqPageSchema, type MediaOfferId } from '@/lib/schema'
+import { PRICING_FAQS } from '@/lib/faq-content'
+import RichFaqList from '@/components/RichFaqList'
 import { OG_IMAGE } from '@/lib/og'
+
+const PRICING_DESC = `Bricks pricing in CAD: software plans from free, brokerage seats, listing media from $${CORE_FROM} by home size and Site Progress visits from ${fmt(PER_VISIT[0].price)}.`
 
 export const metadata: Metadata = {
   title: "Pricing: Software Plans and Listing Media | Bricks",
-  description:
-    'Clay is free; Keystone $49, Marble $99, Diamond $149 a month. Listing media from $248, priced by home size. Brokerage seats from $300 a year. CAD.',
+  description: PRICING_DESC,
   alternates: { canonical: '/pricing' },
   openGraph: { images: [OG_IMAGE],
     title: "Pricing: Software Plans and Listing Media | Bricks",
@@ -72,25 +75,7 @@ export default function PricingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(osSoftwareApplicationSchema('https://www.brxs.ca/pricing')) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: [
-              { '@type': 'Question', name: "What's in Essentials?", acceptedAnswer: { '@type': 'Answer', text: `HDR photos, licensed drone and a floor plan in one shoot, from $${CORE_FROM}.` } },
-              { '@type': 'Question', name: 'Are the photos MLS®-safe?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We keep real window views and don’t add fake skies by default. Twilight is shot for real at blue hour.' } },
-              { '@type': 'Question', name: 'How does travel work?', acceptedAnswer: { '@type': 'Answer', text: 'Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.' } },
-              { '@type': 'Question', name: 'How is home size measured?', acceptedAnswer: { '@type': 'Answer', text: 'By finished area and complexity. Not sure? Choose "advise me" when you book and we\'ll size it from the address.' } },
-              { '@type': 'Question', name: 'Virtual tour or virtual visit?', acceptedAnswer: { '@type': 'Answer', text: `A virtual tour follows a set path (${TOUR_RANGE}) and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on (${VISIT_PRICE_LABEL.toLowerCase()}).` } },
-              ...(VIRTUAL_STAGING_ENABLED ? [{ '@type': 'Question', name: 'What is virtual staging?', acceptedAnswer: { '@type': 'Answer', text: `Furniture added to photos of vacant rooms, marked as virtually staged. $${STAGING_PER_IMAGE} per photo, before tax, and not part of any package.` } }] : []),
-              { '@type': 'Question', name: 'Where do you shoot?', acceptedAnswer: { '@type': 'Answer', text: 'Across Canada. Ask and we’ll confirm your area and quote any travel.' } },
-              { '@type': 'Question', name: 'Can I add Brixton AI without changing plan?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Brixton AI is one switch on a paid plan. Diamond includes it.' } },
-            ],
-          }),
-        }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(PRICING_FAQS)) }} />
 
       <section className="hero">
         <div className="wrap">
@@ -209,17 +194,7 @@ export default function PricingPage() {
 
         <section className="cm-sec rvl" aria-label="Questions">
           <Head title="Before you book." />
-          <div className="faq">
-            <div className="qa"><h3>What&apos;s in Essentials?</h3><p>HDR photos, licensed drone and a floor plan in one shoot.</p></div>
-            <div className="qa"><h3>Are the photos MLS®-safe?</h3><p>Yes. We keep real window views and don&apos;t add fake skies by default. Twilight is shot for real at blue hour.</p></div>
-            <div className="qa"><h3>How does travel work?</h3><p>Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer&apos;s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.</p></div>
-            <div className="qa"><h3>How is home size measured?</h3><p>By finished area and complexity. Not sure? Choose &quot;advise me&quot; when you book and we&apos;ll size it from the address.</p></div>
-            <div className="qa"><h3>Virtual tour or virtual visit?</h3><p>A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.</p></div>
-            {VIRTUAL_STAGING_ENABLED && <div className="qa"><h3>What is virtual staging?</h3><p>Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.</p></div>}
-            <div className="qa"><h3>Where do you shoot?</h3><p>Across Canada. Ask and we&apos;ll confirm your area and quote any travel.</p></div>
-            <div className="qa"><h3>Can I add Brixton AI without changing plan?</h3><p>Yes. Brixton AI is one switch on a paid plan. Diamond includes it.</p></div>
-            <div className="qa"><h3>Brokerage or individual plan?</h3><p>Agents start free, or pick a paid plan. Offices buy seats, from ${OFFICE_SEAT_PRICE_PER_YEAR.franchise.toLocaleString('en-CA')} a year. Every seat gets all of Bricks plus trust accounting.</p></div>
-          </div>
+          <RichFaqList faqs={PRICING_FAQS} />
         </section>
 
 

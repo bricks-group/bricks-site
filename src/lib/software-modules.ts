@@ -45,7 +45,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     name: 'Deals and transactions',
     blurb: 'Prices, commission, conditions, dates and signatures on one file per deal.',
     metaTitle: 'Real Estate Deal Management Software | Bricks',
-    metaDescription: 'Track every deal from offer to closing in Bricks: prices, commission, conditions and deadlines, showings, checklists, documents and e-signatures on one file.',
+    metaDescription: 'Track every deal from offer to closing: prices, commission, conditions, deadlines, showings, checklists, documents and e-signatures on one file.',
     h1: 'Every deal, deadline and closing in one place.',
     sub: 'Each deal gets one file: prices, commission, conditions, key dates, documents and signatures. Nothing to rebuild from a spreadsheet and an inbox.',
     replaces: [

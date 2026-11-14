@@ -49,7 +49,7 @@ export default function AboutPage() {
       <section className="hero">
         <div className="wrap">
           <h1>About Bricks.</h1>
-          <p className="sub">The system that brings it all together for Canadian real estate.</p>
+          <p className="sub">Bricks Group builds Bricks in Mississauga, Ontario: real estate software for builders, brokerages, agents, property managers and vendors.</p>
         </div>
       </section>
 

@@ -10,7 +10,7 @@ import { OG_IMAGE } from '@/lib/og'
 
 const URL = 'https://www.brxs.ca/virtual-tours'
 const TITLE = '3D Virtual Tours for Real Estate Listings in Canada | Bricks'
-const DESC = `Virtual tours for real estate listings, ${TOUR_RANGE} by home size, and Virtual Visit free-roam 3D, ${VISIT_RANGE}. Captured on the listing shoot and booked inside Bricks.`
+const DESC = `Virtual tours for real estate listings, ${TOUR_RANGE} by home size, and Virtual Visit free-roam 3D, ${VISIT_RANGE}. Captured on the shoot, booked in Bricks.`
 
 export const metadata: Metadata = {
   title: TITLE,

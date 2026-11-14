@@ -69,7 +69,7 @@ export const AREA_SERVED_SCHEMA = [
 export const KNOWS_ABOUT = [
   'Real estate photography',
   'Listing photos',
-  'MLS photos',
+  'MLS® photos',
   'Listing media',
   'Aerial photography',
   'Drone real estate photos',

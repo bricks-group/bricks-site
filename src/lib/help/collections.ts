@@ -15,7 +15,7 @@ export const COLLECTIONS: Collection[] = [
   { slug: 'investors', title: 'Investors', summary: 'Acquisition capture, portfolio watch and claims.', icon: 'chart', audience: true },
   { slug: 'reits', title: 'REITs', summary: 'Portfolio accounts and volume pricing.', icon: 'grid', audience: true },
   { slug: 'home-services', title: 'Home services', summary: 'Staging, cleaning, inspections and measurement, by quote.', icon: 'home' },
-  { slug: 'integrations', title: 'Integrations', summary: 'MLS feeds, CRMs, calendars and payments.', icon: 'link' },
+  { slug: 'integrations', title: 'Integrations', summary: 'MLS® feeds, CRMs, calendars and payments.', icon: 'link' },
   { slug: 'account-security', title: 'Account, security and privacy', summary: 'Settings, notifications, privacy and deleting your account.', icon: 'lock' },
   { slug: 'photographers', title: 'Working with Bricks', summary: 'Applying as a photographer, pilot or home services vendor, jobs, pay and the capture standard.', icon: 'aperture' },
   { slug: 'troubleshooting', title: 'Troubleshooting', summary: 'Sign-in, email, payment and delivery problems.', icon: 'wrench' },
