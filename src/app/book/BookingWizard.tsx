@@ -16,6 +16,8 @@ import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
 import { type BookPrefill, bookTypeOption, canSkipToPackages, readBookPrefill, readHandoff } from '@/lib/book-prefill'
 import { type Recommendation, compactMoney, recommendPackage } from '@/lib/book-recommend'
+import NotInArea from '@/components/NotInArea'
+import { type CoverageInput, type CoverageState, UNAVAILABLE_CODE, UNAVAILABLE_MESSAGE, checkCoverage, coverageKey, isNotCoveredCode } from '@/lib/booking-coverage'
 const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
 
 type AddrSuggestion = {
@@ -202,6 +204,9 @@ export default function BookingWizard() {
   const [quote, setQuote] = useState<Quote | null>(null)
   const [quoteLoading, setQuoteLoading] = useState(false)
   const [quoteError, setQuoteError] = useState('')
+  // Booking coverage (Kam 2026-11-14): checked on Next from step 0, before quote, times or payment.
+  const [coverage, setCoverage] = useState<{ key: string; state: CoverageState } | null>(null)
+  const [checkingCoverage, setCheckingCoverage] = useState(false)
   const [sqftInput, setSqftInput] = useState('')
   const [date, setDate] = useState('')
   const [notes, setNotes] = useState('')
@@ -451,6 +456,8 @@ export default function BookingWizard() {
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
       .then((res) => {
         setQuoteLoading(false)
+        if (!res.ok && isNotCoveredCode(res.j?.code)) { evt('quote_not_covered'); setQuote(null); markNotCovered(); return }
+        if (!res.ok && res.j?.code === UNAVAILABLE_CODE) { evt('quote_failed'); setQuote(null); setQuoteError(UNAVAILABLE_MESSAGE); return }
         if (!res.ok) { evt('quote_failed'); setQuote(null); setQuoteError("We couldn't auto-price this address. Enter the square footage above and hit Re-quote, or email help@brxs.ca."); return }
         setQuote(res.j.quote)
         evt('quote_viewed', { footprint: res.j.quote.footprint_label, total: res.j.quote.total, sqft_source: res.j.quote.sqft_source ?? 'unknown' })
@@ -571,8 +578,34 @@ export default function BookingWizard() {
     return !msg
   }
 
-  function goNext(s: number) {
-    if (validate(s)) {
+  function coverageInput(): CoverageInput {
+    return { address: selectedAddr || addr.trim(), lat: addrLat, lon: addrLng, province: addrProvince, flow: 'book' }
+  }
+  function markNotCovered() {
+    setCoverage({ key: coverageKey(coverageInput()), state: { status: 'not_covered', message: '' } })
+    setSelectedSlot(null)
+    setStep(0)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  const notCovered = !!coverage && coverage.state.status === 'not_covered' && coverage.key === coverageKey(coverageInput())
+
+  async function goNext(s: number) {
+    if (s === 0 && validate(0)) {
+      const input = coverageInput()
+      const key = coverageKey(input)
+      let state = coverage && coverage.key === key ? coverage.state : null
+      if (!state || state.status === 'error') {
+        setCheckingCoverage(true)
+        state = await checkCoverage(input)
+        setCheckingCoverage(false)
+        setCoverage({ key, state })
+      }
+      if (state.status === 'not_covered') { evt('booking_not_covered'); return }
+      if (state.status === 'error') { setErrs((e) => ({ ...e, 0: state!.status === 'error' ? state!.message : '' })); return }
+    } else if (s === 0) {
+      return
+    }
+    if (s === 0 || validate(s)) {
       const next = s + 1
       setStep(next)
       if (s === 0) evt('booking_contact_submitted')
@@ -647,6 +680,7 @@ export default function BookingWizard() {
     fetch('/api/create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       .then((r) => r.json().then((j) => ({ ok: r.ok && j.ok, j })))
       .then((res) => {
+        if (!res.ok && isNotCoveredCode(res.j?.code)) { evt('checkout_failed', { reason: 'not_covered' }); setPaying(false); markNotCovered(); return }
         if (!res.ok) { evt('checkout_failed', { reason: 'create_checkout_error' }); setErrs((e) => ({ ...e, 3: 'Checkout failed: ' + (res.j.error || 'try again') })); setPaying(false); return }
         setDoneTitle('Redirecting to secure checkout…')
         evt('checkout_redirected', { total: quote ? quote.total : null })
@@ -762,7 +796,11 @@ export default function BookingWizard() {
                 <span className="hint-sm">Optional. Helps us size the shoot.</span>
               </div>
               <div className="err">{errs[0]}</div>
-              <div className="nav-btns"><span></span><button type="button" className="btn btn-brick" onClick={() => goNext(0)}>Next →</button></div>
+              {notCovered ? (
+                <NotInArea input={coverageInput()} email={email} />
+              ) : (
+                <div className="nav-btns"><span></span><button type="button" className="btn btn-brick" disabled={checkingCoverage} onClick={() => goNext(0)}>{checkingCoverage ? 'Checking your area…' : 'Next →'}</button></div>
+              )}
             </div>
 
             <div className={`panel${step === 1 ? ' active' : ''}`}>

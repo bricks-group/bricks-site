@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { isProvinceBlock } from '@/lib/property-tax'
-import { buildQuote } from '@/lib/quote-engine'
+import { NOT_COVERED_MESSAGE, UNAVAILABLE_CODE, UNAVAILABLE_MESSAGE, isNotCoveredCode } from '@/lib/booking-coverage'
 import { stripVirtualStaging } from '@/lib/pricing'
 
 export const runtime = 'nodejs'
@@ -44,48 +44,32 @@ export async function POST(req: Request) {
   // Virtual staging is off sale (VIRTUAL_STAGING_ENABLED in lib/pricing): never quote it.
   body = stripVirtualStaging(body)
 
-  // Prefer OS assign-first quote (near-instant allocate + final travel / GTA $0).
+  // Booking coverage (Kam 2026-11-14): only the Bricks API can confirm an eligible
+  // vendor reaches the address, so there is no local-engine fallback any more. If
+  // it can't be reached, fail closed with a calm 503 and never show a payable quote.
+  let proxied: Awaited<ReturnType<typeof quoteViaOs>> = null
   try {
-    const proxied = await quoteViaOs(body)
-    if (proxied?.ok && proxied.j?.quote) {
-      return NextResponse.json({ ok: true, quote: proxied.j.quote, via: 'os-assign' })
-    }
-    if (proxied && !proxied.ok && proxied.status === 422 && isProvinceBlock(proxied.j)) {
-      // Province rules from OS (Saskatchewan unavailable / province unknown).
-      return NextResponse.json({ ok: false, error: proxied.j?.error || proxied.j?.detail, code: proxied.j?.code || 'province' }, { status: 422 })
-    }
-    if (proxied && !proxied.ok && proxied.status === 409) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error:
-            proxied.j?.error ||
-            proxied.j?.detail ||
-            'No photographer available for this address yet — checkout is blocked until one is assigned.',
-        },
-        { status: 409 },
-      )
-    }
+    proxied = await quoteViaOs(body)
   } catch {
-    // fall through to local quote-engine
+    proxied = null
   }
-
-  const result = await buildQuote(body)
-  if (!result.ok) {
-    return NextResponse.json({ ok: false, error: result.error }, { status: result.status })
+  if (!proxied) {
+    return NextResponse.json({ ok: false, code: UNAVAILABLE_CODE, error: UNAVAILABLE_MESSAGE }, { status: 503 })
   }
-  // Local engine: GTA major is final $0; outside GTA is still pending — do not
-  // pretend a final fee. Surface a clear block so the wizard cannot pay yet.
-  const q = result.quote
-  if (q.travel_pending) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error:
-          'Confirming a photographer for this address — travel outside GTA major markets is finalized from their base before checkout. Try again in a moment, or email help@brxs.ca.',
-      },
-      { status: 409 },
-    )
+  if (proxied.ok && proxied.j?.quote) {
+    return NextResponse.json({ ok: true, quote: proxied.j.quote, via: 'os-assign' })
   }
-  return NextResponse.json({ ok: true, quote: q })
+  const code = typeof proxied.j?.code === 'string' ? proxied.j.code : undefined
+  const msg = (typeof proxied.j?.error === 'string' && proxied.j.error) || (typeof proxied.j?.detail === 'string' && proxied.j.detail) || ''
+  if (proxied.status === 422 && isProvinceBlock(proxied.j)) {
+    // Province rules from OS (Saskatchewan unavailable / province unknown).
+    return NextResponse.json({ ok: false, error: proxied.j?.error || proxied.j?.detail, code: proxied.j?.code || 'province' }, { status: 422 })
+  }
+  if (isNotCoveredCode(code) || proxied.status === 409) {
+    return NextResponse.json({ ok: false, code: code || 'not_covered', error: NOT_COVERED_MESSAGE }, { status: 409 })
+  }
+  if (proxied.status === 422 || proxied.status === 400) {
+    return NextResponse.json({ ok: false, code: code || 'bad_request', error: msg || 'Check the address and try again.' }, { status: proxied.status })
+  }
+  return NextResponse.json({ ok: false, code: UNAVAILABLE_CODE, error: UNAVAILABLE_MESSAGE }, { status: 503 })
 }

@@ -37,7 +37,8 @@ export async function POST(req: Request) {
     const j = (await res.json().catch(() => ({}))) as Record<string, unknown>
     if (!res.ok) {
       const detail = typeof j.detail === 'string' ? j.detail : 'Checkout failed'
-      return NextResponse.json({ ok: false, error: detail }, { status: res.status })
+      const code = typeof j.code === 'string' ? j.code : undefined
+      return NextResponse.json({ ok: false, error: typeof j.error === 'string' && code ? j.error : detail, ...(code ? { code } : {}) }, { status: res.status })
     }
     return NextResponse.json(j)
   } catch {
