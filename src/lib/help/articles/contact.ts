@@ -12,7 +12,7 @@ export const CONTACT: Article[] = [
         ['Support', '[help@brxs.ca](mailto:help@brxs.ca)'],
         ['General enquiries', '[hello@brxs.ca](mailto:hello@brxs.ca)'],
         ['Privacy', '[privacy@brxs.ca](mailto:privacy@brxs.ca)'],
-        ['Phone', '[343-453-4578](tel:+13434534578)'],
+        ['Phone', '[(289) 312-7425](tel:+12893127425)'],
       ]),
       p(`Or use the [contact form](/contact). Tell us the property address, the shoot type and your preferred date, or anything else we should know.`),
       p(`Writing about a booking? Include the property address and the email you booked with.`),

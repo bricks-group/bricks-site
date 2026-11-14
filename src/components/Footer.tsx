@@ -96,7 +96,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
       <div className="foot-meta">
         <span>© {LEGAL_NAME} · Canada</span>
         <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
-        <span className="mono">343-453-4578</span>
+        <span className="mono">(289) 312-7425</span>
         <a href="https://share.google/7ttYfc6W7JRwlqA9U" target="_blank" rel="noopener noreferrer">Find us on Google</a>
         {SOCIAL_PROFILES.map((p) => (
           <a key={p.url} href={p.url} target="_blank" rel="me noopener noreferrer">{p.label}</a>

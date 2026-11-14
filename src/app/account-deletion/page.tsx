@@ -96,7 +96,7 @@ export default function AccountDeletionPage() {
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions</h2>
           <p>
-            <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span> ·{' '}
+            <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">(289) 312-7425</span> ·{' '}
             <Link href="/privacy">Privacy Policy</Link>
           </p>
           <p>Bricks Group · Ontario, Canada</p>

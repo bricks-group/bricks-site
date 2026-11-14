@@ -206,7 +206,7 @@ export default function DpaPage() {
             For DPA inquiries or to exercise Controller rights under this agreement:{' '}
             <a href="mailto:help@brxs.ca">help@brxs.ca</a>
             <br />
-            Phone: <span className="mono">343-453-4578</span>
+            Phone: <span className="mono">(289) 312-7425</span>
             <br />
             Bricks Group · Ontario, Canada
           </p>

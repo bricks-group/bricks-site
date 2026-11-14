@@ -54,7 +54,7 @@ export const CHANGES_REFUNDS: Article[] = [
         `Tell occupants the date and time.`,
         `Check building rules for amenities and drone ahead of time.`,
       ),
-      p(`Running late or locked out on the day? Email [help@brxs.ca](mailto:help@brxs.ca) or call [343-453-4578](tel:+13434534578) right away.`),
+      p(`Running late or locked out on the day? Email [help@brxs.ca](mailto:help@brxs.ca) or call [(289) 312-7425](tel:+12893127425) right away.`),
     ],
     related: ['prepare-for-a-shoot', 'cancel-a-shoot'],
   },

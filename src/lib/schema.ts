@@ -81,13 +81,13 @@ export const ORGANIZATION_SCHEMA = {
   },
   areaServed: { '@type': 'Country', name: 'Canada' },
   email: 'help@brxs.ca',
-  telephone: '+1-343-453-4578',
+  telephone: '+12893127425',
   contactPoint: [
     {
       '@type': 'ContactPoint',
       contactType: 'customer service',
       email: 'help@brxs.ca',
-      telephone: '+1-343-453-4578',
+      telephone: '+12893127425',
       areaServed: 'CA',
       availableLanguage: ['en'],
     },

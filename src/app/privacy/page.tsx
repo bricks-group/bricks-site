@@ -98,7 +98,7 @@ export default function PrivacyPage() {
       <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Contact</h2>
-          <p><a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
+          <p><a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">(289) 312-7425</span></p>
           <p>Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada</p>
         </section>
       </div>

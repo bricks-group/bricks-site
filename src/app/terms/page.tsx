@@ -133,7 +133,7 @@ export default function TermsPage() {
       <div className="legal-body">
         <section className="block" style={{ borderTop: '1px solid var(--hair)' }}>
           <h2>Questions?</h2>
-          <p>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">343-453-4578</span></p>
+          <p>Email <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">(289) 312-7425</span></p>
           <p>Bricks Group · Mississauga, Ontario, Canada</p>
         </section>
       </div>
