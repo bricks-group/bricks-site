@@ -70,7 +70,7 @@ export default function Post() {
         </ul>
 
         <h2>How Bricks prices it</h2>
-        <p>Every seat gets all of <Link href="/brokerage">Bricks for brokerages</Link>, plus trust accounting for the office. Agents don’t pay separately. Listing media is billed separately. Prices are CAD, before tax.</p>
+        <p>Every seat gets all of Bricks’ <Link href="/brokerage">real estate brokerage software</Link>, plus trust accounting for the office. Agents don’t pay separately. Listing media is billed separately. Prices are CAD, before tax.</p>
         <div className="table-wrap">
           <table>
             <thead><tr><th>Tier</th><th>Seats</th><th className="num">Per seat, yearly</th><th className="num">Per seat, monthly</th></tr></thead>

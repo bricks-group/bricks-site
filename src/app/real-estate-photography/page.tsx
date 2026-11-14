@@ -99,7 +99,7 @@ export default function RealEstatePhotographyPage() {
             { title: '4. Shoot and delivery', detail: 'Photos typically within 24 hours, other media within 24–48 hours.' },
           ]}
         />
-        <p className="cm-note">Getting the home ready? Use the <Link href="/help/booking/prepare-for-a-shoot">shoot prep checklist</Link>.</p>
+        <p className="cm-note">Getting the home ready? Use the <Link href="/help/booking/prepare-for-a-shoot">shoot prep checklist</Link>, or add <Link href="/home-staging">home staging</Link> before the shoot.</p>
       </section>
 
       <section className="cm-sec rvl" id="pricing" aria-label="Pricing">
@@ -117,7 +117,7 @@ export default function RealEstatePhotographyPage() {
             </table>
           </div>
         </div>
-        <p className="cm-note">Bands: {BAND_DETAIL.join(' · ')}. Add-ons on their own: drone {DRONE_RANGE}, film {REEL_RANGE}, {TOUR_NAME.toLowerCase()} {TOUR_RANGE}. Photos {PHOTO_RANGE}. CAD, before travel and tax.</p>
+        <p className="cm-note">Bands: {BAND_DETAIL.join(' · ')}. Add-ons on their own: drone {DRONE_RANGE}, film {REEL_RANGE}, {TOUR_NAME.toLowerCase()} {TOUR_RANGE}. Photos {PHOTO_RANGE}. CAD, before travel and tax. How these compare: <Link href="/blog/canada-real-estate-photography-cost-2026">real estate photography cost in Canada</Link>.</p>
       </section>
 
       <section className="cm-sec rvl" aria-label="Cities">

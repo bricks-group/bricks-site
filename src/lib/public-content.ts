@@ -101,3 +101,10 @@ export const COMMERCIAL_FAQS = [
   { q: 'Can you shoot the building from the air?', a: `Yes. An aerial set is ${money(ONE_OFFS.cre_aerial.cents)}: aerial photos and video of the site, flown by certified pilots.` },
   { q: 'Is Virtual Visit a path tour?', a: 'No. It’s free-roam 3D of the space, so tenants and buyers can move anywhere they like. Leasing sets include one, and it can be added to any media booking.' },
 ] as const
+
+// W2.2 (handoff §2 /platform). No plan names or prices.
+export const PLATFORM_FAQS = [
+  { q: 'What does Bricks software include?', a: 'Deals, listings, vendor booking, documents and e-sign, teams and roles, and payments, in one system on the web and on your phone. Listing media and Site Progress are booked inside it.' },
+  { q: 'Can I try Bricks free?', a: 'Yes. You can start free with no card and add more only when you need it. Current prices are on the pricing page.' },
+  { q: 'Does Bricks work on my phone?', a: 'Yes. Companion lets you book media and follow every listing from your phone.' },
+] as const

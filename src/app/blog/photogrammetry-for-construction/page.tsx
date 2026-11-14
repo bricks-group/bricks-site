@@ -7,7 +7,7 @@ import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
 const PATH = '/blog/photogrammetry-for-construction'
 const TITLE = 'Photogrammetry for Construction: Drone Mapping | Bricks'
-const DESC = 'How drone photogrammetry works on a construction site, what it produces, what it’s good for, its limits, and how to run it on a schedule for progress reporting.'
+const DESC = 'How drone photogrammetry works on a construction site: what it produces, where it helps, its limits and how to run it on a schedule for progress reports.'
 const MAPPED = PER_VISIT.find((x) => x.key === 'mapped')!
 const SETUP = PER_VISIT.find((x) => x.key === 'setup')!
 const MAPPED_PLAN = PLANS.find((p) => p.kind === 'Mapped')!

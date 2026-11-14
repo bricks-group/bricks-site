@@ -105,7 +105,7 @@ export default function Home() {
       </section>
 
       <section className="cm-sec rvl" aria-label="One system">
-        <Head title="One system for the whole job." lede="Every part shares the same record." link={{ href: '/platform', label: 'See the software' }} />
+        <Head title="One system for the whole job." lede="Every part shares the same record." link={{ href: '/platform', label: 'See the real estate software' }} />
         <ModuleGrid />
       </section>
 

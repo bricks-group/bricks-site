@@ -141,6 +141,7 @@ export default function Post() {
         <p className="lead">
           Canadian agents buy <strong>listing photos</strong> the same way everywhere: by footprint, by service stack, and by how fast MLS®-ready files need to land. Prices move with metro density, but the shopping list is national — HDR stills, optional drone real estate photos, a floor plan, and sometimes a path-confined virtual tour.
         </p>
+        <p>Want the Bricks rates first? Our <Link href="/real-estate-photography">real estate photography packages</Link> run from photos only to a full suite, priced by home size, and the full rate table is further down this page.</p>
 
         <h2>Canada-wide market ranges (2026)</h2>
         <p>

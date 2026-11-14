@@ -11,6 +11,8 @@ import { osSoftwareApplicationSchema } from '@/lib/schema'
 import ModuleGrid from '@/components/software/ModuleGrid'
 import Link from 'next/link'
 import { OG_IMAGE } from '@/lib/og'
+import PublicFaqs from '@/components/PublicFaqs'
+import { PLATFORM_FAQS } from '@/lib/public-content'
 
 const TITLE = 'Real Estate Software: Deals, Listings, Sites | Bricks'
 const DESC = 'Deals, listings, vendor booking, e-sign, teams and payments in one system, on the web and your phone. Media and Site Progress booked inside. Start free.'
@@ -35,7 +37,7 @@ export default function PlatformPage() {
       <section className="hero hero-tight">
         <div className="wrap">
           <h1>One system, from site to sale.</h1>
-          <p className="sub">Deals, listings, vendors, documents, team and payments, on the web and on your phone. Media and Site Progress are booked inside.</p>
+          <p className="sub">Bricks is all-in-one real estate software: deals, listings, vendors, documents, team and payments, on the web and on your phone. Media and Site Progress are booked inside.</p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={OS_LOGIN}>Try Bricks free</a>
             <Link className="cm-link" href="/why-bricks">With and without Bricks</Link>
@@ -98,6 +100,8 @@ export default function PlatformPage() {
         />
         <p className="cm-note">{SOFTWARE_BLURB}</p>
       </section>
+
+      <PublicFaqs title="Questions about the software." faqs={PLATFORM_FAQS} />
 
       <Close title="Start with the software." href={OS_LOGIN} label="Try Bricks free" external />
 

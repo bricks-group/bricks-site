@@ -34,7 +34,7 @@ export default function DroneMappingPage() {
     <Landing
       schemas={[siteProgressServiceSchema(URL)]}
       h1="Drone mapping for construction sites."
-      sub="Orthomosaics, 3D models and measurable site maps, flown on a schedule and kept as dated visits in Site Progress."
+      sub="Orthomosaics, 3D models and measurable site maps, flown on a schedule across Ontario and kept as dated visits in Site Progress."
       primary={{ href: '/book/site', label: 'Book a mapped capture' }}
       secondary={{ href: '/builders', label: 'About Site Progress' }}
       sections={[

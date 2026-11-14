@@ -6,7 +6,7 @@ import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
 const PATH = '/blog/home-inspection-cost-ontario'
 const TITLE = 'Home Inspection Cost in Ontario (2026): Prices | Bricks'
-const DESC = 'What a home inspection costs in Ontario in 2026, from published price guides, what moves the price, which add-ons cost extra, and how to get a written quote.'
+const DESC = 'What a home inspection costs in Ontario in 2026, from published price guides: what moves the price, which add-ons cost extra and how to get a quote.'
 const HOMESTARS = 'https://www.homestars.com/green-energy-diagnostics/price-guides/home-inspection-cost-toronto'
 
 export const metadata: Metadata = {

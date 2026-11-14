@@ -14,7 +14,7 @@ import { BROKERAGE_FAQS } from '@/lib/public-content'
 
 export const metadata: Metadata = {
   title: "Real Estate Brokerage Software, Deals & Media | Bricks",
-  description: "Bricks brings brokerage software, deals, e-sign and listing media together, with roster, pipeline and trust accounting for the office. Explore seat plans.",
+  description: "Real estate brokerage software for Canada: deals, e-sign and a launch kit for every agent, plus roster, pipeline and trust accounting. Per-seat plans.",
   alternates: { canonical: '/brokerage' },
 }
 
@@ -28,7 +28,7 @@ export default function BrokeragePage() {
       />
       <section className="hero">
         <div className="wrap">
-          <h1>Software agents join for, and stay for.</h1>
+          <h1>Brokerage software agents join for, and stay for.</h1>
           <p className="sub">{AGENT_LAUNCH_LIVE
             ? 'Every seat gets deals, e-sign, a launch kit for each listing and a deal room for each closing. The office gets roster, pipeline and trust accounting.'
             : 'Every seat gets deals, e-sign and listing media in one desk. The office gets roster, pipeline and trust accounting.'}</p>
