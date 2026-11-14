@@ -1,11 +1,11 @@
-// Fix broken Supabase property thumbnails in booking mockup.
-// The "Bricks Images" bucket was migrated and 3 files were lost (400 Bad Request).
-// This swaps in real listing photos from Ajani's Unsplash (@akasm).
+// Booking-mockup thumbs used to load from Supabase Storage (now 402).
+// bricks.js points at self-hosted /media/v/screens/ files. This keeps a
+// fallback if an old UUID filename is still requested.
 (function() {
   var FIXES = {
-    '74E774C6-1524-4287-B115-25CA213E4BBD.PNG': 'https://images.unsplash.com/photo-1759691555105-17e609a3e46f?w=128&q=80&fm=jpg&fit=crop',
-    '8F382591-AA45-4B74-AD75-08717CFB63D4.PNG': 'https://images.unsplash.com/photo-1759691555010-7f3f8674d2f2?w=128&q=80&fm=jpg&fit=crop',
-    '2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG': 'https://images.unsplash.com/photo-1759691554646-8155da2172ee?w=128&q=80&fm=jpg&fit=crop'
+    '74E774C6-1524-4287-B115-25CA213E4BBD.PNG': '/media/v/screens/listing-a.bf8aeb6444b6.webp',
+    '8F382591-AA45-4B74-AD75-08717CFB63D4.PNG': '/media/v/screens/listing-b.422812c72a6d.webp',
+    '2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG': '/media/v/screens/listing-c.ab2992eff4a1.webp'
   };
   function fixImg(img) {
     if (!img || img.tagName !== 'IMG' || img.dataset.bxFixed) return;

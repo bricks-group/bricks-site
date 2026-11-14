@@ -11,7 +11,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 // Real Bricks listing photos, reused as sample thumbnails in mockups.
-const SB_IMG = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/';
+const SB_IMG = '/media/v/screens/';
 
 // Shared primitives — used by all screen files. Lean tokens + helpers.
 const T = {
@@ -1695,10 +1695,10 @@ function BookHome({ dark=false }) {
           </div>
           <div style={{ marginTop:12, display:'flex', flexDirection:'column', gap:10 }}>
             {[
-              ['214 Linden St', 'Shoot today · 14:30', 'brick',   'In progress', SB_IMG + '74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
-              ['77 Alder Ave',  'Shoot today · 16:00', 'neutral', 'Scheduled',   SB_IMG + '8F382591-AA45-4B74-AD75-08717CFB63D4.PNG'],
-              ['8 Riverbend',   'Delivered yesterday', 'ok',      'Delivered',   SB_IMG + '2153E4F6-D200-4DE8-BDCE-15799C873D44.PNG'],
-              ['201 Oak Dr',    'Delivered Apr 13',    'ok',      'Delivered',   SB_IMG + '74E774C6-1524-4287-B115-25CA213E4BBD.PNG'],
+              ['214 Linden St', 'Shoot today · 14:30', 'brick',   'In progress', SB_IMG + 'listing-a.bf8aeb6444b6.webp'],
+              ['77 Alder Ave',  'Shoot today · 16:00', 'neutral', 'Scheduled',   SB_IMG + 'listing-b.422812c72a6d.webp'],
+              ['8 Riverbend',   'Delivered yesterday', 'ok',      'Delivered',   SB_IMG + 'listing-c.ab2992eff4a1.webp'],
+              ['201 Oak Dr',    'Delivered Apr 13',    'ok',      'Delivered',   SB_IMG + 'listing-a.bf8aeb6444b6.webp'],
             ].map(([a,b,tone,s,photo]) => (
               <div key={a} style={{ padding:14, border:`1px solid ${th.hair}`, borderRadius:2, display:'flex', gap:12, alignItems:'center' }}>
                 <img src={photo} alt="" style={{ width:48, height:48, borderRadius:2, objectFit:'cover', flex:'none' }}/>
@@ -1829,7 +1829,7 @@ function BookFlowProperty({ th, dark }) {
 
 function BookFlowPackage({ th, dark }) {
   const [hov, setHov] = React.useState(-1);
-  const photo = (typeof SB_IMG !== 'undefined' ? SB_IMG : '') + '74E774C6-1524-4287-B115-25CA213E4BBD.PNG';
+  const photo = (typeof SB_IMG !== 'undefined' ? SB_IMG : '') + 'listing-a.bf8aeb6444b6.webp';
   const pkgs = [
     { n:'Essentials', p:'$379', d:'HDR · licensed drone · floor plan · 24–48h target', sel:false },
     { n:'Showcase',  p:'$749', d:'Essentials + reel + virtual tour · 24–48h target', sel:true  },

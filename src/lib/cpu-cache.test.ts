@@ -18,6 +18,7 @@ test('hashed fonts have immutable headers and mutable media gets bounded caching
   const rules = await nextConfig.headers!()
   assert.ok(rules.some(r => r.source.includes('/fonts/') && r.headers.some(h => h.key === 'Cache-Control' && h.value.includes('immutable'))))
   assert.ok(rules.some(r => r.source === '/media/:path*' && r.headers.some(h => h.key === 'Cache-Control' && h.value.includes('max-age=86400'))))
+  assert.ok(rules.some(r => r.source === '/media/v/:path*' && r.headers.some(h => h.key === 'Cache-Control' && h.value.includes('immutable'))))
 })
 
 test('project pages are on-demand ISR without enumerating live projects', () => {

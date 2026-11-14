@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
       { key: 'Access-Control-Allow-Methods', value: 'GET, HEAD, OPTIONS' },
     ]
     return [
+      // Hashed self-hosted media (content-addressed filenames).
+      { source: '/media/v/:path*', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
       // Only fingerprinted assets are immutable. Stable URLs stay refreshable.
       ...['/media/:path*', '/assets/:path*', '/screens/:path*', '/fonts/:path*'].map(source => ({
         source,

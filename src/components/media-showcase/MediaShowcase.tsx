@@ -23,7 +23,10 @@ const PAIRS = [
   { k: 'Twilight', before: '/media/proof/twilight-before-1408.webp', after: '/media/proof/twilight-after-1408.webp' },
 ] as const
 
-const FILM_SRC = 'https://rbywjnnctjglhcdemnnj.supabase.co/storage/v1/object/public/Bricks%20Images/Video/bid.mp4'
+const FILM_POSTER = '/media/v/reel-poster.89feefc92167.webp'
+const FILM_W = 1280
+const FILM_H = 720
+// bid.mp4 (5,825,945 bytes) was not on the box; Supabase Storage returns 402. Poster only until the original film is recovered.
 
 export default function MediaShowcase() {
   const [tab, setTab] = useState<Tab>('photos')
@@ -114,9 +117,17 @@ export default function MediaShowcase() {
 
           <div className={tab === 'film' ? 'ms-panel is-on' : 'ms-panel'} id="ms-panel-film" role="tabpanel" aria-labelledby="ms-tab-film" hidden={tab !== 'film'}>
             {seen.film ? (
-              <video className="ms-video" autoPlay muted loop playsInline preload="metadata" poster="/media/reel-poster.jpg">
-                <source src={FILM_SRC} type="video/mp4" />
-              </video>
+              <video
+                className="ms-video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="none"
+                poster={FILM_POSTER}
+                width={FILM_W}
+                height={FILM_H}
+              />
             ) : null}
           </div>
 
