@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { addressedToHelp, answerSentences, classifyEmail, relatedLinks, flags, handleInboundRequest, inboxDbDownAlert, osInboundSaver, processEvent, safeMailExcerpt, signForTest, suppressionReason, threadKey, unavailableDb, verifySignature, type InboundRecord, type ReceivedEmail, type SaveInboundResult } from './inbound.ts'
+import { addressedToHelp, answerSentences, classifyEmail, relatedLinks, flags, handleInboundRequest, inboxDbDownAlert, osInboundSaver, processEvent, resendFetcher, safeMailExcerpt, signForTest, suppressionReason, threadKey, unavailableDb, verifySignature, type InboundRecord, type ReceivedEmail, type SaveInboundResult } from './inbound.ts'
+import { resendAlerter } from './alert.ts'
 import type { Db } from './db.ts'
 
 const SECRET = 'whsec_' + Buffer.from('test-secret-key-123').toString('base64')
@@ -50,6 +51,24 @@ const mail = (over: Partial<ReceivedEmail> = {}): ReceivedEmail => ({
   headers: {}, message_id: '<m1@example.com>', authentication: { dkim: 'pass', dmarc: 'pass' }, ...over,
 })
 const SHADOW = flags({ SUPPORT_INBOUND_ENABLED: 'true' })
+
+
+function hungFetch(timeoutMs: number): typeof fetch {
+  return (async (_url, init) => {
+    await new Promise((_resolve, reject) => {
+      const signal = init?.signal
+      if (!signal) return
+      if (signal.aborted) {
+        reject(Object.assign(new Error('aborted'), { name: 'TimeoutError' }))
+        return
+      }
+      signal.addEventListener('abort', () => {
+        reject(Object.assign(new Error('aborted'), { name: 'TimeoutError' }))
+      })
+    })
+    return new Response('late')
+  }) as typeof fetch
+}
 
 describe('webhook signature', () => {
   const body = '{"type":"email.received"}'
@@ -459,5 +478,43 @@ describe('OS inbound saver and fail-open alerting', () => {
     assert.equal(out.http, 500)
     assert.equal(out.status, 'retry')
     assert.ok(calls.includes('alert:e-hang'), JSON.stringify(calls))
+  })
+})
+
+
+describe('Resend fetch and alert timeouts', () => {
+  const view = {
+    kind: 'email_needs_kam' as const, helpNo: null, who: 'client@example.com', replyTo: 'client@example.com',
+    subject: 'Drone rules?', latest: 'hi', reasons: ['no_draft'], draft: null, reviewUrl: 'https://help.brxs.ca/admin/support',
+  }
+
+  it('times out a hung Resend fetch and a hung alert send', async () => {
+    const fetchMail = resendFetcher({ RESEND_INBOUND_API_KEY: 'rk' }, hungFetch(40), 40)
+    await assert.rejects(() => fetchMail!('e-hang'), (err: Error) => err.name === 'TimeoutError' || err.message === 'aborted')
+
+    const alert = resendAlerter({ RESEND_API_KEY: 'rk' }, hungFetch(40), 40)
+    const out = await alert!({ view, idempotencyKey: 'alert:e-hang', meta: { Email: 'e-hang' } })
+    assert.equal(out.ok, false)
+    assert.ok(out.error)
+  })
+
+  it('alerts from webhook metadata when the Resend fetch times out, and returns 500', async () => {
+    inboxDbDownAlert.now = () => Date.now()
+    inboxDbDownAlert.reset()
+    const fetchEmail = resendFetcher({ RESEND_INBOUND_API_KEY: 'rk' }, hungFetch(40), 40)!
+    const calls: { who: string; subject: string; latest: string; key: string }[] = []
+    const evWithSubject = { type: 'email.received', created_at: '2026-11-07T15:00:00Z', data: { email_id: 'e-hang-meta', from: 'Client <client@example.com>', to: ['help@brxs.ca'], subject: 'Booking question' } }
+    const out = await processEvent('m-hang-fetch', evWithSubject, {
+      saveInbound: async () => ({ ok: true, http: 200, status: 'failed' }),
+      fetchEmail,
+      flags: SHADOW,
+      alert: async (a) => { calls.push({ who: a.view.who, subject: a.view.subject || '', latest: a.view.latest, key: a.idempotencyKey }); return { ok: true, id: 'a' } },
+    })
+    assert.equal(out.http, 500)
+    assert.equal(out.status, 'retry')
+    const mailAlert = calls.find((c) => c.key === 'alert:e-hang-meta')
+    assert.ok(mailAlert, JSON.stringify(calls))
+    assert.equal(mailAlert!.who, 'client@example.com')
+    assert.equal(mailAlert!.subject, 'Booking question')
   })
 })

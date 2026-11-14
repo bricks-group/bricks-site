@@ -165,7 +165,7 @@ export type AlertSender = (a: AlertSendInput) => Promise<{ ok: boolean; id?: str
 
 /** One sender for every support alert. Idempotent per key, never throws, Bricks-alert headers (loop guard).
  *  Internal ids ride only in X-Bricks-* headers. */
-export function resendAlerter(env: Env = process.env, f: typeof fetch = fetch): AlertSender | undefined {
+export function resendAlerter(env: Env = process.env, f: typeof fetch = fetch, timeoutMs = 8_000): AlertSender | undefined {
   const key = (env.RESEND_API_KEY || '').trim()
   if (!key) return undefined
   const to = (env.SUPPORT_ALERT_TO || ALERT_TO).trim()
@@ -177,6 +177,7 @@ export function resendAlerter(env: Env = process.env, f: typeof fetch = fetch): 
         method: 'POST',
         headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'Idempotency-Key': idempotencyKey.slice(0, 256) },
         body: JSON.stringify({ from: ALERT_FROM, to: [to], reply_to: view.replyTo, subject: alertSubject(view), text: alertText(view), html: alertHtml(view), headers }),
+        signal: AbortSignal.timeout(timeoutMs),
       })
       if (!r.ok) return { ok: false, error: `resend_alert_${r.status}` }
       const j = (await r.json().catch(() => ({}))) as { id?: string }

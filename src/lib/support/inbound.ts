@@ -225,11 +225,14 @@ export function flags(env: Env = process.env): Flags {
   }
 }
 
-export function resendFetcher(env: Env = process.env, f: typeof fetch = fetch): FetchEmail | null {
+export function resendFetcher(env: Env = process.env, f: typeof fetch = fetch, timeoutMs = 8_000): FetchEmail | null {
   const key = (env.RESEND_INBOUND_API_KEY || '').trim()
   if (!key) return null
   return async (id) => {
-    const r = await f(`https://api.resend.com/emails/receiving/${encodeURIComponent(id)}`, { headers: { Authorization: `Bearer ${key}` } })
+    const r = await f(`https://api.resend.com/emails/receiving/${encodeURIComponent(id)}`, {
+      headers: { Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(timeoutMs),
+    })
     if (r.status === 404) return null
     if (!r.ok) throw new Error(`resend_fetch_${r.status}`)
     return (await r.json()) as ReceivedEmail
@@ -538,30 +541,37 @@ export async function processEvent(svixId: string, ev: WebhookEvent, deps: Proce
   }
 
   let email: ReceivedEmail | null
+  // Webhook metadata only — do not re-fetch after a timeout, or we spend another 8s.
+  const webhookMail = { from: bare(meta.from || ''), subject: (meta.subject || '').slice(0, 300), excerpt: '' }
   try {
     email = await deps.fetchEmail(meta.email_id!)
   } catch (e) {
     const msg = e instanceof Error ? e.message : 'fetch_failed'
     // Count prior failed attempts via a failed-status save; Resend retries the webhook.
     const prior = await save({
-      svix_id: svixId, email_id: meta.email_id, event_type: ev.type, from: bare(meta.from || ''),
-      to, received_for: rf, subject: (meta.subject || '').slice(0, 300), text: '', thread_key: `failed:${svixId}`,
+      svix_id: svixId, email_id: meta.email_id, event_type: ev.type, from: webhookMail.from,
+      to, received_for: rf, subject: webhookMail.subject, text: '', thread_key: `failed:${svixId}`,
       status: 'failed', last_error: msg,
     })
     // We don't have a durable attempt counter without a successful first write; the
     // route still returns 500 so Resend retries. After MAX_ATTEMPTS of failed saves
     // that already recorded the event, mark dead_letter.
-    if (prior.ok && prior.status === 'dead_letter') return { http: 200, status: 'dead_letter' }
+    if (prior.ok && prior.status === 'dead_letter') {
+      await alertWhenInboxSaveFails(deps, { ...webhookMail, emailId: meta.email_id })
+      return { http: 200, status: 'dead_letter' }
+    }
     // Keep previous behaviour for memDb: increment by re-reading attempts.
     if (deps.db) {
       const ex = await deps.db.select('support_email_events', `provider_event_id=eq.${encodeURIComponent(svixId)}&select=status,attempts`)
       const attempts = Number(ex.rows[0]?.attempts ?? 0)
       if (attempts >= MAX_ATTEMPTS) {
         await deps.db.update('support_email_events', { provider_event_id: svixId }, { status: 'dead_letter', last_error: msg, updated_at: new Date().toISOString() })
+        await alertWhenInboxSaveFails(deps, { ...webhookMail, emailId: meta.email_id })
         return { http: 200, status: 'dead_letter' }
       }
     }
-    return { http: 500, status: 'retry', detail: msg }
+    // Timeout or any other fetch failure: still alert from the webhook's sender/subject.
+    return failOpen(msg, webhookMail)
   }
   if (!email) {
     await save({
