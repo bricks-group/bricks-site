@@ -405,7 +405,7 @@ export function osInboundSaver(env: Env = process.env, f: typeof fetch = fetch, 
       })
       const j = (await r.json().catch(() => ({}))) as SaveInboundResult
       if (!r.ok) return { ok: false, http: r.status, error: typeof j.error === 'string' ? j.error : 'save_failed', duplicate: Boolean(j.duplicate) }
-      return { ok: true, http: r.status, ...j }
+      return { ...j, ok: true, http: r.status }
     } catch {
       // Timeout, abort, or network error: treat as a save failure so fail-open
       // alerting still runs and the webhook returns non-2xx for a Resend retry.
