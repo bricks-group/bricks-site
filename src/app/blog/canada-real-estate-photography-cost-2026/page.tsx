@@ -85,7 +85,7 @@ export default function Post() {
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
             mainEntityOfPage: 'https://www.brxs.ca/blog/canada-real-estate-photography-cost-2026',
             keywords:
-              'real estate photography cost Canada, listing photos price, MLS photos Canada, real estate photographer Canada, drone real estate photos cost',
+              'real estate photography cost Canada, listing photos price, MLS® photos Canada, real estate photographer Canada, drone real estate photos cost',
             image: OG_IMAGE_URL,
           }),
         }}
@@ -136,10 +136,10 @@ export default function Post() {
       <BlogPostLayout
         badge="Resources · Pricing · Canada"
         title="How much does real estate photography cost in Canada? (2026)"
-        sub="A Canada-wide look at listing photos, MLS media, drone, floor plans, and virtual tours — then how Bricks prices the same work à la carte. Updated November 2026 with a full price table by home size."
+        sub="A Canada-wide look at listing photos, MLS® media, drone, floor plans, and virtual tours — then how Bricks prices the same work à la carte. Updated November 2026 with a full price table by home size."
       >
         <p className="lead">
-          Canadian agents buy <strong>listing photos</strong> the same way everywhere: by footprint, by service stack, and by how fast MLS-ready files need to land. Prices move with metro density, but the shopping list is national — HDR stills, optional drone real estate photos, a floor plan, and sometimes a path-confined virtual tour.
+          Canadian agents buy <strong>listing photos</strong> the same way everywhere: by footprint, by service stack, and by how fast MLS®-ready files need to land. Prices move with metro density, but the shopping list is national — HDR stills, optional drone real estate photos, a floor plan, and sometimes a path-confined virtual tour.
         </p>
 
         <h2>Canada-wide market ranges (2026)</h2>
@@ -181,7 +181,7 @@ export default function Post() {
         </p>
         <h3>2. Services on the order</h3>
         <p>
-          MLS photos alone are one line item. Licensed drone, twilight, cinematic reel, and {TOUR_NAME.toLowerCase()} stack on top. {VISIT_NAME} is always a separate paid add-on — {VISIT_PACKAGING}
+          MLS® photos alone are one line item. Licensed drone, twilight, cinematic reel, and {TOUR_NAME.toLowerCase()} stack on top. {VISIT_NAME} is always a separate paid add-on — {VISIT_PACKAGING}
         </p>
         <h3>3. Travel and access</h3>
         <p>
@@ -189,7 +189,7 @@ export default function Post() {
         </p>
         <h3>4. Turnaround</h3>
         <p>
-          Honest standard delivery for edited MLS listing photos is <strong>24 hours</strong> at Bricks; 24–48 hours is common elsewhere in the market. Same-day rush is usually a flat add-on. Treat &quot;guaranteed next morning&quot; claims carefully unless the ops SLA is published and proven.
+          Honest standard delivery for edited MLS® listing photos is <strong>24 hours</strong> at Bricks; 24–48 hours is common elsewhere in the market. Same-day rush is usually a flat add-on. Treat &quot;guaranteed next morning&quot; claims carefully unless the ops SLA is published and proven.
         </p>
         <h3>5. Compliance for aerial</h3>
         <p>

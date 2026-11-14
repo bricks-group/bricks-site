@@ -13,12 +13,12 @@ import { OG_IMAGE } from '@/lib/og'
 const TEAM_PLANS = SOFTWARE_PLANS.filter((p) => p.id !== 'clay')
 
 export const metadata: Metadata = {
-  title: 'Bricks for real estate teams | Up to 6 agents on one plan',
-  description: "Manage a real estate team in Bricks with a shared pipeline, listing files and e-sign. Book listing media from each listing and explore plans for up to 6 agents.",
+  title: 'Real Estate Team Software: Up to 6 Agents | Bricks',
+  description: "Real estate team software for up to 6 agents on one plan: a shared pipeline, listing files and e-sign, with listing media booked from each listing.",
   alternates: { canonical: '/teams' },
   openGraph: { images: [OG_IMAGE],
-    title: 'One desk for the whole team | Bricks',
-    description: "Manage a real estate team in Bricks with a shared pipeline, listing files and e-sign. Book listing media from each listing and explore plans for up to 6 agents.",
+    title: 'Real Estate Team Software: Up to 6 Agents | Bricks',
+    description: "Real estate team software for up to 6 agents on one plan: a shared pipeline, listing files and e-sign, with listing media booked from each listing.",
   },
 }
 

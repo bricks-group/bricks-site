@@ -48,7 +48,7 @@ const CONTEXT_HELP_TABLE = Object.fromEntries(CONTEXT_HELP_PATHS.map((p) => [p, 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-CA" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

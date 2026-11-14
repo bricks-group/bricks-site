@@ -8,7 +8,7 @@ import ServiceQuoteForm from '@/components/home-services/ServiceQuoteForm'
 import '@/components/home-services/home-services.css'
 import { OG_IMAGE } from '@/lib/og'
 
-const title = 'Home services | Bricks'
+const title = 'Home Staging, Cleaning & Inspections, Quoted | Bricks'
 const LIST = tradeListPhrase()
 const NUM = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][TRADES.length] || String(TRADES.length)
 const description = `${LIST.charAt(0).toUpperCase()}${LIST.slice(1)}, for listings, rentals and sales, requested inside Bricks and quoted in writing by a person at Bricks.`
@@ -28,7 +28,7 @@ export default function ServicesPage() {
         <div className="wrap">
           <h1>Book home services inside Bricks.</h1>
           <p className="sub">
-            {LIST.charAt(0).toUpperCase() + LIST.slice(1)}, requested from the same system as your listings and units. A person at Bricks quotes every job in writing, and the results are kept with the property.
+            {`${LIST.charAt(0).toUpperCase() + LIST.slice(1)}, requested from the same system as your listings and units.`} A person at Bricks quotes every job in writing, and the results are kept with the property.
           </p>
           <div className="cta-row">
             <a className="btn btn-sec" href="#quote">Request a quote</a>

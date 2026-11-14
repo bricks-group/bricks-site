@@ -1,4 +1,5 @@
 /** Shared public definitions: visible answers, structured data and the AI text export. */
+import { PER_VISIT, PLANS, fmt } from './commercial'
 export const BRICKS_DEFINITION = 'Bricks is subscription software for Canadian real estate: builders, developers, investors, brokerages, teams and realtors. Listing media, Virtual Visit free-roam 3D and Site Progress — drone mapping, orthomosaics, models, documents, reports and comparisons over time — are services booked inside Bricks. Bricks Group is based in Ontario, Canada.'
 
 export const LISTING_MEDIA_DESCRIPTION = 'Listing media is a service booked inside Bricks: HDR photography, licensed drone, floor plans, video and cinematic reels, with files delivered to the listing.'
@@ -25,6 +26,10 @@ export const SITE_PROGRESS_FAQS = [
   { q: 'What is Site Progress?', a: SITE_PROGRESS_DESCRIPTION },
   { q: 'Can I compare site visits over time?', a: 'Yes. Bricks keeps captures as dated visits, including your own imported GeoTIFF, LAS and OBJ files. The builder hub supports 3D comparisons and reports showing changes since earlier visits.' },
   { q: 'Does a progress report certify completion or quantities?', a: 'No. Bricks reports are visual documentation, not a cost, quantity or completion certification. Reports can be shared as PDFs or expiring read-only links.' },
+  // W2 (Markez, pages/08, 2026-11-14). Prices from commercial.ts.
+  { q: 'How much does a construction progress report cost?', a: `Reports are drafted from your visits. A progress visit is ${fmt(PER_VISIT[0].price)}, a mapped capture is ${fmt(PER_VISIT[1].price)}, and monthly plans start at ${fmt(PLANS[0].rows[0].price)} per site. CAD, plus tax.` },
+  { q: 'Who sees the progress report?', a: 'Anyone you share it with. Send a PDF or a read-only link that expires; readers don’t need an account.' },
+  { q: 'Can lenders check the evidence?', a: 'Yes. Every file in the evidence index carries a SHA-256 checksum, with weather and capture details for each visit.' },
 ] as const
 
 // Generated from Markez's seo-content-w1/_src/faqs.py (2026-11-14). Edit there, not here.
@@ -44,6 +49,10 @@ export const PM_FAQS = [
   { q: "Are there monthly plans for rentals?", a: "Yes. Rentals 5, 12 and 25 give that many turnover media bundles a month for $1,325, $2,990 or $5,875 a month, CAD plus tax. Credits can be spent on any rentals visit, and unused credits roll over one month." },
   { q: "Do I need an account to book?", a: "Not for one or two units. A property manager account shows every unit’s turnover and next step, compares each condition report room by room with the last one, and prints an owner report for any period." },
   { q: "Does Bricks sync with my property management system?", a: "Not yet. Your team updates unit status in Bricks: available, reserved or leased." },
+  // W2 (Markez, pages/07, 2026-11-14)
+  { q: "Is Bricks a full property management system?", a: "No. Bricks covers condition reports, turnover media, leasing media and unit status. It sits beside your property management system and doesn’t sync with one yet." },
+  { q: "Can I compare a move-out report with the move-in report?", a: "Yes. In a property manager account, each condition report is compared room by room with the last one for that unit." },
+  { q: "Can I give owners a report?", a: "Yes. Print an owner report for any period from your property manager account." },
 ] as const
 
 export const ABOUT_FAQS = [

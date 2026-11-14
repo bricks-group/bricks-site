@@ -2,8 +2,15 @@ import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { REEL_RANGE, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
-import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { LOGO_SCHEMA, ORG_REF, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
+
+// Visible FAQ and FAQPage JSON-LD come from this one array (W2 handoff 3.5).
+const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
+  { q: `Is a ${TOUR_NAME.toLowerCase()} the same as a floor plan?`, a: `No. A floor plan is a flat dimensioned drawing (included on every Bricks standard shoot). A ${TOUR_NAME.toLowerCase()} is path-confined and spatial but isn’t a substitute for a measured plan. A ${VISIT_NAME.toLowerCase()} is a free-roam splat — never a tour.` },
+  { q: 'Which helps SEO / portals more?', a: `Listings with both rich media types get more saves and views on major portals; the reel drives initial engagement, the ${TOUR_NAME.toLowerCase()} extends time-on-listing.` },
+  { q: 'Can I use the reel on social?', a: 'Yes — the cinematic reel is formatted for Instagram, TikTok, and Realtor.ca embeds. That’s its main job.' },
+]
 
 export const metadata: Metadata = {
   title: "Virtual Tours vs Video Walkthroughs for Listings | Bricks",
@@ -41,6 +48,7 @@ export default function Post() {
           }),
         }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS.map(({ q, a }) => ({ q, a })))) }} />
       <BlogPostLayout
         badge="Resources · Strategy"
         title="Virtual tour vs. video walkthrough: which sells faster?"
@@ -50,7 +58,7 @@ export default function Post() {
 
         <h2>What each one actually is</h2>
         <h3>{TOUR_NAME}</h3>
-        <p>{TOUR_BLURB} Click to move room to room along the captured path. Delivered as an interactive embed on the listing and often MLS-ready. Best for letting serious buyers pre-screen a property before a showing. À la carte add-on; included in Showcase and Full suite.</p>
+        <p>{TOUR_BLURB} Click to move room to room along the captured path. Delivered as an interactive embed on the listing and often MLS®-ready. Best for letting serious buyers pre-screen a property before a showing. À la carte add-on; included in Showcase and Full suite.</p>
         <h3>{VISIT_NAME}</h3>
         <p>{VISIT_BLURB} {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Published at $249 / $299 / $349 / $399 by footprint — never bundled into a package, and charged at checkout when selected.</p>
         <h3>Video walkthrough / cinematic reel</h3>
@@ -80,16 +88,14 @@ export default function Post() {
         <h2>Cost reality (2026)</h2>
         <ul>
           <li>Cinematic reel: {REEL_RANGE} add-on, by footprint.</li>
-          <li>{TOUR_NAME}: {TOUR_RANGE}, path-confined, MLS-ready.</li>
+          <li>{TOUR_NAME}: {TOUR_RANGE}, path-confined, MLS®-ready.</li>
           <li>{VISIT_NAME}: {VISIT_PRICE_LABEL} ({FOOTPRINT_BANDS}). {VISIT_PACKAGING}</li>
         </ul>
         <p>Both are modest next to the cost of a price reduction from a stale listing. The mistake isn&apos;t spending — it&apos;s spending on the wrong one for the property.</p>
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h3>Is a {TOUR_NAME.toLowerCase()} the same as a floor plan?</h3><p>No. A floor plan is a flat dimensioned drawing (included on every Bricks standard shoot). A {TOUR_NAME.toLowerCase()} is path-confined and spatial but isn&apos;t a substitute for a measured plan. A {VISIT_NAME.toLowerCase()} is a free-roam splat — never a tour.</p></div>
-          <div className="qa"><h3>Which helps SEO / portals more?</h3><p>Listings with both rich media types get more saves and views on major portals; the reel drives initial engagement, the {TOUR_NAME.toLowerCase()} extends time-on-listing.</p></div>
-          <div className="qa"><h3>Can I use the reel on social?</h3><p>Yes — the cinematic reel is formatted for Instagram, TikTok, and Realtor.ca embeds. That&apos;s its main job.</p></div>
+          {FAQS.map((f) => <div className="qa" key={f.q}><h3>{f.q}</h3><p>{f.a}{f.link ? <> <a href={f.link.href}>{f.link.label}</a></> : null}</p></div>)}
         </div>
       </BlogPostLayout>
     </>

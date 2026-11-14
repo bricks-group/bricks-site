@@ -34,6 +34,30 @@ const posts = [
     date: '2026-11-14',
   },
   {
+    href: '/blog/brokerage-software-ontario',
+    tag: 'Brokerages',
+    title: 'What brokerage software needs to do in Ontario',
+    desc: 'Trust, commissions, roster, deal files and MLS® feeds on one record, with the questions to ask before you move your agents.',
+    read: '4 min',
+    date: '2026-11-14',
+  },
+  {
+    href: '/blog/drone-progress-reports-ontario-builders',
+    tag: 'Site Progress',
+    title: 'Drone progress reporting for Ontario builders',
+    desc: 'What a dated drone visit captures, how often to fly, and what a progress report can and can’t say.',
+    read: '4 min',
+    date: '2026-11-14',
+  },
+  {
+    href: '/blog/move-out-condition-report-ontario',
+    tag: 'Property managers',
+    title: 'Move-in and move-out condition reports in Ontario',
+    desc: 'What to photograph, when to do it, and how to keep a record you can compare from one tenant to the next.',
+    read: '3 min',
+    date: '2026-11-14',
+  },
+  {
     href: '/blog/drone-licence-canada',
     tag: 'Drone · Canada',
     title: 'Drone licence in Canada: Basic vs Advanced (2026)',
@@ -77,7 +101,7 @@ const posts = [
     href: '/blog/canada-real-estate-photography-cost-2026',
     tag: 'Pricing · Canada',
     title: 'How much does real estate photography cost in Canada? (2026)',
-    desc: 'Canada-wide cost overview for listing photos, MLS media, drone, floor plans, and tours, with a full price table by home size.',
+    desc: 'Canada-wide cost overview for listing photos, MLS® media, drone, floor plans, and tours, with a full price table by home size.',
     read: '9 min',
     date: '2026-09-12',
   },
@@ -185,7 +209,7 @@ export default function BlogPage() {
           <div className="book">
             <span className="over">Ready?</span>
             <h2>Book a listing shoot.</h2>
-            <p className="lead">Pick your services à la carte, get a tailored quote, and your MLS-ready photos in 24 hours, other media on a 24–48h target.</p>
+            <p className="lead">Pick your services à la carte, get a tailored quote, and your MLS®-ready photos in 24 hours, other media on a 24–48h target.</p>
             <div className="cta-row">
               <Link className="btn btn-brick" href="/book">
                 Book listing media

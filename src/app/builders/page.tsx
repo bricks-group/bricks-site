@@ -15,18 +15,20 @@ import { SITE_PROGRESS_FAQS } from '@/lib/public-content'
 import { siteProgressServiceSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
+const DESC = `Dated drone visits, measured maps, progress reports and investor updates for builders and developers in Ontario. Progress visit ${fmt(PER_VISIT[0].price)}, or a monthly plan.`
+
 export const metadata: Metadata = {
-  title: "Site Progress & Drone Mapping for Builders | Bricks",
-  description: "Dated drone visits, orthomosaics, 3D models and progress reports for every site, compared over time. For builders and developers in Canada.",
+  title: "Construction Progress Reports for Builders | Bricks",
+  description: DESC,
   alternates: { canonical: '/builders' },
   openGraph: { images: [OG_IMAGE],
-    title: "Site Progress & Drone Mapping for Builders | Bricks",
-    description: "Dated drone visits, orthomosaics, 3D models and progress reports for every site, compared over time. For builders and developers in Canada.",
+    title: "Construction Progress Reports for Builders | Bricks",
+    description: DESC,
   },
   twitter: {
     card: 'summary',
-    title: "Site Progress & Drone Mapping for Builders | Bricks",
-    description: "Dated drone visits, orthomosaics, 3D models and progress reports for every site, compared over time. For builders and developers in Canada.",
+    title: "Construction Progress Reports for Builders | Bricks",
+    description: DESC,
   },
 }
 
@@ -38,6 +40,7 @@ const PROOF = [
 ] as const
 
 const pageCss = `
+  .bx-intro{font-size:var(--vs-fs-body);color:var(--vs-fg-2);line-height:1.55;max-width:66ch;margin:0 0 32px;}
   .bx-proof{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:2px;}
   .bx-proof div{background:var(--paper);padding:var(--card-pad);display:flex;flex-direction:column;gap:8px;}
   .bx-proof b{font-weight:500;font-size:15px;color:var(--ink);letter-spacing:-.02em;}
@@ -91,7 +94,7 @@ export default function BuildersPage() {
         <div className="wrap">
           <h1>See every site.<br />On schedule.</h1>
           <p className="sub">
-            Progress reports, investor updates and 3D compare for builders, developers and investors. Built from every dated site visit, ours or your own.
+            Construction progress reports, investor updates and 3D compare for builders, developers and investors, built from every dated site visit.
           </p>
           <div className="cta-row">
             <Link className="btn btn-night btn-primary" href="/book/site">Book a site visit</Link>
@@ -105,6 +108,7 @@ export default function BuildersPage() {
 
       <section className="cm-sec" id="hub" aria-label="The builder hub">
         <Head title="The builder hub." lede="Dated, measured evidence from every visit, for your team, your lenders and your quantity surveyor." link={{ href: '/drone-mapping', label: 'Drone mapping' }} />
+        <p className="bx-intro">Bricks gives builders and developers construction progress reports from dated drone visits. A certified, insured pilot flies the site, each visit lands on the project timeline, and Bricks drafts the progress report and investor update from what changed. Book a {fmt(PER_VISIT[0].price)} progress visit, a {fmt(PER_VISIT[1].price)} mapped capture or a monthly plan per site. CAD, plus tax.</p>
         <FeatureList items={HUB} label="Builder hub features" sheet="B" />
       </section>
 
@@ -158,6 +162,18 @@ export default function BuildersPage() {
             <ConstructionForm />
           </div>
         </div>
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Guides for builders">
+        <Head title="Guides for builders." />
+        <Rows
+          items={[
+            { title: 'Drone progress reporting for Ontario builders', detail: 'Rules, how often to fly, what a report can’t certify.', href: '/blog/drone-progress-reports-ontario-builders' },
+            { title: 'What is an orthomosaic?', detail: 'The measurable top-down map behind a mapped capture.', href: '/blog/what-is-an-orthomosaic' },
+            { title: 'Photogrammetry for construction', detail: 'How overlapping photos become maps and models.', href: '/blog/photogrammetry-for-construction' },
+            { title: 'Reports your investors and lenders can check', detail: 'Draw reports with a checksummed evidence index.', href: '/investors' },
+          ]}
+        />
       </section>
 
       <PublicFaqs title="Questions about Site Progress." faqs={SITE_PROGRESS_FAQS} />

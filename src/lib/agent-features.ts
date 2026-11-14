@@ -24,7 +24,7 @@ export const LAUNCH: readonly FeatureItem[] = [
       'MLS® package: board-sized photos, a field sheet, remarks and a required-field checklist',
     ],
     shot: 'launch-kit',
-    alt: 'The Bricks launch page for a sample listing: media, listing site, Virtual Visit, listing copy and MLS package steps, with the feature sheet, social pack and MLS package ready to download',
+    alt: 'The Bricks launch page for a sample listing: media, listing site, Virtual Visit, listing copy and MLS® package steps, with the feature sheet, social pack and MLS® package ready to download',
   },
   {
     title: 'A deal room for everyone on the deal.',

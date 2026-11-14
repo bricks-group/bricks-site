@@ -106,3 +106,10 @@ export function checkoutBody(kind: PropertyClient, f: CheckoutFields & { company
   if (s?.move) { b.move_kind = f.move_kind; b.move_date = f.move_date }
   return b
 }
+
+/** Server-rendered price list on /book/property (crawlable above the client form). Same table the form charges. */
+export const PROPERTY_PRICE_GROUPS: { label: string; items: { name: string; price: string }[] }[] = [
+  { label: 'Property managers', kind: 'property_manager' as PropertyClient },
+  { label: 'Commercial', kind: 'commercial' as PropertyClient },
+  { label: 'Investors', kind: 'investor' as PropertyClient },
+].map(({ label, kind }) => ({ label, items: ONE_OFFS_FOR[kind].map((k) => ({ name: ONE_OFFS[k].name, price: money(ONE_OFFS[k].cents) })) }))

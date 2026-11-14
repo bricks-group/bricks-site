@@ -14,10 +14,18 @@ export function generateStaticParams() {
   return TRADE_SLUGS.map((trade) => ({ trade }))
 }
 
+/** Search titles per trade (W2 keyword pass, 2026-11-14). Others fall back to the generic title. */
+const JOB_TITLES: Partial<Record<string, string>> = {
+  cleaning: 'Cleaning Contractor Jobs: Turnovers & Move-Outs | Bricks',
+  inspections: 'Home Inspector Jobs in Ontario | Work with Bricks',
+  measurement: 'Floor Plan Measurer Jobs | Work with Bricks',
+  staging: 'Home Stager Jobs | Work with Bricks',
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ trade: string }> }): Promise<Metadata> {
   const t = tradeBySlug((await params).trade)
   if (!t) return {}
-  const title = `Apply: ${t.apply.role.toLowerCase()} | Work with Bricks`
+  const title = JOB_TITLES[t.slug] ?? `Apply: ${t.apply.role.toLowerCase()} | Work with Bricks`
   const description = `${t.apply.lede} Apply to take ${t.name.toLowerCase()} jobs through Bricks.`
   return { title, description, alternates: { canonical: `/work-with-bricks/${t.slug}` }, openGraph: { images: [OG_IMAGE], title, description } }
 }
@@ -31,7 +39,7 @@ export default async function TradeApplyPage({ params }: { params: Promise<{ tra
       <section className="hero">
         <div className="wrap">
           <p className="eyebrow"><Link href="/work-with-bricks">Work with Bricks</Link> · {t.name}</p>
-          <h1>{t.apply.role}: apply to work with Bricks.</h1>
+          <h1>{`${t.apply.role}: apply to work with Bricks.`}</h1>
           <p className="sub">{t.apply.lede} You&apos;re an independent contractor. Bricks sends you quoted, scoped jobs near you.</p>
         </div>
       </section>

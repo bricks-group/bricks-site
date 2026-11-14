@@ -7,7 +7,7 @@ import ServiceIcon from '@/components/home-services/ServiceIcon'
 import '@/components/home-services/home-services.css'
 import { OG_IMAGE } from '@/lib/og'
 
-const title = 'Work with Bricks | Bricks'
+const title = 'Real Estate Vendor Jobs: Photo, Staging, Cleaning | Bricks'
 const description = 'Apply as an independent vendor: photographers and pilots, stagers, cleaning crews, inspectors, measurers and repair vendors.'
 
 export const metadata: Metadata = {

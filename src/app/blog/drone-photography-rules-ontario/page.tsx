@@ -1,8 +1,15 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
-import { LOGO_SCHEMA, ORG_REF } from '@/lib/schema'
+import { LOGO_SCHEMA, ORG_REF, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
+
+// Visible FAQ and FAQPage JSON-LD come from this one array (W2 handoff 3.5).
+const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
+  { q: 'Can any drone photo be used in a listing?', a: 'Only if flown legally by a certified pilot with the right airspace clearance. Bricks flies under an Advanced RPAS certificate.' },
+  { q: 'What if the home is near the airport?', a: 'Then it’s almost certainly controlled airspace — we file the NAV CANADA authorization before the shoot. That’s standard for much of Mississauga and Etobicoke.' },
+  { q: 'Is drone included or extra?', a: 'Licensed drone coverage is part of the core Bricks shoot; aerial video can be added as a reel.', link: { href: '/pricing', label: 'See pricing →' } },
+]
 
 export const metadata: Metadata = {
   title: 'Drone photography rules for real estate in Ontario | Bricks',
@@ -40,6 +47,7 @@ export default function Post() {
           }),
         }}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS.map(({ q, a }) => ({ q, a })))) }} />
       <BlogPostLayout
         badge="Resources · Rules & safety"
         title="Drone photography rules for real estate in Ontario"
@@ -76,9 +84,7 @@ export default function Post() {
 
         <h2>FAQ</h2>
         <div className="faq">
-          <div className="qa"><h3>Can any drone photo be used in a listing?</h3><p>Only if flown legally by a certified pilot with the right airspace clearance. Bricks flies under an Advanced RPAS certificate.</p></div>
-          <div className="qa"><h3>What if the home is near the airport?</h3><p>Then it&apos;s almost certainly controlled airspace — we file the NAV CANADA authorization before the shoot. That&apos;s standard for much of Mississauga and Etobicoke.</p></div>
-          <div className="qa"><h3>Is drone included or extra?</h3><p>Licensed drone coverage is part of the core Bricks shoot; aerial video can be added as a reel. <a href="/pricing">See pricing →</a></p></div>
+          {FAQS.map((f) => <div className="qa" key={f.q}><h3>{f.q}</h3><p>{f.a}{f.link ? <> <a href={f.link.href}>{f.link.label}</a></> : null}</p></div>)}
         </div>
       </BlogPostLayout>
     </>

@@ -67,7 +67,7 @@ export default function DroneMappingPage() {
         },
         {
           title: 'New to mapping?',
-          body: <p>Start with <Link href="/blog/what-is-an-orthomosaic">what an orthomosaic is</Link> and <Link href="/blog/photogrammetry-for-construction">how photogrammetry works on a construction site</Link>. For aerial photos of a finished property, see <Link href="/drone-photography">drone photography</Link>.</p>,
+          body: <p>Start with <Link href="/blog/what-is-an-orthomosaic">what an orthomosaic is</Link> and <Link href="/blog/photogrammetry-for-construction">how photogrammetry works on a construction site</Link>. For reporting, see <Link href="/blog/drone-progress-reports-ontario-builders">drone progress reports for Ontario builders</Link>. For aerial photos of a finished property, see <Link href="/drone-photography">drone photography</Link>.</p>,
         },
       ]}
       faqTitle="Drone mapping, answered."

@@ -29,3 +29,9 @@ export const PLAN_NOTE =
   'Plans are billed monthly per site, month to month. Mapped plans add the one-time $650 setup. Survey-grade accuracy is quoted separately. CAD, plus tax (GST/HST based on the property\'s province).'
 
 export const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`
+
+/** Server-rendered price list on /book/site (crawlable above the client form). */
+export const SITE_PRICE_GROUPS: { label: string; items: { name: string; price: string }[] }[] = [
+  { label: 'One visit', items: PER_VISIT.map((x) => ({ name: x.name, price: `${fmt(x.price)} ${x.unit}` })) },
+  ...PLANS.map((p) => ({ label: `${p.kind} plans, per site a month`, items: p.rows.map((r) => ({ name: r.cadence, price: fmt(r.price) })) })),
+]
