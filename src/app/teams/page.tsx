@@ -53,7 +53,7 @@ export default function TeamsPage() {
             { title: 'Up to 6 agents', detail: 'The lead and up to five agents share the lead’s plan. Pay monthly, or yearly and get two months free.' },
             { title: 'Shared pipeline', detail: 'Every deal and listing in one view, with who owns each one.' },
             { title: 'Invite by email', detail: 'Agents join from an invite and keep their own logins.' },
-            { title: 'More than 6 agents', detail: 'Add a seat for $79 per agent a month, or $790 a year, CAD plus tax. From about 17 agents, brokerage seats can cost less.', href: '/brokerage' },
+            { title: 'More than 6 agents', detail: 'Add seats as the team grows, or move to brokerage seats for a larger office. See pricing.', href: '/pricing' },
           ]}
         />
       </section>

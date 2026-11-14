@@ -137,7 +137,9 @@ test('approved client prices (2026-10-25) match the app; one-off visits are book
   }
   assert.match(read('src/app/commercial/page.tsx'), /\$1,590 a month/)
   assert.match(read('src/app/investors/page.tsx'), /\$195 a month per property, billed \$585 a quarter, or \$450 a month per property/)
-  assert.match(read('src/app/teams/page.tsx'), /\$79 per agent a month, or \$790 a year/)
+  // Kam (2026-11-14): the /teams body points to /pricing instead of quoting the extra-seat price.
+  assert.doesNotMatch(read('src/app/teams/page.tsx'), /\$79 per agent/)
+  assert.match(read('src/app/teams/page.tsx'), /More than 6 agents', detail: '[^']*See pricing\.', href: '\/pricing'/)
   const llms = read('public/llms.txt')
   assert.match(llms, /booked and paid online at \/book\/property/)
   assert.match(llms, /\$79 per agent a month or \$790 a year/)

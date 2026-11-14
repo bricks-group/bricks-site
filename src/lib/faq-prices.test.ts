@@ -111,7 +111,7 @@ test('team FAQ has no prices; commercial, investor and REIT FAQs use catalog pri
     assert.ok(!/\$\d/.test(`${f.q} ${f.a}`), `price in: ${f.q}`)
     for (const pl of SOFTWARE_PLANS) assert.ok(!`${f.q} ${f.a}`.includes(pl.name), `${pl.name} in: ${f.q}`)
   }
-  assert.match(read('src/app/teams/page.tsx'), new RegExp(`\\$${TEAM_EXTRA_SEAT.monthly} per agent a month, or \\$${TEAM_EXTRA_SEAT.yearly} a year`))
+  assert.doesNotMatch(read('src/app/teams/page.tsx'), new RegExp(`\\$${TEAM_EXTRA_SEAT.monthly} per agent`))
   const cre = COMMERCIAL_FAQS.map((f) => f.a).join(' ')
   for (const k of ['cre_leasing_s', 'cre_leasing_m', 'cre_leasing_l', 'cre_aerial']) assert.ok(cre.includes(money(ONE_OFFS[k].cents)), k)
   for (const f of [...INVESTORS_FAQS, ...REITS_FAQS]) assert.ok(!/\$\d/.test(f.a), f.q)
