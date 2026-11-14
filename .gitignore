@@ -13,3 +13,7 @@ build/
 .env.*
 !.env.example
 .vercel
+
+# Cloudflare (OpenNext) build output
+.open-next/
+.wrangler/
