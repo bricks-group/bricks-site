@@ -89,7 +89,6 @@ export default function Nav() {
             <Link href="/" className="brand" aria-label="Bricks — home">
               <span className="wordmark">bricks</span>
             </Link>
-            <span className="nav-flag">Canada</span>
           </div>
           <nav className="nav-links" aria-label="Primary" ref={navRef}>
             <div

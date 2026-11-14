@@ -92,7 +92,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
         </div>
       </div>
       <div className="foot-meta">
-        <span>© {LEGAL_NAME} · Canada</span>
+        <span>© {LEGAL_NAME}</span>
         <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
         <span className="mono">(289) 312-7425</span>
         <a href="https://share.google/7ttYfc6W7JRwlqA9U" target="_blank" rel="noopener noreferrer">Find us on Google</a>

@@ -3,6 +3,23 @@ import { marketRedirect } from './lib/seasonal-market'
 
 const COOKIE = 'bricks_www_gate'
 const PASSWORD_ENV = 'WWW_SITE_GATE_PASSWORD'
+/** Set only in wrangler.preview.jsonc. Never set on the production Worker. */
+export const PREVIEW_ENV = 'BRICKS_SITE_PREVIEW'
+export const PREVIEW_ROBOTS_TAG = 'noindex, nofollow'
+
+export function isSitePreview(): boolean {
+  const v = process.env[PREVIEW_ENV]
+  if (typeof v !== 'string') return false
+  const n = v.trim().toLowerCase()
+  return n !== '' && n !== '0' && n !== 'false' && n !== 'off'
+}
+
+function withPreviewHeaders(response: NextResponse): NextResponse {
+  if (isSitePreview()) {
+    response.headers.set('X-Robots-Tag', PREVIEW_ROBOTS_TAG)
+  }
+  return response
+}
 
 function gateEnabled(): boolean {
   const v = process.env[PASSWORD_ENV]
@@ -95,29 +112,29 @@ function helpHostRoute(request: NextRequest): NextResponse | null {
 
 export function middleware(request: NextRequest) {
   const routed = helpHostRoute(request)
-  if (routed) return routed
+  if (routed) return withPreviewHeaders(routed)
   const { pathname } = request.nextUrl
   // Seasonal market pages: out-of-season URLs (and /market) go to the current season.
   // 307 (temporary) so the target flips on the season date with no redeploy.
   const season = marketRedirect(pathname)
   if (season) {
     const u = request.nextUrl.clone(); u.pathname = season
-    return NextResponse.redirect(u, 307)
+    return withPreviewHeaders(NextResponse.redirect(u, 307))
   }
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-bricks-pathname', pathname)
 
   if (!gateEnabled()) {
-    return NextResponse.next({ request: { headers: requestHeaders } })
+    return withPreviewHeaders(NextResponse.next({ request: { headers: requestHeaders } }))
   }
 
   if (isPublicPath(pathname)) {
-    return NextResponse.next({ request: { headers: requestHeaders } })
+    return withPreviewHeaders(NextResponse.next({ request: { headers: requestHeaders } }))
   }
 
   const cookie = request.cookies.get(COOKIE)?.value
   if (cookie === '1') {
-    return NextResponse.next({ request: { headers: requestHeaders } })
+    return withPreviewHeaders(NextResponse.next({ request: { headers: requestHeaders } }))
   }
 
   const url = request.nextUrl.clone()
@@ -127,7 +144,7 @@ export function middleware(request: NextRequest) {
   if (next && next !== '/') {
     url.searchParams.set('next', next)
   }
-  return NextResponse.redirect(url)
+  return withPreviewHeaders(NextResponse.redirect(url))
 }
 
 export const config = {

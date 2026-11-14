@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { isPublicPath } from './middleware.ts'
+import { isPublicPath, isSitePreview, PREVIEW_ENV } from './middleware.ts'
 
 describe('isPublicPath', () => {
   it('keeps gate + static public', () => {
@@ -89,5 +89,36 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/platform'), false)
     assert.equal(isPublicPath('/api/contact'), false)
     assert.equal(isPublicPath('/api/newsletter'), false)
+  })
+})
+
+
+describe('isSitePreview', () => {
+  const prev = process.env[PREVIEW_ENV]
+  function restore() {
+    if (prev === undefined) delete process.env[PREVIEW_ENV]
+    else process.env[PREVIEW_ENV] = prev
+  }
+
+  it('is off when the preview env is unset, 0, or false', () => {
+    delete process.env[PREVIEW_ENV]
+    assert.equal(isSitePreview(), false)
+    process.env[PREVIEW_ENV] = ''
+    assert.equal(isSitePreview(), false)
+    process.env[PREVIEW_ENV] = '0'
+    assert.equal(isSitePreview(), false)
+    process.env[PREVIEW_ENV] = 'false'
+    assert.equal(isSitePreview(), false)
+    process.env[PREVIEW_ENV] = 'off'
+    assert.equal(isSitePreview(), false)
+    restore()
+  })
+
+  it('is on when BRICKS_SITE_PREVIEW is set to 1', () => {
+    process.env[PREVIEW_ENV] = '1'
+    assert.equal(isSitePreview(), true)
+    process.env[PREVIEW_ENV] = 'true'
+    assert.equal(isSitePreview(), true)
+    restore()
   })
 })

@@ -34,9 +34,6 @@ header{position:sticky;top:0;z-index:70;background:rgba(244,241,235,0.92);
 .nav-links a.active{color:var(--brickDeep);}
 .nav-cta{background:var(--brick);color:#fff;font-size:13px;font-weight:500;
   padding:9px 16px;border-radius:2px;text-decoration:none;}
-.nav-flag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;
-  text-transform:uppercase;color:var(--inkFaint);border:1px solid var(--hair);
-  padding:4px 8px;border-radius:2px;}
 
 /* hero / page head */
 .hero{padding:64px 36px 40px;}
@@ -173,7 +170,6 @@ footer{border-top:1px solid var(--hair);margin-top:52px;}
   .nav-links a:first-child{border-top:none;}
   .nav-links a:hover{color:var(--brickDeep);}
   .nav-links .nav-cta{background:var(--brick);color:#fff;margin:0 24px 16px;padding:15px 22px;text-align:center;border-top:1px solid var(--hair);width:auto;}
-  .nav-links .nav-flag{display:none;}
   .wrap{padding:0 20px;}
   .hero{padding:48px 20px 32px;}
   .foot{padding:28px 20px;}

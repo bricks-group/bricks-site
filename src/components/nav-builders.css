@@ -50,7 +50,7 @@
 .platform-parts .pp-item{padding:20px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);border-radius:0;scroll-margin-top:80px;}
 .platform-parts .pp-item h3{margin:0 0 6px;font-size:17px;font-weight:500;}
 .platform-parts .pp-item p{margin:0;color:var(--inkMute);font-size:14px;}
-header .nav-flag,header .nav-cta,header .nav-burger span,.drawer .drawer-links .drawer-cta{border-radius:0;}
+header .nav-cta,header .nav-burger span,.drawer .drawer-links .drawer-cta{border-radius:0;}
 /* Grouped Software menu + Who it's for menu */
 .nav-dd-btn.nav-nowrap{white-space:nowrap;}
 .nav-dd-panel.nav-dd-groups{width:720px;}

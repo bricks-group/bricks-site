@@ -63,9 +63,6 @@ header{position:sticky;top:0;z-index:70;background:color-mix(in srgb, var(--pape
 .brand:hover .brand-mark svg rect:nth-child(3){animation:brickPop .5s var(--ease-out, cubic-bezier(.16,1,.3,1)) .14s forwards;}
 @keyframes brickPop{0%{transform:translateY(0);}40%{transform:translateY(-3px);}100%{transform:translateY(0);}}
 .wordmark{font-weight:500;font-size:18px;letter-spacing:-0.6px;color:var(--ink);}
-.nav-flag{font-family:inherit;font-size:11px;letter-spacing:0;
-  text-transform:none;color:var(--inkFaint);border:1px solid var(--hair);
-  padding:4px 8px;border-radius:2px;}
 .nav-links{display:none;align-items:center;gap:28px;margin:0;}
 .nav-links a{font-size:14px;font-weight:500;color:var(--inkMute);text-decoration:none;
   letter-spacing:-0.15px;}
@@ -302,7 +299,6 @@ html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
 @media (max-width:680px){
   .grid3,.areas{grid-template-columns:1fr;}
   .hero h1{font-size:34px;}
-  .nav-flag{display:none;}
   .wrap{padding:0 var(--gutter);}
   .drawer{padding:14px var(--gutter) 40px;}
   .drawer-links a,.drawer-links .drawer-logout{font-size:26px;}
