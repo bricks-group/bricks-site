@@ -28,13 +28,13 @@ export const SITE_PROGRESS_FAQS = [
 ] as const
 
 // Generated from Markez's seo-content-w1/_src/faqs.py (2026-11-14). Edit there, not here.
+// AGENT_FAQS edited here 2026-11-14 per Kam: no plan names or prices on /agents (mirror in faqs.py).
 export const AGENT_FAQS = [
-  { q: "How much does Bricks cost for an agent?", a: "Clay is free. Keystone is $49 a month or $490 a year, Marble is $99 a month or $990 a year, and Diamond is $149 a month or $1,490 a year. CAD, before tax. Listing media is booked separately." },
-  { q: "What does each plan add?", a: "Clay includes the listing file, transactions, your own MLS® feed, the listing launch kit and media booking at rack rate. Keystone adds CRM and e-sign. Marble adds forms and the deal room. Diamond includes AI Listing Copy, AI CMA and AI Document Drafter." },
+  { q: "How much does Bricks cost for an agent?", a: "You can start free and add more only when you need it. Current prices are on the pricing page. Listing media is booked separately, per shoot." },
   { q: "How do I book listing media?", a: "From the listing in Bricks, or at brxs.ca/book without an account. Enter the address, pick services and an exact time. Bricks assigns the photographer before you pay, so travel is on the quote. Photos usually arrive within 24 hours and other media within 24 to 48 hours. These are targets, not guarantees." },
   { q: "Can I cancel or reschedule a shoot?", a: "Cancel 24 hours or more before the shoot window for a full refund. Inside 24 hours, or if the photographer can’t get in, there’s no refund. Rescheduling 24 hours or more ahead is free." },
   { q: "Does Bricks post to my MLS®?", a: "No. The launch kit builds an MLS® package with board-sized photos, a field sheet, remarks and a required-field checklist. You submit it yourself. Bricks never posts or submits for you." },
-  { q: "Can my team use Bricks?", a: "Yes. Up to 6 agents share the lead’s plan, with one shared pipeline. Extra agents are $79 a month or $790 a year each, CAD plus tax. From about 17 agents, brokerage seats can cost less." },
+  { q: "Can my team use Bricks?", a: "Yes. Up to 6 agents share the lead’s plan, with one shared pipeline. Larger offices can use brokerage seats instead." },
 ] as const
 
 export const PM_FAQS = [

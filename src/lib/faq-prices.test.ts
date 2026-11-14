@@ -17,11 +17,11 @@ test('property manager FAQ prices match the catalog', () => {
   }
 })
 
-test('agent FAQ plan prices match the catalog', () => {
-  for (const p of SOFTWARE_PLANS) {
-    if (p.price === 'Free') continue
-    const monthly = p.price.match(/\$[\d,]+/)?.[0]
-    assert.ok(monthly && AGENT_FAQS[0].a.includes(monthly), `${p.id} ${p.price}`)
+// Kam (2026-11-14): the agents FAQ names no plans and shows no prices; the pricing page does.
+test('agent FAQ has no plan names or prices', () => {
+  for (const f of AGENT_FAQS) {
+    const text = `${f.q} ${f.a}`
+    assert.ok(!/\$\d/.test(text), `price in: ${f.q}`)
+    for (const p of SOFTWARE_PLANS) assert.ok(!text.includes(p.name), `${p.name} in: ${f.q}`)
   }
-  for (const v of ['$490', '$990', '$1,490']) assert.ok(AGENT_FAQS[0].a.includes(v), v)
 })
