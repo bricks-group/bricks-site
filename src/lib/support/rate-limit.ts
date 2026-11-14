@@ -43,3 +43,8 @@ export async function limited(db: Db | null, key: string, limit: Limit): Promise
 export function requestIp(headers: Headers): string {
   return (headers.get('x-real-ip') || headers.get('x-forwarded-for')?.split(',')[0] || 'unknown').trim()
 }
+
+/** Client IP for Cloudflare-fronted public routes. Never the first X-Forwarded-For hop. */
+export function connectingIp(headers: Headers): string {
+  return (headers.get('cf-connecting-ip') || 'unknown').trim() || 'unknown'
+}

@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server'
+import { clientKey, connectingIp, limited } from '@/lib/support/rate-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
+
+const WAITLIST_LIMIT = { windowSec: 600, max: 8 }
 
 /** "We're not in your area yet" email capture -> Bricks API /book/coverage-waitlist. */
 const OS_WAITLIST = 'https://api.brxs.ca/api/book/coverage-waitlist'
@@ -22,13 +25,21 @@ export async function POST(req: Request) {
   if (!EMAIL_RE.test(email)) return NextResponse.json({ ok: false, error: 'Enter a valid email.' }, { status: 400 })
   const key = (process.env.INTERNAL_API_KEY || process.env.BRICKS_INTERNAL_API_KEY || '').trim()
   if (!key) return NextResponse.json({ ok: false, error: FAIL }, { status: 503 })
-  const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : undefined)
+  const ip = connectingIp(req.headers)
+  if (await limited(null, clientKey('coverage-waitlist', ip), WAITLIST_LIMIT)) {
+    return NextResponse.json({ ok: false, error: 'Please try again in a moment.' }, { status: 429 })
+  }
   const flow = ['book', 'property', 'site'].includes(String(body.flow)) ? String(body.flow) : 'book'
   try {
     const res = await fetch(OS_WAITLIST, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Internal-Api-Key': key },
-      body: JSON.stringify({ email, address: String(body.address || '').slice(0, 300), lat: num(body.lat), lon: num(body.lon), flow }),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Internal-Api-Key': key,
+        // Forward the browser IP so OS can apply the same CF-Connecting-IP limit.
+        'CF-Connecting-IP': ip,
+      },
+      body: JSON.stringify({ email, address: String(body.address || '').slice(0, 300), flow }),
     })
     const j = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
     if (!res.ok || !j.ok) return NextResponse.json({ ok: false, error: typeof j.error === 'string' ? j.error : FAIL }, { status: res.status >= 400 ? res.status : 502 })

@@ -49,7 +49,7 @@ export async function checkCoverage(i: CoverageInput): Promise<CoverageState> {
     const r = await fetch('/api/book/coverage', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address: i.address.trim(), lat: i.lat ?? undefined, lon: i.lon ?? undefined, province: i.province || undefined, flow: i.flow }),
+      body: JSON.stringify({ address: i.address.trim(), flow: i.flow }),
     })
     const j = (await r.json().catch(() => null)) as Json
     return interpretCoverage(r.status, j)
