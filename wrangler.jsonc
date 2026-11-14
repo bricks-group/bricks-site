@@ -1,7 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  /* PREVIEW ONLY. Do not merge this name to main; production is bricks-site. */
-  "name": "bricks-site-preview-pricing",
+  "name": "bricks-site",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-11-09",
   "compatibility_flags": ["nodejs_compat"],

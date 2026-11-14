@@ -25,7 +25,7 @@ export default function PlanChoice() {
             </p>
             <h3>{p.name}</h3>
             <p className="pr-choice-line">{PLAN_LINE[p.id]}</p>
-            <p className="pr-choice-yr">{p.yearly}</p>
+            {p.yearly && p.yearly !== 'No card' ? <p className="pr-choice-yr">{p.yearly}</p> : null}
           </li>
         )
       })}
