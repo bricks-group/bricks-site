@@ -26,7 +26,7 @@ export const PRICING_FAQS: readonly RichFaq[] = [
   faq('How is home size measured?', 'By finished area and complexity. Not sure? Choose “advise me” when you book and we’ll size it from the address.'),
   faq('Virtual tour or virtual visit?', 'A virtual tour follows a set path and comes with Showcase and Full suite. A virtual visit is free-roam 3D, booked as an add-on.'),
   ...(VIRTUAL_STAGING_ENABLED ? [faq('What is virtual staging?', 'Furniture added to photos of vacant rooms, marked as virtually staged. Priced per photo and not part of any package.')] : []),
-  faq('Where do you shoot?', 'Across Canada. Ask and we’ll confirm your area and quote any travel.'),
+  faq('Where do you shoot?', 'Across Ontario, wherever a photographer is near. We check your address when you book and assign a photographer before you pay, with any travel on the quote.'),
   faq('Can I add Brixton AI without changing plan?', 'Yes. Brixton AI is one switch on a paid plan. Diamond includes it.'),
   faq('Brokerage or individual plan?', `Agents start free, or pick a paid plan. Offices buy seats, from $${OFFICE_SEAT_PRICE_PER_YEAR.franchise.toLocaleString('en-CA')} a year. Every seat gets all of Bricks plus trust accounting.`),
 ]

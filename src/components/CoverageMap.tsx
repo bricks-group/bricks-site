@@ -500,7 +500,7 @@ export default function CoverageMap({ token }: { token: string }) {
         </p>
       ) : (
         <p className="cov-map-note">
-          Canada-wide network. Tap a shaded area to zoom. Address on <a href="/book">/book</a> confirms coverage and
+          Across Ontario, wherever a photographer is near. Tap a shaded area to zoom. Address on <a href="/book">/book</a> confirms coverage and
           travel before checkout.
         </p>
       )}

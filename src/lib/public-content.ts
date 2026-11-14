@@ -11,7 +11,7 @@ export const HOME_FAQS = [
   { id: 'what', q: 'What is Bricks?', a: BRICKS_DEFINITION },
   { id: 'who', q: 'Who is it for?', a: 'Builders, developers and investors running projects, and the brokerages, teams and agents selling them.' },
   { id: 'booking', q: 'How do I book media or a site visit?', a: 'From inside Bricks, or online. Enter the address, pick what you need and see the full price before you pay.' },
-  { id: 'coverage', q: 'Where do you work?', a: 'Across Canada. Availability and any travel charges are confirmed for the property at booking; inspections are available in Ontario only.' },
+  { id: 'coverage', q: 'Where do you work?', a: 'Across Ontario, wherever a vendor is near. We confirm a vendor is available for your address before your shoot. Any travel is on the quote.' },
   { id: 'virtual-visit', q: 'What is Virtual Visit?', a: VIRTUAL_VISIT_DESCRIPTION },
   { id: 'site-progress', q: 'What is Site Progress?', a: SITE_PROGRESS_DESCRIPTION },
   { id: 'plans', q: 'How much does Bricks software cost?', a: 'Start free. Paid plans are $49, $99 or $149 a month, or $490, $990 or $1,490 a year (two months free). The $99 plan is the one we recommend. CAD, before tax. Services are booked separately.' },
@@ -59,9 +59,9 @@ export const PM_FAQS = [
 export const ABOUT_FAQS = [
   { q: "What is Bricks?", a: "Bricks is subscription software for Canadian real estate: builders, developers, investors, brokerages, teams and realtors. Listing media, Virtual Visit free-roam 3D and Site Progress — drone mapping, orthomosaics, models, documents, reports and comparisons over time — are services booked inside Bricks. Bricks Group is based in Ontario, Canada." },
   { q: "Who is Bricks for?", a: "Builders and developers, agents and brokerages, property managers, and the vendors who do the work on site. Each works from the same record." },
-  { q: "Who makes Bricks?", a: "Bricks Group, founded in 2026 and based in Mississauga, Ontario." },
+  { q: "Who makes Bricks?", a: "Bricks Group, founded in 2026 and based in the GTA, Ontario." },
   { q: "Is Bricks software or a media company?", a: "Software first. Projects, listings and deals live in Bricks. When a site needs a progress visit or a listing needs media, you book it inside Bricks, and the files land where the work is." },
-  { q: "Where does Bricks work?", a: "Across Canada. Availability and any travel charges are confirmed for the property at booking. Inspections are available in Ontario only." },
+  { q: "Where does Bricks work?", a: "Across Ontario, wherever a vendor is near. We confirm a vendor is available for your address before your shoot. Any travel is on the quote." },
   { q: "How do I contact Bricks?", a: "Email hello@brxs.ca for general questions or help@brxs.ca for support, or call (289) 312-7425." },
 ] as const
 

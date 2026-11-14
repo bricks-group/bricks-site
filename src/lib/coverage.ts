@@ -8,12 +8,12 @@
  * Geography rules (Kam, 2026-09-12):
  * - Launch Ontario footprint ≈ anything within ~2 hours’ drive of Mississauga
  *   (INTERNAL sizing rule — never put “2 hour” / “2hr” in public UI copy).
- * - Public label: Golden Horseshoe (GGH+) with Mississauga as coverage map hub.
+ * - Public label (2026-11-14): 'GTA and nearby'; Mississauga is only the internal map hub.
  * - Geometry must stay in Canada — clip the US (no NY/PA bleed across the lakes).
  * - Includes GTA, Hamilton, Niagara (ON), Waterloo Region (Cambridge/KW), Guelph,
  *   London, Barrie corridor, etc. as ONE hub — not a city laundry list of chips.
  * - Beyond that shed (e.g. Ottawa) and other provinces = status 'confirm'.
- * - Brand line stays Canada-wide; no city laundry list on the homepage hero.
+ * - Brand line (Kam, 2026-11-14): all of Ontario, wherever a vendor is near; no city laundry list.
  */
 export type CoverageStatus = 'base' | 'active' | 'confirm'
 
@@ -153,7 +153,7 @@ export const LAUNCH_RING: [number, number][] = [
 export const COVERAGE_HUBS: CoverageHub[] = [
   {
     id: 'ggh',
-    name: 'Golden Horseshoe',
+    name: 'GTA and nearby',
     region: 'Ontario · base',
     lng: -79.55,
     lat: 43.45,
@@ -161,10 +161,10 @@ export const COVERAGE_HUBS: CoverageHub[] = [
     status: 'base',
     ring: LAUNCH_RING,
     note:
-      ' — Toronto through the Golden Horseshoe, plus Cambridge, Kitchener, Waterloo, Guelph, London, Hamilton, Niagara, Barrie, and nearby. Travel is from the assigned photographer’s base (first 25 km free, then per km). Address on /book confirms the quote.',
+      ' — Toronto and the GTA, plus Hamilton, Niagara, Kitchener, Waterloo, Cambridge, Guelph, London, Barrie and nearby. No travel fee inside this area. Elsewhere in Ontario, travel is from the assigned photographer’s base (first 25 km free, then per km). Address on /book confirms the quote.',
     detail: {
       headline: 'Our home base',
-      desc: 'The GTA and Golden Horseshoe, plus Cambridge, Guelph, London, Hamilton, Niagara, the Barrie corridor and nearby Ontario.',
+      desc: 'The GTA, plus Hamilton, Niagara, Cambridge, Guelph, London, the Barrie corridor and nearby Ontario.',
     },
   },
   {
@@ -181,44 +181,7 @@ export const COVERAGE_HUBS: CoverageHub[] = [
       desc: 'Downtown condos to suburban homes. We confirm a photographer before you pay.',
     },
   },
-  {
-    id: 'calgary',
-    name: 'Calgary',
-    region: 'Alberta',
-    lng: -114.0719,
-    lat: 51.0447,
-    radiusKm: 28,
-    status: 'confirm',
-    note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
-    detail: {
-      headline: 'Confirmed at booking',
-      desc: 'HDR photos, optional drone and a floor plan on every standard shoot. We confirm a local photographer when you book.',
-    },
-  },
-  {
-    id: 'edmonton',
-    name: 'Edmonton',
-    region: 'Alberta',
-    lng: -113.4909,
-    lat: 53.5461,
-    radiusKm: 28,
-    status: 'confirm',
-    note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
-  },
-  {
-    id: 'vancouver',
-    name: 'Vancouver',
-    region: 'British Columbia',
-    lng: -123.1207,
-    lat: 49.2827,
-    radiusKm: 26,
-    status: 'confirm',
-    note: ' — photographer coverage expands with booked demand. Confirm before you lock the slot.',
-    detail: {
-      headline: 'Confirmed at booking',
-      desc: 'Dense condo cores and North Shore homes. We confirm a local photographer first.',
-    },
-  },
+  // Calgary, Edmonton and Vancouver hubs removed 2026-11-14: Bricks serves Ontario today (Kam).
 ]
 
 
@@ -256,7 +219,7 @@ export function hubKind(hub: CoverageHub): 'base' | 'hub' | 'soft' {
 }
 
 export function chipMeta(hub: CoverageHub): string {
-  if (hub.status === 'base') return 'Base · Mississauga'
+  if (hub.status === 'base') return 'Base · GTA'
   if (hub.status === 'confirm') return 'Confirm'
   return hub.region
 }
@@ -277,7 +240,7 @@ export function coverageDetailCards() {
       continue
     }
     cards.push({
-      name: hub.id === 'ggh' ? 'Greater Golden Horseshoe' : hub.name,
+      name: hub.id === 'ggh' ? 'GTA and nearby Ontario' : hub.name,
       region: hub.status === 'base' ? 'Ontario' : hub.region,
       headline: hub.detail.headline,
       desc: hub.detail.desc,

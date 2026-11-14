@@ -27,7 +27,7 @@ const FAQS = [
   { q: "Do I need a paid plan to use Bricks?", a: "No. Clay is free, and anyone can book listing media at brxs.ca/book without an account. Paid plans add CRM, e-sign, forms and AI." },
   { q: "How are Bricks services priced?", a: "Every price is public, in CAD before tax. The With and without Bricks page sets them beside published GTA and Ontario rates, so you can check the difference yourself." },
   { q: "Does Bricks replace my MLS®?", a: "No. Bricks can pull your MLS® feed on your own credentials and builds an MLS® package for each listing, but it never posts or submits to your MLS®. You submit it yourself." },
-  { q: "Where does Bricks work?", a: "Across Canada. Availability and any travel charges are confirmed for the property at booking. Inspections are available in Ontario only." },
+  { q: "Where does Bricks work?", a: "Across Ontario, wherever a vendor is near. We confirm a vendor is available for your address before your shoot. Any travel is on the quote." },
 ] as const
 
 export default function Post() {

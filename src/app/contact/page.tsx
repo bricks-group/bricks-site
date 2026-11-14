@@ -56,7 +56,7 @@ export default function ContactPage() {
             <div className="c"><div className="l">General enquiries</div><div className="v"><a href="mailto:hello@brxs.ca">hello@brxs.ca</a></div><p>For general questions about Bricks software, listing media, Virtual Visit or Site Progress services.</p></div>
             <div className="c"><div className="l">Privacy</div><div className="v"><a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></div><p>For questions about personal information or to make a privacy request. Do not include passwords or payment details.</p></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+12893127425">(289) 312-7425</a></div></div>
-            <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>
+            <div className="c"><div className="l">Service area</div><div className="v">Across Ontario</div></div>
           </div>
 
           <div className="sec-head">

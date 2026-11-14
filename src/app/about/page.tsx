@@ -8,18 +8,18 @@ import { OG_IMAGE } from '@/lib/og'
 
 export const metadata: Metadata = {
   title: 'About Bricks: The System for Canadian Real Estate',
-  description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
+  description: 'Bricks is software for Canadian real estate from Bricks Group in Ontario. Builders, agents, brokerages and property managers, on one record.',
   alternates: { canonical: '/about' },
   openGraph: { images: [OG_IMAGE],
     type: 'website',
     title: 'About Bricks',
-    description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
+    description: 'Bricks is software for Canadian real estate from Bricks Group in Ontario. Builders, agents, brokerages and property managers, on one record.',
     url: 'https://www.brxs.ca/about',
   },
   twitter: {
     card: 'summary',
     title: 'About Bricks',
-    description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
+    description: 'Bricks is software for Canadian real estate from Bricks Group in Ontario. Builders, agents, brokerages and property managers, on one record.',
   },
 }
 
@@ -49,7 +49,7 @@ export default function AboutPage() {
       <section className="hero">
         <div className="wrap">
           <h1>About Bricks.</h1>
-          <p className="sub">Bricks Group builds Bricks in Mississauga, Ontario: real estate software for builders, brokerages, agents, property managers and vendors.</p>
+          <p className="sub">Bricks Group builds Bricks in Ontario: real estate software for builders, brokerages, agents, property managers and vendors.</p>
         </div>
       </section>
 

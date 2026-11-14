@@ -52,18 +52,15 @@ export const BROKERAGE_LOGOS = [
 
 /** Hub names for internal lists — live map geometry lives in lib/coverage.ts. */
 export const COVERAGE_CITIES = [
-  'Golden Horseshoe',
+  'GTA',
   'Ottawa',
-  'Calgary',
-  'Edmonton',
-  'Vancouver',
 ] as const
 
-/** Public coverage beat — Canada-wide launch; no city laundry list. */
-export const COVERAGE_LINE = 'Serving Canada.'
+/** Public coverage beat (Kam, 2026-11-14): all of Ontario, wherever a vendor is near. */
+export const COVERAGE_LINE = 'Across Ontario, wherever a vendor is near.'
 
 export const AREA_SERVED_SCHEMA = [
-  { '@type': 'Country' as const, name: 'Canada' },
+  { '@type': 'State' as const, name: 'Ontario', containedInPlace: { '@type': 'Country' as const, name: 'Canada' } },
 ]
 
 export const KNOWS_ABOUT = [

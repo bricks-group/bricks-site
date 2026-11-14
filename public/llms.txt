@@ -2,7 +2,7 @@
 
 > Bricks is subscription software for Canadian real estate, built by Bricks Group in Ontario, Canada. Builders, developers and investors, as well as brokerages, teams and realtors, use Bricks. Listing media, Virtual Visit and Site Progress are services booked inside the software.
 
-Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-on, not a path-confined virtual tour and never included in a media package. Site Progress covers dated drone visits, mapping and orthomosaics, models, documents, reports and comparisons over time. Confirm service availability and any travel costs for the property at booking; inspections are Ontario only.
+Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-on, not a path-confined virtual tour and never included in a media package. Site Progress covers dated drone visits, mapping and orthomosaics, models, documents, reports and comparisons over time. Services are offered across Ontario, wherever a vendor is near; availability and any travel costs are confirmed for the property at booking.
 
 ## Primary sources
 
@@ -33,7 +33,7 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [Move-out and turnover cleaning](https://www.brxs.ca/move-out-cleaning): Move-out, turnover and pre-listing cleans with photo proof, by written quote.
 - [Home inspections in Ontario](https://www.brxs.ca/home-inspection-ontario): Pre-listing, pre-purchase, condo and new-build inspections; Ontario only.
 - [City pages](https://www.brxs.ca/real-estate-photography/toronto): Toronto (home base), plus [Ottawa](https://www.brxs.ca/real-estate-photography/ottawa), [Calgary](https://www.brxs.ca/real-estate-photography/calgary) and [Vancouver](https://www.brxs.ca/real-estate-photography/vancouver), where a photographer is confirmed at booking.
-- [Service areas](https://www.brxs.ca/service-areas): Canada-wide coverage, subject to property-specific confirmation.
+- [Service areas](https://www.brxs.ca/service-areas): All of Ontario, wherever a vendor is near; the address is checked at booking and a photographer is assigned before payment.
 - [Gallery](https://www.brxs.ca/gallery): First-party listing photography samples.
 
 ## Customers and vendors

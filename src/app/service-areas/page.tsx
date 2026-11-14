@@ -2,24 +2,30 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CoverageMap from '@/components/CoverageMap'
 import { coverageDetailCards } from '@/lib/coverage'
-import { AREA_SERVED_SCHEMA, COVERAGE_LINE, TOUR_NAME, VISIT_NAME } from '@/lib/brand'
+import { AREA_SERVED_SCHEMA } from '@/lib/brand'
+import { TRAVEL_ANSWER } from '@/lib/faq-content'
+import PublicFaqs from '@/components/PublicFaqs'
 import { ORG_REF } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
+// Coverage (Kam, 2026-11-14): all of Ontario, wherever a vendor is near. /api/create-checkout
+// refuses payment until a photographer is assigned, so 'before you pay' is true to the code.
+const TITLE = 'Real Estate Photography Service Areas in Ontario | Bricks'
+const DESC = 'Real estate photography and listing media across Ontario, wherever a photographer is near. We check your address and assign one before you pay.'
+
 export const metadata: Metadata = {
-  title: "Real Estate Photography & Media Service Areas | Bricks",
-  description: "Find Bricks real estate photography and listing media coverage across Canada. Review service areas, then confirm availability and any travel costs at booking.",
+  title: TITLE,
+  description: DESC,
   alternates: { canonical: '/service-areas' },
-  openGraph: { images: [OG_IMAGE],
-    title: "Real Estate Photography & Media Service Areas | Bricks",
-    description: `Bricks listing media across Canada. ${COVERAGE_LINE} HDR, drone, floor plans, optional virtual tour.`,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Real Estate Photography & Media Service Areas | Bricks",
-    description: "Find Bricks real estate photography and listing media coverage across Canada. Review service areas, then confirm availability and any travel costs at booking.",
-  },
+  openGraph: { images: [OG_IMAGE], title: TITLE, description: DESC },
+  twitter: { card: 'summary_large_image', title: TITLE, description: DESC },
 }
+
+const FAQS = [
+  { q: 'Where does Bricks shoot?', a: 'Across Ontario, wherever a photographer is near. Enter the listing address when you book, and we assign a photographer and show the final price before you pay.' },
+  { q: 'Is there a travel fee?', a: TRAVEL_ANSWER },
+  { q: 'What if no photographer is near my address?', a: 'Checkout stays closed until a photographer is assigned, so you never pay for a shoot nobody can take. Email help@brxs.ca with the address and we’ll look into it.' },
+] as const
 
 const areas = coverageDetailCards()
 
@@ -36,7 +42,7 @@ export default function ServiceAreasPage() {
             '@type': 'Service',
             serviceType: 'Real estate photography',
             description:
-              'Listing photos and real estate photography for Canadian agents — HDR, licensed drone, floor plans, optional virtual tour and virtual visit.',
+              'Listing photos and real estate photography for Ontario agents: HDR, licensed drone, floor plans, optional virtual tour and virtual visit.',
             url: 'https://www.brxs.ca/service-areas',
             provider: ORG_REF,
             areaServed: AREA_SERVED_SCHEMA,
@@ -47,9 +53,9 @@ export default function ServiceAreasPage() {
       <section className="hero hero-cov">
         <div className="wrap">
           <span className="badge">Service areas</span>
-          <h1>Where we shoot.</h1>
+          <h1>Across Ontario, wherever a vendor is near.</h1>
           <p className="sub">
-            We shoot across Canada. We confirm your area and quote travel before you pay.
+            We check your address when you book. You pay only once a photographer is assigned and any travel is on the quote.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
@@ -67,7 +73,7 @@ export default function ServiceAreasPage() {
           <CoverageMap token={mapToken} />
         ) : (
           <div className="cov-map-missing">
-            <p>We shoot across Canada. Enter an address to confirm coverage and travel.</p>
+            <p>Across Ontario, wherever a photographer is near. Enter an address to check yours.</p>
             <Link className="btn btn-sec" href="/book">Book a shoot</Link>
           </div>
         )}
@@ -83,10 +89,10 @@ export default function ServiceAreasPage() {
           </div>
           <div className="prose">
             <p>
-              <Link href="/book">Enter the listing address</Link> and we&apos;ll size the home, quote travel and show the exact times available. City not on the map? Ask anyway.
+              <Link href="/book">Enter the listing address</Link> and we&apos;ll size the home, quote travel and show the exact times available. If no photographer is near, checkout stays closed and you aren’t charged.
             </p>
             <p>
-              City guides: <Link href="/real-estate-photography/toronto">Toronto</Link>, <Link href="/real-estate-photography/ottawa">Ottawa</Link>, <Link href="/real-estate-photography/calgary">Calgary</Link> and <Link href="/real-estate-photography/vancouver">Vancouver</Link>.
+              City guides: <Link href="/real-estate-photography/toronto">real estate photography in Toronto</Link> and <Link href="/real-estate-photography/ottawa">in Ottawa</Link>.
             </p>
           </div>
         </div>
@@ -114,6 +120,8 @@ export default function ServiceAreasPage() {
           </div>
         </div>
       </section>
+
+      <PublicFaqs title="Questions about coverage." faqs={FAQS} />
 
       <section className="block">
         <div className="wrap">

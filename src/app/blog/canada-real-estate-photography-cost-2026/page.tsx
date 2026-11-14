@@ -251,7 +251,7 @@ export default function Post() {
 
         <h2>Regional notes (without a laundry list)</h2>
         <p>
-          Toronto / GTA, Vancouver / Lower Mainland, Calgary / Edmonton, Ottawa / Montreal, and Atlantic markets all buy the same media stack. Where certified drone operators are scarce, aerial premiums rise. Where condo inventory dominates, average photo tickets fall but volume rises. Bricks recruits photographers Canada-wide so coverage can follow booked demand — confirm at booking rather than assuming a city page equals a guaranteed slot.
+          Toronto / GTA, Vancouver / Lower Mainland, Calgary / Edmonton, Ottawa / Montreal, and Atlantic markets all buy the same media stack. Where certified drone operators are scarce, aerial premiums rise. Where condo inventory dominates, average photo tickets fall but volume rises. Bricks books shoots across Ontario today, wherever a photographer is near, and checks your address at booking rather than assuming a city page equals a guaranteed slot.
         </p>
         <p>
           City guides:{' '}

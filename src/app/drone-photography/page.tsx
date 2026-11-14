@@ -10,7 +10,7 @@ import { OG_IMAGE } from '@/lib/og'
 
 const URL = 'https://www.brxs.ca/drone-photography'
 const TITLE = 'Drone Photography for Real Estate in Canada | Bricks'
-const DESC = `Licensed real estate drone photography across Canada, flown by Transport Canada certified pilots. Aerials ${DRONE_RANGE} by home size, or in Essentials from $${CORE_FROM}.`
+const DESC = `Licensed real estate drone photography across Ontario, by Transport Canada certified pilots. Aerials ${DRONE_RANGE} by home size, or in Essentials from $${CORE_FROM}.`
 
 export const metadata: Metadata = {
   title: TITLE,

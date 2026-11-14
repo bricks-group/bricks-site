@@ -4,7 +4,7 @@ import { Head, Rows, Close } from '@/components/calm/Calm'
 import Image from 'next/image'
 import RevealObserver from '@/components/RevealObserver'
 import PublicFaqs from '@/components/PublicFaqs'
-import { COVERAGE_LINE, TOUR_NAME, VISIT_NAME, VISIT_PACKAGING, WORK_PHOTOS } from '@/lib/brand'
+import { TOUR_NAME, VISIT_NAME, VISIT_PACKAGING, WORK_PHOTOS } from '@/lib/brand'
 import {
   PHOTO_RATE, DRONE_RATE, REEL_RATE, TOUR_RATE, TWILIGHT_RATE, VISIT_RATE, BAND_LABELS, bandCells,
   PHOTO_RANGE, DRONE_RANGE, TOUR_RANGE, REEL_RANGE, CORE_FROM, FLOOR_PLAN_ONLY_RATE, RUSH_FLAT,
@@ -15,8 +15,8 @@ import { CITY_PAGES } from '@/lib/city-pages'
 import { OG_IMAGE } from '@/lib/og'
 
 const URL = 'https://www.brxs.ca/real-estate-photography'
-const TITLE = 'Real Estate Photography in Canada: Photos & Drone | Bricks'
-const DESC = `Real estate photography across Canada: HDR photos from $${PHOTO_RATE[0]}, licensed drone, floor plans, film and virtual tours. Exact times, one quoted price.`
+const TITLE = 'Real Estate Photography in Ontario: Photos & Drone | Bricks'
+const DESC = `Real estate photography across Ontario: HDR photos from $${PHOTO_RATE[0]}, licensed drone, floor plans, film and virtual tours. Exact times, one quoted price.`
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -39,7 +39,7 @@ const PACKAGES = [
 const FAQS = [
   { q: 'What is included in Bricks real estate photography?', a: 'HDR interiors and exteriors, edited in-house and MLS®-safe. Essentials adds licensed drone and a branded 2D floor plan in the same visit. Photos are typically delivered within 24 hours.' },
   { q: 'How much does real estate photography cost in Canada?', a: `Bricks HDR photography is ${bandCells(PHOTO_RATE).join(' / ')} CAD before tax, by footprint. Essentials (photos, drone and floor plan) starts at $${CORE_FROM}. Travel is $0 for properties inside the no-travel-fee area shown on our coverage map. Outside that area, travel is priced from the assigned photographer’s location: the first 25 km are free, then $0.75 per additional km. Your assigned photographer and final travel fee are confirmed before payment.` },
-  { q: 'Do you shoot MLS® photos Canada-wide?', a: 'Yes. The GTA and Golden Horseshoe are the home base. In other markets, including Ottawa, Calgary and Vancouver, a local photographer is confirmed when you book, before you pay.' },
+  { q: 'Do you shoot MLS® photos across Ontario?', a: 'Yes, wherever a photographer is near. There is no travel fee in the GTA’s major markets. Elsewhere in Ontario, a local photographer is assigned when you book, before you pay.' },
   { q: 'Virtual tour or Virtual Visit?', a: `A ${TOUR_NAME.toLowerCase()} follows a set path and is included in Showcase and Full suite. ${VISIT_NAME} is free-roam 3D. ${VISIT_PACKAGING}` },
   { q: 'How fast is delivery?', a: `Photos are typically delivered within 24 hours, and other media within 24–48 hours. Rush delivery is faster, for a flat $${RUSH_FLAT}.` },
   { q: 'Do you replace skies or window views?', a: 'Not by default. Bricks keeps real window views and doesn’t add fake skies, so photos stay MLS®-safe. Twilight is shot for real at blue hour.' },
@@ -55,7 +55,7 @@ export default function RealEstatePhotographyPage() {
 
       <section className="hero">
         <div className="wrap">
-          <h1>Real estate photography, Canada-wide.</h1>
+          <h1>Real estate photography, booked to the minute.</h1>
           <p className="sub">HDR listing photos, licensed drone, floor plans, film and tours. Pick an exact time, see one quoted price, and get photos back in about a day.</p>
           <div className="cta-row">
             <Link className="btn btn-night btn-primary" href="/book">Book a shoot</Link>
@@ -121,7 +121,7 @@ export default function RealEstatePhotographyPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Cities">
-        <Head title="Where we shoot." lede={COVERAGE_LINE} link={{ href: '/service-areas', label: 'Service areas' }} />
+        <Head title="City guides." link={{ href: '/service-areas', label: 'Service areas' }} />
         <Rows
           items={CITY_PAGES.map((c) => ({
             title: `Real estate photography in ${c.city}`,
