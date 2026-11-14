@@ -2,24 +2,29 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import CoverageMap from '@/components/CoverageMap'
 import { coverageDetailCards } from '@/lib/coverage'
-import { AREA_SERVED_SCHEMA, COVERAGE_LINE, TOUR_NAME, VISIT_NAME } from '@/lib/brand'
+import { AREA_SERVED_SCHEMA } from '@/lib/brand'
+import { TRAVEL_ANSWER } from '@/lib/faq-content'
+import PublicFaqs from '@/components/PublicFaqs'
 import { ORG_REF } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
 
+// Coverage wording per W2 handoff §2 (Golden Horseshoe first). Kam confirms coverage before deploy.
+const TITLE = 'Real Estate Photography & Media Service Areas | Bricks'
+const DESC = 'Bricks service areas for real estate photography and listing media, starting in the Golden Horseshoe. Confirm your address and travel before you pay.'
+
 export const metadata: Metadata = {
-  title: "Real Estate Photography & Media Service Areas | Bricks",
-  description: "Find Bricks real estate photography and listing media coverage across Canada. Review service areas, then confirm availability and any travel costs at booking.",
+  title: TITLE,
+  description: DESC,
   alternates: { canonical: '/service-areas' },
-  openGraph: { images: [OG_IMAGE],
-    title: "Real Estate Photography & Media Service Areas | Bricks",
-    description: `Bricks listing media across Canada. ${COVERAGE_LINE} HDR, drone, floor plans, optional virtual tour.`,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Real Estate Photography & Media Service Areas | Bricks",
-    description: "Find Bricks real estate photography and listing media coverage across Canada. Review service areas, then confirm availability and any travel costs at booking.",
-  },
+  openGraph: { images: [OG_IMAGE], title: TITLE, description: DESC },
+  twitter: { card: 'summary_large_image', title: TITLE, description: DESC },
 }
+
+const FAQS = [
+  { q: 'Where does Bricks shoot?', a: 'We’re based in Mississauga and shoot across the Golden Horseshoe. Outside it, we confirm your area and quote travel before you pay.' },
+  { q: 'Is there a travel fee?', a: TRAVEL_ANSWER },
+  { q: 'My city isn’t on the map. Can I still book?', a: 'Ask anyway. Enter the listing address when you book and we’ll confirm coverage and travel before you pay.' },
+] as const
 
 const areas = coverageDetailCards()
 
@@ -47,9 +52,9 @@ export default function ServiceAreasPage() {
       <section className="hero hero-cov">
         <div className="wrap">
           <span className="badge">Service areas</span>
-          <h1>Where we shoot.</h1>
+          <h1>Where we shoot, starting in the Golden Horseshoe.</h1>
           <p className="sub">
-            We shoot across Canada. We confirm your area and quote travel before you pay.
+            We’re based in Mississauga and shoot across the Golden Horseshoe. Outside it, we confirm your area and quote travel before you pay.
           </p>
           <div className="cta-row">
             <Link className="btn btn-brick" href="/book">
@@ -67,7 +72,7 @@ export default function ServiceAreasPage() {
           <CoverageMap token={mapToken} />
         ) : (
           <div className="cov-map-missing">
-            <p>We shoot across Canada. Enter an address to confirm coverage and travel.</p>
+            <p>We shoot across the Golden Horseshoe. Enter an address to confirm coverage and travel anywhere else.</p>
             <Link className="btn btn-sec" href="/book">Book a shoot</Link>
           </div>
         )}
@@ -114,6 +119,8 @@ export default function ServiceAreasPage() {
           </div>
         </div>
       </section>
+
+      <PublicFaqs title="Questions about coverage." faqs={FAQS} />
 
       <section className="block">
         <div className="wrap">
