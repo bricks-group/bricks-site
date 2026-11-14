@@ -427,4 +427,37 @@ describe('OS inbound saver and fail-open alerting', () => {
     assert.equal(again.status, 'duplicate')
     assert.deepEqual(keys, ['alert:e-dup'])
   })
+
+  it('treats a hung OS call as a save failure, alerts, and returns 500', async () => {
+    inboxDbDownAlert.now = () => Date.now()
+    inboxDbDownAlert.reset()
+    const save = osInboundSaver(
+      { BRICKS_OS_API_URL: 'https://api.brxs.ca', INTERNAL_API_KEY: 'k' },
+      (async (_url, init) => {
+        await new Promise((_resolve, reject) => {
+          const signal = init?.signal
+          if (!signal) return
+          if (signal.aborted) {
+            reject(Object.assign(new Error('aborted'), { name: 'TimeoutError' }))
+            return
+          }
+          signal.addEventListener('abort', () => {
+            reject(Object.assign(new Error('aborted'), { name: 'TimeoutError' }))
+          })
+        })
+        return new Response('late')
+      }) as typeof fetch,
+      40,
+    )
+    const calls: string[] = []
+    const out = await processEvent('m-hang', ev('e-hang'), {
+      saveInbound: save,
+      fetchEmail: async () => mail({ subject: 'Booking question', text: 'Can I book a shoot in Barrie next week?' }),
+      flags: SHADOW,
+      alert: async (a) => { calls.push(a.idempotencyKey); return { ok: true, id: 'a' } },
+    })
+    assert.equal(out.http, 500)
+    assert.equal(out.status, 'retry')
+    assert.ok(calls.includes('alert:e-hang'), JSON.stringify(calls))
+  })
 })

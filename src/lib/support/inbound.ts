@@ -388,7 +388,7 @@ type ProcessDeps = {
 }
 
 /** Production saver: POST the parsed message to the OS API (direct Postgres). */
-export function osInboundSaver(env: Env = process.env, f: typeof fetch = fetch) {
+export function osInboundSaver(env: Env = process.env, f: typeof fetch = fetch, timeoutMs = 10_000) {
   const base = (env.BRICKS_OS_API_URL || 'https://api.brxs.ca').replace(/\/$/, '')
   const key = (env.INTERNAL_API_KEY || env.BRICKS_INTERNAL_API_KEY || '').trim()
   return async (record: InboundRecord): Promise<SaveInboundResult> => {
@@ -398,11 +398,14 @@ export function osInboundSaver(env: Env = process.env, f: typeof fetch = fetch) 
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Internal-Api-Key': key },
         body: JSON.stringify(record),
+        signal: AbortSignal.timeout(timeoutMs),
       })
       const j = (await r.json().catch(() => ({}))) as SaveInboundResult
       if (!r.ok) return { ok: false, http: r.status, error: typeof j.error === 'string' ? j.error : 'save_failed', duplicate: Boolean(j.duplicate) }
       return { ok: true, http: r.status, ...j }
     } catch {
+      // Timeout, abort, or network error: treat as a save failure so fail-open
+      // alerting still runs and the webhook returns non-2xx for a Resend retry.
       return { ok: false, http: 500, error: 'save_failed' }
     }
   }
