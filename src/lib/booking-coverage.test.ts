@@ -2,8 +2,10 @@ import assert from 'node:assert/strict'
 import { afterEach, describe, it } from 'node:test'
 import { NOT_COVERED_MESSAGE, UNAVAILABLE_MESSAGE, interpretCoverage, isNotCoveredCode } from './booking-coverage'
 import { POST as coveragePOST } from '../app/api/book/coverage/route'
+import { POST as waitlistPOST } from '../app/api/book/coverage-waitlist/route'
 import { POST as quotePOST } from '../app/api/quote/route'
 import { POST as checkoutPOST } from '../app/api/create-checkout/route'
+import { connectingIp, _resetMemory } from './support/rate-limit'
 
 // Three addresses, as the Bricks API answers them (backend/tests/test_booking_coverage.py).
 const COVERED = { address: '1 King St W, Toronto, ON', os: { status: 200, body: { ok: true, covered: true, code: 'covered' } } }
@@ -76,6 +78,21 @@ describe('booking coverage: /api/book/coverage', () => {
     assert.equal(res.status, 503)
     assert.equal((await res.json()).code, 'coverage_unavailable')
   })
+  it('forwards the address only — never client lat/lon', async () => {
+    process.env.INTERNAL_API_KEY = 'test'
+    let sent: Record<string, unknown> = {}
+    mockOs((_url, body) => {
+      sent = body
+      return COVERED.os
+    })
+    const res = await coveragePOST(req('/api/book/coverage', { address: COVERED.address, lat: 43.65, lon: -79.38, province: 'ON' }))
+    assert.equal(res.status, 200)
+    assert.equal(sent.address, COVERED.address)
+    assert.equal('lat' in sent, false)
+    assert.equal('lon' in sent, false)
+    assert.equal('lng' in sent, false)
+    assert.equal('province' in sent, false)
+  })
 })
 
 describe('booking coverage: /api/quote and /api/create-checkout (bypassed UI)', () => {
@@ -98,6 +115,18 @@ describe('booking coverage: /api/quote and /api/create-checkout (bypassed UI)', 
     const res = await quotePOST(req('/api/quote', { address: COVERED.address, package_id: 'essentials' }))
     assert.equal(res.status, 200)
     assert.equal((await res.json()).quote.assignee_id, 'v1')
+  })
+  it('quote: strips vendor home coordinates from the public response', async () => {
+    process.env.INTERNAL_API_KEY = 'test'
+    mockOs(() => ({ status: 200, body: { ok: true, quote: { total: 300, assignee_id: 'v1', vendor_base_lat: 43.589, vendor_base_lng: -79.644, _base_lat: 43.589 } } }))
+    const res = await quotePOST(req('/api/quote', { address: COVERED.address, package_id: 'essentials' }))
+    const q = (await res.json()).quote
+    assert.equal(res.status, 200)
+    assert.equal(q.assignee_id, 'v1')
+    assert.equal(q.total, 300)
+    for (const k of ['vendor_base_lat', 'vendor_base_lng', 'vendor_home_lat', 'vendor_home_lng', '_base_lat', '_base_lng']) {
+      assert.equal(k in q, false, k)
+    }
   })
   it('quote: no local fallback when the API is unreachable -> 503', async () => {
     delete process.env.INTERNAL_API_KEY
@@ -141,3 +170,48 @@ describe('booking coverage: /api/quote and /api/create-checkout (bypassed UI)', 
     assert.equal(calls.some((u) => u.includes('stripe.com')), false)
   })
 })
+
+describe('connectingIp and coverage waitlist', () => {
+  afterEach(() => _resetMemory())
+
+  it('keys only on CF-Connecting-IP, never the first X-Forwarded-For hop', () => {
+    const h = new Headers({
+      'CF-Connecting-IP': '203.0.113.9',
+      'X-Forwarded-For': '198.51.100.1, 10.0.0.1',
+      'X-Real-IP': '192.0.2.1',
+    })
+    assert.equal(connectingIp(h), '203.0.113.9')
+    assert.equal(connectingIp(new Headers({ 'X-Forwarded-For': '198.51.100.1', 'x-real-ip': '192.0.2.1' })), 'unknown')
+  })
+
+  it('forwards CF-Connecting-IP to OS and returns 200; a ninth request from the same IP is 429', async () => {
+    process.env.INTERNAL_API_KEY = 'test'
+    _resetMemory()
+    const headersSeen: string[] = []
+    mockOs((_url, _body) => {
+      return { status: 200, body: { ok: true } }
+    })
+    // Capture headers by wrapping fetch after mockOs
+    const inner = globalThis.fetch
+    globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+      const h = new Headers(init?.headers)
+      headersSeen.push(h.get('cf-connecting-ip') || '')
+      return inner(input, init)
+    }) as typeof fetch
+    const waitReq = (n: number) => new Request('https://www.brxs.ca/api/book/coverage-waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.40' },
+      body: JSON.stringify({ email: `a${n}@example.com`, address: FAR_NORTH.address, flow: 'book' }),
+    })
+    for (let i = 0; i < 8; i++) {
+      const res = await waitlistPOST(waitReq(i))
+      assert.equal(res.status, 200, `request ${i}`)
+    }
+    assert.ok(headersSeen.every((ip) => ip === '203.0.113.40'))
+    const limited = await waitlistPOST(waitReq(8))
+    assert.equal(limited.status, 429)
+    const j = await limited.json()
+    assert.equal(j.ok, false)
+  })
+})
+

@@ -24,17 +24,12 @@ export async function POST(req: Request) {
   if (!address) return NextResponse.json({ ok: false, code: 'address_not_found', error: 'Enter the property address.' }, { status: 400 })
   const key = (process.env.INTERNAL_API_KEY || process.env.BRICKS_INTERNAL_API_KEY || '').trim()
   if (!key) return unavailable()
-  const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : undefined)
   try {
     const res = await fetch(OS_COVERAGE, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Internal-Api-Key': key },
-      body: JSON.stringify({
-        address,
-        lat: num(body.lat),
-        lon: num(body.lon),
-        province: typeof body.province === 'string' ? body.province.slice(0, 40) : undefined,
-      }),
+      // Address only: OS geocodes server-side. Never forward client lat/lon.
+      body: JSON.stringify({ address }),
     })
     const j = (await res.json().catch(() => null)) as Record<string, unknown> | null
     if (!j) return unavailable()

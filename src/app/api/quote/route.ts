@@ -8,6 +8,20 @@ export const dynamic = 'force-dynamic'
 
 const OS_QUOTE = 'https://api.brxs.ca/api/book/www-quote'
 
+/** Strip vendor home / base coordinates from a public quote (Sentinel I1). */
+function publicQuote(quote: unknown) {
+  if (!quote || typeof quote !== 'object' || Array.isArray(quote)) return quote
+  const out = { ...(quote as Record<string, unknown>) }
+  delete out.vendor_base_lat
+  delete out.vendor_base_lng
+  delete out.vendor_home_lat
+  delete out.vendor_home_lng
+  delete out._base_lat
+  delete out._base_lng
+  return out
+}
+
+
 async function quoteViaOs(body: Record<string, unknown>) {
   const key = (
     process.env.INTERNAL_API_KEY ||
@@ -57,7 +71,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, code: UNAVAILABLE_CODE, error: UNAVAILABLE_MESSAGE }, { status: 503 })
   }
   if (proxied.ok && proxied.j?.quote) {
-    return NextResponse.json({ ok: true, quote: proxied.j.quote, via: 'os-assign' })
+    return NextResponse.json({ ok: true, quote: publicQuote(proxied.j.quote), via: 'os-assign' })
   }
   const code = typeof proxied.j?.code === 'string' ? proxied.j.code : undefined
   const msg = (typeof proxied.j?.error === 'string' && proxied.j.error) || (typeof proxied.j?.detail === 'string' && proxied.j.detail) || ''
