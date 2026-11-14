@@ -10,8 +10,8 @@ import { ESIGN, LAUNCH } from '@/lib/agent-features'
 import { AGENT_LAUNCH_LIVE } from '@/lib/launch'
 
 export const metadata: Metadata = {
-  title: 'bricks for agents and teams — listing file plus Companion',
-  description: 'Run your listings in Bricks and book shoots from Companion. Software plans start free.',
+  title: 'Bricks for Agents & Teams: Listings, Deals and Media',
+  description: 'Run your pipeline, deals and listings in Bricks, then book listing media from the listing itself. Software plans for agents and teams start free.',
   alternates: { canonical: '/agents' },
 }
 

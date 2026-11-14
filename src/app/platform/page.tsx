@@ -13,7 +13,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Bricks software — web and mobile',
-  description: 'The system that brings it all together: deals, listings, booking and vendor dispatch, updates, documents, teams, payments and integrations on the web and on your phone, with media and Site Progress booked inside.',
+  description: 'Bricks on web and mobile: deals, listings, booking and dispatch, documents, teams, payments and integrations, with media and Site Progress inside.',
   alternates: { canonical: '/platform' },
 }
 

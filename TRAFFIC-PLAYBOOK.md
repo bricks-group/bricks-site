@@ -42,7 +42,7 @@ Setup (business.google.com):
 - Business type: **Service Area Business** (no public address — you shoot on-site).
   Service area: Greater Toronto Area — add Toronto, Mississauga, Brampton,
   Vaughan, Markham, Oakville, Etobicoke, Scarborough, North York (keep ≤15).
-- Phone: 343-453-4578  (the site number)
+- Phone: (289) 312-7425  (the site number)
 - Website: https://brxs.ca  (switch to https://bricks.ag after domain step)
 - Hours: your real booking hours (not 24h).
 - Description (750 char max) — use the draft in `outreach/GBP-description.txt`.
