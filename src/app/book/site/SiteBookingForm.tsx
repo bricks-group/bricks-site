@@ -9,6 +9,8 @@ import BricksLoader from '@/components/BricksLoader'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
 import { propertyTax, provinceFromAddress } from '@/lib/property-tax'
+import NotInArea from '@/components/NotInArea'
+import { checkCoverage, coverageKey, isNotCoveredCode, type CoverageInput } from '@/lib/booking-coverage'
 
 /** Booking email kept across the Stripe redirect so the success state can offer the matching builder account. */
 const EMAIL_KEY = 'bricks-site-booking-email'
@@ -98,6 +100,10 @@ export default function SiteBookingForm() {
   }, [params])
 
   const [siteAddress, setSiteAddress] = useState('')
+  // Booking coverage (Kam 2026-11-14): checked before checkout; the API re-checks.
+  const [notCoveredKey, setNotCoveredKey] = useState('')
+  const covInput: CoverageInput = { address: siteAddress, flow: 'site' }
+  const notCovered = !!notCoveredKey && notCoveredKey === coverageKey(covInput)
   const quote = useMemo(() => {
     const lines: Array<[string, number]> = []
     let recurring = 0
@@ -134,9 +140,18 @@ export default function SiteBookingForm() {
     else payload.plan_key = `${planKind}_${cadence}`
     setBusy(true)
     setMsg('')
+    const input: CoverageInput = { address: String(payload.site_address || ''), flow: 'site' }
+    const cov = await checkCoverage(input)
+    if (cov.status !== 'covered') {
+      setBusy(false)
+      if (cov.status === 'not_covered') { setNotCoveredKey(coverageKey(input)); evt('site_booking_not_covered') }
+      else setMsg(cov.message)
+      return
+    }
     try {
       const r = await fetch('/api/book/commercial-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string }
+      const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string; code?: string }
+      if (isNotCoveredCode(j.code)) { setNotCoveredKey(coverageKey(input)); return }
       if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email help@brxs.ca.'); return }
       try {
         sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || ''))
@@ -264,7 +279,9 @@ export default function SiteBookingForm() {
 
         <p className="terms-line" style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule.</p>
         <div className="cta-row">
+          {notCovered ? <NotInArea input={covInput} /> : (
           <button type="submit" className="btn btn-brick" disabled={busy}>{busy && <BricksLoader variant="cycle" size={16} color="currentColor" style={{ marginRight: 8 }} />}{busy ? 'Opening checkout…' : 'Continue to payment'}</button>
+          )}
           <a className="btn btn-sec" href="/builders#quote">Talk to us instead</a>
         </div>
         <div className="msg" role="status">{msg}</div>

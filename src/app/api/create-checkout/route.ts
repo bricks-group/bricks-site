@@ -1,3 +1,4 @@
+import { NOT_COVERED_MESSAGE, UNAVAILABLE_CODE, UNAVAILABLE_MESSAGE, isNotCoveredCode } from '@/lib/booking-coverage'
 import { NextResponse } from 'next/server'
 import { isProvinceBlock, propertyTax } from '@/lib/property-tax'
 import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
@@ -11,6 +12,13 @@ export const dynamic = 'force-dynamic'
 
 const WALLET_DOMAINS = ['brxs.ca', 'www.brxs.ca']
 const OS_CHECKOUT = 'https://api.brxs.ca/api/book/www-create-checkout'
+
+function coverageBlocked(code: string) {
+  return NextResponse.json({ ok: false, code: isNotCoveredCode(code) ? code : 'not_covered', error: NOT_COVERED_MESSAGE }, { status: 409 })
+}
+function coverageUnavailable() {
+  return NextResponse.json({ ok: false, code: UNAVAILABLE_CODE, error: UNAVAILABLE_MESSAGE }, { status: 503 })
+}
 
 function bad(msg: string, status = 400) {
   return NextResponse.json({ ok: false, error: msg }, { status })
@@ -180,6 +188,10 @@ export async function POST(req: Request) {
         )
       }
       if (!proxied.ok) {
+        if (proxied.status === 409 || isNotCoveredCode(proxied.j?.code)) {
+          return coverageBlocked(typeof proxied.j?.code === 'string' ? proxied.j.code : 'not_covered')
+        }
+        if (proxied.j?.code === UNAVAILABLE_CODE) return coverageUnavailable()
         return NextResponse.json(
           { ok: false, error: proxied.j?.error || `OS checkout failed (${proxied.status})` },
           { status: proxied.status >= 400 ? proxied.status : 502 },
@@ -239,13 +251,11 @@ export async function POST(req: Request) {
     } else if (proxied && proxied.status === 422 && isProvinceBlock(proxied.j)) {
       // Province rules (Saskatchewan unavailable / province unknown): never fall back.
       return bad(proxied.j?.error || proxied.j?.detail || 'This address cannot be booked online yet.', 422)
-    } else if (proxied && proxied.status === 409) {
-      return bad(
-        proxied.j?.error ||
-          proxied.j?.detail ||
-          'No photographer available — checkout blocked until one is assigned.',
-        409,
-      )
+    } else if (proxied && (proxied.status === 409 || isNotCoveredCode(proxied.j?.code))) {
+      // Booking coverage (Kam 2026-11-14): no eligible vendor reaches this address.
+      return coverageBlocked(typeof proxied.j?.code === 'string' ? proxied.j.code : 'not_covered')
+    } else if (proxied && proxied.j?.code === UNAVAILABLE_CODE) {
+      return coverageUnavailable()
     }
   } catch {
     /* fall through */
@@ -272,21 +282,14 @@ export async function POST(req: Request) {
           via: 'os-proxy-assign',
         })
       }
-      if (proxied && proxied.status === 409) {
-        return bad(
-          proxied.j?.error ||
-            proxied.j?.detail ||
-            'No photographer available — checkout blocked until one is assigned.',
-          409,
-        )
+      if (proxied && (proxied.status === 409 || isNotCoveredCode(proxied.j?.code))) {
+        return coverageBlocked(typeof proxied.j?.code === 'string' ? proxied.j.code : 'not_covered')
       }
     } catch {
       /* continue to explicit block */
     }
-    return bad(
-      'Checkout blocked: a photographer must be assigned and the final fee shown before payment.',
-      409,
-    )
+    // Coverage could not be confirmed by the Bricks API: fail closed, never charge.
+    return coverageUnavailable()
   }
   const amountCents = Math.round(q.total * 100)
   if (amountCents < 50) return bad('Amount too small')

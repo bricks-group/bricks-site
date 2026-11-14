@@ -6,6 +6,8 @@ import { useSearchParams } from 'next/navigation'
 import { CLIENT_LABEL, isPropertyClient, type PropertyClient } from '@/lib/clientServices'
 import { ONE_OFFS, ONE_OFFS_FOR, addDays, checkCheckout, checkoutBody, money, tierForSqft, type CheckoutFields } from '@/lib/propertyCheckout'
 import { signupUrl } from '@/lib/brand'
+import NotInArea from '@/components/NotInArea'
+import { checkCoverage, coverageKey, isNotCoveredCode, UNAVAILABLE_CODE, type CoverageInput } from '@/lib/booking-coverage'
 
 const TYPES = Object.keys(ONE_OFFS_FOR) as PropertyClient[]
 const torontoToday = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())
@@ -48,6 +50,10 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
   const today = useMemo(torontoToday, [])
+  // Booking coverage (Kam 2026-11-14): checked before checkout; the API re-checks.
+  const [notCoveredKey, setNotCoveredKey] = useState('')
+  const covInput: CoverageInput = { address: [f.street.trim(), f.city.trim()].filter(Boolean).join(', '), flow: 'property' }
+  const notCovered = !!notCoveredKey && notCoveredKey === coverageKey(covInput)
   const s = ONE_OFFS[f.service_key]
   const set = (k: keyof CheckoutFields) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const v = e.target.value
@@ -79,9 +85,18 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
     if (err) { setMsg(err); return }
     setBusy(true)
     setMsg('')
+    const cov = await checkCoverage(covInput)
+    if (cov.status !== 'covered') {
+      setBusy(false)
+      if (cov.status === 'not_covered') setNotCoveredKey(coverageKey(covInput))
+      else setMsg(cov.message)
+      return
+    }
     try {
       const r = await fetch('/api/book/property-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(checkoutBody(kind, { ...f, company })) })
-      const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string }
+      const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string; code?: string }
+      if (isNotCoveredCode(j.code)) { setNotCoveredKey(coverageKey(covInput)); return }
+      if (j.code === UNAVAILABLE_CODE) { setMsg(j.error || 'We couldn’t confirm coverage for this address. Please try again in a moment.'); return }
       // Not configured on this deploy (no key, or the API has no checkout yet): fall back to the request form.
       if (r.status === 503 || r.status === 404 || r.status === 405) { onRequest(); return }
       if (!r.ok || !j.url) { setMsg(j.error || 'Checkout failed. Email help@brxs.ca.'); return }
@@ -161,7 +176,7 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
         </fieldset>
         {s && <div className="total"><span className="hint">Plus HST.</span><b data-testid="pc-total">{money(s.cents)}</b></div>}
         <div className="msg" role="alert">{msg}</div>
-        <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Opening checkout…' : 'Continue to payment'}</button>
+        {notCovered ? <NotInArea input={covInput} email={f.contact_email} /> : <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Opening checkout…' : 'Continue to payment'}</button>}
         <p className="hint">Secure checkout by Stripe.</p>
       </form>
       <aside>
