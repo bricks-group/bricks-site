@@ -218,7 +218,6 @@ export function mediaServiceSchema(opts: { url: string; name?: string; offers: r
   }
 }
 
-
 export function virtualVisitServiceSchema(pageUrl: string) {
   return {
     '@context': 'https://schema.org', '@type': 'Service', '@id': 'https://www.brxs.ca/#virtual-visit',
@@ -278,7 +277,7 @@ export function faqPageSchema(faqs: readonly { q: string; a: string }[]) {
 export const PAGE_NAMES: Record<string, string> = {
   '/about': 'About', '/pricing': 'Pricing', '/platform': 'Software', '/why-bricks': 'With and without Bricks',
   ...Object.fromEntries(SOFTWARE_MODULES.map((m) => [`/software/${m.slug}`, m.name])), '/media': 'Listing media',
-  '/builders': 'Site Progress for builders', '/investors': 'Investors', '/agents': 'Agents',
+  '/builders': 'Site Progress for builders', '/developers': 'Developers', '/investors': 'Investors & lenders', '/agents': 'Agents',
   '/brokerage': 'Brokerages', '/teams': 'Teams', '/reits': 'REITs', '/commercial': 'Commercial',
   '/property-managers': 'Property managers', '/book': 'Book listing media',
   '/book/property': 'Book a property visit', '/book/site': 'Book Site Progress',
@@ -321,3 +320,4 @@ export function siteBreadcrumbItems(pathname: string) {
     : pathname.startsWith('/software/') ? '/platform' : undefined
   return [{ name: 'Home', path: '/' }, ...(parent ? [{ name: PAGE_NAMES[parent], path: parent }] : []), { name, path: pathname }]
 }
+

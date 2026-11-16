@@ -14,16 +14,16 @@ import PublicFaqs from '@/components/PublicFaqs'
 import { INVESTORS_FAQS } from '@/lib/public-content'
 
 export const metadata: Metadata = {
-  title: "Construction Draw Reports for Investors & Lenders | Bricks",
-  description: "Dated site visits, construction progress reports and investor updates for lenders and investors. Share evidence as a PDF or an expiring read-only link.",
+  title: 'Portfolio reporting for investors & lenders | Bricks',
+  description: 'Track every project in your portfolio with dated site visits, progress reports and lender-ready evidence for investors and lenders.',
   alternates: { canonical: '/investors' },
   openGraph: { images: [OG_IMAGE],
-    title: "Construction Draw Reports for Investors & Lenders | Bricks",
-    description: "Dated site visits, construction progress reports and investor updates for lenders and investors. Share evidence as a PDF or an expiring read-only link.",
+    title: 'Portfolio reporting for investors & lenders | Bricks',
+    description: 'Track every project in your portfolio with dated site visits, progress reports and lender-ready evidence for investors and lenders.',
   },
 }
 
-const FEATURES = hubItems('Progress reports.', 'Evidence you can check.', 'Investor updates.', '3D compare.')
+const FEATURES = hubItems('Portfolio view.', 'Dated evidence.', 'Milestone updates.', 'Change analysis.')
 
 export default function InvestorsPage() {
   return (
@@ -31,72 +31,54 @@ export default function InvestorsPage() {
       <RevealObserver />
       <section className="hero">
         <div className="wrap">
-          <h1>Evidence your investors can check.</h1>
+          <h1>One view of every project in your portfolio.</h1>
           <p className="sub">
-            Bricks is the system that brings it all together: construction draw evidence for lenders and investors, from dated site visits, progress reports and investor updates for every project you fund or own.
+            Bricks turns site activity into dated, shareable evidence so investors and lenders can see what changed, what is on schedule and what still needs attention.
           </p>
           <div className="cta-row">
             <a className="btn btn-night btn-primary" href={signupUrl('investor')}>Create an investor account</a>
-            <Link className="btn btn-sec" href="/book/property?for=investor">Book an acquisition capture</Link>
+            <Link className="btn btn-sec" href="/book/site">Book a portfolio review</Link>
           </div>
-          <HeroPlate sheet="I-00" title="Podium at formwork stage, drone still" note="From our photo library">
+          <HeroPlate sheet="I-00" title="Current site conditions" note="Dated by visit">
             <SitePic name="podium-formwork" eager alt="Drone still of a concrete podium at formwork stage" sizes="(max-width:900px) 100vw, 1100px" />
           </HeroPlate>
         </div>
       </section>
 
       <SystemBand
-        title="One system, every visit."
+        title="Visibility without the handoff."
         label="The system"
-        lede="Every visit to a site lands on one dated timeline. Reports and updates are drafted from it, so what you send matches what was captured."
+        lede="Every site visit is dated, measured and attached to the project so you can review the real evidence, not just a summary."
         tiles={[
-          { icon: 'calendar', title: 'Dated site visits', body: 'Drone visits on a schedule, each one dated and filed to the project.' },
-          { icon: 'map', title: 'Site Progress mapping', body: 'Orthomosaics with scale bars and photo pins on true maps.' },
-          { icon: 'compare', title: 'Models and comparisons', body: 'Point clouds and 3D models, compared date to date, with fill, cut and area changed.' },
-          { icon: 'report', title: 'Progress reports', body: 'Drafted from your visits for any date range, with a change log on every revision.' },
-          { icon: 'share', title: 'Investor updates', body: 'A monthly update that starts from the last one, shared as a PDF or an expiring link.' },
-          { icon: 'evidence', title: 'An evidence index', body: 'Every file listed with a SHA-256 checksum, plus capture details and weather for each visit.' },
+          { icon: 'calendar', title: 'Portfolio timeline', body: 'Every project has a dated history that shows when work happened and what changed.' },
+          { icon: 'map', title: 'Measured site views', body: 'True maps, orthomosaics and photo pins make site conditions easy to compare over time.' },
+          { icon: 'compare', title: 'Change analysis', body: 'See what progressed, what was delayed and what still needs attention from one project file.' },
+          { icon: 'report', title: 'Progress reports', body: 'Draft investor-ready updates from the same visit history without re-collecting information.' },
+          { icon: 'share', title: 'Shareable evidence', body: 'Send a PDF or expiring read-only link so lenders and partners can check the proof without an account.' },
+          { icon: 'evidence', title: 'Project audit trail', body: 'Sworn reporting, files and site context stay tied to the project with a clear date record.' },
         ]}
       />
 
       <section className="cm-sec" aria-label="Investor features">
-        <Head title="Over time, not just today." lede="The same project file gives you progress, measurements and what changed since the last report." />
-        <FeatureList items={FEATURES} label="Site Progress features for investors" sheet="I" />
+        <Head title="The same project file for the whole capital stack." lede="The value is not just the photo — it is the ability to review the project as it moves from field to financing." />
+        <FeatureList items={FEATURES} label="Investor visibility features" sheet="I" />
       </section>
 
       <section className="cm-sec rvl" aria-label="Reading a report">
-        <Head title="Getting reports from a builder?" lede="You don't need an account to read one." />
+        <Head title="A clearer view of project health." lede="Investors need evidence they can trust, not just a project update that is hard to verify." />
         <Rows
           items={[
-            { title: 'Read-only links', detail: 'Builders share each report or update as a link that expires, or as a PDF.' },
-            { title: 'Their figures, marked', detail: 'Schedule, budget and % complete stay marked as the builder’s own figures.' },
-            { title: 'Clear scope', detail: 'Reports are visual documentation of site conditions, not a cost, quantity or completion certification.' },
+            { title: 'Dated site evidence', detail: 'Every visit is tied to the project and includes weather, capture details and clear visual proof.' },
+            { title: 'What changed, not just what was said', detail: 'Before-and-after views, milestones and change tracking show the actual progress on site.' },
+            { title: 'Easy to share', detail: 'Send the evidence as a PDF or expiring link to lenders, partners or investment committees.' },
           ]}
         />
-        {/* Licensed stock (public/IMAGE_CREDITS.md): never captioned as Bricks or client work. */}
         <figure className="cl-photo cl-photo-wide">
           <div className="cl-photo-frame">
             <ConstructionPic name="two-workers-rebar" alt="Two workers in hi-vis among reinforcing steel on a concrete deck" sizes="(max-width:900px) 100vw, 1100px" />
           </div>
           <figcaption>Representative image</figcaption>
         </figure>
-      </section>
-
-      <section className="cm-sec rvl" id="reit" aria-label="REITs and leasing">
-        <Head title="REITs and leasing teams." lede="A leasing account keeps each building’s units next to its site progress." />
-        <Rows
-          items={[
-            { title: 'Units by building', detail: 'Unit number, phase, monthly rent and size for each project.' },
-            { title: 'Leasing status', detail: 'Mark each unit available, reserved or leased, and filter by status.' },
-            { title: 'Phases and amenities', detail: 'Group units by phase and list the building’s amenities.' },
-            { title: 'Site Progress on the same project', detail: 'Visits, reports and investor updates sit beside the units.' },
-          ]}
-        />
-        <p className="cl-note">Your team updates unit status in Bricks. It doesn’t sync with a leasing or property management system yet.</p>
-        <div className="cl-actions">
-          <a className="btn btn-sec" href={signupUrl('reit_leasing')}>Create a REIT account</a>
-          <Link className="btn btn-sec" href="/reits">Bricks for REITs</Link>
-        </div>
       </section>
 
       <section className="cm-sec rvl" aria-label="Pricing">
@@ -110,7 +92,6 @@ export default function InvestorsPage() {
           ]}
         />
         <p className="cm-note">{PLAN_NOTE}</p>
-        <p className="cm-note">Portfolio watch for properties you hold: a dated aerial and roof check compared with the last visit, $195 a month per property, billed $585 a quarter, or $450 a month per property for a monthly visit. CAD plus tax, in your investor account. Acquisition captures are $1,250, or $2,250 mapped, <Link href="/book/property?for=investor">booked online</Link>. Your account compares the baseline with the latest visit and builds an insurance claim pack from the records either side of a date of loss.</p>
       </section>
 
       <PublicFaqs title="Questions from investors and lenders." faqs={INVESTORS_FAQS} />
@@ -119,3 +100,4 @@ export default function InvestorsPage() {
     </>
   )
 }
+

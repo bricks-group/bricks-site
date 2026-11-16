@@ -70,6 +70,7 @@ const PRODUCT_PAGES = [
   { path: '/legal', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/dpa', changeFrequency: 'yearly' as const, priority: 0.3 },
   { path: '/builders', changeFrequency: 'monthly' as const, priority: 0.6 },
+  { path: '/developers', changeFrequency: 'monthly' as const, priority: 0.6 },
   { path: '/investors', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/commercial', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/property-managers', changeFrequency: 'monthly' as const, priority: 0.55 },
@@ -80,7 +81,6 @@ const PRODUCT_PAGES = [
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Last meaningful site-wide content/schema update; never substitute crawl/build time.
   const contentUpdated = '2026-11-07'
   const pages = [...PUBLIC_NOW, ...PRODUCT_PAGES].map((r) => ({
     url: `${BASE}${r.path}`,
@@ -88,7 +88,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }))
-  // Only the in-season market page is listed; the other three 307 to it.
   pages.push({ url: `${BASE}${currentSeason().slug}`, lastModified: '2026-11-14', changeFrequency: 'monthly', priority: 0.65 })
   const help = [
     { url: 'https://help.brxs.ca/', lastModified: contentUpdated, changeFrequency: 'weekly' as const, priority: 0.8 },
@@ -97,3 +96,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
   return [...pages, ...help]
 }
+
