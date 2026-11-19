@@ -16,6 +16,7 @@ import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
 import { type BookPrefill, bookTypeOption, canSkipToPackages, readBookPrefill, readHandoff } from '@/lib/book-prefill'
 import { type Recommendation, compactMoney, recommendPackage } from '@/lib/book-recommend'
+import { oaiqOrderCreated } from '@/lib/oaiq'
 import NotInArea from '@/components/NotInArea'
 import { type CoverageInput, type CoverageState, UNAVAILABLE_CODE, UNAVAILABLE_MESSAGE, checkCoverage, coverageKey, isNotCoveredCode } from '@/lib/booking-coverage'
 const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
@@ -311,6 +312,9 @@ export default function BookingWizard() {
     setScheduleCtaVisible(true)
 
     const sessionId = new URLSearchParams(window.location.search).get('session_id') || ''
+    // ChatGPT ads conversion: Stripe only redirects here after payment
+    // completes, so paid=1 means the order was created.
+    oaiqOrderCreated(sessionId)
     if (!sessionId) {
       // Edge may be stale without session_id — webhook (or manual nudge) is the only path.
       setDoneMsg('Payment confirmed. Your shoot is booked — finalizing dispatch.')
