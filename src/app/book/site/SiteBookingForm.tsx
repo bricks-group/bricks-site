@@ -11,6 +11,7 @@ import { signupUrl } from '@/lib/brand'
 import { propertyTax, provinceFromAddress } from '@/lib/property-tax'
 import NotInArea from '@/components/NotInArea'
 import { checkCoverage, coverageKey, isNotCoveredCode, type CoverageInput } from '@/lib/booking-coverage'
+import { oaiqOrderCreated } from '@/lib/oaiq'
 
 /** Booking email kept across the Stripe redirect so the success state can offer the matching builder account. */
 const EMAIL_KEY = 'bricks-site-booking-email'
@@ -90,7 +91,7 @@ export default function SiteBookingForm() {
     setPaid('checking')
     fetch('/api/confirm-paid', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ session_id: sid }) })
       .then((r) => r.json().then((j) => ({ r, j })))
-      .then(({ r, j }) => { setPaid(r.ok && j?.ok ? 'ok' : 'fail'); if (r.ok) evt('site_booking_paid', { commercial: true }) })
+      .then(({ r, j }) => { setPaid(r.ok && j?.ok ? 'ok' : 'fail'); if (r.ok) { evt('site_booking_paid', { commercial: true }); oaiqOrderCreated(sid) } })
       .catch(() => setPaid('fail'))
     try {
       const e = (sessionStorage.getItem(EMAIL_KEY) || '').trim()
