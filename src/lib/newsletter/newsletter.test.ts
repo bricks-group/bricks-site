@@ -42,11 +42,11 @@ describe('newsletter tokens', () => {
 describe('newsletter emails (CASL + RFC 8058)', () => {
   const base = 'https://www.brxs.ca'
   it('confirm email has sender, address, unsubscribe link and one-click headers', () => {
-    const m = confirmEmail({ to: 'a@b.ca', base, confirmToken: 'CT', unsubToken: 'UT', postal: 'Mississauga, Ontario, Canada' })
+    const m = confirmEmail({ to: 'a@b.ca', base, confirmToken: 'CT', unsubToken: 'UT', postal: 'Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada' })
     assert.equal(m.from, 'Raphael at Bricks <hello@brxs.ca>')
     for (const body of [m.html, m.text]) {
       assert.match(body, /Bricks Group/)
-      assert.match(body, /Mississauga, Ontario, Canada/)
+      assert.match(body, /6330 Montevideo Road, Mississauga, ON L5N 3V2/)
       assert.match(body, /\/newsletter\/unsubscribe\?t=UT/)
       assert.match(body, /\/newsletter\/confirm\?t=CT/)
       assert.match(body, /Raphael/)
@@ -63,11 +63,12 @@ describe('newsletter emails (CASL + RFC 8058)', () => {
 })
 
 describe('siteBase', () => {
-  it('only trusts our own hosts', () => {
-    assert.equal(siteBase('https://www.brxs.ca', {}), 'https://www.brxs.ca')
-    assert.equal(siteBase('https://bricks-site-preview-nl.x.workers.dev', {}), 'https://bricks-site-preview-nl.x.workers.dev')
-    assert.equal(siteBase('https://evil.example', {}), 'https://www.brxs.ca')
+  it('pins production to www.brxs.ca and only trusts our hosts in preview', () => {
+    assert.equal(siteBase('https://bricks-site-preview-nl.x.workers.dev', {}), 'https://www.brxs.ca')
+    assert.equal(siteBase('https://bricks-site-preview-nl.x.workers.dev', { BRICKS_SITE_PREVIEW: '1' }), 'https://bricks-site-preview-nl.x.workers.dev')
+    assert.equal(siteBase('https://evil.example', { BRICKS_SITE_PREVIEW: '1' }), 'https://www.brxs.ca')
     assert.equal(siteBase('https://evil.example', { NEWSLETTER_BASE_URL: 'https://www.brxs.ca/' }), 'https://www.brxs.ca')
+    assert.equal(siteBase('https://www.brxs.ca', { NEWSLETTER_BASE_URL: 'https://www.brxs.ca' }), 'https://www.brxs.ca')
   })
 })
 

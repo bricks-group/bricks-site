@@ -39,7 +39,7 @@ export default function PrivacyPage() {
           <ul>
             <li>Booking: name, brokerage, email, phone, property address, property type/size, package and add-on choices, booked date and clock time, access notes.</li>
             <li>Payment: processed by Stripe. We do not store full card numbers. We may store Stripe customer id, last four, brand, and payment status.</li>
-            <li>Launch / marketing email: email, if you opted in.</li>
+            <li>Newsletter: email, optional name, and the time you consent (and confirm), if you sign up. We use double opt-in — you confirm by email before we subscribe you.</li>
             <li>Photographer applicants: name, phone, email, city, travel radius, specialties, equipment, portfolio URLs, resume file, HST number if provided, and IC-acceptance record.</li>
             <li>Technical: IP address, device/browser, pages, and similar logs needed to run and secure the site.</li>
           </ul>
@@ -67,19 +67,29 @@ export default function PrivacyPage() {
           </ul>
 
           <h3>3. Who we share with</h3>
-          <p>We do not sell personal information. We share what is needed with: Stripe; Supabase; OpenStreetMap/geocoding; Expo, Apple and Google push services, and Mapbox (for the apps); OpenAI (ChatGPT ads measurement only as described in section 10 — hashed email and phone for ad conversion measurement, not raw contact details); the assigned photographer (address, time, access notes, contact name as needed); counsel, accountants, or authorities when required by law. Photographers are independent contractors and must keep booking details confidential under the IC agreement.</p>
+          <p>We do not sell personal information. We share what is needed with: Stripe; Supabase; OpenStreetMap/geocoding; Expo, Apple and Google push services, and Mapbox (for the apps); OpenAI (ChatGPT ads measurement only as described in section 10 — hashed email and phone for ad conversion measurement, not raw contact details); Resend (newsletter subscriber records and email delivery — email, optional name, and consent timing); the assigned photographer (address, time, access notes, contact name as needed); counsel, accountants, or authorities when required by law. Photographers are independent contractors and must keep booking details confidential under the IC agreement.</p>
 
           <h3>4. Where</h3>
-          <p>Primary app database, authentication, and storage run on Supabase in Canada. Other processors include Stripe and Vercel (United States), Expo push delivery and Mapbox for the apps (United States), OpenAI for ChatGPT ads measurement when section 10 applies (United States), and similar providers listed in section 3. By using the site you consent to those transfers where needed. We remain accountable under PIPEDA for personal information we collect.</p>
+          <p>Primary app database, authentication, and storage run on Supabase in Canada. Other processors include Stripe and Vercel (United States), Expo push delivery and Mapbox for the apps (United States), OpenAI for ChatGPT ads measurement when section 10 applies (United States), Resend for newsletter email when you subscribe (United States), and similar providers listed in section 3. By using the site you consent to those transfers where needed. We remain accountable under PIPEDA for personal information we collect.</p>
 
           <h3>5. Retention</h3>
-          <p>Booking and payment records: generally 7 years. Delivered media: until delivered plus a limited operational window. Photographer applications: while we evaluate or engage you, then as required for records. Marketing consent records: as required by CASL. App push tokens: until you delete the account or the token stops working. On-device saved data: until you sign out. Deletion on request unless we must keep a record.</p>
+          <p>Booking and payment records: generally 7 years. Delivered media: until delivered plus a limited operational window. Photographer applications: while we evaluate or engage you, then as required for records. Newsletter: while you stay subscribed; consent and unsubscribe records as required by CASL. Marketing consent records: as required by CASL. App push tokens: until you delete the account or the token stops working. On-device saved data: until you sign out. Deletion on request unless we must keep a record.</p>
 
           <h3>6. Your rights</h3>
           <p>Email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a> to access, correct, or withdraw consent (subject to legal and booking obligations). You can also delete your account in the Bricks app (see 1A and <a href="/account-deletion">brxs.ca/account-deletion</a>). Aim to respond within 30 days. Complaint: Office of the Privacy Commissioner of Canada (<a href="https://www.priv.gc.ca" rel="noopener noreferrer">priv.gc.ca</a>).</p>
 
+          <h3 id="newsletter">Newsletter</h3>
+          <p>
+            If you sign up for our newsletter, we collect your email, your name if you give it, and when you consent.
+            We use a double opt-in: you confirm by email before we add you. We use this only to send Bricks news and
+            updates you asked for. Subscriber records and sends go through Resend (United States). You can unsubscribe
+            with the link in every newsletter, or email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a>. We keep
+            your subscription while you stay subscribed, and keep consent and unsubscribe records as Canada&rsquo;s
+            anti-spam law (CASL) requires.
+          </p>
+
           <h3>7. CASL</h3>
-          <p>Commercial electronic messages only with CASL consent. Unsubscribe on marketing. Transactional booking/application messages as needed to perform the service.</p>
+          <p>Commercial electronic messages only with your express consent under Canada&rsquo;s anti-spam law (CASL). Our newsletter uses double opt-in: you confirm by email before we send marketing. Every newsletter has a one-click unsubscribe link; you can also email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a>. Transactional booking and application messages are sent as needed to perform the service.</p>
 
           <h3>8. Children</h3>
           <p>Adults 18+. We do not knowingly collect information from children. Listing media is of property, not of children.</p>

@@ -5,7 +5,7 @@ export const NEWSLETTER_REPLY_TO = 'hello@brxs.ca'
 export const ALERT_FROM = 'Bricks Alerts <alerts@brxs.ca>'
 export const DEFAULT_ALERT_TO = 'raph@brxs.ca'
 /** CASL: every message names the sender and a mailing address. Set the full address in NEWSLETTER_POSTAL_ADDRESS. */
-export const DEFAULT_POSTAL = 'Mississauga, Ontario, Canada'
+export const DEFAULT_POSTAL = 'Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada'
 export const CONSENT_TEXT = 'By signing up you agree to get email updates from Bricks Group. Unsubscribe anytime.'
 
 export const newsletterSecret = (env: Env = process.env) => (env.NEWSLETTER_SECRET || '').trim()
@@ -19,10 +19,15 @@ export const segmentId = (env: Env = process.env) => (env.NEWSLETTER_SEGMENT_ID 
 export const alertTo = (env: Env = process.env) => (env.NEWSLETTER_ALERT_TO || DEFAULT_ALERT_TO).trim()
 export const postalAddress = (env: Env = process.env) => (env.NEWSLETTER_POSTAL_ADDRESS || DEFAULT_POSTAL).trim()
 
-/** Links point back at the host that served the request, but only our own hosts. */
+/**
+ * Links in emails. Prod always uses https://www.brxs.ca (Sentinel: do not let *.workers.dev leak into live mail).
+ * Preview Workers (BRICKS_SITE_PREVIEW=1) may use the request host or NEWSLETTER_BASE_URL.
+ */
 export function siteBase(origin: string | null | undefined, env: Env = process.env): string {
   const fixed = (env.NEWSLETTER_BASE_URL || '').trim().replace(/\/$/, '')
   if (fixed) return fixed
+  const preview = (env.BRICKS_SITE_PREVIEW || '').trim() === '1'
+  if (!preview) return 'https://www.brxs.ca'
   try {
     const u = new URL(origin || '')
     const h = u.hostname
