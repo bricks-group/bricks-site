@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bricks-site-preview-legal",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "workers_dev": true,
+  "vars": {
+    "BRICKS_SITE_PREVIEW": "1",
+    "BOOKING_COPY_TO_OVERRIDE": "delivered@resend.dev"
+  }
+}

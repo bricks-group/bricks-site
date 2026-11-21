@@ -151,7 +151,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     plan: 'Book media on any plan, including free Clay, or at brxs.ca/book without an account. Media is priced separately from software.',
     faqs: [
       { q: 'Can I choose my photographer?', a: 'Bricks assigns the photographer. Brokerages can mark favourites, who get priority for their agents’ shoots.' },
-      { q: 'What if the drone can’t fly?', a: 'If rules, airspace, weather or the site make it unsafe, the rest of the package is still delivered and the drone add-on is refunded if it was charged separately.' },
+      { q: 'What if the drone can’t fly?', a: 'If rules, airspace, weather or the site make it unsafe, the rest of the package is still delivered and Bricks refunds the drone part plus its tax.' },
       { q: 'Do I need an account to book?', a: 'No. With an account, the shoot also attaches to the listing in Bricks.' },
     ],
     related: ['listings', 'documents-and-delivery', 'payments'],

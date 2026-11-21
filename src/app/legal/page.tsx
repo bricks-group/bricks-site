@@ -26,26 +26,27 @@ export default function LegalHubPage() {
           <span className="badge">Legal</span>
           <h1>Legal</h1>
           <p className="sub">
-            Agreements for Bricks Group (Ontario, Canada).
+            The agreements that apply when you book, work, or sign up with Bricks (Ontario, Canada).
           </p>
-          <div className="updated">Updated · 3 October 2026</div>
+          <div className="updated">Updated · 21 November 2026</div>
         </div>
       </section>
 
       <div className="legal-body">
         <section className="block" id="agreements">
           <h2>Documents</h2>
-          <p>Use this index to find the document relevant to your use of Bricks. Each link opens the full document; the summaries here help you navigate and do not replace its terms.</p>
+          <p>Pick the document that matches how you use Bricks. The one-line notes here help you find it and do not replace the document.</p>
           <ul>
             <li>
-              <Link href="/terms">Terms of Service</Link> — media booking terms on brxs.ca. Effective 27 August 2026.
+              <Link href="/terms">Terms of Service</Link> — media booking terms on brxs.ca, in short sections. For clients who book.
             </li>
             <li>
-              <Link href="/privacy">Privacy Policy</Link> — how we handle personal information. Effective 27 August 2026.
+              <Link href="/privacy">Privacy Policy</Link> — how we handle personal information, including the newsletter. For everyone.
             </li>
             <li>
               <a href="/legal/ic-agreement.txt">Independent Contractor Agreement v1.9</a>
-              {' '}— photographers working through the Bricks app. Effective 3 October 2026.
+              {' '}— photographers working through the Bricks app. Effective 23 October 2026.
+              {' '}Amended for accepted jobs by Amendment IC-A1, which vendors accept in the Bricks app.
             </li>
             <li>
               <Link href="/dpa">Data Processing Agreement</Link> — enterprise / brokerage controller–processor terms. Effective 27 August 2026.
@@ -61,7 +62,7 @@ export default function LegalHubPage() {
             <br />
             General enquiries: <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
             <br />
-            Bricks Group · Ontario, Canada
+            Bricks · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada
           </p>
         </section>
       </div>

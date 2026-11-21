@@ -7,6 +7,7 @@ import { termsAcceptanceMeta } from '@/lib/terms-version'
 import { resolvePropertyTimezone, localYmd, isBookableStart } from '@/lib/schedule'
 import { agentIdentityError } from '@/lib/agent-identity'
 import { EMBEDDED_BRANDING, embeddedPublishableKey, wantsEmbedded } from '@/lib/embedded-checkout'
+import { quoteLinesForCopy } from '@/lib/booking-copy'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -63,6 +64,13 @@ async function createCheckoutSession(stripeKey: string, form: URLSearchParams) {
   })
   const j = await res.json()
   return { ok: res.ok, status: res.status, j }
+}
+
+function quoteRef(q: unknown, body: Record<string, unknown>): string {
+  const src = JSON.stringify({ q, e: String(body.email || '').toLowerCase(), s: body.selected_slot_start || '', a: body.property_address || '' })
+  let h = 5381
+  for (let i = 0; i < src.length; i++) h = ((h * 33) ^ src.charCodeAt(i)) >>> 0
+  return `q_${h.toString(16).padStart(8, '0')}${src.length.toString(16)}`
 }
 
 const OS_QUOTE = 'https://api.brxs.ca/api/book/www-quote'
@@ -400,6 +408,9 @@ export async function POST(req: Request) {
     }).slice(0, 480),
     // Terms acceptance (Counsel 2026-11-07): version shown at the pay button + time.
     ...termsAcceptanceMeta(),
+    // Quote reference kept with the booking: short hash of what the client saw and agreed to.
+    quote_id: quoteRef(q, body),
+    quote_lines: quoteLinesForCopy(q as never),
     // Property-province GST/HST (OS backend/common/property_tax.py); the OS tax
     // ledger and Dispatch payout basis read these. Local quotes are GTA (ON) only.
     ...taxMeta(q, viaOs, amountCents),

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { sendCopyForSession } from '@/lib/booking-copy'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -44,6 +45,12 @@ export async function POST(req: Request) {
       body: JSON.stringify(body),
     })
     const j = await res.json().catch(() => ({}))
+    if (res.ok && (j as { ok?: boolean }).ok) {
+      // Written copy of the agreement (CPA s. 33). Best effort; never blocks the confirmation.
+      try {
+        await sendCopyForSession(sessionId)
+      } catch {}
+    }
     return NextResponse.json(j, { status: res.status })
   } catch {
     return NextResponse.json(

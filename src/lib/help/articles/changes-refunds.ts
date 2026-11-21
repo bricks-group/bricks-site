@@ -71,12 +71,12 @@ export const CHANGES_REFUNDS: Article[] = [
   {
     slug: 'drone-not-flown',
     title: `When drone can't be flown`,
-    summary: `The ground package is still delivered, and a separately charged drone add-on is refunded.`,
+    summary: `The ground package is still delivered, and Bricks refunds the drone part, its add-on price plus the tax you paid on it, including when the drone is part of a package.`,
     body: [
       p(`Drone may be skipped if Transport Canada rules, NAV CANADA airspace, weather or the site make it unsafe or unlawful.`),
       ul(
         `The rest of the paid ground package is still delivered.`,
-        `If the drone add-on was charged separately and couldn't be shot, Bricks refunds it.`,
+        `If the drone couldn't be flown, Bricks refunds the drone part (its add-on price plus the tax you paid on it), including when it's part of a package like Essentials.`,
       ),
       p(`For Site Progress visits, a visit that can't be flown safely is rescheduled within the same billing month where possible.`),
     ],

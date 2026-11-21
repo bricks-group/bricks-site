@@ -3,8 +3,9 @@
  * Sent with checkout; the booking API records it with the acceptance time.
  * Bump with every change to /terms and mirror in Bricks-OS common/terms.py
  * (KNOWN_TERMS_VERSIONS). 2026-11-07: refund boundary reads "24 hours or more".
+ * 2026-11-21: weather partial refund, supplier name and GST/HST number, premises address.
  */
-export const TERMS_VERSION = '2026-11-07'
+export const TERMS_VERSION = '2026-11-21'
 
 /** {terms_version, terms_accepted_at} for Stripe metadata at checkout creation. */
 export function termsAcceptanceMeta(now: Date = new Date()): { terms_version: string; terms_accepted_at: string } {

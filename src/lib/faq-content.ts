@@ -42,6 +42,7 @@ export const BOOK_FAQS: readonly RichFaq[] = [
   ...(VIRTUAL_STAGING_ENABLED ? [faq('What is virtual staging?', `Furniture added to photos of vacant rooms, marked as virtually staged. ${STAGING_PRICE_LABEL}, before tax, and not part of any package. Choose how many photos in Step 2.`)] : []),
   faq('Can I reschedule after booking?', '24 hours or more before the shoot window is free. Inside 24 hours we will try; if we cannot, the cancellation schedule applies. Email ', { href: 'mailto:help@brxs.ca', label: 'help@brxs.ca' }, ' as soon as you know. See the ', { href: '/terms#refunds', label: 'cancellation policy' }, '.'),
   faq('What if I need to cancel?', '24 hours or more before the shoot window: full refund. Inside 24 hours, or no-show / no access: no refund. If we cancel on our side: full refund or a free reshoot, your choice. No callout fee. Full schedule in the ', { href: '/terms#refunds', label: 'Terms' }, '.'),
+  faq('What if the weather stops the drone?', 'We still deliver the rest of your package and refund that part: its add-on price for your property size, plus the tax you paid on it. Full wording in the ', { href: '/terms#refunds', label: 'Terms' }, '.'),
   faq('How do refunds work?', 'Refunds go back to your original payment method, typically within 5–10 business days.'),
   faq('Can I pay with Apple Pay or Google Pay?', 'Yes, plus cards. Apple Pay works in Safari and on iOS, Google Pay in Chrome and on Android. We don’t take PayPal, Klarna, Afterpay or Interac.'),
 ]

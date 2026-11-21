@@ -25,7 +25,7 @@ const AERIALS = WORK_PHOTOS.filter((p) => p.alt.startsWith('Drone view'))
 const FAQS = [
   { q: 'Who flies Bricks drone shoots?', a: 'Pilots who hold a Transport Canada drone pilot certificate. They fly in visual line of sight and below 122 m, and get NAV CANADA authorization when a property sits in controlled airspace.' },
   { q: 'What does drone photography cost?', a: `Licensed drone is ${bandCells(DRONE_RATE).join(' / ')} CAD before HST, by footprint (${FOOTPRINT_BANDS} sq ft). It is included in Essentials, Story, Showcase and Full suite.` },
-  { q: 'What happens if the drone can’t fly?', a: 'If Transport Canada rules, NAV CANADA airspace, weather or the site make a flight unsafe or unlawful, the pilot skips it. The rest of the shoot is still delivered, and a separately charged drone add-on is refunded.' },
+  { q: 'What happens if the drone can’t fly?', a: 'If Transport Canada rules, NAV CANADA airspace, weather or the site make a flight unsafe or unlawful, the pilot skips it. The rest of the shoot is still delivered, and Bricks refunds the drone part, its add-on price plus the tax you paid on it, including when the drone is part of a package.' },
   { q: 'Can you fly over a condo building?', a: 'Many condo buildings need the board’s or property manager’s permission first. Add the building’s rules to the booking notes and Bricks plans the flight around them.' },
 ]
 
@@ -53,7 +53,7 @@ export default function DronePhotographyPage() {
           body: (
             <>
               <p>Pilots fly in visual line of sight and below 122 m. Near airports and in controlled airspace, which covers large parts of Toronto, Vancouver, Calgary and Ottawa, the pilot requests NAV CANADA authorization before the shoot.</p>
-              <p>If a flight can’t be done safely or lawfully, it’s skipped, the ground shoot goes ahead, and a drone add-on paid separately is refunded. Read <Link href="/blog/drone-photography-rules-ontario">drone photography rules for real estate in Ontario</Link>, or <Link href="/blog/drone-licence-canada">how to get a drone licence in Canada</Link> if you fly yourself.</p>
+              <p>If a flight can’t be done safely or lawfully, it’s skipped, the ground shoot goes ahead, and Bricks refunds the drone part, its add-on price plus the tax you paid on it, even when the drone is part of a package. Read <Link href="/blog/drone-photography-rules-ontario">drone photography rules for real estate in Ontario</Link>, or <Link href="/blog/drone-licence-canada">how to get a drone licence in Canada</Link> if you fly yourself.</p>
             </>
           ),
         },

@@ -44,7 +44,7 @@ export const CITY_PAGES: readonly CityPage[] = [
     ],
     faqs: [
       { q: 'Is there a travel fee in Toronto?', a: 'No. There is no travel fee in the GTA’s major markets, including Toronto, Mississauga, Peel, Halton, York and Durham. Elsewhere, the first 25 km from the assigned photographer are free, then $0.75 a km.' },
-      { q: 'Can you fly a drone in downtown Toronto?', a: 'Often, with planning. Much of Toronto is controlled airspace around Pearson and Billy Bishop, so the pilot requests NAV CANADA authorization, and condo buildings may need permission. If a flight can’t be done safely or lawfully, it’s skipped and a separately charged drone add-on is refunded.' },
+      { q: 'Can you fly a drone in downtown Toronto?', a: 'Often, with planning. Much of Toronto is controlled airspace around Pearson and Billy Bishop, so the pilot requests NAV CANADA authorization, and condo buildings may need permission. If a flight can’t be done safely or lawfully, it’s skipped and Bricks refunds the drone part, its add-on price plus the tax you paid on it, including when the drone is part of a package.' },
       { q: 'How fast are Toronto listing photos delivered?', a: 'Photos are typically delivered within 24 hours of the shoot, and other media within 24–48 hours. Rush delivery is available for a flat fee.' },
       { q: 'Can I also book staging, cleaning or an inspection in Toronto?', a: 'Yes. Home staging, cleaning and Ontario home inspections are quoted in writing through Bricks. Nothing is booked until you approve the quote.' },
     ],
@@ -126,7 +126,7 @@ export const CITY_PAGES: readonly CityPage[] = [
     faqs: [
       { q: 'Does Bricks cover Vancouver?', a: `Yes, with coverage confirmed at booking. ${CONFIRM}` },
       { q: 'Is there a travel fee in Vancouver?', a: TRAVEL },
-      { q: 'Can you fly a drone over a Vancouver condo?', a: 'Sometimes. Much of Vancouver is busy, controlled airspace, and strata buildings may need permission. If a flight can’t be done safely or lawfully, it’s skipped and a separately charged drone add-on is refunded.' },
+      { q: 'Can you fly a drone over a Vancouver condo?', a: 'Sometimes. Much of Vancouver is busy, controlled airspace, and strata buildings may need permission. If a flight can’t be done safely or lawfully, it’s skipped and Bricks refunds the drone part, its add-on price plus the tax you paid on it, including when the drone is part of a package.' },
       { q: 'Do you replace skies or window views?', a: 'No, not by default. Bricks keeps real window views and doesn’t add fake skies, so photos stay MLS®-safe. Twilight is shot for real at blue hour.' },
     ],
   },

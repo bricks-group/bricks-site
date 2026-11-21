@@ -183,7 +183,7 @@ export const BOOKING: Article[] = [
     summary: `Every drone pilot is Transport Canada certified. Some sites can't be flown.`,
     body: [
       p(`Drone is flown by pilots who hold a Transport Canada drone pilot certificate. They stay in visual line of sight and below 122 m.`),
-      p(`Drone may be skipped if Transport Canada rules, NAV CANADA airspace, weather or the site make it unsafe or unlawful. When that happens, the rest of the ground package is still delivered, and Bricks refunds the drone add-on if it was charged separately and couldn't be shot.`),
+      p(`Drone may be skipped if Transport Canada rules, NAV CANADA airspace, weather or the site make it unsafe or unlawful. When that happens, the rest of the ground package is still delivered, and Bricks refunds the drone part, its add-on price plus the tax you paid on it, even when the drone is part of a package.`),
       p(`Condo buildings and some sites need permission to fly. Tell us in the booking notes if the building has rules.`),
     ],
     related: ['drone-not-flown', 'add-ons'],

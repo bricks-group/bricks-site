@@ -8,6 +8,7 @@ import RichFaqList from '@/components/RichFaqList'
 import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
 import { BookCalendar } from './BookCalendar'
 import { TERMS_VERSION } from '@/lib/terms-version'
+import { SUPPLIER } from '@/lib/supplier'
 import { type BookSlot, WORK_END, WORK_START, buildDaySlots, buildTwilightSlots, formatBookedWhen, localYmd, resolvePropertyTimezone, zoneAbbrev } from '@/lib/schedule'
 import Link from 'next/link'
 import LegalDocSheet from '@/components/legal/LegalDocSheet'
@@ -997,17 +998,25 @@ export default function BookingWizard() {
               </div>
               {quote && <div className="quote" style={{ marginTop: 16 }}><QuoteBlock q={quote} editable={false} /></div>}
               <div className="err">{errs[3]}</div>
-              <p style={{ fontSize: 12.5, color: 'var(--inkSoft)', marginTop: 12, lineHeight: 1.45, padding: '12px 16px', border: '1px solid var(--hairStrong)', borderRadius: 2, background: 'var(--bgRaised, transparent)' }}>
-                <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Cancellation / no-show:</strong>{' '}
-                24 hours or more before the shoot window: full refund. Inside 24 hours, or no-show / no access: <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>no refund</strong>. If we cancel: full refund or a free reshoot. No callout fee. Full schedule in the <Link href="/terms#refunds" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link>.
-              </p>
-              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" onClick={openLegal('privacy')} style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
+              <div className="agreement" style={{ fontSize: 13, color: 'var(--inkSoft)', marginTop: 16, lineHeight: 1.5, padding: '14px 16px', border: '1px solid var(--hairStrong)', borderRadius: 0, background: 'var(--bgRaised, transparent)' }}>
+                <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Your agreement, in short</strong>
+                <ul style={{ margin: '8px 0 0 18px', padding: 0 }}>
+                  <li><strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Who you&apos;re booking with:</strong> {SUPPLIER.legalName}, {SUPPLIER.description}. {SUPPLIER.address} · {SUPPLIER.phone} · {SUPPLIER.email}. GST/HST {SUPPLIER.gstHst}.</li>
+                  <li><strong style={{ color: 'var(--ink)', fontWeight: 500 }}>What you get:</strong> the services listed above, for {addr.trim() || 'your property'}{selectedSlot ? ` on ${formatBookedWhen(selectedSlot.start, propertyTz)}` : ''}. Photos in 24 hours, other media in 24–48 hours.</li>
+                  {quote && <li><strong style={{ color: 'var(--ink)', fontWeight: 500 }}>What you pay today:</strong> ${quote.subtotal.toFixed(2)} + ${quote.hst.toFixed(2)} tax = <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>${quote.total.toFixed(2)} CAD</strong>, charged in full by card through Stripe. No other charges.</li>}
+                  <li><strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Cancel:</strong> 24 hours or more before the shoot window, full refund. Less than 24 hours before, or a no-show or no access: no refund. No callout fee. If we cancel: full refund or a free reshoot.</li>
+                  <li><strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Weather:</strong> if weather or safety stops part of your package, such as the drone, we deliver the rest and refund that part plus its tax.</li>
+                </ul>
+                <p style={{ margin: '10px 0 0', fontSize: 12.5 }}>Terms version {TERMS_VERSION}. Full <Link href="/terms#refunds" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link>. After you pay, we email you a copy of this agreement to keep.</p>
+              </div>
+              <p style={{ fontSize: 12.5, color: 'var(--inkSoft)', marginTop: 12 }}>Something wrong? <button type="button" className="linklike" onClick={() => setStep(0)} style={{ background: 'none', border: 0, padding: 0, color: 'var(--brickDeep)', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}>Edit your details</button>, <button type="button" className="linklike" onClick={() => setStep(1)} style={{ background: 'none', border: 0, padding: 0, color: 'var(--brickDeep)', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}>change your services</button>, <button type="button" className="linklike" onClick={() => setStep(2)} style={{ background: 'none', border: 0, padding: 0, color: 'var(--brickDeep)', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}>change your time</button>, or <Link href="/" style={{ color: 'var(--brickDeep)' }}>leave without booking</Link>. Nothing is charged until you press the button below.</p>
+              <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" onClick={openLegal('privacy')} style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, and accept this agreement, including the cancellation and no-show schedule above.</p>
               <LegalDocSheet doc={legalOpen} read={legalOpen ? !!legalRead[legalOpen] : false} onRead={(k) => setLegalRead((r) => ({ ...r, [k]: true }))} onClose={() => setLegalOpen(null)} />
               {embedded ? (
                 <SamePagePay session={embedded} onBack={() => setEmbedded(null)} detail={selectedSlot ? formatBookedWhen(selectedSlot.start, propertyTz) : undefined} />
               ) : (
                 <>
-                  <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Opening payment…' : 'Pay & book'}</button></div>
+                  <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Opening payment…' : (quote ? `Accept & pay $${quote.total.toFixed(2)} CAD` : 'Accept & pay')}</button></div>
                   <p className="hint-sm" style={{ margin: '12px 0 0' }}>Have a launch code? Enter it at checkout.</p>
                 </>
               )}
@@ -1024,7 +1033,7 @@ export default function BookingWizard() {
               {scheduleCtaVisible && (
                 <div style={{ display: 'block', marginTop: 16, padding: 'var(--card-pad)', border: '1px solid var(--hairStrong)', borderRadius: 2 }}>
                   <h3 style={{ margin: '0 0 8px', fontSize: 17, fontWeight: 500, color: 'var(--ink)' }}>Shoot booked ✓</h3>
-                  <p style={{ margin: '0 0 16px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and sent to the photographer. A confirmation email is on its way.</p>
+                  <p style={{ margin: '0 0 16px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and sent to the photographer. A confirmation email is on its way. It is your written copy of the agreement, so keep it.</p>
                 </div>
               )}
               {scheduleCtaVisible && !signedIn && paidSessionId && <SaveDetailsOffer sessionId={paidSessionId} />}
