@@ -88,10 +88,18 @@ describe('isPublicPath', () => {
     assert.equal(isPublicPath('/service-areas'), false)
     assert.equal(isPublicPath('/platform'), false)
     assert.equal(isPublicPath('/api/contact'), false)
-    assert.equal(isPublicPath('/api/newsletter'), false)
   })
 })
 
+
+describe('newsletter paths', () => {
+  it('keeps sign-up, confirm and unsubscribe public', () => {
+    for (const p of ['/newsletter', '/newsletter/confirm', '/newsletter/unsubscribe', '/api/newsletter', '/api/newsletter/confirm', '/api/newsletter/unsubscribe']) {
+      assert.equal(isPublicPath(p), true, p)
+    }
+    assert.equal(isPublicPath('/newsletters-admin'), false)
+  })
+})
 
 describe('isSitePreview', () => {
   const prev = process.env[PREVIEW_ENV]
