@@ -16,7 +16,7 @@ import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
 import { type BookPrefill, bookTypeOption, canSkipToPackages, readBookPrefill, readHandoff } from '@/lib/book-prefill'
 import { type Recommendation, compactMoney, recommendPackage } from '@/lib/book-recommend'
-import { oaiqOrderCreated } from '@/lib/oaiq'
+import { oaiqMayHoldContact, oaiqOrderCreated } from '@/lib/oaiq'
 import NotInArea from '@/components/NotInArea'
 import { type CoverageInput, type CoverageState, UNAVAILABLE_CODE, UNAVAILABLE_MESSAGE, checkCoverage, coverageKey, isNotCoveredCode } from '@/lib/booking-coverage'
 const MAPBOX_PUBLIC = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''
@@ -637,7 +637,7 @@ export default function BookingWizard() {
     setPaying(true)
     evt('checkout_started', { total: quote ? quote.total : null })
     try {
-      sessionStorage.setItem('bricks_booking', JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), addr: selectedAddr || addr.trim(), notes: notes.trim() }))
+      sessionStorage.setItem('bricks_booking', JSON.stringify({ name: name.trim(), email: email.trim(), phone: oaiqMayHoldContact() ? phone.trim() : '', addr: selectedAddr || addr.trim(), notes: notes.trim() }))
     } catch {}
     const visitSqft = (sqftInput ? parseInt(sqftInput, 10) : null) || quote.sqft
     const visitBand = quote.footprint_label || 'unbanded'

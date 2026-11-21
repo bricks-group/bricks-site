@@ -88,7 +88,25 @@ export default function PrivacyPage() {
           <p>TLS in transit, access-limited systems. Notify of a PIPEDA-significant breach as required.</p>
 
           <h3 id="cookies">10. Cookies and analytics</h3>
-          <p>This site uses Vercel Analytics to measure aggregate usage. Vercel Analytics is cookieless: it does not set cookies, does not build a profile of you, and does not track you across other sites. The site sets no advertising or tracking cookies. If we ever add a tool that sets cookies, we will name it here first and ask for consent where the law requires it.</p>
+          <p>This site uses Vercel Analytics to measure aggregate usage. Vercel Analytics is cookieless: it does not set cookies, does not build a profile of you, and does not track you across other sites.</p>
+          <p>Cloudflare helps protect and deliver the site. It may set first-party security cookies such as <code>__cf_ob</code> and <code>cf_clearance</code> for bot protection. Cloudflare Web Analytics may also measure aggregate traffic. These are for security and operations, not advertising.</p>
+          <p><strong>Booking source (first-party).</strong> When you book, we may record whether the visit was organic or paid using a first-party, cookieless source tag on the booking. That tag is not a third-party advertising cookie.</p>
+          <p><strong>ChatGPT ads measurement.</strong> We use OpenAI&rsquo;s measurement pixel to measure visits and bookings that follow a ChatGPT ad. It loads only in these cases:</p>
+          <ul>
+            <li>you arrive from a ChatGPT ad (the link includes <code>?oppref=</code>), or</li>
+            <li>you reach the booking confirmation page and your browser already has our <code>__oppref</code> ad cookie from an earlier ChatGPT ad visit.</li>
+          </ul>
+          <p>When it runs, it can set two first-party cookies on brxs.ca:</p>
+          <ul>
+            <li><code>__oppref</code>: about 30 days; stores the ad click ID from the landing URL.</li>
+            <li><code>__obref</code>: about 365 days; a random browser ID for this site.</li>
+          </ul>
+          <p>The pixel may send page-view and order events to OpenAI (<code>bzr.openai.com</code> and <code>bzrcdn.openai.com</code>). OpenAI may also set its own cookies (for example Cloudflare <code>__cf_bm</code> and <code>_cfuvid</code>) on OpenAI&rsquo;s domains.</p>
+          <p><strong>Advanced matching.</strong> On the booking confirmation page only (and only when the pixel runs), our code sends OpenAI only SHA-256 hashes of your email and phone. We hash them in your browser first. Raw email and phone are not sent to OpenAI for this. Purpose: measure whether a ChatGPT ad led to your booking.</p>
+          <p><strong>Checkout and your browser.</strong> To do this, your email and phone may be kept briefly in your browser&rsquo;s session storage while you go through Stripe checkout and come back. We use them only to make the hashes on the confirmation page. They are cleared when that is done or your browsing session ends.</p>
+          <p>Measurement data may be processed in the United States. We remain accountable under PIPEDA for personal information we collect.</p>
+          <p><strong>Quebec and unknown location.</strong> If you are in Quebec, or we can&rsquo;t tell where you are, we ask for your consent before this measurement pixel loads. You can Accept or Refuse. If you Refuse, the pixel stays off and we remember your choice in your browser so we don&rsquo;t ask again. The short notice shown before it would run uses the same words.</p>
+          <p><strong>Your choices.</strong> Clear site cookies in your browser, use private browsing, or block cookies for brxs.ca. Email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a> to ask us to stop using measurement cookies where we can. Where we ask, refuse on the notice, or email us.</p>
 
           <h3>11. Changes</h3>
           <p>Posted on this page and dated.</p>

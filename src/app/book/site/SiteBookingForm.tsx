@@ -11,7 +11,7 @@ import { signupUrl } from '@/lib/brand'
 import { propertyTax, provinceFromAddress } from '@/lib/property-tax'
 import NotInArea from '@/components/NotInArea'
 import { checkCoverage, coverageKey, isNotCoveredCode, type CoverageInput } from '@/lib/booking-coverage'
-import { oaiqOrderCreated } from '@/lib/oaiq'
+import { oaiqMayHoldContact, oaiqOrderCreated } from '@/lib/oaiq'
 
 /** Booking email kept across the Stripe redirect so the success state can offer the matching builder account. */
 const EMAIL_KEY = 'bricks-site-booking-email'
@@ -157,7 +157,7 @@ export default function SiteBookingForm() {
       if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email help@brxs.ca.'); return }
       try {
         sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || ''))
-        sessionStorage.setItem(PHONE_KEY, String(payload.contact_phone || ''))
+        sessionStorage.setItem(PHONE_KEY, oaiqMayHoldContact() ? String(payload.contact_phone || '') : '')
         sessionStorage.setItem(PLAN_KEY, mode === 'plan' ? '1' : '0')
       } catch { /* best-effort */ }
       evt('site_booking_checkout', { mode, service: String(payload.service_key || payload.plan_key) })

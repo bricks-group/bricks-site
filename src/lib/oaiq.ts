@@ -19,6 +19,11 @@ const GEO_KEY = 'bricks-geo'
 type Oaiq = ((...args: unknown[]) => void) & { q?: unknown[] }
 export type OaiqUser = { email?: string; phone?: string }
 
+/** Only keep phone/email across checkout when the pixel could actually run for this visitor. */
+export function oaiqMayHoldContact(): boolean {
+  return hasAdCookie() && pref() !== 'no'
+}
+
 export function hasAdCookie(): boolean {
   try { return /(?:^|;\s*)__oppref=/.test(document.cookie) } catch { return false }
 }
@@ -90,8 +95,8 @@ function askConsent(): Promise<boolean> {
   return new Promise((resolve) => {
     const fr = /^fr/i.test(navigator.language || '')
     const t = fr
-      ? { h: 'Mesurer les résultats des publicités ChatGPT?', p: 'Nous utilisons OpenAI pour mesurer si une publicité ChatGPT a mené à votre visite ou à votre réservation. Cela peut créer des témoins (cookies) sur ce site (__oppref, __obref) et, si vous terminez une réservation, envoyer à OpenAI votre courriel et votre téléphone hachés (SHA-256 dans votre navigateur, jamais les valeurs brutes). OpenAI peut traiter ces données aux États-Unis.', l: 'Confidentialité : témoins et analytique', y: 'Accepter', n: 'Refuser' }
-      : { h: 'Measure ChatGPT ad results?', p: 'We use OpenAI to measure whether a ChatGPT ad led to your visit or booking. That may set cookies on this site (__oppref, __obref) and, if you complete a booking, send hashed email and phone (SHA-256 in your browser, not the raw values) to OpenAI. OpenAI may process this in the United States.', l: 'Privacy: cookies and analytics', y: 'Accept', n: 'Refuse' }
+      ? { h: 'Mesurer les résultats des publicités ChatGPT?', p: 'Nous utilisons OpenAI pour mesurer si une publicité ChatGPT a mené à votre visite ou à votre réservation. Cela peut créer des témoins (cookies) sur ce site : un qui retient le clic sur la publicité et un identifiant de navigateur aléatoire pour ce site. Si vous terminez une réservation, cela peut aussi envoyer à OpenAI votre courriel et votre téléphone, hachés dans votre navigateur (jamais les valeurs brutes). OpenAI peut traiter ces données aux États-Unis.', l: 'Confidentialité : témoins et analytique', y: 'Accepter', n: 'Refuser' }
+      : { h: 'Measure ChatGPT ad results?', p: 'We use OpenAI to measure whether a ChatGPT ad led to your visit or booking. That may set cookies on this site: one that remembers the ad click and a random browser ID for this site. If you complete a booking, it may also send your email and phone to OpenAI, hashed in your browser (not the raw values). OpenAI may process this in the United States.', l: 'Privacy: cookies and analytics', y: 'Accept', n: 'Refuse' }
     const root = document.createElement('div')
     root.setAttribute('role', 'dialog')
     root.setAttribute('aria-label', t.h)
@@ -146,6 +151,7 @@ export async function oaiqOrderCreated(sessionId?: string, user?: OaiqUser) {
       window.sessionStorage.setItem(key, '1')
     } catch { /* sessionStorage unavailable: fire anyway */ }
     const hashes = await userHashes(user)
+    try { sessionStorage.removeItem('bricks_booking'); sessionStorage.removeItem('bricks-site-booking-phone') } catch { /* ignore */ }
     const oaiq = loadOaiq(hashes)
     if (!oaiq) return
     oaiq('measure', 'order_created', { type: 'contents' })
