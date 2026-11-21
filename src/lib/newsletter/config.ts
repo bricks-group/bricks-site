@@ -13,7 +13,9 @@ export const newsletterSecret = (env: Env = process.env) => (env.NEWSLETTER_SECR
 export const sendKey = (env: Env = process.env) => (env.RESEND_API_KEY || '').trim()
 /** Contacts need a full-access key; falls back to the one www already holds for inbound mail. */
 export const contactsKey = (env: Env = process.env) => (env.NEWSLETTER_RESEND_KEY || env.RESEND_INBOUND_API_KEY || '').trim()
-export const segmentId = (env: Env = process.env) => (env.NEWSLETTER_SEGMENT_ID || '').trim()
+/** Resend segment "Newsletter" (an ID, not a secret). */
+export const DEFAULT_SEGMENT_ID = 'd51b56c0-a701-41db-9a71-c36b08c33470'
+export const segmentId = (env: Env = process.env) => (env.NEWSLETTER_SEGMENT_ID || DEFAULT_SEGMENT_ID).trim()
 export const alertTo = (env: Env = process.env) => (env.NEWSLETTER_ALERT_TO || DEFAULT_ALERT_TO).trim()
 export const postalAddress = (env: Env = process.env) => (env.NEWSLETTER_POSTAL_ADDRESS || DEFAULT_POSTAL).trim()
 
