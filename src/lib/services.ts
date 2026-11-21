@@ -122,7 +122,7 @@ export const ALL_TRADES: readonly Trade[] = [
     title: 'Home and building inspections in Ontario, booked through Bricks | Bricks',
     description: 'Request a quote for a pre-listing, pre-purchase, condo or new-build home inspection in Ontario. A written report with photos, kept with the property in Bricks.',
     h1: 'Inspections with the report kept on the property.',
-    sub: 'Request a quote for a home or building inspection in Ontario. Bricks schedules an insured inspector, and the written report with photos is kept with the property in your Bricks account.',
+    sub: 'Request a quote for a home or building inspection in Ontario. Bricks schedules a vetted inspector, and the written report with photos is kept with the property in your Bricks account.',
     handles: [
       { title: 'Pre-listing inspections', detail: 'Find issues before the home goes on the market.' },
       { title: 'Pre-purchase inspections', detail: 'For buyers and their agents, booked around the conditional period.' },
@@ -137,7 +137,7 @@ export const ALL_TRADES: readonly Trade[] = [
     receive: [
       { title: 'A written quote', detail: 'Inspection type, timing and report format, before anything is booked.' },
       { title: 'A written report with photos', detail: 'Findings by system and area, kept with the property in your Bricks account.' },
-      { title: 'An insured inspector', detail: '$2M commercial general liability insurance is required for repair and inspection vendors.' },
+      { title: 'A vetted network', detail: 'A person reviews every application. Inspection vendors must carry liability insurance, and Bricks checks the proof before they take jobs.' },
     ],
     rules: ['Inspections are available in Ontario only.'],
     scopes: ['Pre-listing', 'Pre-purchase', 'Condo', 'New-build or pre-delivery', 'Building condition assessment', 'Not sure yet'],
@@ -197,7 +197,7 @@ export const ALL_TRADES: readonly Trade[] = [
     short: 'Small repairs and deficiency lists before listing or between tenants.',
     icon: 'repairs',
     title: 'Handyman and small repairs, booked through Bricks | Bricks',
-    description: 'Request a quote for drywall, paint touch-ups, caulking, doors, hardware, trim and deficiency lists before listing or between tenants. Insured repair vendors. No electrical, plumbing or gas work.',
+    description: 'Request a quote for drywall, paint touch-ups, caulking, doors, hardware, trim and deficiency lists before listing or between tenants. Vetted repair vendors. No electrical, plumbing or gas work.',
     h1: 'Small repairs, done before the listing goes live.',
     sub: 'Request a quote for the small jobs that hold up a listing or a turnover. You approve a written estimate first, and before and after photos are kept with the property in your Bricks account.',
     handles: [
@@ -215,7 +215,7 @@ export const ALL_TRADES: readonly Trade[] = [
     receive: [
       { title: 'A written estimate first', detail: 'Each item, with time and materials, approved by you before work starts.' },
       { title: 'Before and after photos', detail: 'For each item, kept with the property in your Bricks account.' },
-      { title: 'An insured repair vendor', detail: '$2M commercial general liability insurance is required for repair and inspection vendors.' },
+      { title: 'A vetted network', detail: 'A person reviews every application. Repair vendors must carry $2M liability insurance, and Bricks checks the proof before they take jobs.' },
     ],
     rules: [
       'Repairs don’t include electrical, plumbing or gas work. Hire a licensed electrician, plumber or gas contractor for those.',

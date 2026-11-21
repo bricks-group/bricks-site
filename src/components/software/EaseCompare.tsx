@@ -13,7 +13,7 @@ const LABEL: Record<Aud, string> = { builder: 'Builders', agent: 'Agents', pm: '
 const FLOW: Record<Aud, { without: string[]; with: string[] }> = {
   builder: {
     without: ['Ask for quotes', 'Email the site rules', 'Agree a date', 'Chase the files', 'Build the report', 'Pay the invoice'],
-    with: ['Book the visit', 'Bricks sends a vetted, insured pilot', 'Photos, maps and a drafted report land on the project'],
+    with: ['Book the visit', 'Bricks sends a vetted pilot', 'Photos, maps and a drafted report land on the project'],
   },
   agent: {
     without: ['Find a photographer', 'Book drone separately', 'Send lockbox notes', 'Pay each invoice', 'Download from links', 'Upload to the listing'],

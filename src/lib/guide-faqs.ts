@@ -13,7 +13,7 @@ export const BROKERAGE_SOFTWARE_ONTARIO_FAQS = [
 
 export const DRONE_PROGRESS_REPORTS_ONTARIO_BUILDERS_FAQS = [
   { q: 'How often should a construction site be flown for progress reports?', a: 'Monthly suits most draw schedules. Every two weeks or weekly suits fast phases or tight schedules. Keep the same flight plan each time so visits compare cleanly.' },
-  { q: 'Who can fly a drone on a construction site in Ontario?', a: 'A pilot with a Transport Canada Advanced certificate, with NAV CANADA authorization in controlled airspace. Bricks pilots also carry at least $2M drone liability insurance, verified for the flight date.' },
+  { q: 'Who can fly a drone on a construction site in Ontario?', a: 'A pilot with a Transport Canada Advanced certificate, with NAV CANADA authorization in controlled airspace. For builder-site work, Bricks requires at least $2M drone liability insurance and checks the proof for the flight date.' },
   { q: 'What is the difference between a progress visit and a mapped capture?', a: 'A progress visit is dated drone photos and video. A mapped capture adds an orthomosaic, a 3D model and a measurable map for distances, areas and elevation.' },
   { q: 'Can I use drone captures from another pilot?', a: 'Yes. Import GeoTIFF, LAS, LAZ, E57, PLY, OBJ, GLB, photos, video or PDF, up to 5 GB a file. Each import becomes a dated visit, marked as imported.' },
   { q: 'Can a drone progress report replace a quantity survey?', a: 'No. Volumes and areas are estimates for tracking progress. A progress report documents site conditions and doesn’t certify cost, quantity or completion.' },

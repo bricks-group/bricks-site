@@ -49,7 +49,7 @@ export const FLOWS: Record<'agent' | 'builder', Flow> = {
     ],
     with: [
       { t: 'Book the visit, or put the site on a monthly plan', via: 'One booking' },
-      { t: 'Bricks assigns a vetted, insured pilot', via: 'Dispatch' },
+      { t: 'Bricks assigns a vetted pilot', via: 'Dispatch' },
       { t: 'Photos, video and maps land on the project timeline, dated', via: 'Timeline' },
       { t: 'Pick a date range and Bricks drafts the report', via: 'Report' },
       { t: 'Share a PDF or a read-only link that expires', via: 'Share' },

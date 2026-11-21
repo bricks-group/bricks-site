@@ -42,8 +42,7 @@ export default function PrivacyPage() {
 <li><strong>Privacy contact:</strong> <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></li>
 <li><strong>Address:</strong> 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada</li>
 </ul></section></div>
-<div className="legal-body"><section className="block" id="1-what-we-collect"><h2>1. What we collect</h2>
-<p className="inshort"><strong>In short:</strong> Booking and payment details, optional newsletter signup, applicant info, and technical logs needed to run the site.</p>
+<div className="legal-body"><section className="block" id="1-what-we-collect"><h2>1. What we collect</h2><p className="inshort"><strong>In short:</strong> Booking and payment details, optional newsletter signup, applicant info, and technical logs needed to run the site.</p><details><summary>Read the details</summary>
 <ul>
 <li><strong>Booking:</strong> name, brokerage, email, phone, property address, property type/size, package and add-on choices, booked date and clock time, access notes.</li>
 <li><strong>Payment:</strong> processed by Stripe. We do not store full card numbers. We may store Stripe customer id, last four, brand, and payment status.</li>
@@ -63,7 +62,7 @@ export default function PrivacyPage() {
 <p>The apps do not include advertising or analytics SDKs, and we do not track you across other companies&apos; apps or websites.</p>
 <p><strong>App service providers:</strong> Supabase (sign-in, database, file storage; Canada), Expo (push notification delivery; United States), Apple and Google (push delivery, and sign-in if you choose it), Stripe (photographer payouts), and Mapbox (map tiles in a Bricks listing file; receives your IP address and the map area you view).</p>
 <p><strong>Deleting your account:</strong> in the Bricks app, photographers go to Me &gt; Delete account; real estate offices go to Account &gt; Delete account. You can also email privacy@brxs.ca. What we delete and keep is listed at <Link href="/account-deletion">brxs.ca/account-deletion</Link>.</p>
-</section></div>
+</details></section></div>
 <div className="legal-body"><section className="block" id="2-why-we-use-it"><h2>2. Why we use it</h2>
 <ul>
 <li>Provide quotes, take payment, schedule, dispatch, shoot, deliver, support, and refund.</li>
@@ -74,8 +73,7 @@ export default function PrivacyPage() {
 <li>Marketing email only with CASL-compliant consent.</li>
 </ul>
 </section></div>
-<div className="legal-body"><section className="block" id="3-who-we-share-with"><h2>3. Who we share with</h2>
-<p className="inshort"><strong>In short:</strong> Only what is needed to run the service. We do not sell personal information.</p>
+<div className="legal-body"><section className="block" id="3-who-we-share-with"><h2>3. Who we share with</h2><p className="inshort"><strong>In short:</strong> Only what is needed to run the service. We do not sell personal information.</p><details><summary>Read the details</summary>
 <p>We share what is needed with:</p>
 <ul>
 <li>Stripe (payments and, for photographers, payouts)</li>
@@ -88,15 +86,14 @@ export default function PrivacyPage() {
 <li>Counsel, accountants, or authorities when required by law</li>
 </ul>
 <p>Photographers are independent contractors and must keep booking details confidential under the IC agreement.</p>
-</section></div>
-<div className="legal-body"><section className="block" id="4-where"><h2>4. Where</h2>
-<p className="inshort"><strong>In short:</strong> Main app data in Canada; some processors in the United States.</p>
+</details></section></div>
+<div className="legal-body"><section className="block" id="4-where"><h2>4. Where</h2><p className="inshort"><strong>In short:</strong> Main app data in Canada; some processors in the United States.</p><details><summary>Read the details</summary>
 <ul>
 <li>Primary app database, authentication, and storage run on Supabase in <strong>Canada</strong>.</li>
 <li>Other processors include Stripe and Vercel (<strong>United States</strong>), Expo push delivery and Mapbox for the apps (<strong>United States</strong>), OpenAI for ChatGPT ads measurement when section 10 applies (<strong>United States</strong>), Resend for newsletter email when you subscribe (<strong>United States</strong>), and similar providers listed in section 3.</li>
 <li>By using the site you consent to those transfers where needed. We remain accountable under PIPEDA for personal information we collect.</li>
 </ul>
-</section></div>
+</details></section></div>
 <div className="legal-body"><section className="block" id="5-retention"><h2>5. Retention</h2>
 <ul>
 <li><strong>Booking and payment records:</strong> generally 7 years.</li>
@@ -112,23 +109,21 @@ export default function PrivacyPage() {
 <div className="legal-body"><section className="block" id="6-your-rights"><h2>6. Your rights</h2>
 <p>Email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a> to access, correct, or withdraw consent (subject to legal and booking obligations). You can also delete your account in the Bricks app (see 1A and <Link href="/account-deletion">brxs.ca/account-deletion</Link>). We aim to respond within 30 days. Complaint: Office of the Privacy Commissioner of Canada (<a href="https://www.priv.gc.ca">priv.gc.ca</a>).</p>
 </section></div>
-<div className="legal-body"><section className="block" id="7-casl-anti-spam"><h2>7. CASL (anti-spam)</h2>
-<p className="inshort"><strong>In short:</strong> Marketing only with your express consent. Newsletter uses double opt-in. Easy unsubscribe.</p>
+<div className="legal-body"><section className="block" id="7-casl-anti-spam"><h2>7. CASL (anti-spam)</h2><p className="inshort"><strong>In short:</strong> Marketing only with your express consent. Newsletter uses double opt-in. Easy unsubscribe.</p><details><summary>Read the details</summary>
 <ul>
 <li>Commercial electronic messages only with your express consent under Canada&apos;s anti-spam law (CASL).</li>
 <li>Our newsletter uses <strong>double opt-in</strong>: you confirm by email before we send marketing.</li>
 <li>Every newsletter has a <strong>one-click unsubscribe</strong> link; you can also email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a>.</li>
 <li>Transactional booking and application messages are sent as needed to perform the service.</li>
 </ul>
-</section></div>
+</details></section></div>
 <div className="legal-body"><section className="block" id="8-children"><h2>8. Children</h2>
 <p>Adults 18+. We do not knowingly collect information from children. Listing media is of property, not of children.</p>
 </section></div>
 <div className="legal-body"><section className="block" id="9-security"><h2>9. Security</h2>
 <p>TLS in transit, access-limited systems. We notify of a PIPEDA-significant breach as required.</p>
 </section></div>
-<div className="legal-body"><section className="block" id="10-cookies-and-analytics"><h2>10. Cookies and analytics</h2>
-<p className="inshort"><strong>In short:</strong> Cookieless Vercel Analytics; Cloudflare for security; optional ChatGPT ads measurement only for ad arrivals (and confirmation if the ad cookie is already set). Quebec (and unknown region) visitors are asked first.</p>
+<div className="legal-body"><section className="block" id="10-cookies-and-analytics"><span id="cookies" /><h2>10. Cookies and analytics</h2><p className="inshort"><strong>In short:</strong> Cookieless Vercel Analytics; Cloudflare for security; optional ChatGPT ads measurement only for ad arrivals (and confirmation if the ad cookie is already set). Quebec (and unknown region) visitors are asked first.</p><details><summary>Read the details</summary>
 <h3>Vercel Analytics</h3>
 <p>This site uses Vercel Analytics to measure aggregate usage. It is cookieless: it does not set cookies, does not build a profile of you, and does not track you across other sites.</p>
 <h3>Cloudflare</h3>
@@ -156,11 +151,10 @@ export default function PrivacyPage() {
 <p>If you are in Quebec, or we can&apos;t tell where you are, we ask for your consent before this measurement pixel loads. You can Accept or Refuse. If you Refuse, the pixel stays off and we remember your choice in your browser so we don&apos;t ask again. The short notice shown before it would run uses the same words (English and French prompts in the pixel pack).</p>
 <h3>Your choices</h3>
 <p>Clear site cookies in your browser, use private browsing, or block cookies for brxs.ca. Email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a> to ask us to stop using measurement cookies where we can. Where we ask, refuse on the notice, or email us.</p>
-</section></div>
-<div className="legal-body"><section className="block" id="11-newsletter-resend"><h2>11. Newsletter (Resend)</h2>
-<p className="inshort"><strong>In short:</strong> Double opt-in. Stored and sent through Resend in the United States. Unsubscribe any time.</p>
+</details></section></div>
+<div className="legal-body"><section className="block" id="11-newsletter-resend"><h2>11. Newsletter (Resend)</h2><p className="inshort"><strong>In short:</strong> Double opt-in. Stored and sent through Resend in the United States. Unsubscribe any time.</p><details><summary>Read the details</summary>
 <p>If you sign up for our newsletter, we collect your email, your name if you give it, and when you consent. We use a double opt-in: you confirm by email before we add you. We use this only to send Bricks news and updates you asked for. Subscriber records and sends go through <strong>Resend</strong> (United States). You can unsubscribe with the link in every newsletter, or email <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a>. We keep your subscription while you stay subscribed, and keep consent and unsubscribe records as Canada&apos;s anti-spam law (CASL) requires.</p>
-</section></div>
+</details></section></div>
 <div className="legal-body"><section className="block" id="12-changes"><h2>12. Changes</h2>
 <p>Posted on this page and dated.</p>
 </section></div>

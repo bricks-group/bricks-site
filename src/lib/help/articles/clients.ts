@@ -290,12 +290,12 @@ export const BUILDERS: Article[] = [
   {
     slug: 'site-pilots-insurance',
     title: `Pilots, insurance and site rules`,
-    summary: `Advanced-certified pilots with at least $2M liability insurance, or your higher minimum.`,
+    summary: `Advanced-certified pilots. Builder-site pilots must carry at least $2M liability insurance, or your higher minimum.`,
     body: [
       ul(
         `Site work goes only to vetted pilots with a Transport Canada Advanced Operations certificate.`,
-        `Drone liability insurance of at least $2,000,000 per occurrence, or the higher minimum you set on the order (for example $5,000,000 under CCDC 41).`,
-        `On request, Bricks provides the certificate of insurance for the flight before it happens.`,
+        `Builder-site pilots must carry drone liability insurance of at least $2,000,000 per occurrence, or the higher minimum you set on the order (for example $5,000,000 under CCDC 41).`,
+        `Bricks checks the proof of insurance before the flight, and on request provides the certificate for it.`,
         `Flights depend on weather, airspace (including NAV CANADA authorization), and site access and safety rules.`,
       ),
       p(`A visit that can't be flown safely is rescheduled within the same billing month where possible.`),

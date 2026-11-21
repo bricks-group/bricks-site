@@ -368,7 +368,7 @@ export const SOFTWARE_MODULES: readonly SoftwareModule[] = [
     ],
     steps: [
       { title: 'Book the visit', body: `A progress visit from ${fmt(PER_VISIT[0].price)} or a mapped capture from ${fmt(PER_VISIT[1].price)}, or a monthly plan per site.` },
-      { title: 'Vetted pilots fly it', body: 'Transport Canada Advanced certificate and at least $2M liability insurance, or the higher minimum you set.' },
+      { title: 'Vetted pilots fly it', body: 'Transport Canada Advanced certificate. Builder-site pilots must also carry at least $2M liability insurance, or the higher minimum you set.' },
       { title: 'Filed by date', body: 'Each visit, or each import of your own captures, lands on the project timeline.' },
       { title: 'Report from it', body: 'Pick a date range and Bricks drafts the report. Share it as a PDF or a read-only link that expires.' },
     ],

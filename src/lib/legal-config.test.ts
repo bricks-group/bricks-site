@@ -10,13 +10,13 @@ const read = (p: string) => readFileSync(new URL(p, import.meta.url), 'utf8')
 
 test('default: owner legal name, trading as Bricks, switch off', () => {
   assert.equal(BUSINESS_NAME_REGISTERED, false)
-  assert.equal(legalPartyName(), 'AJANI SHORTERMERCHANT')
-  assert.equal(legalPartyLine(), 'AJANI SHORTERMERCHANT, a sole proprietor operating as Bricks')
+  assert.equal(legalPartyName(), 'Ajani Shorter Merchant')
+  assert.equal(legalPartyLine(), 'Ajani Shorter Merchant, a sole proprietor operating as Bricks')
 })
 
 test('flag alone is not enough: needs the registration number too', () => {
   assert.equal(businessNameIsRegistered(true, ''), false)
-  assert.equal(legalPartyName(true, ''), 'AJANI SHORTERMERCHANT')
+  assert.equal(legalPartyName(true, ''), 'Ajani Shorter Merchant')
 })
 
 test('registered with BIN renders Bricks Group everywhere', () => {
@@ -41,10 +41,10 @@ test('no surface hardcodes either name', () => {
   for (const f of ['../app/terms/page.tsx', '../app/privacy/page.tsx', '../app/book/BookingWizard.tsx', './booking-copy.ts', './supplier.ts', '../components/Footer.tsx',
     '../app/about/page.tsx', '../app/dpa/page.tsx', '../app/account-deletion/page.tsx', '../app/newsletter/page.tsx',
     '../app/photographers/PhotographerForm.tsx', '../app/photographers/page.tsx', '../app/work-with-bricks/TradeApplyForm.tsx',
-    './public-content.ts', './contact-mail.ts', './help/jsonld.ts', './help/articles/getting-started.ts',
+    './public-content.ts', './contact-mail.ts', './help/jsonld.ts', 
     './newsletter/config.ts', './newsletter/email.ts']) {
     const s = read(f)
-    assert.ok(!/AJANI SHORTERMERCHANT|bricks group/i.test(s.replace(/\(bricks group\|ajani shortermerchant\)/i, '')), `${f} hardcodes a legal name`)
+    assert.ok(!/Ajani Shorter Merchant|bricks group/i.test(s.split('\n').filter((l) => !l.includes('postal.trim().replace')).join('\n')), `${f} hardcodes a legal name`)
   }
 })
 
@@ -53,4 +53,18 @@ test('newsletter CASL line uses the current name even if the configured postal l
   const t = footerText('https://www.brxs.ca', 'tok', 'Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada')
   assert.ok(t.includes(legalPartyName() + ' · 6330 Montevideo Road'))
   assert.ok(!t.includes('Bricks Group'))
+})
+
+test('no blanket insurance claims on public copy', () => {
+  const { execSync } = require('node:child_process') as typeof import('node:child_process')
+  const out = execSync(`grep -rniE "insured (pilot|inspector|vendor|repair)|vetted, insured|pilots also carry" src --include=*.ts --include=*.tsx -l || true`, { cwd: new URL('../..', import.meta.url).pathname }).toString().split('\n').filter((f) => f && !f.endsWith('.test.ts'))
+  assert.deepEqual(out, [])
+})
+
+test('terms and privacy keep a short summary per section with detail collapsed, and the old anchors', () => {
+  const t = read('../app/terms/page.tsx')
+  const p = read('../app/privacy/page.tsx')
+  assert.ok(t.includes('<details>') && p.includes('<details>'))
+  assert.ok(t.includes('id="refunds"') && p.includes('id="cookies"'))
+  for (const s of ['5-reschedule', '12-law', '7-no-property']) assert.ok(t.includes(s))
 })

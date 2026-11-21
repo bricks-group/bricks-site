@@ -12,6 +12,11 @@ export const legalDocCss = `
   th{text-align:left;padding:10px 12px;background:var(--paper);border:1px solid var(--hair);font-weight:500;color:var(--ink);}
   td{padding:10px 12px;border:1px solid var(--hair);color:var(--inkSoft);line-height:1.55;vertical-align:top;}
   .inshort{background:var(--paper);border:1px solid var(--hair);border-left:3px solid var(--brick);padding:12px 16px;margin-bottom:16px;border-radius:0;color:var(--ink);}
+  section.block details{margin:4px 0 0;}
+  section.block summary{cursor:pointer;color:var(--brickDeep);font-size:14px;padding:6px 0;margin-bottom:8px;list-style:none;}
+  section.block summary::-webkit-details-marker{display:none;}
+  section.block summary::before{content:'+ ';}
+  section.block details[open] summary::before{content:'− ';}
   .legal-notice{background:var(--paper);border:1px solid var(--hair);border-left:3px solid var(--brick);padding:16px 20px;margin-bottom:24px;border-radius:2px;}
   .legal-notice p{font-size:13px;color:var(--inkSoft);margin:0;}
 `

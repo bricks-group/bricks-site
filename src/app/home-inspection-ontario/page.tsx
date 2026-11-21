@@ -10,7 +10,7 @@ import { OG_IMAGE } from '@/lib/og'
 const URL = 'https://www.brxs.ca/home-inspection-ontario'
 const T = tradeBySlug('inspections')!
 const TITLE = 'Home Inspections in Ontario: Pre-Listing & Purchase | Bricks'
-const DESC = 'Pre-listing, pre-purchase, condo and new-build home inspections in Ontario by insured inspectors, with a written photo report kept on the property file.'
+const DESC = 'Pre-listing, pre-purchase, condo and new-build home inspections in Ontario by vetted inspectors, with a written photo report kept on the property file.'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const FAQS = [
   { q: 'Where do you offer home inspections?', a: 'In Ontario only. Send the address with your request and Bricks confirms an inspector for it in the written quote. Bricks does not arrange inspections outside Ontario.' },
   { q: 'How much does a home inspection cost?', a: 'Bricks quotes every inspection in writing based on the type of inspection, the home and the report format. Nothing is booked or charged until you approve the quote. For typical market ranges, read our guide to home inspection cost in Ontario.' },
-  { q: 'Are inspectors insured?', a: 'Yes. $2M commercial general liability insurance is required for inspection vendors, and a person at Bricks checks the certificate before an inspector takes jobs.' },
+  { q: 'Do inspectors need insurance?', a: 'Yes. Inspectors come from our vetted network: a person reviews every application. Insurance is required for inspection vendors, and Bricks checks the proof before they take jobs.' },
   { q: 'What’s in the report?', a: 'A written report with photos, organised by system and area, kept with the property in your Bricks account.' },
 ]
 
@@ -32,7 +32,7 @@ export default function HomeInspectionOntarioPage() {
     <Landing
       schemas={[focusedServiceSchema({ url: URL, id: '/home-inspection-ontario#service', name: 'Home and building inspections in Ontario', serviceType: 'Home inspection', description: T.description, areaServed: ONTARIO_AREA_SCHEMA })]}
       h1="Home inspections in Ontario."
-      sub="Pre-listing, pre-purchase, condo and new-build inspections by insured inspectors, with the report kept on the property in Bricks."
+      sub="Pre-listing, pre-purchase, condo and new-build inspections by vetted inspectors, with the report kept on the property in Bricks."
       primary={{ href: '#quote', label: 'Request an inspection quote' }}
       secondary={{ href: '/blog/home-inspection-cost-ontario', label: 'What inspections cost' }}
       sections={[

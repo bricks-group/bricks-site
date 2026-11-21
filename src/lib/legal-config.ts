@@ -8,7 +8,7 @@
  * data, privacy accountability line) then shows "Bricks Group". Do not hardcode
  * either name anywhere else.
  */
-export const LEGAL_PARTY_NAME = 'AJANI SHORTERMERCHANT'
+export const LEGAL_PARTY_NAME = 'Ajani Shorter Merchant'
 export const REGISTERED_BUSINESS_NAME = 'Bricks Group'
 export const TRADING_NAME = 'Bricks'
 export const BUSINESS_NAME_REGISTERED = false

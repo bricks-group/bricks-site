@@ -77,7 +77,7 @@ export default function Post() {
 
         <h2>How Bricks runs it</h2>
         <p>
-          With <Link href="/drone-mapping">Bricks drone mapping</Link>, a certified, insured pilot flies the site, and the first mapped flight includes ground control setup. Each mapped capture delivers an orthomosaic, a 3D model and a measurable site map as a dated visit in Site Progress. Two mapped visits can be compared on a 0.5 m grid, leaving out changes under 10 cm. Cut, fill, net volume and area show their method and are estimates. You can also import your own GeoTIFF, LAS, LAZ, E57, PLY, OBJ or GLB files.
+          With <Link href="/drone-mapping">Bricks drone mapping</Link>, a certified pilot flies the site, and the first mapped flight includes ground control setup. Each mapped capture delivers an orthomosaic, a 3D model and a measurable site map as a dated visit in Site Progress. Two mapped visits can be compared on a 0.5 m grid, leaving out changes under 10 cm. Cut, fill, net volume and area show their method and are estimates. You can also import your own GeoTIFF, LAS, LAZ, E57, PLY, OBJ or GLB files.
         </p>
         <p>A mapped capture is {fmt(MAPPED.price)} {MAPPED.unit}, with a {fmt(SETUP.price)} one-time setup. Mapped plans per site: {MAPPED_PLAN.rows.map((r) => `${r.cadence.toLowerCase()} visits ${fmt(r.price)} a month`).join(', ')}. CAD, plus tax.</p>
 

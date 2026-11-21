@@ -18,7 +18,7 @@ session.amount_total = 28024
 test('written copy carries every CPA s.32/33 and CRA invoice item', () => {
   const c = buildBookingCopy(session)!
   for (const needle of [
-    'AJANI SHORTERMERCHANT', 'sole proprietor operating as Bricks', '6330 Montevideo Road', '(289) 312-7425', 'help@brxs.ca', '798370003 RT0001', // supplier + GST/HST number
+    'Ajani Shorter Merchant', 'sole proprietor operating as Bricks', '6330 Montevideo Road', '(289) 312-7425', 'help@brxs.ca', '798370003 RT0001', // supplier + GST/HST number
     'Alex Agent', '2026-11-21', // consumer name + agreement date
     'HDR photography', '$149.00', 'Licensed drone', '$99.00', '$32.24', '$280.24', 'Total paid (CAD)', // itemized, tax, total
     '1 Test St', 'December 2, 2026', // place + date

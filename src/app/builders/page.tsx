@@ -33,9 +33,9 @@ export const metadata: Metadata = {
 }
 
 const PROOF = [
-  { k: 'Vetted, insured, certified pilots', v: 'Every pilot is vetted by Bricks before they fly a site.' },
+  { k: 'Vetted, certified pilots', v: 'Part of our vetted network: a person reviews every application, and pilots hold a Transport Canada Advanced certificate.' },
   { k: 'Advanced RPAS', v: 'Certified by Transport Canada for controlled airspace and work near people.' },
-  { k: 'Verified insurance', v: '$2M drone liability minimum, verified by us and valid on the flight date. $5M when your contract requires it.' },
+  { k: 'Insurance checked before the flight', v: 'Builder-site pilots must carry at least $2M drone liability, or $5M when your contract requires it. We check the proof before they fly.' },
   { k: 'One site file', v: 'Every visit dated, compared and shared through one link.' },
 ] as const
 
@@ -108,7 +108,7 @@ export default function BuildersPage() {
 
       <section className="cm-sec" id="hub" aria-label="The builder hub">
         <Head title="The builder hub." lede="Dated, measured evidence from every visit, for your team, your lenders and your quantity surveyor." link={{ href: '/drone-mapping', label: 'Drone mapping' }} />
-        <p className="bx-intro">Bricks gives builders and developers construction progress reports from dated drone visits. A certified, insured pilot flies the site, each visit lands on the project timeline, and Bricks drafts the progress report and investor update from what changed. Book a {fmt(PER_VISIT[0].price)} progress visit, a {fmt(PER_VISIT[1].price)} mapped capture or a monthly plan per site. CAD, plus tax.</p>
+        <p className="bx-intro">Bricks gives builders and developers construction progress reports from dated drone visits. A certified pilot flies the site, each visit lands on the project timeline, and Bricks drafts the progress report and investor update from what changed. Book a {fmt(PER_VISIT[0].price)} progress visit, a {fmt(PER_VISIT[1].price)} mapped capture or a monthly plan per site. CAD, plus tax.</p>
         <FeatureList items={HUB} label="Builder hub features" sheet="B" />
       </section>
 

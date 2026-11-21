@@ -1,7 +1,6 @@
 import type { Article } from '../types'
 import { p, h, ul, ol, note, table } from '../blocks'
 import { signupUrl } from '@/lib/brand'
-import { legalPartyName } from '@/lib/legal-config'
 
 export const GETTING_STARTED: Article[] = [
   {
@@ -14,7 +13,7 @@ export const GETTING_STARTED: Article[] = [
       h(`Two parts, one company`),
       ul(
         `**The Bricks app** at [app.brxs.ca](https://app.brxs.ca): listing files, transactions, CRM, e-sign, forms, billing and media orders. Agents, teams, brokerages, builders, property managers, commercial owners, investors and REITs each get a version shaped for how they work.`,
-        `**Listing media**: shoots booked at [brxs.ca/book](/book) or from a listing in the app. ${legalPartyName()} is the company you contract with. Photographers who shoot for Bricks are independent contractors, and Bricks edits every photo and film in-house.`,
+        `**Listing media**: shoots booked at [brxs.ca/book](/book) or from a listing in the app. Bricks is the company you contract with. Photographers who shoot for Bricks are independent contractors, and Bricks edits every photo and film in-house.`,
       ),
       p(`Photographers and vendors use their own version of Bricks at [go.brxs.ca](https://go.brxs.ca) to take jobs, shoot to the standard and get paid. See [Photographers and vendors](/help/photographers).`),
       h(`Where to start`),

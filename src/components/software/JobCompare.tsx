@@ -15,7 +15,7 @@ export const JOBS: Record<Audience, { jobs: Job[]; tally: { label: string; witho
   builder: {
     jobs: [
       { job: 'Book the visit', without: 'Calls and emails to find a drone pilot', tools: 'Phone, email', with: 'Book once, or put the site on a monthly plan' },
-      { job: 'Send someone', without: 'Find a pilot and check their insurance', tools: 'You', with: 'Bricks assigns a vetted, insured pilot' },
+      { job: 'Send someone', without: 'Find a pilot and check their insurance', tools: 'You', with: 'Bricks assigns a vetted pilot' },
       { job: 'Make the maps', without: 'Run the flight through mapping software', tools: 'Mapping software', with: 'Orthomosaic and 3D model on mapped visits' },
       { job: 'Keep the files', without: 'Download links, saved to a shared drive', tools: 'File transfer, drive', with: 'Dated on the project timeline' },
       { job: 'Write the report', without: 'Copy images into slides, write what changed', tools: 'Slides', with: 'Pick the dates. Bricks drafts it' },

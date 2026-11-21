@@ -17,7 +17,7 @@ export function listUnsubscribeHeaders(base: string, unsubToken: string): Record
 
 /** The configured postal line may already start with a party name (prod CASL line); always show the current one. */
 function identityLine(postal: string): string {
-  const p = postal.trim().replace(/^(bricks group|ajani shortermerchant)\s*·\s*/i, '')
+  const p = postal.trim().replace(/^(bricks group|ajani shorter\s?merchant)\s*·\s*/i, '')
   return `${legalPartyName()} · ${p}`
 }
 export function footerHtml(base: string, unsubToken: string, postal: string): string {
