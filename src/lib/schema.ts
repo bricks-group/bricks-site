@@ -1,3 +1,4 @@
+import { legalPartyName } from '@/lib/legal-config'
 import {
   AREA_SERVED_SCHEMA,
   OS_URL,
@@ -35,7 +36,7 @@ export const SITE_ID = 'https://www.brxs.ca/#website'
 export const LOGO_ID = 'https://www.brxs.ca/#logo'
 
 /** Confirmed legal name (Kam, 2026-10-10). Single source for schema legalName. */
-export const LEGAL_NAME = 'Bricks Group'
+export const LEGAL_NAME = legalPartyName()
 
 /** Confirmed founding year (Kam, 2026-10-10). Year only. */
 export const FOUNDING_YEAR = '2026'

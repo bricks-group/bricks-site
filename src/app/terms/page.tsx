@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
 import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 import { OG_IMAGE } from '@/lib/og'
+import { SUPPLIER } from '@/lib/supplier'
 
 const DESC = 'Bricks listing-media terms of service and cancellation policy, in short sections. Full refund when you cancel 24 hours or more before your shoot.'
 
@@ -33,7 +34,7 @@ export default function TermsPage() {
 <div className="legal-body"><section className="block" id="who"><h2>Who you are contracting with</h2>
 <p className="inshort"><strong>In short:</strong> One supplier, easy to reach, with the tax number on every receipt.</p>
 <ul>
-<li><strong>Supplier:</strong> Bricks Group (&quot;Bricks&quot;).</li>
+<li><strong>Supplier:</strong> {SUPPLIER.legalPartyLine} (&quot;Bricks&quot;).</li>
 <li><strong>Premises address:</strong> 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada</li>
 <li><strong>Phone:</strong> (289) 312-7425</li>
 <li><strong>Email:</strong> <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> (bookings and support: <a href="mailto:help@brxs.ca">help@brxs.ca</a>)</li>

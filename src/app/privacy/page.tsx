@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
 import { OG_IMAGE } from '@/lib/og'
+import { SUPPLIER } from '@/lib/supplier'
 
 export const metadata: Metadata = {
   title: 'Bricks — Privacy Policy',
@@ -37,7 +38,7 @@ export default function PrivacyPage() {
 <div className="legal-body"><section className="block" id="who"><h2>Who is responsible</h2>
 <p className="inshort"><strong>In short:</strong> Bricks is accountable for your information. Ask us anything at privacy@brxs.ca.</p>
 <ul>
-<li><strong>Organization:</strong> Bricks Group.</li>
+<li><strong>Organization:</strong> {SUPPLIER.legalPartyLine}.</li>
 <li><strong>Privacy contact:</strong> <a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></li>
 <li><strong>Address:</strong> 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada</li>
 </ul></section></div>
