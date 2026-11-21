@@ -11,12 +11,27 @@ export const dynamic = 'force-dynamic'
  * Server-side so the app API never needs a CORS rule for www previews.
  */
 const OS_API = (process.env.BRICKS_OS_API_URL || 'https://api.brxs.ca').replace(/\/$/, '')
+const PREVIEW_SAMPLE_TOKEN = 'preview-sample-account.' + '0'.repeat(32)
+const PREVIEW_SAMPLE = {
+  kind: 'contact',
+  name: 'Jordan Rivera',
+  email: 'jordan.rivera@example.com',
+  phone: '416-555-0142',
+  brokerage: 'Harbourline Realty',
+  address: '',
+  addresses: ['100 Queen St W, Toronto, ON', '88 Harbour St, Toronto, ON'],
+}
 const TOKEN = /^[A-Za-z0-9_\-]{16,560}\.[a-f0-9]{32}$/
 
 export async function GET(req: NextRequest) {
   const t = req.nextUrl.searchParams.get('t') || ''
   const headers = { 'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer' }
   if (!TOKEN.test(t)) return NextResponse.json({ ok: false, error: 'invalid' }, { status: 400, headers })
+  // Preview Workers only: a fixed sample account so the signed-in state can be
+  // reviewed without a live session. Never set on production.
+  if (process.env.PREVIEW_HANDOFF_SAMPLE === '1' && t === PREVIEW_SAMPLE_TOKEN) {
+    return NextResponse.json({ ok: true, handoff: PREVIEW_SAMPLE }, { headers })
+  }
   try {
     const r = await fetch(`${OS_API}/api/book/handoff/${encodeURIComponent(t)}`, {
       cache: 'no-store',

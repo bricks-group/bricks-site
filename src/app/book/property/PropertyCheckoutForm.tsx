@@ -7,7 +7,8 @@ import { CLIENT_LABEL, isPropertyClient, type PropertyClient } from '@/lib/clien
 import { ONE_OFFS, ONE_OFFS_FOR, addDays, checkCheckout, checkoutBody, money, tierForSqft, type CheckoutFields } from '@/lib/propertyCheckout'
 import { signupUrl } from '@/lib/brand'
 import NotInArea from '@/components/NotInArea'
-import EmbeddedPay, { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
+import SamePagePay from '@/components/SamePagePay'
+import { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
 import { checkCoverage, coverageKey, isNotCoveredCode, UNAVAILABLE_CODE, type CoverageInput } from '@/lib/booking-coverage'
 
 const TYPES = Object.keys(ONE_OFFS_FOR) as PropertyClient[]
@@ -180,7 +181,7 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
         </fieldset>
         {s && <div className="total"><span className="hint">Plus HST.</span><b data-testid="pc-total">{money(s.cents)}</b></div>}
         <div className="msg" role="alert">{msg}</div>
-        {embedded ? <EmbeddedPay session={embedded} onBack={() => setEmbedded(null)} note="" /> : (<>
+        {embedded ? <SamePagePay session={embedded} onBack={() => setEmbedded(null)} /> : (<>
         {notCovered ? <NotInArea input={covInput} email={f.contact_email} /> : <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Opening checkout…' : 'Continue to payment'}</button>}
         <p className="hint">Secure checkout by Stripe.</p>
         </>)}

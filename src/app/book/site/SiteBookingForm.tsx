@@ -6,7 +6,8 @@ import { TERMS_VERSION } from '@/lib/terms-version'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import BricksLoader from '@/components/BricksLoader'
-import EmbeddedPay, { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
+import SamePagePay from '@/components/SamePagePay'
+import { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
 import { propertyTax, provinceFromAddress } from '@/lib/property-tax'
@@ -293,7 +294,7 @@ export default function SiteBookingForm() {
           <a className="btn btn-sec" href="/builders#quote">Talk to us instead</a>
         </div>
         <div className="msg" role="status">{msg}</div>
-        {embedded && <EmbeddedPay session={embedded} onBack={() => setEmbedded(null)} note="" />}
+        {embedded && <SamePagePay session={embedded} onBack={() => setEmbedded(null)} />}
       </form>
 
       <aside aria-label="Summary">

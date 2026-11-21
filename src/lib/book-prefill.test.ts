@@ -79,3 +79,13 @@ test('photo reason rides only with a photos gap and only known values', () => {
   assert.equal(readBookPrefill('?gaps=photos&photo=nonsense').photoReason, undefined)
   assert.equal(readHandoff({ gaps: ['photos'], photo_reason: 'low_res' }).photoReason, 'low_res')
 })
+
+test('contact handoff: account details, saved addresses, stays on step one', async () => {
+  const { readHandoff, contactHandoffUrl, canSkipToPackages } = await import('./book-prefill')
+  const p = readHandoff({ kind: 'contact', name: 'Jane Agent', email: 'jane@example.com', phone: '416-555-0100', brokerage: 'North Realty', address: '', addresses: ['12 King St W, Toronto', '12 King St W, Toronto', 'x', '<b>9 Bay St</b>'] })
+  assert.equal(p.fromAccount, true)
+  assert.equal(p.name, 'Jane Agent')
+  assert.deepEqual(p.addresses, ['12 King St W, Toronto', 'b 9 Bay St /b'])
+  assert.equal(canSkipToPackages(p), false)
+  assert.equal(contactHandoffUrl('https://app.brxs.ca/', 'https://www.brxs.ca/book'), 'https://app.brxs.ca/book-details?next=https%3A%2F%2Fwww.brxs.ca%2Fbook')
+})

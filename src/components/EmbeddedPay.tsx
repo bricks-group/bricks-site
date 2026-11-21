@@ -9,14 +9,15 @@ import { loadStripe, type StripeEmbeddedCheckout } from '@stripe/stripe-js'
  * returns the browser to the session's return address (the same paid=1
  * confirmation the hosted page used), so the confirmation flow is unchanged.
  */
-export type EmbeddedSession = { clientSecret: string; publishableKey: string }
+export type EmbeddedSession = { clientSecret: string; publishableKey: string; uiMode: 'elements' | 'embedded' }
 
 /** Reads an API reply; returns the embedded session when the server sent one. */
 export function embeddedFrom(j: unknown): EmbeddedSession | null {
-  const r = (j || {}) as { client_secret?: unknown; publishable_key?: unknown }
+  const r = (j || {}) as { client_secret?: unknown; publishable_key?: unknown; ui_mode?: unknown }
   const clientSecret = typeof r.client_secret === 'string' ? r.client_secret : ''
   const publishableKey = typeof r.publishable_key === 'string' ? r.publishable_key : ''
-  return clientSecret && publishableKey.startsWith('pk_') ? { clientSecret, publishableKey } : null
+  const uiMode = r.ui_mode === 'elements' ? 'elements' : 'embedded'
+  return clientSecret && publishableKey.startsWith('pk_') ? { clientSecret, publishableKey, uiMode } : null
 }
 
 export default function EmbeddedPay({

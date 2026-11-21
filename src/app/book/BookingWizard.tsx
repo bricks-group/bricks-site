@@ -14,8 +14,12 @@ import LegalDocSheet from '@/components/legal/LegalDocSheet'
 import type { LegalDocKey } from '@/lib/legal-docs'
 import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
-import EmbeddedPay, { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
-import { type BookPrefill, bookTypeOption, canSkipToPackages, readBookPrefill, readHandoff } from '@/lib/book-prefill'
+import SamePagePay from '@/components/SamePagePay'
+import { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
+import { type BookPrefill, bookTypeOption, canSkipToPackages, contactHandoffUrl, readBookPrefill, readHandoff } from '@/lib/book-prefill'
+import { hasSignedInHint } from '@/lib/site-session'
+import { OS_URL } from '@/lib/brand'
+import SaveDetailsOffer from '@/components/SaveDetailsOffer'
 import { type Recommendation, compactMoney, recommendPackage } from '@/lib/book-recommend'
 import { oaiqMayHoldContact, oaiqOrderCreated } from '@/lib/oaiq'
 import NotInArea from '@/components/NotInArea'
@@ -163,6 +167,9 @@ function esc(s: string) {
 }
 
 type TrackProps = Record<string, string | number | boolean | null | undefined>
+/** "Use my saved details" needs app.brxs.ca/book-details (Bricks OS); on once that ships. */
+const CONTACT_HANDOFF = process.env.NEXT_PUBLIC_BOOK_CONTACT_HANDOFF === '1'
+
 function evt(_name: string, _props?: TrackProps) {
   /* Vercel analytics removed */
 }
@@ -231,10 +238,18 @@ export default function BookingWizard() {
   const [handoffLoading, setHandoffLoading] = useState(false)
   const [handoffNote, setHandoffNote] = useState('')
   const [pendingQuote, setPendingQuote] = useState(false)
+  // Signed in to Bricks (hint cookie only; www never holds the session).
+  const [signedIn, setSignedIn] = useState(false)
+  const [fromAccount, setFromAccount] = useState(false)
+  const [savedAddrs, setSavedAddrs] = useState<string[]>([])
+  const [paidSessionId, setPaidSessionId] = useState('')
 
   useEffect(() => {
     const q = readBookPrefill(window.location.search)
+    setSignedIn(hasSignedInHint(document.cookie))
     const apply = (p: BookPrefill) => {
+      if (p.fromAccount) setFromAccount(true)
+      if (p.addresses?.length) setSavedAddrs(p.addresses)
       if (p.name) setName((v) => v || p.name!)
       if (p.brokerage) setBrokerage((v) => v || p.brokerage!)
       if (p.email) setEmail((v) => v || p.email!)
@@ -270,7 +285,7 @@ export default function BookingWizard() {
       .then((r) => r.json().catch(() => ({})))
       .then((j: { ok?: boolean; error?: string; handoff?: unknown }) => {
         if (j && j.ok) { apply(readHandoff(j.handoff)); return }
-        setHandoffNote(j && j.error === 'expired' ? 'That link from Bricks has expired. Check the details below.' : 'Couldn’t load your listing. Check the details below.')
+        setHandoffNote(j && j.error === 'expired' ? 'That link from Bricks has expired. Check the details below.' : 'Couldn’t load your Bricks details. Check the details below.')
         apply(q)
       })
       .catch(() => { setHandoffNote('Couldn’t load your listing. Check the details below.'); apply(q) })
@@ -314,6 +329,7 @@ export default function BookingWizard() {
     setScheduleCtaVisible(true)
 
     const sessionId = new URLSearchParams(window.location.search).get('session_id') || ''
+    setPaidSessionId(sessionId)
     // ChatGPT ads conversion: Stripe only redirects here after payment
     // completes, so paid=1 means the order was created.
     let oaiqUser: { email?: string; phone?: string } | undefined
@@ -765,6 +781,14 @@ export default function BookingWizard() {
               <h2>What are we shooting?</h2>
               <p className="hint">Start typing the address.</p>
               {handoffNote && <p className="hint-sm" role="status" style={{ margin: '-12px 0 20px' }}>{handoffNote}</p>}
+              {fromAccount ? (
+                <p className="hint-sm" role="status" data-testid="from-account" style={{ margin: '-8px 0 20px' }}>Filled in from your Bricks account.</p>
+              ) : CONTACT_HANDOFF && signedIn && !name && !email && !handoffLoading ? (
+                <div data-testid="use-account" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap', margin: '-8px 0 24px', padding: '12px 16px', border: '1px solid var(--hairStrong)', borderRadius: 0 }}>
+                  <span style={{ fontSize: 14, color: 'var(--inkSoft)' }}>You&apos;re signed in to Bricks.</span>
+                  <a href={contactHandoffUrl(OS_URL, typeof window !== 'undefined' ? window.location.origin + '/book' : 'https://www.brxs.ca/book')} style={{ fontSize: 14, fontWeight: 500, color: 'var(--brickDeep)' }}>Use my saved details</a>
+                </div>
+              ) : null}
               <div className="grid2">
                 <div className="field"><label>Listing agent name <span className="req">*</span></label><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Agent" /></div>
                 <div className="field"><label>Brokerage <span className="req">*</span></label><input value={brokerage} onChange={(e) => setBrokerage(e.target.value)} placeholder="e.g. Your brokerage" /></div>
@@ -776,6 +800,13 @@ export default function BookingWizard() {
               <div className="field" ref={addrFieldRef}>
                 <label>Property address <span className="req">*</span></label>
                 <input ref={addrInputRef} value={addr} onChange={(e) => { setAddr(e.target.value); clearPickedPin(); onAddrEdited(e.target.value) }} placeholder="123 Main St, Mississauga" autoComplete="off" />
+                {savedAddrs.length > 0 && !addr.trim() && (
+                  <div data-testid="saved-addresses" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10 }}>
+                    {savedAddrs.map((a) => (
+                      <button key={a} type="button" onClick={() => { setAddr(a); clearPickedPin(); onAddrEdited(a) }} style={{ padding: '8px 12px', border: '1px solid var(--hairStrong)', borderRadius: 0, background: 'transparent', color: 'var(--inkSoft)', font: 'inherit', fontSize: 13.5, cursor: 'pointer' }}>{a.split(',')[0]}</button>
+                    ))}
+                  </div>
+                )}
                 {showSuggest && suggestions.length > 0 && (
                   <div className="suggest" ref={suggestBoxRef} role="listbox">
                     {suggestions.map((o) => (
@@ -973,7 +1004,7 @@ export default function BookingWizard() {
               <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" onClick={openLegal('privacy')} style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
               <LegalDocSheet doc={legalOpen} read={legalOpen ? !!legalRead[legalOpen] : false} onRead={(k) => setLegalRead((r) => ({ ...r, [k]: true }))} onClose={() => setLegalOpen(null)} />
               {embedded ? (
-                <EmbeddedPay session={embedded} onBack={() => setEmbedded(null)} />
+                <SamePagePay session={embedded} onBack={() => setEmbedded(null)} detail={selectedSlot ? formatBookedWhen(selectedSlot.start, propertyTz) : undefined} />
               ) : (
                 <>
                   <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Opening payment…' : 'Pay & book'}</button></div>
@@ -996,6 +1027,7 @@ export default function BookingWizard() {
                   <p style={{ margin: '0 0 16px', fontSize: 14, color: 'var(--inkSoft)' }}>Your booked time is locked and sent to the photographer. A confirmation email is on its way.</p>
                 </div>
               )}
+              {scheduleCtaVisible && !signedIn && paidSessionId && <SaveDetailsOffer sessionId={paidSessionId} />}
               <p style={{ marginTop: 16 }}><Link href="/" style={{ color: 'var(--brickDeep)', fontWeight: 500 }}>← Back to overview</Link></p>
             </div>
           </div>

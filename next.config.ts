@@ -28,6 +28,19 @@ const nextConfig: NextConfig = {
         source,
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       })),
+      // The pay form sits on /book now: no third-party framing (Sentinel 2026-11-21).
+      ...['/book', '/book/:path*'].map(source => ({
+        source,
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
+        ],
+      })),
+      // Stripe draws the card fields in its own frame and loads our font from there.
+      ...['/fonts/GeneralSans-Medium.0168813e5da4.woff2', '/fonts/GeneralSans-Regular.1336dc613744.woff2'].map(source => ({
+        source,
+        headers: [{ key: 'Access-Control-Allow-Origin', value: '*' }],
+      })),
       { source: '/terms', headers: legalCors },
       { source: '/privacy', headers: legalCors },
       { source: '/legal/ic-agreement.txt', headers: legalCors },

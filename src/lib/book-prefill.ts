@@ -48,6 +48,10 @@ export type BookPrefill = {
   packages?: boolean
   /** Signed handoff token from Bricks. */
   token?: string
+  /** Addresses the signed-in client booked or saved before (contact handoff). */
+  addresses?: string[]
+  /** Filled from the client's own Bricks account. */
+  fromAccount?: boolean
 }
 
 type ContactKey = 'address' | 'name' | 'email' | 'phone' | 'brokerage'
@@ -152,7 +156,20 @@ export function readHandoff(j: unknown): BookPrefill {
   const f = asFocus(r.focus); if (f) out.focus = f
   const g = gapsOf(r.gaps); if (g) out.gaps = g
   const pr = asPhotoReason(r.photo_reason, g); if (pr) out.photoReason = pr
+  if (Array.isArray(r.addresses)) {
+    const list = Array.from(new Set(r.addresses.map((a) => clean(a, CAPS.address)).filter((a) => a.length >= 5))).slice(0, 5)
+    if (list.length) out.addresses = list
+  }
+  if (r.kind === 'contact') { out.fromAccount = true; out.packages = false }
   return out
+}
+
+/**
+ * Signed in to Bricks but no listing handoff: app.brxs.ca mints a contact-only
+ * handoff for the signed-in client and sends the browser back here with ?h=.
+ */
+export function contactHandoffUrl(osUrl: string, returnTo: string): string {
+  return `${osUrl.replace(/\/$/, '')}/book-details?next=${encodeURIComponent(returnTo)}`
 }
 
 /** Contact + address complete, so the package step can open first. */

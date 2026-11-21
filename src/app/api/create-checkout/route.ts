@@ -409,15 +409,21 @@ export async function POST(req: Request) {
   form.set('mode', 'payment')
   form.set('currency', 'cad')
   form.set('locale', 'en')
-  form.set('submit_type', 'book')
   const publishableKey = wantsEmbedded(body) ? embeddedPublishableKey(stripeKey, process.env) : null
-  if (publishableKey) {
-    // Embedded: one return address (no cancel page; the form sits on /book).
+  const useEmbeddedPage = () => {
+    // Stripe's prebuilt embedded page (limited styling): fallback only.
     form.set('ui_mode', 'embedded_page')
-    form.set('return_url', `${appUrl}/book?paid=1&session_id={CHECKOUT_SESSION_ID}`)
-    // Match the page: square corners, the brick pay button, the paper background.
+    form.set('submit_type', 'book')
     for (const [k, v] of Object.entries(EMBEDDED_BRANDING)) form.set(`branding_settings[${k}]`, v)
+  }
+  if (publishableKey) {
+    // Same page, drawn by Bricks (Kam 2026-11-21): Checkout Session in
+    // `elements` mode; www renders the Payment Element with its own theme.
+    // One return address, the same paid=1 confirmation.
+    form.set('ui_mode', 'elements')
+    form.set('return_url', `${appUrl}/book?paid=1&session_id={CHECKOUT_SESSION_ID}`)
   } else {
+    form.set('submit_type', 'book')
     form.set('success_url', `${appUrl}/book?paid=1&session_id={CHECKOUT_SESSION_ID}`)
     form.set('cancel_url', `${appUrl}/book?paid=0`)
   }
@@ -451,14 +457,13 @@ export async function POST(req: Request) {
       form.delete('payment_method_types[1]')
       session = await createCheckoutSession(stripeKey, form)
     }
-    if (!session.ok && publishableKey && /branding_settings/i.test(String(session.j?.error?.message || ''))) {
-      for (const k of Object.keys(EMBEDDED_BRANDING)) form.delete(`branding_settings[${k}]`)
+    if (!session.ok && publishableKey && /ui_mode|elements/i.test(String(session.j?.error?.message || ''))) {
+      useEmbeddedPage()
       session = await createCheckoutSession(stripeKey, form)
-    }
-    if (!session.ok && publishableKey && /ui_mode/i.test(String(session.j?.error?.message || ''))) {
-      // Older Stripe API versions call it `embedded`.
-      form.set('ui_mode', 'embedded')
-      session = await createCheckoutSession(stripeKey, form)
+      if (!session.ok && /branding_settings/i.test(String(session.j?.error?.message || ''))) {
+        for (const k of Object.keys(EMBEDDED_BRANDING)) form.delete(`branding_settings[${k}]`)
+        session = await createCheckoutSession(stripeKey, form)
+      }
     }
     if (!session.ok) {
       return bad('Stripe error: ' + (session.j.error?.message || session.status), 502)
@@ -470,7 +475,7 @@ export async function POST(req: Request) {
         session_id: session.j.id,
         client_secret: session.j.client_secret,
         publishable_key: publishableKey,
-        ui_mode: 'embedded',
+        ui_mode: session.j.ui_mode === 'elements' ? 'elements' : 'embedded',
         via: 'www-stripe',
       })
     }
