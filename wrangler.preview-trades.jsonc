@@ -8,6 +8,8 @@
   "workers_dev": true,
   "vars": {
     "BRICKS_SITE_PREVIEW": "1",
-    "BOOKING_COPY_TO_OVERRIDE": "delivered@resend.dev"
+    "BOOKING_COPY_TO_OVERRIDE": "delivered@resend.dev",
+    "STRIPE_FORCE_TEST": "1",
+    "NEXT_PUBLIC_TRADE_CHECKOUT_TEST": "1"
   }
 }

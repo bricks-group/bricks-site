@@ -24,8 +24,12 @@ function appUrl() {
 function stripeKey(preferTest: boolean): { key: string; mode: 'test' | 'live' } | null {
   const test = (process.env.STRIPE_SECRET_KEY_TEST || '').trim()
   const live = (process.env.STRIPE_SECRET_KEY || '').trim()
-  if (preferTest && test.startsWith('sk_test_')) return { key: test, mode: 'test' }
-  if (preferTest && live.startsWith('sk_test_')) return { key: live, mode: 'test' }
+  // Kam: no live-money tests. Prefer-test never falls through to sk_live_.
+  if (preferTest) {
+    if (test.startsWith('sk_test_')) return { key: test, mode: 'test' }
+    if (live.startsWith('sk_test_')) return { key: live, mode: 'test' }
+    return null
+  }
   if (live.startsWith('sk_')) return { key: live, mode: live.startsWith('sk_live_') ? 'live' : 'test' }
   if (test.startsWith('sk_')) return { key: test, mode: 'test' }
   return null
