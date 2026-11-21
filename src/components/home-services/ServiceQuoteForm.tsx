@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { PROPERTY_TYPES, QUOTE_CLIENT_TYPES, TIMING_OPTIONS, TRADES, tradeBySlug, type TradeSlug } from '@/lib/services'
+import { tradePriceByKey } from '@/lib/trade-pricing'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -35,10 +36,10 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
   const [sent, setSent] = useState<string | null>(null)
 
   // One form for every trade: #staging (old /staging links redirect here) or
-  // #quote-staging (the "Request a quote" link in each section) picks the trade.
+  // #book-staging (the "Book" link in each section) picks the trade.
   useEffect(() => {
     const pick = () => {
-      const h = decodeURIComponent(window.location.hash.replace(/^#(quote-)?/, ''))
+      const h = decodeURIComponent(window.location.hash.replace(/^#(quote-|book-)?/, ''))
       const x = tradeBySlug(h)
       if (x) setSlug(x.slug)
     }
@@ -53,6 +54,7 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
     const v = (n: string) => ((f.elements.namedItem(n) as HTMLInputElement | null)?.value || '').trim()
     const email = v('email')
     if (!slug) { setMsg('Pick a service.'); return }
+    if (!v('scope')) { setMsg('Pick the service and price.'); return }
     if (!v('clientType')) { setMsg('Pick who it’s for.'); return }
     if (!v('name') || !EMAIL_RE.test(email)) { setMsg('Add your name and a valid email.'); return }
     if (!v('address')) { setMsg('Add the property address.'); return }
@@ -79,8 +81,8 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
       <div className="sq" style={{ gridTemplateColumns: '1fr' }}>
         <style>{css}</style>
         <div className="ok" data-testid="service-quote-sent" role="status">
-          <h3>Request sent.</h3>
-          <p className="hint" style={{ fontSize: 15 }}>We sent a copy to {sent}. A person at Bricks will reply by email with questions or a written quote. Nothing is booked or charged until you approve it.</p>
+          <h3>Booking received.</h3>
+          <p className="hint" style={{ fontSize: 15 }}>We sent a copy to {sent}. We match a vendor near you, then email the time and a link to pay the set price. Nothing is charged until you pay that link.</p>
         </div>
       </div>
     )
@@ -101,10 +103,13 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
               </select>
             </div>
             <div>
-              <label className="f" htmlFor="sq-scope">Type of job (optional)</label>
+              <label className="f" htmlFor="sq-scope">Service and price</label>
               <select id="sq-scope" name="scope" defaultValue="" key={slug}>
                 <option value="">Pick one</option>
-                {(t?.scopes || []).map((s) => <option key={s} value={s}>{s}</option>)}
+                {(t?.scopes || []).map((s) => {
+                  const p = tradePriceByKey(s)
+                  return <option key={s} value={s}>{p ? `${p.name}, ${p.price}` : s}</option>
+                })}
               </select>
             </div>
           </div>
@@ -152,17 +157,17 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
         </fieldset>
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1 }} />
         <div className="msg" role="alert">{msg}</div>
-        <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Sending…' : 'Request a quote'}</button>
+        <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Sending…' : 'Book at this price'}</button>
       </form>
       <aside>
-        <h3>How quote requests work</h3>
+        <h3>How booking works</h3>
         <ol>
-          <li>You send the request. We email you a copy.</li>
-          <li>A person at Bricks reviews it and may ask a few questions.</li>
-          <li>You get a written quote. Nothing is booked or charged until you approve it.</li>
+          <li>Pick the service. The price is set before HST.</li>
+          <li>We match a vendor near you and email the time.</li>
+          <li>You pay the set price from that email.</li>
           <li>Once it&apos;s done, the results are kept with the property in your Bricks account.</li>
         </ol>
-        <p style={{ margin: 0 }}><a href="/help/home-services/how-quote-requests-work">More about quote requests</a></p>
+        <p style={{ margin: 0 }}><a href="/help/home-services/how-quote-requests-work">More about booking home services</a></p>
       </aside>
     </div>
   )

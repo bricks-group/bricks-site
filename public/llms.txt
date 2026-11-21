@@ -20,10 +20,11 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [Book Site Progress](https://www.brxs.ca/book/site): A site visit or monitoring plan.
 - [Book a property visit](https://www.brxs.ca/book/property): Condition reports, turnovers, leasing sets and acquisition captures are booked and paid online at /book/property.
 - [Home services](https://www.brxs.ca/services): Staging, cleaning, inspections and measurement, by approved written quote.
-- [Home staging](https://www.brxs.ca/services#staging): Staging plans, installation and removal, by quote.
-- [Cleaning and turnovers](https://www.brxs.ca/services#cleaning): Property cleaning with a checklist and photo proof, by quote.
-- [Inspections](https://www.brxs.ca/services#inspections): Ontario home and building inspections with written reports, by quote.
-- [Measurement](https://www.brxs.ca/services#measurement): Floor area and floor plans, by quote; legal land surveys are referred to an Ontario Land Surveyor.
+- [Home staging](https://www.brxs.ca/services#staging): Staging consult, installation and removal, at set prices from $295.
+- [Cleaning and turnovers](https://www.brxs.ca/services#cleaning): Property cleaning with a checklist and photo proof, at set prices from $229.
+- [Inspections](https://www.brxs.ca/services#inspections): Ontario home inspections with written reports, at set prices from $349.
+- [Measurement](https://www.brxs.ca/services#measurement): Measured floor plan with floor area for $99; legal land surveys are referred to an Ontario Land Surveyor.
+- [Handyman and repairs](https://www.brxs.ca/services#repairs): Small repairs from $149 for the first hour, travel included. No electrical, plumbing or gas work.
 - [Real estate photography](https://www.brxs.ca/real-estate-photography): Listing photo packages and prices by home size.
 - [Drone photography](https://www.brxs.ca/drone-photography): Licensed aerial listing photos by Transport Canada certified pilots.
 - [Virtual tours](https://www.brxs.ca/virtual-tours): Path-confined virtual tours, and Virtual Visit free-roam 3D as a separate add-on.

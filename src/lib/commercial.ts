@@ -26,7 +26,7 @@ export const PLANS = [
 ] as const
 
 export const PLAN_NOTE =
-  'Plans are billed monthly per site, month to month. Mapped plans add the one-time $650 setup. Survey-grade accuracy is quoted separately. CAD, plus tax (GST/HST based on the property\'s province).'
+  'Plans are billed monthly per site, month to month. Mapped plans add the one-time $650 setup. Survey-grade mapping is $1,499 for up to 10 acres plus $60 per extra acre, up to 200 acres, plus the one-time $650 setup. CAD, plus tax (GST/HST based on the property\'s province).'
 
 export const fmt = (n: number) => `$${n.toLocaleString('en-CA')}`
 

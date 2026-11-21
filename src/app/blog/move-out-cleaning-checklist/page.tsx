@@ -29,7 +29,7 @@ const FAQS = [
   { q: 'What should a move-out clean include?', a: 'Inside appliances and cabinets, bathrooms top to bottom, baseboards, switches, doors, windows and tracks, closets, light fixtures and floors, plus any balcony, garage or locker. The checklist on this page covers it room by room.' },
   { q: 'How long does a move-out clean take?', a: 'It depends on the size of the unit and its condition. An empty unit is much faster to clean than one with furniture still in it, so schedule the clean after the move.' },
   { q: 'How do landlords document a move-out clean?', a: 'Photograph each room after the clean, date the photos and keep them with the move-out condition report for the unit, so the next move-in report has something to compare against.' },
-  { q: 'Can Bricks arrange the clean?', a: 'Yes. Request a quote for a move-out, turnover or pre-listing clean. It’s quoted in writing, and you get room-by-room photos and the completed checklist when it’s done.' },
+  { q: 'Can Bricks arrange the clean?', a: 'Yes. Book a move-out, turnover or pre-listing clean at a set price from $229, and you get room-by-room photos and the completed checklist when it’s done.' },
 ]
 
 export default function Post() {
@@ -42,7 +42,7 @@ export default function Post() {
         badge="Guides · Home services"
         title="Move-out cleaning checklist, room by room"
         sub="Everything to clean before you hand back the keys or turn a unit over, and how to prove it was done."
-        cta={{ href: '/move-out-cleaning', label: 'Request a cleaning quote' }}
+        cta={{ href: '/move-out-cleaning', label: 'Book a clean' }}
         related={[
           { href: '/move-out-cleaning', label: 'Move-out and turnover cleaning' },
           { href: '/property-managers', label: 'Bricks for property managers' },
@@ -74,7 +74,7 @@ export default function Post() {
 
         <h2>Getting it done for you</h2>
         <p>
-          Bricks arranges <Link href="/move-out-cleaning">move-out, turnover and pre-listing cleans</Link>, quoted in writing with the scope, checklist and crew size. When it’s done you get room-by-room photos and the completed checklist, kept with the property in your Bricks account. Rental turnovers are cleaned on a checklist you approve.
+          Bricks arranges <Link href="/move-out-cleaning">move-out, turnover and pre-listing cleans</Link> at set prices from $229. When it’s done you get room-by-room photos and the completed checklist, kept with the property in your Bricks account. Rental turnovers are cleaned on a checklist you approve.
         </p>
 
         <h2>FAQ</h2>

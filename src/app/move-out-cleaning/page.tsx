@@ -10,7 +10,7 @@ import { OG_IMAGE } from '@/lib/og'
 const URL = 'https://www.brxs.ca/move-out-cleaning'
 const T = tradeBySlug('cleaning')!
 const TITLE = 'Move-Out, Turnover & Pre-Listing Cleaning | Bricks'
-const DESC = 'Move-out cleaning, rental turnovers and pre-listing deep cleans, quoted in writing and booked in Bricks, with room-by-room photo proof when it’s done.'
+const DESC = 'Move-out cleaning, rental turnovers and pre-listing deep cleans, at set prices from $229, booked in Bricks, with room-by-room photo proof when it’s done.'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -21,10 +21,9 @@ export const metadata: Metadata = {
 }
 
 const FAQS = [
-  { q: 'How much does a move-out clean cost?', a: 'It depends on the size of the unit, its condition and the checklist. Bricks quotes every clean in writing with the scope, checklist and crew size, and nothing is booked or charged until you approve the quote.' },
+  { q: 'How much does a move-out clean cost?', a: 'Set prices before HST: $229 for a studio or 1 bed, $279 for 2 beds, $369 for 3 beds or a townhouse, and $449 to $649 for a house by size.' },
   { q: 'Do I get proof the clean was done?', a: 'Yes. Room-by-room photos when the clean is done, plus the completed checklist, kept with the property in your Bricks account.' },
   { q: 'Can you clean between tenants on my own checklist?', a: 'Yes. Rental turnovers are cleaned on a checklist you approve.' },
-  { q: 'Do you clean after a renovation?', a: 'Yes. Post-construction cleans cover dust and debris after a renovation or a new build, and are always quoted after a look at the site.' },
 ]
 
 export default function MoveOutCleaningPage() {
@@ -32,8 +31,8 @@ export default function MoveOutCleaningPage() {
     <Landing
       schemas={[focusedServiceSchema({ url: URL, id: '/move-out-cleaning#service', name: 'Move-out and turnover cleaning', serviceType: 'Move-out cleaning', description: T.description })]}
       h1="Move-out and turnover cleaning, with photo proof."
-      sub="Empty units cleaned top to bottom between owners or tenants, and deep cleans timed before listing photos. Quoted in writing, tracked in Bricks."
-      primary={{ href: '#quote', label: 'Request a cleaning quote' }}
+      sub="Empty units cleaned top to bottom between owners or tenants, and deep cleans timed before listing photos. Set prices, tracked in Bricks."
+      primary={{ href: '#book', label: 'Book a clean' }}
       secondary={{ href: '/blog/move-out-cleaning-checklist', label: 'Move-out checklist' }}
       sections={[
         { title: 'Cleans Bricks arranges.', rows: T.handles },
@@ -48,16 +47,16 @@ export default function MoveOutCleaningPage() {
         },
         { title: 'What you get back.', rows: T.receive },
         {
-          id: 'quote',
-          title: 'Request a cleaning quote.',
+          id: 'book',
+          title: 'Book a clean.',
           lede: 'Tell us the address, the type of clean and the date you need it done by.',
           raw: <div className="hs hs-quote"><ServiceQuoteForm trade="cleaning" /></div>,
-          note: <>How it works: <Link href="/help/home-services/how-quote-requests-work">quote requests</Link> · <Link href="/help/home-services/cleaning-and-turnovers">cleaning help</Link></>,
+          note: <>How it works: <Link href="/help/home-services/how-quote-requests-work">booking home services</Link> · <Link href="/help/home-services/cleaning-and-turnovers">cleaning help</Link></>,
         },
       ]}
       faqTitle="Move-out cleaning, answered."
       faqs={FAQS}
-      close={{ title: 'Get the unit ready.', href: '#quote', label: 'Request a cleaning quote' }}
+      close={{ title: 'Get the unit ready.', href: '#book', label: 'Book a clean' }}
     />
   )
 }

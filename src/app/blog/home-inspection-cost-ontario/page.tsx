@@ -10,7 +10,7 @@ const META = postMeta(SLUG)
 const PATH = `/blog/${SLUG}`
 const HEADLINE = 'Home inspection cost in Ontario: what sets the price'
 const TITLE = `${HEADLINE} | Bricks`
-const DESC = 'What moves the price of a home inspection in Ontario, which tests cost extra, what to check before you hire an inspector, and how to get a written quote.'
+const DESC = 'What moves the price of a home inspection in Ontario, which tests cost extra, what to check before you hire an inspector, and what Bricks charges.'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -26,7 +26,7 @@ const FAQS = [
   { q: 'Do home inspectors need a licence in Ontario?', a: 'Not today. Ontario passed the Home Inspection Act, 2017, but it is not yet in force, so there is no provincial licence. Ask about training, insurance and a sample report.' },
   { q: 'Who pays for a home inspection?', a: 'Whoever orders it. Sellers pay for a pre-listing inspection, and buyers pay for a pre-purchase inspection.' },
   { q: 'Is a condo inspection cheaper?', a: 'Usually. There is less to inspect inside a unit, and the building’s shared systems are managed by the condo corporation. ' },
-  { q: 'How does Bricks price an inspection?', a: 'Bricks quotes every inspection in writing based on the type of inspection, the home and the report. Inspections are Ontario only, and nothing is booked or charged until you approve the quote.' },
+  { q: 'How does Bricks price an inspection?', a: 'Set prices before HST: $349 for a condo, $399 for a townhouse or semi, and $449 to $629 for a detached home by size. Inspections are Ontario only.' },
 ]
 
 export default function Post() {
@@ -39,16 +39,16 @@ export default function Post() {
         badge="Resources · Home services"
         title={HEADLINE}
         sub="What moves the price, which tests cost extra, and what to check before you hire an inspector."
-        cta={{ href: '/home-inspection-ontario', label: 'Request an inspection quote' }}
+        cta={{ href: '/home-inspection-ontario', label: 'Book an inspection' }}
         related={[
           { href: '/home-inspection-ontario', label: 'Home inspections in Ontario' },
           { href: '/home-staging', label: 'Home staging' },
           { href: '/move-out-cleaning', label: 'Move-out and pre-listing cleaning' },
-          { href: '/help/home-services/how-quote-requests-work', label: 'How quote requests work' },
+          { href: '/help/home-services/how-quote-requests-work', label: 'How booking works' },
         ]}
       >
         <p className="lead">
-          A home inspection is one of the smaller costs in an Ontario sale, and one of the most useful. Prices aren’t regulated and vary by inspector, so the best guide is a written quote for your home.
+          A home inspection is one of the smaller costs in an Ontario sale, and one of the most useful. Prices aren’t regulated and vary by inspector, so ask for the full price before you book.
         </p>
 
         <h2>What moves the price</h2>
@@ -74,9 +74,9 @@ export default function Post() {
           <li>What needs attention now, what to watch, and what to have a specialist look at.</li>
         </ul>
 
-        <h2>Getting a quote through Bricks</h2>
+        <h2>Booking through Bricks</h2>
         <p>
-          Bricks arranges <Link href="/home-inspection-ontario">home and building inspections in Ontario</Link>: pre-listing, pre-purchase, condo and new-build. Inspectors come from a vetted network: a person at Bricks reviews every application and checks proof of insurance before they take jobs. Every job is quoted in writing, and nothing is booked or charged until you approve. The written report with photos is kept with the property in your Bricks account.
+          Bricks arranges <Link href="/home-inspection-ontario">home and building inspections in Ontario</Link>: pre-listing, pre-purchase, condo and new-build. Inspectors come from a vetted network: a person at Bricks reviews every application and checks proof of insurance before they take jobs. Every inspection has a set price, from $349 for a condo. The written report with photos is kept with the property in your Bricks account.
         </p>
 
         <h2>FAQ</h2>

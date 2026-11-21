@@ -2,6 +2,7 @@ import type { Article } from '../types'
 import { p, h, ul, ol, note, flow, qa } from '../blocks'
 import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 import { isTradeEnabled, tradeListPhrase } from '@/lib/services'
+import { DISPUTES, PAYOUT_TIMING } from '@/lib/trade-pricing'
 
 /** Repairs is paused for launch (services.ts `enabled: false`); its articles and mentions come back with the flag. */
 const REPAIRS = isTradeEnabled('repairs')
@@ -16,33 +17,31 @@ function onSale(list: Article[]): Article[] {
 }
 
 /**
- * Home services sold as quote requests (phase 1). No prices: every job is quoted by a person.
+ * Home services sold at set prices (decided 21 Nov 2026). Prices live in trade-pricing.ts.
  * Keep the compliance lines: measurement is never a survey; repairs exclude electrical,
  * plumbing and gas; inspections are Ontario only.
  */
 export const HOME_SERVICES: Article[] = onSale([
   {
     slug: 'how-quote-requests-work',
-    title: `How quote requests work`,
-    summary: `Send a request, get a written quote, approve it. Nothing is booked or charged before you say yes.`,
+    title: `How booking home services works`,
+    summary: `Pick the service at its set price. We email the time and a link to pay.`,
     popular: true,
     howto: true,
     body: [
-      p(`${LIST_CAP} are booked through a quote request, not online checkout. Every property is different, so a person at Bricks reviews each request and quotes it in writing.`),
+      p(`${LIST_CAP} each have a set price, like listing photos.`),
       ol(
-        `Open [home services](/services). Every service has its own section, for example [Cleaning and turnovers](/services#cleaning), and one quote form at the bottom of the page covers all of them.`,
-        `Fill in the form: who it's for, the address, the type of job and any details such as rooms, access or dates.`,
-        `Send it. We email you a copy right away.`,
-        `A person at Bricks reviews it and may reply with a few questions.`,
-        `You get a written quote with the scope, timing and price.`,
-        `Approve the quote by replying. Bricks then schedules the vendor.`,
+        `Open [home services](/services). Every service shows its set prices, for example [Cleaning and turnovers](/services#cleaning).`,
+        `Pick the service and price in the form, and add the address and your timing.`,
+        `We match a vetted vendor near you and email the time.`,
+        `Pay the set price from that email. Nothing is charged before then.`,
       ),
       h(`What it costs`),
-      p(`There are no public prices for these services yet. The written quote is the price. Nothing is booked or charged until you approve it.`),
+      p(`The price you pick is the price, before HST. Each vendor has their own calendar, so services booked together can land on different days. They all sit on one timeline for the listing.`),
       h(`Where the results go`),
       p(`Reports, photos, checklists and measurements are kept with the property in your Bricks account. If you don't have an account yet, we send them by email and you can [create one](/help/getting-started) later.`),
       qa(
-        [`Is a quote request a booking?`, `No. It's a request for a price. Nothing is booked until you approve the written quote.`],
+        [`When am I charged?`, `When you pay the link we email with your time. Not before.`],
         [`Who does the work?`, `Vetted independent vendors that Bricks schedules and checks. $2M commercial general liability insurance is required for ${CGL_WHO}.`],
         [`Can I combine services with a photo visit?`, `Yes. Say so in the details, for example a clean or staging before listing photos, and we schedule them in order.`],
       ),
@@ -52,9 +51,9 @@ export const HOME_SERVICES: Article[] = onSale([
   {
     slug: 'home-staging',
     title: `Home staging`,
-    summary: `Staging vacant or lived-in homes before photos and showings, by quote.`,
+    summary: `Staging vacant or lived-in homes before photos and showings, at set prices.`,
     body: [
-      p(`Bricks arranges staging for vacant and occupied homes, model suites and units between tenants. [Request a quote](/services#quote-staging) with the address and the rooms you want staged.`),
+      p(`Bricks arranges staging for vacant and occupied homes, model suites and units between tenants. [Book staging](/services#book-staging): $295 for a consult, credited to the install. Occupied homes from $1,795 and vacant homes from $2,495 for 30 days, by size. Each extra 30 days is 25% of the first.`),
       h(`What's included`),
       ul(
         `A consult or a plan from your photos and floor plan.`,
@@ -63,7 +62,7 @@ export const HOME_SERVICES: Article[] = onSale([
         `Install before the photo visit, and removal when the listing closes or the rental period ends.`,
       ),
       h(`What you get back`),
-      p(`A written quote first, then install photos of each staged room. Install, photo visit and removal dates are kept with the property in your Bricks account.`),
+      p(`A set price first, then install photos of each staged room. Install, photo visit and removal dates are kept with the property in your Bricks account.`),
       ...(VIRTUAL_STAGING_ENABLED ? [note(`Virtual staging is different. It adds furniture to photos and is a photo add-on. See [Add-ons](/help/booking/add-ons).`)] : []),
     ],
     related: ['how-quote-requests-work', 'cleaning-and-turnovers'],
@@ -71,15 +70,14 @@ export const HOME_SERVICES: Article[] = onSale([
   {
     slug: 'cleaning-and-turnovers',
     title: `Cleaning and turnovers`,
-    summary: `Pre-listing deep cleans, move-in and move-out cleans, rental turnovers and post-construction cleans.`,
+    summary: `Pre-listing deep cleans, move-in and move-out cleans and rental turnovers, at set prices.`,
     body: [
-      p(`[Request a quote](/services#quote-cleaning) for a clean before listing photos, between owners or between tenants.`),
+      p(`[Book a clean](/services#book-cleaning) before listing photos, between owners or between tenants. $229 for a studio or 1 bed, $279 for 2 beds, $369 for 3 beds or a townhouse, $449 to $649 for a house by size.`),
       h(`Types of clean`),
       ul(
         `**Pre-listing deep clean:** kitchens, baths, floors, glass and fixtures, timed before the photo visit.`,
         `**Move-in or move-out:** an empty unit cleaned top to bottom.`,
         `**Rental turnover:** a unit cleaned between tenants on a checklist you approve.`,
-        `**Post-construction:** dust and debris after a renovation or new build. Always quoted after a look at the site.`,
       ),
       h(`What you get back`),
       p(`Room-by-room photos when the clean is done, and the completed checklist, kept with the property in your Bricks account.`),
@@ -91,13 +89,12 @@ export const HOME_SERVICES: Article[] = onSale([
     title: `Home and building inspections`,
     summary: `Pre-listing, pre-purchase, condo and new-build inspections in Ontario, with a written report.`,
     body: [
-      p(`[Request a quote](/services#quote-inspections) for an inspection of a home, condo or building. Inspections are available in Ontario only.`),
+      p(`[Book an inspection](/services#book-inspections). $349 for a condo, $399 for a townhouse or semi, $449 to $629 for a detached home by size. Ontario only.`),
       h(`Types of inspection`),
       ul(
         `Pre-listing inspections, to find issues before the home goes on the market.`,
         `Pre-purchase inspections for buyers and their agents.`,
         `Condo units and new homes before possession, including deficiency lists.`,
-        `Building condition assessments for commercial and multi-unit buildings, always quoted after a review of the building.`,
       ),
       h(`What you get back`),
       p(`A written report with photos, organised by system and area, kept with the property in your Bricks account.`),
@@ -112,12 +109,11 @@ export const HOME_SERVICES: Article[] = onSale([
     title: `Measurement and floor area`,
     summary: `Measured interior floor area and floor plans for listings and leasing. Not a legal survey.`,
     body: [
-      p(`[Request a quote](/services#quote-measurement) for measured interior floor area and a floor plan of each level.`),
+      p(`[Book a measured floor plan](/services#book-measurement) for $99, with interior floor area for each level, basement included.`),
       h(`What's measured`),
       ul(
         `Room-by-room and total interior floor area for a listing or lease.`,
         `A measured floor plan of each level.`,
-        `Commercial rentable area for offices, retail and industrial space, always quoted after a look at the drawings.`,
       ),
       h(`What you get back`),
       p(`The measurements, a floor plan and a short note on the method, including what was and wasn't counted. They're kept with the property in your Bricks account.`),
@@ -129,9 +125,9 @@ export const HOME_SERVICES: Article[] = onSale([
   {
     slug: 'handyman-and-repairs',
     title: `Handyman and repairs`,
-    summary: `Small repairs and deficiency lists, with a written estimate first. No electrical, plumbing or gas work.`,
+    summary: `Small repairs and deficiency lists at set prices. No electrical, plumbing or gas work.`,
     body: [
-      p(`[Request a quote](/services#quote-repairs) for the small jobs that hold up a listing or a turnover.`),
+      p(`[Book a handyman](/services#book-repairs) for the small jobs that hold up a listing or a turnover. $149 for the first hour with travel, then $47.50 per 30 minutes. $449 for a half day, $849 for a full day. Materials at cost with the receipt.`),
       h(`What's included`),
       ul(
         `Drywall patches and paint touch-ups.`,
@@ -143,9 +139,9 @@ export const HOME_SERVICES: Article[] = onSale([
       h(`What's not included`),
       p(`Repairs don't include electrical, plumbing or gas work. Hire a licensed electrician, plumber or gas contractor for those. Larger renovations are out of scope too.`),
       flow(
-        ['Request', 'Send the list and photos if you have them.'],
-        ['Estimate', 'A written estimate for each item, with time and materials.'],
-        ['Approve', 'Nothing starts until you approve it.'],
+        ['Book', 'Pick the hour, half day or full day, and send the list.'],
+        ['Pay', 'Pay the set price from the email with your time.'],
+        ['Extra time', 'You approve any extra 30 minutes in Bricks first.'],
         ['Done', 'Before and after photos for each item, kept with the property.'],
       ),
       p(`$2M commercial general liability insurance is required for repair and inspection vendors.`),
@@ -172,7 +168,7 @@ export const TRADE_VENDORS: Article[] = onSale([
         `Read and accept the independent contractor agreement, then submit.`,
       ),
       p(`A person reviews every application, usually within 1–3 business days. Check spam too.`),
-      note(`Jobs in these trades are quoted to the client first. Bricks contacts you with the scope before any job is confirmed.`),
+      note(`Every job in these trades has a set price and a set cut for you, shown before you accept. ${PAYOUT_TIMING} ${DISPUTES}`),
     ],
     related: ['insurance-for-home-services-vendors', 'how-vendor-work-works'],
   },
@@ -204,8 +200,8 @@ export const TRADE_VENDORS: Article[] = onSale([
       p(`Repair jobs through Bricks are small, listable items: drywall and paint touch-ups, caulking, doors, hardware, trim, assembly and deficiency lists.`),
       h(`Never through Bricks`),
       p(`Electrical, plumbing and gas work are out of scope, even when you hold the licence. Tell the client to hire a licensed electrician, plumber or gas contractor, and flag it in the job notes.`),
-      h(`Estimates and photos`),
-      p(`Write the estimate item by item before work starts. Take a before and an after photo of each item. The client sees them with the property in Bricks.`),
+      h(`Time and photos`),
+      p(`Jobs are booked by the hour, half day or full day at a set price. Extra time goes in 30 minute blocks the client approves in Bricks first. Keep material receipts; they're paid back at cost. Take a before and an after photo of each item.`),
     ],
     related: ['apply-as-a-home-services-vendor', 'insurance-for-home-services-vendors'],
   },

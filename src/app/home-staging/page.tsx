@@ -9,8 +9,8 @@ import { OG_IMAGE } from '@/lib/og'
 
 const URL = 'https://www.brxs.ca/home-staging'
 const T = tradeBySlug('staging')!
-const TITLE = 'Home Staging for Listings, Quoted in Writing | Bricks'
-const DESC = 'Home staging for vacant and lived-in homes, booked inside Bricks. A written quote first, install before the photo visit, removal when the listing closes.'
+const TITLE = 'Home Staging for Listings, Set Prices | Bricks'
+const DESC = 'Home staging for vacant and lived-in homes, booked inside Bricks. Set prices from $295, install before the photo visit, removal when the listing closes.'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 }
 
 const FAQS = [
-  { q: 'How much does home staging cost?', a: 'It depends on the rooms staged, the inventory, the install and removal dates and how long the furniture stays. Bricks doesn’t list prices: every job is quoted in writing, and nothing is booked or charged until you approve the quote.' },
+  { q: 'How much does home staging cost?', a: 'Set prices before HST for the first 30 days: occupied homes from $1,795 and vacant homes from $2,495, by size. A $295 consult is credited to the install. Each extra 30 days is 25% of the first.' },
   { q: 'Can you stage a home that people still live in?', a: 'Yes. For occupied homes the stager edits and restyles what’s there, with accent pieces where they help.' },
   { q: 'When is the furniture installed and removed?', a: 'Install is scheduled before the photo visit, so the rooms are ready for the photographer. Removal is when the listing closes or the rental period ends.' },
   { q: 'Who is staging for?', a: 'Agents and teams with listings, builders with model suites and inventory homes, and investors or property managers with units between tenants.' },
@@ -32,8 +32,8 @@ export default function HomeStagingPage() {
     <Landing
       schemas={[focusedServiceSchema({ url: URL, id: '/home-staging#service', name: 'Home staging', serviceType: 'Home staging', description: T.description })]}
       h1="Home staging, timed with your listing photos."
-      sub="Staging for vacant and lived-in homes, quoted in writing and scheduled so the rooms are ready when the photographer arrives."
-      primary={{ href: '#quote', label: 'Request a staging quote' }}
+      sub="Staging for vacant and lived-in homes, at a set price and scheduled so the rooms are ready when the photographer arrives."
+      primary={{ href: '#book', label: 'Book staging' }}
       secondary={{ href: '/services', label: 'All home services' }}
       sections={[
         { title: 'What the stager handles.', rows: T.handles },
@@ -41,8 +41,8 @@ export default function HomeStagingPage() {
           title: 'How a staging job runs.',
           body: (
             <ol>
-              <li><strong>Request a quote</strong> with the address, the rooms and your listing date.</li>
-              <li><strong>Get a written quote</strong> covering rooms, inventory, install and removal dates and the rental period.</li>
+              <li><strong>Pick the service</strong> by home size. The price is set.</li>
+              <li><strong>Get your dates</strong> for the install, the photo visit and removal.</li>
               <li><strong>Approve it.</strong> Nothing is booked or charged before you do.</li>
               <li><strong>Install</strong> happens before the photo visit. You get photos of each staged room.</li>
               <li><strong>Photos and showings.</strong> Book the <Link href="/real-estate-photography">listing shoot</Link> for after the install.</li>
@@ -61,16 +61,16 @@ export default function HomeStagingPage() {
           ),
         },
         {
-          id: 'quote',
-          title: 'Request a staging quote.',
-          lede: 'Tell us about the property. A person at Bricks quotes every job in writing.',
+          id: 'book',
+          title: 'Book staging.',
+          lede: 'Pick the service and tell us about the property.',
           raw: <div className="hs hs-quote"><ServiceQuoteForm trade="staging" /></div>,
-          note: <>How it works: <Link href="/help/home-services/how-quote-requests-work">quote requests</Link> · <Link href="/help/home-services/home-staging">home staging help</Link></>,
+          note: <>How it works: <Link href="/help/home-services/how-quote-requests-work">booking home services</Link> · <Link href="/help/home-services/home-staging">home staging help</Link></>,
         },
       ]}
       faqTitle="Home staging, answered."
       faqs={FAQS}
-      close={{ title: 'Stage it before the shoot.', href: '#quote', label: 'Request a staging quote' }}
+      close={{ title: 'Stage it before the shoot.', href: '#book', label: 'Book staging' }}
     />
   )
 }

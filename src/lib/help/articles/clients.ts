@@ -277,7 +277,7 @@ export const BUILDERS: Article[] = [
     summary: `Cut, fill and area estimates, imported files, and change between two visits.`,
     body: [
       h(`Measurements`),
-      p(`Measure cut, fill, net volume and area on a mapped capture. The method is shown with each number. These are estimates, not a survey. Survey-grade accuracy is quoted separately.`),
+      p(`Measure cut, fill, net volume and area on a mapped capture. The method is shown with each number. These are estimates, not a survey. Survey-grade mapping has its own set price per acre.`),
       h(`Imports`),
       p(`Bring your own files: GeoTIFF, LAS, LAZ, E57, PLY, OBJ, GLB, photos, video and PDF, up to 5 GB a file. Imported files are marked as imported.`),
       h(`3D compare`),
@@ -308,7 +308,7 @@ export const PROPERTY_MANAGERS: Article[] = [
   {
     slug: 'property-manager-services',
     title: `What property managers can book`,
-    summary: `Turnover media bundles, condition reports, listing sets and building sets, booked online. Media only: physical turnover cleaning is quoted separately.`,
+    summary: `Turnover media bundles, condition reports, listing sets and building sets, booked online. Media only: turnover cleaning is booked separately at a set price.`,
     popular: true,
     body: [
       table(['Service', 'What you get', 'Price'], ['pm_turnover', 'pm_condition_report', 'pm_listing_set', 'pm_listing_video', 'pm_building_set'].map(oneOff)),
@@ -364,7 +364,7 @@ export const COMMERCIAL: Article[] = [
     body: [
       table(['Service', 'What you get', 'Price'], ['cre_leasing_s', 'cre_leasing_m', 'cre_leasing_l', 'cre_aerial'].map(oneOff)),
       p(`CAD, before HST. Book at [brxs.ca/book/property](/book/property?for=commercial). Add the suite for each space.`),
-      p(`Spaces over 20,000 sq ft are quoted. Send a request and we reply with a price.`),
+      p(`Spaces over 20,000 sq ft: $1,450 plus $0.04 per sq ft over 20,000, up to 100,000 sq ft.`),
     ],
     related: ['leasing-desk', 'commercial-mapping'],
   },
@@ -384,7 +384,7 @@ export const COMMERCIAL: Article[] = [
     summary: `Measured maps and a 3D model, booked like any other visit.`,
     body: [
       p(`Book a progress visit or mapped capture for a commercial property at [brxs.ca/book/site](/book/site). Prices are the same as [Site Progress](/help/builders/site-progress-pricing).`),
-      note(`Maps and models are visual documentation, not a survey. Survey-grade accuracy is quoted separately.`),
+      note(`Maps and models are visual documentation, not a survey. Survey-grade mapping has its own set price per acre.`),
     ],
     related: ['site-progress-pricing', 'commercial-leasing-sets'],
   },

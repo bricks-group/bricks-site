@@ -39,3 +39,4 @@
 .hs-jump:hover{color:var(--brickDeep);}
 .hs-anchor{display:block;position:relative;top:-96px;height:0;visibility:hidden;}
 @media (max-width:900px){.hs-trade-grid{grid-template-columns:1fr;gap:24px;}}
+.hs-prices{grid-column:1/-1;}.hs-price-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px 32px;}

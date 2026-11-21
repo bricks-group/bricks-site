@@ -46,7 +46,7 @@ export const CITY_PAGES: readonly CityPage[] = [
       { q: 'Is there a travel fee in Toronto?', a: 'No. There is no travel fee in the GTA’s major markets, including Toronto, Mississauga, Peel, Halton, York and Durham. Elsewhere, the first 25 km from the assigned photographer are free, then $0.75 a km.' },
       { q: 'Can you fly a drone in downtown Toronto?', a: 'Often, with planning. Much of Toronto is controlled airspace around Pearson and Billy Bishop, so the pilot requests NAV CANADA authorization, and condo buildings may need permission. If a flight can’t be done safely or lawfully, it’s skipped and Bricks refunds the drone part, its add-on price plus the tax you paid on it, including when the drone is part of a package.' },
       { q: 'How fast are Toronto listing photos delivered?', a: 'Photos are typically delivered within 24 hours of the shoot, and other media within 24–48 hours. Rush delivery is available for a flat fee.' },
-      { q: 'Can I also book staging, cleaning or an inspection in Toronto?', a: 'Yes. Home staging, cleaning and Ontario home inspections are quoted in writing through Bricks. Nothing is booked until you approve the quote.' },
+      { q: 'Can I also book staging, cleaning or an inspection in Toronto?', a: 'Yes. Home staging, cleaning and Ontario home inspections are booked through Bricks at set prices.' },
     ],
   },
   {
@@ -63,7 +63,7 @@ export const CITY_PAGES: readonly CityPage[] = [
       { title: 'Downtown condos', detail: 'Interiors, views and amenities, shot around the building’s rules.' },
       { title: 'Suburban homes', detail: 'Kanata, Orléans, Barrhaven and beyond: exteriors, yards and aerials.' },
       { title: 'Drone near YOW', detail: 'Parts of the city sit in controlled airspace around Ottawa’s airport. Pilots get NAV CANADA authorization first.' },
-      { title: 'Ontario home services', detail: 'Ottawa is in Ontario, so home inspections can be quoted here as well as staging and cleaning.' },
+      { title: 'Ontario home services', detail: 'Ottawa is in Ontario, so home inspections can be booked here as well as staging and cleaning.' },
     ],
     localProse: [
       'Ottawa listings range from downtown and Centretown condos to family homes in the suburbs. Suburban homes usually benefit most from drone: lot size, the backyard and nearby parks read better from above.',
@@ -72,7 +72,7 @@ export const CITY_PAGES: readonly CityPage[] = [
     faqs: [
       { q: 'Does Bricks cover Ottawa?', a: `Yes, with coverage confirmed at booking. ${CONFIRM}` },
       { q: 'Is there a travel fee in Ottawa?', a: TRAVEL },
-      { q: 'Can I book a home inspection in Ottawa?', a: 'Yes. Ottawa is in Ontario, where Bricks arranges pre-listing, pre-purchase, condo and new-build inspections. Every inspection is quoted in writing first.' },
+      { q: 'Can I book a home inspection in Ottawa?', a: 'Yes. Ottawa is in Ontario, where Bricks arranges pre-listing, pre-purchase, condo and new-build inspections. Every inspection has a set price.' },
       { q: 'What do Ottawa listing photos cost?', a: 'The same Canada-wide menu as everywhere else, priced by the home’s footprint, plus any travel on your quote.' },
     ],
   },

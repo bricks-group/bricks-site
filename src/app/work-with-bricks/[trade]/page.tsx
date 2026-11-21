@@ -5,6 +5,7 @@ import RevealObserver from '@/components/RevealObserver'
 import { Head } from '@/components/calm/Calm'
 import { TRADE_SLUGS, tradeBySlug } from '@/lib/services'
 import TradeApplyForm from '../TradeApplyForm'
+import { DISPUTES, PAYOUT_TIMING, tradePay } from '@/lib/trade-pricing'
 import '@/components/home-services/home-services.css'
 import { OG_IMAGE } from '@/lib/og'
 
@@ -40,7 +41,7 @@ export default async function TradeApplyPage({ params }: { params: Promise<{ tra
         <div className="wrap">
           <p className="eyebrow"><Link href="/work-with-bricks">Work with Bricks</Link> · {t.name}</p>
           <h1>{`${t.apply.role}: apply to work with Bricks.`}</h1>
-          <p className="sub">{t.apply.lede} You&apos;re an independent contractor. Bricks sends you quoted, scoped jobs near you.</p>
+          <p className="sub">{t.apply.lede} You&apos;re an independent contractor. Bricks sends you set-price jobs near you, with your cut shown up front.</p>
         </div>
       </section>
 
@@ -53,6 +54,14 @@ export default async function TradeApplyPage({ params }: { params: Promise<{ tra
         {t.rules.length ? (
           <div className="hs-rules" role="note">{t.rules.map((r) => <p key={r}><b>Scope.</b> {r}</p>)}</div>
         ) : null}
+      </section>
+
+      <section className="cm-sec rvl" aria-label="Your pay">
+        <Head title="Your pay." lede="A set amount per job, by tier: Tier 1 / Tier 2 / Tier 3." />
+        <ul className="hs-list hs-price-list" style={{ maxWidth: '72ch' }}>
+          {tradePay(t.slug).map((r) => <li key={r.name}><b>{r.pay}</b>{r.name}</li>)}
+        </ul>
+        <p className="hs-note">{PAYOUT_TIMING} {DISPUTES}</p>
       </section>
 
       <section className="cm-sec hs-quote" id="apply" aria-label="Application">

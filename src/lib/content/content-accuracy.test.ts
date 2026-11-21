@@ -12,6 +12,7 @@
  * Fix the copy or the fact sheet (src/lib/content/facts.ts); don't loosen the test.
  */
 import { test } from 'node:test'
+import tradeSheet from '../trade-price-sheet.json'
 import assert from 'node:assert/strict'
 import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
@@ -60,6 +61,8 @@ function collectNumbers(v: unknown, out: Set<number>, depth = 0) {
 function bricksPrices(): Set<string> {
   const nums = new Set<number>()
   for (const mod of [pricing, catalog, commercial, marketRates]) collectNumbers(mod, nums)
+  // Set trade prices (decided 21 Nov 2026).
+  for (const rows of Object.values(tradeSheet.trades)) for (const r of rows as { price?: number }[]) if (typeof r.price === 'number') nums.add(r.price)
   for (const o of Object.values(checkout.ONE_OFFS)) nums.add(o.cents / 100)
   // Package totals: photo + any mix of drone, reel, tour, twilight, per band.
   const P = pricing as unknown as Record<string, number[]>
