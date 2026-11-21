@@ -81,7 +81,7 @@ export function buildBookingCopy(session: CopySession): BookingCopy {
     ['Change something', `Email ${SUPPLIER.email} or call ${SUPPLIER.phone}.`],
     ['Terms', `Terms version ${m.terms_version || ''} at https://www.brxs.ca/terms and Privacy Policy at https://www.brxs.ca/privacy. Keep this email as your copy of the agreement.`],
   ]
-  const supplier = `${SUPPLIER.legalName}, ${SUPPLIER.description} · ${SUPPLIER.address} · ${SUPPLIER.phone} · ${SUPPLIER.email} · GST/HST ${SUPPLIER.gstHst}`
+  const supplier = `${SUPPLIER.legalName} · ${SUPPLIER.address} · ${SUPPLIER.phone} · ${SUPPLIER.email} · GST/HST ${SUPPLIER.gstHst}`
   const td = 'padding:6px 0;vertical-align:top;font-size:14px;line-height:1.5'
   const tbl = (r: [string, string][]) => `<table style="border-collapse:collapse;width:100%">${r.map(([k, v]) => `<tr><td style="${td};color:#8A8178;width:38%">${esc(k)}</td><td style="${td}">${esc(v)}</td></tr>`).join('')}</table>`
   const html = `<!doctype html><html><body style="margin:0;background:#F6F3EE"><div style="max-width:560px;margin:0 auto;padding:32px 24px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#14110E">`
