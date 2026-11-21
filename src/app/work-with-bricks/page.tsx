@@ -6,6 +6,7 @@ import { TRADES } from '@/lib/services'
 import ServiceIcon from '@/components/home-services/ServiceIcon'
 import '@/components/home-services/home-services.css'
 import { OG_IMAGE } from '@/lib/og'
+import { CAREERS_EMAIL } from '@/lib/careers'
 
 const title = 'Real Estate Vendor Jobs: Photo, Staging, Cleaning | Bricks'
 const description = 'Apply as an independent vendor: photographers and pilots, stagers, cleaning crews, inspectors, measurers and repair vendors.'
@@ -64,6 +65,7 @@ export default function WorkWithBricksPage() {
           ))}
         </ul>
         <p className="hs-note">$2M commercial general liability insurance is required for repair and inspection vendors. Stagers, cleaning crews and measurers don&apos;t need a certificate to apply.</p>
+        <p className="hs-note">Questions before you apply? Email <a href={`mailto:${CAREERS_EMAIL}`}>{CAREERS_EMAIL}</a>.</p>
       </section>
     </div>
   )

@@ -5,6 +5,7 @@ import { LegalDocRows, LegalDocSheet, useLegalReads } from '@/components/legal/L
 import { lockedReason, type LegalDocKey } from '@/lib/legal-docs'
 import type { Trade } from '@/lib/services'
 import { legalPartyName } from '@/lib/legal-config'
+import { CAREERS_EMAIL } from '@/lib/careers'
 
 // Same flow and scoring as /photographers, minus photo samples and the resume.
 const APPLY_DOCS: readonly LegalDocKey[] = ['ic', 'privacy']
@@ -203,7 +204,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
           try { await uploadDoc(data.member_id, data.application_token || '', 'wsib', wsib) } catch { failed.push('WSIB clearance') }
         }
       }
-      if (failed.length) setDocWarning(`Application received, but your ${failed.join(' and ')} didn’t upload. Email it to help@brxs.ca so we can review your application.`)
+      if (failed.length) setDocWarning(`Application received, but your ${failed.join(' and ')} didn’t upload. Email it to ${CAREERS_EMAIL} so we can review your application.`)
       setSubmitted(true)
     } catch {
       setErr('Network error. Please check your connection and try again.'); setSubmitting(false)
