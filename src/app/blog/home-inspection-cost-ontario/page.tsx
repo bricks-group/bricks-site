@@ -76,7 +76,7 @@ export default function Post() {
 
         <h2>Getting a quote through Bricks</h2>
         <p>
-          Bricks arranges <Link href="/home-inspection-ontario">home and building inspections in Ontario</Link>: pre-listing, pre-purchase, condo and new-build. Inspection vendors must carry $2M commercial general liability insurance, and a person at Bricks checks the certificate before they take jobs. Every job is quoted in writing, and nothing is booked or charged until you approve. The written report with photos is kept with the property in your Bricks account.
+          Bricks arranges <Link href="/home-inspection-ontario">home and building inspections in Ontario</Link>: pre-listing, pre-purchase, condo and new-build. Inspectors come from a vetted network: a person at Bricks reviews every application and checks proof of insurance before they take jobs. Every job is quoted in writing, and nothing is booked or charged until you approve. The written report with photos is kept with the property in your Bricks account.
         </p>
 
         <h2>FAQ</h2>

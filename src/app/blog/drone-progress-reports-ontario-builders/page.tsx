@@ -51,7 +51,7 @@ export default function Post() {
         <p>A <strong>progress visit</strong> is drone photos and video of the site, dated. A <strong>mapped capture</strong> adds an <Link href="/blog/what-is-an-orthomosaic">orthomosaic</Link>, a 3D model and a measurable site map, so you can take distances, areas and elevation from it and compare one visit with the next. More on how the map is made in <Link href="/blog/photogrammetry-for-construction">photogrammetry for construction</Link>.</p>
 
         <h2>The rules on an Ontario site</h2>
-        <p>Construction sites usually mean work near people, and much of the GTA sits in controlled airspace around Pearson and Billy Bishop. That needs a pilot with a Transport Canada Advanced certificate and, in controlled airspace, NAV CANADA authorization. Ask for proof of liability insurance valid on the flight date. Bricks requires a $2M minimum, or the higher minimum your contract sets. More in <Link href="/blog/drone-licence-canada">drone licences in Canada</Link>.</p>
+        <p>Construction sites usually mean work near people, and much of the GTA sits in controlled airspace around Pearson and Billy Bishop. That needs a pilot with a Transport Canada Advanced certificate and, in controlled airspace, NAV CANADA authorization. Ask for proof of liability insurance valid on the flight date. For builder-site work, Bricks requires at least $2M, or the higher minimum your contract sets, and checks the proof before the flight. More in <Link href="/blog/drone-licence-canada">drone licences in Canada</Link>.</p>
 
         <h2>How often to fly</h2>
         <ul>
