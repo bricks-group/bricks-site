@@ -337,7 +337,7 @@ export default function BookingWizard() {
     void oaiqOrderCreated(sessionId, oaiqUser)
     if (!sessionId) {
       // Edge may be stale without session_id — webhook (or manual nudge) is the only path.
-      setDoneMsg('Payment confirmed. Your shoot is booked — finalizing dispatch.')
+      setDoneMsg('Your shoot is booked — finalizing dispatch.')
       return
     }
 
@@ -355,8 +355,8 @@ export default function BookingWizard() {
           const agent = (j as { agent_user_id?: string | null }).agent_user_id
           setDoneMsg(
             agent
-              ? 'Payment confirmed. Your shoot is booked, and the listing is in Bricks at app.brxs.ca.'
-              : 'Payment confirmed. Your shoot is booked.',
+              ? 'Your shoot is booked, and the listing is in Bricks at app.brxs.ca.'
+              : 'Your shoot is booked.',
           )
           return
         }

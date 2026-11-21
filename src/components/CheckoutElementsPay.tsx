@@ -150,15 +150,23 @@ export default function CheckoutElementsPay({
       <div ref={payRef} />
 
       {err && <div role="alert" style={{ marginTop: 16, fontSize: 14, color: 'var(--brickDeep)' }}>{err}</div>}
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', marginTop: 24 }}>
-        {onBack ? <button type="button" className="btn btn-ghost" onClick={onBack} style={{ borderRadius: 0 }}>← {backLabel}</button> : <span />}
+      <style>{`
+        .ec-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:24px;}
+        .ec-actions .btn{border-radius:0;justify-content:center;text-align:center;}
+        .ec-actions .ec-book{min-width:200px;}
+        @media (max-width:680px){
+          .ec-actions{flex-direction:column-reverse;align-items:stretch;gap:10px;}
+          .ec-actions .btn,.ec-actions .ec-book{width:100%;min-width:0;}
+        }
+      `}</style>
+      <div className="ec-actions">
+        {onBack ? <button type="button" className="btn btn-ghost" onClick={onBack} style={{ background: 'transparent', color: 'var(--ink)', border: '1px solid var(--hairStrong)' }}>← {backLabel}</button> : <span />}
         <button
           type="button"
-          className="btn btn-brick"
+          className="btn btn-brick ec-book"
           data-testid="pay-book"
           disabled={state !== 'ready' || busy || cs?.canConfirm === false}
           onClick={book}
-          style={{ borderRadius: 0, minWidth: 200 }}
         >
           {busy ? 'Booking…' : total ? `Book · ${total}` : 'Book'}
         </button>
