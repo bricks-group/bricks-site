@@ -87,7 +87,7 @@ export default function PrivacyPage() {
           <h3>9. Security</h3>
           <p>TLS in transit, access-limited systems. Notify of a PIPEDA-significant breach as required.</p>
 
-          <h3>10. Cookies and analytics</h3>
+          <h3 id="cookies">10. Cookies and analytics</h3>
           <p>This site uses Vercel Analytics to measure aggregate usage. Vercel Analytics is cookieless: it does not set cookies, does not build a profile of you, and does not track you across other sites. The site sets no advertising or tracking cookies. If we ever add a tool that sets cookies, we will name it here first and ask for consent where the law requires it.</p>
 
           <h3>11. Changes</h3>

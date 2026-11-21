@@ -15,6 +15,7 @@ import { oaiqOrderCreated } from '@/lib/oaiq'
 
 /** Booking email kept across the Stripe redirect so the success state can offer the matching builder account. */
 const EMAIL_KEY = 'bricks-site-booking-email'
+const PHONE_KEY = 'bricks-site-booking-phone'
 const PLAN_KEY = 'bricks-site-booking-plan'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -91,7 +92,7 @@ export default function SiteBookingForm() {
     setPaid('checking')
     fetch('/api/confirm-paid', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ session_id: sid }) })
       .then((r) => r.json().then((j) => ({ r, j })))
-      .then(({ r, j }) => { setPaid(r.ok && j?.ok ? 'ok' : 'fail'); if (r.ok) { evt('site_booking_paid', { commercial: true }); oaiqOrderCreated(sid) } })
+      .then(({ r, j }) => { setPaid(r.ok && j?.ok ? 'ok' : 'fail'); if (r.ok) { evt('site_booking_paid', { commercial: true }); void oaiqOrderCreated(sid, { email: sessionStorage.getItem(EMAIL_KEY) || '', phone: sessionStorage.getItem(PHONE_KEY) || '' }) } })
       .catch(() => setPaid('fail'))
     try {
       const e = (sessionStorage.getItem(EMAIL_KEY) || '').trim()
@@ -156,6 +157,7 @@ export default function SiteBookingForm() {
       if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email help@brxs.ca.'); return }
       try {
         sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || ''))
+        sessionStorage.setItem(PHONE_KEY, String(payload.contact_phone || ''))
         sessionStorage.setItem(PLAN_KEY, mode === 'plan' ? '1' : '0')
       } catch { /* best-effort */ }
       evt('site_booking_checkout', { mode, service: String(payload.service_key || payload.plan_key) })

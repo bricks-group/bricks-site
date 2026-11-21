@@ -314,7 +314,9 @@ export default function BookingWizard() {
     const sessionId = new URLSearchParams(window.location.search).get('session_id') || ''
     // ChatGPT ads conversion: Stripe only redirects here after payment
     // completes, so paid=1 means the order was created.
-    oaiqOrderCreated(sessionId)
+    let oaiqUser: { email?: string; phone?: string } | undefined
+    try { const b = JSON.parse(sessionStorage.getItem('bricks_booking') || '{}'); oaiqUser = { email: b.email, phone: b.phone } } catch {}
+    void oaiqOrderCreated(sessionId, oaiqUser)
     if (!sessionId) {
       // Edge may be stale without session_id — webhook (or manual nudge) is the only path.
       setDoneMsg('Payment confirmed. Your shoot is booked — finalizing dispatch.')
@@ -635,7 +637,7 @@ export default function BookingWizard() {
     setPaying(true)
     evt('checkout_started', { total: quote ? quote.total : null })
     try {
-      sessionStorage.setItem('bricks_booking', JSON.stringify({ name: name.trim(), email: email.trim(), addr: selectedAddr || addr.trim(), notes: notes.trim() }))
+      sessionStorage.setItem('bricks_booking', JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), addr: selectedAddr || addr.trim(), notes: notes.trim() }))
     } catch {}
     const visitSqft = (sqftInput ? parseInt(sqftInput, 10) : null) || quote.sqft
     const visitBand = quote.footprint_label || 'unbanded'
