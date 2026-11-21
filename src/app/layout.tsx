@@ -6,6 +6,7 @@ import SiteBreadcrumbs from '@/components/SiteBreadcrumbs'
 import ChromeGate from '@/components/ChromeGate'
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA, PAGE_NAMES } from '@/lib/schema'
 import { CONTEXT_HELP_PATHS, contextHelpFor } from '@/lib/help/context-links'
+import OaiqLanding from '@/components/OaiqLanding'
 import MotionLayer from '@/components/MotionLayer'
 import ContextHelp from '@/components/help/ContextHelp'
 import HelpChat from '@/components/help/HelpChat'
@@ -69,17 +70,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var KEY='bricks-theme';var stored=localStorage.getItem(KEY)||'system';var resolved=stored==='dark'||stored==='light'?stored:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var root=document.documentElement;root.setAttribute('data-theme',resolved);root.style.colorScheme=resolved;}catch(e){}})();`,
           }}
         />
-        {/* ChatGPT ads pixel (oaiq). Raw script in <head> (not next/script
-            afterInteractive) so window.oaiq exists before any client component
-            fires oaiq("measure", ...). Loads on every page. Keep debug:true
-            until Kam turns it off — do not remove it here. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f);}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"7BsqozXG56vx2MaJfWMquA",debug:true});`,
-          }}
-        />
       </head>
       <body>
+        <OaiqLanding />
         <ChromeGate>
           <Nav />
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA] }) }} />
