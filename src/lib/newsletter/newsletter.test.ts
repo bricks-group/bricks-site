@@ -100,6 +100,6 @@ describe('Resend contact sync', () => {
     assert.deepEqual(calls, ['PATCH /contacts/a%40b.ca', 'POST /contacts'])
   })
   it('fails closed without config', async () => {
-    assert.equal((await subscribeContact('a@b.ca', { signup_source: 'x', consent_at: 'y' }, {}, fetch)).ok, false)
+    assert.equal((await subscribeContact('a@b.ca', { signup_source: 'x', consent_at: 'y' }, {}, fetch)).ok, false) // no contacts key
   })
 })
