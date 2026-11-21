@@ -7,6 +7,7 @@ import { CLIENT_LABEL, isPropertyClient, type PropertyClient } from '@/lib/clien
 import { ONE_OFFS, ONE_OFFS_FOR, addDays, checkCheckout, checkoutBody, money, tierForSqft, type CheckoutFields } from '@/lib/propertyCheckout'
 import { signupUrl } from '@/lib/brand'
 import NotInArea from '@/components/NotInArea'
+import EmbeddedPay, { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
 import { checkCoverage, coverageKey, isNotCoveredCode, UNAVAILABLE_CODE, type CoverageInput } from '@/lib/booking-coverage'
 
 const TYPES = Object.keys(ONE_OFFS_FOR) as PropertyClient[]
@@ -48,6 +49,7 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
   const [f, setF] = useState<CheckoutFields>(() => ({ ...EMPTY, service_key: presetKey && keys.includes(presetKey) ? presetKey : keys[0] }))
   const [company, setCompany] = useState('')
   const [busy, setBusy] = useState(false)
+  const [embedded, setEmbedded] = useState<EmbeddedSession | null>(null)
   const [msg, setMsg] = useState('')
   const today = useMemo(torontoToday, [])
   // Booking coverage (Kam 2026-11-14): checked before checkout; the API re-checks.
@@ -99,6 +101,8 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
       if (j.code === UNAVAILABLE_CODE) { setMsg(j.error || 'We couldn’t confirm coverage for this address. Please try again in a moment.'); return }
       // Not configured on this deploy (no key, or the API has no checkout yet): fall back to the request form.
       if (r.status === 503 || r.status === 404 || r.status === 405) { onRequest(); return }
+      const emb = embeddedFrom(j)
+      if (r.ok && emb) { setEmbedded(emb); return } // same page when the booking service supports it
       if (!r.ok || !j.url) { setMsg(j.error || 'Checkout failed. Email help@brxs.ca.'); return }
       window.location.assign(j.url)
     } catch {
@@ -176,8 +180,10 @@ export default function PropertyCheckoutForm({ onRequest }: { onRequest: () => v
         </fieldset>
         {s && <div className="total"><span className="hint">Plus HST.</span><b data-testid="pc-total">{money(s.cents)}</b></div>}
         <div className="msg" role="alert">{msg}</div>
+        {embedded ? <EmbeddedPay session={embedded} onBack={() => setEmbedded(null)} note="" /> : (<>
         {notCovered ? <NotInArea input={covInput} email={f.contact_email} /> : <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Opening checkout…' : 'Continue to payment'}</button>}
         <p className="hint">Secure checkout by Stripe.</p>
+        </>)}
       </form>
       <aside>
         <h3>How it works</h3>

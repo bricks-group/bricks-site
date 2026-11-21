@@ -14,6 +14,7 @@ import LegalDocSheet from '@/components/legal/LegalDocSheet'
 import type { LegalDocKey } from '@/lib/legal-docs'
 import MapCutout from '@/components/MapCutout'
 import BricksLoader from '@/components/BricksLoader'
+import EmbeddedPay, { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
 import { type BookPrefill, bookTypeOption, canSkipToPackages, readBookPrefill, readHandoff } from '@/lib/book-prefill'
 import { type Recommendation, compactMoney, recommendPackage } from '@/lib/book-recommend'
 import { oaiqMayHoldContact, oaiqOrderCreated } from '@/lib/oaiq'
@@ -217,6 +218,7 @@ export default function BookingWizard() {
   const [slotsLive, setSlotsLive] = useState(false)
   const [slotsHint, setSlotsHint] = useState('Pick a date to see clock times.')
   const [paying, setPaying] = useState(false)
+  const [embedded, setEmbedded] = useState<EmbeddedSession | null>(null)
   const [doneTitle, setDoneTitle] = useState('Payment started.')
   const [doneMsg, setDoneMsg] = useState('Redirecting to secure checkout…')
   const [scheduleCtaVisible, setScheduleCtaVisible] = useState(false)
@@ -622,6 +624,7 @@ export default function BookingWizard() {
     }
   }
   function goPrev(s: number) {
+    setEmbedded(null)
     setStep(s - 1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -681,6 +684,8 @@ export default function BookingWizard() {
       staging_images: VIRTUAL_STAGING_ENABLED && staging ? Math.max(1, stagingImages || 1) : 0,
       visit_addon: visit,
       notes: combinedNotes || null,
+      // Pay on this page when the server can; it falls back to the hosted page.
+      ui_mode: 'embedded',
     }
     // Same-origin Next API — bypasses Canada Edge Fair-Use 402.
     fetch('/api/create-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
@@ -688,6 +693,13 @@ export default function BookingWizard() {
       .then((res) => {
         if (!res.ok && isNotCoveredCode(res.j?.code)) { evt('checkout_failed', { reason: 'not_covered' }); setPaying(false); markNotCovered(); return }
         if (!res.ok) { evt('checkout_failed', { reason: 'create_checkout_error' }); setErrs((e) => ({ ...e, 3: 'Checkout failed: ' + (res.j.error || 'try again') })); setPaying(false); return }
+        const emb = embeddedFrom(res.j)
+        if (emb) {
+          evt('checkout_embedded', { total: quote ? quote.total : null })
+          setEmbedded(emb)
+          setPaying(false)
+          return
+        }
         setDoneTitle('Redirecting to secure checkout…')
         evt('checkout_redirected', { total: quote ? quote.total : null })
         window.location.href = res.j.url
@@ -960,8 +972,14 @@ export default function BookingWizard() {
               </p>
               <p style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" onClick={openLegal('terms')} style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" onClick={openLegal('privacy')} style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule above.</p>
               <LegalDocSheet doc={legalOpen} read={legalOpen ? !!legalRead[legalOpen] : false} onRead={(k) => setLegalRead((r) => ({ ...r, [k]: true }))} onClose={() => setLegalOpen(null)} />
-              <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Starting checkout…' : 'Pay & book'}</button></div>
-              <p className="hint-sm" style={{ margin: '12px 0 0' }}>Have a launch code? Enter it at checkout.</p>
+              {embedded ? (
+                <EmbeddedPay session={embedded} onBack={() => setEmbedded(null)} />
+              ) : (
+                <>
+                  <div className="nav-btns"><button type="button" className="btn btn-ghost" onClick={() => goPrev(3)}>← Back</button><button type="button" className="btn btn-brick" disabled={paying} onClick={pay}>{paying ? 'Opening payment…' : 'Pay & book'}</button></div>
+                  <p className="hint-sm" style={{ margin: '12px 0 0' }}>Have a launch code? Enter it at checkout.</p>
+                </>
+              )}
             </div>
           </form>
         )}

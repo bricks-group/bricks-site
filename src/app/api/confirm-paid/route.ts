@@ -21,6 +21,22 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: 'session_id (cs_…) is required' }, { status: 400 })
   }
 
+  // Preview Workers run on Stripe test keys: check the test session here and
+  // never hand it to the live booking service (no jobs from test payments).
+  const sk = (process.env.STRIPE_SECRET_KEY || '').trim()
+  if (process.env.PREVIEW_CONFIRM_LOCAL === '1' && sk.startsWith('sk_test_') && sessionId.startsWith('cs_test_')) {
+    try {
+      const r = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, {
+        headers: { Authorization: `Bearer ${sk}` },
+      })
+      const s = (await r.json().catch(() => ({}))) as { status?: string; payment_status?: string }
+      const paid = r.ok && s.status === 'complete' && s.payment_status === 'paid'
+      return NextResponse.json({ ok: paid, preview: true, agent_user_id: null }, { status: paid ? 200 : 409 })
+    } catch {
+      return NextResponse.json({ ok: false, preview: true }, { status: 502 })
+    }
+  }
+
   try {
     const res = await fetch(OS_CONFIRM_PAID, {
       method: 'POST',

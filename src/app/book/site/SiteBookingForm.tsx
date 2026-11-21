@@ -6,6 +6,7 @@ import { TERMS_VERSION } from '@/lib/terms-version'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import BricksLoader from '@/components/BricksLoader'
+import EmbeddedPay, { type EmbeddedSession, embeddedFrom } from '@/components/EmbeddedPay'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { signupUrl } from '@/lib/brand'
 import { propertyTax, provinceFromAddress } from '@/lib/property-tax'
@@ -71,6 +72,7 @@ const css = `
 
 export default function SiteBookingForm() {
   const params = useSearchParams()
+  const [embedded, setEmbedded] = useState<EmbeddedSession | null>(null)
   const [mode, setMode] = useState<'one_off' | 'plan'>(params.get('plan') ? 'plan' : 'one_off')
   const [service, setService] = useState<'visual_visit' | 'mapped_visit'>(params.get('service') === 'mapped' ? 'mapped_visit' : 'visual_visit')
   const [firstMapped, setFirstMapped] = useState(true)
@@ -154,14 +156,17 @@ export default function SiteBookingForm() {
       const r = await fetch('/api/book/commercial-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       const j = (await r.json().catch(() => ({}))) as { ok?: boolean; url?: string; error?: string; code?: string }
       if (isNotCoveredCode(j.code)) { setNotCoveredKey(coverageKey(input)); return }
-      if (!r.ok || !j.ok || !j.url) { setMsg(j.error || 'Could not start checkout. Email help@brxs.ca.'); return }
+      const emb = embeddedFrom(j)
+      if (!r.ok || !j.ok || (!j.url && !emb)) { setMsg(j.error || 'Could not start checkout. Email help@brxs.ca.'); return }
       try {
         sessionStorage.setItem(EMAIL_KEY, String(payload.contact_email || ''))
         sessionStorage.setItem(PHONE_KEY, oaiqMayHoldContact() ? String(payload.contact_phone || '') : '')
         sessionStorage.setItem(PLAN_KEY, mode === 'plan' ? '1' : '0')
       } catch { /* best-effort */ }
       evt('site_booking_checkout', { mode, service: String(payload.service_key || payload.plan_key) })
-      window.location.href = j.url
+      // Same page when the booking service returns an embedded session; else the hosted page.
+      if (emb) { setEmbedded(emb); return }
+      window.location.href = j.url as string
     } catch {
       setMsg('Network error. Please email help@brxs.ca.')
     } finally {
@@ -282,12 +287,13 @@ export default function SiteBookingForm() {
 
         <p className="terms-line" style={{ fontSize: 11.5, color: 'var(--inkFaint)', marginTop: 12 }}>By paying you agree to our <Link href="/terms" style={{ color: 'var(--brickDeep)' }}>Terms</Link> and <Link href="/privacy" style={{ color: 'var(--brickDeep)' }}>Privacy Policy</Link>, including the cancellation and no-show schedule.</p>
         <div className="cta-row">
-          {notCovered ? <NotInArea input={covInput} /> : (
+          {embedded ? null : notCovered ? <NotInArea input={covInput} /> : (
           <button type="submit" className="btn btn-brick" disabled={busy}>{busy && <BricksLoader variant="cycle" size={16} color="currentColor" style={{ marginRight: 8 }} />}{busy ? 'Opening checkout…' : 'Continue to payment'}</button>
           )}
           <a className="btn btn-sec" href="/builders#quote">Talk to us instead</a>
         </div>
         <div className="msg" role="status">{msg}</div>
+        {embedded && <EmbeddedPay session={embedded} onBack={() => setEmbedded(null)} note="" />}
       </form>
 
       <aside aria-label="Summary">
