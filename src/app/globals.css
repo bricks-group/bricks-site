@@ -80,11 +80,8 @@ html[data-bx-auth="in"] .nav-auth-out{display:none !important;}
 html[data-bx-auth="in"] .nav-auth-in{display:inline-flex !important;}
 html[data-bx-auth="in"] .nav-open{color:var(--ink);}
 @media (max-width:899px){html[data-bx-auth="in"] .nav-actions .nav-logout{display:none !important;}}
-.drawer-links .drawer-logout{font:inherit;font-size:32px;font-weight:500;letter-spacing:-0.8px;line-height:1.2;
-  color:var(--ink);background:none;border:none;border-bottom:1px solid var(--hair);border-radius:0;
-  padding:10px 0;text-align:left;cursor:pointer;width:100%;}
-.drawer-links .drawer-logout:hover{color:var(--brickDeep);}
-html[data-bx-auth="in"] .drawer-links .nav-auth-in{display:block !important;}
+/* Signed-in drawer rows (Open Bricks, Log out) use the same .drawer-row look as every other row. */
+html[data-bx-auth="in"] .drawer-links .nav-auth-in{display:flex !important;}
 /* Signed in adds one item on the right: below 1180 the symmetric 1fr columns would overflow,
    so side columns go content-sized; under 1080 Contact steps out (still in the footer). */
 /* (this branch's longer primary links need content-sized side columns at every desktop width) */
