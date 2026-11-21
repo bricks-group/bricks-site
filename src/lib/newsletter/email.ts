@@ -14,13 +14,18 @@ export function listUnsubscribeHeaders(base: string, unsubToken: string): Record
   }
 }
 
+/** postal may already start with "Bricks Group ·" (prod CASL line). */
+function identityLine(postal: string): string {
+  const p = postal.trim()
+  return /^bricks group\b/i.test(p) ? p : `Bricks Group · ${p}`
+}
 export function footerHtml(base: string, unsubToken: string, postal: string): string {
   return `<p style="margin:32px 0 0;padding-top:16px;border-top:1px solid #E4DED6;font-size:12px;line-height:1.6;color:#8A8178">`
-    + `Bricks Group · ${esc(postal)} · <a href="mailto:${NEWSLETTER_REPLY_TO}" style="color:#8A8178">${NEWSLETTER_REPLY_TO}</a><br>`
+    + `${esc(identityLine(postal))} · <a href="mailto:${NEWSLETTER_REPLY_TO}" style="color:#8A8178">${NEWSLETTER_REPLY_TO}</a><br>`
     + `<a href="${esc(unsubscribePageUrl(base, unsubToken))}" style="color:#8A8178">Unsubscribe</a></p>`
 }
 export function footerText(base: string, unsubToken: string, postal: string): string {
-  return `\n--\nBricks Group · ${postal} · ${NEWSLETTER_REPLY_TO}\nUnsubscribe: ${unsubscribePageUrl(base, unsubToken)}\n`
+  return `\n--\n${identityLine(postal)} · ${NEWSLETTER_REPLY_TO}\nUnsubscribe: ${unsubscribePageUrl(base, unsubToken)}\n`
 }
 
 function frame(inner: string): string {

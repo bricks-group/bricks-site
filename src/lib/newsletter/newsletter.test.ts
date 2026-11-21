@@ -45,7 +45,8 @@ describe('newsletter emails (CASL + RFC 8058)', () => {
     const m = confirmEmail({ to: 'a@b.ca', base, confirmToken: 'CT', unsubToken: 'UT', postal: 'Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada' })
     assert.equal(m.from, 'Raphael at Bricks <hello@brxs.ca>')
     for (const body of [m.html, m.text]) {
-      assert.match(body, /Bricks Group/)
+      assert.match(body, /Bricks Group · 6330 Montevideo Road/)
+      assert.equal((body.match(/Bricks Group/g) || []).length, 1)
       assert.match(body, /6330 Montevideo Road, Mississauga, ON L5N 3V2/)
       assert.match(body, /\/newsletter\/unsubscribe\?t=UT/)
       assert.match(body, /\/newsletter\/confirm\?t=CT/)
