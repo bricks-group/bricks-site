@@ -27,10 +27,10 @@ export default function AccountDeletionPage() {
           <span className="badge">Legal</span>
           <h1>Delete your account</h1>
           <p className="sub">
-            For accounts in the Bricks apps (photographers and vendors, or real estate offices), made by
-            Bricks Group, Ontario, Canada.
+            For accounts in the Bricks apps (agents booking shoots, photographers and vendors, or real estate
+            offices), made by Bricks Group, Ontario, Canada.
           </p>
-          <div className="updated">Updated · 11 October 2026</div>
+          <div className="updated">Updated · 21 November 2026</div>
         </div>
       </section>
 
@@ -38,6 +38,10 @@ export default function AccountDeletionPage() {
         <section className="block" id="in-app">
           <h2>Delete it in the app</h2>
           <ul>
+            <li>
+              <strong>Agent booking accounts:</strong> open <strong>Profile</strong>, tap <strong>Delete account</strong>, then
+              confirm. On the web, open <strong>Account</strong> (your email, top right), then <strong>Delete account</strong>.
+            </li>
             <li>
               <strong>Photographer and vendor accounts:</strong> open the <strong>Me</strong> tab, tap <strong>Delete account</strong>, then
               confirm.
