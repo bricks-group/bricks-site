@@ -34,7 +34,7 @@ export function fullReference(): string {
     ...TRADES.map((trade) => `- ${trade.name}: ${trade.short}`),
     'Home services are by written quote. Nothing is booked or charged until the client approves the quote. A measurement is not a legal land survey; Bricks refers legal land surveys to an Ontario Land Surveyor.', '',
     '## Contact', `Source: ${BASE}/contact`, '',
-    '- Support: help@brxs.ca', '- General enquiries: hello@brxs.ca', '- Privacy: privacy@brxs.ca', '',
+    '- Support: help@brxs.ca', '- General enquiries: hello@brxs.ca', '- Vendor and job applications: careers@brxs.ca', '- Privacy: privacy@brxs.ca', '',
   ]
   for (const [url, faqs] of [[`${BASE}/`, HOME_FAQS], [`${BASE}/media`, MEDIA_FAQS], [`${BASE}/builders`, SITE_PROGRESS_FAQS]] as const) {
     lines.push(`## Questions answered on ${url}`, '')

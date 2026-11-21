@@ -297,7 +297,7 @@
   fetch('/legal/ic-agreement.txt')
     .then(function(r){ return r.ok ? r.text() : Promise.reject(); })
     .then(function(t){ document.getElementById('icBox').textContent = t; })
-    .catch(function(){ document.getElementById('icBox').textContent = 'Could not load agreement. Please email support@brxs.ca for the full text.'; });
+    .catch(function(){ document.getElementById('icBox').textContent = 'Could not load agreement. Please email help@brxs.ca for the full text.'; });
 
   document.getElementById('f_spec_drone').addEventListener('change', function(e){
     document.getElementById('droneBlock').style.display = e.target.checked ? 'block' : 'none';

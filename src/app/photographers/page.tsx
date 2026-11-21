@@ -7,6 +7,7 @@ import { ORG_ID } from '@/lib/schema'
 import { Rows } from '@/components/calm/Calm'
 import { OG_IMAGE } from '@/lib/og'
 import { legalPartyName } from '@/lib/legal-config'
+import { CAREERS_EMAIL } from '@/lib/careers'
 
 const OG = OG_IMAGE
 
@@ -211,7 +212,7 @@ export default function PhotographersPage() {
             <div>
               <h2>Join the network.</h2>
             </div>
-            <p>Takes about four minutes.</p>
+            <p>Takes about four minutes. Questions? Email <a href={`mailto:${CAREERS_EMAIL}`}>{CAREERS_EMAIL}</a>.</p>
           </div>
           <PhotographerForm />
         </section>

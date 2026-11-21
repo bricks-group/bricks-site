@@ -8,6 +8,7 @@ import TradeApplyForm from '../TradeApplyForm'
 import { DISPUTES, PAYOUT_TIMING, tradePay } from '@/lib/trade-pricing'
 import '@/components/home-services/home-services.css'
 import { OG_IMAGE } from '@/lib/og'
+import { CAREERS_EMAIL } from '@/lib/careers'
 
 export const dynamicParams = false
 
@@ -65,7 +66,7 @@ export default async function TradeApplyPage({ params }: { params: Promise<{ tra
       </section>
 
       <section className="cm-sec hs-quote" id="apply" aria-label="Application">
-        <Head title="Apply." lede="No photo samples are needed for this trade." />
+        <Head title="Apply." lede={`No photo samples are needed for this trade. Questions? Email ${CAREERS_EMAIL}.`} />
         <TradeApplyForm trade={t} />
       </section>
     </div>

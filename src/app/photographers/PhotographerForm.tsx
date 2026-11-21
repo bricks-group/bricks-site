@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { LegalDocRows, LegalDocSheet, useLegalReads } from '@/components/legal/LegalDocRows'
 import { lockedReason, type LegalDocKey } from '@/lib/legal-docs'
 import { legalPartyName } from '@/lib/legal-config'
+import { CAREERS_EMAIL } from '@/lib/careers'
 
 // The applicant must open and scroll through both before the agreement checkbox unlocks.
 const APPLY_DOCS: readonly LegalDocKey[] = ['ic', 'privacy']
@@ -320,7 +321,7 @@ export default function PhotographerForm() {
       <div className="success-box aform">
         <div className="check">✓</div>
         <h3>Application received.</h3>
-        <p>We&apos;ll review your photos and be in touch within 3 business days. Check your email — including spam.</p>
+        <p>We&apos;ll review your photos and be in touch within 3 business days. Check your email — including spam. Questions? Email <a href={`mailto:${CAREERS_EMAIL}`}>{CAREERS_EMAIL}</a>.</p>
       </div>
     )
   }

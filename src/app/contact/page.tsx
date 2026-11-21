@@ -54,6 +54,7 @@ export default function ContactPage() {
           <div className="contact-grid">
             <div className="c"><div className="l">Support</div><div className="v"><a href="mailto:help@brxs.ca">help@brxs.ca</a></div><p>For help with your account, a booking or delivered media. Include a booking reference if you have one.</p></div>
             <div className="c"><div className="l">General enquiries</div><div className="v"><a href="mailto:hello@brxs.ca">hello@brxs.ca</a></div><p>For general questions about Bricks software, listing media, Virtual Visit or Site Progress services.</p></div>
+            <div className="c"><div className="l">Work with Bricks</div><div className="v"><a href="mailto:careers@brxs.ca">careers@brxs.ca</a></div><p>For vendor and job applications: photographers, pilots, inspectors, stagers, cleaners and other trades.</p></div>
             <div className="c"><div className="l">Privacy</div><div className="v"><a href="mailto:privacy@brxs.ca">privacy@brxs.ca</a></div><p>For questions about personal information or to make a privacy request. Do not include passwords or payment details.</p></div>
             <div className="c"><div className="l">Phone</div><div className="v"><a href="tel:+12893127425">(289) 312-7425</a></div></div>
             <div className="c"><div className="l">Service area</div><div className="v">Canada-wide</div></div>

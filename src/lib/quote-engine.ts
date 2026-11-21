@@ -83,7 +83,7 @@ async function geocode(address: string): Promise<{ lat: number; lon: number; dis
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&countrycodes=ca`
   try {
     const r = await fetch(url, {
-      headers: { 'User-Agent': 'BricksPreLaunch/1.0 (booking@brxs.ca)' },
+      headers: { 'User-Agent': 'BricksPreLaunch/1.0 (help@brxs.ca)' },
     })
     const j = await r.json()
     if (Array.isArray(j) && j.length) {

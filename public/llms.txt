@@ -50,7 +50,7 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 
 ## Support and policies
 
-- [Contact](https://www.brxs.ca/contact): help@brxs.ca for support; hello@brxs.ca for general enquiries; privacy@brxs.ca for privacy.
+- [Contact](https://www.brxs.ca/contact): help@brxs.ca for support; hello@brxs.ca for general enquiries; careers@brxs.ca for vendor and job applications; privacy@brxs.ca for privacy.
 - [Help centre](https://www.brxs.ca/help): Product and service questions, booking, billing and support.
 - [Help article index](https://www.brxs.ca/help/llms.txt): Source links for every published help article.
 - [Terms](https://www.brxs.ca/terms): Binding booking and cancellation terms. Delivery times are targets, not guarantees.

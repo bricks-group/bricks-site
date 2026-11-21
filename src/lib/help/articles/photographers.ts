@@ -41,7 +41,7 @@ export const PHOTOGRAPHERS: Article[] = [
         `Read and accept the independent contractor agreement, then submit.`,
       ),
       h(`What we look at`),
-      p(`Verticals, exposure, window views, colour and composition. Bricks checks photos and kit automatically, and a person makes every decision. Expect a reply within 1–3 business days. Check spam too.`),
+      p(`Verticals, exposure, window views, colour and composition. Bricks checks photos and kit automatically, and a person makes every decision. Expect a reply within 1–3 business days. Questions before you apply? Email [careers@brxs.ca](mailto:careers@brxs.ca). Check spam too.`),
       h(`Minimum kit for interiors`),
       ul(
         `An interchangeable-lens camera, full-frame or APS-C.`,

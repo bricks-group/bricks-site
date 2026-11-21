@@ -11,6 +11,7 @@ export const CONTACT: Article[] = [
       table(['For', 'Contact'], [
         ['Support', '[help@brxs.ca](mailto:help@brxs.ca)'],
         ['General enquiries', '[hello@brxs.ca](mailto:hello@brxs.ca)'],
+        ['Applications and work with Bricks', '[careers@brxs.ca](mailto:careers@brxs.ca)'],
         ['Privacy', '[privacy@brxs.ca](mailto:privacy@brxs.ca)'],
         ['Phone', '[(289) 312-7425](tel:+12893127425)'],
       ]),
