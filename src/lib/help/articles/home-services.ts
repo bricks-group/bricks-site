@@ -127,7 +127,7 @@ export const HOME_SERVICES: Article[] = onSale([
     title: `Handyman and repairs`,
     summary: `Small repairs and deficiency lists at set prices. No electrical, plumbing or gas work.`,
     body: [
-      p(`[Book a handyman](/services#book-repairs) for the small jobs that hold up a listing or a turnover. $149 for the first hour with travel, then $47.50 per 30 minutes. $449 for a half day, $849 for a full day. Materials at cost with the receipt.`),
+      p(`[Book a handyman](/services#book-repairs) for the small jobs that hold up a listing or a turnover. $149 for the first hour with travel, then $47.50 per 30 minutes. $449 for a half day. Materials at cost with the receipt.`),
       h(`What's included`),
       ul(
         `Drywall patches and paint touch-ups.`,
@@ -137,10 +137,10 @@ export const HOME_SERVICES: Article[] = onSale([
         `Deficiency lists from an inspection or a walkthrough.`,
       ),
       h(`What's not included`),
-      p(`Repairs don't include electrical, plumbing or gas work. Hire a licensed electrician, plumber or gas contractor for those. Larger renovations are out of scope too.`),
+      p(`Repairs don't include electrical, plumbing or gas work. Hire a licensed electrician, plumber or gas contractor for those. Handyman jobs top out at a half day. Bigger jobs go to our specialist trades.`),
       flow(
-        ['Book', 'Pick the hour, half day or full day, and send the list.'],
-        ['Pay', 'Pay the set price from the email with your time.'],
+        ['Book', 'Pick the hour or the half day, and send the list.'],
+        ['Pay', 'Pay the set price when you book.'],
         ['Extra time', 'You approve any extra 30 minutes in Bricks first.'],
         ['Done', 'Before and after photos for each item, kept with the property.'],
       ),
@@ -201,7 +201,7 @@ export const TRADE_VENDORS: Article[] = onSale([
       h(`Never through Bricks`),
       p(`Electrical, plumbing and gas work are out of scope, even when you hold the licence. Tell the client to hire a licensed electrician, plumber or gas contractor, and flag it in the job notes.`),
       h(`Time and photos`),
-      p(`Jobs are booked by the hour, half day or full day at a set price. Extra time goes in 30 minute blocks the client approves in Bricks first. Keep material receipts; they're paid back at cost. Take a before and an after photo of each item.`),
+      p(`Jobs are booked by the hour or the half day at a set price, never longer. Bigger jobs go to our specialist trades. Extra time goes in 30 minute blocks the client approves in Bricks first. Keep material receipts; they're paid back at cost. Take a before and an after photo of each item.`),
     ],
     related: ['apply-as-a-home-services-vendor', 'insurance-for-home-services-vendors'],
   },

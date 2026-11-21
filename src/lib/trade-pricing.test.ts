@@ -12,7 +12,8 @@ test('every trade is on sale with a set price for each scope', () => {
 })
 
 test('handyman and floor plan prices', () => {
-  assert.deepEqual(tradePrices('repairs').slice(0, 4).map((p) => p.price), ['$149', '$47.50', '$449', '$849'])
+  assert.deepEqual(tradePrices('repairs').slice(0, 3).map((p) => p.price), ['$149', '$47.50', '$449'])
+  assert.ok(!tradePrices('repairs').some((p) => p.key === 'rep_day'), 'no handyman full day')
   assert.equal(tradeFrom('measurement'), '$99')
   assert.equal(tradeFrom('cleaning'), '$229')
 })
@@ -29,4 +30,12 @@ test('no quote words in client copy', () => {
     assert.doesNotMatch(text, /quot/i, t.slug)
   }
   assert.equal(tradePay('staging')[1].pay, '80% of the price')
+})
+
+test('checkout refuses the retired handyman full day', async () => {
+  const { priceTrade } = await import('./trade-checkout')
+  const r = priceTrade({ trade: 'repairs', scope: 'rep_day', address: '12 King St W, Toronto, ON' })
+  assert.equal(r.ok, false)
+  const half = priceTrade({ trade: 'repairs', scope: 'rep_half', address: '12 King St W, Toronto, ON' })
+  assert.ok(half.ok && half.quote.subtotal_cents === 44900)
 })

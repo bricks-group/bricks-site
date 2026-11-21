@@ -1,5 +1,5 @@
 {
- "version": "2026-11-21.1",
+ "version": "2026-11-21.2",
  "decided_by": "Owner, 21 Nov 2026",
  "currency": "CAD",
  "tax": "before GST/HST",
@@ -440,17 +440,6 @@
     ]
    },
    {
-    "key": "rep_day",
-    "name": "Full day, 8 hours",
-    "price": 849,
-    "unit": "per job",
-    "payout": [
-     314.15,
-     356.6,
-     407.5
-    ]
-   },
-   {
     "key": "rep_materials",
     "name": "Materials",
     "price_rule": "at cost with receipt",
@@ -481,5 +470,6 @@
   }
  },
  "payout_timing": "Weekly, Monday 9:00 am Toronto, for jobs delivered and approved. First 3 jobs held until the client rates or auto-release.",
- "disputes": "help@brxs.ca within 30 days"
+ "disputes": "help@brxs.ca within 30 days",
+ "repairs_scope": "Handyman work tops out at a half day. Bigger jobs go to our specialist trades."
 }

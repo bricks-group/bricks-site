@@ -211,15 +211,15 @@ export const ALL_TRADES: readonly Trade[] = [
       { title: 'Investors and builders', detail: 'Deficiency lists and punch lists.' },
     ],
     receive: [
-      { title: 'A set price', detail: 'By the hour, half day or full day. Materials at cost with the receipt. You approve any extra time in Bricks.' },
+      { title: 'A set price', detail: 'By the hour or the half day. Materials at cost with the receipt. You approve any extra time in Bricks.' },
       { title: 'Before and after photos', detail: 'For each item, kept with the property in your Bricks account.' },
       { title: 'A vetted network', detail: 'A person reviews every application. Repair vendors must carry $2M liability insurance, and Bricks checks the proof before they take jobs.' },
     ],
     rules: [
       'Repairs don’t include electrical, plumbing or gas work. Hire a licensed electrician, plumber or gas contractor for those.',
-      'Larger renovations are out of scope.',
+      'Handyman jobs top out at a half day. Bigger jobs go to our specialist trades.',
     ],
-    scopes: ['rep_1h', 'rep_half', 'rep_day'],
+    scopes: ['rep_1h', 'rep_half'],
     apply: {
       role: 'Handyman and repair vendors',
       lede: 'Handymen and small repair companies who work through lists cleanly and photograph their work.',
