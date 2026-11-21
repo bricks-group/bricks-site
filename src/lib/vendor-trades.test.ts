@@ -17,15 +17,15 @@ function strayingSurvey(text: string): boolean {
 }
 
 describe('home services pages', () => {
-  it('lists every page in the sitemap, llms.txt and footer, and the hub in the nav drawer', () => {
+  it('lists every page in the sitemap and llms.txt, the footer links the hub, and the hub in the nav drawer', () => {
     const sitemap = read('../app/sitemap.ts')
     const llms = read('../../public/llms.txt')
     const footer = read('../components/Footer.tsx')
     for (const p of [...PAGES, ...APPLY]) assert.ok(sitemap.includes(`path: '${p}'`), `sitemap misses ${p}`)
     for (const p of [...PAGES, '/work-with-bricks', ...TRADE_SLUGS.map((s) => `/services#${s}`)]) {
       assert.ok(llms.includes(`https://www.brxs.ca${p})`), `llms.txt misses ${p}`)
-      assert.ok(footer.includes(`href="${p}"`), `footer misses ${p}`)
     }
+    assert.ok(footer.includes('href="/services"'), 'footer links the services hub')
     for (const s of TRADE_SLUGS) assert.ok(!sitemap.includes(`path: '/${s}'`), `sitemap still lists /${s}`)
     assert.ok(read('../components/Nav.tsx').includes('href="/services"'))
   })

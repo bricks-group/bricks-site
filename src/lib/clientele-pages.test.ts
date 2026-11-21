@@ -43,10 +43,10 @@ test('new pages are in the sitemap, llms.txt, footer and drawer', () => {
   const llms = read('public/llms.txt')
   const footer = read('src/components/Footer.tsx')
   const nav = read('src/components/Nav.tsx')
+  assert.ok(footer.includes('href="/investors"') && footer.includes('href="/teams"'), 'footer keeps short audience list')
   for (const path of ['/investors', '/commercial', '/property-managers', '/teams', '/reits']) {
     assert.ok(sitemap.includes(`'${path}'`), `sitemap ${path}`)
     assert.ok(llms.includes(`https://www.brxs.ca${path}`), `llms ${path}`)
-    assert.ok(footer.includes(`href="${path}"`), `footer ${path}`)
     assert.ok(nav.includes(`href="${path}"`), `drawer ${path}`)
   }
 })
