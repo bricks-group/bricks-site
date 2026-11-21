@@ -300,7 +300,7 @@ html.reveal-ready .rvl.in{opacity:1;transform:translateY(0);}
   .hero h1{font-size:34px;}
   .wrap{padding:0 var(--gutter);}
   .drawer{padding:14px var(--gutter) 40px;}
-  .drawer-links a,.drawer-links .drawer-logout{font-size:26px;}
+  .drawer-links a{font-size:26px;}
   .foot-inner{grid-template-columns:1fr 1fr;padding:32px var(--gutter) 16px;gap:8px 20px;}
   .foot-brand{grid-column:1 / -1;margin-bottom:8px;}
   .foot-col .foot-heading{margin:0 0 4px;padding-top:6px;}
