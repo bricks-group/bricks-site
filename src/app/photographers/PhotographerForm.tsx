@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { LegalDocRows, LegalDocSheet, useLegalReads } from '@/components/legal/LegalDocRows'
 import { lockedReason, type LegalDocKey } from '@/lib/legal-docs'
+import { legalPartyName } from '@/lib/legal-config'
 
 // The applicant must open and scroll through both before the agreement checkbox unlocks.
 const APPLY_DOCS: readonly LegalDocKey[] = ['ic', 'privacy']
@@ -533,7 +534,7 @@ export default function PhotographerForm() {
       )}
 
       <div className="fsec">Independent contractor agreement</div>
-      <p className="hint-sm" style={{ margin: '0 0 4px' }}>Open and read both documents before accepting. The agreement governs your relationship with Bricks Group as an independent contractor under Ontario law.</p>
+      <p className="hint-sm" style={{ margin: '0 0 4px' }}>Open and read both documents before accepting. The agreement governs your relationship with {legalPartyName()} as an independent contractor under Ontario law.</p>
       <LegalDocRows docs={APPLY_DOCS} read={legal.read} onOpen={legal.setOpen} />
       <label className={`ic-accept${legal.done ? '' : ' is-locked'}`} onClick={() => { if (!legal.done) setShowWhy(true) }}>
         <input
@@ -545,7 +546,7 @@ export default function PhotographerForm() {
           onChange={(e) => { if (!legal.done) { setShowWhy(true); return } setAccept(e.target.checked) }}
           data-testid="apply-accept-checkbox"
         />
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.9</strong> with Bricks Group. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes and equipment; and that Transport Canada drone regulations are my sole responsibility.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.9</strong> with {legalPartyName()}. I understand I am an independent contractor, not an employee; that I am responsible for my own taxes and equipment; and that Transport Canada drone regulations are my sole responsibility.</span>
       </label>
       {acceptMsg ? <p id="f_accept_why" className="ic-why" role="status">{acceptMsg}</p> : null}
       <LegalDocSheet doc={legal.open} read={legal.open ? !!legal.read[legal.open] : false} onRead={legal.markRead} onClose={() => legal.setOpen(null)} />

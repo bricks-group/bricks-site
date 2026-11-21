@@ -3,19 +3,22 @@ import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
 import { VIRTUAL_STAGING_ENABLED } from '@/lib/pricing'
 import { OG_IMAGE } from '@/lib/og'
+import { legalPartyName } from '@/lib/legal-config'
+
+const DPA_DESC = `Read the ${legalPartyName()} Data Processing Agreement for brokerages, teams and enterprise clients handling third-party personal data through the Bricks platform.`
 
 export const metadata: Metadata = {
   title: 'Data Processing Agreement — Bricks',
-  description: "Read the Bricks Group Data Processing Agreement for brokerages, teams and enterprise clients handling third-party personal data through the Bricks platform.",
+  description: DPA_DESC,
   alternates: { canonical: '/dpa' },
   openGraph: { images: [OG_IMAGE],
     title: 'Data Processing Agreement — Bricks',
-    description: "Read the Bricks Group Data Processing Agreement for brokerages, teams and enterprise clients handling third-party personal data through the Bricks platform.",
+    description: DPA_DESC,
   },
   twitter: {
     card: 'summary',
     title: 'Data Processing Agreement — Bricks',
-    description: "Read the Bricks Group Data Processing Agreement for brokerages, teams and enterprise clients handling third-party personal data through the Bricks platform.",
+    description: DPA_DESC,
   },
 }
 
@@ -47,7 +50,7 @@ export default function DpaPage() {
         <section className="block">
           <h2>1. Definitions</h2>
           <p>&quot;<strong>Controller</strong>&quot; means the Client who determines the purposes and means of processing personal data of their agents, staff, and property owners.</p>
-          <p>&quot;<strong>Processor</strong>&quot; means Bricks Group, which processes personal data on behalf of the Controller in connection with the Bricks platform.</p>
+          <p>&quot;<strong>Processor</strong>&quot; means {legalPartyName()}, which processes personal data on behalf of the Controller in connection with the Bricks platform.</p>
           <p>&quot;<strong>Sub-Processor</strong>&quot; means a third party engaged by Bricks to assist in processing personal data.</p>
           <p>&quot;<strong>Personal Data</strong>&quot; means any information relating to an identified or identifiable natural person processed through the Bricks platform in connection with the Controller&apos;s use of the service.</p>
           <p>&quot;<strong>Applicable Law</strong>&quot; means PIPEDA and any applicable provincial privacy legislation including Ontario&apos;s privacy framework.</p>
@@ -208,7 +211,7 @@ export default function DpaPage() {
             <br />
             Phone: <span className="mono">(289) 312-7425</span>
             <br />
-            Bricks Group · Ontario, Canada
+            {legalPartyName()} · Ontario, Canada
           </p>
           <p>
             Also see <Link href="/legal">/legal</Link>, <Link href="/privacy">/privacy</Link>, and{' '}

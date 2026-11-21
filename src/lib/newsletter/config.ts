@@ -1,12 +1,13 @@
 type Env = Record<string, string | undefined>
+import { legalPartyName } from '@/lib/legal-config'
 
 export const NEWSLETTER_FROM = 'Raphael at Bricks <hello@brxs.ca>'
 export const NEWSLETTER_REPLY_TO = 'hello@brxs.ca'
 export const ALERT_FROM = 'Bricks Alerts <alerts@brxs.ca>'
 export const DEFAULT_ALERT_TO = 'raph@brxs.ca'
 /** CASL: every message names the sender and a mailing address. Set the full address in NEWSLETTER_POSTAL_ADDRESS. */
-export const DEFAULT_POSTAL = 'Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada'
-export const CONSENT_TEXT = 'By signing up you agree to get email updates from Bricks Group. Unsubscribe anytime.'
+export const DEFAULT_POSTAL = `${legalPartyName()} · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada`
+export const CONSENT_TEXT = `By signing up you agree to get email updates from ${legalPartyName()}. Unsubscribe anytime.`
 
 export const newsletterSecret = (env: Env = process.env) => (env.NEWSLETTER_SECRET || '').trim()
 /** Sending key (restricted keys are fine). */

@@ -5,21 +5,24 @@ import { Head, Rows, Close } from '@/components/calm/Calm'
 import { BRICKS_DEFINITION, ABOUT_FAQS } from '@/lib/public-content'
 import PublicFaqs from '@/components/PublicFaqs'
 import { OG_IMAGE } from '@/lib/og'
+import { legalPartyName } from '@/lib/legal-config'
+
+const ABOUT_DESC = `Bricks is software for Canadian real estate from ${legalPartyName()} in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.`
 
 export const metadata: Metadata = {
   title: 'About Bricks: The System for Canadian Real Estate',
-  description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
+  description: ABOUT_DESC,
   alternates: { canonical: '/about' },
   openGraph: { images: [OG_IMAGE],
     type: 'website',
     title: 'About Bricks',
-    description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
+    description: ABOUT_DESC,
     url: 'https://www.brxs.ca/about',
   },
   twitter: {
     card: 'summary',
     title: 'About Bricks',
-    description: 'Bricks is software for Canadian real estate from Bricks Group in Mississauga, Ontario. Builders, agents, brokerages and property managers, on one record.',
+    description: ABOUT_DESC,
   },
 }
 
@@ -49,7 +52,7 @@ export default function AboutPage() {
       <section className="hero">
         <div className="wrap">
           <h1>About Bricks.</h1>
-          <p className="sub">Bricks Group builds Bricks in Mississauga, Ontario: real estate software for builders, brokerages, agents, property managers and vendors.</p>
+          <p className="sub">{legalPartyName()} builds Bricks in Mississauga, Ontario: real estate software for builders, brokerages, agents, property managers and vendors.</p>
         </div>
       </section>
 

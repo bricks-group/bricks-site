@@ -1,4 +1,5 @@
 /**
+import { legalPartyName } from '@/lib/legal-config'
  * Contact inbox delivery for /api/contact and /api/book/property-request.
  *
  * Sends through Resend directly when this deploy has RESEND_API_KEY (bricks-site
@@ -10,6 +11,8 @@
  * delivered to admin@brxs.ca only, never the public inbox, so the deploy script
  * can POST the real form without emailing anyone else.
  */
+import { legalPartyName } from '@/lib/legal-config'
+
 export const CONTACT_INBOX = 'hello@brxs.ca'
 export const SMOKE_FROM = 'admin@brxs.ca'
 export const SMOKE_TAG = '[bricks-smoke-test]'
@@ -30,7 +33,7 @@ export function recipientFor(m: ContactMessage, inbox: string = CONTACT_INBOX): 
 
 export function resendPayload(m: ContactMessage, sourceLabel: string, subject?: string, inbox?: string) {
   return {
-    from: 'Bricks Group <hello@brxs.ca>',
+    from: `${legalPartyName()} <hello@brxs.ca>`,
     to: [recipientFor(m, inbox)],
     reply_to: [m.email],
     subject: `${isSmokeTest(m) ? '[SMOKE TEST] ' : ''}${subject || `Bricks — message from ${m.name}`}`,

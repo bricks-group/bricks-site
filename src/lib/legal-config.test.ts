@@ -38,8 +38,19 @@ test('every surface reads the config', () => {
 })
 
 test('no surface hardcodes either name', () => {
-  for (const f of ['../app/terms/page.tsx', '../app/privacy/page.tsx', '../app/book/BookingWizard.tsx', './booking-copy.ts', './supplier.ts', '../components/Footer.tsx']) {
+  for (const f of ['../app/terms/page.tsx', '../app/privacy/page.tsx', '../app/book/BookingWizard.tsx', './booking-copy.ts', './supplier.ts', '../components/Footer.tsx',
+    '../app/about/page.tsx', '../app/dpa/page.tsx', '../app/account-deletion/page.tsx', '../app/newsletter/page.tsx',
+    '../app/photographers/PhotographerForm.tsx', '../app/photographers/page.tsx', '../app/work-with-bricks/TradeApplyForm.tsx',
+    './public-content.ts', './contact-mail.ts', './help/jsonld.ts', './help/articles/getting-started.ts',
+    './newsletter/config.ts', './newsletter/email.ts']) {
     const s = read(f)
-    assert.ok(!/AJANI SHORTERMERCHANT|Bricks Group/.test(s), `${f} hardcodes a legal name`)
+    assert.ok(!/AJANI SHORTERMERCHANT|bricks group/i.test(s.replace(/\(bricks group\|ajani shortermerchant\)/i, '')), `${f} hardcodes a legal name`)
   }
+})
+
+test('newsletter CASL line uses the current name even if the configured postal line has an old one', async () => {
+  const { footerText } = await import('./newsletter/email')
+  const t = footerText('https://www.brxs.ca', 'tok', 'Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada')
+  assert.ok(t.includes(legalPartyName() + ' · 6330 Montevideo Road'))
+  assert.ok(!t.includes('Bricks Group'))
 })

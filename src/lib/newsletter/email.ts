@@ -1,5 +1,6 @@
 /** Newsletter emails: CASL footer (sender, address, unsubscribe) + RFC 8058 one-click headers. */
 import { NEWSLETTER_FROM, NEWSLETTER_REPLY_TO } from './config'
+import { legalPartyName } from '@/lib/legal-config'
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string)
 
@@ -14,10 +15,10 @@ export function listUnsubscribeHeaders(base: string, unsubToken: string): Record
   }
 }
 
-/** postal may already start with "Bricks Group ·" (prod CASL line). */
+/** The configured postal line may already start with a party name (prod CASL line); always show the current one. */
 function identityLine(postal: string): string {
-  const p = postal.trim()
-  return /^bricks group\b/i.test(p) ? p : `Bricks Group · ${p}`
+  const p = postal.trim().replace(/^(bricks group|ajani shortermerchant)\s*·\s*/i, '')
+  return `${legalPartyName()} · ${p}`
 }
 export function footerHtml(base: string, unsubToken: string, postal: string): string {
   return `<p style="margin:32px 0 0;padding-top:16px;border-top:1px solid #E4DED6;font-size:12px;line-height:1.6;color:#8A8178">`

@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { legalDocCss } from '@/components/legalDocCss'
 import { OG_IMAGE } from '@/lib/og'
+import { legalPartyName } from '@/lib/legal-config'
 
 export const metadata: Metadata = {
   title: 'Bricks — Delete your account',
   description:
-    'How to delete your Bricks account in the app or by email to privacy@brxs.ca, what Bricks Group deletes and keeps, and the 30-day timeline to finish.',
+    `How to delete your Bricks account in the app or by email to privacy@brxs.ca, what ${legalPartyName()} deletes and keeps, and the 30-day timeline to finish.`,
   alternates: { canonical: '/account-deletion' },
   openGraph: { images: [OG_IMAGE],
     title: 'Bricks — Delete your account',
@@ -28,7 +29,7 @@ export default function AccountDeletionPage() {
           <h1>Delete your account</h1>
           <p className="sub">
             For accounts in the Bricks apps (agents booking shoots, photographers and vendors, or real estate
-            offices), made by Bricks Group, Ontario, Canada.
+            offices), made by {legalPartyName()}, Ontario, Canada.
           </p>
           <div className="updated">Updated · 21 November 2026</div>
         </div>
@@ -103,7 +104,7 @@ export default function AccountDeletionPage() {
             <a href="mailto:hello@brxs.ca">hello@brxs.ca</a> · <span className="mono">(289) 312-7425</span> ·{' '}
             <Link href="/privacy">Privacy Policy</Link>
           </p>
-          <p>Bricks Group · Ontario, Canada</p>
+          <p>{legalPartyName()} · Ontario, Canada</p>
         </section>
       </div>
 

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { LegalDocRows, LegalDocSheet, useLegalReads } from '@/components/legal/LegalDocRows'
 import { lockedReason, type LegalDocKey } from '@/lib/legal-docs'
 import type { Trade } from '@/lib/services'
+import { legalPartyName } from '@/lib/legal-config'
 
 // Same flow and scoring as /photographers, minus photo samples and the resume.
 const APPLY_DOCS: readonly LegalDocKey[] = ['ic', 'privacy']
@@ -356,7 +357,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
           aria-disabled={!legal.done}
           onChange={(e) => { if (!legal.done) { setShowWhy(true); return } setAccept(e.target.checked) }}
         />
-        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.9</strong> with Bricks Group. I understand I am an independent contractor, not an employee, and that I am responsible for my own taxes, tools and insurance.</span>
+        <span>I have read and agree to the <strong>Bricks Independent Contractor Agreement v1.9</strong> with {legalPartyName()}. I understand I am an independent contractor, not an employee, and that I am responsible for my own taxes, tools and insurance.</span>
       </label>
       {acceptMsg ? <p className="ic-why" role="status">{acceptMsg}</p> : null}
       <LegalDocSheet doc={legal.open} read={legal.open ? !!legal.read[legal.open] : false} onRead={legal.markRead} onClose={() => legal.setOpen(null)} />

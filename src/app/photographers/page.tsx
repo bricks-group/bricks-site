@@ -6,6 +6,7 @@ import { COVERAGE_LINE, GO_URL, STATUS } from '@/lib/brand'
 import { ORG_ID } from '@/lib/schema'
 import { Rows } from '@/components/calm/Calm'
 import { OG_IMAGE } from '@/lib/og'
+import { legalPartyName } from '@/lib/legal-config'
 
 const OG = OG_IMAGE
 
@@ -201,7 +202,7 @@ export default function PhotographersPage() {
             <div className="qa"><h3>What equipment do I need?</h3><p>A full-frame camera or equivalent, fast primes, and a DJI or Autel drone for aerial work. List your kit in the form.</p></div>
             <div className="qa"><h3>Do I need drone certification?</h3><p>For aerial jobs, yes. You need Transport Canada Advanced RPAS certification, and we check it before sending you drone work.</p></div>
             <div className="qa"><h3>Do I need insurance?</h3><p>Not for listing jobs. For builder &amp; developer site jobs, and to hold Tier 3, yes: drone liability of at least $2M on a certificate Bricks verifies.</p></div>
-            <div className="qa"><h3>Am I an employee?</h3><p>No. You&apos;re an independent contractor with Bricks Group under Ontario law, in control of your equipment, methods and availability.</p></div>
+            <div className="qa"><h3>Am I an employee?</h3><p>No. You&apos;re an independent contractor with {legalPartyName()} under Ontario law, in control of your equipment, methods and availability.</p></div>
           </div>
         </section>
 
