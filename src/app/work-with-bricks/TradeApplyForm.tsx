@@ -10,7 +10,6 @@ import { CAREERS_EMAIL } from '@/lib/careers'
 // Same flow and scoring as /photographers, minus photo samples and the resume.
 const APPLY_DOCS: readonly LegalDocKey[] = ['ic', 'privacy']
 const DISPATCH_API = 'https://dispatch-api.brxs.ca/api/onboarding'
-const CGL_MIN_CENTS = 200_000_000 // $2M
 const DOC_MAX_BYTES = 4 * 1024 * 1024
 const DOC_EXTS = ['.pdf', '.png', '.jpg', '.jpeg']
 
@@ -69,11 +68,18 @@ function checkDoc(f: File | null, label: string): string {
 
 export default function TradeApplyForm({ trade }: { trade: Trade }) {
   const needsCgl = trade.apply.cgl
+  const needsEo = trade.apply.eo
+  const cglMinCad = trade.apply.cglMinCad
+  const cglMinCents = cglMinCad * 100
+  const cglLabel = cglMinCad >= 1_000_000
+    ? `$${(cglMinCad / 1_000_000).toFixed(cglMinCad % 1_000_000 === 0 ? 0 : 1)}M`
+    : `$${cglMinCad.toLocaleString('en-CA')}`
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [hstExempt, setHstExempt] = useState(false)
   const [source, setSource] = useState('')
   const [cityChoice, setCityChoice] = useState('')
+  const [operatorShape, setOperatorShape] = useState<'sole' | 'company' | ''>('')
   const legal = useLegalReads(APPLY_DOCS)
   const [accept, setAccept] = useState(false)
   const [showWhy, setShowWhy] = useState(false)
@@ -82,7 +88,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
   const [docWarning, setDocWarning] = useState('')
   const today = new Date().toISOString().slice(0, 10)
 
-  async function uploadDoc(memberId: string, token: string, docType: 'coi' | 'wsib', file: File) {
+  async function uploadDoc(memberId: string, token: string, docType: 'coi' | 'wsib' | 'eo', file: File) {
     const fd = new FormData()
     fd.append('member_id', memberId)
     fd.append('doc_type', docType)
@@ -131,15 +137,33 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
     if (!(availability.notice_hours >= 1)) { setErr('Tell us how much notice you need.'); return }
     if (availability.has_car === null || availability.has_licence === null) { setErr("Tell us whether you have a vehicle and a driver's licence."); return }
 
+    if (!operatorShape || !trade.apply.shapes.includes(operatorShape)) {
+      setErr('Say whether you apply as a sole contractor or a company.'); return
+    }
+    if (operatorShape === 'company' && !s('business_name')) {
+      setErr('Company applications need the legal business name.'); return
+    }
+
     const coi = (fd.get('coi') as File) || null
+    const eoFile = (fd.get('eo') as File) || null
     const wsib = (fd.get('wsib_file') as File) || null
     const cglConfirmed = fd.get('cgl_confirmed') === 'on'
+    const eoConfirmed = fd.get('eo_confirmed') === 'on'
     if (needsCgl) {
       if (!coi || coi.size === 0) { setErr('Attach your certificate of insurance (PDF, PNG or JPEG).'); return }
       if (!s('insurer')) { setErr('Enter your insurer.'); return }
-      if (!cglConfirmed) { setErr('Confirm you carry at least $2M commercial general liability insurance.'); return }
+      if (!cglConfirmed) { setErr(`Confirm you carry at least ${cglLabel} commercial general liability insurance.`); return }
     }
-    const docErr = checkDoc(needsCgl ? coi : null, 'Certificate of insurance') || checkDoc(trade.apply.wsibOptional ? wsib : null, 'WSIB clearance')
+    if (needsEo) {
+      if (!eoFile || eoFile.size === 0) { setErr('Attach your errors and omissions certificate (PDF, PNG or JPEG).'); return }
+      if (!eoConfirmed) { setErr('Confirm you carry E&O insurance at $250k per occurrence / $300k aggregate.'); return }
+    }
+    if (trade.vendorType === 'handyman' && fd.get('scope_ack') !== 'on') {
+      setErr('Confirm you will not do electrical, plumbing or gas work.'); return
+    }
+    const docErr = checkDoc(needsCgl ? coi : null, 'Certificate of insurance')
+      || checkDoc(needsEo ? eoFile : null, 'E&O certificate')
+      || checkDoc(trade.apply.wsibOptional ? wsib : null, 'WSIB clearance')
     if (docErr) { setErr(docErr); return }
 
     const hstNumber = s('hst_number')
@@ -173,6 +197,7 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
       preferred_regions: [] as string[],
       source: sourceVal,
       source_detail: sourceDetail,
+      operator_shape: operatorShape,
       trade_credentials: {
         business_name: s('business_name'),
         years_experience: Number.isFinite(years) ? years : undefined,
@@ -182,7 +207,10 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
         insurer: s('insurer') || undefined,
         policy_number: s('policy_number') || undefined,
         cgl_confirmed: cglConfirmed,
-        cgl_limit_cents: cglConfirmed ? CGL_MIN_CENTS : 0,
+        cgl_limit_cents: cglConfirmed ? cglMinCents : 0,
+        eo_confirmed: needsEo ? eoConfirmed : undefined,
+        eo_limit_cents: needsEo && eoConfirmed ? trade.apply.eoMinCad * 100 : undefined,
+        eo_aggregate_cents: needsEo && eoConfirmed ? trade.apply.eoAggregateCad * 100 : undefined,
         wsib_number: trade.apply.wsibOptional ? s('wsib_number') || undefined : undefined,
       },
     }
@@ -199,6 +227,9 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
       if (data.member_id) {
         if (needsCgl && coi && coi.size) {
           try { await uploadDoc(data.member_id, data.application_token || '', 'coi', coi) } catch { failed.push('certificate of insurance') }
+        }
+        if (needsEo && eoFile && eoFile.size) {
+          try { await uploadDoc(data.member_id, data.application_token || '', 'eo', eoFile) } catch { failed.push('E&O certificate') }
         }
         if (trade.apply.wsibOptional && wsib && wsib.size) {
           try { await uploadDoc(data.member_id, data.application_token || '', 'wsib', wsib) } catch { failed.push('WSIB clearance') }
@@ -230,13 +261,20 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
       </div>
 
       <div className="fsec">About you</div>
+      <div className="field"><label>How you work <span className="req">*</span></label>
+        <div className="radio-row" role="radiogroup" aria-label="Sole contractor or company">
+          <label><input type="radio" name="operator_shape" value="sole" checked={operatorShape === 'sole'} onChange={() => setOperatorShape('sole')} /> Sole contractor</label>
+          <label><input type="radio" name="operator_shape" value="company" checked={operatorShape === 'company'} onChange={() => setOperatorShape('company')} /> Company (with or without crew)</label>
+        </div>
+        <span className="hint-sm">Both are welcome. Companies and sole operators go through the same vetting.</span>
+      </div>
       <div className="grid2">
         <div className="field"><label htmlFor="t_name">Full name <span className="req">*</span></label><input id="t_name" name="name" required autoComplete="name" /></div>
         <div className="field"><label htmlFor="t_phone">Phone <span className="req">*</span></label><input id="t_phone" name="phone" type="tel" required autoComplete="tel" /></div>
       </div>
       <div className="grid2">
         <div className="field"><label htmlFor="t_email">Email <span className="req">*</span></label><input id="t_email" name="email" type="email" required autoComplete="email" /></div>
-        <div className="field"><label htmlFor="t_biz">Business name</label><input id="t_biz" name="business_name" autoComplete="organization" /></div>
+        <div className="field"><label htmlFor="t_biz">Business name{operatorShape === 'company' ? <> <span className="req">*</span></> : null}</label><input id="t_biz" name="business_name" autoComplete="organization" required={operatorShape === 'company'} /></div>
       </div>
       <div className="grid2">
         <div className="field"><label htmlFor="t_city">Home city <span className="req">*</span></label>
@@ -270,22 +308,42 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
         <div className="field"><label htmlFor="t_port">Portfolio link <span className="opt">(optional)</span></label><input id="t_port" name="portfolio" type="url" placeholder="https://" /></div>
       )}
 
-      {needsCgl ? (
+      {(needsCgl || needsEo) ? (
         <>
           <div className="fsec">Insurance</div>
-          <p className="hint-sm" style={{ margin: '0 0 12px' }}>$2M commercial general liability insurance is required for repair and inspection vendors. A person checks the certificate before you take jobs.</p>
-          <div className="grid2">
-            <div className="field"><label htmlFor="t_insurer">Insurer <span className="req">*</span></label><input id="t_insurer" name="insurer" required /></div>
-            <div className="field"><label htmlFor="t_policy">Policy number</label><input id="t_policy" name="policy_number" /></div>
-          </div>
-          <div className="field"><label htmlFor="t_coi">Certificate of insurance <span className="req">*</span></label>
-            <input id="t_coi" name="coi" type="file" accept=".pdf,.png,.jpg,.jpeg" required />
-            <span className="hint-sm">PDF, PNG or JPEG, 4 MB max.</span>
-          </div>
-          <label className="check-item">
-            <input type="checkbox" name="cgl_confirmed" data-testid="cgl-confirm" />
-            <span>I carry at least $2M commercial general liability insurance, and I&apos;ll keep it in force while I take jobs through Bricks.</span>
-          </label>
+          <p className="hint-sm" style={{ margin: '0 0 12px' }}>
+            {needsCgl ? `${cglLabel} commercial general liability per occurrence is required. ` : ''}
+            {needsEo ? 'Errors and omissions at $250k per occurrence / $300k aggregate is also required. ' : ''}
+            A person at Bricks checks every certificate before you are approved or take jobs.
+          </p>
+          {needsCgl ? (
+            <>
+              <div className="grid2">
+                <div className="field"><label htmlFor="t_insurer">Insurer <span className="req">*</span></label><input id="t_insurer" name="insurer" required /></div>
+                <div className="field"><label htmlFor="t_policy">Policy number</label><input id="t_policy" name="policy_number" /></div>
+              </div>
+              <div className="field"><label htmlFor="t_coi">CGL certificate of insurance <span className="req">*</span></label>
+                <input id="t_coi" name="coi" type="file" accept=".pdf,.png,.jpg,.jpeg" required />
+                <span className="hint-sm">PDF, PNG or JPEG, 4 MB max.</span>
+              </div>
+              <label className="check-item">
+                <input type="checkbox" name="cgl_confirmed" data-testid="cgl-confirm" />
+                <span>I carry at least {cglLabel} commercial general liability insurance, and I&apos;ll keep it in force while I take jobs through Bricks.</span>
+              </label>
+            </>
+          ) : null}
+          {needsEo ? (
+            <>
+              <div className="field" style={{ marginTop: 16 }}><label htmlFor="t_eo">E&amp;O certificate <span className="req">*</span></label>
+                <input id="t_eo" name="eo" type="file" accept=".pdf,.png,.jpg,.jpeg" required />
+                <span className="hint-sm">$250k per occurrence / $300k aggregate. PDF, PNG or JPEG, 4 MB max.</span>
+              </div>
+              <label className="check-item">
+                <input type="checkbox" name="eo_confirmed" data-testid="eo-confirm" />
+                <span>I carry errors and omissions insurance of at least $250,000 per occurrence and $300,000 aggregate.</span>
+              </label>
+            </>
+          ) : null}
           {trade.apply.wsibOptional && (
             <>
               <div className="grid2" style={{ marginTop: 16 }}>
@@ -294,6 +352,17 @@ export default function TradeApplyForm({ trade }: { trade: Trade }) {
               </div>
             </>
           )}
+        </>
+      ) : null}
+
+      {trade.vendorType === 'handyman' ? (
+        <>
+          <div className="fsec">Scope</div>
+          <p className="hint-sm" style={{ margin: '0 0 12px' }}>Handyman jobs never include electrical, plumbing or gas work. Fixtures that need wiring or piping are out of scope. Refer that work to a licensed trade.</p>
+          <label className="check-item">
+            <input type="checkbox" name="scope_ack" data-testid="handyman-scope-ack" />
+            <span>I will not do electrical, plumbing or gas work on Bricks jobs.</span>
+          </label>
         </>
       ) : null}
 

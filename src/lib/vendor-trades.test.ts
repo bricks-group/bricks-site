@@ -80,7 +80,18 @@ describe('home services pages', () => {
     const i = TRADES.find((t) => t.slug === 'inspections')!
     assert.ok(i.rules.some((x) => /Ontario only/.test(x)))
     assert.ok(r.apply.cgl && i.apply.cgl && r.apply.wsibOptional)
-    for (const t of TRADES.filter((x) => !['repairs', 'inspections'].includes(x.slug))) assert.equal(t.apply.cgl, false, t.slug)
+    assert.equal(r.apply.cglMinCad, 2_000_000)
+    assert.equal(i.apply.cglMinCad, 1_000_000)
+    assert.ok(i.apply.eo && i.apply.eoMinCad === 250_000)
+    const cleaner = TRADES.find((t) => t.slug === 'cleaning')!
+    const stager = TRADES.find((t) => t.slug === 'staging')!
+    const measurer = TRADES.find((t) => t.slug === 'measurement')!
+    assert.ok(cleaner.apply.cgl && cleaner.apply.cglMinCad === 1_000_000)
+    assert.ok(stager.apply.cgl && stager.apply.cglMinCad === 1_000_000)
+    assert.equal(measurer.apply.cgl, false)
+    for (const t of TRADES) {
+      assert.deepEqual(t.apply.shapes, ['sole', 'company'])
+    }
   })
 
   it('keeps brand rules in customer copy', () => {
@@ -91,16 +102,17 @@ describe('home services pages', () => {
     assert.ok(!/quot/i.test(read('../app/services/page.tsx').replace(/ServiceQuoteForm|how-quote-requests-work|id="quote"|hs-quote/g, '')), 'no quotes: every trade has a set price')
   })
 
-  it('follows the legal review: no trip fee, no background checks, no IC clause, $2M worded as a vendor requirement', () => {
+  it('follows the legal review: no trip fee, no background checks, no IC clause; IC v1.10 insurance floors', () => {
     const all = read('./services.ts') + read('./help/articles/home-services.ts') + read('../app/services/page.tsx')
       + read('../app/work-with-bricks/page.tsx') + read('../app/work-with-bricks/TradeApplyForm.tsx') + read('../../public/llms.txt')
     assert.ok(!/trip fee|callout fee|\$60/i.test(read('./services.ts') + read('./help/articles/home-services.ts') + read('../app/services/page.tsx')))
     assert.ok(!/background check/i.test(all))
     assert.ok(!/\bIC\b[^.\n]{0,40}(clause|schedule|v2)/i.test(all))
-    assert.ok(!/(carries|vendors carry|inspectors carry) at least \$2M/.test(all), 'word $2M as required for repair and inspection vendors')
-    for (const f of ['./services.ts', '../app/work-with-bricks/page.tsx', '../app/work-with-bricks/TradeApplyForm.tsx']) {
-      assert.match(read(f), /required for repair and inspection vendors/)
-    }
+    assert.ok(!/(carries|vendors carry|inspectors carry) at least \$2M/.test(all), 'word $2M as a vendor requirement, not a claim that vendors already carry it')
+    assert.ok(!/simple fixture swaps/i.test(all), 'no fixture-swap loophole')
+    assert.match(read('./services.ts'), /\$2M commercial general liability/)
+    assert.match(read('../app/work-with-bricks/page.tsx'), /handyman \$2M CGL/)
+    assert.match(read('../app/work-with-bricks/TradeApplyForm.tsx'), /electrical, plumbing or gas work/)
   })
 })
 

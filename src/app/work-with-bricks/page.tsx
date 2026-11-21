@@ -64,7 +64,7 @@ export default function WorkWithBricksPage() {
             </li>
           ))}
         </ul>
-        <p className="hs-note">$2M commercial general liability insurance is required for repair and inspection vendors. Stagers, cleaning crews and measurers don&apos;t need a certificate to apply.</p>
+        <p className="hs-note">Insurance follows IC v1.10: handyman $2M CGL; inspector $1M CGL plus E&amp;O $250k/$300k; cleaner and stager $1M CGL. Measurers and residential photographers do not need a certificate to apply. Sole contractors and companies are both welcome.</p>
         <p className="hs-note">Questions before you apply? Email <a href={`mailto:${CAREERS_EMAIL}`}>{CAREERS_EMAIL}</a>.</p>
       </section>
     </div>

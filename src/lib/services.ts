@@ -28,7 +28,21 @@ export type Trade = {
   rules: string[]
   scopes: string[]
   /** Vendor side: who should apply, and what they need. */
-  apply: { role: string; lede: string; needs: string[]; cgl: boolean; wsibOptional: boolean }
+  apply: {
+    role: string
+    lede: string
+    needs: string[]
+    /** CGL required; floor in CAD dollars (0 = not required). IC v1.10. */
+    cgl: boolean
+    cglMinCad: number
+    /** E&O required (inspectors). */
+    eo: boolean
+    eoMinCad: number
+    eoAggregateCad: number
+    wsibOptional: boolean
+    /** sole and/or company. */
+    shapes: Array<'sole' | 'company'>
+  }
   /**
    * Off = paused for clients and applicants: hidden from /services, the booking form,
    * /work-with-bricks and help. The entry and its code stay. Mirrors Dispatch
@@ -71,9 +85,19 @@ export const ALL_TRADES: readonly Trade[] = [
     apply: {
       role: 'Stagers',
       lede: 'Staging companies and independent stagers with their own inventory or a reliable rental source.',
-      needs: ['A portfolio link to past installs (optional)', 'Your inventory, truck and crew, or how you source them', 'Areas you can install in'],
-      cgl: false,
+      needs: [
+        'A certificate of insurance showing $1M commercial general liability',
+        'A portfolio link to past installs (optional)',
+        'Your inventory, truck and crew, or how you source them',
+        'Areas you can install in',
+      ],
+      cgl: true,
+      cglMinCad: 1_000_000,
+      eo: false,
+      eoMinCad: 0,
+      eoAggregateCad: 0,
       wsibOptional: false,
+      shapes: ['sole', 'company'],
     },
   },
   {
@@ -106,10 +130,20 @@ export const ALL_TRADES: readonly Trade[] = [
     scopes: ['cln_1b', 'cln_2b', 'cln_3b', 'cln_house_m', 'cln_house_l', 'cln_house_xl'],
     apply: {
       role: 'Cleaning crews',
-      lede: 'Cleaning companies and crews who do deep cleans, move-outs and turnovers.',
-      needs: ['Crew size and the cleans you do', 'Your supplies and equipment', 'Areas you can work in'],
-      cgl: false,
+      lede: 'Cleaning companies and crews who do deep cleans, move-outs and turnovers — sole operators or companies.',
+      needs: [
+        'A certificate of insurance showing $1M commercial general liability',
+        'Crew size and the cleans you do',
+        'Your supplies and equipment',
+        'Areas you can work in',
+      ],
+      cgl: true,
+      cglMinCad: 1_000_000,
+      eo: false,
+      eoMinCad: 0,
+      eoAggregateCad: 0,
       wsibOptional: false,
+      shapes: ['sole', 'company'],
     },
   },
   {
@@ -142,10 +176,20 @@ export const ALL_TRADES: readonly Trade[] = [
     scopes: ['insp_condo', 'insp_attached', 'insp_detached_m', 'insp_detached_l', 'insp_detached_xl'],
     apply: {
       role: 'Home and building inspectors',
-      lede: 'Inspectors working in Ontario who write their own reports.',
-      needs: ['A certificate of insurance showing $2M commercial general liability (required for repair and inspection vendors)', 'Your professional designation or membership, if any', 'A sample report (shared later, with client details removed)'],
+      lede: 'Inspectors working in Ontario who write their own reports — sole operators or companies.',
+      needs: [
+        'Commercial general liability of $1M per occurrence',
+        'Errors and omissions of $250k per occurrence / $300k aggregate',
+        'Your professional designation or membership, if any',
+        'A sample report (shared later, with client details removed)',
+      ],
       cgl: true,
+      cglMinCad: 1_000_000,
+      eo: true,
+      eoMinCad: 250_000,
+      eoAggregateCad: 300_000,
       wsibOptional: false,
+      shapes: ['sole', 'company'],
     },
   },
   {
@@ -180,10 +224,15 @@ export const ALL_TRADES: readonly Trade[] = [
     scopes: ['floor_plan_only'],
     apply: {
       role: 'Measurers',
-      lede: 'Measurement technicians who produce floor area and floor plans for listings and leasing.',
+      lede: 'Measurement technicians who produce floor area and floor plans for listings and leasing — sole operators or companies.',
       needs: ['The tools you measure with', 'The standards you measure to', 'A sample floor plan (shared later)'],
       cgl: false,
+      cglMinCad: 0,
+      eo: false,
+      eoMinCad: 0,
+      eoAggregateCad: 0,
       wsibOptional: false,
+      shapes: ['sole', 'company'],
     },
   },
   {
@@ -222,10 +271,20 @@ export const ALL_TRADES: readonly Trade[] = [
     scopes: ['rep_1h', 'rep_half'],
     apply: {
       role: 'Handyman and repair vendors',
-      lede: 'Handymen and small repair companies who work through lists cleanly and photograph their work.',
-      needs: ['A certificate of insurance showing $2M commercial general liability (required for repair and inspection vendors)', 'WSIB clearance if you have workers (optional)', 'Your tools and vehicle'],
+      lede: 'Handymen and small repair companies who work through lists cleanly and photograph their work. No electrical, plumbing or gas work.',
+      needs: [
+        'A certificate of insurance showing $2M commercial general liability',
+        'WSIB clearance if you have workers (optional)',
+        'Your tools and vehicle',
+        'Agreement: no electrical, plumbing or gas work (no fixture-swap exception)',
+      ],
       cgl: true,
+      cglMinCad: 2_000_000,
+      eo: false,
+      eoMinCad: 0,
+      eoAggregateCad: 0,
       wsibOptional: true,
+      shapes: ['sole', 'company'],
     },
   },
 ]
