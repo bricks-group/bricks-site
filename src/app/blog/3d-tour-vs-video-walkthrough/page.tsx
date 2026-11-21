@@ -1,31 +1,32 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
-import { REEL_RANGE, TOUR_RANGE, VISIT_PRICE_LABEL, FOOTPRINT_BANDS } from '@/lib/pricing'
-import { TOUR_BLURB, TOUR_NAME, VISIT_BLURB, VISIT_NAME, VISIT_PACKAGING } from '@/lib/brand'
+import { REEL_RANGE, TOUR_RANGE, VISIT_PRICE_LABEL } from '@/lib/pricing'
+import { TOUR_NAME, VISIT_NAME } from '@/lib/brand'
 import { LOGO_SCHEMA, ORG_REF, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
+import { VISIT_PLAIN } from '@/lib/content/facts'
+import { postMeta } from '@/lib/content/posts'
 
-// Visible FAQ and FAQPage JSON-LD come from this one array (W2 handoff 3.5).
-const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
-  { q: `Is a ${TOUR_NAME.toLowerCase()} the same as a floor plan?`, a: `No. A floor plan is a flat dimensioned drawing (included on every Bricks standard shoot). A ${TOUR_NAME.toLowerCase()} is path-confined and spatial but isn’t a substitute for a measured plan. A ${VISIT_NAME.toLowerCase()} is a free-roam splat — never a tour.` },
-  { q: 'Which helps SEO / portals more?', a: `Listings with both rich media types get more saves and views on major portals; the reel drives initial engagement, the ${TOUR_NAME.toLowerCase()} extends time-on-listing.` },
-  { q: 'Can I use the reel on social?', a: 'Yes — the cinematic reel is formatted for Instagram, TikTok, and Realtor.ca embeds. That’s its main job.' },
+const SLUG = '3d-tour-vs-video-walkthrough'
+const META = postMeta(SLUG)
+const TITLE = 'Virtual tour or video walkthrough: which fits the listing?'
+const DESC = 'What a virtual tour, a video walkthrough and a Virtual Visit each do, and how to choose for the home you are listing.'
+const tour = TOUR_NAME.toLowerCase()
+
+const FAQS: { q: string; a: string }[] = [
+  { q: `Is a ${tour} the same as a floor plan?`, a: `No. A floor plan is a flat drawing with room sizes. A ${tour} lets buyers click from room to room, but it doesn’t replace a measured plan.` },
+  { q: `What is the difference between a ${tour} and a ${VISIT_NAME}?`, a: `A ${tour} moves along a set path. A ${VISIT_NAME} is free-roam 3D: buyers move anywhere in the home. ${VISIT_PLAIN}` },
+  { q: 'Can I use the reel on social media?', a: 'Yes. The reel is a short film made for social posts and the top of a listing page.' },
 ]
 
 export const metadata: Metadata = {
-  title: "Virtual Tours vs Video Walkthroughs for Listings | Bricks",
-  description: 'When a path-confined virtual tour beats a cinematic video walkthrough — and when the reverse is true. Virtual visit (Gaussian splat) is a separate product.',
-  alternates: { canonical: '/blog/3d-tour-vs-video-walkthrough' },
+  title: `${TITLE} | Bricks`,
+  description: DESC,
+  alternates: { canonical: `/blog/${SLUG}` },
   robots: { index: true, follow: true },
-  openGraph: { images: [OG_IMAGE],
-    type: 'article',
-    title: "Virtual Tours vs Video Walkthroughs for Listings | Bricks",
-    description: 'When a virtual tour beats a cinematic reel — and when the reverse is true. Virtual visit is a separate product.',
-  },
-  twitter: {
-    title: "Virtual Tours vs Video Walkthroughs for Listings | Bricks",
-    description: 'When to use a virtual tour vs a video walkthrough. Virtual visit is a separate free-roam splat.',
-  },
+  openGraph: { images: [OG_IMAGE], type: 'article', title: TITLE, description: DESC },
+  twitter: { title: TITLE, description: DESC },
 }
 
 export default function Post() {
@@ -37,65 +38,60 @@ export default function Post() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
-            headline: 'Virtual tour vs. video walkthrough: which sells listings faster?',
-            description: 'When a path-confined virtual tour beats a cinematic video walkthrough — and when the reverse is true. Virtual visit is a separate product.',
+            headline: TITLE,
+            description: DESC,
             author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
-            datePublished: '2026-07-22',
-            dateModified: '2026-07-22',
+            datePublished: META.published,
+            dateModified: META.reviewedOn,
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
-            mainEntityOfPage: 'https://www.brxs.ca/blog/3d-tour-vs-video-walkthrough',
-            keywords: 'virtual tour vs video walkthrough, real estate video, scanned 3D walkthrough, Gaussian splat virtual visit',
+            mainEntityOfPage: `https://www.brxs.ca/blog/${SLUG}`,
+            keywords: 'virtual tour vs video walkthrough, real estate video, virtual tour for listings, free-roam 3D',
           }),
         }}
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS.map(({ q, a }) => ({ q, a })))) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
-        badge="Resources · Strategy"
-        title="Virtual tour vs. video walkthrough: which sells faster?"
-        sub="They're not the same product. Here's when to spend on a path-confined virtual tour, when a cinematic reel does the job, and why a virtual visit is something else entirely."
+        slug={SLUG}
+        badge="Resources · Listing media"
+        title={TITLE}
+        sub="Three different things that often get the same name. What each does, and when to use it."
       >
-        <p className="lead">Agents often treat &quot;{TOUR_NAME.toLowerCase()}&quot;, &quot;{VISIT_NAME.toLowerCase()}&quot;, and &quot;video walkthrough&quot; as interchangeable. They&apos;re not. A {TOUR_NAME.toLowerCase()} is path-confined. A {VISIT_NAME.toLowerCase()} is a free-roam Gaussian splat — never a tour. A reel sells the feeling in 30–45 seconds.</p>
+        <p className="lead">A {tour}, a {VISIT_NAME} and a video walkthrough are often mixed up. They do different jobs. Here is what each one is and how to pick.</p>
 
-        <h2>What each one actually is</h2>
+        <h2>What each one is</h2>
         <h3>{TOUR_NAME}</h3>
-        <p>{TOUR_BLURB} Click to move room to room along the captured path. Delivered as an interactive embed on the listing and often MLS®-ready. Best for letting serious buyers pre-screen a property before a showing. À la carte add-on; included in Showcase and Full suite.</p>
+        <p>Buyers click from room to room along a set path. It sits on the listing page so people can look around before a showing. It comes with Showcase and Full suite, or as an add-on at {TOUR_RANGE}.</p>
         <h3>{VISIT_NAME}</h3>
-        <p>{VISIT_BLURB} {VISIT_PACKAGING} {VISIT_PRICE_LABEL} on the same bands as photo, reel, and virtual tour ({FOOTPRINT_BANDS}). Published at $249 / $299 / $349 / $399 by footprint — never bundled into a package, and charged at checkout when selected.</p>
-        <h3>Video walkthrough / cinematic reel</h3>
-        <p>A produced, set to music, paced edit — usually 30–90 seconds. It&apos;s an emotional asset: it makes the home feel desirable and is built for social, portals, and the top of a listing page. It sells the <em>lifestyle</em>, not the measurements.</p>
+        <p>Free-roam 3D: buyers move anywhere in the home, not only along a path. {VISIT_PLAIN} {VISIT_PRICE_LABEL} by home size.</p>
+        <h3>Video walkthrough or reel</h3>
+        <p>A short edited film, 30 to 45 seconds, set to music. It shows light, flow and feel, and works well on social media and at the top of a listing. Add it for {REEL_RANGE}.</p>
 
-        <h2>Use a {TOUR_NAME.toLowerCase()} when…</h2>
+        <h2>When a {tour} fits</h2>
         <ul>
-          <li><strong>The home is large or unusual in layout</strong> — estates, multiplexes, custom builds. Buyers want to understand the flow before driving out.</li>
-          <li><strong>You&apos;re pre-qualifying showings</strong> — a {TOUR_NAME.toLowerCase()} filters out the merely-curious and brings serious, informed buyers to open houses.</li>
-          <li><strong>The buyer pool is remote or relocating</strong> — out-of-town and overseas buyers lean on a walkthrough they can run themselves.</li>
-          <li><strong>The listing will sit a while</strong> — a {TOUR_NAME.toLowerCase()} keeps working 24/7 as a self-serve open house.</li>
+          <li>The layout is large or unusual, like a multiplex or a custom build.</li>
+          <li>Buyers are out of town and want to look around on their own.</li>
+          <li>You want people to know the home before they book a showing.</li>
         </ul>
 
-        <h2>Use a cinematic reel when…</h2>
+        <h2>When a reel fits</h2>
         <ul>
-          <li><strong>You need attention fast</strong> — a reel is built for the scroll: social, portals, email blasts. It earns the click.</li>
-          <li><strong>The home photographs on feeling</strong> — light, views, design. Video shows that better than any still or scan.</li>
-          <li><strong>The listing is straightforward</strong> — a tidy semi or condo doesn&apos;t need a navigable model; a strong reel plus HDR does the work.</li>
-          <li><strong>You&apos;re on a budget</strong> — a reel is usually cheaper than a full spatial capture and punches above its weight on reach.</li>
+          <li>You want something to post on social media this week.</li>
+          <li>The home’s light, views or design are its strongest points.</li>
+          <li>The layout is simple, like a condo or a semi, so photos already explain it.</li>
         </ul>
 
-        <h2>The honest answer: most listings want both, in order</h2>
-        <p>For a typical Canadian detached, the highest-converting combo is <strong>HDR photos + a cinematic reel for reach</strong>, then <strong>a {TOUR_NAME.toLowerCase()} if the home is large, high-value, or has a remote buyer pool</strong>. Add a {VISIT_NAME.toLowerCase()} when free-roam matters — it is never packaged. You don&apos;t have to decide blindly — at Bricks the reel and {TOUR_NAME.toLowerCase()} are separate à la carte add-ons.</p>
-
-        <blockquote>&quot;A reel gets them to the listing. A {TOUR_NAME.toLowerCase()} gets them to the front door. A {VISIT_NAME.toLowerCase()} lets them walk the space without a path. Most homes only need the first; the rest earn their keep on the bigger ones.&quot;</blockquote>
-
-        <h2>Cost reality (2026)</h2>
+        <h2>When a {VISIT_NAME} fits</h2>
         <ul>
-          <li>Cinematic reel: {REEL_RANGE} add-on, by footprint.</li>
-          <li>{TOUR_NAME}: {TOUR_RANGE}, path-confined, MLS®-ready.</li>
-          <li>{VISIT_NAME}: {VISIT_PRICE_LABEL} ({FOOTPRINT_BANDS}). {VISIT_PACKAGING}</li>
+          <li>Buyers will want to stand in each room and look around freely.</li>
+          <li>The home is high-value or hard to visit in person.</li>
         </ul>
-        <p>Both are modest next to the cost of a price reduction from a stale listing. The mistake isn&apos;t spending — it&apos;s spending on the wrong one for the property.</p>
+
+        <h2>Many listings use more than one</h2>
+        <p>Photos are always the base. Many agents add a reel for reach and a {tour} for larger homes. It depends on the home and the buyers, so pick for the listing in front of you. <Link href="/pricing">See every price →</Link></p>
 
         <h2>FAQ</h2>
         <div className="faq">
-          {FAQS.map((f) => <div className="qa" key={f.q}><h3>{f.q}</h3><p>{f.a}{f.link ? <> <a href={f.link.href}>{f.link.label}</a></> : null}</p></div>)}
+          {FAQS.map((f) => <div className="qa" key={f.q}><h3>{f.q}</h3><p>{f.a}</p></div>)}
         </div>
       </BlogPostLayout>
     </>

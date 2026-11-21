@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { postMeta } from '@/lib/content/posts'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
@@ -34,9 +35,10 @@ const FAQS = [
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Move-out cleaning checklist, room by room', description: DESC, datePublished: '2026-11-07', keywords: 'move out cleaning checklist, move-out cleaning, end of tenancy cleaning, rental turnover cleaning, move out clean', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Move-out cleaning checklist, room by room', description: DESC, datePublished: '2026-11-07', dateModified: postMeta('move-out-cleaning-checklist').reviewedOn, keywords: 'move out cleaning checklist, move-out cleaning, end of tenancy cleaning, rental turnover cleaning, move out clean', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
+        slug="move-out-cleaning-checklist"
         badge="Guides · Home services"
         title="Move-out cleaning checklist, room by room"
         sub="Everything to clean before you hand back the keys or turn a unit over, and how to prove it was done."

@@ -98,6 +98,6 @@ export const REITS_FAQS = [
 const LEASING = ['cre_leasing_s', 'cre_leasing_m', 'cre_leasing_l'].map((k) => ONE_OFFS[k])
 export const COMMERCIAL_FAQS = [
   { q: 'What does a leasing set include?', a: `Photos, a measured floor plan and a Virtual Visit of the space. ${LEASING.map((o) => `${money(o.cents)} up to ${o.maxSqft!.toLocaleString('en-CA')} sq ft`).join(', ')}. CAD plus tax.` },
-  { q: 'Can you shoot the building from the air?', a: `Yes. An aerial set is ${money(ONE_OFFS.cre_aerial.cents)}: aerial photos and video of the site, flown by certified pilots.` },
+  { q: 'Can you shoot the building from the air?', a: `Yes. An aerial set is ${money(ONE_OFFS.cre_aerial.cents)}: aerial photos and video of the site, flown by pilots with a Transport Canada Advanced certificate.` },
   { q: 'Is Virtual Visit a path tour?', a: 'No. It’s free-roam 3D of the space, so tenants and buyers can move anywhere they like. Leasing sets include one, and it can be added to any media booking.' },
 ] as const

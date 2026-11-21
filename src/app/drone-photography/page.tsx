@@ -10,7 +10,7 @@ import { OG_IMAGE } from '@/lib/og'
 
 const URL = 'https://www.brxs.ca/drone-photography'
 const TITLE = 'Drone Photography for Real Estate in Canada | Bricks'
-const DESC = `Licensed real estate drone photography across Canada, flown by Transport Canada certified pilots. Aerials ${DRONE_RANGE} by home size, or in Essentials from $${CORE_FROM}.`
+const DESC = `Licensed real estate drone photography across Canada, flown by pilots with a Transport Canada Advanced certificate. Aerials ${DRONE_RANGE} by home size, or in Essentials from $${CORE_FROM}.`
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const AERIALS = WORK_PHOTOS.filter((p) => p.alt.startsWith('Drone view'))
 
 const FAQS = [
-  { q: 'Who flies Bricks drone shoots?', a: 'Pilots who hold a Transport Canada drone pilot certificate. They fly in visual line of sight and below 122 m, and get NAV CANADA authorization when a property sits in controlled airspace.' },
+  { q: 'Who flies Bricks drone shoots?', a: 'Pilots who hold a Transport Canada Advanced certificate. They fly in visual line of sight and below 122 m, and get NAV CANADA authorization when a property sits in controlled airspace.' },
   { q: 'What does drone photography cost?', a: `Licensed drone is ${bandCells(DRONE_RATE).join(' / ')} CAD before HST, by footprint (${FOOTPRINT_BANDS} sq ft). It is included in Essentials, Story, Showcase and Full suite.` },
   { q: 'What happens if the drone can’t fly?', a: 'If Transport Canada rules, NAV CANADA airspace, weather or the site make a flight unsafe or unlawful, the pilot skips it. The rest of the shoot is still delivered, and Bricks refunds the drone part, its add-on price plus the tax you paid on it, including when the drone is part of a package.' },
   { q: 'Can you fly over a condo building?', a: 'Many condo buildings need the board’s or property manager’s permission first. Add the building’s rules to the booking notes and Bricks plans the flight around them.' },
@@ -32,9 +32,9 @@ const FAQS = [
 export default function DronePhotographyPage() {
   return (
     <Landing
-      schemas={[focusedServiceSchema({ url: URL, id: '/drone-photography#service', name: 'Real estate drone photography', serviceType: 'Aerial real estate photography', description: 'Licensed aerial photos of homes, lots and commercial properties for listings, flown by Transport Canada certified pilots and delivered with the listing in Bricks.', offers: ['drone', 'essentials'] })]}
+      schemas={[focusedServiceSchema({ url: URL, id: '/drone-photography#service', name: 'Real estate drone photography', serviceType: 'Aerial real estate photography', description: 'Licensed aerial photos of homes, lots and commercial properties for listings, flown by Transport Canada Advanced certified pilots and delivered with the listing in Bricks.', offers: ['drone', 'essentials'] })]}
       h1="Drone photography for real estate."
-      sub="Aerial photos that show the lot, the street and what’s nearby, flown by certified pilots and delivered with the rest of the listing media."
+      sub="Aerial photos that show the lot, the street and what’s nearby, flown by Advanced-certified pilots and delivered with the rest of the listing media."
       primary={{ href: '/book', label: 'Book a drone shoot' }}
       secondary={{ href: '/pricing', label: 'See pricing' }}
       sections={[
@@ -49,7 +49,7 @@ export default function DronePhotographyPage() {
         },
         {
           title: 'Flown by the rules.',
-          lede: 'Commercial drone work in Canada is regulated by Transport Canada. Every Bricks pilot is certified, and every flight is planned for the airspace.',
+          lede: 'Commercial drone work in Canada is regulated by Transport Canada. Every Bricks drone pilot holds an Advanced certificate, and every flight is planned for the airspace.',
           body: (
             <>
               <p>Pilots fly in visual line of sight and below 122 m. Near airports and in controlled airspace, which covers large parts of Toronto, Vancouver, Calgary and Ottawa, the pilot requests NAV CANADA authorization before the shoot.</p>

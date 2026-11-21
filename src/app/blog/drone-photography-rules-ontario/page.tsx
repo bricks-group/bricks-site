@@ -3,28 +3,29 @@ import type { Metadata } from 'next'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { LOGO_SCHEMA, ORG_REF, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE } from '@/lib/og'
+import { DRONE_PILOT_LINE } from '@/lib/content/facts'
+import { postMeta } from '@/lib/content/posts'
 
-// Visible FAQ and FAQPage JSON-LD come from this one array (W2 handoff 3.5).
+const SLUG = 'drone-photography-rules-ontario'
+const META = postMeta(SLUG)
+const TITLE = 'Drone photography rules for real estate in Ontario'
+const DESC = 'The Transport Canada rules behind a real estate drone shot in Ontario: the 250 g line, Basic and Advanced certificates, controlled airspace, height limits and the 2025 changes.'
+
+// Visible FAQ and FAQPage JSON-LD come from this one array.
 const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] = [
-  { q: 'Can any drone photo be used in a listing?', a: 'Only if flown legally by a certified pilot with the right airspace clearance. Bricks flies under an Advanced RPAS certificate.' },
-  { q: 'What if the home is near the airport?', a: 'Then it’s almost certainly controlled airspace — we file the NAV CANADA authorization before the shoot. That’s standard for much of Mississauga and Etobicoke.' },
-  { q: 'Is drone included or extra?', a: 'Licensed drone coverage is part of the core Bricks shoot; aerial video can be added as a reel.', link: { href: '/pricing', label: 'See pricing →' } },
+  { q: 'Do I need a drone pilot certificate to shoot a listing?', a: 'If the drone weighs 250 g or more, yes, and the drone must be registered and marked. The rules are the same whether the flight is for work or for fun. Drones under 250 g need no certificate but must follow the microdrone rules.' },
+  { q: 'Is a Basic certificate enough for real estate?', a: 'Only if the whole flight stays in uncontrolled airspace and more than 30 m from anyone not involved. Most homes have neighbours, a street or an airport nearby, so most listing flights need an Advanced certificate.' },
+  { q: 'What if the home is near an airport?', a: 'It is probably in controlled airspace. The pilot needs an Advanced certificate and a flight authorization from NAV CANADA, requested through NAV Drone, before flying.' },
+  { q: 'Who flies Bricks drone shoots?', a: `${DRONE_PILOT_LINE} If the rules, the airspace or the weather make a flight unsafe or unlawful on the day, the pilot skips the aerials and the rest of the shoot is still delivered.` },
 ]
 
 export const metadata: Metadata = {
-  title: 'Drone photography rules for real estate in Ontario | Bricks',
-  description: "Understand Ontario real estate drone photography rules, including Transport Canada certification, controlled airspace, altitude and planning a legal shoot.",
-  alternates: { canonical: '/blog/drone-photography-rules-ontario' },
+  title: `${TITLE} | Bricks`,
+  description: DESC,
+  alternates: { canonical: `/blog/${SLUG}` },
   robots: { index: true, follow: true },
-  openGraph: { images: [OG_IMAGE],
-    type: 'article',
-    title: 'Drone photography rules for real estate in Ontario',
-    description: "Understand Ontario real estate drone photography rules, including Transport Canada certification, controlled airspace, altitude and planning a legal shoot.",
-  },
-  twitter: {
-    title: 'Drone photography rules for real estate in Ontario',
-    description: "Understand Ontario real estate drone photography rules, including Transport Canada certification, controlled airspace, altitude and planning a legal shoot.",
-  },
+  openGraph: { images: [OG_IMAGE], type: 'article', title: TITLE, description: DESC },
+  twitter: { title: TITLE, description: DESC },
 }
 
 export default function Post() {
@@ -36,51 +37,48 @@ export default function Post() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
-            headline: 'Drone photography rules for real estate listings in Ontario',
-            description: 'Transport Canada Advanced RPAS rules for real estate drone photography in Ontario: certification, no-fly zones, altitude, and what a compliant aerial shoot looks like.',
+            headline: TITLE,
+            description: DESC,
             author: { '@type': 'Organization', name: 'Bricks', url: 'https://www.brxs.ca' },
-            datePublished: '2026-07-22',
-            dateModified: '2026-11-07',
+            datePublished: META.published,
+            dateModified: META.reviewedOn,
             publisher: { ...ORG_REF, logo: LOGO_SCHEMA },
-            mainEntityOfPage: 'https://www.brxs.ca/blog/drone-photography-rules-ontario',
-            keywords: 'drone photography rules Ontario, real estate drone Toronto, Transport Canada Advanced RPAS, aerial photography GTA',
+            mainEntityOfPage: `https://www.brxs.ca/blog/${SLUG}`,
+            keywords: 'drone photography rules Ontario, real estate drone Toronto, Transport Canada drone certificate, NAV CANADA drone authorization',
           }),
         }}
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS.map(({ q, a }) => ({ q, a })))) }} />
       <BlogPostLayout
-        badge="Resources · Rules & safety"
-        title="Drone photography rules for real estate in Ontario"
-        sub="Aerial shots sell homes — but only when they're legal. Here's what Transport Canada actually requires, and how a compliant GTA shoot works."
+        slug={SLUG}
+        badge="Resources · Drone"
+        title={TITLE}
+        sub="What Transport Canada requires for a listing aerial, in plain words, with links to the rules."
       >
-        <p className="lead">A licensed drone shot is one of the highest-impact frames in a listing — and one of the easiest ways to get it wrong. If the operator isn&apos;t certified and following the rules, the footage isn&apos;t just risky, it can get pulled and the agent exposed. Here&apos;s the real framework for Ontario.</p>
+        <p className="lead">Drone rules in Canada are set by Transport Canada and apply the same way whether you fly for work or for fun. Here is what matters for a real estate shoot in Ontario.</p>
 
-        <h2>You need an Advanced RPAS certificate</h2>
-        <p>In Canada, flying a drone for <strong>commercial work — including real estate photography</strong> — requires a <strong>Transport Canada pilot certificate</strong>. For the kind of flying real estate needs (near people, near buildings, often in controlled airspace around the GTA), that means the <strong>Advanced Operations</strong> certificate: a written exam, an in-person flight review, and registration of the aircraft.</p>
-        <p>Bricks&apos; drone work is flown under an <strong>Advanced RPAS (Remotely Piloted Aircraft Systems) certificate</strong>. That&apos;s the difference between &quot;someone with a DJI&quot; and a compliant operator who can legally fly in the complex airspace around Toronto, Mississauga, and the airports.</p>
-        <p>Getting certified yourself? Our <Link href="/blog/drone-licence-canada">drone licence guide for Canada</Link> covers Basic vs Advanced, age limits, the exams, the flight review and drone registration. Booking aerials for a listing? See <Link href="/drone-photography">real estate drone photography</Link>.</p>
+        <h2>The 250 g line</h2>
+        <p>If a drone weighs 250 g or more, the pilot needs a Transport Canada drone pilot certificate, and the drone must be registered and marked with its registration number. Under 250 g, no certificate or registration is needed, but the microdrone rules still apply.</p>
 
-        <h2>The rules that actually affect your shoot</h2>
-        <h3>Controlled airspace &amp; no-fly zones</h3>
-        <p>The GTA sits under some of the busiest airspace in the country — Pearson, Billy Bishop, and several helipads. Many listings fall inside <strong>controlled airspace</strong> or near an airport, which requires <strong>advance clearance from NAV CANADA</strong> (a flight plan / airspace authorization) before flying. A compliant operator checks this per address, every time.</p>
-        <h3>Altitude &amp; distance</h3>
-        <p>Recreational and most commercial flights are capped at <strong>122 metres (400 feet) above ground level</strong> and must stay within visual line of sight. For real estate that&apos;s plenty — a listing aerial at 60–100 m reads beautifully without leaving the legal envelope.</p>
-        <h3>People &amp; property</h3>
-        <p>Advanced certification is what permits flying <strong>over people and near buildings</strong> safely — but it still demands a risk assessment, not a free-for-all. That&apos;s exactly why the certificate matters for residential shoots.</p>
+        <h2>Basic or Advanced</h2>
+        <p>A <strong>Basic</strong> certificate covers flights in uncontrolled airspace, more than 30 m (measured horizontally) from anyone not involved in the flight. An <strong>Advanced</strong> certificate adds flying in controlled airspace with permission and flying closer to people. Both also need a drone whose maker has declared it meets Transport Canada’s safety requirements for that kind of flight.</p>
+        <p>A listing usually has neighbours, a street and sometimes an airport nearby, so most real estate flights fall outside Basic limits. For the exams and how to apply, see our <Link href="/blog/drone-licence-canada">drone licence guide</Link>.</p>
 
-        <h2>What a compliant GTA aerial shoot looks like</h2>
-        <ul>
-          <li><strong>Pre-flight check:</strong> verify the address against NAV CANADA airspace and any local restrictions.</li>
-          <li><strong>Clearance:</strong> file the required authorization when the location is in controlled airspace.</li>
-          <li><strong>On-site assessment:</strong> wind, obstacles, neighbours, and a safe launch point.</li>
-          <li><strong>Capture:</strong> a tight set of exterior and approach angles — usually enough in 10–15 minutes of flight.</li>
-          <li><strong>Edit:</strong> straightened, colour-matched HDR stills and a short aerial clip, delivered with the rest of the shoot.</li>
-        </ul>
+        <h2>Controlled airspace</h2>
+        <p>Much of the GTA sits in controlled airspace around Pearson, Billy Bishop and other airports and heliports. To fly there, an Advanced pilot requests an RPAS flight authorization from NAV CANADA, through the NAV Drone app or website, and flies only once it is granted. A careful pilot checks every address before the shoot.</p>
 
-        <h2>Why it matters to the agent</h2>
-        <p>An unlicensed operator isn&apos;t just breaking rules — if something goes wrong, the <strong>agent and brokerage are on the hook too</strong>. Booking a certified Advanced RPAS operator protects the listing, the client, and your license. It&apos;s also a quiet trust signal: buyers and sellers notice when the media is clearly professional.</p>
+        <h2>Height and sight</h2>
+        <p>Drones must stay at or below 122 m (400 ft) above ground. Within 61 m of a building, the limit is 30 m above that building. The pilot or a visual observer must keep the drone in sight, unless the flight is one of the specific operations the rules allow.</p>
 
-        <blockquote>&quot;In the GTA, the airspace is the hard part — not the flying. Certification is what lets us shoot legally next to Pearson&apos;s approach path.&quot;</blockquote>
+        <h2>What changed in November 2025</h2>
+        <p>New rules took effect on 4 November 2025. Advanced pilots can now fly <strong>sheltered operations</strong>: close to a building, no more than 30 m above it and within 61 m of it, still at least 30 m from people not involved. The same update added a Level 1 Complex certificate for some flights beyond visual line of sight. Listing shoots don’t need it.</p>
+
+        <h2>Other laws still apply</h2>
+        <p>Transport Canada reminds pilots to respect privacy and trespassing laws. Condo buildings and some sites also have their own rules about flying, so ask before you book.</p>
+
+        <h2>How Bricks handles it</h2>
+        <p>{DRONE_PILOT_LINE} The pilot checks the airspace for the address, requests NAV CANADA authorization when it is needed, and decides on the day whether the flight is safe. Booking aerials for a listing? See <Link href="/drone-photography">real estate drone photography</Link>.</p>
+        <p style={{ fontSize: 14, color: 'var(--inkMute)' }}>This guide is a plain summary, not legal advice. The links below are the rules themselves.</p>
 
         <h2>FAQ</h2>
         <div className="faq">

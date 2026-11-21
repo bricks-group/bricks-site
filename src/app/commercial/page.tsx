@@ -67,7 +67,7 @@ export default function CommercialPage() {
         lede="Book by address, pick an exact time and we assign the photographer. The media lands on the listing in Bricks."
         tiles={[
           { icon: 'camera', title: 'Listing photos', body: 'HDR photos of offices, retail, industrial and multi-unit property. Photos in 24 hours.' },
-          { icon: 'map', title: 'Licensed drone', body: 'Aerials of the building, the lot and the access, flown by certified pilots.' },
+          { icon: 'map', title: 'Licensed drone', body: 'Aerials of the building, the lot and the access, flown by pilots with a Transport Canada Advanced certificate.' },
           { icon: 'plan', title: 'Floor plans', body: 'Measured floor plans for leasing and sale listings.' },
           { icon: 'visit', title: 'Virtual Visit', body: 'Free-roam 3D of the space, so tenants and buyers can walk it from anywhere. A paid add-on.' },
           { icon: 'compare', title: 'Mapped capture', body: 'An orthomosaic, a 3D model and a measurable site map of the property.' },

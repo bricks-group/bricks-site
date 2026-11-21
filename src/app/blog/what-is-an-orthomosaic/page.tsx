@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { postMeta } from '@/lib/content/posts'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 
@@ -27,9 +28,10 @@ const FAQS = [
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'What is an orthomosaic?', description: DESC, datePublished: '2026-11-07', keywords: 'orthomosaic, what is an orthomosaic, orthomosaic map, drone mapping, orthophoto, construction drone map', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'What is an orthomosaic?', description: DESC, datePublished: '2026-11-07', dateModified: postMeta('what-is-an-orthomosaic').reviewedOn, keywords: 'orthomosaic, what is an orthomosaic, orthomosaic map, drone mapping, orthophoto, construction drone map', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
+        slug="what-is-an-orthomosaic"
         badge="Guides · Site Progress"
         title="What is an orthomosaic?"
         sub="The drone map builders use to measure, compare and report on a site, explained without the jargon."

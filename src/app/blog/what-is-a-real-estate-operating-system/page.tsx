@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { postMeta } from '@/lib/content/posts'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 import { OS_LOGIN } from '@/lib/brand'
@@ -33,9 +34,10 @@ const FAQS = [
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'What is a real estate operating system?', description: DESC, datePublished: '2026-11-14', keywords: 'real estate operating system, real estate operating system canada, real estate software canada, real estate platform, builder software, brokerage software, property manager software', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'What is a real estate operating system?', description: DESC, datePublished: '2026-11-14', dateModified: postMeta('what-is-a-real-estate-operating-system').reviewedOn, keywords: 'real estate operating system, real estate operating system canada, real estate software canada, real estate platform, builder software, brokerage software, property manager software', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
+        slug="what-is-a-real-estate-operating-system"
         badge="Guides · Software"
         title="What is a real estate operating system?"
         sub="One record for everyone around a property, with the work booked inside it."

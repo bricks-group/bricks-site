@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { postMeta } from '@/lib/content/posts'
+import { RENTALS_PLANS } from '@/lib/catalog'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 import { ONE_OFFS, money } from '@/lib/propertyCheckout'
@@ -26,9 +28,10 @@ export const metadata: Metadata = {
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Move-in and move-out condition reports in Ontario', description: DESC, datePublished: '2026-11-14', keywords: 'move out condition report ontario, move in inspection report, rental condition report photos, turnover photos, property manager toronto, landlord and tenant board evidence', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Move-in and move-out condition reports in Ontario', description: DESC, datePublished: '2026-11-14', dateModified: postMeta('move-out-condition-report-ontario').reviewedOn, keywords: 'move out condition report ontario, move in inspection report, rental condition report photos, turnover photos, property manager toronto, landlord and tenant board evidence', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
+        slug="move-out-condition-report-ontario"
         badge="Guides · Property managers"
         title="Move-in and move-out condition reports in Ontario"
         sub="What to photograph, when to do it, and how to keep a record you can compare from one tenant to the next."
@@ -69,7 +72,7 @@ export default function Post() {
 
         <h2>How Bricks does it</h2>
         <p>Book a dated move-in or move-out condition report for {REPORT}, or a turnover media bundle for {TURNOVER}: a move-out condition report, new listing photos and a measured floor plan in one visit. Both are <Link href="/book/property?for=property_manager">booked online by address</Link>, CAD plus tax. Media only: cleaning and repairs are not included, and are <Link href="/move-out-cleaning">quoted separately</Link>.</p>
-        <p>In a <Link href="/property-managers">property manager account</Link>, each condition report is compared room by room with the last one, every unit shows its turnover and next step, and you can print an owner report for any period. Managing many units? Rentals plans cover 5, 12 or 25 turnover bundles a month for $1,325, $2,990 or $5,875.</p>
+        <p>In a <Link href="/property-managers">property manager account</Link>, each condition report is compared room by room with the last one, every unit shows its turnover and next step, and you can print an owner report for any period. Managing many units? Rentals plans cover {RENTALS_PLANS.map((r) => r.bundles).join(', ').replace(/, (\d+)$/, ' or $1')} turnover bundles a month for {RENTALS_PLANS.map((r) => `$${r.monthly.toLocaleString('en-CA')}`).join(', ').replace(/, ([^,]+)$/, ' or $1')}.</p>
 
         <h2>FAQ</h2>
         <div className="faq">

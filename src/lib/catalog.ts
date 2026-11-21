@@ -105,3 +105,10 @@ export const PLAN_FEATURES: readonly { label: string; from: (typeof PLAN_ORDER)[
   { label: 'AI CMA', from: 'diamond', addon: '$25 / mo' },
   { label: 'AI Document Drafter', from: 'diamond', addon: '$19 / mo' },
 ]
+
+/** Rentals plans for property managers (monthly, CAD before tax). Shown on /property-managers, help and blog. */
+export const RENTALS_PLANS = [
+  { name: 'Rentals 5', bundles: 5, monthly: 1325 },
+  { name: 'Rentals 12', bundles: 12, monthly: 2990 },
+  { name: 'Rentals 25', bundles: 25, monthly: 5875 },
+] as const

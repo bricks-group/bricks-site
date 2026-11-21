@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { postMeta } from '@/lib/content/posts'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 import { OFFICE_PLANS, OFFICE_SEAT_PRICE_PER_MONTH } from '@/lib/catalog'
@@ -22,9 +23,10 @@ export const metadata: Metadata = {
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'What brokerage software needs to do in Ontario', description: DESC, datePublished: '2026-11-14', keywords: 'brokerage software ontario, real estate brokerage software, brokerage back office software, trust accounting software real estate, commission tracking, RECO, TRESA, MLS® feed', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'What brokerage software needs to do in Ontario', description: DESC, datePublished: '2026-11-14', dateModified: postMeta('brokerage-software-ontario').reviewedOn, keywords: 'brokerage software ontario, real estate brokerage software, brokerage back office software, trust accounting software real estate, commission tracking, RECO, TRESA, MLS® feed', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
+        slug="brokerage-software-ontario"
         badge="Guides · Brokerages"
         title="What brokerage software needs to do in Ontario"
         sub="The five jobs an office system has to cover, and the questions to ask before you move your agents."

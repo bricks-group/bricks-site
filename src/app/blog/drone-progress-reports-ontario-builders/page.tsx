@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { postMeta } from '@/lib/content/posts'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
@@ -25,9 +26,10 @@ export const metadata: Metadata = {
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Drone progress reporting for Ontario builders', description: DESC, datePublished: '2026-11-14', keywords: 'drone progress reports, construction progress reporting, construction drone ontario, site progress, orthomosaic, draw inspection, investor update', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Drone progress reporting for Ontario builders', description: DESC, datePublished: '2026-11-14', dateModified: postMeta('drone-progress-reports-ontario-builders').reviewedOn, keywords: 'drone progress reports, construction progress reporting, construction drone ontario, site progress, orthomosaic, draw inspection, investor update', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
+        slug="drone-progress-reports-ontario-builders"
         badge="Guides · Site Progress"
         title="Drone progress reporting for Ontario builders"
         sub="What a dated drone visit captures, how often to fly, and how to turn it into a report your lender can check."
@@ -42,7 +44,7 @@ export default function Post() {
         ]}
       >
         <p className="lead">
-          Drone progress reporting means flying a construction site on a schedule, filing each visit by date, and building reports from what changed between visits. On an Ontario site that takes a Transport Canada certified pilot, a consistent flight plan and software that keeps every visit on one timeline. The report documents conditions; it doesn’t certify quantities.
+          Drone progress reporting means flying a construction site on a schedule, filing each visit by date, and building reports from what changed between visits. On an Ontario site that takes a pilot with a Transport Canada Advanced certificate, a consistent flight plan and software that keeps every visit on one timeline. The report documents conditions; it doesn’t certify quantities.
         </p>
 
         <h2>What a dated visit captures</h2>

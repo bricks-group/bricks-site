@@ -69,7 +69,7 @@ export default function RealEstatePhotographyPage() {
         <Rows
           items={[
             { title: 'HDR listing photos', detail: 'Bracketed interiors and exteriors, edited in-house. Real window views, no fake skies.' },
-            { title: 'Licensed drone', detail: 'Aerials by Transport Canada certified pilots.', href: '/drone-photography' },
+            { title: 'Licensed drone', detail: 'Aerials by pilots with a Transport Canada Advanced certificate.', href: '/drone-photography' },
             { title: 'Floor plan', detail: `A branded 2D floor plan, from Essentials up, or $${FLOOR_PLAN_ONLY_RATE} on its own.` },
             { title: 'Film', detail: 'A calm 30–45 second listing film.', href: '/real-estate-video' },
             { title: 'Virtual tour and Virtual Visit', detail: 'A guided path through the home, or free-roam 3D.', href: '/virtual-tours' },
@@ -135,8 +135,8 @@ export default function RealEstatePhotographyPage() {
         <Head title="Read before you book." link={{ href: '/blog', label: 'All guides' }} />
         <Rows
           items={[
-            { title: 'How much does real estate photography cost in Canada? (2026)', href: '/blog/canada-real-estate-photography-cost-2026' },
-            { title: 'GTA real estate media cost (2026)', href: '/blog/gta-real-estate-media-cost-2026' },
+            { title: 'What real estate photography costs in Canada', href: '/blog/canada-real-estate-photography-cost-2026' },
+            { title: 'What real estate photography costs in the GTA', href: '/blog/gta-real-estate-media-cost-2026' },
             { title: 'What’s included in a listing photo shoot?', href: '/blog/whats-included-listing-shoot' },
             { title: 'Drone photography rules for real estate in Ontario', href: '/blog/drone-photography-rules-ontario' },
           ]}

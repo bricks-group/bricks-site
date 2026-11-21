@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
+import { postMeta } from '@/lib/content/posts'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { PER_VISIT, PLANS, fmt } from '@/lib/commercial'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
@@ -31,9 +32,10 @@ const FAQS = [
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Photogrammetry for construction: a practical guide', description: DESC, datePublished: '2026-11-07', keywords: 'photogrammetry construction, drone photogrammetry, construction drone mapping, drone survey construction, orthomosaic, cut and fill', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Photogrammetry for construction: a practical guide', description: DESC, datePublished: '2026-11-07', dateModified: postMeta('photogrammetry-for-construction').reviewedOn, keywords: 'photogrammetry construction, drone photogrammetry, construction drone mapping, drone survey construction, orthomosaic, cut and fill', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
+        slug="photogrammetry-for-construction"
         badge="Guides · Site Progress"
         title="Photogrammetry for construction: a practical guide"
         sub="What drone photogrammetry produces on a job site, where it helps, where it doesn’t, and how to run it on a schedule."
@@ -77,7 +79,11 @@ export default function Post() {
 
         <h2>How Bricks runs it</h2>
         <p>
+<<<<<<< HEAD
           With <Link href="/drone-mapping">Bricks drone mapping</Link>, a certified pilot flies the site, and the first mapped flight includes ground control setup. Each mapped capture delivers an orthomosaic, a 3D model and a measurable site map as a dated visit in Site Progress. Two mapped visits can be compared on a 0.5 m grid, leaving out changes under 10 cm. Cut, fill, net volume and area show their method and are estimates. You can also import your own GeoTIFF, LAS, LAZ, E57, PLY, OBJ or GLB files.
+=======
+          With <Link href="/drone-mapping">Bricks drone mapping</Link>, a pilot with a Transport Canada Advanced certificate and $2M drone liability insurance flies the site, and the first mapped flight includes ground control setup. Each mapped capture delivers an orthomosaic, a 3D model and a measurable site map as a dated visit in Site Progress. Two mapped visits can be compared on a 0.5 m grid, leaving out changes under 10 cm. Cut, fill, net volume and area show their method and are estimates. You can also import your own GeoTIFF, LAS, LAZ, E57, PLY, OBJ or GLB files.
+>>>>>>> 4bab4db (Blog accuracy: rewrite drone rules from Transport Canada, fix cost/included posts, evergreen titles, fact sheet + accuracy test)
         </p>
         <p>A mapped capture is {fmt(MAPPED.price)} {MAPPED.unit}, with a {fmt(SETUP.price)} one-time setup. Mapped plans per site: {MAPPED_PLAN.rows.map((r) => `${r.cadence.toLowerCase()} visits ${fmt(r.price)} a month`).join(', ')}. CAD, plus tax.</p>
 

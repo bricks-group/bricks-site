@@ -3,10 +3,14 @@ import Link from 'next/link'
 import BlogPostLayout from '@/components/BlogPostLayout'
 import { blogPostingSchema, faqPageSchema } from '@/lib/schema'
 import { OG_IMAGE, OG_IMAGE_URL } from '@/lib/og'
+import { postMeta } from '@/lib/content/posts'
 
-const PATH = '/blog/drone-licence-canada'
-const TITLE = 'Drone Licence in Canada: Basic vs Advanced (2026) | Bricks'
-const DESC = 'How to get a drone licence in Canada in 2026: Basic, Advanced and Level 1 Complex certificates, exams, flight reviews and what real estate work needs.'
+const SLUG = 'drone-licence-canada'
+const META = postMeta(SLUG)
+const PATH = `/blog/${SLUG}`
+const HEADLINE = 'Drone licence in Canada: Basic vs Advanced'
+const TITLE = `${HEADLINE} | Bricks`
+const DESC = 'How to get a drone licence in Canada: Basic, Advanced and Level 1 Complex certificates, exams, flight reviews and what real estate work needs.'
 const TC = 'https://tc.canada.ca/en/aviation/drone-safety'
 
 export const metadata: Metadata = {
@@ -23,17 +27,18 @@ const FAQS = [
   { q: 'What is the difference between a Basic and an Advanced drone certificate?', a: 'Basic lets you fly small drones in uncontrolled airspace, more than 30 m horizontally from people. Advanced adds flying closer to or over people, in controlled airspace with air traffic control permission, and medium drones, if the drone meets the safety requirements for that operation.' },
   { q: 'How old do you have to be to get a drone licence?', a: '14 for Basic, 16 for Advanced and 18 for Level 1 Complex.' },
   { q: 'Does a drone pilot certificate expire?', a: 'No. Transport Canada certificates do not expire, but pilots must keep their skills up to date.' },
-  { q: 'Which certificate does real estate drone work need?', a: 'Usually Advanced. Homes sit near streets, neighbours and often controlled airspace, which puts most listing flights outside Basic limits. Bricks requires Advanced certification before routing drone jobs to a pilot.' },
+  { q: 'Which certificate does real estate drone work need?', a: 'Usually Advanced. Homes sit near streets, neighbours and often controlled airspace, which puts most listing flights outside Basic limits. Every Bricks drone pilot holds an Advanced certificate.' },
 ]
 
 export default function Post() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: 'Drone licence in Canada: Basic vs Advanced (2026)', description: DESC, datePublished: '2026-11-07', keywords: 'drone licence Canada, drone license Canada, drone pilot certificate, Advanced RPAS, Basic drone certificate, drone rules Canada', image: OG_IMAGE_URL })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema({ path: PATH, headline: HEADLINE, description: DESC, datePublished: META.published, dateModified: META.reviewedOn, keywords: 'drone licence Canada, drone license Canada, drone pilot certificate, Advanced RPAS, Basic drone certificate, drone rules Canada', image: OG_IMAGE_URL })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(FAQS)) }} />
       <BlogPostLayout
-        badge="Guides · Drone · Canada"
-        title="Drone licence in Canada: Basic vs Advanced (2026)"
+        slug={SLUG}
+        badge="Resources · Drone"
+        title={HEADLINE}
         sub="What Transport Canada’s three drone pilot certificates allow, how to get each one, and which one you need to fly real estate."
         cta={{ href: '/photographers', label: 'Fly for Bricks' }}
         related={[

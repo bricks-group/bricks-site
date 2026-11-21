@@ -27,8 +27,8 @@ export const metadata: Metadata = {
 
 const posts = [
   { href: '/blog/what-is-a-real-estate-operating-system', title: 'What is a real estate operating system?' },
-  { href: '/blog/canada-real-estate-photography-cost-2026', title: 'How much does real estate photography cost in Canada? (2026)' },
-  { href: '/blog/3d-tour-vs-video-walkthrough', title: 'Virtual tour vs. video walkthrough: which sells faster?' },
+  { href: '/blog/canada-real-estate-photography-cost-2026', title: 'What real estate photography costs in Canada' },
+  { href: '/blog/3d-tour-vs-video-walkthrough', title: 'Virtual tour or video walkthrough: which fits the listing?' },
   { href: '/blog/drone-photography-rules-ontario', title: 'Drone photography rules for real estate in Ontario' },
 ]
 
