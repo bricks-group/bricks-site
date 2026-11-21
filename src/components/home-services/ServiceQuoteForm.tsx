@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { PROPERTY_TYPES, QUOTE_CLIENT_TYPES, TIMING_OPTIONS, TRADES, tradeBySlug, type TradeSlug } from '@/lib/services'
 import { tradePriceByKey } from '@/lib/trade-pricing'
+import EmbeddedPay, { embeddedFrom, type EmbeddedSession } from '@/components/EmbeddedPay'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -28,15 +29,17 @@ const css = `
   @media (max-width:900px){.sq{grid-template-columns:1fr;}.sq aside{position:static;}.sq .two{grid-template-columns:1fr;}}
 `
 
+type Quote = { name: string; total_cents: number; tax_label: string; subtotal_cents: number }
+
 export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
   const [slug, setSlug] = useState<TradeSlug | ''>(trade || '')
   const t = slug ? tradeBySlug(slug) : undefined
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
-  const [sent, setSent] = useState<string | null>(null)
+  const [pay, setPay] = useState<EmbeddedSession | null>(null)
+  const [quote, setQuote] = useState<Quote | null>(null)
+  const [paid, setPaid] = useState(false)
 
-  // One form for every trade: #staging (old /staging links redirect here) or
-  // #book-staging (the "Book" link in each section) picks the trade.
   useEffect(() => {
     const pick = () => {
       const h = decodeURIComponent(window.location.hash.replace(/^#(quote-|book-)?/, ''))
@@ -64,11 +67,17 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
       const body = {
         trade: slug, clientType: v('clientType'), scope: v('scope'), name: v('name'), email, phone: v('phone'), company: v('company'),
         address: v('address'), propertyType: v('propertyType'), size: v('size'), timing: v('timing'), details: v('details'), website: v('website'),
+        ui_mode: 'embedded',
+        // Preview / Sentinel builds set STRIPE_FORCE_TEST=1. Never charge live from agent tests.
+        test: process.env.NEXT_PUBLIC_TRADE_CHECKOUT_TEST === '1',
       }
-      const r = await fetch('/api/book/service-request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-      const j = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string }
-      if (!r.ok || !j.ok) { setMsg(j.error || 'Could not send. Email help@brxs.ca.'); return }
-      setSent(email)
+      const r = await fetch('/api/book/trade-checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      const j = await r.json().catch(() => ({})) as { ok?: boolean; error?: string; quote?: Quote; url?: string }
+      if (!r.ok || !j.ok) { setMsg(j.error || 'Could not start payment. Email help@brxs.ca.'); return }
+      const emb = embeddedFrom(j)
+      if (emb) { setQuote(j.quote || null); setPay(emb); return }
+      if (j.url) { window.location.href = j.url; return }
+      setMsg('Checkout did not return a payment form. Email help@brxs.ca.')
     } catch {
       setMsg('Network error. Please email help@brxs.ca.')
     } finally {
@@ -76,14 +85,31 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
     }
   }
 
-  if (sent) {
+  if (paid) {
     return (
       <div className="sq" style={{ gridTemplateColumns: '1fr' }}>
         <style>{css}</style>
-        <div className="ok" data-testid="service-quote-sent" role="status">
-          <h3>Booking received.</h3>
-          <p className="hint" style={{ fontSize: 15 }}>We sent a copy to {sent}. We match a vendor near you, then email the time and a link to pay the set price. Nothing is charged until you pay that link.</p>
+        <div className="ok" data-testid="trade-paid" role="status">
+          <h3>Paid. Bricks has it from here.</h3>
+          <p className="hint" style={{ fontSize: 15 }}>We match a vendor near you and email the time. The results stay with the property in your Bricks account.</p>
         </div>
+      </div>
+    )
+  }
+
+  if (pay) {
+    const dollars = quote ? (quote.total_cents / 100).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' }) : ''
+    return (
+      <div className="sq" style={{ gridTemplateColumns: '1fr' }}>
+        <style>{css}</style>
+        {quote ? <p className="hint" style={{ fontSize: 15, marginBottom: 8 }}>{quote.name}. {dollars} with {quote.tax_label}.</p> : null}
+        <EmbeddedPay
+          session={pay}
+          title="Pay"
+          note="Card or Link. Nothing is charged until you finish here."
+          backLabel="Change details"
+          onBack={() => setPay(null)}
+        />
       </div>
     )
   }
@@ -157,17 +183,17 @@ export default function ServiceQuoteForm({ trade }: { trade?: TradeSlug }) {
         </fieldset>
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1 }} />
         <div className="msg" role="alert">{msg}</div>
-        <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Sending…' : 'Book at this price'}</button>
+        <button className="btn btn-night btn-primary" type="submit" disabled={busy}>{busy ? 'Opening pay…' : 'Pay and book'}</button>
       </form>
       <aside>
-        <h3>How booking works</h3>
+        <h3>How it works</h3>
         <ol>
-          <li>Pick the service. The price is set before HST.</li>
-          <li>We match a vendor near you and email the time.</li>
-          <li>You pay the set price from that email.</li>
-          <li>Once it&apos;s done, the results are kept with the property in your Bricks account.</li>
+          <li>Pick the service. The price is set before tax.</li>
+          <li>Pay here. Nothing is charged until you finish.</li>
+          <li>We match a vendor and email the time.</li>
+          <li>Results stay with the property in Bricks.</li>
         </ol>
-        <p style={{ margin: 0 }}><a href="/help/home-services/how-quote-requests-work">More about booking home services</a></p>
+        <p style={{ margin: 0 }}><a href="/help/home-services/how-quote-requests-work">More about booking</a></p>
       </aside>
     </div>
   )

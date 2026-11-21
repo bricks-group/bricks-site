@@ -26,9 +26,9 @@ export default function ServicesPage() {
       <RevealObserver />
       <section className="hero">
         <div className="wrap">
-          <h1>Book home services inside Bricks.</h1>
+          <h1>Book home services.</h1>
           <p className="sub">
-            {`${LIST.charAt(0).toUpperCase() + LIST.slice(1)}, booked from the same system as your listings and units.`} Every service has a set price, and the results are kept with the property.
+            {`${LIST.charAt(0).toUpperCase() + LIST.slice(1)}.`} Set prices. Kept with the property.
           </p>
           <div className="cta-row">
             <a className="btn btn-sec" href="#book">See prices and book</a>
@@ -38,7 +38,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="cm-sec rvl" aria-label="Services">
-        <Head title={`${NUM} services, one system.`} lede="Pick a service to see what it covers and its set prices." />
+        <Head title={`${NUM} services.`} lede="Pick one. See the price. Book." />
         <TradeGrid />
       </section>
 
@@ -49,8 +49,8 @@ export default function ServicesPage() {
         <Rows
           items={[
             { title: 'Pick the service', detail: 'Every service has a set price before HST.' },
-            { title: 'Get your time', detail: 'Bricks matches a vetted vendor near you and emails the time.' },
-            { title: 'Pay the set price', detail: 'From that email. Nothing is charged before then.' },
+            { title: 'Pay the set price', detail: 'On this page. Nothing is charged until you finish.' },
+            { title: 'Get your time', detail: 'After you pay, Bricks matches a vetted vendor and emails the time.' },
             { title: 'Get the results inside Bricks', detail: 'Reports, photos, checklists and measurements are kept with the property in your Bricks account.' },
           ]}
         />
@@ -73,7 +73,7 @@ export default function ServicesPage() {
       <section className="cm-sec hs-quote" id="book" aria-label="Book a service">
         <span id="quote" className="hs-anchor" aria-hidden="true" />
         {TRADES.map((t) => <span key={t.slug} id={`book-${t.slug}`} className="hs-anchor" aria-hidden="true" />)}
-        <Head title="Book a service." lede="Pick the service and price, and tell us about the property. We email the time and a link to pay." />
+        <Head title="Book." lede="Pick the service and price. Pay here. We email the time." />
         <ServiceQuoteForm />
       </section>
     </div>
