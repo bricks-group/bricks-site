@@ -48,8 +48,11 @@ export async function POST(req: Request) {
     if (res.ok && (j as { ok?: boolean }).ok) {
       // Written copy of the agreement (CPA s. 33). Best effort; never blocks the confirmation.
       try {
-        await sendCopyForSession(sessionId)
-      } catch {}
+        const out = await sendCopyForSession(sessionId)
+        if (!out.ok) console.error('booking-copy failed', out.error)
+      } catch (e) {
+        console.error('booking-copy threw', e instanceof Error ? e.message : 'unknown')
+      }
     }
     return NextResponse.json(j, { status: res.status })
   } catch {

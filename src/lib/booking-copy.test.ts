@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
 import { buildBookingCopy, quoteLinesForCopy, sendBookingCopy, sendCopyForSession, type CopySession } from './booking-copy'
 
 const session: CopySession = {
@@ -46,18 +46,62 @@ test('send redirects to override address and never needs the real customer in pr
   assert.deepEqual(body.to, ['delivered@resend.dev'])
 })
 
-test('sendCopyForSession sends once and marks the session', async () => {
-  const calls: string[] = []
+function stripeMock(opts: { failMark?: boolean; failResend?: boolean } = {}) {
+  const meta: Record<string, string> = { ...(session.metadata as Record<string, string>) }
+  const log: { u: string; m: string; h: any }[] = []
   const f = (async (u: string, init: any = {}) => {
-    calls.push((init.method || 'GET') + ' ' + u.replace('https://', '').slice(0, 40))
-    if (u.includes('stripe.com')) return { ok: true, json: async () => session }
-    return { ok: true }
+    const m = init.method || 'GET'
+    log.push({ u, m, h: init.headers })
+    if (u.includes('api.resend.com')) return { ok: !opts.failResend }
+    if (m === 'POST') {
+      const p = new URLSearchParams(init.body)
+      if (opts.failMark && p.has('metadata[copy_sent_at]')) return { ok: false }
+      for (const [k, v] of p) meta[k.replace('metadata[', '').replace(']', '')] = v
+      return { ok: true, json: async () => ({}) }
+    }
+    return { ok: true, json: async () => ({ ...session, metadata: { ...meta } }) }
   }) as any
-  const out = await sendCopyForSession('cs_test_123', { STRIPE_SECRET_KEY: 'sk_test_x', RESEND_API_KEY: 're_x', BOOKING_COPY_TO_OVERRIDE: 'delivered@resend.dev' }, f)
+  return { f, meta, log }
+}
+const ENV = { STRIPE_SECRET_KEY: 'sk_test_x', RESEND_API_KEY: 're_x', BOOKING_COPY_TO_OVERRIDE: 'delivered@resend.dev' }
+
+test('sendCopyForSession sends once with an idempotency key and marks the session', async () => {
+  const { f, meta, log } = stripeMock()
+  const out = await sendCopyForSession('cs_test_123', ENV, f)
   assert.equal(out.ok, true)
-  assert.ok(calls.some((c) => c.startsWith('POST api.resend.com')) && calls.some((c) => c.startsWith('POST api.stripe.com')))
-  const again = await sendCopyForSession('cs_test_123', { STRIPE_SECRET_KEY: 'sk_test_x' }, (async () => ({ ok: true, json: async () => ({ ...session, metadata: { ...session.metadata, copy_sent_at: 'x' } }) })) as any)
+  const resend = log.filter((c) => c.u.includes('api.resend.com'))
+  assert.equal(resend.length, 1)
+  assert.equal(resend[0].h['Idempotency-Key'], 'booking-copy-cs_test_123')
+  assert.ok(meta.copy_sent_at)
+  const again = await sendCopyForSession('cs_test_123', ENV, f)
   assert.equal(again.already_sent, true)
+  assert.equal(log.filter((c) => c.u.includes('api.resend.com')).length, 1)
+})
+
+test('a failed copy_sent_at write is reported, not swallowed', async () => {
+  const { f } = stripeMock({ failMark: true })
+  const out = await sendCopyForSession('cs_test_123', ENV, f)
+  assert.equal(out.ok, false)
+  assert.equal(out.error, 'mark_failed')
+})
+
+test('a fresh claim by another caller blocks a second send', async () => {
+  const { f, meta, log } = stripeMock()
+  meta.copy_claim = `abc.${Date.now()}`
+  const out = await sendCopyForSession('cs_test_123', ENV, f)
+  assert.equal(out.already_sent, true)
+  assert.equal(log.filter((c) => c.u.includes('api.resend.com')).length, 0)
+})
+
+test('a failed send leaves the session unmarked', async () => {
+  const { f, meta } = stripeMock({ failResend: true })
+  const out = await sendCopyForSession('cs_test_123', ENV, f)
+  assert.equal(out.error, 'send_failed')
+  assert.ok(!meta.copy_sent_at)
+})
+
+test('there is no public booking-copy route', () => {
+  assert.ok(!existsSync(new URL('../app/api/booking-copy/route.ts', import.meta.url)))
 })
 
 test('quote lines fit Stripe metadata and skip included items', () => {

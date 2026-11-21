@@ -104,36 +104,52 @@ export function buildBookingCopy(session: CopySession): BookingCopy {
 
 type Env = Record<string, string | undefined>
 
-/** Send via Resend. BOOKING_COPY_TO_OVERRIDE redirects every send (previews use delivered@resend.dev). */
-export async function sendBookingCopy(copy: NonNullable<BookingCopy>, env: Env = process.env, f: typeof fetch = fetch): Promise<{ ok: boolean; to: string }> {
+/** Send via Resend. BOOKING_COPY_TO_OVERRIDE redirects every send (previews use delivered@resend.dev).
+ *  The Idempotency-Key makes Resend drop any repeat of the same session's copy for 24 hours. */
+export async function sendBookingCopy(copy: NonNullable<BookingCopy>, env: Env = process.env, f: typeof fetch = fetch, idempotencyKey?: string): Promise<{ ok: boolean; to: string }> {
   const key = (env.RESEND_API_KEY || '').trim()
   const to = (env.BOOKING_COPY_TO_OVERRIDE || '').trim() || copy.to
   if (!key) return { ok: false, to }
+  const headers: Record<string, string> = { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }
+  if (idempotencyKey) headers['Idempotency-Key'] = idempotencyKey
   const r = await f('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ from: `Bricks <hello@brxs.ca>`, to: [to], reply_to: [SUPPLIER.email], subject: copy.subject, html: copy.html, text: copy.text }),
   })
   return { ok: r.ok, to }
 }
 
-/** Reads the paid Stripe session, sends the copy once, marks it sent. Used by /api/booking-copy and /api/confirm-paid. */
+const CLAIM_TTL_MS = 10 * 60 * 1000
+
+/** Reads the paid Stripe session, sends the copy once, marks it sent. Called only from /api/confirm-paid (server side).
+ *  Double-send protection: (1) a claim token written to Stripe metadata and re-read, (2) a Resend Idempotency-Key per session,
+ *  (3) the sent mark is checked: a failed write is reported, never swallowed. */
 export async function sendCopyForSession(sessionId: string, env: Env = process.env, f: typeof fetch = fetch): Promise<{ ok: boolean; status: number; error?: string; already_sent?: boolean }> {
   const key = (env.STRIPE_SECRET_KEY || '').trim()
   if (!key) return { ok: false, status: 503, error: 'not_configured' }
   const auth = { Authorization: `Bearer ${key}` }
-  const r = await f(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, { headers: auth })
-  if (!r.ok) return { ok: false, status: 404, error: 'session_not_found' }
-  const session = (await r.json()) as CopySession
+  const url = `https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`
+  const form = { ...auth, 'Content-Type': 'application/x-www-form-urlencoded' }
+  const read = async () => { const r = await f(url, { headers: auth }); return r.ok ? ((await r.json()) as CopySession) : null }
+  const session = await read()
+  if (!session) return { ok: false, status: 404, error: 'session_not_found' }
   if (session.metadata?.copy_sent_at) return { ok: true, status: 200, already_sent: true }
   const copy = buildBookingCopy(session)
   if (!copy) return { ok: false, status: 409, error: 'not_paid_or_no_email' }
-  const sent = await sendBookingCopy(copy, env, f)
+  // Claim: another caller holding a fresh claim means a send is in flight.
+  const prior = String(session.metadata?.copy_claim || '')
+  const priorAt = Number(prior.split('.')[1] || 0)
+  if (prior && Date.now() - priorAt < CLAIM_TTL_MS) return { ok: true, status: 200, already_sent: true }
+  const token = `${Math.random().toString(36).slice(2, 10)}.${Date.now()}`
+  const claimRes = await f(url, { method: 'POST', headers: form, body: new URLSearchParams({ 'metadata[copy_claim]': token }).toString() })
+  if (!claimRes.ok) return { ok: false, status: 502, error: 'claim_failed' }
+  const again = await read()
+  if (!again || again.metadata?.copy_claim !== token) return { ok: true, status: 200, already_sent: true }
+  if (again.metadata?.copy_sent_at) return { ok: true, status: 200, already_sent: true }
+  const sent = await sendBookingCopy(copy, env, f, `booking-copy-${sessionId}`)
   if (!sent.ok) return { ok: false, status: 502, error: 'send_failed' }
-  await f(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, {
-    method: 'POST',
-    headers: { ...auth, 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ 'metadata[copy_sent_at]': new Date().toISOString() }).toString(),
-  }).catch(() => {})
+  const mark = await f(url, { method: 'POST', headers: form, body: new URLSearchParams({ 'metadata[copy_sent_at]': new Date().toISOString() }).toString() })
+  if (!mark.ok) return { ok: false, status: 502, error: 'mark_failed' }
   return { ok: true, status: 200 }
 }
