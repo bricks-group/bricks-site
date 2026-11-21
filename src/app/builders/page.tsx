@@ -108,11 +108,7 @@ export default function BuildersPage() {
 
       <section className="cm-sec" id="hub" aria-label="The builder hub">
         <Head title="The builder hub." lede="Dated, measured evidence from every visit, for your team, your lenders and your quantity surveyor." link={{ href: '/drone-mapping', label: 'Drone mapping' }} />
-<<<<<<< HEAD
         <p className="bx-intro">Bricks gives builders and developers construction progress reports from dated drone visits. A certified pilot flies the site, each visit lands on the project timeline, and Bricks drafts the progress report and investor update from what changed. Book a {fmt(PER_VISIT[0].price)} progress visit, a {fmt(PER_VISIT[1].price)} mapped capture or a monthly plan per site. CAD, plus tax.</p>
-=======
-        <p className="bx-intro">Bricks gives builders and developers construction progress reports from dated drone visits. A pilot with an Advanced certificate and insurance flies the site, each visit lands on the project timeline, and Bricks drafts the progress report and investor update from what changed. Book a {fmt(PER_VISIT[0].price)} progress visit, a {fmt(PER_VISIT[1].price)} mapped capture or a monthly plan per site. CAD, plus tax.</p>
->>>>>>> 4bab4db (Blog accuracy: rewrite drone rules from Transport Canada, fix cost/included posts, evergreen titles, fact sheet + accuracy test)
         <FeatureList items={HUB} label="Builder hub features" sheet="B" />
       </section>
 
