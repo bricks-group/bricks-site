@@ -16,10 +16,10 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [Pricing](https://www.brxs.ca/pricing): Clay, Keystone, Marble and Diamond, monthly or annual in CAD; separate service and brokerage pricing.
 - [Listing media and Virtual Visit](https://www.brxs.ca/media): Photography, drone, video, reels, floor plans and free-roam 3D.
 - [Site Progress](https://www.brxs.ca/builders): Builder and developer reports, maps, models and comparisons over time.
-- [Book listing media](https://www.brxs.ca/book): Address-based quotes and booking.
+- [Book listing media](https://www.brxs.ca/book): Address-based pricing and booking.
 - [Book Site Progress](https://www.brxs.ca/book/site): A site visit or monitoring plan.
 - [Book a property visit](https://www.brxs.ca/book/property): Condition reports, turnovers, leasing sets and acquisition captures are booked and paid online at /book/property.
-- [Home services](https://www.brxs.ca/services): Staging, cleaning, inspections and measurement, by approved written quote.
+- [Home services](https://www.brxs.ca/services): Staging, cleaning, inspections and measurement, at set prices Bricks calculates.
 - [Home staging](https://www.brxs.ca/services#staging): Staging consult, installation and removal, at set prices from $295.
 - [Cleaning and turnovers](https://www.brxs.ca/services#cleaning): Property cleaning with a checklist and photo proof, at set prices from $229.
 - [Inspections](https://www.brxs.ca/services#inspections): Ontario home inspections with written reports, at set prices from $349.
@@ -30,8 +30,8 @@ Virtual Visit is the flagship free-roam 3D service (Gaussian splat), a paid add-
 - [Virtual tours](https://www.brxs.ca/virtual-tours): Path-confined virtual tours, and Virtual Visit free-roam 3D as a separate add-on.
 - [Real estate video](https://www.brxs.ca/real-estate-video): Calm, editorial 30–45 second listing films.
 - [Drone mapping](https://www.brxs.ca/drone-mapping): Orthomosaics, 3D models and measurable site maps for construction; estimates, not a survey.
-- [Home staging page](https://www.brxs.ca/home-staging): Staging for vacant and lived-in homes, by written quote.
-- [Move-out and turnover cleaning](https://www.brxs.ca/move-out-cleaning): Move-out, turnover and pre-listing cleans with photo proof, by written quote.
+- [Home staging page](https://www.brxs.ca/home-staging): Staging for vacant and lived-in homes, at a set price.
+- [Move-out and turnover cleaning](https://www.brxs.ca/move-out-cleaning): Move-out, turnover and pre-listing cleans with photo proof, at a set price.
 - [Home inspections in Ontario](https://www.brxs.ca/home-inspection-ontario): Pre-listing, pre-purchase, condo and new-build inspections; Ontario only.
 - [City pages](https://www.brxs.ca/real-estate-photography/toronto): Toronto (home base), plus [Ottawa](https://www.brxs.ca/real-estate-photography/ottawa), [Calgary](https://www.brxs.ca/real-estate-photography/calgary) and [Vancouver](https://www.brxs.ca/real-estate-photography/vancouver), where a photographer is confirmed at booking.
 - [Service areas](https://www.brxs.ca/service-areas): Canada-wide coverage, subject to property-specific confirmation.

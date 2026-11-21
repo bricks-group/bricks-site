@@ -32,7 +32,7 @@ export function fullReference(): string {
     '## Site Progress', `Source: ${BASE}/builders`, '', SITE_PROGRESS_DESCRIPTION, '',
     '## Other services booked through Bricks', `Source: ${BASE}/services`, '',
     ...TRADES.map((trade) => `- ${trade.name}: ${trade.short}`),
-    'Home services are by written quote. Nothing is booked or charged until the client approves the quote. A measurement is not a legal land survey; Bricks refers legal land surveys to an Ontario Land Surveyor.', '',
+    'Every home service has a set price that Bricks calculates, shown before you book. Nothing is charged until the client confirms the booking. A measurement is not a legal land survey; Bricks refers legal land surveys to an Ontario Land Surveyor.', '',
     '## Contact', `Source: ${BASE}/contact`, '',
     '- Support: help@brxs.ca', '- General enquiries: hello@brxs.ca', '- Vendor and job applications: careers@brxs.ca', '- Privacy: privacy@brxs.ca', '',
   ]
