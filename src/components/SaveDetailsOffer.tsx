@@ -37,7 +37,7 @@ export default function SaveDetailsOffer({ sessionId }: { sessionId: string }) {
         <>
           <h3 style={{ margin: '0 0 8px', fontSize: 17, fontWeight: 500, color: 'var(--ink)' }}>Save your details for next time.</h3>
           <p style={{ margin: '0 0 16px', fontSize: 14, color: 'var(--inkSoft)' }}>Next booking takes seconds, and this shoot shows up in your Bricks account.</p>
-          <button type="button" className="btn btn-sec" onClick={save} disabled={state === 'busy'} style={{ borderRadius: 0 }}>
+          <button type="button" className="btn btn-sec" onClick={save} disabled={state === 'busy'} style={{ borderRadius: 0, background: 'transparent', color: 'var(--ink)', border: '1px solid var(--ink)' }}>
             {state === 'busy' ? 'Saving…' : 'Save my details'}
           </button>
           {state === 'error' && <p role="status" style={{ margin: '12px 0 0', fontSize: 13.5, color: 'var(--inkSoft)' }}>That didn&apos;t go through. You can set up an account any time at app.brxs.ca.</p>}

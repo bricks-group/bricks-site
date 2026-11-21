@@ -70,8 +70,7 @@ export default function CheckoutElementsPay({
     }
   }, [session.clientSecret, session.publishableKey])
 
-  async function applyCode(e?: React.FormEvent) {
-    e?.preventDefault()
+  async function applyCode() {
     const a = actionsRef.current
     const c = code.trim()
     if (!a || !c) return
@@ -127,17 +126,18 @@ export default function CheckoutElementsPay({
         </div>
         <div style={{ marginTop: 12 }}>
           {codeOpen ? (
-            <form onSubmit={applyCode} style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8 }}>
               <input
                 aria-label="Launch code"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); void applyCode() } }}
                 placeholder="Launch code"
                 autoFocus
                 style={{ flex: 1, minWidth: 0, padding: '10px 12px', border: line, borderRadius: 0, background: 'var(--paper)', color: 'var(--ink)', font: 'inherit', fontSize: 14 }}
               />
-              <button type="submit" className="btn btn-ghost" style={{ borderRadius: 0 }}>Apply</button>
-            </form>
+              <button type="button" className="btn btn-ghost" onClick={() => void applyCode()} style={{ borderRadius: 0 }}>Apply</button>
+            </div>
           ) : discounts.length === 0 ? (
             <button type="button" onClick={() => setCodeOpen(true)} style={{ background: 'none', border: 0, padding: 0, color: 'var(--inkSoft)', textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer', font: 'inherit', fontSize: 13.5 }}>Have a launch code?</button>
           ) : null}
