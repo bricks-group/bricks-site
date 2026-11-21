@@ -8,5 +8,10 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "workers_dev": true
+  "workers_dev": true,
+  "vars": {
+    "NEWSLETTER_BASE_URL": "https://www.brxs.ca",
+    "NEWSLETTER_POSTAL_ADDRESS": "Bricks Group · 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada",
+    "NEWSLETTER_SEGMENT_ID": "d51b56c0-a701-41db-9a71-c36b08c33470"
+  }
 }
