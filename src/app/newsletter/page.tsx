@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import NewsletterForm from './NewsletterForm'
 import './newsletter.css'
-import { legalPartyName } from '@/lib/legal-config'
 
 export const metadata: Metadata = {
   title: 'Bricks updates by email',
@@ -18,7 +17,7 @@ export default function NewsletterPage() {
         <p className="sub">One short email a month. What&rsquo;s new, and what it means for your business.</p>
         <NewsletterForm source="page" />
         <p className="nl-fine">
-          From {legalPartyName()}, 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada. We&rsquo;ll send a link to confirm first. Every email has an unsubscribe link.
+          From Bricks, 6330 Montevideo Road, Mississauga, ON L5N 3V2, Canada. We&rsquo;ll send a link to confirm first. Every email has an unsubscribe link.
           See our <Link href="/privacy">privacy policy</Link>.
         </p>
       </div>

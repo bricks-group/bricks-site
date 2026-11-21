@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import Link from '@/components/SiteLink'
 import { isTradeEnabled } from '@/lib/services'
 import { COMPANION_URL, GO_URL, OS_LOGIN, STATUS } from '@/lib/brand'
-import { LEGAL_NAME, SOCIAL_PROFILES } from '@/lib/schema'
+import { SOCIAL_PROFILES } from '@/lib/schema'
 import ThemeToggle from '@/components/ThemeToggle'
 import { SOFTWARE_MODULES, moduleHref } from '@/lib/software-modules'
 
@@ -92,7 +92,7 @@ export default function Footer({ children }: { children?: ReactNode }) {
         </div>
       </div>
       <div className="foot-meta">
-        <span>© {LEGAL_NAME}</span>
+        <span>© Bricks</span>
         <a href="mailto:hello@brxs.ca">hello@brxs.ca</a>
         <span className="mono">(289) 312-7425</span>
         <a href="https://share.google/7ttYfc6W7JRwlqA9U" target="_blank" rel="noopener noreferrer">Find us on Google</a>

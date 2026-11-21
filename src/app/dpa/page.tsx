@@ -48,16 +48,16 @@ export default function DpaPage() {
         </div>
 
         <section className="block">
-          <h2>1. Definitions</h2>
+          <h2>1. Definitions</h2><p className="inshort"><strong>In short:</strong> Who&apos;s who: you are the Controller, Bricks is the Processor.</p><details><summary>Read the details</summary>
           <p>&quot;<strong>Controller</strong>&quot; means the Client who determines the purposes and means of processing personal data of their agents, staff, and property owners.</p>
           <p>&quot;<strong>Processor</strong>&quot; means {legalPartyName()}, which processes personal data on behalf of the Controller in connection with the Bricks platform.</p>
           <p>&quot;<strong>Sub-Processor</strong>&quot; means a third party engaged by Bricks to assist in processing personal data.</p>
           <p>&quot;<strong>Personal Data</strong>&quot; means any information relating to an identified or identifiable natural person processed through the Bricks platform in connection with the Controller&apos;s use of the service.</p>
           <p>&quot;<strong>Applicable Law</strong>&quot; means PIPEDA and any applicable provincial privacy legislation including Ontario&apos;s privacy framework.</p>
-        </section>
+        </details></section>
 
         <section className="block">
-          <h2>2. Subject Matter and Nature of Processing</h2>
+          <h2>2. Subject Matter and Nature of Processing</h2><p className="inshort"><strong>In short:</strong> We only handle personal data to run the platform for you.</p><details><summary>Read the details</summary>
           <p>
             Bricks processes Personal Data on behalf of the Controller solely for the purpose of providing the
             platform services described in the Terms of Service, including: managing agent accounts, processing
@@ -69,7 +69,7 @@ export default function DpaPage() {
             Service and this DPA without the Controller&apos;s prior written instruction, except where required by
             applicable law.
           </p>
-        </section>
+        </details></section>
 
         <section className="block">
           <h2>3. Categories of Data Subjects and Personal Data</h2>
@@ -98,7 +98,7 @@ export default function DpaPage() {
         </section>
 
         <section className="block">
-          <h2>4. Bricks&apos;s Obligations as Processor</h2>
+          <h2>4. Bricks&apos;s Obligations as Processor</h2><p className="inshort"><strong>In short:</strong> We follow your instructions, keep staff bound to confidentiality, and protect the data.</p><details><summary>Read the details</summary>
           <p>Bricks will:</p>
           <ul>
             <li>Process Personal Data only on documented instructions from the Controller (as set out in this DPA and the Terms of Service) or as required by applicable law.</li>
@@ -109,7 +109,7 @@ export default function DpaPage() {
             <li>Notify the Controller of any Personal Data breach affecting the Controller&apos;s data without undue delay and in any event within 72 hours of becoming aware.</li>
             <li>Upon termination of the service, delete or return all Personal Data as instructed by the Controller within 90 days, except where retention is required by applicable law.</li>
           </ul>
-        </section>
+        </details></section>
 
         <section className="block">
           <h2>5. Controller&apos;s Obligations</h2>
@@ -121,7 +121,7 @@ export default function DpaPage() {
         </section>
 
         <section className="block">
-          <h2>6. Security Measures</h2>
+          <h2>6. Security Measures</h2><p className="inshort"><strong>In short:</strong> Encryption, limited access and regular reviews protect the data.</p><details><summary>Read the details</summary>
           <p>Bricks implements the following security measures to protect Personal Data:</p>
           <ul>
             <li>Encryption in transit (TLS 1.2 or higher) for all data transmission.</li>
@@ -131,10 +131,10 @@ export default function DpaPage() {
             <li>Periodic security reviews and vulnerability assessments.</li>
             <li>Audit logging for all administrative actions affecting account data.</li>
           </ul>
-        </section>
+        </details></section>
 
         <section className="block">
-          <h2>7. Sub-Processors</h2>
+          <h2>7. Sub-Processors</h2><p className="inshort"><strong>In short:</strong> You approve the services we use to host and run Bricks. The list is below.</p><details><summary>Read the details</summary>
           <p>
             The Controller hereby provides general authorization for Bricks to engage the following Sub-Processors.
             Bricks will maintain this list current and notify the Controller of any changes:
@@ -161,7 +161,7 @@ export default function DpaPage() {
               {VIRTUAL_STAGING_ENABLED && <tr><td>Bricks (owned)</td><td>Virtual staging — owned pipeline on Bricks&apos; own GPU, $35 per photo at checkout; no third-party furniture vendor</td><td>Canada</td></tr>}
             </tbody>
           </table>
-        </section>
+        </details></section>
 
         <section className="block">
           <h2>8. International Data Transfers</h2>
@@ -173,7 +173,7 @@ export default function DpaPage() {
         </section>
 
         <section className="block">
-          <h2>9. Data Breach Notification</h2>
+          <h2>9. Data Breach Notification</h2><p className="inshort"><strong>In short:</strong> If a serious breach happens, we tell you without unreasonable delay, targeting 72 hours.</p><details><summary>Read the details</summary>
           <p>
             In the event Bricks becomes aware of a confirmed breach of security safeguards involving Personal Data
             that creates a real risk of significant harm to affected individuals, Bricks will:
@@ -183,7 +183,7 @@ export default function DpaPage() {
             <li>Provide the Controller with sufficient information to meet its own notification obligations under PIPEDA&apos;s mandatory breach reporting rules.</li>
             <li>Cooperate with the Controller&apos;s investigation and remediation efforts.</li>
           </ul>
-        </section>
+        </details></section>
 
         <section className="block">
           <h2>10. Audit Rights</h2>

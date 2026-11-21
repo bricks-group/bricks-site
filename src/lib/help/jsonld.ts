@@ -1,6 +1,5 @@
 import type { ArticleWithCollection, Block } from './types'
 import { articleHref, getCollection, plain } from './index'
-import { legalPartyName } from '@/lib/legal-config'
 
 export const BASE = 'https://www.brxs.ca'
 
@@ -46,7 +45,7 @@ export function articleLd(a: ArticleWithCollection): object[] {
       headline: a.title,
       description: a.summary,
       dateModified: a.updated,
-      publisher: { '@type': 'Organization', name: legalPartyName(), url: BASE },
+      publisher: { '@type': 'Organization', name: 'Bricks', url: BASE },
       mainEntityOfPage: BASE + articleHref(a),
     })
   }

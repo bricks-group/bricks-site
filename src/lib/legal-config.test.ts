@@ -33,7 +33,9 @@ test('every surface reads the config', () => {
   assert.ok(read('../app/terms/page.tsx').includes('SUPPLIER.legalPartyLine'))
   assert.ok(read('../app/privacy/page.tsx').includes('SUPPLIER.legalPartyLine'))
   assert.ok(read('../app/book/BookingWizard.tsx').includes('SUPPLIER.legalPartyLine'))
-  assert.ok(read('../components/Footer.tsx').includes('LEGAL_NAME'))
+  for (const f of ['../app/about/page.tsx', './public-content.ts', '../components/Footer.tsx', '../app/newsletter/page.tsx', './help/jsonld.ts'])
+    assert.ok(!read(f).includes('legalPartyName'), `${f} is marketing: say Bricks`)
+  for (const f of ['../app/dpa/page.tsx', '../app/account-deletion/page.tsx']) assert.ok(read(f).includes('Read the details') && read(f).includes('legalPartyName'))
   assert.ok(read('./schema.ts').includes('legalName: LEGAL_NAME'))
 })
 

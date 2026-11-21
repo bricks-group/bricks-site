@@ -37,7 +37,7 @@ export default function AccountDeletionPage() {
 
       <div className="legal-body">
         <section className="block" id="in-app">
-          <h2>Delete it in the app</h2>
+          <h2>Delete it in the app</h2><p className="inshort"><strong>In short:</strong> Open Delete account in the app and confirm. That&apos;s all it takes.</p><details><summary>Read the details</summary>
           <ul>
             <li>
               <strong>Agent booking accounts:</strong> open <strong>Profile</strong>, tap <strong>Delete account</strong>, then
@@ -56,7 +56,7 @@ export default function AccountDeletionPage() {
             The app sends us your deletion request and signs you out. We complete the deletion within 30 days and email
             you when it is done.
           </p>
-        </section>
+        </details></section>
 
         <section className="block" id="by-email">
           <h2>Delete it without the app</h2>
@@ -68,7 +68,7 @@ export default function AccountDeletionPage() {
         </section>
 
         <section className="block" id="deleted">
-          <h2>What we delete (within 30 days)</h2>
+          <h2>What we delete (within 30 days)</h2><p className="inshort"><strong>In short:</strong> Your login, profile, device tokens and uploads are deleted within 30 days.</p><details><summary>Read the details</summary>
           <ul>
             <li>Your login (email and password, or the Apple or Google sign-in link)</li>
             <li>Your profile: name, phone, photo, bio, skills, service area, and availability</li>
@@ -77,10 +77,10 @@ export default function AccountDeletionPage() {
             <li>Documents and pictures you added that are not part of an office&rsquo;s listing file or a client&rsquo;s delivery</li>
           </ul>
           <p>Job lists and listing files saved on your phone for offline use are removed when you sign out.</p>
-        </section>
+        </details></section>
 
         <section className="block" id="kept">
-          <h2>What we keep, and for how long</h2>
+          <h2>What we keep, and for how long</h2><p className="inshort"><strong>In short:</strong> Tax and payout records stay 7 years, and media already delivered stays with the client.</p><details><summary>Read the details</summary>
           <ul>
             <li>
               <strong>Payment, payout, and tax records</strong> (for example, completed-job payouts and invoices): kept
@@ -94,7 +94,7 @@ export default function AccountDeletionPage() {
               <strong>Records we must keep for a legal claim or dispute,</strong> until it is resolved.
             </li>
           </ul>
-        </section>
+        </details></section>
       </div>
 
       <div className="legal-body">
