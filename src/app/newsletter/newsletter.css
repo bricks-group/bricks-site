@@ -1,0 +1,23 @@
+/* Newsletter pages (www.brxs.ca/newsletter). Square edges, site tokens only. */
+.nl-page{padding:var(--hero-top) var(--gutter) var(--sec-half);}
+.nl-page .wrap{max-width:560px;padding:0;}
+.nl-page h1{font-weight:500;font-size:clamp(34px,4.4vw,46px);line-height:1.02;letter-spacing:-.04em;color:var(--ink);margin:0;}
+.nl-page .sub{font-size:17px;color:var(--inkSoft);margin:14px 0 0;line-height:1.45;}
+.nl-form{margin-top:28px;display:flex;flex-direction:column;gap:14px;}
+.nl-row{display:flex;gap:8px;flex-wrap:wrap;}
+.nl-row input[type=email]{flex:1 1 240px;min-width:0;font:inherit;font-size:15px;background:var(--paper);color:var(--ink);
+  border:1px solid var(--hairStrong);border-radius:0;padding:13px 14px;outline:none;}
+.nl-row input[type=email]:focus{border-color:var(--ink);}
+.nl-row .btn{border-radius:0;min-height:48px;justify-content:center;}
+.nl-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.nl-consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5;color:var(--inkMute);cursor:pointer;}
+.nl-consent input{margin:3px 0 0;width:16px;height:16px;accent-color:var(--brick);border-radius:0;flex:none;}
+.nl-msg{font-family:inherit;font-size:14px;color:var(--ink);min-height:21px;margin:0;}
+.nl-msg.err{color:var(--brickDeep);}
+.nl-done{margin-top:28px;padding:18px 20px;border:1px solid var(--hair);background:var(--paperSoft);}
+.nl-done strong{display:block;color:var(--ink);font-weight:500;font-size:16px;margin-bottom:4px;}
+.nl-done p{margin:0;font-size:14.5px;color:var(--inkSoft);line-height:1.5;}
+.nl-fine{margin-top:22px;font-size:12.5px;line-height:1.55;color:var(--inkMute);}
+.nl-fine a{color:var(--inkSoft);}
+.pv-card,.pv-btn,.pv-err{border-radius:0 !important;}
+@media (max-width:520px){.nl-row .btn{width:100%;}}

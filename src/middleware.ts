@@ -83,6 +83,9 @@ export function isPublicPath(pathname: string): boolean {
   // Plan visit one-tap link from client emails (token-signed; no account).
   if (pathname === '/visit' || pathname.startsWith('/visit/')) return true
   if (pathname.startsWith('/api/visit/')) return true
+  // Newsletter sign-up, confirm and unsubscribe (signed links in emails must always work; CASL).
+  if (pathname === '/newsletter' || pathname.startsWith('/newsletter/')) return true
+  if (pathname === '/api/newsletter' || pathname.startsWith('/api/newsletter/')) return true
   return false
 }
 
