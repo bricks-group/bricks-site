@@ -1,13 +1,6 @@
 import { timingSafeEqual } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
-
-const COOKIE = 'bricks_www_gate'
-const PASSWORD_ENV = 'WWW_SITE_GATE_PASSWORD'
-const MAX_AGE = 60 * 60 * 24 * 30 // 30 days
-
-function expectedPassword(): string {
-  return (process.env[PASSWORD_ENV] || '').trim()
-}
+import { GATE_COOKIE, GATE_COOKIE_MAX_AGE, gatePassword, mintGateCookie } from '@/lib/gate-cookie'
 
 function safeEqual(a: string, b: string): boolean {
   const ab = Buffer.from(a, 'utf8')
@@ -21,7 +14,7 @@ function safeEqual(a: string, b: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
-  const expected = expectedPassword()
+  const expected = gatePassword()
   if (!expected) {
     return NextResponse.json({ ok: true, gated: false })
   }
@@ -46,12 +39,12 @@ export async function POST(req: NextRequest) {
   }
 
   const res = NextResponse.json({ ok: true })
-  res.cookies.set(COOKIE, '1', {
+  res.cookies.set(GATE_COOKIE, mintGateCookie(expected), {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
     path: '/',
-    maxAge: MAX_AGE,
+    maxAge: GATE_COOKIE_MAX_AGE,
   })
   return res
 }

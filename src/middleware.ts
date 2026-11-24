@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { marketRedirect } from './lib/seasonal-market'
+import { GATE_COOKIE, gatePassword, verifyGateCookie } from './lib/gate-cookie'
 
-const COOKIE = 'bricks_www_gate'
-const PASSWORD_ENV = 'WWW_SITE_GATE_PASSWORD'
 /** Set only in wrangler.preview.jsonc. Never set on the production Worker. */
 export const PREVIEW_ENV = 'BRICKS_SITE_PREVIEW'
 export const PREVIEW_ROBOTS_TAG = 'noindex, nofollow'
@@ -22,8 +21,7 @@ function withPreviewHeaders(response: NextResponse): NextResponse {
 }
 
 function gateEnabled(): boolean {
-  const v = process.env[PASSWORD_ENV]
-  return typeof v === 'string' && v.trim().length > 0
+  return gatePassword().length > 0
 }
 
 export function isPublicPath(pathname: string): boolean {
@@ -133,8 +131,7 @@ export function middleware(request: NextRequest) {
     return withPreviewHeaders(NextResponse.next({ request: { headers: requestHeaders } }))
   }
 
-  const cookie = request.cookies.get(COOKIE)?.value
-  if (cookie === '1') {
+  if (verifyGateCookie(request.cookies.get(GATE_COOKIE)?.value, gatePassword())) {
     return withPreviewHeaders(NextResponse.next({ request: { headers: requestHeaders } }))
   }
 
