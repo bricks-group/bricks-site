@@ -4,7 +4,7 @@ import { buildIndex } from '@/lib/help/assistant/corpus'
 import { parseEscalation, saveEscalation } from '@/lib/help/assistant/escalate'
 import { supportDb } from '@/lib/support/db'
 import { resendAlerter } from '@/lib/support/alert'
-import { clientKey, limited, requestIp } from '@/lib/support/rate-limit'
+import { clientKey, connectingIp, limited } from '@/lib/support/rate-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
   const db = supportDb()
   if (!db) return NextResponse.json({ ok: false, error: 'Couldn’t reach support. Email help@brxs.ca.' }, { status: 503 })
-  if (await limited(db, clientKey('help-esc', requestIp(req.headers)), { windowSec: 3600, max: 5 })) {
+  if (await limited(db, clientKey('help-esc', connectingIp(req.headers)), { windowSec: 3600, max: 5 })) {
     return NextResponse.json({ ok: false, error: 'Too many requests. Email help@brxs.ca.' }, { status: 429, headers: { 'Retry-After': '3600' } })
   }
   const saved = await saveEscalation(db, parsed.value, buildIndex().version, resendAlerter())
