@@ -4,9 +4,9 @@ import {
   clampInviteDays,
   mintDemoInvite,
 } from '@/lib/demo-invite'
+import { GATE_COOKIE, gatePassword, verifyGateCookie } from '@/lib/gate-cookie'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const GATE_COOKIE = 'bricks_www_gate'
 
 function json(data: Record<string, unknown>, status = 200) {
   return NextResponse.json(data, { status })
@@ -29,7 +29,8 @@ function safeEqual(a: string, b: string): boolean {
 }
 
 function authorized(req: NextRequest): boolean {
-  if (req.cookies.get(GATE_COOKIE)?.value === '1') return true
+  // The gated /demo/invite page calls this with the signed gate cookie only.
+  if (verifyGateCookie(req.cookies.get(GATE_COOKIE)?.value, gatePassword())) return true
   const auth = req.headers.get('authorization') || ''
   const m = /^Bearer\s+(.+)$/i.exec(auth)
   if (!m) return false
