@@ -12,6 +12,10 @@
 --
 -- IMPORTANT: capture_pipeline is GLOBAL — stages are the same for every job.
 -- The API reads it without a job_id filter. Do NOT add job_id FK or filter.
+--
+-- Access: capture_sessions / capture_rooms are service-role only, so capture-api.ts
+-- must run server-side with the service role key, never with the browser anon key.
+-- capture_pipeline is read-only for anon/authenticated.
 
 BEGIN;
 
@@ -43,8 +47,11 @@ CREATE TABLE IF NOT EXISTS public.capture_sessions (
 
 ALTER TABLE public.capture_sessions ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "anon can manage capture sessions" ON public.capture_sessions
-    FOR ALL TO anon
+-- Holds client job IDs and property addresses: service role (server routes) only.
+REVOKE ALL ON public.capture_sessions FROM anon, authenticated;
+
+CREATE POLICY "service role manages capture sessions" ON public.capture_sessions
+    FOR ALL TO service_role
     USING (true)
     WITH CHECK (true);
 
@@ -71,8 +78,10 @@ CREATE TABLE IF NOT EXISTS public.capture_rooms (
 
 ALTER TABLE public.capture_rooms ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "anon can manage capture rooms" ON public.capture_rooms
-    FOR ALL TO anon
+REVOKE ALL ON public.capture_rooms FROM anon, authenticated;
+
+CREATE POLICY "service role manages capture rooms" ON public.capture_rooms
+    FOR ALL TO service_role
     USING (true)
     WITH CHECK (true);
 
@@ -94,8 +103,16 @@ CREATE TABLE IF NOT EXISTS public.capture_pipeline (
 
 ALTER TABLE public.capture_pipeline ENABLE ROW LEVEL SECURITY;
 
+-- Stage definitions are shared by every job: readable by clients, writable only by the service role.
+REVOKE ALL ON public.capture_pipeline FROM anon, authenticated;
+GRANT SELECT ON public.capture_pipeline TO anon, authenticated;
+
 CREATE POLICY "anon can read capture pipeline" ON public.capture_pipeline
-    FOR ALL TO anon
+    FOR SELECT TO anon, authenticated
+    USING (true);
+
+CREATE POLICY "service role manages capture pipeline" ON public.capture_pipeline
+    FOR ALL TO service_role
     USING (true)
     WITH CHECK (true);
 
