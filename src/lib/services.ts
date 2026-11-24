@@ -356,19 +356,38 @@ export function quoteInboxMessage(q: CleanQuote, internal = true): string {
   ].filter(Boolean).join('\n')
 }
 
-/** Confirmation the client receives. Bricks only; no prices promised. */
+/**
+ * Rate-limit key for the confirmation recipient: one mailbox however the
+ * address is cased or +tagged (and dotted, for Gmail).
+ */
+export function quoteRecipientKey(email: string): string {
+  const e = email.trim().toLowerCase()
+  const at = e.lastIndexOf('@')
+  if (at < 1) return e
+  let local = e.slice(0, at).split('+')[0] || e.slice(0, at)
+  const domain = e.slice(at + 1)
+  if (domain === 'gmail.com' || domain === 'googlemail.com') local = local.replace(/\./g, '')
+  return `${local}@${domain === 'googlemail.com' ? 'gmail.com' : domain}`
+}
+
+/**
+ * Confirmation the client receives. Bricks only; no prices promised. The
+ * address it goes to is unverified, so it carries only Bricks copy and fields
+ * picked from fixed lists, never the name, address, details or other free text.
+ */
 export function quoteConfirmation(q: CleanQuote): { subject: string; text: string } {
-  const first = q.name.split(/\s+/)[0] || q.name
   const rules = q.trade.rules.length ? `\n${q.trade.rules.join('\n')}\n` : ''
   return {
     subject: `We got your ${q.trade.name.toLowerCase()} request`,
     text: [
-      `Hi ${first},`,
+      'Hi,',
       '',
-      `Thanks for your ${q.trade.name.toLowerCase()} request for ${q.address}. A person at Bricks will review it and reply by email, usually with a few questions or a written quote. Nothing is booked or charged until you approve a quote.`,
+      `Thanks for your ${q.trade.name.toLowerCase()} request. A person at Bricks will review it and reply by email, usually with a few questions or a written quote. Nothing is booked or charged until you approve a quote.`,
       rules,
-      'What you sent:',
-      quoteInboxMessage(q, false),
+      'Your request:',
+      [`Service: ${q.trade.name}`, `For: ${q.clientLabel}`, q.scope && `Scope: ${q.scope}`].filter(Boolean).join('\n'),
+      '',
+      'If you didn’t send this request, you can ignore this email.',
       '',
       'Reply to this email if anything changes.',
       '',
