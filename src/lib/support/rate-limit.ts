@@ -40,11 +40,11 @@ export async function limited(db: Db | null, key: string, limit: Limit): Promise
   return count > limit.max
 }
 
-export function requestIp(headers: Headers): string {
-  return (headers.get('x-real-ip') || headers.get('x-forwarded-for')?.split(',')[0] || 'unknown').trim()
-}
-
-/** Client IP for Cloudflare-fronted public routes. Never the first X-Forwarded-For hop. */
+/**
+ * Client IP for Cloudflare-fronted public routes. Never the first X-Forwarded-For hop:
+ * Cloudflare keeps a client-sent X-Forwarded-For and only appends to it, and X-Real-IP
+ * is passed through as sent, so both are caller-controlled.
+ */
 export function connectingIp(headers: Headers): string {
   return (headers.get('cf-connecting-ip') || 'unknown').trim() || 'unknown'
 }

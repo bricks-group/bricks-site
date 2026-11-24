@@ -3,7 +3,7 @@ import { respond } from '@/lib/help/assistant/answer'
 import { buildIndex } from '@/lib/help/assistant/corpus'
 import { chatStatus, gatewayModel } from '@/lib/help/assistant/config'
 import { supportDb } from '@/lib/support/db'
-import { clientKey, limited, requestIp } from '@/lib/support/rate-limit'
+import { clientKey, connectingIp, limited } from '@/lib/support/rate-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   try { body = await req.json() } catch { return NextResponse.json({ ok: false, error: 'Invalid request.' }, { status: 400 }) }
 
   const db = supportDb()
-  const ip = requestIp(req.headers)
+  const ip = connectingIp(req.headers)
   if (await limited(db, clientKey('help-chat-m', ip), MINUTE) || await limited(db, clientKey('help-chat-d', ip), DAY)) {
     return NextResponse.json({ ok: false, error: 'Too many questions in a short time. Try again in a minute, or email help@brxs.ca.' }, { status: 429, headers: { 'Retry-After': '60' } })
   }

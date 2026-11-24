@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { supportDb } from '@/lib/support/db'
 import { adminSecret, signAdminToken, verifyAdminToken } from '@/lib/support/alert'
 import { sendEmailCode, signInWithEmailCode, signInWithPassword, type SigninResult } from '@/lib/support/account-signin'
-import { clientKey, limited } from '@/lib/support/rate-limit'
+import { clientKey, connectingIp, limited } from '@/lib/support/rate-limit'
 import { resendSender } from '@/lib/support/inbound'
 
 export async function isAdmin(): Promise<boolean> {
@@ -16,11 +16,21 @@ export async function isAdmin(): Promise<boolean> {
 const ADMIN_COOKIE = 'bricks_support_admin'
 const EMAIL_COOKIE = 'bricks_support_signin_email'
 const SESSION_DAYS = 7
+const SIGNIN_LIMIT = { windowSec: 600, max: 8 }
 
-async function tooMany(scope: string): Promise<boolean> {
-  const h = await headers()
-  const ip = (h.get('x-forwarded-for') || '').split(',')[0].trim() || h.get('x-real-ip') || 'unknown'
-  return limited(supportDb(), clientKey(`support-signin:${scope}`, ip), { windowSec: 600, max: 8 })
+const normEmail = (e: string) => e.trim().toLowerCase()
+
+/**
+ * One attempt counts against the connecting IP and against the account it targets,
+ * so neither rotating addresses nor spreading guesses over many accounts gets past it.
+ * The caller must pass the same normalized email it then signs in with.
+ */
+async function tooMany(scope: string, email: string): Promise<boolean> {
+  const ip = connectingIp(await headers())
+  if (ip === 'unknown') return true
+  const db = supportDb()
+  if (await limited(db, clientKey(`support-signin:${scope}`, ip), SIGNIN_LIMIT)) return true
+  return limited(db, clientKey(`support-signin:${scope}:account`, email), SIGNIN_LIMIT)
 }
 
 /** Same signed cookie the alert-email link sets, so every admin check stays one code path. */
@@ -34,13 +44,14 @@ async function finish(r: SigninResult): Promise<never> {
 }
 
 export async function signInPassword(form: FormData) {
-  if (await tooMany('password')) redirect('/admin/support?e=busy')
-  await finish(await signInWithPassword(String(form.get('email') || ''), String(form.get('password') || '')))
+  const email = normEmail(String(form.get('email') || ''))
+  if (await tooMany('password', email)) redirect('/admin/support?e=busy')
+  await finish(await signInWithPassword(email, String(form.get('password') || '')))
 }
 
 export async function requestCode(form: FormData) {
-  if (await tooMany('code')) redirect('/admin/support?e=busy')
-  const email = String(form.get('email') || '').trim().toLowerCase()
+  const email = normEmail(String(form.get('email') || ''))
+  if (await tooMany('code', email)) redirect('/admin/support?e=busy')
   await sendEmailCode(email)
   ;(await cookies()).set(EMAIL_COOKIE, email.slice(0, 254), { httpOnly: true, secure: true, sameSite: 'lax', path: '/admin', maxAge: 15 * 60 })
   // Same answer whether or not the account exists.
@@ -48,8 +59,8 @@ export async function requestCode(form: FormData) {
 }
 
 export async function signInCode(form: FormData) {
-  if (await tooMany('verify')) redirect('/admin/support?e=busy')
-  const email = (await cookies()).get(EMAIL_COOKIE)?.value || String(form.get('email') || '')
+  const email = normEmail((await cookies()).get(EMAIL_COOKIE)?.value || String(form.get('email') || ''))
+  if (await tooMany('verify', email)) redirect('/admin/support?e=busy')
   await finish(await signInWithEmailCode(email, String(form.get('code') || '')))
 }
 
