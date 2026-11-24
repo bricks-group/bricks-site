@@ -3,7 +3,7 @@ import { supportDb } from '@/lib/support/db'
 import { approveAndSend, dismiss, isAdmin, pendingCodeEmail, requestCode, signInCode, signInPassword, signOut } from './actions'
 import { SIGNIN_MESSAGES } from '@/lib/support/account-signin'
 import './support.css'
-import { helpRef, plainReasons } from '@/lib/support/alert'
+import { helpRef, plainReasons, reviewLive } from '@/lib/support/alert'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Support review · Bricks', robots: { index: false, follow: false } }
@@ -21,7 +21,7 @@ const fmt = (iso: string | null) => iso ? new Date(iso).toLocaleString('en-CA', 
 export default async function SupportReview({ searchParams }: { searchParams: Promise<{ e?: string; all?: string }> }) {
   const sp = await searchParams
   // Production stays off until Kam approves the preview (flip SUPPORT_REVIEW_LIVE=true).
-  if (process.env.VERCEL_ENV === 'production' && (process.env.SUPPORT_REVIEW_LIVE || '').trim() !== 'true') {
+  if (!reviewLive()) {
     return (
       <main className="sr">
         <h1>Support review</h1>
@@ -36,7 +36,7 @@ export default async function SupportReview({ searchParams }: { searchParams: Pr
     return (
       <main className="sr">
         <h1>Support review</h1>
-        <p className="lede">Sign in with your Bricks account, the same one you use for the Bricks app. The Open button in any help@ alert email also signs you in.</p>
+        <p className="lede">Sign in with your Bricks account, the same one you use for the Bricks app.</p>
         {msg && <p className="note" role="status">{msg}</p>}
         <section className="card signin">
           <h2>Sign in with your Bricks account</h2>

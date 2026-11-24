@@ -3,12 +3,13 @@ import { cookies, headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { supportDb } from '@/lib/support/db'
-import { adminSecret, signAdminToken, verifyAdminToken } from '@/lib/support/alert'
+import { adminSecret, reviewLive, signAdminToken, verifyAdminToken } from '@/lib/support/alert'
 import { sendEmailCode, signInWithEmailCode, signInWithPassword, type SigninResult } from '@/lib/support/account-signin'
 import { clientKey, limited } from '@/lib/support/rate-limit'
 import { resendSender } from '@/lib/support/inbound'
 
 export async function isAdmin(): Promise<boolean> {
+  if (!reviewLive()) return false
   const c = (await cookies()).get(ADMIN_COOKIE)?.value
   return verifyAdminToken(adminSecret(), c)
 }
@@ -23,7 +24,7 @@ async function tooMany(scope: string): Promise<boolean> {
   return limited(supportDb(), clientKey(`support-signin:${scope}`, ip), { windowSec: 600, max: 8 })
 }
 
-/** Same signed cookie the alert-email link sets, so every admin check stays one code path. */
+/** Signed session cookie checked by isAdmin, so every admin check stays one code path. */
 async function finish(r: SigninResult): Promise<never> {
   const secret = adminSecret()
   if (!r.ok || !secret) redirect(`/admin/support?e=${!secret ? 'config' : r.ok ? 'config' : r.reason}`)

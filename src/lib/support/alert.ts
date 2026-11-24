@@ -16,12 +16,14 @@ export const REVIEW_PATH = '/admin/support'
 
 const site = (env: Env) => (env.SUPPORT_REVIEW_BASE_URL || 'https://help.brxs.ca').replace(/\/$/, '')
 
-/* ---------- admin link tokens (HMAC, no DB) ---------- */
+/* ---------- admin session tokens (HMAC, no DB) ---------- */
 export function adminSecret(env: Env = process.env): string {
   return (env.SUPPORT_ADMIN_SECRET || '').trim()
 }
+// Session cookies only, never put in an email: alerts carry the visitor's Reply-To, so a reply quotes the body to them.
+// The context differs from the retired alert-link tokens so links already mailed out can't be replayed as a cookie.
 export function signAdminToken(secret: string, expSec: number): string {
-  const mac = createHmac('sha256', secret).update(`support-admin:${expSec}`).digest('base64url')
+  const mac = createHmac('sha256', secret).update(`support-admin-session:v2:${expSec}`).digest('base64url')
   return `${expSec}.${mac}`
 }
 export function verifyAdminToken(secret: string, token: string | undefined | null, nowSec = Math.floor(Date.now() / 1000)): boolean {
@@ -33,11 +35,14 @@ export function verifyAdminToken(secret: string, token: string | undefined | nul
   const a = Buffer.from(mac), b = Buffer.from(want)
   return a.length === b.length && timingSafeEqual(a, b)
 }
-export function reviewLink(env: Env = process.env, days = 7, nowSec = Math.floor(Date.now() / 1000)): string {
-  const secret = adminSecret(env)
-  const base = `${site(env)}${REVIEW_PATH}`
-  if (!secret) return base
-  return `${base}/login?t=${encodeURIComponent(signAdminToken(secret, nowSec + days * 86400))}`
+/** Plain review page URL for alert emails; the page asks for Bricks account sign-in. */
+export function reviewLink(env: Env = process.env): string {
+  return `${site(env)}${REVIEW_PATH}`
+}
+/** Review page kill switch: off in any production build (Vercel or Cloudflare) until SUPPORT_REVIEW_LIVE=true. */
+export function reviewLive(env: Env = process.env): boolean {
+  if ((env.SUPPORT_REVIEW_LIVE || '').trim() === 'true') return true
+  return env.NODE_ENV !== 'production' || env.VERCEL_ENV === 'preview'
 }
 
 
