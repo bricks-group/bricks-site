@@ -73,7 +73,7 @@ if (rows?.[0]?.id) {
 const now = new Date().toISOString();
 const rush = opts.m.rush_addon === 'true';
 const drone = opts.m.drone_addon === 'true';
-const pkg = packageIdOf(opts.m.package_interest || '', opts.m.package_id || '');
+const pkg = packageIdOf(opts.m.package_id || '');
 const tour = tourPurchased(opts.m, pkg);
 const floorplan = floorplanPurchased(opts.m, pkg);
 const floorPlanOnly = pkg === 'floor_plan_only' || opts.m.floor_plan_only === 'true';
