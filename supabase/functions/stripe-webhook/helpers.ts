@@ -4,31 +4,14 @@ export const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
 export const KAM_VENDOR_ID = '0c3fa7c2-d23b-4e44-90ad-ab2d19af2580';
 export const ORG_VENDOR_ID = 'default_vendor';
 export const GTA = ['gta','toronto','mississauga','brampton','vaughan','markham','oakville','peel','halton','york','durham','etobicoke','scarborough'];
-export function packageIdOf(name: string, explicit?: string): string {
-const raw = (explicit || '').toLowerCase().replace(/[^a-z0-9_]+/g, '');
-const aliases: Record<string, string> = {
-photosonly: 'photos_only', photo_only: 'photos_only', photos: 'photos_only',
-fullsuite: 'suite', full: 'suite',
-floorplanonly: 'floor_plan_only', floor_planonly: 'floor_plan_only', floorplanonl: 'floor_plan_only',
-};
-if (raw) {
-if (aliases[raw]) return aliases[raw];
-if (['photos_only', 'essentials', 'story', 'showcase', 'suite', 'estate', 'luxury', 'premium', 'standard', 'floor_plan_only'].includes(raw)) {
-return raw;
-}
-if (raw) return raw;
-}
-const n = (name || '').toLowerCase();
-if (n.includes('photos only') || n.includes('photo only')) return 'photos_only';
-if (n.includes('floor plan only') || n.includes('floorplan only')) return 'floor_plan_only';
-if (n.includes('full suite')) return 'suite';
-for (const token of ['showcase', 'essentials', 'story', 'suite', 'estate', 'luxury', 'premium', 'standard']) {
-if (n.includes(token)) return token;
-}
-const first = n.split(/[^a-z0-9]+/).filter(Boolean)[0] || 'essentials';
-if (aliases[first]) return aliases[first];
-if (first === 'hdr' || first === 'photo' || first === 'listing') return 'essentials';
-return first;
+export const SOLD_PACKAGE_IDS = ['photos_only', 'essentials', 'story', 'showcase', 'suite', 'floor_plan_only'];
+/**
+ * Only the package_id that checkout wrote from the priced quote decides delivery.
+ * package_interest is display text and never maps to a package. '' = not a sold package.
+ */
+export function packageIdOf(explicit?: string): string {
+const raw = String(explicit || '');
+return SOLD_PACKAGE_IDS.includes(raw) ? raw : '';
 }
 export function minTierOf(pkg: string): number {
 if (pkg === 'estate' || pkg === 'luxury' || pkg === 'suite' || pkg === 'showcase') return 3;
@@ -36,17 +19,14 @@ if (pkg === 'premium' || pkg === 'story') return 2;
 return 1;
 }
 export function tourPurchased(m: Record<string, string>, pkg: string): boolean {
-if (m.tour_addon === 'true') return true;
-return ['showcase', 'suite', 'full', 'premium', 'luxury', 'estate'].includes(pkg);
+if (!pkg || pkg === 'floor_plan_only') return false;
+return m.tour_addon === 'true' || ['showcase', 'suite'].includes(pkg);
 }
 export function floorplanPurchased(m: Record<string, string>, pkg: string): boolean {
-if (m.floor_plan_only === 'true' || pkg === 'floor_plan_only' || pkg === 'floorplanonly') return true;
-if (m.floor_plan_included === 'true') return true;
+if (pkg === 'floor_plan_only') return true;
+if (!pkg || pkg === 'photos_only') return false;
 if (m.floor_plan_included === 'false') return false;
-const photosOnly = pkg === 'photos_only' || pkg === 'photosonly' || pkg === 'photos';
-if (photosOnly) return false;
-const drone = m.drone_addon === 'true';
-return drone || ['essentials', 'story', 'showcase', 'suite', 'full', 'standard', 'premium', 'luxury', 'estate'].includes(pkg);
+return m.drone_addon === 'true' || ['essentials', 'story', 'showcase', 'suite'].includes(pkg);
 }
 export function isOwner(m: any): boolean {
 const role = String(m?.role || '').toLowerCase();

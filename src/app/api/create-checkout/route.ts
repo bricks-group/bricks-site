@@ -2,7 +2,8 @@ import { NOT_COVERED_MESSAGE, UNAVAILABLE_CODE, UNAVAILABLE_MESSAGE, isNotCovere
 import { NextResponse } from 'next/server'
 import { isProvinceBlock, propertyTax } from '@/lib/property-tax'
 import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
-import { stripVirtualStaging } from '@/lib/pricing'
+import { MEDIA_PACKAGE_IDS, stripVirtualStaging } from '@/lib/pricing'
+import { TOUR_NAME, VISIT_NAME } from '@/lib/brand'
 import { termsAcceptanceMeta } from '@/lib/terms-version'
 import { resolvePropertyTimezone, localYmd, isBookableStart } from '@/lib/schedule'
 import { agentIdentityError } from '@/lib/agent-identity'
@@ -22,6 +23,44 @@ function coverageUnavailable() {
 
 function bad(msg: string, status = 400) {
   return NextResponse.json({ ok: false, error: msg }, { status })
+}
+
+function isTrue(v: unknown) {
+  return v === true || v === 'true'
+}
+
+const PACKAGE_LABEL: Record<string, string> = {
+  photos_only: 'Photos only',
+  essentials: 'Essentials',
+  story: 'Story',
+  showcase: 'Showcase',
+  suite: 'Full suite',
+  floor_plan_only: 'Floor plan only',
+}
+
+/** Display name for the paid package, built from the priced flags only. */
+function packageSummary(
+  pkg: string,
+  f: {
+    floor_plan_only: boolean
+    drone_addon: boolean
+    reel_addon: boolean
+    tour_addon: boolean
+    twilight_addon: boolean
+    rush_addon: boolean
+    visit: boolean
+    stagingImages: number
+  },
+) {
+  const parts = f.floor_plan_only ? ['Floor plan only'] : ['HDR photo']
+  if (f.drone_addon) parts.push('Drone')
+  if (f.reel_addon) parts.push('Cinematic reel')
+  if (f.tour_addon) parts.push(TOUR_NAME)
+  if (f.visit) parts.push(VISIT_NAME)
+  if (f.stagingImages > 0) parts.push(`Virtual staging ×${f.stagingImages}`)
+  if (f.twilight_addon) parts.push('Twilight')
+  if (f.rush_addon) parts.push('Rush')
+  return `${PACKAGE_LABEL[pkg] || 'Listing media'} — ${parts.join(' + ')}`
 }
 
 function publicAppUrl() {
@@ -175,12 +214,42 @@ export async function POST(req: Request) {
       'Legacy Companion package_id is not sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only).',
     )
   }
+  const pkg = (MEDIA_PACKAGE_IDS as readonly string[]).includes(pkgNormEarly) ? pkgNormEarly : ''
+  if (!pkg) return bad(`package_id is required (one of ${MEDIA_PACKAGE_IDS.join(', ')})`)
+
+  // Every fulfilment flag is derived here once, priced by the quote, and written
+  // to Stripe metadata as-is. Client package_interest / floor_plan_included are
+  // never read: the webhook dispatches from this metadata.
+  const floorPlanOnly = pkg === 'floor_plan_only'
+  const photosOnly = pkg === 'photos_only'
+  const droneOn = !photosOnly && !floorPlanOnly
+  const reelOn = !floorPlanOnly && (isTrue(body.reel_addon) || ['story', 'showcase', 'suite'].includes(pkg))
+  const tourOn = !floorPlanOnly && (isTrue(body.tour_addon) || ['showcase', 'suite'].includes(pkg))
+  const twilightOn = !floorPlanOnly && (isTrue(body.twilight_addon) || pkg === 'suite')
+  const rushOn = isTrue(body.rush_addon)
+  const derived = {
+    package_id: pkg,
+    floor_plan_only: floorPlanOnly,
+    floor_plan_included: floorPlanOnly || droneOn,
+    drone_addon: droneOn,
+    reel_addon: reelOn,
+    tour_addon: tourOn,
+    twilight_addon: twilightOn,
+    rush_addon: rushOn,
+  }
+  const osBody = (visit: boolean, stagingImages: number) => ({
+    ...body,
+    ...derived,
+    package_interest: packageSummary(pkg, { ...derived, visit, stagingImages }),
+  })
 
   const stripeKey = (process.env.STRIPE_SECRET_KEY || '').trim()
   if (!stripeKey) {
     // No local Stripe — proxy to OS (same recompute + session create).
     try {
-      const proxied = await proxyToOs(body)
+      const proxied = await proxyToOs(
+        osBody(isTrue(body.visit_addon), isTrue(body.staging_addon) ? Number(body.staging_images) || 1 : 0),
+      )
       if (!proxied) {
         return bad(
           'Checkout unavailable: Stripe not configured on www and INTERNAL_API_KEY missing for OS proxy',
@@ -211,31 +280,16 @@ export async function POST(req: Request) {
   const quoteBody = {
     address: body.property_address || body.address,
     property_type: body.property_type,
-    drone_addon:
-      body.drone_addon === true ||
-      body.drone_addon === 'true' ||
-      ['essentials', 'story', 'showcase', 'suite', 'full'].includes(pkgNormEarly),
-    reel_addon:
-      body.reel_addon === true ||
-      body.reel_addon === 'true' ||
-      ['story', 'showcase', 'suite', 'full'].includes(pkgNormEarly),
-    tour_addon:
-      body.tour_addon === true ||
-      body.tour_addon === 'true' ||
-      ['showcase', 'suite', 'full'].includes(pkgNormEarly),
-    twilight_addon:
-      body.twilight_addon === true ||
-      body.twilight_addon === 'true' ||
-      ['suite', 'full'].includes(pkgNormEarly),
-    rush_addon: body.rush_addon === true || body.rush_addon === 'true',
-    staging_addon: body.staging_addon === true || body.staging_addon === 'true',
+    drone_addon: droneOn,
+    reel_addon: reelOn,
+    tour_addon: tourOn,
+    twilight_addon: twilightOn,
+    rush_addon: rushOn,
+    staging_addon: isTrue(body.staging_addon),
     staging_images: body.staging_images,
-    visit_addon: body.visit_addon === true || body.visit_addon === 'true',
-    floor_plan_only:
-      body.floor_plan_only === true ||
-      body.floor_plan_only === 'true' ||
-      pkgNormEarly === 'floor_plan_only',
-    package_id: body.package_id,
+    visit_addon: isTrue(body.visit_addon),
+    floor_plan_only: floorPlanOnly,
+    package_id: pkg,
     sqft: body.sqft || undefined,
   }
 
@@ -273,7 +327,9 @@ export async function POST(req: Request) {
   if (q.travel_pending || !(q as QuoteResult & { assignee_id?: string }).assignee_id) {
     // Last resort: try full OS checkout proxy (re-allocates + Stripe)
     try {
-      const proxied = await proxyToOs(body)
+      const proxied = await proxyToOs(
+        osBody(!!(q as { visit_addon?: boolean }).visit_addon, Number((q as { staging_images?: number }).staging_images) || 0),
+      )
       if (proxied?.ok) {
         return NextResponse.json({
           ok: true,
@@ -294,36 +350,6 @@ export async function POST(req: Request) {
   const amountCents = Math.round(q.total * 100)
   if (amountCents < 50) return bad('Amount too small')
 
-  const pkgNorm = pkgNormEarly
-  const floorPlanOnly =
-    body.floor_plan_only === true ||
-    body.floor_plan_only === 'true' ||
-    pkgNorm === 'floor_plan_only' ||
-    pkgNorm === 'floorplan_only'
-  const photosOnly =
-    pkgNorm === 'photos_only' || /photos\s*only/i.test(String(body.package_interest || ''))
-
-  const droneOn =
-    !photosOnly &&
-    !floorPlanOnly &&
-    (body.drone_addon === true ||
-      body.drone_addon === 'true' ||
-      ['essentials', 'story', 'showcase', 'suite', 'full'].includes(pkgNorm))
-  const reelOn =
-    !floorPlanOnly &&
-    (body.reel_addon === true ||
-      body.reel_addon === 'true' ||
-      ['story', 'showcase', 'suite', 'full'].includes(pkgNorm))
-  const tourOn =
-    !floorPlanOnly &&
-    (body.tour_addon === true ||
-      body.tour_addon === 'true' ||
-      ['showcase', 'suite', 'full'].includes(pkgNorm))
-  const twilightOn =
-    !floorPlanOnly &&
-    (body.twilight_addon === true ||
-      body.twilight_addon === 'true' ||
-      ['suite', 'full'].includes(pkgNorm))
   // Shoot hours guard (launch review 2026-11-07): a start must be a normal
   // 09:00–17:00 slot, or the sunset twilight slot when twilight is booked.
   // Never general evening slots.
@@ -346,10 +372,9 @@ export async function POST(req: Request) {
     }
   }
   const floorPlan =
-    floorPlanOnly ||
-    body.floor_plan_included === true ||
-    body.floor_plan_included === 'true' ||
-    (body.floor_plan_included == null && droneOn && !photosOnly)
+    typeof q.floor_plan_included === 'boolean' ? q.floor_plan_included : derived.floor_plan_included
+  const stagingImages = Number((q as { staging_images?: number }).staging_images) || 0
+  const visitOn = !!(q as { visit_addon?: boolean }).visit_addon
 
   const appUrl = publicAppUrl()
   const meta: Record<string, string> = {
@@ -357,8 +382,8 @@ export async function POST(req: Request) {
     email: (body.email || '').toString().slice(0, 200),
     property_address: (body.property_address || '').toString().slice(0, 300),
     property_type: (body.property_type || '').toString(),
-    package_id: (floorPlanOnly ? 'floor_plan_only' : body.package_id || '').toString().slice(0, 64),
-    package_interest: (body.package_interest || '').toString(),
+    package_id: pkg,
+    package_interest: packageSummary(pkg, { ...derived, visit: visitOn, stagingImages }),
     floor_plan_included: String(!!floorPlan),
     preferred_date: preferredDate,
     preferred_window: ['morning', 'afternoon', 'evening'].includes(preferredWindow)
@@ -372,10 +397,10 @@ export async function POST(req: Request) {
     reel_addon: String(reelOn),
     tour_addon: String(tourOn),
     twilight_addon: String(twilightOn),
-    rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
+    rush_addon: String(rushOn),
     staging_addon: String(!!(q as { staging_addon?: boolean }).staging_addon),
-    staging_images: String((q as { staging_images?: number }).staging_images || 0),
-    visit_addon: String(!!(q as { visit_addon?: boolean }).visit_addon),
+    staging_images: String(stagingImages),
+    visit_addon: String(visitOn),
     visit_sqft_tier: ['small', 'mid', 'large', 'xl'][(q as { footprint_band?: number }).footprint_band ?? 0] || 'small',
     floor_plan_only: String(!!floorPlanOnly),
     phone: (body.phone || '').toString(),

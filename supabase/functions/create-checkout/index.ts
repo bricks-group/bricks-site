@@ -27,7 +27,8 @@
 //
 // Invoke:  POST /functions/v1/create-checkout
 //          body: { agent_name, email, property_address, property_type,
-//                  package_interest, sqft, preferred_date, selected_slot_start,
+//                  package_id (required; photos_only/essentials/story/showcase/suite/floor_plan_only),
+//                  sqft, preferred_date, selected_slot_start,
 //                  selected_slot_end, timezone, province, preferred_window (optional),
 //                  drone_addon, reel_addon, tour_addon, twilight_addon, rush_addon, staging_addon, staging_images, floor_plan_only,
 //                  phone, brokerage, notes }
@@ -44,6 +45,15 @@ const corsHeaders = {
 };
 
 const WALLET_DOMAINS = ['brxs.ca', 'www.brxs.ca'];
+const SOLD_PACKAGE_IDS = ['photos_only', 'essentials', 'story', 'showcase', 'suite', 'floor_plan_only'];
+const PACKAGE_LABEL: Record<string, string> = {
+  photos_only: 'Photos only',
+  essentials: 'Essentials',
+  story: 'Story',
+  showcase: 'Showcase',
+  suite: 'Full suite',
+  floor_plan_only: 'Floor plan only',
+};
 
 function bad(msg: string, status = 400) {
   return new Response(JSON.stringify({ ok: false, error: msg }), {
@@ -131,6 +141,19 @@ Deno.serve(async (req: Request) => {
   if (['standard', 'premium', 'luxury', 'estate'].includes(pkgNormEarly)) {
     return bad('Legacy Companion package_id is not sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only).')
   }
+  const pkg = SOLD_PACKAGE_IDS.includes(pkgNormEarly) ? pkgNormEarly : '';
+  if (!pkg) return bad(`package_id is required (one of ${SOLD_PACKAGE_IDS.join(', ')})`);
+  // Every fulfilment flag is derived here once, priced by the quote, and written
+  // to Stripe metadata as-is. Client package_interest / floor_plan_included are
+  // never read: stripe-webhook dispatches from this metadata.
+  const isTrue = (v: unknown) => v === true || v === 'true';
+  const floorPlanOnly = pkg === 'floor_plan_only';
+  const photosOnly = pkg === 'photos_only';
+  const droneOn = !photosOnly && !floorPlanOnly;
+  const reelOn = !floorPlanOnly && (isTrue(body.reel_addon) || ['story', 'showcase', 'suite'].includes(pkg));
+  const tourOn = !floorPlanOnly && (isTrue(body.tour_addon) || ['showcase', 'suite'].includes(pkg));
+  const twilightOn = !floorPlanOnly && (isTrue(body.twilight_addon) || pkg === 'suite');
+  const rushOn = isTrue(body.rush_addon);
   let q: any;
   try {
     const quoteRes = await fetch(`${supabaseUrl}/functions/v1/quote`, {
@@ -139,21 +162,16 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify({
         address: body.property_address,
         property_type: body.property_type,
-        drone_addon: body.drone_addon === true || body.drone_addon === 'true'
-          || ['essentials','story','showcase','suite','full'].includes(pkgNormEarly),
-        reel_addon: body.reel_addon === true || body.reel_addon === 'true'
-          || ['story','showcase','suite','full'].includes(pkgNormEarly),
-        tour_addon: body.tour_addon === true || body.tour_addon === 'true'
-          || ['showcase','suite','full'].includes(pkgNormEarly),
-        twilight_addon: body.twilight_addon === true || body.twilight_addon === 'true'
-          || ['suite','full'].includes(pkgNormEarly),
-        rush_addon: body.rush_addon === true || body.rush_addon === 'true',
-        staging_addon: body.staging_addon === true || body.staging_addon === 'true',
+        drone_addon: droneOn,
+        reel_addon: reelOn,
+        tour_addon: tourOn,
+        twilight_addon: twilightOn,
+        rush_addon: rushOn,
+        staging_addon: isTrue(body.staging_addon),
         staging_images: body.staging_images,
-        visit_addon: body.visit_addon === true || body.visit_addon === 'true',
-        floor_plan_only: body.floor_plan_only === true || body.floor_plan_only === 'true'
-          || pkgNormEarly === 'floor_plan_only',
-        package_id: body.package_id,
+        visit_addon: isTrue(body.visit_addon),
+        floor_plan_only: floorPlanOnly,
+        package_id: pkg,
         sqft: body.sqft || undefined,
       }),
     });
@@ -176,42 +194,25 @@ Deno.serve(async (req: Request) => {
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 
-  const pkgNorm = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_')
-  const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
-    || pkgNorm === 'floor_plan_only' || pkgNorm === 'floorplan_only'
-  const photosOnly = pkgNorm === 'photos_only'
-    || /photos\s*only/i.test(String(body.package_interest || ''))
   const stagingOn = !!q.staging_addon
   const stagingImages = Number(q.staging_images) || 0
   const visitOn = !!q.visit_addon
-  // Mirror quote package ladder into Stripe metadata so webhook/GO stamps match paid SKU
-  // even when the client only sent package_id.
-  const droneOn = !photosOnly && !floorPlanOnly && (
-    body.drone_addon === true || body.drone_addon === 'true'
-    || ['essentials','story','showcase','suite','full'].includes(pkgNorm)
-  )
-  const reelOn = !floorPlanOnly && (
-    body.reel_addon === true || body.reel_addon === 'true'
-    || ['story','showcase','suite','full'].includes(pkgNorm)
-  )
-  const tourOn = !floorPlanOnly && (
-    body.tour_addon === true || body.tour_addon === 'true'
-    || ['showcase','suite','full'].includes(pkgNorm)
-  )
-  const twilightOn = !floorPlanOnly && (
-    body.twilight_addon === true || body.twilight_addon === 'true'
-    || ['suite','full'].includes(pkgNorm)
-  )
-  const floorPlan = floorPlanOnly
-    || body.floor_plan_included === true || body.floor_plan_included === 'true'
-    || (body.floor_plan_included == null && droneOn && !photosOnly)
+  const floorPlan = typeof q.floor_plan_included === 'boolean' ? q.floor_plan_included : (floorPlanOnly || droneOn)
+  const summaryParts = floorPlanOnly ? ['Floor plan only'] : ['HDR photo']
+  if (droneOn) summaryParts.push('Drone')
+  if (reelOn) summaryParts.push('Cinematic reel')
+  if (tourOn) summaryParts.push('Virtual tour')
+  if (visitOn) summaryParts.push('Virtual visit')
+  if (stagingImages > 0) summaryParts.push(`Virtual staging ×${stagingImages}`)
+  if (twilightOn) summaryParts.push('Twilight')
+  if (rushOn) summaryParts.push('Rush')
   const meta: Record<string, string> = {
     agent_name: (body.agent_name || '').toString().slice(0, 200),
     email: (body.email || '').toString().slice(0, 200),
     property_address: (body.property_address || '').toString().slice(0, 300),
     property_type: (body.property_type || '').toString(),
-    package_id: (floorPlanOnly ? 'floor_plan_only' : (body.package_id || '')).toString().slice(0, 64),
-    package_interest: (body.package_interest || '').toString(),
+    package_id: pkg,
+    package_interest: `${PACKAGE_LABEL[pkg]} — ${summaryParts.join(' + ')}`,
     floor_plan_included: String(!!floorPlan),
     preferred_date: preferredDate,
     preferred_window: ['morning', 'afternoon', 'evening'].includes(preferredWindow) ? preferredWindow : '',
@@ -224,7 +225,7 @@ Deno.serve(async (req: Request) => {
     reel_addon: String(reelOn),
     tour_addon: String(tourOn),
     twilight_addon: String(twilightOn),
-    rush_addon: String(body.rush_addon === true || body.rush_addon === 'true'),
+    rush_addon: String(rushOn),
     staging_addon: String(stagingOn),
     staging_images: String(stagingImages),
     visit_addon: String(visitOn),
