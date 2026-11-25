@@ -137,3 +137,28 @@ export const MEDIA_PACKAGE_FROM = {
  * Companion GET /packages no longer sells them.
  */
 export const LEGACY_COMPANION_PACKAGE_IDS = ['standard', 'premium', 'luxury', 'estate'] as const
+
+export type MediaPackageId = (typeof MEDIA_PACKAGE_IDS)[number]
+
+const MEDIA_PACKAGE_ALIASES: Record<string, MediaPackageId> = {
+  full: 'suite',
+  floorplan_only: 'floor_plan_only',
+}
+
+/**
+ * Normalize a client package_id to a sold MEDIA_PACKAGE_IDS entry.
+ * '' when none was sent; null when it names nothing sold (legacy ids included).
+ * Kept in lockstep with supabase/functions/_shared/package-id.ts, which the
+ * Stripe webhook uses to fulfill the same id.
+ */
+export function soldPackageId(raw: unknown): MediaPackageId | '' | null {
+  if (raw == null) return ''
+  if (typeof raw !== 'string') return null
+  const n = raw
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_]+/g, '_')
+  if (!n) return ''
+  const id = MEDIA_PACKAGE_ALIASES[n] || n
+  return (MEDIA_PACKAGE_IDS as readonly string[]).includes(id) ? (id as MediaPackageId) : null
+}

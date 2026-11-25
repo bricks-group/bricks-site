@@ -1,34 +1,12 @@
 import { civilYmd, civilClockHm, formatLocalWhen } from './tz.ts';
+import { fulfilledPackageId } from '../_shared/package-id.ts';
 
 export const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
 export const KAM_VENDOR_ID = '0c3fa7c2-d23b-4e44-90ad-ab2d19af2580';
 export const ORG_VENDOR_ID = 'default_vendor';
 export const GTA = ['gta','toronto','mississauga','brampton','vaughan','markham','oakville','peel','halton','york','durham','etobicoke','scarborough'];
-export function packageIdOf(name: string, explicit?: string): string {
-const raw = (explicit || '').toLowerCase().replace(/[^a-z0-9_]+/g, '');
-const aliases: Record<string, string> = {
-photosonly: 'photos_only', photo_only: 'photos_only', photos: 'photos_only',
-fullsuite: 'suite', full: 'suite',
-floorplanonly: 'floor_plan_only', floor_planonly: 'floor_plan_only', floorplanonl: 'floor_plan_only',
-};
-if (raw) {
-if (aliases[raw]) return aliases[raw];
-if (['photos_only', 'essentials', 'story', 'showcase', 'suite', 'estate', 'luxury', 'premium', 'standard', 'floor_plan_only'].includes(raw)) {
-return raw;
-}
-if (raw) return raw;
-}
-const n = (name || '').toLowerCase();
-if (n.includes('photos only') || n.includes('photo only')) return 'photos_only';
-if (n.includes('floor plan only') || n.includes('floorplan only')) return 'floor_plan_only';
-if (n.includes('full suite')) return 'suite';
-for (const token of ['showcase', 'essentials', 'story', 'suite', 'estate', 'luxury', 'premium', 'standard']) {
-if (n.includes(token)) return token;
-}
-const first = n.split(/[^a-z0-9]+/).filter(Boolean)[0] || 'essentials';
-if (aliases[first]) return aliases[first];
-if (first === 'hdr' || first === 'photo' || first === 'listing') return 'essentials';
-return first;
+export function packageIdOf(explicit?: string): string {
+return fulfilledPackageId(explicit);
 }
 export function minTierOf(pkg: string): number {
 if (pkg === 'estate' || pkg === 'luxury' || pkg === 'suite' || pkg === 'showcase') return 3;

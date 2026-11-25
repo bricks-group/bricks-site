@@ -2,7 +2,7 @@ import { NOT_COVERED_MESSAGE, UNAVAILABLE_CODE, UNAVAILABLE_MESSAGE, isNotCovere
 import { NextResponse } from 'next/server'
 import { isProvinceBlock, propertyTax } from '@/lib/property-tax'
 import { buildQuote, type QuoteResult } from '@/lib/quote-engine'
-import { stripVirtualStaging } from '@/lib/pricing'
+import { soldPackageId, stripVirtualStaging } from '@/lib/pricing'
 import { termsAcceptanceMeta } from '@/lib/terms-version'
 import { resolvePropertyTimezone, localYmd, isBookableStart } from '@/lib/schedule'
 import { agentIdentityError } from '@/lib/agent-identity'
@@ -167,14 +167,15 @@ export async function POST(req: Request) {
     return bad('selected_slot_start must fall on preferred_date in the property local timezone')
   }
 
-  const pkgNormEarly = String(body.package_id || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9_]+/g, '_')
-  if (['standard', 'premium', 'luxury', 'estate'].includes(pkgNormEarly)) {
+  // package_id is the only package input that is priced and fulfilled; package_interest is a display label.
+  const soldPkg = soldPackageId(body.package_id)
+  if (soldPkg === null) {
     return bad(
-      'Legacy Companion package_id is not sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only).',
+      'package_id is not a package sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only).',
     )
   }
+  const pkgNormEarly: string = soldPkg
+  body = { ...body, package_id: soldPkg || undefined }
 
   const stripeKey = (process.env.STRIPE_SECRET_KEY || '').trim()
   if (!stripeKey) {
@@ -235,7 +236,7 @@ export async function POST(req: Request) {
       body.floor_plan_only === true ||
       body.floor_plan_only === 'true' ||
       pkgNormEarly === 'floor_plan_only',
-    package_id: body.package_id,
+    package_id: soldPkg || undefined,
     sqft: body.sqft || undefined,
   }
 
@@ -300,8 +301,7 @@ export async function POST(req: Request) {
     body.floor_plan_only === 'true' ||
     pkgNorm === 'floor_plan_only' ||
     pkgNorm === 'floorplan_only'
-  const photosOnly =
-    pkgNorm === 'photos_only' || /photos\s*only/i.test(String(body.package_interest || ''))
+  const photosOnly = pkgNorm === 'photos_only'
 
   const droneOn =
     !photosOnly &&
@@ -357,7 +357,7 @@ export async function POST(req: Request) {
     email: (body.email || '').toString().slice(0, 200),
     property_address: (body.property_address || '').toString().slice(0, 300),
     property_type: (body.property_type || '').toString(),
-    package_id: (floorPlanOnly ? 'floor_plan_only' : body.package_id || '').toString().slice(0, 64),
+    package_id: floorPlanOnly ? 'floor_plan_only' : soldPkg,
     package_interest: (body.package_interest || '').toString(),
     floor_plan_included: String(!!floorPlan),
     preferred_date: preferredDate,

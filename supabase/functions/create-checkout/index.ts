@@ -36,6 +36,7 @@
 // "Photos only" booking gets silently re-priced at the full drone rate here.
 
 import { civilYmd, resolvePropertyTimezone } from '../_shared/canada-tz.ts';
+import { soldPackageId } from '../_shared/package-id.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -126,11 +127,13 @@ Deno.serve(async (req: Request) => {
   // pricing. Pass the same sqft the wizard used (agent-confirmed or the
   // auto-estimate) so the recompute matches exactly, not a fresh re-estimate.
   // Always forward package_id so quote expands the ladder (Showcase ≠ Essentials).
-  const pkgNormEarly = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_')
-  // Refuse silent Companion legacy remaps (would under/over-charge vs Companion rack).
-  if (['standard', 'premium', 'luxury', 'estate'].includes(pkgNormEarly)) {
-    return bad('Legacy Companion package_id is not sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only).')
+  // package_id is the only package input that is priced and fulfilled; package_interest
+  // is a display label. Legacy Companion ids are refused (would under/over-charge vs Companion rack).
+  const soldPkg = soldPackageId(body.package_id)
+  if (soldPkg === null) {
+    return bad('package_id is not a package sold on www. Use essentials/story/showcase/suite (or photos_only / floor_plan_only).')
   }
+  const pkgNormEarly = soldPkg
   let q: any;
   try {
     const quoteRes = await fetch(`${supabaseUrl}/functions/v1/quote`, {
@@ -153,7 +156,7 @@ Deno.serve(async (req: Request) => {
         visit_addon: body.visit_addon === true || body.visit_addon === 'true',
         floor_plan_only: body.floor_plan_only === true || body.floor_plan_only === 'true'
           || pkgNormEarly === 'floor_plan_only',
-        package_id: body.package_id,
+        package_id: soldPkg || undefined,
         sqft: body.sqft || undefined,
       }),
     });
@@ -176,11 +179,10 @@ Deno.serve(async (req: Request) => {
   const amountCents = Math.round(q.total * 100);
   if (amountCents < 50) return bad('Amount too small');
 
-  const pkgNorm = String(body.package_id || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_')
+  const pkgNorm = soldPkg
   const floorPlanOnly = body.floor_plan_only === true || body.floor_plan_only === 'true'
-    || pkgNorm === 'floor_plan_only' || pkgNorm === 'floorplan_only'
+    || pkgNorm === 'floor_plan_only'
   const photosOnly = pkgNorm === 'photos_only'
-    || /photos\s*only/i.test(String(body.package_interest || ''))
   const stagingOn = !!q.staging_addon
   const stagingImages = Number(q.staging_images) || 0
   const visitOn = !!q.visit_addon
@@ -210,7 +212,7 @@ Deno.serve(async (req: Request) => {
     email: (body.email || '').toString().slice(0, 200),
     property_address: (body.property_address || '').toString().slice(0, 300),
     property_type: (body.property_type || '').toString(),
-    package_id: (floorPlanOnly ? 'floor_plan_only' : (body.package_id || '')).toString().slice(0, 64),
+    package_id: floorPlanOnly ? 'floor_plan_only' : soldPkg,
     package_interest: (body.package_interest || '').toString(),
     floor_plan_included: String(!!floorPlan),
     preferred_date: preferredDate,
