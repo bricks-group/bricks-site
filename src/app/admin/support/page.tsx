@@ -30,7 +30,8 @@ export default async function SupportReview({ searchParams }: { searchParams: Pr
     )
   }
   const preview = process.env.VERCEL_ENV === 'preview'
-  if (!preview && !(await isAdmin())) {
+  const admin = await isAdmin()
+  if (!admin && !preview) {
     const codeEmail = await pendingCodeEmail()
     const msg = sp.e ? SIGNIN_MESSAGES[sp.e] : ''
     return (
@@ -68,18 +69,19 @@ export default async function SupportReview({ searchParams }: { searchParams: Pr
       </main>
     )
   }
-  const db = supportDb()
+  // Only a verified admin gets the service-role client; signed-out preview visitors see SAMPLE.
+  const db = admin ? supportDb() : null
   const filter = sp.all ? '' : '&status=in.(shadow,failed,queued)'
   const res = db ? await db.select('support_email_outbound', `select=id,status,mode,needs_kam,escalation_reasons,to_email,subject,body_text,category,created_at,sent_at,last_error,support_email_messages!support_email_outbound_inbound_message_id_fkey(from_email,subject,text_body,received_at),support_email_threads!support_email_outbound_thread_id_fkey(help_no)${filter}&order=created_at.desc&limit=50`) : { ok: false, rows: [] }
   let rows = res.rows as unknown as Row[]
-  // Preview has no service-role key: show sample cards so the layout can be reviewed.
+  // Preview without an admin session or a service-role key: show sample cards so the layout can be reviewed.
   const sample = preview && !db
   if (sample) rows = SAMPLE
   return (
     <main className="sr">
       <h1>Support review</h1>
       <p className="lede">help@brxs.ca drafts. Auto-send is off. Nothing goes to a customer until you press Approve &amp; send. <a href={sp.all ? '/admin/support' : '/admin/support?all=1'}>{sp.all ? 'Show pending only' : 'Show all'}</a></p>
-      {!preview && <form action={signOut} className="signout"><button type="submit">Sign out</button></form>}
+      {admin && <form action={signOut} className="signout"><button type="submit">Sign out</button></form>}
       {sample && <p className="note">Preview with sample data. Buttons are disabled here.</p>}
       {!sample && !res.ok && <p>Could not load drafts.</p>}
       {res.ok && rows.length === 0 && <p>No drafts waiting.</p>}
